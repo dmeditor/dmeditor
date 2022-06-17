@@ -1,7 +1,7 @@
 .active{
-    color: rgb(6, 6, 112);
+    color: #12913e;
     font-weight: bold;
-    background-color: #dddddd;
+    box-shadow: 1px 0px 3px #999999;
 }
 
 .tab-header{
@@ -14,10 +14,11 @@
     grid-template-columns:50% 50%;
     background: #f0f0f0;
     border-top:1px solid #cccccc;
-    border-bottom: 1px solid #ebe2e2;
+    border-bottom: 1px solid #12913e;
 }
 
 .tab-content{
     padding: 10px;
     color: #333333;    
+    font-size: 14px;
 }

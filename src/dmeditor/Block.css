@@ -2,13 +2,45 @@
     text-align: center;
     position: absolute;
     width: 100%;
+    z-index: 100;
 }
 
 .tool-above{
-    z-index: 100;
-    top: -20px;
+    top: -30px;
+}
+
+.tool-under{
+    bottom: -30px;
 }
 
 .block-container{
     position: relative;
+    /* animation: fadeIn 1s; */
+}
+
+.block{
+    margin: 5px;
+}
+
+
+@keyframes fadeIn {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+.tool-item{
+    width: 24px;
+    height: 24px;
+    border-radius: 15px;
+    border: 1px solid transparent;
+    display: inline-block;
+    text-align: center;
+    line-height: 24px;
+    background-color: white;
+}
+
+.tool-item:hover{
+    border: 1px solid #2b884c;
+    background-color: #12913e;
+    color: white;
 }

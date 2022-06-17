@@ -1,0 +1,12 @@
+.moreblock{
+    margin-top: 2px;
+    height: 40px;   
+    padding: 10px 20px;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.moreblock:hover{
+    border: 1px solid #cccccc
+}

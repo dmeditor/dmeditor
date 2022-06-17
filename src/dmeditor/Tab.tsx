@@ -8,7 +8,7 @@ export const Tab = (props:{content:ReactElement})=>{
 
     const tabs = [{text:'Block', 
     content: props.content},
-                    {text:'Data', content: <div>
+                    {text:'Layout', content: <div>
                     <label>Layout</label>
                                 <hr />
         
@@ -17,11 +17,11 @@ export const Tab = (props:{content:ReactElement})=>{
 
 
     return (<div style={{height:'100vh'}}>
-        <div className='tab-header-container'>
-        {tabs.map((tab, index)=><div onClick={()=>setActive(index)} className={((index==active)?'active ':'')+'tab-header'}>{tab.text}</div>)}
+        <div className='tab-header-container'>        
+        {tabs.map((tab, index)=><div key={index} onClick={()=>setActive(index)} className={((index==active)?'active ':'')+'tab-header'}>{tab.text}</div>)}
         </div>
         <div>
-        {tabs.map((tab, index)=><div className='tab-content'>{index==active&&<>{tab.content}</>}</div>)}
+        {tabs.map((tab, index)=><div key={index} className='tab-content'>{index==active&&<>{tab.content}</>}</div>)}
         </div>
     </div>)
 }

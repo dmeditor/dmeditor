@@ -4,16 +4,20 @@ import { blockManager } from './BlockManager';
 import { Paragraph } from './blocks/Paragraph';
 import { Table } from './blocks/Table';
 import { BlockData } from './Main';
+import { AddBox, AddBoxOutlined, Collections, CollectionsOutlined, Delete, DeleteOutline, DeleteOutlineOutlined, ImageOutlined, ListAltRounded, MoreHorizOutlined, PlusOneOutlined, PlusOneRounded, TextSnippet, TextSnippetOutlined, TextSnippetRounded } from '@mui/icons-material';
 
-export const Block = (props:{addAbove:any, onSelect:any, addUnder:any, active:boolean, data: BlockData})=>{
+export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:any, onDelete:any, addUnder:any, active:boolean, data: BlockData})=>{
     const [isActive, setIsActive] = useState(props.active);
+    const [data, setData] = useState(props.data);
+    
 
     React.useEffect(() => {
-        setIsActive(props.active);       
-      }, [props.active]);
+        setIsActive(props.active);   
+        setData(props.data);    
+      });
 
 
-    const content = props.data.content;
+    const content = data.content;
 
     const renderContent = (type: string):ReactElement=>{        
         const render = blockManager.getBlock(type);
@@ -24,30 +28,27 @@ export const Block = (props:{addAbove:any, onSelect:any, addUnder:any, active:bo
         }
     }
 
+    const onChange = (e:any) =>{
+        props.onChange(e.target.innerText);
+    }
+
     const renderBlock = ()=>{
-        return <div onClick={props.onSelect} className={"block"+(isActive?' block-active':'')} {...{contentEditable:isActive?true:false}}>
+        //{...{contentEditable:isActive?true:false}}
+        return <div onClick={props.onSelect} onInput={onChange} className={"block"+(isActive?' block-active':'')} {...{contentEditable:isActive?true:false}}>
             {renderContent(props.data.type)}          
         </div>
     }
 
     return (<>
         {isActive&&<div className='block-container'>
-            <div className="tool tool-above">
-                <a href="#" title="Add above" onClick={props.addAbove}>+</a>
-                <select onChange={(e)=>props.addAbove(e.target.value)}>
-                    <option value="">Select</option>                    
-                    <option value="table">Table</option>
-                    <option value="p">Paragraph</option>
-                </select>
+            <div className="tool tool-above">              
+                <a className="tool-item" href="javascript:void(0);" title="Add paragraph" onClick={()=>props.addAbove('p')}><TextSnippetOutlined /></a>
+                <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>props.addMore(-1)}><AddBoxOutlined /></a>
             </div>
                 {renderBlock()}
-            <div className="tool tool-under">               
-                <a href="#" title="Add under" onClick={props.addUnder}>+</a>
-                <select onChange={(e)=>props.addUnder(e.target.value)}>
-                    <option value="">Select</option>  
-                    <option value="table">Table</option>
-                    <option value="p">Paragraph</option>
-                </select>
+            <div className="tool tool-under">                             
+                <a className="tool-item" href="javascript:void(0);" title="Add paragraph" onClick={()=>props.addUnder('p')}><TextSnippetOutlined /></a>                
+                <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>props.addMore(1)}><AddBoxOutlined /></a>
             </div>
         </div>}
         {!isActive&&<>{renderBlock()}</>}

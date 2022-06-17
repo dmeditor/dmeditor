@@ -1,13 +1,21 @@
 .dmeditor-layout{
-    min-height: 100vh;
+    height: 100vh;
     background-color: #f0f0f0;
     display: grid;
-    grid-template-columns: auto 400px;
+    grid-template-columns: auto 300px;
     color: #666666;
 }
 
 .layout-properties{
     border: 1px solid #dddddd;
+    overflow-y: scroll;
+}
+
+.layout-main{
+    background: white;
+    width: 900px;
+    margin:10px auto;
+    overflow-y: scroll;
 }
 
 [contenteditable='true'] {
@@ -15,14 +23,20 @@
   }
  
 .block-active{
-    outline: 1px solid #ff0000;
+    outline: 1px dotted #12913e;
+    box-shadow: 0px 0px 4px #12913e;
 }
 
 a{
     text-decoration: none;
-    color:rgb(255, 156, 159)
+    color: #12913e
 }
 
 a:hover{
-    color:rgb(217, 75, 80)
+    color:#046726
+}
+
+hr{
+    border-top: 1px solid #cccccc;
+    border-bottom: none;
 }
