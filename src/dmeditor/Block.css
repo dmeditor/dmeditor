@@ -6,4 +6,9 @@
 
 .tool-above{
     z-index: 100;
+    top: -20px;
+}
+
+.block-container{
+    position: relative;
 }

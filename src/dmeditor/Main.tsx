@@ -18,15 +18,28 @@ export const Main = (props:any)=>{
     const [activeBlock, setActiveBlock] = useState(0);
 
 
-    const addAbove = ()=>{
-        blocks.splice(activeBlock, 0, {type: 'p', content:'Hello'} );
-        setBlocks(blocks);
+    const getDefaultData = (type: string) =>{
+        if(type == 'p'){
+            return 'Hello in paragraph'
+        }
+        if(type == 'table'){
+            return [['test table']]
+        }
+    }
+
+    const addAbove = (type: string)=>{
+        if( type ){
+            blocks.splice(activeBlock, 0, {type: type, content: getDefaultData(type) as string} );
+            setBlocks(blocks);
+        }
     }
 
 
-    const addUnder = ()=>{
-        setBlocks([...blocks, {type: 'table', content:[['test']]}]);
-        setActiveBlock(activeBlock+1);
+    const addUnder = (type: string)=>{
+        if( type ){
+            setBlocks([...blocks, {type: type, content: getDefaultData(type) as DataTable }]);
+            setActiveBlock(activeBlock+1);
+        }
     }
 
     const select = (index:number)=>{

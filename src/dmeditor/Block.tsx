@@ -24,12 +24,32 @@ export const Block = (props:{addAbove:any, onSelect:any, addUnder:any, active:bo
         }
     }
 
-
-    return (<>
-        {isActive&&<div className="tool tool-above"><a href="#" title="Add above" onClick={props.addAbove}>+</a></div>}
-        <div onClick={props.onSelect} className={"block"+(isActive?' block-active':'')} {...{contentEditable:isActive?true:false}}>
+    const renderBlock = ()=>{
+        return <div onClick={props.onSelect} className={"block"+(isActive?' block-active':'')} {...{contentEditable:isActive?true:false}}>
             {renderContent(props.data.type)}          
         </div>
-        {isActive&&<div className="tool tool-under"><a href="#" title="Add under" onClick={props.addUnder}>+</a></div>}
+    }
+
+    return (<>
+        {isActive&&<div className='block-container'>
+            <div className="tool tool-above">
+                <a href="#" title="Add above" onClick={props.addAbove}>+</a>
+                <select onChange={(e)=>props.addAbove(e.target.value)}>
+                    <option value="">Select</option>                    
+                    <option value="table">Table</option>
+                    <option value="p">Paragraph</option>
+                </select>
+            </div>
+                {renderBlock()}
+            <div className="tool tool-under">               
+                <a href="#" title="Add under" onClick={props.addUnder}>+</a>
+                <select onChange={(e)=>props.addUnder(e.target.value)}>
+                    <option value="">Select</option>  
+                    <option value="table">Table</option>
+                    <option value="p">Paragraph</option>
+                </select>
+            </div>
+        </div>}
+        {!isActive&&<>{renderBlock()}</>}
     </>);
 }
