@@ -6,9 +6,9 @@ import './Tab.css';
 export const Tab = (props:{content:ReactElement})=>{
     const [active, setActive] = useState(0);
 
-    const tabs = [{text:'Block settings', 
+    const tabs = [{text:'Block', 
     content: props.content},
-                    {text:'Tab2', content: <div>
+                    {text:'Data', content: <div>
                     <label>Layout</label>
                                 <hr />
         
