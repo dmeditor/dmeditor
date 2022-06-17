@@ -1,0 +1,29 @@
+.dmeditor-layout{
+    height: 100vh;
+    background-color: #f0f0f0;
+    display: grid;
+    grid-template-columns: auto 400px;
+    color: #666666;
+}
+
+.layout-properties{
+    border: 1px solid #dddddd;
+}
+
+[contenteditable='true'] {
+    outline: 0px solid transparent;
+  }
+ 
+.block-active{
+    position: relative;
+    outline: 1px solid #ff0000;
+}
+
+a{
+    text-decoration: none;
+    color:rgb(255, 156, 159)
+}
+
+a:hover{
+    color:rgb(217, 75, 80)
+}
