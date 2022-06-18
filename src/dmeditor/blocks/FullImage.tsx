@@ -4,7 +4,7 @@ import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 
 
-const FullImage = (props:{data:DataFullImage})=>{
+const FullImage = (props:{data:DataFullImage, isActive:boolean})=>{
    return <div style={{borderColor:'#666666', borderStyle:'solid', ...props.data.style}}><img style={{width: '100%'}} src={props.data.src} /></div>
 }
 
@@ -49,8 +49,8 @@ const FullImageSettings = (props:{data:DataFullImage, onSetting:any})=>{
  export const FullImageHandler = {
     type: 'full_image',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData):ReactElement=>{
-        return <FullImage data={data as DataFullImage} />
+    renderMain: (data:BlockData, isActive: boolean):ReactElement=>{
+        return <FullImage data={data as DataFullImage} isActive={isActive} />
     },
     getDefaultData:():BlockData=>{
        return {

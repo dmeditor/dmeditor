@@ -4,7 +4,7 @@ import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 
 
-const Heading = (props:{data:DataHeading})=>{
+const Heading = (props:{data:DataHeading, isActive:boolean})=>{
     const content = props.data;
     switch(content.style.level){
         case 1:
@@ -56,8 +56,8 @@ const HeadingSettings = (props:{data:DataHeading, onSetting:any})=>{
  export const HeadingHandler = {
     type: 'heading',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData):ReactElement=>{
-        return <Heading data={data as DataHeading} />
+    renderMain: (data:BlockData, isActive:boolean):ReactElement=>{
+        return <Heading data={data as DataHeading} isActive={isActive} />
     },
     getDefaultData:():BlockData=>{
         return {text:'Test', style:{level: 2}};

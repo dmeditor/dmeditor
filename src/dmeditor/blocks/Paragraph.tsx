@@ -4,8 +4,8 @@ import { BlockData} from '../Main';
 import { Ranger } from '../utils/Ranger';
 
 
-const Paragraph = (props:{data:any})=>{
-   return <p>{props.data}</p>
+const Paragraph = (props:{data:any, isActive:boolean})=>{
+   return <p {...{contentEditable:props.isActive}}>{props.data}</p>
 }
 
 
@@ -38,8 +38,8 @@ const ParagraphSettings = (props:{data:any, onSetting:any})=>{
  export const ParagraphHandler = {
     type: 'p',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData):ReactElement=>{
-        return <Paragraph data={data} />
+    renderMain: (data:BlockData, isActive:boolean):ReactElement=>{
+        return <Paragraph data={data} isActive={isActive} />
     },
     getDefaultData:():BlockData=>{
         return 'Test';

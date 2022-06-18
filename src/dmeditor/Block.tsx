@@ -21,7 +21,7 @@ export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:a
         // return <div>{type}</div>;
         const handler = blockManager.getBlockType(type);
         if( handler ){
-            return handler.renderMain(content);
+            return handler.renderMain(content, isActive);
         }else{
             return <div>Unknown block type.</div>
         }
@@ -33,7 +33,7 @@ export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:a
 
     const renderBlock = ()=>{
         //{...{contentEditable:isActive?true:false}}
-        return <div onClick={props.onSelect} onBlur={onChange} className={"block"+(isActive?' block-active':'')} {...{contentEditable:isActive?true:false}}>
+        return <div onClick={props.onSelect} onBlur={onChange} className={"block"+(isActive?' block-active':'')}>
             {renderContent(props.data.type)}          
         </div>
     }

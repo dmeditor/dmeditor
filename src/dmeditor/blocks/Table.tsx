@@ -5,7 +5,7 @@ import { Ranger } from "../utils/Ranger";
 import './Table.css';
 
 
-const Table = (props:{data:DataTable})=>{
+const Table = (props:{data:DataTable, isActive:boolean})=>{
     const [content, SetContent] = useState(props.data);
 
     useEffect(()=>{
@@ -108,8 +108,8 @@ const TableSettings = (props:{data:DataTable, onSetting:any })=>{
  export const TableHandler = {
     type: 'table',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData):ReactElement=>{
-        return <Table data={data as DataTable} />
+    renderMain: (data:BlockData, isActive:boolean):ReactElement=>{
+        return <Table data={data as DataTable} isActive={isActive} />
     },
     getDefaultData:():BlockData=>{
         return [['test table', 'test table1']];
