@@ -34,9 +34,9 @@ export interface BlockInfo{
 
 
 export const Main = (props:any)=>{
-    const [blocks, setBlocks] = useState([{type: 'p', content:'Test'}] as Array<BlockInfo>);
-    const [activeBlock, setActiveBlock] = useState(0);
-    const [addMore, setAddMore] = useState(0);   
+    const [blocks, setBlocks] = useState([] as Array<BlockInfo>);
+    const [activeBlock, setActiveBlock] = useState(-1);
+    const [addMore, setAddMore] = useState(1);   
 
     const addAbove = (type: string)=>{
         if( type ){
@@ -91,13 +91,14 @@ export const Main = (props:any)=>{
     }
 
     const onDelete = ()=>{
-        if( activeBlock>0 ){
-            let fullBlocks = [...blocks];
-            fullBlocks.splice(activeBlock, 1);
-            if( activeBlock == blocks.length -1 ){
-                setActiveBlock(blocks.length-2);
-            }
-            setBlocks(fullBlocks);
+        let fullBlocks = [...blocks];
+        fullBlocks.splice(activeBlock, 1);           
+        setBlocks(fullBlocks);
+        if( fullBlocks.length===0 ){
+            setActiveBlock(-1);
+            setAddMore(1);
+        }else{
+            setActiveBlock(activeBlock-1);
         }
     }
 
@@ -108,8 +109,8 @@ export const Main = (props:any)=>{
             )}         
         </div>
         <div className='layout-properties'>  
-            {addMore!=0&&<MoreBlocks onSelect={confirmAddMore} />}
-            {addMore==0&&<Property current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
+            {(addMore!=0||activeBlock==-1)&&<MoreBlocks onSelect={confirmAddMore} />}
+            {(addMore==0&&activeBlock>=0)&&<Property current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
         </div>
     </div>);
 }
