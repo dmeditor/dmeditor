@@ -1,17 +1,17 @@
 import { DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { blockManager } from "./BlockManager";
-import { BlockData } from "./Main"
+import { BlockInfo } from "./Main"
 import { Tab } from "./Tab"
 
-export const Property = (props:{current: BlockData, onSeting: any, onDelete:any})=>{
+export const Property = (props:{current: BlockInfo, onSeting: any, onDelete:any})=>{
 
     const current = props.current;
 
     const renderProperty = ()=>{
-        const render = blockManager.getBlockSettings(current.type);
-        if( render ){
-            return render(current.content, props.onSeting);
+        const handler = blockManager.getBlockType(current.type);
+        if( handler ){
+            return handler.renderSetting(current.content, props.onSeting);
         }else{
             return <div>Unknown type {current.type}</div>;
         }

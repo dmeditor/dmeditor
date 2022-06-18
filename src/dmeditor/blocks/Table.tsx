@@ -1,5 +1,5 @@
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
-import { DataTable } from "../Main"
+import { ChangeEvent, ChangeEventHandler, ReactElement, useEffect, useState } from "react";
+import { BlockData, DataTable } from "../Main"
 import { Input } from "../utils/Input";
 import { Ranger } from "../utils/Ranger";
 import './Table.css';
@@ -69,7 +69,6 @@ export const TableSettings = (props:{content:DataTable, onSetting:any })=>{
     return <div>
         <div>
         <label>Table</label>
-        <hr />        
         <table style={{width: '100%'}}>
         <tbody>
             <tr><td style={{width: '50px'}}>
@@ -88,7 +87,6 @@ export const TableSettings = (props:{content:DataTable, onSetting:any })=>{
     <br />
     <div>
         <label>Layout</label>
-        <hr />   
         <table style={{width: '100%'}}>
         <tbody>
             <tr>
@@ -104,4 +102,16 @@ export const TableSettings = (props:{content:DataTable, onSetting:any })=>{
     </div>
     
     </div>
+ }
+
+
+ export const TableHandler = {
+    type: 'table',
+    onDataChange: (ele:HTMLElement):any => {},
+    renderMain: (data:BlockData):ReactElement=>{
+        return <Table content={data as DataTable} />
+    },
+    renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
+        return <TableSettings content={data as DataTable} onSetting={onSetting} />
+    }
  }

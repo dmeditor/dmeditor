@@ -17,19 +17,26 @@ export interface DataFullImage{
     }
 }
 
+export interface DataHeading{
+    text: string,
+    style: {
+        level: number
+    }
+}
 
-export interface BlockData{
+export type BlockData = string|DataTable|DataFullImage|DataHeading;
+
+export interface BlockInfo{
     type: string
-    content: string|DataTable|DataFullImage
+    content: BlockData
 }
 
 
 export const Main = (props:any)=>{
-    const [blocks, setBlocks] = useState([{type: 'p', content:'Test'}] as Array<BlockData>);
+    const [blocks, setBlocks] = useState([{type: 'p', content:'Test'}] as Array<BlockInfo>);
     const [activeBlock, setActiveBlock] = useState(0);
     const [addMore, setAddMore] = useState(0);
     
-
     const getDefaultData = (type: string) =>{
         if(type == 'p'){
             return 'Hello in paragraph'
@@ -42,7 +49,13 @@ export const Main = (props:any)=>{
                 src:'https://www.iucn.org/sites/dev/files/content/images/2020/shutterstock_1458128810.jpg',
                 style: {padding: 2, borderWidth: 0, background:''}
             };
-
+            return v;
+        }
+        if(type == 'heading'){
+            let v:DataHeading = {
+                text: 'Text',
+                style: {level: 2}
+            };
             return v;
         }
 
@@ -80,9 +93,12 @@ export const Main = (props:any)=>{
 
     const onChange = (data:any)=>{
         let allBlocks = [...blocks];
-        if( allBlocks[activeBlock].type == 'p' ){
-            // allBlocks[activeBlock].content = data;
-            // setBlocks(allBlocks);
+        if( allBlocks[activeBlock].type == 'heading' ){
+            let blockData = allBlocks[activeBlock].content as DataHeading;
+            blockData.text= data;
+
+            allBlocks[activeBlock].content = blockData
+            setBlocks(allBlocks);
         }
     }
 

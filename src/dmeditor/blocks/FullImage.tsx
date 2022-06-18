@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { DataFullImage } from '../Main';
+import React, { ReactElement, useState } from 'react';
+import { BlockData, DataFullImage } from '../Main';
 import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 
@@ -44,4 +44,16 @@ export const FullImageSettings = (props:{content:DataFullImage, onSetting:any})=
         </tbody>
     </table>
     </div>
+ }
+
+
+ export const FullImageHandler = {
+    type: 'full_image',
+    onDataChange: (ele:HTMLElement):any => {},
+    renderMain: (data:BlockData):ReactElement=>{
+        return <FullImage content={data as DataFullImage} />
+    },
+    renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
+        return <FullImageSettings content={data as DataFullImage} onSetting={onSetting} />
+    }
  }

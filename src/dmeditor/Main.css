@@ -3,12 +3,13 @@
     background-color: #f0f0f0;
     display: grid;
     grid-template-columns: auto 300px;
-    color: #666666;
+    color: #333333;
 }
 
 .layout-properties{
     border: 1px solid #dddddd;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .layout-main{
@@ -18,13 +19,17 @@
     overflow-y: scroll;
 }
 
+/* .layout-main > div:first-child{
+    margin-top: 50px;
+} */
+
 [contenteditable='true'] {
     outline: 0px solid transparent;
   }
  
 .block-active{
-    outline: 1px dotted #12913e;
-    box-shadow: 0px 0px 4px #12913e;
+    outline: 1px solid #1ed45d;
+    box-shadow: 0px 0px 3px #12913e;
 }
 
 a{

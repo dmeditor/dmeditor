@@ -1,20 +1,25 @@
 import { ReactElement } from "react";
+import { BlockData } from "./Main";
+
+interface BlockHandler {
+    type:string;
+    onDataChange: (ele:HTMLElement)=>any;    
+    renderMain: (data:BlockData)=>ReactElement;
+    renderSetting: (data:BlockData, onSetting: any) => ReactElement
+}
+
+var blockHandlers:{[key:string]: BlockHandler;} ={};
 
 var blockRenders: {[key:string]:(content:any)=>ReactElement} = {};
 
 var blockSettings: {[key:string]:(content:any, onSetting:any)=>ReactElement} = {};
 
-export const blockManager = {
-    getBlock: (type: string): (content:any)=>ReactElement=>{
-        return blockRenders[type];
+export const blockManager = {  
+    registerBlockType: (handler:BlockHandler)=>{
+        blockHandlers[handler.type] = handler;
     },
-    getBlockSettings: (type: string):(content:any, onSetting:any)=>ReactElement=>{
-        return blockSettings[type];
-    },
-    registerBlock: (type: string, render: (content:any)=>ReactElement)=>{
-        blockRenders[type] = render;
-    },
-    registerBlockSetting: (type: string, render:(content:any, onSetting:any)=>ReactElement)=>{
-        blockSettings[type] = render;
-    }    
+
+    getBlockType: (type:string): BlockHandler=>{
+        return blockHandlers[type];
+    }
 }
