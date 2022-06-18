@@ -52,7 +52,9 @@ export const Main = (props:any)=>{
     const addUnder = (type: string)=>{
         if( type ){
             const defaultData = blockManager.getBlockType(type).getDefaultData();
-            setBlocks([...blocks, {type: type, content: defaultData }]);
+            let allBlocks = [...blocks];            
+            allBlocks.splice(activeBlock+1, 0, {type: type, content: defaultData });
+            setBlocks( allBlocks );
             setActiveBlock(activeBlock+1);
         }
         setAddMore(0);
@@ -72,13 +74,8 @@ export const Main = (props:any)=>{
 
     const onChange = (data:any)=>{
         let allBlocks = [...blocks];
-        if( allBlocks[activeBlock].type == 'heading' ){
-            let blockData = allBlocks[activeBlock].content as DataHeading;
-            blockData.text= data;
-
-            allBlocks[activeBlock].content = blockData
-            setBlocks(allBlocks);
-        }
+        allBlocks[activeBlock].content=data;
+        setBlocks(allBlocks);
     }
 
     const onAddMore = (position:number)=>{

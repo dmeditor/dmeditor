@@ -18,22 +18,20 @@ export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:a
     const content = data.content;
 
     const renderContent = (type: string):ReactElement=>{        
-        // return <div>{type}</div>;
         const handler = blockManager.getBlockType(type);
         if( handler ){
-            return handler.renderMain(content, isActive);
+            return handler.renderMain(content, isActive, onChange);
         }else{
             return <div>Unknown block type.</div>
         }
     }
 
-    const onChange = (e:any) =>{
-        props.onChange(e.target.innerText);
+    const onChange = (data:any) =>{
+        props.onChange(data);
     }
 
     const renderBlock = ()=>{
-        //{...{contentEditable:isActive?true:false}}
-        return <div onClick={props.onSelect} onBlur={onChange} className={"block"+(isActive?' block-active':'')}>
+        return <div onClick={props.onSelect} className={"block"+(isActive?' block-active':'')}>
             {renderContent(props.data.type)}          
         </div>
     }

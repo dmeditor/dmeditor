@@ -12,7 +12,7 @@ const Table = (props:{data:DataTable, isActive:boolean})=>{
         SetContent(props.data);
     })
 
-    return <table className="table">
+    return <table className="table" contentEditable={props.isActive}>
         <tbody>
             {content.map((row)=><tr>{row.map((col)=><td>{col}</td>)}</tr> )}
             </tbody>

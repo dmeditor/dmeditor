@@ -4,8 +4,18 @@ import { BlockData} from '../Main';
 import { Ranger } from '../utils/Ranger';
 
 
-const Paragraph = (props:{data:any, isActive:boolean})=>{
-   return <p {...{contentEditable:props.isActive}}>{props.data}</p>
+const Paragraph = (props:{data:any, isActive:boolean, onChange?:(data:any)=>void})=>{
+    //todo: filter render allowed tags
+
+
+    const change = (e:any)=>{
+        let text = e.target.innerHTML as string;
+        if( props.onChange ){
+            props.onChange(text);
+        }
+    }
+
+   return <p onBlur={change}  contentEditable={props.isActive} dangerouslySetInnerHTML={{__html:props.data}}></p>
 }
 
 
@@ -38,13 +48,17 @@ const ParagraphSettings = (props:{data:any, onSetting:any})=>{
  export const ParagraphHandler = {
     type: 'p',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData, isActive:boolean):ReactElement=>{
-        return <Paragraph data={data} isActive={isActive} />
+    renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void):ReactElement=>{
+        return <Paragraph data={data} isActive={isActive} onChange={onChange} />
     },
     getDefaultData:():BlockData=>{
-        return 'Test';
+        return '';
     },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
         return <ParagraphSettings data={data} onSetting={onSetting} />
     }
  }
+
+function useFocus(): [any, any] {
+    throw new Error('Function not implemented.');
+}
