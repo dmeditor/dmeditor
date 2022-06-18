@@ -4,17 +4,17 @@ import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 
 
-export const FullImage = (props:{content:DataFullImage})=>{
-   return <div style={{borderColor:'#666666', borderStyle:'solid', ...props.content.style}}><img style={{width: '100%'}} src={props.content.src} /></div>
+const FullImage = (props:{data:DataFullImage})=>{
+   return <div style={{borderColor:'#666666', borderStyle:'solid', ...props.data.style}}><img style={{width: '100%'}} src={props.data.src} /></div>
 }
 
 
-export const FullImageSettings = (props:{content:DataFullImage, onSetting:any})=>{
+const FullImageSettings = (props:{data:DataFullImage, onSetting:any})=>{
 
-    let style = props.content.style;
+    let style = props.data.style;
 
     const update = ()=>{
-        let content = props.content;
+        let content = props.data;
         content.style = {...content.style, ...style};
         props.onSetting(content);
     }
@@ -51,9 +51,9 @@ export const FullImageSettings = (props:{content:DataFullImage, onSetting:any})=
     type: 'full_image',
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData):ReactElement=>{
-        return <FullImage content={data as DataFullImage} />
+        return <FullImage data={data as DataFullImage} />
     },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <FullImageSettings content={data as DataFullImage} onSetting={onSetting} />
+        return <FullImageSettings data={data as DataFullImage} onSetting={onSetting} />
     }
  }

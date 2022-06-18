@@ -1,10 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import './Block.css';
 import { blockManager } from './BlockManager';
-import { Paragraph } from './blocks/Paragraph';
-import { Table } from './blocks/Table';
 import {  BlockInfo } from './Main';
-import { AddBox, AddBoxOutlined, Collections, CollectionsOutlined, Delete, DeleteOutline, DeleteOutlineOutlined, ImageOutlined, ListAltRounded, MoreHorizOutlined, PlusOneOutlined, PlusOneRounded, TextSnippet, TextSnippetOutlined, TextSnippetRounded } from '@mui/icons-material';
+import { AddBoxOutlined, TextSnippetOutlined } from '@mui/icons-material';
 
 export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:any, onDelete:any, addUnder:any, active:boolean, data: BlockInfo})=>{
     const [isActive, setIsActive] = useState(props.active);

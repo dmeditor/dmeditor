@@ -4,8 +4,8 @@ import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 
 
-const Heading = (props:{content:DataHeading})=>{
-    const content = props.content;
+const Heading = (props:{data:DataHeading})=>{
+    const content = props.data;
     switch(content.style.level){
         case 1:
             return <h1>{content.text}</h1>
@@ -28,12 +28,12 @@ const Heading = (props:{content:DataHeading})=>{
 }
 
 
-const HeadingSettings = (props:{content:DataHeading, onSetting:any})=>{
+const HeadingSettings = (props:{data:DataHeading, onSetting:any})=>{
 
-    let style = props.content.style;
+    let style = props.data.style;
 
     const update = ()=>{
-        let content = props.content;
+        let content = props.data;
         content.style = {...content.style, ...style};
         props.onSetting(content);
     }
@@ -57,9 +57,9 @@ const HeadingSettings = (props:{content:DataHeading, onSetting:any})=>{
     type: 'heading',
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData):ReactElement=>{
-        return <Heading content={data as DataHeading} />
+        return <Heading data={data as DataHeading} />
     },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <HeadingSettings content={data as DataHeading} onSetting={onSetting} />
+        return <HeadingSettings data={data as DataHeading} onSetting={onSetting} />
     }
  }

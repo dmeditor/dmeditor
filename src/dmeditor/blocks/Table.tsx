@@ -5,11 +5,11 @@ import { Ranger } from "../utils/Ranger";
 import './Table.css';
 
 
-export const Table = (props:{content:DataTable})=>{
-    const [content, SetContent] = useState(props.content);
+const Table = (props:{data:DataTable})=>{
+    const [content, SetContent] = useState(props.data);
 
     useEffect(()=>{
-        SetContent(props.content);
+        SetContent(props.data);
     })
 
     return <table className="table">
@@ -20,12 +20,12 @@ export const Table = (props:{content:DataTable})=>{
  }
 
 
-export const TableSettings = (props:{content:DataTable, onSetting:any })=>{
+const TableSettings = (props:{data:DataTable, onSetting:any })=>{
     const updateRow = (value:any) =>{
         let newRows = value;
-        let content = props.content;
+        let content = props.data;
         let rows = content.length;
-        let columns = props.content[0].length;
+        let columns = props.data[0].length;
 
         if( newRows > rows ){
             for( let i=rows; i<newRows; i++ ){
@@ -45,7 +45,7 @@ export const TableSettings = (props:{content:DataTable, onSetting:any })=>{
 
     const updateColumn = (value:any) =>{
         let newColumns = value;
-        let content = props.content;
+        let content = props.data;
     
         let newContent:DataTable = [];
         for( let row of content){
@@ -74,11 +74,11 @@ export const TableSettings = (props:{content:DataTable, onSetting:any })=>{
             <tr><td style={{width: '50px'}}>
                 
                 <label>Rows</label></td><td>
-                <Ranger defaultValue={props.content.length} min={1} max={10} step={1} onChange={updateRow} />
+                <Ranger defaultValue={props.data.length} min={1} max={10} step={1} onChange={updateRow} />
                 </td></tr>
             <tr>
                 <td><label>Columns</label></td><td>
-                <Ranger defaultValue={props.content[0].length} min={1} max={5} step={1} onChange={updateColumn} />
+                <Ranger defaultValue={props.data[0].length} min={1} max={5} step={1} onChange={updateColumn} />
                 </td></tr>
         </tbody>
     </table>
@@ -109,9 +109,9 @@ export const TableSettings = (props:{content:DataTable, onSetting:any })=>{
     type: 'table',
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData):ReactElement=>{
-        return <Table content={data as DataTable} />
+        return <Table data={data as DataTable} />
     },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <TableSettings content={data as DataTable} onSetting={onSetting} />
+        return <TableSettings data={data as DataTable} onSetting={onSetting} />
     }
  }

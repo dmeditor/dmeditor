@@ -4,12 +4,12 @@ import { BlockData} from '../Main';
 import { Ranger } from '../utils/Ranger';
 
 
-export const Paragraph = (props:{content:any})=>{
-   return <p>{props.content}</p>
+const Paragraph = (props:{data:any})=>{
+   return <p>{props.data}</p>
 }
 
 
-export const ParagraphSettings = (props:{content:any, onSetting:any})=>{
+const ParagraphSettings = (props:{data:any, onSetting:any})=>{
     return <div><table style={{width: '100%'}}>
         <tbody>
             <tr><td>Format</td><td>
@@ -39,9 +39,9 @@ export const ParagraphSettings = (props:{content:any, onSetting:any})=>{
     type: 'p',
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData):ReactElement=>{
-        return <Paragraph content={data} />
+        return <Paragraph data={data} />
     },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <ParagraphSettings content={data} onSetting={onSetting} />
+        return <ParagraphSettings data={data} onSetting={onSetting} />
     }
  }
