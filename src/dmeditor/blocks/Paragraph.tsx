@@ -41,6 +41,9 @@ const ParagraphSettings = (props:{data:any, onSetting:any})=>{
     renderMain: (data:BlockData):ReactElement=>{
         return <Paragraph data={data} />
     },
+    getDefaultData:():BlockData=>{
+        return 'Test';
+    },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
         return <ParagraphSettings data={data} onSetting={onSetting} />
     }

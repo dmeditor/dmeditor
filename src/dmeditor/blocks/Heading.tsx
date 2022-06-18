@@ -59,6 +59,9 @@ const HeadingSettings = (props:{data:DataHeading, onSetting:any})=>{
     renderMain: (data:BlockData):ReactElement=>{
         return <Heading data={data as DataHeading} />
     },
+    getDefaultData:():BlockData=>{
+        return {text:'Test', style:{level: 2}};
+    },    
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
         return <HeadingSettings data={data as DataHeading} onSetting={onSetting} />
     }

@@ -4,7 +4,8 @@ import { BlockData } from "./Main";
 interface BlockHandler {
     type:string;
     onDataChange: (ele:HTMLElement)=>any;    
-    renderMain: (data:BlockData)=>ReactElement;
+    getDefaultData: ()=>BlockData;    //when block type is selected
+    renderMain: (data:BlockData)=>ReactElement;    
     renderSetting: (data:BlockData, onSetting: any) => ReactElement
 }
 

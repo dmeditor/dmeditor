@@ -111,6 +111,9 @@ const TableSettings = (props:{data:DataTable, onSetting:any })=>{
     renderMain: (data:BlockData):ReactElement=>{
         return <Table data={data as DataTable} />
     },
+    getDefaultData:():BlockData=>{
+        return [['test table', 'test table1']];
+    },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
         return <TableSettings data={data as DataTable} onSetting={onSetting} />
     }

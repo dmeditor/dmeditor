@@ -5,6 +5,7 @@ import './Main.css';
 import { Property } from './Property';
 import './Init';
 import { MoreBlocks } from './MoreBlocks';
+import { blockManager } from './BlockManager';
 
 export interface DataTable extends Array<Array<string|number>>{};
 
@@ -37,34 +38,36 @@ export const Main = (props:any)=>{
     const [activeBlock, setActiveBlock] = useState(0);
     const [addMore, setAddMore] = useState(0);
     
-    const getDefaultData = (type: string) =>{
-        if(type == 'p'){
-            return 'Hello in paragraph'
-        }
-        if(type == 'table'){
-            return [['test table', 'test table1']]
-        }
-        if(type == 'full_image'){
-            let v:DataFullImage = {
-                src:'https://www.iucn.org/sites/dev/files/content/images/2020/shutterstock_1458128810.jpg',
-                style: {padding: 2, borderWidth: 0, background:''}
-            };
-            return v;
-        }
-        if(type == 'heading'){
-            let v:DataHeading = {
-                text: 'Text',
-                style: {level: 2}
-            };
-            return v;
-        }
+    // const getDefaultData = (type: string) =>{
+        
+    //     if(type == 'p'){
+    //         return 'Hello in paragraph'
+    //     }
+    //     if(type == 'table'){
+    //         return [['test table', 'test table1']]
+    //     }
+    //     if(type == 'full_image'){
+    //         let v:DataFullImage = {
+    //             src:'https://www.iucn.org/sites/dev/files/content/images/2020/shutterstock_1458128810.jpg',
+    //             style: {padding: 2, borderWidth: 0, background:''}
+    //         };
+    //         return v;
+    //     }
+    //     if(type == 'heading'){
+    //         let v:DataHeading = {
+    //             text: 'Text',
+    //             style: {level: 2}
+    //         };
+    //         return v;
+    //     }
 
-    }
+    // }
 
     const addAbove = (type: string)=>{
         if( type ){
             let allBlocks = [...blocks];
-            allBlocks.splice(activeBlock, 0, {type: type, content: getDefaultData(type) as string} );
+            const defaultData = blockManager.getBlockType(type).getDefaultData();
+            allBlocks.splice(activeBlock, 0, {type: type, content: defaultData} );
             setBlocks(allBlocks);
         }
         setAddMore(0);
@@ -73,7 +76,8 @@ export const Main = (props:any)=>{
 
     const addUnder = (type: string)=>{
         if( type ){
-            setBlocks([...blocks, {type: type, content: getDefaultData(type) as DataTable }]);
+            const defaultData = blockManager.getBlockType(type).getDefaultData();
+            setBlocks([...blocks, {type: type, content: defaultData }]);
             setActiveBlock(activeBlock+1);
         }
         setAddMore(0);

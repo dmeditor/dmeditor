@@ -8,7 +8,6 @@ const FullImage = (props:{data:DataFullImage})=>{
    return <div style={{borderColor:'#666666', borderStyle:'solid', ...props.data.style}}><img style={{width: '100%'}} src={props.data.src} /></div>
 }
 
-
 const FullImageSettings = (props:{data:DataFullImage, onSetting:any})=>{
 
     let style = props.data.style;
@@ -52,6 +51,12 @@ const FullImageSettings = (props:{data:DataFullImage, onSetting:any})=>{
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData):ReactElement=>{
         return <FullImage data={data as DataFullImage} />
+    },
+    getDefaultData:():BlockData=>{
+       return {
+        src:'https://www.iucn.org/sites/dev/files/content/images/2020/shutterstock_1458128810.jpg',
+        style: {padding: 2, borderWidth: 0, background:''}
+    }
     },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
         return <FullImageSettings data={data as DataFullImage} onSetting={onSetting} />
