@@ -51,7 +51,7 @@ const HeadingSettings = (props:{data:DataHeading, onSetting:any})=>{
     }
 
     return <div>
-        <label>Table</label>
+        <label>Heading</label>
         <hr />        
         <table style={{width: '100%'}}>
         <tbody>

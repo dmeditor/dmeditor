@@ -21,7 +21,9 @@ const Paragraph = (props:{data:any, isActive:boolean, onChange?:(data:any)=>void
 
 
 const ParagraphSettings = (props:{data:any, onSetting:any})=>{
-    return <div><table style={{width: '100%'}}>
+    return <div>
+        <label>Paragraph</label>
+        <table style={{width: '100%'}}>
         <tbody>
             <tr><td>Format</td><td>
                 <a href="#"><FormatBoldOutlined /></a>

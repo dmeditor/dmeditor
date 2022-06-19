@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React, { ReactElement, useState } from 'react';
 import { BlockData, DataFullImage } from '../Main';
 import { Input } from '../utils/Input';
@@ -19,13 +20,13 @@ const FullImageSettings = (props:{data:DataFullImage, onSetting:any})=>{
     }
 
     return <div>
-        <label>Table</label>
-        <hr />        
+        <label>Image</label>
         <table style={{width: '100%'}}>
         <tbody>
              <tr>
                 <td><label>Source</label></td><td>
                 <Input defaultValue={data.src} onChange={(e:any)=>{data.src=e;update()}} />
+                <Button><a href='#'>Browse</a></Button>
                 </td>
             </tr>
             <tr><td style={{width: '50px'}}>                

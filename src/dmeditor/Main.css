@@ -20,7 +20,7 @@
     width: 900px;
     margin:auto;
     background: white;
-    height: 100%;
+    min-height: 100vh;
 }
 
 .layout-main-container{
