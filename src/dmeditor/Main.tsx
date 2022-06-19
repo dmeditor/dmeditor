@@ -25,7 +25,17 @@ export interface DataHeading{
     }
 }
 
-export type BlockData = string|DataTable|DataFullImage|DataHeading;
+export interface BlockLayoutData{
+    padding: number,
+    marginTop?: number,
+    backgroundColor?:string
+}
+
+
+export interface BlockData{
+    layout:BlockLayoutData,
+    data: string|DataTable|DataFullImage|DataHeading,
+}
 
 export interface BlockInfo{
     type: string

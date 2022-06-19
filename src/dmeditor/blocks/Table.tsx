@@ -1,18 +1,19 @@
 import { ChangeEvent, ChangeEventHandler, ReactElement, useEffect, useState } from "react";
-import { BlockData, DataTable } from "../Main"
+import { BlockData, BlockLayoutData, DataTable } from "../Main"
+import { CommonSetting } from "../Property";
 import { Input } from "../utils/Input";
 import { Ranger } from "../utils/Ranger";
 import './Table.css';
 
 
-const Table = (props:{data:DataTable, isActive:boolean})=>{
-    const [content, SetContent] = useState(props.data);
+const Table = (props:{data:BlockData, isActive:boolean})=>{
+    const [content, SetContent] = useState(props.data.data as DataTable);
 
     useEffect(()=>{
-        SetContent(props.data);
+        SetContent(props.data.data as DataTable);
     })
 
-    return <table className="table" contentEditable={props.isActive}>
+    return <table style={{...props.data.layout}} className="table" contentEditable={props.isActive}>
         <tbody>
             {content.map((row)=><tr>{row.map((col)=><td>{col}</td>)}</tr> )}
             </tbody>
@@ -20,12 +21,13 @@ const Table = (props:{data:DataTable, isActive:boolean})=>{
  }
 
 
-const TableSettings = (props:{data:DataTable, onSetting:any })=>{
+const TableSettings = (props:{data:BlockData, onSetting:any })=>{
     const updateRow = (value:any) =>{
         let newRows = value;
-        let content = props.data;
+        let data = props.data;
+        let content = data.data as DataTable;
         let rows = content.length;
-        let columns = props.data[0].length;
+        let columns = content[0].length;
 
         if( newRows > rows ){
             for( let i=rows; i<newRows; i++ ){
@@ -40,12 +42,14 @@ const TableSettings = (props:{data:DataTable, onSetting:any })=>{
         if( newRows < rows ){            
             content = content.slice(0, newRows);            
         }
-        props.onSetting(content);
+        data.data = content
+        props.onSetting(data);
     }
 
     const updateColumn = (value:any) =>{
+        let data = props.data;
         let newColumns = value;
-        let content = props.data;
+        let content = data.data as DataTable;
     
         let newContent:DataTable = [];
         for( let row of content){
@@ -63,7 +67,14 @@ const TableSettings = (props:{data:DataTable, onSetting:any })=>{
             }            
         }
 
-        props.onSetting(newContent);
+        data.data = newContent
+        props.onSetting(data);
+    }
+
+    const changeCommon = (settings:BlockLayoutData)=>{
+        let data = props.data;
+        data.layout = settings;
+        props.onSetting(data);
     }
 
     return <div>
@@ -74,33 +85,17 @@ const TableSettings = (props:{data:DataTable, onSetting:any })=>{
             <tr><td style={{width: '50px'}}>
                 
                 <label>Rows</label></td><td>
-                <Ranger defaultValue={props.data.length} min={1} max={10} step={1} onChange={updateRow} />
+                <Ranger defaultValue={(props.data.data as DataTable).length} min={1} max={10} step={1} onChange={updateRow} />
                 </td></tr>
             <tr>
                 <td><label>Columns</label></td><td>
-                <Ranger defaultValue={props.data[0].length} min={1} max={5} step={1} onChange={updateColumn} />
+                <Ranger defaultValue={(props.data.data as DataTable)[0].length} min={1} max={5} step={1} onChange={updateColumn} />
                 </td></tr>
         </tbody>
     </table>
     </div>
     <br />
-    <br />
-    <div>
-        <label>Layout</label>
-        <table style={{width: '100%'}}>
-        <tbody>
-            <tr>
-            <td>Width(%)</td><td>
-            <Ranger defaultValue={100} min={10} max={100} step={10} onChange={()=>{}} />
-            </td></tr>
-            <tr>
-            <td>Height</td><td>
-            <Input />
-            </td></tr>
-        </tbody>
-    </table>     
-    </div>
-    
+    <CommonSetting settings={props.data.layout} onChange={changeCommon} />
     </div>
  }
 
@@ -109,12 +104,14 @@ const TableSettings = (props:{data:DataTable, onSetting:any })=>{
     type: 'table',
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData, isActive:boolean):ReactElement=>{
-        return <Table data={data as DataTable} isActive={isActive} />
+        return <Table data={data} isActive={isActive} />
     },
     getDefaultData:():BlockData=>{
-        return [['test table', 'test table1']];
+        return {
+            layout:{padding: 0},
+            data: [['test table', 'test table1']]};
     },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <TableSettings data={data as DataTable} onSetting={onSetting} />
+        return <TableSettings data={data} onSetting={onSetting} />
     }
  }

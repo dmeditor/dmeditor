@@ -1,26 +1,40 @@
 import { BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalic, FormatItalicOutlined } from '@mui/icons-material';
 import React, { ReactElement, useState } from 'react';
-import { BlockData} from '../Main';
+import { BlockData, BlockLayoutData} from '../Main';
+import { CommonSetting } from '../Property';
 import { Ranger } from '../utils/Ranger';
 import './Paragraph.css';
 
 
-const Paragraph = (props:{data:any, isActive:boolean, onChange?:(data:any)=>void})=>{
+const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)=>void})=>{
     //todo: filter render allowed tags
-
+    const [data, setData] = useState(props.data.data as string);
 
     const change = (e:any)=>{
         let text = e.target.innerHTML as string;
         if( props.onChange ){
-            props.onChange(text);
+            let newData = props.data;
+            newData.data = text;
+            props.onChange(newData);
         }
     }
 
-   return <p onBlur={change}  contentEditable={props.isActive} dangerouslySetInnerHTML={{__html:props.data}}></p>
+   if( !data ){
+        setData( '<p></p>' );
+   }
+
+   return <div style={{...props.data.layout}} contentEditable={props.isActive} onBlur={change} dangerouslySetInnerHTML={{__html:data}}>
+   </div>
 }
 
 
-const ParagraphSettings = (props:{data:any, onSetting:any})=>{
+const ParagraphSettings = (props:{data:BlockData, onSetting:any})=>{
+    const changeCommon = (settings:BlockLayoutData)=>{
+        let data = props.data;
+        data.layout = settings;
+        props.onSetting(data);
+    }
+
     return <div>
         <label>Paragraph</label>
         <table style={{width: '100%'}}>
@@ -43,7 +57,7 @@ const ParagraphSettings = (props:{data:any, onSetting:any})=>{
                 </td></tr>                     
         </tbody>
     </table>
-    
+    <CommonSetting  settings={props.data.layout}  onChange={changeCommon}/>
     </div>
  }
 
@@ -55,7 +69,9 @@ const ParagraphSettings = (props:{data:any, onSetting:any})=>{
         return <Paragraph data={data} isActive={isActive} onChange={onChange} />
     },
     getDefaultData:():BlockData=>{
-        return '';
+        return {
+            layout:{padding: 0},
+            data:''};
     },
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
         return <ParagraphSettings data={data} onSetting={onSetting} />

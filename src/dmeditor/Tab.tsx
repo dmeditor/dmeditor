@@ -2,13 +2,15 @@ import { LaptopMacOutlined, MobileScreenShareOutlined, PhoneIphoneOutlined, Tabl
 import { Box, Tabs, Tab } from '@mui/material';
 import { ReactElement, useState } from 'react';
 import './Tab.css';
+import { Input } from './utils/Input';
+import { Ranger } from './utils/Ranger';
 
 
 export const DMTab = (props:{content:ReactElement})=>{
     const [active, setActive] = useState(0);
 
     const tabs = [{text:'Block', 
-    content: props.content},
+                    content: <div>{props.content}</div>},
                     {text:'Page', content: <div>
                     <label>Page settings</label>
                     <div>

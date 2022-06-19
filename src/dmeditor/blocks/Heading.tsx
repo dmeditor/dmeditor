@@ -1,22 +1,24 @@
 import React, { ReactElement, useState } from 'react';
-import { BlockData, DataFullImage, DataHeading } from '../Main';
+import { BlockData, BlockLayoutData, DataFullImage, DataHeading } from '../Main';
+import { CommonSetting } from '../Property';
 import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 
 
-const Heading = (props:{data:DataHeading, isActive:boolean, onChange?:any})=>{
-    const content = props.data;
+const Heading = (props:{data:BlockData, isActive:boolean, onChange?:any})=>{
+    const content = props.data.data as DataHeading;
 
     const change = (e:any)=>{
         const text = e.target.innerText;
         if(props.onChange){
-            let data = props.data;
-            data.text = text;
-            props.onChange(data);
+            content.text = text;
+            let newData = props.data;
+            newData.data = content;
+            props.onChange(newData);
         }
     }
 
-    const common = {onBlur:change, contentEditable: props.isActive}
+    const common = {onBlur:change, contentEditable: props.isActive, style:{...props.data.layout}}
 
     switch(content.style.level){
         case 1:
@@ -40,19 +42,26 @@ const Heading = (props:{data:DataHeading, isActive:boolean, onChange?:any})=>{
 }
 
 
-const HeadingSettings = (props:{data:DataHeading, onSetting:any})=>{
+const HeadingSettings = (props:{data:BlockData, onSetting:any})=>{
 
-    let style = props.data.style;
+    let style = (props.data.data as DataHeading).style;
 
     const update = ()=>{
-        let content = props.data;
+        let content = props.data.data as DataHeading;
         content.style = {...content.style, ...style};
-        props.onSetting(content);
+        let newData = props.data;
+        newData.data = content;
+        props.onSetting(newData);
+    }
+
+    const changeCommon = (settings:BlockLayoutData)=>{
+        let data = props.data;
+        data.layout = settings;
+        props.onSetting(data);
     }
 
     return <div>
         <label>Heading</label>
-        <hr />        
         <table style={{width: '100%'}}>
         <tbody>
             <tr><td style={{width: '50px'}}>                
@@ -61,6 +70,7 @@ const HeadingSettings = (props:{data:DataHeading, onSetting:any})=>{
                 </td></tr>                       
         </tbody>
     </table>
+    <CommonSetting  settings={props.data.layout}  onChange={changeCommon}/>
     </div>
  }
 
@@ -69,12 +79,15 @@ const HeadingSettings = (props:{data:DataHeading, onSetting:any})=>{
     type: 'heading',
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData, isActive:boolean, onChange?:any):ReactElement=>{
-        return <Heading data={data as DataHeading} isActive={isActive} onChange={onChange} />
+        return <Heading data={data} isActive={isActive} onChange={onChange} />
     },
     getDefaultData:():BlockData=>{
-        return {text:'Test', style:{level: 2}};
+        return {
+            layout:{padding: 0},
+            data: {text:'Test', style:{level: 2}}
+        };
     },    
     renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <HeadingSettings data={data as DataHeading} onSetting={onSetting} />
+        return <HeadingSettings data={data} onSetting={onSetting} />
     }
  }

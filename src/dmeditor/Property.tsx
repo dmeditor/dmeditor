@@ -1,8 +1,11 @@
 import { DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { useState } from "react";
 import { blockManager } from "./BlockManager";
-import { BlockInfo } from "./Main"
+import { BlockInfo, BlockLayoutData } from "./Main"
 import { DMTab } from "./Tab"
+import { Input } from "./utils/Input";
+import { Ranger } from "./utils/Ranger";
 
 export const Property = (props:{current: BlockInfo, onSeting: any, onDelete:any})=>{
 
@@ -28,4 +31,30 @@ export const Property = (props:{current: BlockInfo, onSeting: any, onDelete:any}
     return <div>
         <DMTab content={content} />
     </div>
+}
+
+export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>{
+    const [open, setOpen] = useState(false);
+
+    const change = (settings:BlockLayoutData)=>{
+        if( props.onChange ){
+            props.onChange(settings);   
+        }
+    }
+
+    return <div>
+            <a onClick={()=>setOpen(!open)}>Layout</a>
+            <br /><br />
+            {open&&<table style={{width: '100%'}}>
+                <tr><td><label>Background color:</label></td>
+                <td><Input defaultValue={props.settings.backgroundColor} onChange={(v:string)=>change({...props.settings, backgroundColor: v})} /></td>
+                </tr>  
+                <tr><td width={'30%'}><label>Padding:</label></td>
+                <td><Ranger min={0} max={20} step={1} onChange={(v:number)=>change({...props.settings, padding: v})} defaultValue={props.settings.padding} /></td>
+                </tr>
+                <tr><td><label>Margin top:</label></td>
+                <td><Ranger min={0} max={50} onChange={(v:number)=>change({...props.settings, marginTop: v})} step={1} defaultValue={props.settings.marginTop?props.settings.marginTop:0} /></td>
+                </tr>    
+            </table>}    
+            </div>
 }
