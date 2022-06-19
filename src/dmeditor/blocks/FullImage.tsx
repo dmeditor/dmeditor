@@ -4,18 +4,18 @@ import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 
 
-const FullImage = (props:{data:DataFullImage, isActive:boolean})=>{
+const FullImage = (props:{data:DataFullImage, isActive:boolean})=>{    
    return <div style={{borderColor:'#666666', borderStyle:'solid', ...props.data.style}}><img style={{width: '100%'}} src={props.data.src} /></div>
 }
 
 const FullImageSettings = (props:{data:DataFullImage, onSetting:any})=>{
+    const [data, setData] = useState(props.data);
 
     let style = props.data.style;
 
     const update = ()=>{
-        let content = props.data;
-        content.style = {...content.style, ...style};
-        props.onSetting(content);
+        data.style = {...data.style, ...style};        
+        props.onSetting(data);
     }
 
     return <div>
@@ -23,6 +23,11 @@ const FullImageSettings = (props:{data:DataFullImage, onSetting:any})=>{
         <hr />        
         <table style={{width: '100%'}}>
         <tbody>
+             <tr>
+                <td><label>Source</label></td><td>
+                <Input defaultValue={data.src} onChange={(e:any)=>{data.src=e;update()}} />
+                </td>
+            </tr>
             <tr><td style={{width: '50px'}}>                
                 <label>Padding</label></td><td>
                 <Ranger defaultValue={style.padding} min={0} max={20} step={1} onChange={(v:number)=>{style.padding=v;update()}} />

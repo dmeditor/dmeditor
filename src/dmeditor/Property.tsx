@@ -2,7 +2,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { blockManager } from "./BlockManager";
 import { BlockInfo } from "./Main"
-import { Tab } from "./Tab"
+import { DMTab } from "./Tab"
 
 export const Property = (props:{current: BlockInfo, onSeting: any, onDelete:any})=>{
 
@@ -26,6 +26,6 @@ export const Property = (props:{current: BlockInfo, onSeting: any, onDelete:any}
 
 
     return <div>
-        <Tab content={content} />
+        <DMTab content={content} />
     </div>
 }

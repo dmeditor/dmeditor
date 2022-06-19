@@ -103,10 +103,12 @@ export const Main = (props:any)=>{
     }
 
     return (<div className='dmeditor-layout'>
-        <div className='layout-main'>   
+        <div className='layout-main-container'>  
+         <div className='layout-main'>
             {blocks.map((block, index)=>
                 <Block key={index} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
-            )}         
+            )}  
+         </div>                    
         </div>
         <div className='layout-properties'>  
             {(addMore!=0||activeBlock==-1)&&<MoreBlocks onSelect={confirmAddMore} />}

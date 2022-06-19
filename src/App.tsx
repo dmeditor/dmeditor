@@ -10,6 +10,13 @@ function App() {
   const outerTheme= createTheme({
     palette:{
       primary:grey,
+    },
+    components:{
+      MuiButtonBase:{
+        defaultProps:{
+          disableRipple:true,        
+        }
+      }
     }
   });
 

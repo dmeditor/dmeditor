@@ -4,24 +4,28 @@
     display: grid;
     grid-template-columns: auto 300px;
     color: #333333;
+    margin: auto;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    box-shadow: 0px 0px 3px #cccccc;
 }
 
 .layout-properties{
-    border: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 .layout-main{
-    background: white;
     width: 900px;
-    margin:10px auto;
-    overflow-y: scroll;
+    margin:auto;
+    background: white;
 }
 
-/* .layout-main > div:first-child{
-    margin-top: 50px;
-} */
+.layout-main-container{
+    height: 100%; 
+    overflow-y: scroll;
+}
 
 [contenteditable='true'] {
     outline: 0px solid transparent;
@@ -29,7 +33,7 @@
  
 .block-active{
     outline: 1px solid #1ed45d;
-    box-shadow: 0px 0px 3px #12913e;
+    box-shadow: 0px 0px 4px #12913e;
 }
 
 a{

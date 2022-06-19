@@ -2,6 +2,7 @@ import { BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlin
 import React, { ReactElement, useState } from 'react';
 import { BlockData} from '../Main';
 import { Ranger } from '../utils/Ranger';
+import './Paragraph.css';
 
 
 const Paragraph = (props:{data:any, isActive:boolean, onChange?:(data:any)=>void})=>{

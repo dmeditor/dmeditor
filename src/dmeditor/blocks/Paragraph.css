@@ -1,0 +1,4 @@
+p[contentEditable='true']:empty::before{
+    content: 'Please input';
+    color: #999999;
+}
