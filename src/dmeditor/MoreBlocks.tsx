@@ -1,4 +1,4 @@
-import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CollectionsOutlined, FacebookOutlined, FormatQuote, FormatQuoteOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined } from '@mui/icons-material';
+import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CollectionsOutlined, FacebookOutlined, FormatQuote, FormatQuoteOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, NetworkCellOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined, WidgetsOutlined } from '@mui/icons-material';
 import { ImageList, Input } from '@mui/material';
 import { useState } from 'react';
 import './MoreBlocks.css';

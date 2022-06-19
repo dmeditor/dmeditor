@@ -13,11 +13,11 @@ const Table = (props:{data:BlockData, isActive:boolean})=>{
         SetContent(props.data.data as DataTable);
     })
 
-    return <table style={{...props.data.layout}} className="table" contentEditable={props.isActive}>
+    return <div style={{...props.data.layout}}><table className="table" contentEditable={props.isActive}>
         <tbody>
             {content.map((row)=><tr>{row.map((col)=><td>{col}</td>)}</tr> )}
             </tbody>
-        </table>
+        </table></div>
  }
 
 
@@ -91,6 +91,10 @@ const TableSettings = (props:{data:BlockData, onSetting:any })=>{
                 <td><label>Columns</label></td><td>
                 <Ranger defaultValue={(props.data.data as DataTable)[0].length} min={1} max={5} step={1} onChange={updateColumn} />
                 </td></tr>
+            <tr>
+            <td><label>Cell padding</label></td><td>
+            <Ranger defaultValue={(props.data.data as DataTable)[0].length} min={1} max={5} step={1} onChange={updateColumn} />
+            </td></tr>
         </tbody>
     </table>
     </div>
