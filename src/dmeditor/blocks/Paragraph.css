@@ -2,3 +2,9 @@ p[contentEditable='true']:empty::before{
     content: 'Please input';
     color: #999999;
 }
+
+
+p{
+    margin:0px;
+    padding: 16px 0px;
+}

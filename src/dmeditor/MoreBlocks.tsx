@@ -1,4 +1,4 @@
-import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CollectionsOutlined, FacebookOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined } from '@mui/icons-material';
+import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CollectionsOutlined, FacebookOutlined, FormatQuote, FormatQuoteOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined } from '@mui/icons-material';
 import { ImageList, Input } from '@mui/material';
 import { useState } from 'react';
 import './MoreBlocks.css';
@@ -11,6 +11,7 @@ export const MoreBlocks = (props:{onSelect:any})=>{
         {text:"Paragraph", type:'p', icon: <TextSnippetOutlined style={{fontSize: '28px'}} /> },        
         {text:"Full image", type:'full_image', icon: <ImageOutlined style={{fontSize: '28px'}} /> },
         {text:"Content blocks", type:'content_block', icon: <GridViewOutlined style={{fontSize: '28px'}} /> },    
+        {text:"Quote", type:'quote', icon: <FormatQuoteOutlined style={{fontSize: '28px'}} /> },
         {text:"Carousel", type:'carousel', icon: <CollectionsOutlined style={{fontSize: '28px'}} /> },
         {text:"Calendar events", type:'calendar', icon: <CalendarMonth style={{fontSize: '28px'}} /> },    
         {text:"Last course", type:'last_course', icon: <AccountBalanceOutlined style={{fontSize: '28px'}} /> },    
