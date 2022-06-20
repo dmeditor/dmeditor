@@ -34,7 +34,7 @@ export const Property = (props:{current: BlockInfo, onSeting: any, onDelete:any}
 }
 
 export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>{
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     const change = (settings:BlockLayoutData)=>{
         if( props.onChange ){
@@ -42,10 +42,12 @@ export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>
         }
     }
 
-    return <div>
-            <a onClick={()=>setOpen(!open)}>Layout</a>
-            <br /><br />
-            {open&&<table style={{width: '100%'}}>
+    return <div style={{marginTop:'20px', marginBottom:'20px'}}>
+            <div>
+            <a onClick={()=>setOpen(!open)} style={{fontSize:'1rem'}}>Layout</a>
+            </div>
+            {open&&<>                      
+            <table style={{width: '100%', margin:'5px'}}>
                 <tr><td><label>Background color:</label></td>
                 <td><Input defaultValue={props.settings.backgroundColor} onChange={(v:string)=>change({...props.settings, backgroundColor: v})} /></td>
                 </tr>  
@@ -55,6 +57,6 @@ export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>
                 <tr><td><label>Margin top:</label></td>
                 <td><Ranger min={0} max={50} onChange={(v:number)=>change({...props.settings, marginTop: v})} step={1} defaultValue={props.settings.marginTop?props.settings.marginTop:0} /></td>
                 </tr>    
-            </table>}    
+            </table></>}    
             </div>
 }
