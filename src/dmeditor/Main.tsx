@@ -74,6 +74,7 @@ export const Main = (props:any)=>{
         if( index !== activeBlock ){
             setActiveBlock(index);            
         }
+        setAddMore(0);
     }
 
     const setting = (content:any)=>{
@@ -116,7 +117,7 @@ export const Main = (props:any)=>{
         <div className='layout-main-container'>  
          <div className='layout-main'>
             {blocks.map((block, index)=>
-                <Block key={index} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
+                <Block key={index+block.type} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
             )}  
          </div>                    
         </div>
