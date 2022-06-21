@@ -8,3 +8,8 @@ p[contentEditable='true']:empty::before{
     margin:0px;
     padding: 16px 0px;
 } */
+
+
+a{
+    cursor: pointer;
+}

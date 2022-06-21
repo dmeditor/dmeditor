@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { BlockData } from "./Main";
 
-interface BlockHandler {
+export interface BlockHandler {
     type:string;
     onDataChange: (ele:HTMLElement)=>any;    
     getDefaultData: ()=>BlockData;    //when block type is selected
