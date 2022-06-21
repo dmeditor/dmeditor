@@ -5,10 +5,9 @@ import './MoreBlocks.css';
 
 export const MoreBlocks = (props:{onSelect:any})=>{
     const blockTypes = [
-        {text:"Table", type:'table', icon: <GridOn style={{fontSize: '28px'}} /> }, 
-        {text:"Heading", type:'heading', icon: <TitleOutlined style={{fontSize: '28px'}} /> },         
-        {text:"Rich text", type:'richtext', icon: <HtmlOutlined style={{fontSize: '28px'}} /> },
+        {text:"Heading", type:'heading', icon: <TitleOutlined style={{fontSize: '28px'}} /> },
         {text:"Paragraph", type:'p', icon: <TextSnippetOutlined style={{fontSize: '28px'}} /> },
+        {text:"Table", type:'table', icon: <GridOn style={{fontSize: '28px'}} /> }, 
         {text:"Text Media", type:'text_media', icon: <PermMediaOutlined style={{fontSize: '28px'}} /> },
         {text:"Full image", type:'full_image', icon: <ImageOutlined style={{fontSize: '28px'}} /> },
         {text:"Content blocks", type:'content_block', icon: <GridViewOutlined style={{fontSize: '28px'}} /> },    
