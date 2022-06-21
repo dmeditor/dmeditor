@@ -20,6 +20,13 @@
 }
 
 .block{
+    clear: both;
+}
+
+.block-active::after{
+    content: '';
+    clear: both;
+    display: block;
 }
 
 

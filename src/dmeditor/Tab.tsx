@@ -6,7 +6,7 @@ import { Input } from './utils/Input';
 import { Ranger } from './utils/Ranger';
 
 
-export const DMTab = (props:{content:ReactElement})=>{
+export const DMTab = (props:{params:any,content:ReactElement})=>{
     const [active, setActive] = useState(0);
 
     const tabs = [{text:'Block', 
@@ -28,6 +28,7 @@ export const DMTab = (props:{content:ReactElement})=>{
     return (<div style={{height:'100vh', background:'#fcfcfc'}}>
         <div className='tab-header-container'>  
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <a href="http://digimaker.com"><img style={{float: 'right', padding: '5px 10px'}} src="/logo.png" height={30} /></a>
             <Tabs onChange={(e:any, newValue:number)=>setActive(newValue)}>
                 {tabs.map((tab, index)=><Tab style={{textTransform:'none'}} className={index===active?'active':''} value={index} label={tab.text} />)}
             </Tabs>    

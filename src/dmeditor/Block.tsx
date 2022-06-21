@@ -4,7 +4,7 @@ import { blockManager } from './BlockManager';
 import {  BlockInfo } from './Main';
 import { AddBoxOutlined, TextSnippetOutlined } from '@mui/icons-material';
 
-export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:any, onDelete:any, addUnder:any, active:boolean, data: BlockInfo})=>{
+export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:any, onDelete:any, addUnder:any, active:boolean, onUpdateProperty:any, data: BlockInfo})=>{
     const [isActive, setIsActive] = useState(props.active);
     const [data, setData] = useState(props.data);
     
@@ -17,10 +17,12 @@ export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:a
 
     const content = data.content;
 
+
+
     const renderContent = (type: string):ReactElement=>{        
         const handler = blockManager.getBlockType(type);
         if( handler ){
-            return handler.renderMain(content, isActive, onChange);
+            return handler.renderMain(content, isActive, onChange, props.onUpdateProperty);
         }else{
             return <div>Unknown block type.</div>
         }

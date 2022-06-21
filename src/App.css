@@ -19,7 +19,10 @@ body{
 }
 
 .App-header {
-
+  width: 100px;
+  position: fixed;
+  padding: 10px;
+  left:0px;
 }
 
 .App-link {

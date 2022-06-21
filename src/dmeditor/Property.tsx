@@ -7,14 +7,14 @@ import { DMTab } from "./Tab"
 import { Input } from "./utils/Input";
 import { Ranger } from "./utils/Ranger";
 
-export const Property = (props:{current: BlockInfo, onSeting: any, onDelete:any})=>{
+export const Property = (props:{current: BlockInfo, params:any, onSeting: any, onDelete:any})=>{
 
     const current = props.current;
 
     const renderProperty = ()=>{
         const handler = blockManager.getBlockType(current.type);
         if( handler ){
-            return handler.renderSetting(current.content, props.onSeting);
+            return handler.renderSetting(current.content, props.onSeting, props.params);
         }else{
             return <div>Unknown type {current.type}</div>;
         }
@@ -29,7 +29,7 @@ export const Property = (props:{current: BlockInfo, onSeting: any, onDelete:any}
 
 
     return <div>
-        <DMTab content={content} />
+        <DMTab params={props.params} content={content} />
     </div>
 }
 
@@ -52,7 +52,7 @@ export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>
                 <td><Input defaultValue={props.settings.backgroundColor} onChange={(v:string)=>change({...props.settings, backgroundColor: v})} /></td>
                 </tr>  
                 <tr><td width={'30%'}><label>Padding:</label></td>
-                <td><Ranger min={0} max={20} step={1} onChange={(v:number)=>change({...props.settings, padding: v})} defaultValue={props.settings.padding} /></td>
+                <td><Ranger min={0} max={20} step={1} onChange={(v:number)=>change({...props.settings, padding: v})} defaultValue={props.settings.padding?props.settings.padding:0} /></td>
                 </tr>
                 <tr><td><label>Margin top:</label></td>
                 <td><Ranger min={0} max={50} onChange={(v:number)=>change({...props.settings, marginTop: v})} step={1} defaultValue={props.settings.marginTop?props.settings.marginTop:0} /></td>

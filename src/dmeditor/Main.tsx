@@ -6,6 +6,7 @@ import { Property } from './Property';
 import './Init';
 import { MoreBlocks } from './MoreBlocks';
 import { blockManager } from './BlockManager';
+import { json } from 'stream/consumers';
 
 export interface DataTable extends Array<Array<string|number>>{};
 
@@ -25,8 +26,21 @@ export interface DataHeading{
     }
 }
 
+export interface DataTextMedia {
+    text:string,
+    media:{
+        type: string,
+        src: string,
+        border?: number,
+        width?: number,
+        height?: number,
+        align?:'left'|'right'
+        //todo: define more
+    }
+}
+
 export interface BlockLayoutData{
-    padding: number,
+    padding?: number,
     marginTop?: number,
     backgroundColor?:string
 }
@@ -34,7 +48,7 @@ export interface BlockLayoutData{
 
 export interface BlockData{
     layout:BlockLayoutData,
-    data: string|DataTable|DataFullImage|DataHeading,
+    data: string|DataTable|DataFullImage|DataHeading|DataTextMedia,
 }
 
 export interface BlockInfo{
@@ -43,10 +57,11 @@ export interface BlockInfo{
 }
 
 
-export const Main = (props:any)=>{
-    const [blocks, setBlocks] = useState([] as Array<BlockInfo>);
+export const Main = (props:{data:Array<BlockInfo>})=>{
+    const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
+    const [propertyParams, setPropertyParams] = useState([]);
 
     const addAbove = (type: string)=>{
         if( type ){
@@ -113,17 +128,22 @@ export const Main = (props:any)=>{
         }
     }
 
+    const updatePropertyParams = (params:any)=>{
+        setPropertyParams(params)
+    }
+
     return (<div className='dmeditor-layout'>
         <div className='layout-main-container'>  
          <div className='layout-main'>
+            <div style={{width: '100%', height: 1}}></div>
             {blocks.map((block, index)=>
-                <Block key={index+block.type} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
+                <Block key={index+block.type} onUpdateProperty={updatePropertyParams} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
             )}  
          </div>                    
         </div>
         <div className='layout-properties'>  
             {(addMore!=0||activeBlock==-1)&&<MoreBlocks onSelect={confirmAddMore} />}
-            {(addMore==0&&activeBlock>=0)&&<Property current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
+            {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
         </div>
     </div>);
 }

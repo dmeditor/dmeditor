@@ -5,8 +5,8 @@ interface BlockHandler {
     type:string;
     onDataChange: (ele:HTMLElement)=>any;    
     getDefaultData: ()=>BlockData;    //when block type is selected
-    renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void)=>ReactElement;    
-    renderSetting: (data:BlockData, onSetting: any) => ReactElement
+    renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onSubSelect?:(data:any)=>void)=>ReactElement, onUpdateProperty?:any;    
+    renderSetting: (data:BlockData, onSetting: any, params?:any) => ReactElement
 }
 
 var blockHandlers:{[key:string]: BlockHandler;} ={};
