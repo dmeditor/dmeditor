@@ -142,6 +142,7 @@ export const Main = (props:{data:Array<BlockInfo>})=>{
          </div>                    
         </div>
         <div className='layout-properties'>  
+            <a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img style={{float: 'right', padding: '5px 10px'}} src="/logo.png" height={30} /></a>
             {(addMore!=0||activeBlock==-1)&&<MoreBlocks onSelect={confirmAddMore} />}
             {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
         </div>

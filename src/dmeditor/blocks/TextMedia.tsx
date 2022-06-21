@@ -36,7 +36,7 @@ const TextMedia = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)
    }
 
    return <div onClick={selectNone}>
-   <img onClick={selectImage} style={{width: '400px', float:(data.media.align?data.media.align:'right'), margin:5, outline:(selectedEle?'1px solid green':''), borderColor:'#cccccc', borderStyle:'solid', borderWidth:data.media.border }} src={data.media.src} />
+   <img onClick={selectImage} style={{width: '400px', float:(data.media.align?data.media.align:'right'), margin:5, outline:(selectedEle?'1px solid green':''), borderColor:'#999999', borderStyle:'solid', borderWidth:data.media.border }} src={data.media.src} />
    <div style={{...props.data.layout}} contentEditable={props.isActive} onBlur={change} dangerouslySetInnerHTML={{__html:data.text}}>
    </div></div>
 }
