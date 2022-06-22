@@ -6,6 +6,7 @@ import { BlockInfo, BlockLayoutData } from "./Main"
 import { DMTab } from "./Tab"
 import { Input } from "./utils/Input";
 import { Ranger } from "./utils/Ranger";
+import { SketchPicker } from 'react-color';
 
 export const Property = (props:{current: BlockInfo, params:any, onSeting: any, onDelete:any})=>{
 
@@ -42,6 +43,8 @@ export const Property = (props:{current: BlockInfo, params:any, onSeting: any, o
 
 export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>{
     const [open, setOpen] = useState(true);
+    const [showColorPicker, setShowColorPicker] = useState(false);
+    
 
     const change = (settings:BlockLayoutData)=>{
         if( props.onChange ){
@@ -55,8 +58,18 @@ export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>
             </div>
             {open&&<>                      
             <table style={{width: '100%', margin:'5px'}}>
-                <tr><td><label>Background color:</label></td>
-                <td><Input defaultValue={props.settings.backgroundColor} onChange={(v:string)=>change({...props.settings, backgroundColor: v})} /></td>
+                <tr><td colSpan={2}>
+                    <table>
+                        <tr><td>
+                        <label>Background color:</label>
+                        </td>
+                        <td>
+                        <span onClick={(e)=>{e.stopPropagation();setShowColorPicker(!showColorPicker)}} style={{display:'inline-block', border: '1px solid #cccccc', cursor: 'pointer', width:'30px', height: '30px', borderRadius: 20, background:props.settings.backgroundColor }}></span>
+                    {showColorPicker&&<div style={{position:'absolute', right: 0, zIndex:100}}><SketchPicker presetColors={["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548", "#607d8b"]} color={props.settings.backgroundColor} onChange={(color)=>change({...props.settings, backgroundColor: color.hex})} /></div>}
+                        </td>
+                        </tr>
+                    </table>
+                </td>
                 </tr>  
                 <tr><td width={'30%'}><label>Padding:</label></td>
                 <td><Ranger min={0} max={20} step={1} onChange={(v:number)=>change({...props.settings, padding: v})} defaultValue={props.settings.padding?props.settings.padding:0} /></td>
