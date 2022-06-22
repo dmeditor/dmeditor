@@ -1,4 +1,4 @@
-import { BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalic, FormatItalicOutlined } from '@mui/icons-material';
+import { AudioFileOutlined, BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalic, FormatItalicOutlined, FormatListBulletedOutlined, ImageOutlined, InsertChartOutlined, LinkOutlined, RectangleOutlined, SmartButtonOutlined, VideoFileOutlined } from '@mui/icons-material';
 import React, { ReactElement, useState } from 'react';
 import { BlockData, BlockLayoutData} from '../Main';
 import { CommonSetting } from '../Property';
@@ -9,6 +9,7 @@ import './Paragraph.css';
 import { BlockHandler } from '../BlockManager';
 import { Input } from '../utils/Input';
 import { DMTab } from '../Tab';
+import { ListItemIcon, MenuItem, Select } from '@mui/material';
 
 
 interface ParamsLink {
@@ -72,7 +73,7 @@ const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsL
         document.getElementById('dmeditor-active-element')?.setAttribute('href', v);
     }
 
-    return <DMTab
+    return <div><DMTab
     tabs={[ ...(props.params?[{
         text: 'Element', 
         content:
@@ -109,6 +110,16 @@ const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsL
     },
 
 ]} />
+{(!props.params)&&<div style={{padding: 10}}><Select size='small' fullWidth defaultValue="0" style={{border:'none'}} >
+    <MenuItem value="0">Add element</MenuItem>
+    <MenuItem value="link"><LinkOutlined style={{verticalAlign: 'middle'}} /> &nbsp;Link</MenuItem>
+    <MenuItem value="image"><ImageOutlined style={{verticalAlign: 'middle'}} /> &nbsp;Image</MenuItem>
+    <MenuItem value="video"><VideoFileOutlined />&nbsp;Video</MenuItem>
+    <MenuItem value="audio"><AudioFileOutlined />&nbsp;Audio</MenuItem>
+    <MenuItem value="button"><RectangleOutlined />&nbsp;Button</MenuItem>        
+    <MenuItem value="list"><FormatListBulletedOutlined />&nbsp;List</MenuItem>    
+    </Select></div>}
+</div>
         
  }
 
