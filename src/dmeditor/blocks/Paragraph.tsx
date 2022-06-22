@@ -8,11 +8,13 @@ import { Element } from 'domhandler/lib/node';
 import './Paragraph.css';
 import { BlockHandler } from '../BlockManager';
 import { Input } from '../utils/Input';
+import { DMTab } from '../Tab';
 
 
 interface ParamsLink {
     type: string,
-    href: string
+    href: string,
+    element: HTMLElement
 }
 
 const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onSubSelect?:(params?:ParamsLink)=>void})=>{
@@ -36,8 +38,9 @@ const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)
         e.preventDefault();
         // e.stopproPagation();
         if( props.onSubSelect ){
-            props.onSubSelect({type:'a', href:href});
+            props.onSubSelect({type:'a', href:href, element: e.target});
         }
+        e.target.setAttribute('id', 'dmeditor-active-element');
    }
 
    const selectNone = ()=>{
@@ -65,17 +68,29 @@ const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsL
         props.onSetting(data);
     }
 
-    return <div>
+    const change = (v:string)=>{
+        document.getElementById('dmeditor-active-element')?.setAttribute('href', v);
+    }
 
-        {props.params&&props.params.type=='a'&&<div> 
-            <div>Link setings:</div>
-            <div style={{background: '#eeeeee', padding: 10}}>
+    return <DMTab
+    tabs={[ ...(props.params?[{
+        text: 'Element', 
+        content:
+        <div>{props.params&&props.params.type=='a'&&<div> 
             <div>
-                    Link: <Input onChange={()=>{}} defaultValue={props.params.href} />
+                <label>Link setings</label><br /><br /></div>
+            <div>
+            <div>
+              Link: <Input onChange={change} defaultValue={props.params.href} />
             </div>
             </div>
-            </div>}
-        <label>Paragraph</label>
+            </div>}       
+    </div>    
+    }]:[]),
+    {
+        text: 'Block', 
+        content: <div>
+             <label>Paragraph</label>
         <table style={{width: '100%'}}>
         <tbody>
             <tr><td>Format</td><td>
@@ -88,21 +103,19 @@ const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsL
                 <a href="#"><FormatAlignRight /></a>
             </td></tr>            
         </tbody>
-    </table>
-    <table style={{width: '100%'}}>
-        <tbody>
-            <tr><td width={80}>Columns</td><td>
-                <Ranger min={1} defaultValue={1} step={1} max={4} onChange={()=>{}} />
-                </td></tr>                     
-        </tbody>
-    </table>
-    <CommonSetting  settings={props.data.layout}  onChange={changeCommon}/>
-    </div>
+    </table>   
+            <CommonSetting  settings={props.data.layout}  onChange={changeCommon}/>
+        </div>
+    },
+
+]} />
+        
  }
 
 
  export const ParagraphHandler:BlockHandler = {
     type: 'p',
+    canSelectElement: true,
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onSubSelect?:any):ReactElement=>{
         return <Paragraph data={data} isActive={isActive} onChange={onChange} onSubSelect={onSubSelect} />

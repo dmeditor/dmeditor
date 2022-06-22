@@ -7,6 +7,7 @@ import './Init';
 import { MoreBlocks } from './MoreBlocks';
 import { blockManager } from './BlockManager';
 import { json } from 'stream/consumers';
+import { HelpCenterOutlined, HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 
 export interface DataTable extends Array<Array<string|number>>{};
 
@@ -61,7 +62,8 @@ export const Main = (props:{data:Array<BlockInfo>})=>{
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
-    const [propertyParams, setPropertyParams] = useState([]);
+    const [propertyParams, setPropertyParams] = useState('');
+    const [viewmode, setViewmode] = useState('pc');
 
     const addAbove = (type: string)=>{
         if( type ){
@@ -133,8 +135,20 @@ export const Main = (props:{data:Array<BlockInfo>})=>{
     }
 
     return (<div className='dmeditor-layout'>
-        <div className='layout-main-container'>  
-         <div className='layout-main'>
+        <div className='layout-left'>
+            <a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>
+            
+            <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
+            <div className='left-tool'>
+                <a href="https://github.com/digimakergo/dmeditor" title='help' target="_blank"><HelpOutlined /></a>
+                <hr />
+                <a href='javascript:void(0)' className={viewmode=='pc'?'current':''} onClick={()=>setViewmode('pc')} title='PC'><LaptopMacOutlined /></a>
+                <a href='javascript:void(0)' className={viewmode=='mobile'?'current':''}  onClick={()=>setViewmode('mobile')} title='Mobile'> <PhoneIphoneOutlined /></a>
+                <a href='javascript:void(0)' className={viewmode=='tablet'?'current':''}  onClick={()=>setViewmode('tablet')} title='Tablet'><TabletMacOutlined /></a>
+                </div></div>
+        </div>  
+        <div className='layout-main-container'>               
+         <div className={'layout-main '+' viewmode-'+viewmode}>
             <div style={{width: '100%', height: 1}}></div>
             {blocks.map((block, index)=>
                 <Block key={index+block.type} onUpdateProperty={updatePropertyParams} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
@@ -142,7 +156,6 @@ export const Main = (props:{data:Array<BlockInfo>})=>{
          </div>                    
         </div>
         <div className='layout-properties'>  
-            <a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img style={{float: 'right', padding: '5px 10px'}} src="/logo.png" height={30} /></a>
             {(addMore!=0||activeBlock==-1)&&<MoreBlocks onSelect={confirmAddMore} />}
             {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
         </div>

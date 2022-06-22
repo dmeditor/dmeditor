@@ -2,7 +2,7 @@
     height: 100vh;
     background-color: #f0f0f0;
     display: grid;
-    grid-template-columns: auto 300px;
+    grid-template-columns: 40px auto 300px;
     color: #333333;
     margin: auto;
     border-left: 1px solid #cccccc;
@@ -14,13 +14,42 @@
     border-left: 1px solid #dddddd;
     overflow-y: scroll;
     overflow-x: hidden;
+    background: #fcfcfc
+}
+
+.layout-left{
+    background-color: white;
+    text-align: center;
+    border-right: 1px solid #cccccc;
+    position: relative;
 }
 
 .layout-main{
-    width: 900px;
     margin:auto;
     background: white;
     min-height: 100vh;
+}
+
+.layout-main.viewmode-pc{
+    width: 900px;
+}
+
+.layout-main.viewmode-tablet{
+    width: 768px;
+}
+
+.layout-main.viewmode-mobile{
+    width: 375px;
+}
+
+.left-tool a{
+    color: #666666;
+    display: inline-block;
+    padding: 5px 0px;
+}
+
+.left-tool a.current{
+    color: green
 }
 
 .layout-main-container{

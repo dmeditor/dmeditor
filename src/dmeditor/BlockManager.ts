@@ -3,6 +3,7 @@ import { BlockData } from "./Main";
 
 export interface BlockHandler {
     type:string;
+    canSelectElement?: boolean,
     onDataChange: (ele:HTMLElement)=>any;    
     getDefaultData: ()=>BlockData;    //when block type is selected
     renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onSubSelect?:(data:any)=>void)=>ReactElement, onUpdateProperty?:any;    

@@ -1,4 +1,4 @@
-import { DeleteOutline } from "@mui/icons-material";
+import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline, LaptopMacOutlined, MoveUpOutlined, PhoneIphoneOutlined, TabletMacOutlined } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { blockManager } from "./BlockManager";
@@ -14,23 +14,30 @@ export const Property = (props:{current: BlockInfo, params:any, onSeting: any, o
     const renderProperty = ()=>{
         const handler = blockManager.getBlockType(current.type);
         if( handler ){
-            return handler.renderSetting(current.content, props.onSeting, props.params);
+            const settings = handler.renderSetting(current.content, props.onSeting, props.params);
+            if( handler.canSelectElement ){
+                return settings;
+            }else{
+                return <div><DMTab tabs={[{text:'Block', content: settings}]} /></div>
+            }
         }else{
             return <div>Unknown type {current.type}</div>;
         }
     }
 
-    const content = <div>{renderProperty()}<div>  
-        <br />           
+    return <div style={{display:'grid', height:'100vh', gridTemplateRows:'auto 100px'}}>{renderProperty()}
+    <div style={{padding: 10}}>  
+        <div style={{marginBottom:'15px'}}>
+            <a href="#" title="Move up"><ArrowUpwardOutlined /> </a> 
+            <a href="#"  title="Move down"><ArrowDownwardOutlined /></a></div>
         <Button fullWidth variant="contained" color='error' title="Delete" onClick={props.onDelete}>
             <DeleteOutline />Delete block
         </Button>
     </div></div>
 
-
-    return <div>
-        <DMTab params={props.params} content={content} />
-    </div>
+    // return <div>
+    //     <DMTab params={props.params} content={content} />        
+    // </div>
 }
 
 export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>{

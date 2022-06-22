@@ -13,3 +13,7 @@ p[contentEditable='true']:empty::before{
 a{
     cursor: pointer;
 }
+
+#dmeditor-active-element{
+    outline: 1px solid green;
+}

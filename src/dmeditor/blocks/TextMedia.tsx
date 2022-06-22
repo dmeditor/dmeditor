@@ -88,6 +88,7 @@ const TextMediaSettings = (props:{data:BlockData, onSetting:any, params?:any})=>
 
  export const TextMediaHandler = {
     type: 'text_media',
+    selectSub: true,
     onDataChange: (ele:HTMLElement):any => {},
     renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onUpdateProperty?:any):ReactElement=>{
         return <TextMedia data={data} isActive={isActive} onChange={onChange} onUpdateProperty={onUpdateProperty} />
