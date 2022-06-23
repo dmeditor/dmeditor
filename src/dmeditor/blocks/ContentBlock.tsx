@@ -2,21 +2,22 @@ import { ReactElement } from "react"
 import { BlockData, BlockLayoutData, DataContentBlock } from "../Main"
 import { CommonSetting } from "../Property";
 import { Ranger } from "../utils/Ranger";
+import './ContentBlock.css';
 
 export const ContentBlock = (props:{data:BlockData, isActive:boolean})=>{
     const data = props.data.data as DataContentBlock;
 
     let arr:Array<string> = [];
     for( let i = 0; i< data.columns; i++ ){
-        arr = [...arr,((100/data.columns)+'%')];
+        arr = [...arr,'auto'];
     }
 
     let max = data.columns * data.rows;
 
-    const style={display: 'grid', gridTemplateColumns: arr.join(' '), ...props.data.layout };
+    const style={display: 'grid', gridTemplateColumns: arr.join(' '), gridColumnGap: 5, ...props.data.layout };
 
-    return <div style={style}>
-        {data.list.slice(0, max).map((item)=><div style={{padding: 10}} dangerouslySetInnerHTML={{__html: item}}></div>)}
+    return <div style={style} className="content-block-container">
+        {data.list.slice(0, max).map((item)=><div className="content-block-item" dangerouslySetInnerHTML={{__html: item}}></div>)}
     </div>;
 }
 
