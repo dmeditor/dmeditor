@@ -15,7 +15,6 @@ export const MoreBlocks = (props:{onSelect:any})=>{
         {text:"Content blocks", type:'content_block', icon: <GridViewOutlined style={{fontSize: '28px'}} /> },
         {text:"Carousel", type:'carousel', icon: <CollectionsOutlined style={{fontSize: '28px'}} /> },
         {text:"Calendar events", type:'calendar', icon: <CalendarMonth style={{fontSize: '28px'}} /> },    
-        {text:"Last course", type:'last_course', icon: <AccountBalanceOutlined style={{fontSize: '28px'}} /> },    
         {text:"Video", type:'video', icon: <VideocamOutlined style={{fontSize: '28px'}} /> },
         {text:"Superoffice Form", type:'superoffice_form', icon: <AppRegistrationOutlined style={{fontSize: '28px'}} /> },          
         {text:"Gallery", type:'gallery', icon: <CollectionsOutlined style={{fontSize: '28px'}} /> },     

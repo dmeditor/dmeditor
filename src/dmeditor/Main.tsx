@@ -40,16 +40,23 @@ export interface DataTextMedia {
     }
 }
 
+export interface DataContentBlock{
+    list: Array<string>,
+    columns:number,
+    rows:number,
+    title?: string
+}
+
+
 export interface BlockLayoutData{
     padding?: number,
     marginTop?: number,
     backgroundColor?:string
 }
 
-
 export interface BlockData{
     layout:BlockLayoutData,
-    data: string|DataTable|DataFullImage|DataHeading|DataTextMedia,
+    data: string|DataTable|DataFullImage|DataHeading|DataTextMedia|DataContentBlock,
 }
 
 export interface BlockInfo{
