@@ -111,7 +111,7 @@ const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsL
 
 ]} />
 {(!props.params)&&<div style={{padding: 10}}><Select size='small' fullWidth defaultValue="0" style={{border:'none'}} >
-    <MenuItem value="0">Add element</MenuItem>
+    <MenuItem value="0">Insert element</MenuItem>
     <MenuItem value="link"><LinkOutlined style={{verticalAlign: 'middle'}} /> &nbsp;Link</MenuItem>
     <MenuItem value="image"><ImageOutlined style={{verticalAlign: 'middle'}} /> &nbsp;Image</MenuItem>
     <MenuItem value="video"><VideoFileOutlined />&nbsp;Video</MenuItem>
