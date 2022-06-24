@@ -78,7 +78,6 @@ const HeadingSettings = (props:RenderSettingProps)=>{
 
  export const HeadingHandler = {
     type: 'heading',
-    onDataChange: (ele:HTMLElement):any => {},
     renderMain: (props:RenderMainProps)=><Heading {...props} />,
     getDefaultData:():BlockData=>{
         return {

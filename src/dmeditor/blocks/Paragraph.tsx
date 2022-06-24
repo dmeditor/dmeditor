@@ -139,7 +139,6 @@ const ParagraphSettings = (props:RenderSettingProps)=>{
  export const ParagraphHandler:BlockHandler = {
     type: 'p',
     canSelectElement: true,
-    onDataChange: (ele:HTMLElement):any => {},
     renderMain: (props:RenderMainProps)=><Paragraph {...props} />,
     getDefaultData:():BlockData=>{
         return {

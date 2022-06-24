@@ -68,7 +68,6 @@ export const ContentBlockSettings = (props:RenderSettingProps)=>{
 
 export const ContentBlockHandler = {
     type: 'content_block',
-    onDataChange: (ele:HTMLElement):any => {},
     renderMain: (props:RenderMainProps)=><ContentBlock {...props} />,
     getDefaultData:():BlockData=>{
        return {

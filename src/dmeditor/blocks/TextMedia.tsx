@@ -90,7 +90,6 @@ const TextMediaSettings = (props:RenderSettingProps)=>{
  export const TextMediaHandler = {
     type: 'text_media',
     selectSub: true,
-    onDataChange: (ele:HTMLElement):any => {},
     renderMain:(props:RenderMainProps)=><TextMedia {...props} />,
     getDefaultData:():BlockData=>{
         return {

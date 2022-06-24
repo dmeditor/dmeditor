@@ -18,7 +18,6 @@ export interface RenderSettingProps{
 export interface BlockHandler {
     type:string;
     canSelectElement?: boolean,
-    onDataChange: (ele:HTMLElement)=>any;    
     getDefaultData: ()=>BlockData;    //when block type is selected
     renderMain: React.FC<RenderMainProps>,       
     renderSetting: React.FC<RenderSettingProps>

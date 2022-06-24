@@ -36,10 +36,6 @@ export const Property = (props:{current: BlockInfo, params:any, onSeting: any, o
             <DeleteOutline />Delete block
         </Button>
     </div></div>
-
-    // return <div>
-    //     <DMTab params={props.params} content={content} />        
-    // </div>
 }
 
 export const CommonSetting = (props:{settings:BlockLayoutData, onChange?:any})=>{

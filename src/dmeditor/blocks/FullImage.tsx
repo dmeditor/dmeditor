@@ -60,7 +60,6 @@ const FullImageSettings = (props:RenderSettingProps)=>{
 
  export const FullImageHandler = {
     type: 'full_image',
-    onDataChange: (ele:HTMLElement):any => {},
     renderMain: (props:RenderMainProps)=><FullImage {...props} />,
     getDefaultData:():BlockData=>{
        return {

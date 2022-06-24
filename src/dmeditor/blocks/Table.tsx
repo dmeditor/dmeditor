@@ -107,7 +107,6 @@ const TableSettings = (props:RenderSettingProps)=>{
 
  export const TableHandler = {
     type: 'table',
-    onDataChange: (ele:HTMLElement):any => {},
     renderMain: (props:RenderMainProps)=><Table {...props} />,
     getDefaultData:():BlockData=>{
         return {
