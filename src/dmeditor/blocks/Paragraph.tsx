@@ -1,26 +1,26 @@
 import { AudioFileOutlined, BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalic, FormatItalicOutlined, FormatListBulletedOutlined, ImageOutlined, InsertChartOutlined, LinkOutlined, RectangleOutlined, SmartButtonOutlined, VideoFileOutlined } from '@mui/icons-material';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import { BlockData, BlockLayoutData} from '../Main';
 import { CommonSetting } from '../Property';
 import { Ranger } from '../utils/Ranger';
 import parse, { domToReact } from 'html-react-parser';
 import { Element } from 'domhandler/lib/node';
 import './Paragraph.css';
-import { BlockHandler } from '../BlockManager';
+import { BlockHandler, RenderMainProps, RenderSettingProps } from '../BlockManager';
 import { Input } from '../utils/Input';
 import { DMTab } from '../Tab';
 import { ListItemIcon, MenuItem, Select } from '@mui/material';
 
 
 interface ParamsLink {
-    type: string,
-    href: string,
+    type: string, //tagName: a, text. Empty if it's not selected
     element: HTMLElement
 }
 
 const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onSubSelect?:(params?:ParamsLink)=>void})=>{
     //todo: filter render allowed tags
     const [data, setData] = useState(props.data.data as string);
+    const divRef = useRef(); 
 
     const change = (e:any)=>{
         let text = e.target.innerHTML as string;
@@ -37,17 +37,28 @@ const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)
 
    const selectTag = (e:any, href:string)=>{
         e.preventDefault();
-        // e.stopproPagation();
-        if( props.onSubSelect ){
-            props.onSubSelect({type:'a', href:href, element: e.target});
+        if( props.isActive ){
+            e.stopPropagation();
+            if( props.onSubSelect ){
+                props.onSubSelect({type:'a', element: e.target});
+            }
+            e.target.setAttribute('id', 'dmeditor-active-element');
         }
-        e.target.setAttribute('id', 'dmeditor-active-element');
    }
 
    const selectNone = ()=>{
-    if( props.onSubSelect ){
+    if( props.isActive && props.onSubSelect ){
         props.onSubSelect(undefined);
+        document.getElementById('dmeditor-active-element')?.removeAttribute('id');
     }
+   }
+
+   const selectText = (el:any)=>{
+        const ele = window.getSelection();
+        if( props.onSubSelect ){
+            // props.onSubSelect({type:'text', element: ele?.});
+        }
+        console.log(ele);
    }
 
    let elements = parse(data, {replace:(domNode:any)=>{
@@ -55,14 +66,15 @@ const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)
             return <a onClick={(e)=>selectTag(e, domNode.attribs['href'])} {...domNode.attribs}>{domToReact(domNode.children)}</a>
         }
    }});
+   
 
-   return <div style={{...props.data.layout}} contentEditable={props.isActive} onBlur={change}>
+   return <div onClick={selectNone} onMouseUp={selectText} style={{...props.data.layout}} contentEditable={props.isActive} onBlur={change}>
     {elements}
    </div>
 }
 
 
-const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsLink})=>{
+const ParagraphSettings = (props:RenderSettingProps)=>{
     const changeCommon = (settings:BlockLayoutData)=>{
         let data = props.data;
         data.layout = settings;
@@ -82,7 +94,7 @@ const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsL
                 <label>Link setings</label><br /><br /></div>
             <div>
             <div>
-              Link: <Input onChange={change} defaultValue={props.params.href} />
+              Link: <Input onChange={change} defaultValue={props.params.element.getAttribute('href')} />
             </div>
             </div>
             </div>}       
@@ -104,7 +116,7 @@ const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsL
                 <a href="#"><FormatAlignRight /></a>
             </td></tr>            
         </tbody>
-    </table>   
+        </table>   
             <CommonSetting  settings={props.data.layout}  onChange={changeCommon}/>
         </div>
     },
@@ -128,17 +140,13 @@ const ParagraphSettings = (props:{data:BlockData, onSetting:any, params?:ParamsL
     type: 'p',
     canSelectElement: true,
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onSubSelect?:any):ReactElement=>{
-        return <Paragraph data={data} isActive={isActive} onChange={onChange} onSubSelect={onSubSelect} />
-    },
+    renderMain: (props:RenderMainProps)=><Paragraph {...props} />,
     getDefaultData:():BlockData=>{
         return {
             layout:{padding: 0},
             data:''};
     },
-    renderSetting: (data:BlockData, onSetting:any, params?:any): ReactElement =>{
-        return <ParagraphSettings data={data} onSetting={onSetting} params={params} />
-    }
+    renderSetting: (props:RenderSettingProps) =><ParagraphSettings {...props} />
  }
 
 function useFocus(): [any, any] {

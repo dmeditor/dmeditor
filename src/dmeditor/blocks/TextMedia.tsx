@@ -1,5 +1,6 @@
 import { BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatAlignRightOutlined, FormatBoldOutlined, FormatItalic, FormatItalicOutlined } from '@mui/icons-material';
 import React, { ReactElement, useState } from 'react';
+import { RenderMainProps, RenderSettingProps } from '../BlockManager';
 import { BlockData, BlockLayoutData, DataTextMedia} from '../Main';
 import { CommonSetting } from '../Property';
 import { Ranger } from '../utils/Ranger';
@@ -42,7 +43,7 @@ const TextMedia = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)
 }
 
 
-const TextMediaSettings = (props:{data:BlockData, onSetting:any, params?:any})=>{
+const TextMediaSettings = (props:RenderSettingProps)=>{
     const changeCommon = (settings:BlockLayoutData)=>{
         let data = props.data;
         data.layout = settings;
@@ -90,9 +91,7 @@ const TextMediaSettings = (props:{data:BlockData, onSetting:any, params?:any})=>
     type: 'text_media',
     selectSub: true,
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onUpdateProperty?:any):ReactElement=>{
-        return <TextMedia data={data} isActive={isActive} onChange={onChange} onUpdateProperty={onUpdateProperty} />
-    },
+    renderMain:(props:RenderMainProps)=><TextMedia {...props} />,
     getDefaultData:():BlockData=>{
         return {
             layout:{padding: 0},
@@ -104,7 +103,5 @@ const TextMediaSettings = (props:{data:BlockData, onSetting:any, params?:any})=>
                 }
             }};
     },
-    renderSetting: (data:BlockData, onSetting:any, params?:any): ReactElement =>{
-        return <TextMediaSettings data={data} onSetting={onSetting} params={params} />
-    }
+    renderSetting:(props:RenderSettingProps)=><TextMediaSettings {...props} />
  }

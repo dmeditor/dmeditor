@@ -22,7 +22,8 @@ export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:a
     const renderContent = (type: string):ReactElement=>{        
         const handler = blockManager.getBlockType(type);
         if( handler ){
-            return handler.renderMain(content, isActive, onChange, props.onUpdateProperty);
+            const BlockMain = handler.renderMain;
+            return <BlockMain data={content} isActive={isActive} onChange={onChange} onUpdateProperty={props.onUpdateProperty} />;
         }else{
             return <div>Unknown block type.</div>
         }

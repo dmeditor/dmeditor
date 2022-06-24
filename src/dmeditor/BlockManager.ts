@@ -1,13 +1,27 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { BlockData } from "./Main";
+
+export interface RenderMainProps{
+    data:BlockData,
+    isActive:boolean, 
+    onChange?:(data:any)=>void,
+    onSubSelect?:(data:any)=>void,
+    onUpdateProperty?:any
+}
+
+export interface RenderSettingProps{
+    data:BlockData, 
+    onSetting: any, 
+    params?:any
+}
 
 export interface BlockHandler {
     type:string;
     canSelectElement?: boolean,
     onDataChange: (ele:HTMLElement)=>any;    
     getDefaultData: ()=>BlockData;    //when block type is selected
-    renderMain: (data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onSubSelect?:(data:any)=>void)=>ReactElement, onUpdateProperty?:any;    
-    renderSetting: (data:BlockData, onSetting: any, params?:any) => ReactElement
+    renderMain: React.FC<RenderMainProps>,       
+    renderSetting: React.FC<RenderSettingProps>
 }
 
 var blockHandlers:{[key:string]: BlockHandler;} ={};

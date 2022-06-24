@@ -1,4 +1,5 @@
 import { ChangeEvent, ChangeEventHandler, ReactElement, useEffect, useState } from "react";
+import { RenderMainProps, RenderSettingProps } from "../BlockManager";
 import { BlockData, BlockLayoutData, DataTable } from "../Main"
 import { CommonSetting } from "../Property";
 import { Input } from "../utils/Input";
@@ -21,7 +22,7 @@ const Table = (props:{data:BlockData, isActive:boolean})=>{
  }
 
 
-const TableSettings = (props:{data:BlockData, onSetting:any })=>{
+const TableSettings = (props:RenderSettingProps)=>{
     const updateRow = (value:any) =>{
         let newRows = value;
         let data = props.data;
@@ -107,15 +108,11 @@ const TableSettings = (props:{data:BlockData, onSetting:any })=>{
  export const TableHandler = {
     type: 'table',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData, isActive:boolean):ReactElement=>{
-        return <Table data={data} isActive={isActive} />
-    },
+    renderMain: (props:RenderMainProps)=><Table {...props} />,
     getDefaultData:():BlockData=>{
         return {
             layout:{padding: 0},
             data: [['test table', 'test table1']]};
     },
-    renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <TableSettings data={data} onSetting={onSetting} />
-    }
+    renderSetting: (props: RenderSettingProps)=><TableSettings {...props} />
  }

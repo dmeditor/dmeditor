@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react';
+import { RenderMainProps, RenderSettingProps } from '../BlockManager';
 import { BlockData, BlockLayoutData, DataFullImage, DataHeading } from '../Main';
 import { CommonSetting } from '../Property';
 import { Input } from '../utils/Input';
@@ -42,7 +43,7 @@ const Heading = (props:{data:BlockData, isActive:boolean, onChange?:any})=>{
 }
 
 
-const HeadingSettings = (props:{data:BlockData, onSetting:any})=>{
+const HeadingSettings = (props:RenderSettingProps)=>{
 
     let style = (props.data.data as DataHeading).style;
 
@@ -78,16 +79,12 @@ const HeadingSettings = (props:{data:BlockData, onSetting:any})=>{
  export const HeadingHandler = {
     type: 'heading',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData, isActive:boolean, onChange?:any):ReactElement=>{
-        return <Heading data={data} isActive={isActive} onChange={onChange} />
-    },
+    renderMain: (props:RenderMainProps)=><Heading {...props} />,
     getDefaultData:():BlockData=>{
         return {
             layout:{padding: 0},
             data: {text:'Test', style:{level: 2}}
         };
     },    
-    renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <HeadingSettings data={data} onSetting={onSetting} />
-    }
+    renderSetting:  (props:RenderSettingProps)=><HeadingSettings {...props} />    
  }

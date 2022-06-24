@@ -4,6 +4,7 @@ import { BlockData, BlockLayoutData, DataFullImage } from '../Main';
 import { CommonSetting } from '../Property';
 import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
+import { RenderMainProps, RenderSettingProps } from '../BlockManager';
 
 
 const FullImage = (props:{data:BlockData, isActive:boolean})=>{    
@@ -14,7 +15,7 @@ const FullImage = (props:{data:BlockData, isActive:boolean})=>{
     </div>
 }
 
-const FullImageSettings = (props:{data:BlockData, onSetting:any})=>{
+const FullImageSettings = (props:RenderSettingProps)=>{
     const [data, setData] = useState(props.data.data as DataFullImage);
 
     let style = data.style;
@@ -60,9 +61,7 @@ const FullImageSettings = (props:{data:BlockData, onSetting:any})=>{
  export const FullImageHandler = {
     type: 'full_image',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData, isActive: boolean):ReactElement=>{
-        return <FullImage data={data} isActive={isActive} />
-    },
+    renderMain: (props:RenderMainProps)=><FullImage {...props} />,
     getDefaultData:():BlockData=>{
        return {
         layout:{padding: 0},
@@ -70,7 +69,5 @@ const FullImageSettings = (props:{data:BlockData, onSetting:any})=>{
         src:'https://www.iucn.org/sites/dev/files/content/images/2020/shutterstock_1458128810.jpg',
         style: {padding: 2, borderWidth: 0, background:''}}}
         },
-    renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <FullImageSettings data={data} onSetting={onSetting} />
-    }
+    renderSetting: (props:RenderSettingProps)=><FullImageSettings {...props} />
  }

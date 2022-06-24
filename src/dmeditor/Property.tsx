@@ -15,7 +15,8 @@ export const Property = (props:{current: BlockInfo, params:any, onSeting: any, o
     const renderProperty = ()=>{
         const handler = blockManager.getBlockType(current.type);
         if( handler ){
-            const settings = handler.renderSetting(current.content, props.onSeting, props.params);
+            const Settings = handler.renderSetting;
+            const settings = <Settings data={current.content} onSetting={props.onSeting} params={props.params} />;
             if( handler.canSelectElement ){
                 return settings;
             }else{

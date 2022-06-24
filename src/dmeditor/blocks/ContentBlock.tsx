@@ -1,4 +1,5 @@
 import { ReactElement } from "react"
+import { RenderMainProps, RenderSettingProps } from "../BlockManager";
 import { BlockData, BlockLayoutData, DataContentBlock } from "../Main"
 import { CommonSetting } from "../Property";
 import { Ranger } from "../utils/Ranger";
@@ -21,7 +22,7 @@ export const ContentBlock = (props:{data:BlockData, isActive:boolean})=>{
     </div>;
 }
 
-export const ContentBlockSettings = (props:{data:BlockData, onSetting:any})=>{
+export const ContentBlockSettings = (props:RenderSettingProps)=>{
     const data = props.data.data as DataContentBlock;
 
     const changeCommon = (settings:BlockLayoutData)=>{
@@ -68,9 +69,7 @@ export const ContentBlockSettings = (props:{data:BlockData, onSetting:any})=>{
 export const ContentBlockHandler = {
     type: 'content_block',
     onDataChange: (ele:HTMLElement):any => {},
-    renderMain: (data:BlockData, isActive: boolean):ReactElement=>{
-        return <ContentBlock data={data} isActive={isActive} />
-    },
+    renderMain: (props:RenderMainProps)=><ContentBlock {...props} />,
     getDefaultData:():BlockData=>{
        return {
         layout:{},
@@ -90,7 +89,5 @@ export const ContentBlockHandler = {
         }
       }
     },
-    renderSetting: (data:BlockData, onSetting:any): ReactElement =>{
-        return <ContentBlockSettings data={data} onSetting={onSetting} />
-    }
+    renderSetting:(props:RenderSettingProps)=><ContentBlockSettings {...props} />    
  }
