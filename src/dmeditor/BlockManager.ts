@@ -5,8 +5,7 @@ export interface RenderMainProps{
     data:BlockData,
     isActive:boolean, 
     onChange?:(data:any)=>void,
-    onSubSelect?:(data:any)=>void,
-    onUpdateProperty?:any
+    onUpdateProperty?:(data:any)=>void
 }
 
 export interface RenderSettingProps{

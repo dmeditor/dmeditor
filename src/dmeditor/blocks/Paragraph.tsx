@@ -13,14 +13,14 @@ import { ListItemIcon, MenuItem, Select } from '@mui/material';
 
 
 interface ParamsLink {
-    type: string, //tagName: a, text. Empty if it's not selected
-    element: HTMLElement
+    mode: 'select'|'insert',
+    type: string, //tagName: a, text.
+    element?: HTMLElement|Range
 }
 
-const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onSubSelect?:(params?:ParamsLink)=>void})=>{
+const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onUpdateProperty?:(params?:ParamsLink)=>void})=>{
     //todo: filter render allowed tags
     const [data, setData] = useState(props.data.data as string);
-    const divRef = useRef(); 
 
     const change = (e:any)=>{
         let text = e.target.innerHTML as string;
@@ -39,26 +39,28 @@ const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)
         e.preventDefault();
         if( props.isActive ){
             e.stopPropagation();
-            if( props.onSubSelect ){
-                props.onSubSelect({type:'a', element: e.target});
+            if( props.onUpdateProperty ){
+                props.onUpdateProperty({type:'a', mode:'select', element: e.target});
             }
             e.target.setAttribute('id', 'dmeditor-active-element');
         }
    }
 
    const selectNone = ()=>{
-    if( props.isActive && props.onSubSelect ){
-        props.onSubSelect(undefined);
-        document.getElementById('dmeditor-active-element')?.removeAttribute('id');
-    }
+    // if( props.isActive && props.onUpdateProperty ){
+    //     props.onUpdateProperty(undefined);
+    //     document.getElementById('dmeditor-active-element')?.removeAttribute('id');
+    // }
    }
 
    const selectText = (el:any)=>{
         const ele = window.getSelection();
-        if( props.onSubSelect ){
-            // props.onSubSelect({type:'text', element: ele?.});
+        if( props.onUpdateProperty ){
+            let range = ele?.getRangeAt(0);
+            let isInsert = range?.toString() === '';
+
+            props.onUpdateProperty({mode:(isInsert?'insert':'select'),type:'text', element: range});
         }
-        console.log(ele);
    }
 
    let elements = parse(data, {replace:(domNode:any)=>{
@@ -81,25 +83,74 @@ const ParagraphSettings = (props:RenderSettingProps)=>{
         props.onSetting(data);
     }
 
-    const change = (v:string)=>{
+    const changeHref = (v:string)=>{
         document.getElementById('dmeditor-active-element')?.setAttribute('href', v);
     }
 
+    const changeText = (v:string)=>{
+        const ele = document.getElementById('dmeditor-active-element');
+        if( ele ){
+            ele.textContent = v;
+        }
+    }
+
+    const insert = (type:string)=>{
+        switch( type ){
+            case 'link':
+            let range = props.params?.element as Range;
+            let newNode = document.createElement("a");
+            newNode.appendChild(document.createTextNode("Good"));
+            range?.insertNode(newNode);
+            break;
+        }
+    }
+
+    const insertTools = [ {type:'link', text:'Link', icon:<LinkOutlined style={{fontSize: 30}} /> },
+    {type:'image', text:'Image', icon:<ImageOutlined style={{fontSize: 30}} /> },
+    {type:'video', text:'Video', icon:<VideoFileOutlined style={{fontSize: 30}} /> },
+    {type:'audio', text:'audio', icon:<AudioFileOutlined style={{fontSize: 30}} /> },
+    {type:'button', text:'Button', icon:<RectangleOutlined style={{fontSize: 30}} /> },
+    {type:'list', text:'List', icon:<FormatListBulletedOutlined style={{fontSize: 30}} /> },
+
+];
+
     return <div><DMTab
-    tabs={[ ...(props.params?[{
+         tabs={[{
         text: 'Element', 
         content:
-        <div>{props.params&&props.params.type=='a'&&<div> 
-            <div>
-                <label>Link setings</label><br /><br /></div>
-            <div>
-            <div>
-              Link: <Input onChange={change} defaultValue={props.params.element.getAttribute('href')} />
-            </div>
-            </div>
-            </div>}       
-    </div>    
-    }]:[]),
+        <div>{props.params&&<>
+            {(props.params.mode==='select')&&<div>
+                <label>Select</label> <br /><br />
+                {props.params.type=='a'&&<div> 
+                <div>
+                    <label>Link setings</label><br /><br /></div>
+                <div>
+                <div>
+                Link: <Input onChange={changeHref} defaultValue={props.params.element.getAttribute('href')} />              
+                </div>
+                <div>
+                Text: <Input onChange={changeText} defaultValue={(props.params.element as HTMLElement).textContent} />              
+                </div>
+                </div>
+                </div>}   
+
+                {props.params.type=='text'&&<div>
+                    <FormatBoldOutlined />   
+                    <FormatItalicOutlined /> 
+                    Color
+                </div>}  
+            </div>}                     
+
+            {(props.params.mode==='insert')&&<div>               
+                <div style={{fontSize: 16}}><label>Insert</label></div>
+                <table>
+                    <tbody>
+                        {insertTools.map((item)=><tr style={{cursor: 'pointer'}} onClick={()=>insert(item.type)}><td>{item.icon}</td><td>{item.text}</td></tr>)}
+                    </tbody>
+                </table>
+                </div>}
+    </>}</div>    
+    },
     {
         text: 'Block', 
         content: <div>
@@ -120,17 +171,7 @@ const ParagraphSettings = (props:RenderSettingProps)=>{
             <CommonSetting  settings={props.data.layout}  onChange={changeCommon}/>
         </div>
     },
-
 ]} />
-{(!props.params)&&<div style={{padding: 10}}><Select size='small' fullWidth defaultValue="0" style={{border:'none'}} >
-    <MenuItem value="0">Insert element</MenuItem>
-    <MenuItem value="link"><LinkOutlined style={{verticalAlign: 'middle'}} /> &nbsp;Link</MenuItem>
-    <MenuItem value="image"><ImageOutlined style={{verticalAlign: 'middle'}} /> &nbsp;Image</MenuItem>
-    <MenuItem value="video"><VideoFileOutlined />&nbsp;Video</MenuItem>
-    <MenuItem value="audio"><AudioFileOutlined />&nbsp;Audio</MenuItem>
-    <MenuItem value="button"><RectangleOutlined />&nbsp;Button</MenuItem>        
-    <MenuItem value="list"><FormatListBulletedOutlined />&nbsp;List</MenuItem>    
-    </Select></div>}
 </div>
         
  }
