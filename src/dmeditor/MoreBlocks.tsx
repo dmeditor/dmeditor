@@ -5,9 +5,10 @@ import './MoreBlocks.css';
 
 export const MoreBlocks = (props:{onSelect:any})=>{
     const blockCategory = [
-        {identifier: 'common', text: 'Common'},
-        {identifier: 'util', text: 'Utility'},
+        {identifier: 'basic', text: 'Basic'},
         {identifier: 'content_block', text: 'Content'},
+        {identifier: 'pre_designed', text: 'Pre designed'},        
+        {identifier: 'util', text: 'Utility'},
         {identifier: 'superoffice', text: 'SuperOffice'},
         {identifier: 'social_network', text: 'Social Network'}        
         ];
@@ -15,14 +16,14 @@ export const MoreBlocks = (props:{onSelect:any})=>{
     const iconStyle={fontSize: 26};
     
     const blockTypes = [
-        {text:"Heading", category:'common', type:'heading', icon: <TitleOutlined style={iconStyle} /> },
-        {text:"Paragraph", category:'common', type:'p', icon: <TextSnippetOutlined style={iconStyle} /> },
-        {text:"Table", category:'common', type:'table', icon: <GridOn style={iconStyle} /> }, 
-        {text:"Text media", category:'common', type:'text_media', icon: <PermMediaOutlined style={iconStyle} /> },
-        {text:"Full image", category:'common', type:'full_image', icon: <ImageOutlined style={iconStyle} /> },    
-        {text:"Video", category:'common', type:'video', icon: <VideocamOutlined style={iconStyle} /> },
-        {text:"Quote", category:'common', type:'quote', icon: <FormatQuoteOutlined style={iconStyle} /> },
-        {text:"Code", category:'common', type:'quote', icon: <CodeOutlined style={iconStyle} /> },    
+        {text:"Heading", category:'basic', type:'heading', icon: <TitleOutlined style={iconStyle} /> },
+        {text:"Paragraph", category:'basic', type:'p', icon: <TextSnippetOutlined style={iconStyle} /> },
+        {text:"Table", category:'basic', type:'table', icon: <GridOn style={iconStyle} /> }, 
+        {text:"Text media", category:'pre_designed', type:'text_media', icon: <PermMediaOutlined style={iconStyle} /> },
+        {text:"Full image", category:'basic', type:'full_image', icon: <ImageOutlined style={iconStyle} /> },    
+        {text:"Video", category:'basic', type:'video', icon: <VideocamOutlined style={iconStyle} /> },
+        {text:"Quote", category:'basic', type:'quote', icon: <FormatQuoteOutlined style={iconStyle} /> },
+        {text:"Code", category:'basic', type:'quote', icon: <CodeOutlined style={iconStyle} /> },    
         {text:"Content blocks", category:'content_block', type:'content_block', icon: <GridViewOutlined style={iconStyle} /> },
         {text:"Carousel", category:'content_block', type:'carousel', icon: <CollectionsOutlined style={iconStyle} /> },
         {text:"Tab", category:'util', type:'tab', icon: <TabOutlined style={iconStyle} /> },            
