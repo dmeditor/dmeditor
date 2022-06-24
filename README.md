@@ -1,5 +1,5 @@
 # dmeditor
-dmeditor is a block-styled visual editor. Data is saved to json format.
+dmeditor is a block-styled visual editor. Data is in json format.
 
 *Progress: It's still under development and we will soon have alpha version!*
 
