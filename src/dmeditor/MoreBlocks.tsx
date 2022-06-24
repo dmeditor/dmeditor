@@ -1,4 +1,4 @@
-import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CodeOffOutlined, CodeOutlined, CollectionsOutlined, FacebookOutlined, FormatQuote, FormatQuoteOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, NetworkCellOutlined, PermMediaOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined, WidgetsOutlined } from '@mui/icons-material';
+import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CodeOffOutlined, CodeOutlined, CollectionsOutlined, FacebookOutlined, FormatQuote, FormatQuoteOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, NetworkCellOutlined, PermMediaOutlined, TabOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined, WidgetsOutlined } from '@mui/icons-material';
 import { ImageList, Input } from '@mui/material';
 import { useState } from 'react';
 import './MoreBlocks.css';
@@ -14,6 +14,7 @@ export const MoreBlocks = (props:{onSelect:any})=>{
         {text:"Code", type:'quote', icon: <CodeOutlined style={{fontSize: '28px'}} /> },    
         {text:"Content blocks", type:'content_block', icon: <GridViewOutlined style={{fontSize: '28px'}} /> },
         {text:"Carousel", type:'carousel', icon: <CollectionsOutlined style={{fontSize: '28px'}} /> },
+        {text:"Tabs", type:'tabs', icon: <TabOutlined style={{fontSize: '28px'}} /> },            
         {text:"Calendar events", type:'calendar', icon: <CalendarMonth style={{fontSize: '28px'}} /> },    
         {text:"Video", type:'video', icon: <VideocamOutlined style={{fontSize: '28px'}} /> },
         {text:"Superoffice Form", type:'superoffice_form', icon: <AppRegistrationOutlined style={{fontSize: '28px'}} /> },          
