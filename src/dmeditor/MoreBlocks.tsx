@@ -28,7 +28,7 @@ export const MoreBlocks = (props:{onSelect:any})=>{
         {text:"Tab", category:'util', type:'tab', icon: <TabOutlined style={iconStyle} /> },            
         {text:"Expandable list", category:'util', type:'expandable_list', icon: <ViewListOutlined style={iconStyle} /> },                    
         {text:"Calendar events", category:'content_block', type:'calendar', icon: <CalendarMonth style={iconStyle} /> },    
-        {text:"Superoffice form", category:'superoffice',  type:'superoffice_form', icon: <AppRegistrationOutlined style={iconStyle} /> },          
+        {text:"SuperOffice form", category:'superoffice',  type:'superoffice_form', icon: <AppRegistrationOutlined style={iconStyle} /> },          
         {text:"Gallery", category:'content_block',  type:'gallery', icon: <CollectionsOutlined style={iconStyle} /> },     
         {text:"Facebook page", category:'social_network',  type:'facebook', icon: <FacebookOutlined style={iconStyle} /> },
         {text:"Twitter tweet",  category:'social_network', type:'twitter', icon: <Twitter style={iconStyle} /> },    
