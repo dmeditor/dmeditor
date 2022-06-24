@@ -26,10 +26,6 @@ export interface BlockHandler {
 
 var blockHandlers:{[key:string]: BlockHandler;} ={};
 
-var blockRenders: {[key:string]:(content:any)=>ReactElement} = {};
-
-var blockSettings: {[key:string]:(content:any, onSetting:any)=>ReactElement} = {};
-
 export const blockManager = {  
     registerBlockType: (handler:BlockHandler)=>{
         blockHandlers[handler.type] = handler;
