@@ -19,7 +19,7 @@ Container can be tabs, menu(one level), or customized element.
 Container has whole block's power, so all common block can be inserted into a containers, eg. Heading/Paragraph/Carousel in a tab.
 
 
-Phase 1
+## Phase 1
 1. Heading:
 
    Can change heading, color. when selecting text, text option is shown(see Paragraph/text)
@@ -64,8 +64,7 @@ Phase 1
 - how many rows
 - source
 
-Phase 2
----------
+## Phase 2
 1. Gallery, with callback option for getting data
 2. Carousel, with callback for getting data
 3. Facebook page
