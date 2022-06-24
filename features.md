@@ -1,5 +1,24 @@
 Development features
 ------------
+
+## Basic 
+### 1. Text types(internal):
+- format1(rich text): 
+  - select: bold, italic, color, background color, link, unlink
+  - insert: link, image, video
+- format2(only text, no image): 
+  - select: bold, italic, color, background color, link, unlink
+  - insert: link
+
+Text can be used for paragraph, heading, table's content
+
+
+### 2. Container
+Container can be tabs, menu(one level), or customized element.
+
+Container has whole block's power, so all common block can be inserted into a containers, eg. Heading/Paragraph/Carousel in a tab.
+
+
 Phase 1
 1. Heading:
 
@@ -52,3 +71,4 @@ Phase 2
 3. Facebook page
 4. Twitter tweet
 5. Event calendar, with call back for getting data
+6. Another page/article/content
