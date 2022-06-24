@@ -13,4 +13,7 @@ dmeditor is a block-styled visual editor. Data is saved to json format.
 - Can be embeded to a page to edit from frontend
 
 
+### Screenshots
+![](./blob/main/screen1.png)
 
+![](./blob/main/screen2.png)
