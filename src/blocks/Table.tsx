@@ -1,11 +1,10 @@
 import { GridOn } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { RenderMainProps, RenderSettingProps } from "../BlockManager";
-import { BlockData, BlockLayoutData, DataTable } from "../Main"
+import { RenderMainProps, RenderSettingProps } from "../blocktype";
+import { BlockData, BlockLayoutData, DataTable } from "../types"
 import { CommonSetting } from "../Property";
 import { Ranger } from "../utils/Ranger";
 import './Table.css';
-
 
 const Table = (props:{data:BlockData, isActive:boolean})=>{
     const [content, SetContent] = useState(props.data.data as DataTable);

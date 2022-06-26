@@ -1,4 +1,4 @@
-export interface DataTable extends Array<Array<string|number>>{};
+export interface DataTable extends Array<Array<string|number>>{}
 
 export interface DataFullImage{
     src: string,
@@ -52,3 +52,4 @@ export interface BlockInfo{
     type: string
     content: BlockData
 }
+

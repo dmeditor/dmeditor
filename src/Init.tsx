@@ -1,4 +1,5 @@
-import { BlockHandler, blockManager, RenderMainProps, RenderSettingProps } from "./BlockManager";
+import { BlockHandler, RenderMainProps, RenderSettingProps } from "./blocktype";
+import { blockManager } from "./BlockManager";
 import { FullImageHandler } from "./blocks/FullImage";
 import { HeadingHandler } from "./blocks/Heading";
 import { TextMediaHandler } from "./blocks/TextMedia";

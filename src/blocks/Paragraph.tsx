@@ -1,11 +1,11 @@
 import { AudioFileOutlined, FormatAlignCenter, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalicOutlined, FormatListBulletedOutlined, ImageOutlined, LinkOutlined, RectangleOutlined, TextSnippetOutlined, VideoFileOutlined } from '@mui/icons-material';
 import { useState } from 'react';
-import { BlockData, BlockLayoutData} from '../Main';
+import { BlockData, BlockLayoutData} from '../types';
 import { CommonSetting } from '../Property';
 import parse, { domToReact } from 'html-react-parser';
 import { Element } from 'domhandler/lib/node';
 import './Paragraph.css';
-import { BlockHandler, RenderMainProps, RenderSettingProps } from '../BlockManager';
+import { BlockHandler, RenderMainProps, RenderSettingProps } from '../blocktype';
 import { Input } from '../utils/Input';
 import { DMTab } from '../Tab';
 

@@ -2,7 +2,7 @@ import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { blockManager } from "./BlockManager";
-import { BlockInfo, BlockLayoutData } from "./Main"
+import { BlockInfo, BlockLayoutData } from "./types"
 import { DMTab } from "./Tab"
 import { Ranger } from "./utils/Ranger";
 import { SketchPicker } from 'react-color';

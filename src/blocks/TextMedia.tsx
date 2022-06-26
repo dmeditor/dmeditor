@@ -1,7 +1,7 @@
 import { FormatAlignLeftOutlined, FormatAlignRightOutlined, PermMediaOutlined } from '@mui/icons-material';
 import { useState } from 'react';
-import { RenderMainProps, RenderSettingProps } from '../BlockManager';
-import { BlockData, BlockLayoutData, DataTextMedia} from '../Main';
+import { RenderMainProps, RenderSettingProps } from '../blocktype';
+import { BlockData, BlockLayoutData, DataTextMedia} from '../types';
 import { CommonSetting } from '../Property';
 import { Ranger } from '../utils/Ranger';
 import './Paragraph.css';

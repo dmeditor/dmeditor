@@ -1,10 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 import { Button } from '@mui/material';
-import { BlockData, BlockLayoutData, DataFullImage } from '../Main';
+import { BlockData, BlockLayoutData, DataFullImage } from '../types';
 import { CommonSetting } from '../Property';
 import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
-import { RenderMainProps, RenderSettingProps } from '../BlockManager';
+import { RenderMainProps, RenderSettingProps } from '../blocktype';
 import { ImageOutlined } from '@mui/icons-material';
 
 

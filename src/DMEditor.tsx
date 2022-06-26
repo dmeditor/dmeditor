@@ -6,7 +6,7 @@ import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
 import { HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
-import { BlockInfo } from './Main';
+import { BlockInfo } from './types';
 
 export const DMEditor = (props:{data:Array<BlockInfo>})=>{
     const [blocks, setBlocks] = useState(props.data);
@@ -86,8 +86,7 @@ export const DMEditor = (props:{data:Array<BlockInfo>})=>{
 
     return (<div className='dmeditor-layout'>
         <div className='layout-left'>
-            <a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>
-            
+            <a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>            
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
             <div className='left-tool'>
                 <a href="https://github.com/digimakergo/dmeditor" title='help' target="_blank"><HelpOutlined /></a>

@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import './Block.css';
 import { blockManager } from './BlockManager';
-import {  BlockInfo } from './Main';
+import {  BlockInfo } from './types';
 import { AddBoxOutlined, TextSnippetOutlined } from '@mui/icons-material';
 
 export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:any, onDelete:any, addUnder:any, active:boolean, onUpdateProperty:any, data: BlockInfo})=>{

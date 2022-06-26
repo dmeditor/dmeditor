@@ -1,7 +1,7 @@
 import { GridViewOutlined } from "@mui/icons-material";
 import { ReactElement } from "react"
-import { RenderMainProps, RenderSettingProps } from "../BlockManager";
-import { BlockData, BlockLayoutData, DataContentBlock } from "../Main"
+import { RenderMainProps, RenderSettingProps } from "../blocktype";
+import { BlockData, BlockLayoutData, DataContentBlock } from "../types"
 import { CommonSetting } from "../Property";
 import { Ranger } from "../utils/Ranger";
 import './ContentBlock.css';
