@@ -1,10 +1,17 @@
 import { GridViewOutlined } from "@mui/icons-material";
 import { ReactElement } from "react"
-import { RenderMainProps, RenderSettingProps } from "../blocktype";
-import { BlockData, BlockLayoutData, DataContentBlock } from "../types"
+import { BlockHandler, RenderMainProps, RenderSettingProps } from "../blocktype";
+import { BlockData, BlockLayoutData } from "../types"
 import { CommonSetting } from "../Property";
 import { Ranger } from "../utils/Ranger";
 import './ContentBlock.css';
+
+export interface DataContentBlock{
+    list: Array<string>,
+    columns:number,
+    rows:number,
+    title?: string
+}
 
 export const ContentBlock = (props:{data:BlockData, isActive:boolean})=>{
     const data = props.data.data as DataContentBlock;
@@ -67,9 +74,9 @@ export const ContentBlockSettings = (props:RenderSettingProps)=>{
 }
 
 
-export const ContentBlockHandler = {
-    type: 'content_block',
-    menu: {text:"Content grid", category:'content_block', type:'content_block', icon: <GridViewOutlined /> },
+export const ContentBlockHandler:BlockHandler = {
+    type: 'content_grid',
+    menu: {text:"Content grid", category:'content_block', icon: <GridViewOutlined /> },
     renderMain: (props:RenderMainProps)=><ContentBlock {...props} />,
     getDefaultData:():BlockData=>{
        return {

@@ -9,6 +9,9 @@ import { BlockHandler, RenderMainProps, RenderSettingProps } from '../blocktype'
 import { Input } from '../utils/Input';
 import { DMTab } from '../Tab';
 
+interface BlockDataParagraph extends BlockData{
+    data: string
+}
 
 interface ParamsLink {
     mode: 'select'|'insert',
@@ -16,7 +19,7 @@ interface ParamsLink {
     element?: HTMLElement|Range
 }
 
-const Paragraph = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onUpdateProperty?:(params?:ParamsLink)=>void})=>{
+const Paragraph = (props:{data:BlockDataParagraph, isActive:boolean, onChange?:(data:any)=>void, onUpdateProperty?:(params?:ParamsLink)=>void})=>{
     //todo: filter render allowed tags
     const [data, setData] = useState(props.data.data as string);
 
@@ -180,7 +183,7 @@ const ParagraphSettings = (props:RenderSettingProps)=>{
     menu: {text:"Paragraph", category:'basic', icon: <TextSnippetOutlined /> },
     canSelectElement: true,
     renderMain: (props:RenderMainProps)=><Paragraph {...props} />,
-    getDefaultData:():BlockData=>{
+    getDefaultData:():BlockDataParagraph=>{
         return {
             layout:{padding: 0},
             data:''};

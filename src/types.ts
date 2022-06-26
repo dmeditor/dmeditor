@@ -8,14 +8,13 @@ export interface BlockLayoutData{
 
 export interface BlockData{
     layout:BlockLayoutData,
-    data: string|DataTable|DataFullImage|DataHeading|DataTextMedia|DataContentBlock,
+    data: unknown, //depends on the block type
 }
 
 export interface BlockInfo{
     type: string
     content: BlockData
 }
-
 
 /* Data type of block types */
 export interface DataTable extends Array<Array<string|number>>{}
@@ -47,11 +46,4 @@ export interface DataTextMedia {
         align?:'left'|'right'
         //todo: define more
     }
-}
-
-export interface DataContentBlock{
-    list: Array<string>,
-    columns:number,
-    rows:number,
-    title?: string
 }
