@@ -1,69 +1,14 @@
 import { useState } from 'react';
 import { Block } from './Block';
-import './Main.css';
+import './DMEditor.css';
 import { Property } from './Property';
 import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
 import { HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
+import { BlockInfo } from './Main';
 
-export interface DataTable extends Array<Array<string|number>>{};
-
-export interface DataFullImage{
-    src: string,
-    style: {
-        padding: number,
-        borderWidth: number,
-        background: string
-    }
-}
-
-export interface DataHeading{
-    text: string,
-    style: {
-        level: number
-    }
-}
-
-export interface DataTextMedia {
-    text:string,
-    media:{
-        type: string,
-        src: string,
-        border?: number,
-        width?: number,
-        height?: number,
-        align?:'left'|'right'
-        //todo: define more
-    }
-}
-
-export interface DataContentBlock{
-    list: Array<string>,
-    columns:number,
-    rows:number,
-    title?: string
-}
-
-
-export interface BlockLayoutData{
-    padding?: number,
-    marginTop?: number,
-    backgroundColor?:string
-}
-
-export interface BlockData{
-    layout:BlockLayoutData,
-    data: string|DataTable|DataFullImage|DataHeading|DataTextMedia|DataContentBlock,
-}
-
-export interface BlockInfo{
-    type: string
-    content: BlockData
-}
-
-
-export const Main = (props:{data:Array<BlockInfo>})=>{
+export const DMEditor = (props:{data:Array<BlockInfo>})=>{
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
