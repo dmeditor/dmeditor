@@ -2,9 +2,9 @@ import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, B
 import { Collapse, ImageList, Input } from '@mui/material';
 import { ReactElement, useState } from 'react';
 import { BlockHandler, blockManager, BlockTypeMenu } from './BlockManager';
-import './MoreBlocks.css';
+import './MenuList.css';
 
-export const MoreBlocks = (props:{onSelect:any})=>{
+export const MenuList = (props:{onSelect:any})=>{
     const blockCategory = [
         {identifier: 'basic', text: 'Basic'},
         {identifier: 'content_block', text: 'Content'},

@@ -4,7 +4,7 @@ import { Block } from './Block';
 import './Main.css';
 import { Property } from './Property';
 import './Init';
-import { MoreBlocks } from './MoreBlocks';
+import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
 import { json } from 'stream/consumers';
 import { HelpCenterOutlined, HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
@@ -163,7 +163,7 @@ export const Main = (props:{data:Array<BlockInfo>})=>{
          </div>                    
         </div>
         <div className='layout-properties'>  
-            {(addMore!=0||activeBlock==-1)&&<MoreBlocks onSelect={confirmAddMore} />}
+            {(addMore!=0||activeBlock==-1)&&<MenuList onSelect={confirmAddMore} />}
             {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
         </div>
     </div>);
