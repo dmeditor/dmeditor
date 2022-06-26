@@ -1,3 +1,23 @@
+/* Block data type */
+
+export interface BlockLayoutData{
+    padding?: number,
+    marginTop?: number,
+    backgroundColor?:string
+}
+
+export interface BlockData{
+    layout:BlockLayoutData,
+    data: string|DataTable|DataFullImage|DataHeading|DataTextMedia|DataContentBlock,
+}
+
+export interface BlockInfo{
+    type: string
+    content: BlockData
+}
+
+
+/* Data type of block types */
 export interface DataTable extends Array<Array<string|number>>{}
 
 export interface DataFullImage{
@@ -35,21 +55,3 @@ export interface DataContentBlock{
     rows:number,
     title?: string
 }
-
-
-export interface BlockLayoutData{
-    padding?: number,
-    marginTop?: number,
-    backgroundColor?:string
-}
-
-export interface BlockData{
-    layout:BlockLayoutData,
-    data: string|DataTable|DataFullImage|DataHeading|DataTextMedia|DataContentBlock,
-}
-
-export interface BlockInfo{
-    type: string
-    content: BlockData
-}
-
