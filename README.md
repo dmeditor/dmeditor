@@ -27,3 +27,32 @@ https://github.com/digimakergo/dmeditor-sample
 
 
 <img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" width="600"/>
+
+### Extending
+#### 1.Create a customized block type(widget)
+
+*Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/FullImage.tsx) as example*
+1. Create a block handler
+```typescript
+ export const FullImageHandler = {
+    type: 'full_image',
+    menu:  {text:"Full image", category:'basic',icon: <ImageOutlined /> },
+    renderMain: (props:RenderMainProps)=><FullImage {...props} />,
+    getDefaultData:():BlockData=>{
+       return {
+        layout:{padding: 0},
+        data:{
+            src:'https://sample.com/test.jpg',
+            style: {padding: 2, borderWidth: 0, background:''}}}
+        },
+    renderSetting: (props:RenderSettingProps)=><FullImageSettings {...props} />
+ }
+```
+2. Register the block handler(can be in App.tsx)
+
+```typescript
+import { FullImageHandler } from "./blocks/FullImage";
+
+
+blockManager.registerBlockType(ContentBlockHandler);
+```
