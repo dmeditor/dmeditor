@@ -1,7 +1,7 @@
-# dmeditor
+# DMEditor
 dmeditor is a block-styled visual editor. Data is in json format.
 
-*Progress: It's still under development and we will soon have alpha version!*
+*Progress: It's still under development and some apis may change!*
 
 ### Highlights
 - Block based
@@ -12,6 +12,14 @@ dmeditor is a block-styled visual editor. Data is in json format.
 - Widgets supporting data source and showing them instantly
 - Can be embeded to a page to edit from frontend
 
+### Installation
+
+```
+npm install dmeditor
+```
+
+### Usage samples
+https://github.com/digimakergo/dmeditor-sample
 
 ### Screenshots
 
