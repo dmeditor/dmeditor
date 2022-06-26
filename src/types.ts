@@ -15,35 +15,3 @@ export interface BlockInfo{
     type: string
     content: BlockData
 }
-
-/* Data type of block types */
-export interface DataTable extends Array<Array<string|number>>{}
-
-export interface DataFullImage{
-    src: string,
-    style: {
-        padding: number,
-        borderWidth: number,
-        background: string
-    }
-}
-
-export interface DataHeading{
-    text: string,
-    style: {
-        level: number
-    }
-}
-
-export interface DataTextMedia {
-    text:string,
-    media:{
-        type: string,
-        src: string,
-        border?: number,
-        width?: number,
-        height?: number,
-        align?:'left'|'right'
-        //todo: define more
-    }
-}

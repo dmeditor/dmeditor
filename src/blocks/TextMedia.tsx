@@ -1,11 +1,24 @@
 import { FormatAlignLeftOutlined, FormatAlignRightOutlined, PermMediaOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { RenderMainProps, RenderSettingProps } from '../blocktype';
-import { BlockData, BlockLayoutData, DataTextMedia} from '../types';
+import { BlockData, BlockLayoutData} from '../types';
 import { CommonSetting } from '../Property';
 import { Ranger } from '../utils/Ranger';
 import './Paragraph.css';
 
+
+export interface DataTextMedia {
+    text:string,
+    media:{
+        type: string,
+        src: string,
+        border?: number,
+        width?: number,
+        height?: number,
+        align?:'left'|'right'
+        //todo: define more
+    }
+}
 
 const TextMedia = (props:{data:BlockData, isActive:boolean, onChange?:(data:any)=>void, onUpdateProperty?:any})=>{
     //todo: filter render allowed tags

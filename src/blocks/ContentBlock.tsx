@@ -1,5 +1,4 @@
 import { GridViewOutlined } from "@mui/icons-material";
-import { ReactElement } from "react"
 import { BlockHandler, RenderMainProps, RenderSettingProps } from "../blocktype";
 import { BlockData, BlockLayoutData } from "../types"
 import { CommonSetting } from "../Property";

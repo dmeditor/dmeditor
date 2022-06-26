@@ -1,12 +1,21 @@
 import React, { ReactElement, useState } from 'react';
 import { Button } from '@mui/material';
-import { BlockData, BlockLayoutData, DataFullImage } from '../types';
+import { BlockData, BlockLayoutData } from '../types';
 import { CommonSetting } from '../Property';
 import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 import { RenderMainProps, RenderSettingProps } from '../blocktype';
 import { ImageOutlined } from '@mui/icons-material';
 
+
+export interface DataFullImage{
+    src: string,
+    style: {
+        padding: number,
+        borderWidth: number,
+        background: string
+    }
+}
 
 const FullImage = (props:{data:BlockData, isActive:boolean})=>{    
     let data = props.data.data as DataFullImage;

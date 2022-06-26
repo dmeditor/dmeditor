@@ -1,9 +1,15 @@
 import { TitleOutlined } from '@mui/icons-material';
 import { RenderMainProps, RenderSettingProps } from '../blocktype';
-import { BlockData, BlockLayoutData, DataHeading } from '../types';
+import { BlockData, BlockLayoutData } from '../types';
 import { CommonSetting } from '../Property';
 import { Ranger } from '../utils/Ranger';
 
+export interface DataHeading{
+    text: string,
+    style: {
+        level: number
+    }
+}
 
 const Heading = (props:{data:BlockData, isActive:boolean, onChange?:any})=>{
     const content = props.data.data as DataHeading;
