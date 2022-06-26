@@ -1,10 +1,9 @@
-import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline, LaptopMacOutlined, MoveUpOutlined, PhoneIphoneOutlined, TabletMacOutlined } from "@mui/icons-material";
+import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { blockManager } from "./BlockManager";
 import { BlockInfo, BlockLayoutData } from "./Main"
 import { DMTab } from "./Tab"
-import { Input } from "./utils/Input";
 import { Ranger } from "./utils/Ranger";
 import { SketchPicker } from 'react-color';
 

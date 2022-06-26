@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from 'react';
 import { Block } from './Block';
 import './Main.css';
@@ -6,8 +5,7 @@ import { Property } from './Property';
 import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
-import { json } from 'stream/consumers';
-import { HelpCenterOutlined, HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
+import { HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 
 export interface DataTable extends Array<Array<string|number>>{};
 

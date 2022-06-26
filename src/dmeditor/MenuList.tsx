@@ -1,7 +1,6 @@
-import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CodeOffOutlined, CodeOutlined, CollectionsOutlined, ExpandCircleDownOutlined, FacebookOutlined, FormatQuote, FormatQuoteOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, MenuOpenOutlined, NetworkCellOutlined, PermMediaOutlined, SquareOutlined, TabOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined, ViewListOutlined, WidgetsOutlined } from '@mui/icons-material';
-import { Collapse, ImageList, Input } from '@mui/material';
-import { ReactElement, useState } from 'react';
-import { BlockHandler, blockManager, BlockTypeMenu } from './BlockManager';
+import { Input } from '@mui/material';
+import { useState } from 'react';
+import { blockManager } from './BlockManager';
 import './MenuList.css';
 
 export const MenuList = (props:{onSelect:any})=>{

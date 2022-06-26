@@ -1,15 +1,13 @@
-import { AudioFileOutlined, BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalic, FormatItalicOutlined, FormatListBulletedOutlined, ImageOutlined, InsertChartOutlined, LinkOutlined, RectangleOutlined, SmartButtonOutlined, TextSnippetOutlined, VideoFileOutlined } from '@mui/icons-material';
-import React, { ReactElement, useRef, useState } from 'react';
+import { AudioFileOutlined, FormatAlignCenter, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalicOutlined, FormatListBulletedOutlined, ImageOutlined, LinkOutlined, RectangleOutlined, TextSnippetOutlined, VideoFileOutlined } from '@mui/icons-material';
+import { useState } from 'react';
 import { BlockData, BlockLayoutData} from '../Main';
 import { CommonSetting } from '../Property';
-import { Ranger } from '../utils/Ranger';
 import parse, { domToReact } from 'html-react-parser';
 import { Element } from 'domhandler/lib/node';
 import './Paragraph.css';
 import { BlockHandler, RenderMainProps, RenderSettingProps } from '../BlockManager';
 import { Input } from '../utils/Input';
 import { DMTab } from '../Tab';
-import { ListItemIcon, MenuItem, Select } from '@mui/material';
 
 
 interface ParamsLink {

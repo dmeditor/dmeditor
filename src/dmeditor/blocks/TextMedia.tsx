@@ -1,5 +1,5 @@
-import { BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatAlignRightOutlined, FormatBoldOutlined, FormatItalic, FormatItalicOutlined, PermMediaOutlined } from '@mui/icons-material';
-import React, { ReactElement, useState } from 'react';
+import { FormatAlignLeftOutlined, FormatAlignRightOutlined, PermMediaOutlined } from '@mui/icons-material';
+import { useState } from 'react';
 import { RenderMainProps, RenderSettingProps } from '../BlockManager';
 import { BlockData, BlockLayoutData, DataTextMedia} from '../Main';
 import { CommonSetting } from '../Property';

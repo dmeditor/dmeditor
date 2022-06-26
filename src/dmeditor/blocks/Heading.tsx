@@ -1,9 +1,7 @@
 import { TitleOutlined } from '@mui/icons-material';
-import React, { ReactElement, useState } from 'react';
 import { RenderMainProps, RenderSettingProps } from '../BlockManager';
-import { BlockData, BlockLayoutData, DataFullImage, DataHeading } from '../Main';
+import { BlockData, BlockLayoutData, DataHeading } from '../Main';
 import { CommonSetting } from '../Property';
-import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 
 

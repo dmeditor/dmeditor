@@ -1,9 +1,8 @@
 import { GridOn } from "@mui/icons-material";
-import { ChangeEvent, ChangeEventHandler, ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RenderMainProps, RenderSettingProps } from "../BlockManager";
 import { BlockData, BlockLayoutData, DataTable } from "../Main"
 import { CommonSetting } from "../Property";
-import { Input } from "../utils/Input";
 import { Ranger } from "../utils/Ranger";
 import './Table.css';
 
