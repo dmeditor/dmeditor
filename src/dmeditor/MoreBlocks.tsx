@@ -1,4 +1,4 @@
-import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CodeOffOutlined, CodeOutlined, CollectionsOutlined, ExpandCircleDownOutlined, FacebookOutlined, FormatQuote, FormatQuoteOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, MenuOpenOutlined, NetworkCellOutlined, PermMediaOutlined, TabOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined, ViewListOutlined, WidgetsOutlined } from '@mui/icons-material';
+import { AccountBalanceOutlined, AppBlockingOutlined, AppRegistrationOutlined, BrowseGallery, CalendarMonth, CodeOffOutlined, CodeOutlined, CollectionsOutlined, ExpandCircleDownOutlined, FacebookOutlined, FormatQuote, FormatQuoteOutlined, GolfCourseOutlined, GridOn, GridViewOutlined, HtmlOutlined, ImageOutlined, MenuOpenOutlined, NetworkCellOutlined, PermMediaOutlined, SquareOutlined, TabOutlined, TextSnippetOutlined, TitleOutlined, Twitter, VideocamOutlined, ViewListOutlined, WidgetsOutlined } from '@mui/icons-material';
 import { Collapse, ImageList, Input } from '@mui/material';
 import { useState } from 'react';
 import './MoreBlocks.css';
@@ -24,7 +24,8 @@ export const MoreBlocks = (props:{onSelect:any})=>{
         {text:"Video", category:'basic', type:'video', icon: <VideocamOutlined style={iconStyle} /> },
         {text:"Quote", category:'basic', type:'quote', icon: <FormatQuoteOutlined style={iconStyle} /> },
         {text:"Code", category:'basic', type:'quote', icon: <CodeOutlined style={iconStyle} /> },    
-        {text:"Content blocks", category:'content_block', type:'content_block', icon: <GridViewOutlined style={iconStyle} /> },
+        {text:"Content grid", category:'content_block', type:'content_block', icon: <GridViewOutlined style={iconStyle} /> },
+        {text:"Embed content", category:'content_block', type:'content', icon: <SquareOutlined style={iconStyle} /> },
         {text:"Carousel", category:'content_block', type:'carousel', icon: <CollectionsOutlined style={iconStyle} /> },
         {text:"Tab", category:'util', type:'tab', icon: <TabOutlined style={iconStyle} /> },            
         {text:"Expandable list", category:'util', type:'expandable_list', icon: <ViewListOutlined style={iconStyle} /> },                    
