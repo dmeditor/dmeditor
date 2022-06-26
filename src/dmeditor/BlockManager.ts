@@ -14,8 +14,15 @@ export interface RenderSettingProps{
     params?:any
 }
 
+export interface BlockTypeMenu{
+    text: string,
+    category: string,
+    icon: ReactElement
+}
+
 export interface BlockHandler {
     type:string;
+    menu: BlockTypeMenu;
     canSelectElement?: boolean,
     getDefaultData: ()=>BlockData;    //when block type is selected
     renderMain: React.FC<RenderMainProps>,       
@@ -24,6 +31,8 @@ export interface BlockHandler {
 
 var blockHandlers:{[key:string]: BlockHandler;} ={};
 
+var blockHandlerArray: Array<BlockHandler> = [];
+
 export const blockManager = {  
     registerBlockType: (handler:BlockHandler)=>{
         blockHandlers[handler.type] = handler;
@@ -31,5 +40,9 @@ export const blockManager = {
 
     getBlockType: (type:string): BlockHandler=>{
         return blockHandlers[type];
+    },
+
+    getBlockTypes:()=>{        
+        return blockHandlers;
     }
 }

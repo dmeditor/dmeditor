@@ -1,4 +1,4 @@
-import { BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatAlignRightOutlined, FormatBoldOutlined, FormatItalic, FormatItalicOutlined } from '@mui/icons-material';
+import { BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatAlignRightOutlined, FormatBoldOutlined, FormatItalic, FormatItalicOutlined, PermMediaOutlined } from '@mui/icons-material';
 import React, { ReactElement, useState } from 'react';
 import { RenderMainProps, RenderSettingProps } from '../BlockManager';
 import { BlockData, BlockLayoutData, DataTextMedia} from '../Main';
@@ -89,6 +89,7 @@ const TextMediaSettings = (props:RenderSettingProps)=>{
 
  export const TextMediaHandler = {
     type: 'text_media',
+    menu: {text:"Text media", category:'pre_designed', icon: <PermMediaOutlined />},
     selectSub: true,
     renderMain:(props:RenderMainProps)=><TextMedia {...props} />,
     getDefaultData:():BlockData=>{

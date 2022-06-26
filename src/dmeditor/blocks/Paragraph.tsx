@@ -1,4 +1,4 @@
-import { AudioFileOutlined, BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalic, FormatItalicOutlined, FormatListBulletedOutlined, ImageOutlined, InsertChartOutlined, LinkOutlined, RectangleOutlined, SmartButtonOutlined, VideoFileOutlined } from '@mui/icons-material';
+import { AudioFileOutlined, BoltOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignLeftOutlined, FormatAlignRight, FormatBoldOutlined, FormatItalic, FormatItalicOutlined, FormatListBulletedOutlined, ImageOutlined, InsertChartOutlined, LinkOutlined, RectangleOutlined, SmartButtonOutlined, TextSnippetOutlined, VideoFileOutlined } from '@mui/icons-material';
 import React, { ReactElement, useRef, useState } from 'react';
 import { BlockData, BlockLayoutData} from '../Main';
 import { CommonSetting } from '../Property';
@@ -179,6 +179,7 @@ const ParagraphSettings = (props:RenderSettingProps)=>{
 
  export const ParagraphHandler:BlockHandler = {
     type: 'p',
+    menu: {text:"Paragraph", category:'basic', icon: <TextSnippetOutlined /> },
     canSelectElement: true,
     renderMain: (props:RenderMainProps)=><Paragraph {...props} />,
     getDefaultData:():BlockData=>{

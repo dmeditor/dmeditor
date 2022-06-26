@@ -1,3 +1,4 @@
+import { GridOn } from "@mui/icons-material";
 import { ChangeEvent, ChangeEventHandler, ReactElement, useEffect, useState } from "react";
 import { RenderMainProps, RenderSettingProps } from "../BlockManager";
 import { BlockData, BlockLayoutData, DataTable } from "../Main"
@@ -107,6 +108,7 @@ const TableSettings = (props:RenderSettingProps)=>{
 
  export const TableHandler = {
     type: 'table',
+    menu: {text:"Table", category:'basic', icon: <GridOn /> }, 
     renderMain: (props:RenderMainProps)=><Table {...props} />,
     getDefaultData:():BlockData=>{
         return {

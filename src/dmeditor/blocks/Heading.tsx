@@ -1,3 +1,4 @@
+import { TitleOutlined } from '@mui/icons-material';
 import React, { ReactElement, useState } from 'react';
 import { RenderMainProps, RenderSettingProps } from '../BlockManager';
 import { BlockData, BlockLayoutData, DataFullImage, DataHeading } from '../Main';
@@ -78,6 +79,7 @@ const HeadingSettings = (props:RenderSettingProps)=>{
 
  export const HeadingHandler = {
     type: 'heading',
+    menu: {text:'Heading',category:'basic',icon: <TitleOutlined /> },
     renderMain: (props:RenderMainProps)=><Heading {...props} />,
     getDefaultData:():BlockData=>{
         return {

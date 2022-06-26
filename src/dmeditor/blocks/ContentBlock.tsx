@@ -1,3 +1,4 @@
+import { GridViewOutlined } from "@mui/icons-material";
 import { ReactElement } from "react"
 import { RenderMainProps, RenderSettingProps } from "../BlockManager";
 import { BlockData, BlockLayoutData, DataContentBlock } from "../Main"
@@ -68,6 +69,7 @@ export const ContentBlockSettings = (props:RenderSettingProps)=>{
 
 export const ContentBlockHandler = {
     type: 'content_block',
+    menu: {text:"Content grid", category:'content_block', type:'content_block', icon: <GridViewOutlined /> },
     renderMain: (props:RenderMainProps)=><ContentBlock {...props} />,
     getDefaultData:():BlockData=>{
        return {

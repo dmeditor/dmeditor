@@ -5,6 +5,7 @@ import { CommonSetting } from '../Property';
 import { Input } from '../utils/Input';
 import { Ranger } from '../utils/Ranger';
 import { RenderMainProps, RenderSettingProps } from '../BlockManager';
+import { ImageOutlined } from '@mui/icons-material';
 
 
 const FullImage = (props:{data:BlockData, isActive:boolean})=>{    
@@ -60,6 +61,7 @@ const FullImageSettings = (props:RenderSettingProps)=>{
 
  export const FullImageHandler = {
     type: 'full_image',
+    menu:  {text:"Full image", category:'basic',icon: <ImageOutlined /> },
     renderMain: (props:RenderMainProps)=><FullImage {...props} />,
     getDefaultData:():BlockData=>{
        return {
