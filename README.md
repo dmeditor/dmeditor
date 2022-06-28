@@ -18,7 +18,7 @@ dmeditor is a block-styled visual editor. Data is in json format.
 npm install dmeditor
 ```
 
-### Usage samples
+### Sample project 
 https://github.com/digimakergo/dmeditor-sample
 
 ### Screenshots
