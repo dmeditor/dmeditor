@@ -7,6 +7,8 @@ import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
 import { HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 import { BlockInfo } from './types';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 export const DMEditor = (props:{data:Array<BlockInfo>})=>{
     const [blocks, setBlocks] = useState(props.data);
@@ -84,7 +86,22 @@ export const DMEditor = (props:{data:Array<BlockInfo>})=>{
         setPropertyParams(params)
     }
 
-    return (<div className='dmeditor-layout'>
+    const outerTheme= createTheme({
+        palette:{
+          primary:grey,
+        },
+        components:{
+          MuiButtonBase:{
+            defaultProps:{
+              disableRipple:true,        
+            }
+          }
+        }
+      });
+
+    return (
+        <ThemeProvider theme={outerTheme}>
+            <div className='dmeditor-layout'>
         <div className='layout-left'>
             <a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>            
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
@@ -108,5 +125,5 @@ export const DMEditor = (props:{data:Array<BlockInfo>})=>{
             {(addMore!=0||activeBlock==-1)&&<MenuList onSelect={confirmAddMore} />}
             {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
         </div>
-    </div>);
+    </div></ThemeProvider>);
 }
