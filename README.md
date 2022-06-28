@@ -18,6 +18,39 @@ dmeditor is a block-styled visual editor. Data is in json format.
 npm install dmeditor
 ```
 
+### Usage
+Check [Sample code](https://github.com/digimakergo/dmeditor-sample/blob/main/src/App.tsx) for source code.
+```typescript
+
+const sampleData:Array<BlockInfo> = [
+    {
+    type:'heading',
+    content: {
+      layout: {},
+      data: {
+        text: "UN whistleblowing complaints 'dismissed too early'",
+        style: {level: 1}
+      }
+    },
+  },
+  {
+    type:'full_image',
+    content: {
+      layout: {},
+      data: {
+        src: "https://ichef.bbci.co.uk/news/976/cpsprodpb/83F8/production/_125548733_stillspurna3new.jpg",
+        style: {padding: 0, borderWidth:0, background:'#ffffff'}
+      }
+    },
+  }
+];
+
+return (
+    <div className="App">
+        <DMEditor data={sampleData} />
+    </div>);
+```
+
 ### Sample project 
 https://github.com/digimakergo/dmeditor-sample
 
