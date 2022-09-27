@@ -38,11 +38,11 @@ In dmeditor-sample folder
 npm link dmeditor
 ```
 
-### 3. Run dmeditor
-In dmeditor folder
+### 3. Run dmeditor sample
+In dmeditor-sample folder
 ```sh
 npm start
 ```
 
-### 4. Change in dmeditor
+### 4. Dev&Update dmeditor
 If there is change in dmeditor, run `npm run dist` in dmeditor and you will see browser of dmeditor-sample will automatically updated.
