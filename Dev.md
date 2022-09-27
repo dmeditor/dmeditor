@@ -1,4 +1,4 @@
-# How to developement
+# How to do developement
 
 ### 1. Clone code
 
