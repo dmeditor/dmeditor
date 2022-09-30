@@ -3,6 +3,7 @@ import { blockManager } from "./BlockManager";
 import { FullImageHandler } from "./blocks/FullImage";
 import { HeadingHandler } from "./blocks/Heading";
 import { TextMediaHandler } from "./blocks/TextMedia";
+import { QuoteHandler } from './blocks/Quote' //start 2022-9-28
 
 import { ParagraphHandler } from "./blocks/Paragraph";
 import { TableHandler } from "./blocks/Table";
@@ -27,6 +28,7 @@ blockManager.registerBlockType(TableHandler);
 blockManager.registerBlockType(FullImageHandler);
 blockManager.registerBlockType(TextMediaHandler);
 blockManager.registerBlockType(ContentBlockHandler);
+blockManager.registerBlockType(QuoteHandler) //start 2022-9-28
 
 const emptyFields = {
   getDefaultData: () => {
@@ -46,11 +48,11 @@ const list: Array<BlockHandler> = [
       icon: <VideocamOutlined />,
     },
   },
-  {
-    ...emptyFields,
-    type: "quote",
-    menu: { text: "Quote", category: "basic", icon: <FormatQuoteOutlined /> },
-  },
+  // {
+  //   ...emptyFields,
+  //   type: "quote",
+  //   menu: { text: "Quote", category: "basic", icon: <FormatQuoteOutlined /> },
+  // },
   {
     ...emptyFields,
     type: "code",
