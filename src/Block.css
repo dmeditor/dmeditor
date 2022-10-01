@@ -56,3 +56,20 @@
     outline: 1px dotted #1ed45d;
     box-shadow: 0px 0px 3px #12913e;
 }
+
+q.block-quote{
+    display: block;
+    text-align: center;
+    padding: 1em;
+    font-size: 1.5em;
+}
+
+q.block-quote::before{
+    margin-right: 0.5rem;
+    color: #999999;
+}
+
+q.block-quote::after{
+    margin-left: 0.5rem;
+    color: #999999;
+}

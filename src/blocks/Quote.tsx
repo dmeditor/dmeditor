@@ -34,7 +34,7 @@ const Quote = (props: {
     style: { ...props.data.layout },
   }
 
-  return <blockquote className='blockquote' {...common}>{content.text}</blockquote>
+  return <q className='block-quote' {...common}>{content.text}</q>
  
 }
 
@@ -60,7 +60,7 @@ export const QuoteHandler = {
   renderMain: (props: RenderMainProps) => <Quote {...props} />,
   getDefaultData: (): BlockData => {
     return {
-      layout: { padding: 0 },
+      layout: {},
       data: { text: 'Test111222', style: { level: 2 } },
     }
   },
