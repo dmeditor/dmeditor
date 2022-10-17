@@ -9,8 +9,9 @@ import { HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined
 import { BlockInfo } from './types';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import { getDef } from './BlockContainer';
 
-export const DMEditor = (props:{data:Array<BlockInfo>})=>{
+export const DMEditor = (props:{data:Array<any>})=>{
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
@@ -113,17 +114,27 @@ export const DMEditor = (props:{data:Array<BlockInfo>})=>{
                 <a href='javascript:void(0)' className={viewmode=='tablet'?'current':''}  onClick={()=>setViewmode('tablet')} title='Tablet'><TabletMacOutlined /></a>
                 </div></div>
         </div>  
-        <div className='layout-main-container'>               
+        <div id="dmeditor-main" className='layout-main-container'>               
          <div className={'layout-main '+' viewmode-'+viewmode}>
             <div style={{width: '100%', height: 1}}></div>
-            {blocks.map((block, index)=>
-                <Block key={index+block.type} onUpdateProperty={updatePropertyParams} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
+            {blocks.map((block, index)=>{
+             const a = ()=>{
+                let def = getDef(block.type);
+                let DefHandler = def.def;
+                return <div onClick={()=>setActiveBlock(index)}><DefHandler /></div>;         
+             }
+             return a();        
+            }
+                // <Block key={index+block.type} onUpdateProperty={updatePropertyParams} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
+                
+                // <Block data={block} />
             )}  
          </div>                    
         </div>
-        <div className='layout-properties'>  
-            {(addMore!=0||activeBlock==-1)&&<MenuList onSelect={confirmAddMore} />}
-            {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />}
+        <div className='layout-properties'>
+            {activeBlock==-1&&<MenuList onSelect={confirmAddMore} />}
+            {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
+            <div id="dmeditor-property" style={{display: activeBlock>=0?'block':'none'}}></div>
         </div>
     </div></ThemeProvider>);
 }

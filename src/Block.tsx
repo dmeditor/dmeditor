@@ -1,62 +1,71 @@
-import React, { ReactElement, useState } from 'react';
-import './Block.css';
-import { blockManager } from './BlockManager';
-import {  BlockInfo } from './types';
-import { AddBoxOutlined, TextSnippetOutlined } from '@mui/icons-material';
+import { useEffect, useRef, useState } from "react"
+import { BlockButton } from "./blocks/BlockButton"
+import { BlockImage } from "./blocks/BlockImage"
+import { BlockText } from "./blocks/BlockText"
 
-export const Block = (props:{addAbove:any, onSelect:any, addMore:any, onChange:any, onDelete:any, addUnder:any, active:boolean, onUpdateProperty:any, data: BlockInfo})=>{
-    const [isActive, setIsActive] = useState(props.active);
-    const [data, setData] = useState(props.data);
-    
+export type BlockInfo = {
+    type: string
+    content?: any,
+    settings?: any,
+}
 
-    React.useEffect(() => {
-        setIsActive(props.active);   
-        setData(props.data);    
-      });
+interface BlockProps{
+    data: BlockInfo,
+    active?:boolean,
+    onActiveChange?: (active:boolean)=>void
+}
 
+export const Block = (props:BlockProps)=>{
+    const [isActive, setIsActive] = useState(props.active?true:false);
+    const ref:any = useRef();
+    useOnClickOutside(ref, () => changeActive(false));
 
-    const content = data.content;
-
-
-
-    const renderContent = (type: string):ReactElement=>{        
-        const handler = blockManager.getBlockType(type);
-        if( handler ){
-            const BlockMain = handler.renderMain;
-            return <BlockMain data={content} isActive={isActive} onChange={onChange} onUpdateProperty={props.onUpdateProperty} />;
-        }else{
-            return <div>Unknown block type.</div>
+    const changeActive = (active:boolean)=>{
+        setIsActive(active);
+        if( props.onActiveChange ){
+            props.onActiveChange(active);
         }
     }
 
-    const onChange = (data:any) =>{
-        props.onChange(data);
-    }
+    const render = ()=>{
+        if(props.data.type=='text'){
+            return <BlockText data={props.data} active={isActive} />
+        }else if(props.data.type=='image'){
+            return <BlockImage data={props.data} active={isActive} />
+        }else if(props.data.type=='button'){
+            return <BlockButton data={props.data} active={isActive} />      
+        }else{
+            return 'Unknown type';
+        }
+    };
 
-    const renderBlock = ()=>{
-        return <div onClick={props.onSelect} className={"block"+(isActive?' block-active':'')}>
-            {renderContent(props.data.type)}          
-        </div>
-    }
+    
+    return <div ref={ref} className={"block block-type-"+props.data.type+(isActive?' active':'')} 
+    onClick={(e:any)=>{changeActive(true);}}>
+        {render()}
+    </div>
 
-    return (<>
-        {isActive&&<div className='block-container'>
-            <div className="tool tool-above">              
-                <a className="tool-item" href="javascript:void(0);" title="Add paragraphs" onClick={()=>props.addAbove('p')}><TextSnippetOutlined /></a>
-                <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>props.addMore(-1)}><AddBoxOutlined /></a>
-            </div>
-                {renderBlock()}
-            <div className="tool tool-under">                             
-                <a className="tool-item" href="javascript:void(0);" title="Add paragraphs" onClick={()=>props.addUnder('p')}><TextSnippetOutlined /></a>                
-                <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>props.addMore(1)}><AddBoxOutlined /></a>
-            </div>
-        </div>}
-        {!isActive&&<>{renderBlock()}</>}
-    </>);
 }
 
-export interface BlockType{
-    onSettingUpdate:()=>void,
-    onDelete:(index:number)=>void,
-    onAdd:()=>any    //when adding a new block    
+
+const useOnClickOutside = (ref:any, handler:any)=> {
+    useEffect(
+      () => {
+        const listener = (event:any) => {
+          if (!ref.current || ref.current.contains(event.target)) {
+            return;
+          }
+          handler(event);
+        };
+  
+        document.getElementById('dmeditor-main')?.addEventListener("mousedown", listener);
+        document.getElementById('dmeditor-main')?.addEventListener("touchstart", listener);
+  
+        return () => {
+          document.getElementById('dmeditor-main')?.removeEventListener("mousedown", listener);
+          document.getElementById('dmeditor-main')?.removeEventListener("touchstart", listener);
+        };
+      },
+      [ref, handler]
+    );
 }

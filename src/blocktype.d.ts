@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import {BlockData} from "./dmeditor";
+import {BlockData} from "./DMEditor";
 
 export interface RenderMainProps{
     data:BlockData,

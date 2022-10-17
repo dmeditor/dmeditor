@@ -70,7 +70,7 @@ const FullImageSettings = (props:RenderSettingProps)=>{
 
  export const FullImageHandler = {
     type: 'full_image',
-    menu:  {text:"Full image", category:'basic',icon: <ImageOutlined /> },
+    menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
     renderMain: (props:RenderMainProps)=><FullImage {...props} />,
     getDefaultData:():BlockData=>{
        return {
