@@ -1,7 +1,9 @@
-import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from "@mui/icons-material";
+import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight, TextFormatOutlined } from "@mui/icons-material";
 import { Button, Input } from "@mui/material";
 import { useState } from "react";
+import { Block } from "../Block";
 import { BlockProperty } from "../BlockProperty"
+import { ToolDefinition } from "../ToolDefinition";
 
 export const BlockText = (props:any)=>{
     const [size, setSize] = useState(1.1);
@@ -24,4 +26,13 @@ export const BlockText = (props:any)=>{
             </BlockProperty>
             <div style={{fontSize: size+'em', textAlign:align}} dangerouslySetInnerHTML={{__html:props.data.content?props.data.content:'default text1111'}} />
             </div>
+}
+
+
+export const toolText:ToolDefinition = {
+    type: 'text',
+    isComposited: false,
+    menu:  {text:"Image", category:'basic',icon: <TextFormatOutlined /> },
+    initData: 'test',
+    def: ()=><Block data={{type:'text'}} onActiveChange={()=>{}}/>
 }

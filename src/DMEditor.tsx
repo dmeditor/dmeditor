@@ -9,7 +9,7 @@ import { HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined
 import { BlockInfo } from './types';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { getDef } from './BlockContainer';
+import { getDef } from './ToolDefinition';
 
 export const DMEditor = (props:{data:Array<any>})=>{
     const [blocks, setBlocks] = useState(props.data);

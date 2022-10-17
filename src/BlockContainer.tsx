@@ -1,4 +1,4 @@
-import { AlignHorizontalCenter, AlignHorizontalLeft, AlignHorizontalRight, AlignVerticalCenter, AlignVerticalTop, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, HorizontalSplit } from "@mui/icons-material";
+import { AlignHorizontalCenter, AlignHorizontalLeft, AlignHorizontalRight, AlignVerticalCenter, AlignVerticalTop, Collections, CollectionsOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, HorizontalSplit } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import React from "react";
 import { useState } from "react";
@@ -40,7 +40,7 @@ export type BlockContainerDefinition = {
 }
 
 
-const DefContainer = (props:{ required?:boolean,
+export const DefContainer = (props:{ required?:boolean,
                             type?:string,
                             allowedType:string|Array<string>,
                             horizontal?:boolean,
@@ -97,48 +97,4 @@ const DefContainer = (props:{ required?:boolean,
         </BlockProperty>
         {renderChildren()}
     </div>;
-}
-
-const DefBlock = (props:{required:boolean, type:string, 
-    min?:number, 
-    allowedSettings?: string[],
-    onActiveChange?:(active:boolean)=>void,
-    active?:boolean,
-    max?:number})=>{
-    return <Block data={{type:props.type}} onActiveChange={props.onActiveChange} />
-}
-
-//block: type, required, max, min, containerProperties
-//container: allowedType, 
-//common: activatedOnSelect(boolean)
-
-//next: trigger
-
-const defTextImage = {
-    type: 'imagetext',
-    isComposited: true,
-    initData: [{type: 'image', content:'http://www.googl.com/logo.png'}],
-    def: ()=><DefContainer type='imagetext' horizontal allowedType={["image", "container"]}>
-        <DefBlock type="image" required={true} allowedSettings={['leftright']} />
-        <DefContainer required={true} allowedType={["text", "container"]}>
-            <DefBlock required={true} type="text" />
-            <DefContainer align='center' allowedType="button">
-                <DefBlock type="button" required={true} max={3} min={1} />
-            </DefContainer>
-        </DefContainer>
-    </DefContainer>
-}
-
-const defText = {
-    type: 'text',
-    isComposited: false,
-    initData: 'test',
-    def: ()=><Block data={{type:'text'}} onActiveChange={()=>{}}/>
-}
-
-export const getDef = (type:string)=>{
-    if(type === 'imagetext'){
-        return defTextImage;
-    }
-    return defText
 }

@@ -47,6 +47,20 @@ export const Block = (props:BlockProps)=>{
 
 }
 
+//block: type, required, max, min, containerProperties
+//container: allowedType, 
+//common: activatedOnSelect(boolean)
+
+//next: trigger
+export const DefBlock = (props:{required:boolean, type:string, 
+    min?:number, 
+    allowedSettings?: string[],
+    onActiveChange?:(active:boolean)=>void,
+    active?:boolean,
+    max?:number})=>{
+    return <Block data={{type:props.type}} onActiveChange={props.onActiveChange} />
+}
+
 
 const useOnClickOutside = (ref:any, handler:any)=> {
     useEffect(

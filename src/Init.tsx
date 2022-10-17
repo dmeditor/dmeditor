@@ -21,6 +21,10 @@ import {
   VideocamOutlined,
   ViewListOutlined,
 } from "@mui/icons-material";
+import { registerTool } from "./ToolDefinition";
+import { toolText } from "./blocks/BlockText";
+import { toolImageText } from "./blocks/composition/ImageText";
+
 
 blockManager.registerBlockType(ParagraphHandler);
 blockManager.registerBlockType(HeadingHandler);
@@ -144,3 +148,7 @@ const list: Array<BlockHandler> = [
 for (let item of list) {
   blockManager.registerBlockType(item);
 }
+
+
+registerTool(toolText);
+registerTool(toolImageText);
