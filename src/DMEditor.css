@@ -79,3 +79,38 @@ hr{
     border-top: 1px solid #cccccc;
     border-bottom: none;
 }
+
+
+
+.blockcontainer-horizontal{
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+  
+  .blockcontainer{
+    outline: 1px solid rgba(0,0,0,0);
+  }
+  
+  .block:hover, .active{
+    outline: 1px solid #00721f;
+  }
+  
+  .blockcontainer:hover{
+    outline: 1px dotted #333333;
+  }
+  
+  .blockcontainer{
+    margin: 0px;
+  }
+  
+  .blockcontainer-align-center{
+    text-align: center;
+  }
+  
+  .blockcontainer-align-right{
+    text-align: right;
+  }
+  
+  .block-type-imagetext > .block-type-image{
+    display: inline-block;
+  }
