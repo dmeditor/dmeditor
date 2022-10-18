@@ -42,7 +42,7 @@ export const Block = (props:BlockProps)=>{
     
     return <div ref={ref} className={"block block-type-"+props.data.type+(isActive?' active':'')} 
     onClick={(e:any)=>{changeActive(true);}}>
-        {render()}
+        {render()}       
     </div>
 
 }

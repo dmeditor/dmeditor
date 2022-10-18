@@ -5,7 +5,7 @@ import { Property } from './Property';
 import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
-import { HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
+import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 import { BlockInfo } from './types';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
@@ -15,6 +15,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
+    const [mode, setMode] = useState('add' as 'add'|'select');
     const [propertyParams, setPropertyParams] = useState('');
     const [viewmode, setViewmode] = useState('pc');
 
@@ -25,18 +26,20 @@ export const DMEditor = (props:{data:Array<any>})=>{
             allBlocks.splice(activeBlock, 0, {type: type, content: defaultData} );
             setBlocks(allBlocks);
         }
+        setMode('add');
         setAddMore(0);
     }
 
 
     const addUnder = (type: string)=>{
         if( type ){
-            const defaultData = blockManager.getBlockType(type).getDefaultData();
+            const defaultData = getDef(type).initData;
             let allBlocks = [...blocks];            
             allBlocks.splice(activeBlock+1, 0, {type: type, content: defaultData });
             setBlocks( allBlocks );
             setActiveBlock(activeBlock+1);
         }
+        setMode('add');
         setAddMore(0);
     }
 
@@ -60,6 +63,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
     }
 
     const onAddMore = (position:number)=>{
+        setMode('add');
         setAddMore(position);
     }
 
@@ -69,6 +73,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
         }else if(addMore < 0){
             addAbove(type);
         }
+        setMode('select');
     }
 
     const onDelete = ()=>{
@@ -81,10 +86,6 @@ export const DMEditor = (props:{data:Array<any>})=>{
         }else{
             setActiveBlock(activeBlock-1);
         }
-    }
-
-    const updatePropertyParams = (params:any)=>{
-        setPropertyParams(params)
     }
 
     const outerTheme= createTheme({
@@ -121,7 +122,16 @@ export const DMEditor = (props:{data:Array<any>})=>{
              const a = ()=>{
                 let def = getDef(block.type);
                 let DefHandler = def.def;
-                return <div onClick={()=>setActiveBlock(index)}><DefHandler /></div>;         
+                let currentSelected = activeBlock===index ;
+                return <div onClick={()=>{setActiveBlock(index); if(!currentSelected){ setMode('select')}}}>
+                 {currentSelected && <div className="tool tool-above">                             
+                    <a className="tool-item" href="javascript:void(0);" title="Add above" onClick={()=>onAddMore(-1)}><AddBoxOutlined /></a>
+                </div>}   
+                    <DefHandler />
+                 {currentSelected&&<div className="tool tool-under">                             
+                    <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>onAddMore(1)}><AddBoxOutlined /></a>
+                </div>}
+                </div>;         
              }
              return a();        
             }
@@ -131,10 +141,10 @@ export const DMEditor = (props:{data:Array<any>})=>{
             )}  
          </div>                    
         </div>
-        <div className='layout-properties'>
-            {activeBlock==-1&&<MenuList onSelect={confirmAddMore} />}
+        <div className='layout-properties'> mode: {mode}
+            {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
             {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
-            <div id="dmeditor-property" style={{display: activeBlock>=0?'block':'none'}}></div>
+            <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}></div>
         </div>
     </div></ThemeProvider>);
 }
