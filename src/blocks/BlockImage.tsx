@@ -24,6 +24,6 @@ export const BlockImage = (props:any)=>{
 export const toolImage:ToolDefinition = {
     type: 'image',
     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
-    initData: {type:'image', content:'test'},
+    initData: {type:'image', content:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/2312px-Picture_icon_BLACK.svg.png'},
     def: (props:{data:any, active:boolean})=><BlockImage {...props} />
 }
