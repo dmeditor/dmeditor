@@ -32,7 +32,7 @@ export const BlockText = (props:any)=>{
 export const toolText:ToolDefinition = {
     type: 'text',
     isComposited: false,
-    menu:  {text:"Image", category:'basic',icon: <TextFormatOutlined /> },
+    menu:  {text:"Text", category:'basic',icon: <TextFormatOutlined /> },
     initData: 'test',
     def: ()=><Block data={{type:'text'}} onActiveChange={()=>{}}/>
 }

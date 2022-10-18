@@ -2,6 +2,7 @@ import { Input } from '@mui/material';
 import { useState } from 'react';
 import { blockManager } from './BlockManager';
 import './MenuList.css';
+import { GetToolDefinitions } from './ToolDefinition';
 
 export const MenuList = (props:{onSelect:any})=>{
     const blockCategory = [
@@ -13,12 +14,12 @@ export const MenuList = (props:{onSelect:any})=>{
         {identifier: 'social_network', text: 'Social Network'}        
         ];
 
-    const registeredTypes = blockManager.getBlockTypes();    
+    const registeredTypes = GetToolDefinitions();
 
     let names: Array<{type: string, name: string}> = [];
     for( let item of Object.keys( registeredTypes ) ){
-        const blockType = registeredTypes[item];
-        names = [...names, {type: item, name: blockType.menu.text}];
+        const toolType = registeredTypes[item];
+        names = [...names, {type: item, name: toolType.menu.text}];
     }
 
     const [list, setList] = useState(names);

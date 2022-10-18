@@ -1,12 +1,16 @@
 export interface ToolDefinition {
     type:string,
-    isComposited: boolean,
+    isComposited?: boolean,
     menu: {text: string, category: string, icon: React.ReactElement},
     initData: any,
     def: ()=>React.ReactElement,    
 }
 
 let defMap: {[key: string]: ToolDefinition} = {};
+
+export const GetToolDefinitions = () => {
+    return defMap;
+};
 
 export const registerTool = (toolDef:ToolDefinition)=>{
     defMap[toolDef.type] = toolDef;

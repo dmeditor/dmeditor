@@ -15,8 +15,13 @@ import {
   CollectionsOutlined,
   FacebookOutlined,
   FormatQuoteOutlined,
+  GridOn,
+  GridViewOutlined,
+  ImageOutlined,
   SquareOutlined,
   TabOutlined,
+  TextFormatOutlined,
+  TitleOutlined,
   Twitter,
   VideocamOutlined,
   ViewListOutlined,
@@ -25,130 +30,157 @@ import { registerTool } from "./ToolDefinition";
 import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
 
+registerTool(toolText);
+registerTool(toolImageText);
+registerTool(
+  { type: 'heading',
+    isComposited: false,
+    menu: {text:'Heading',category:'basic',icon: <TitleOutlined /> },
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
 
-blockManager.registerBlockType(ParagraphHandler);
-blockManager.registerBlockType(HeadingHandler);
-blockManager.registerBlockType(TableHandler);
-blockManager.registerBlockType(FullImageHandler);
-blockManager.registerBlockType(TextMediaHandler);
-blockManager.registerBlockType(ContentBlockHandler);
-blockManager.registerBlockType(QuoteHandler) //start 2022-9-28
+registerTool(
+  { type: 'table',
+    isComposited: false,
+    menu: {text:"Table", category:'basic', icon: <GridOn /> }, 
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
 
-const emptyFields = {
-  getDefaultData: () => {
-    return { data: "", layout: {} };
-  },
-  renderMain:  (props:RenderMainProps)=><div>Not implemented</div>,
-  renderSetting:(props:RenderSettingProps) => <div></div>,
-};
+registerTool(
+  { type: 'full_image',
+    menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
 
-const list: Array<BlockHandler> = [
-  {
-    ...emptyFields,
-    type: "video",
+registerTool(
+  { type: 'quote',
+    menu: { text: 'Quote', category: 'basic', icon: <TitleOutlined /> },
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { type: "video",
     menu: {
       text: "Video",
       category: "basic",
       icon: <VideocamOutlined />,
     },
-  },
-  // {
-  //   ...emptyFields,
-  //   type: "quote",
-  //   menu: { text: "Quote", category: "basic", icon: <FormatQuoteOutlined /> },
-  // },
-  {
-    ...emptyFields,
-    type: "code",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { type: "code",
     menu: {
       text: "Code",
       category: "basic",
       icon: <CodeOutlined />,
     },
-  },
-  {
-    ...emptyFields,
-    type: "content_block",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { 
+    type: 'content_grid',
+    menu: {text:"Content grid", category:'content_block', icon: <GridViewOutlined /> },
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { type: "content_block",
     menu: {
       text: "Embed content",
       category: "content_block",
       icon: <SquareOutlined />,
     },
-  },
-  {
-    ...emptyFields,
-    type: "carousel",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { type: "carousel",
     menu: {
       text: "Carousel",
       category: "content_block",
       icon: <CollectionsOutlined />,
     },
-  },
-  {
-    ...emptyFields,
-    type: "tab",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { type: "tab",
     menu: { text: "Tab", category: "util", icon: <TabOutlined /> },
-  },
-  {
-    ...emptyFields,
-    type: "expandable_list",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { type: "expandable_list",
     menu: {
       text: "Expandable list",
       category: "util",
       icon: <ViewListOutlined />,
     },
-  },
-  {
-    ...emptyFields,
-    type: "calendar",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { type: "calendar",
     menu: {
       text: "Calendar events",
       category: "content_block",
       icon: <CalendarMonth />,
     },
-  },
-  {
-    ...emptyFields,
-    type: "superoffice_form",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+
+registerTool(
+  { type: "superoffice_form",
     menu: {
       text: "SuperOffice form",
       category: "superoffice",
       icon: <AppRegistrationOutlined />,
     },
-  },
-  {
-    ...emptyFields,
-    type: "gallery",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+registerTool(
+  { type: "gallery",
     menu: {
       text: "Gallery",
       category: "content_block",
       icon: <CollectionsOutlined />,
     },
-  },
-  {
-    ...emptyFields,
-    type: "facebook",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+registerTool(
+  { type: "facebook",
     menu: {
       text: "Facebook page",
       category: "social_network",
       icon: <FacebookOutlined />,
     },
-  },
-  {
-    ...emptyFields,
-    type: "twitter",
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
+registerTool(
+  { type: "twitter",
     menu: {
       text: "Twitter tweet",
       category: "social_network",
       icon: <Twitter />,
     },
-  },
-];
+    initData: 'test',
+    def: ()=> <div>Not implemented</div>}
+);
 
-for (let item of list) {
-  blockManager.registerBlockType(item);
-}
-
-
-registerTool(toolText);
-registerTool(toolImageText);
