@@ -4,9 +4,8 @@ import { FullImageHandler } from "./blocks/FullImage";
 import { HeadingHandler } from "./blocks/Heading";
 import { TextMediaHandler } from "./blocks/TextMedia";
 import { QuoteHandler } from './blocks/Quote' //start 2022-9-28
-
+import {toolTable} from "./blocks/Table";
 import { ParagraphHandler } from "./blocks/Paragraph";
-import { TableHandler } from "./blocks/Table";
 import { ContentBlockHandler } from "./blocks/ContentBlock";
 import {
   AppRegistrationOutlined,
@@ -40,13 +39,7 @@ registerTool(
     def: ()=> <div>Not implemented</div>}
 );
 
-registerTool(
-  { type: 'table',
-    isComposited: false,
-    menu: {text:"Table", category:'basic', icon: <GridOn /> }, 
-    initData: 'test',
-    def: ()=> <div>Not implemented</div>}
-);
+registerTool( toolTable );
 
 registerTool(
   { type: 'full_image',
