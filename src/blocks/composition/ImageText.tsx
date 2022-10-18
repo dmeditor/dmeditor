@@ -9,7 +9,7 @@ export const toolImageText: ToolDefinition = {
     isComposited: true,
     menu:  {text:"Image text", category:'basic',icon: <CollectionsOutlined /> },
     initData: [{type: 'image', content:'http://www.googl.com/logo.png'}],
-    def: ()=><DefContainer type='imagetext' horizontal allowedType={["image", "container"]}>
+    def: (props:{data:any, active:boolean})=><DefContainer type='imagetext' horizontal allowedType={["image", "container"]}>
         <DefBlock type="image" required={true} allowedSettings={['leftright']} />
         <DefContainer required={true} allowedType={["text", "container"]}>
             <DefBlock required={true} type="text" />

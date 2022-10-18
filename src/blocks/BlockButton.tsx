@@ -1,6 +1,8 @@
+import { SmartButtonOutlined } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { BlockProperty } from "../BlockProperty"
+import { ToolDefinition } from "../ToolDefinition";
 
 export const BlockButton = (props:any)=>{
     const [size, setSize] = useState('small' as ('small' | 'medium' | 'large'));
@@ -32,4 +34,10 @@ export const BlockButton = (props:any)=>{
 
             {props.data.content?<Button />:<Button color={color} size={size} variant={variant}><span>default button</span></Button>}
             </div>
+}
+
+export const toolButton:ToolDefinition = {
+    type: 'button',
+    initData: 'test',
+    def: (props:{data:any, active:boolean})=><BlockButton {...props} />
 }

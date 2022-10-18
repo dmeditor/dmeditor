@@ -1,9 +1,9 @@
 export interface ToolDefinition {
     type:string,
     isComposited?: boolean,
-    menu: {text: string, category: string, icon: React.ReactElement},
+    menu?: {text: string, category: string, icon: React.ReactElement},
     initData: any,
-    def: ()=>React.ReactElement,    
+    def: (data:any, active:boolean)=>React.ReactElement,    
 }
 
 let defMap: {[key: string]: ToolDefinition} = {};

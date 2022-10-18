@@ -34,5 +34,5 @@ export const toolText:ToolDefinition = {
     isComposited: false,
     menu:  {text:"Text", category:'basic',icon: <TextFormatOutlined /> },
     initData: 'test',
-    def: ()=><Block data={{type:'text'}} onActiveChange={()=>{}}/>
+    def: (props:{data:any, active:boolean})=><BlockText {...props} />
 }

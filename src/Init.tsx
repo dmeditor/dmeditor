@@ -28,9 +28,14 @@ import {
 import { registerTool } from "./ToolDefinition";
 import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
+import { toolButton } from "./blocks/BlockButton";
+import { toolImage } from "./blocks/BlockImage";
 
 registerTool(toolText);
 registerTool(toolImageText);
+registerTool(toolButton);
+registerTool(toolImage);
+
 registerTool(
   { type: 'heading',
     isComposited: false,
@@ -41,12 +46,12 @@ registerTool(
 
 registerTool( toolTable );
 
-registerTool(
-  { type: 'full_image',
-    menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
-    initData: 'test',
-    def: ()=> <div>Not implemented</div>}
-);
+// registerTool(
+//   { type: 'full_image',
+//     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
+//     initData: 'test',
+//     def: ()=> <div>Not implemented</div>}
+// );
 
 registerTool(
   { type: 'quote',

@@ -3,6 +3,7 @@ import { BlockButton } from "./blocks/BlockButton"
 import { BlockImage } from "./blocks/BlockImage"
 import { BlockText } from "./blocks/BlockText"
 import { Table } from "./blocks/Table"
+import { getDef } from "./ToolDefinition"
 
 export type BlockInfo = {
     type: string
@@ -11,7 +12,7 @@ export type BlockInfo = {
 }
 
 interface BlockProps{
-    data: BlockInfo,
+    data: any,
     active?:boolean,
     onActiveChange?: (active:boolean)=>void
 }
@@ -29,14 +30,10 @@ export const Block = (props:BlockProps)=>{
     }
 
     const render = ()=>{
-        if(props.data.type=='text'){
-            return <BlockText data={props.data} active={isActive} />
-        }else if(props.data.type=='image'){
-            return <BlockImage data={props.data} active={isActive} />
-        }else if(props.data.type=='button'){
-            return <BlockButton data={props.data} active={isActive} />      
-        }else if(props.data.type=='table'){
-            return <Table data={props.data} active={isActive} />
+        let def = getDef( props.data.type );
+        if( def){
+            let ToolRender = def.def;
+            return <ToolRender data={props.data} active={isActive} />
         }else{
             return 'Unknown type';
         }

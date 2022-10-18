@@ -1,6 +1,7 @@
-import { Image, ImageNotSupported } from "@mui/icons-material";
+import { Image, ImageNotSupported, ImageOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { BlockProperty } from "../BlockProperty";
+import { ToolDefinition } from "../ToolDefinition";
 
 
 export const BlockImage = (props:any)=>{
@@ -18,4 +19,11 @@ export const BlockImage = (props:any)=>{
             <div><img width={'100%'} src={'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/2312px-Picture_icon_BLACK.svg.png'} /></div>
             }
             </div>
+}
+
+export const toolImage:ToolDefinition = {
+    type: 'image',
+    menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
+    initData: 'test',
+    def: (props:{data:any, active:boolean})=><BlockImage {...props} />
 }

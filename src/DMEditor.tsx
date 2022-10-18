@@ -120,14 +120,12 @@ export const DMEditor = (props:{data:Array<any>})=>{
             <div style={{width: '100%', height: 1}}></div>
             {blocks.map((block, index)=>{
              const a = ()=>{
-                let def = getDef(block.type);
-                let DefHandler = def.def;
                 let currentSelected = activeBlock===index ;
                 return <div onClick={()=>{setActiveBlock(index); if(!currentSelected){ setMode('select')}}}>
                  {currentSelected && <div className="tool tool-above">                             
                     <a className="tool-item" href="javascript:void(0);" title="Add above" onClick={()=>onAddMore(-1)}><AddBoxOutlined /></a>
                 </div>}   
-                    <DefHandler />
+                    <Block data={block} active={currentSelected} />
                  {currentSelected&&<div className="tool tool-under">                             
                     <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>onAddMore(1)}><AddBoxOutlined /></a>
                 </div>}

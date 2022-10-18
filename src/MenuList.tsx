@@ -19,7 +19,9 @@ export const MenuList = (props:{onSelect:any})=>{
     let names: Array<{type: string, name: string}> = [];
     for( let item of Object.keys( registeredTypes ) ){
         const toolType = registeredTypes[item];
-        names = [...names, {type: item, name: toolType.menu.text}];
+        if( toolType.menu ){
+            names = [...names, {type: item, name: toolType.menu.text}];
+        }
     }
 
     const [list, setList] = useState(names);
@@ -36,11 +38,11 @@ export const MenuList = (props:{onSelect:any})=>{
         <Input fullWidth placeholder='Type to search' onChange={search} autoFocus style={{padding: '10px'}} />
         </div>
         {blockCategory.map((category)=><div>
-            {list.filter(item=>registeredTypes[item.type].menu.category==category.identifier).map((blockType, index)=>
+            {list.filter(item=>registeredTypes[item.type].menu?.category==category.identifier).map((blockType, index)=>
                 <>{index==0&&<div style={{padding: '5px 0px', color: '#4f4f4f', margin:'5px 10px' }}>{category.text}</div>}
                 <div key={index} className="moreblock" onClick={()=>props.onSelect(blockType.type)}>
                 <table style={{width:'100%'}}>
-                    <tr><td style={{width: '28px'}}>{registeredTypes[blockType.type].menu.icon}</td><td style={{textAlign:'left'}}>{blockType.name}</td></tr>                    
+                    <tr><td style={{width: '28px'}}>{registeredTypes[blockType.type].menu?.icon}</td><td style={{textAlign:'left'}}>{blockType.name}</td></tr>                    
                 </table>
             </div></>
             )}

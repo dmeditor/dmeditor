@@ -7,6 +7,7 @@ import './Table.css';
 import { BlockProperty } from "../BlockProperty";
 import React from "react";
 import { Block } from "../Block";
+import { ToolDefinition } from "../ToolDefinition";
 
 export const Table = (props:any)=>{
     const [content, SetContent] = useState([["Hello", "Test"]]);
@@ -40,15 +41,9 @@ export const Table = (props:any)=>{
  }
 
 
- export const toolTable = {
+ export const toolTable:ToolDefinition = {
     type: 'table',
     menu: {text:"Table", category:'basic', icon: <GridOn /> }, 
-    renderMain: (props:RenderMainProps)=><Table {...props} />,
-    initData: [["Test", "Test2"]],
-    getDefaultData:():BlockData=>{
-        return {
-            layout:{padding: 0},
-            data: [['test table', 'test table1']]};
-    },
-    def: ()=><Block data={{type:'table'}} onActiveChange={()=>{}} />
+    initData: [["Test", "Test2"]],    
+    def: (props:{data:any, active:boolean})=><Table {...props} />
  }
