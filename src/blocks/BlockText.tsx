@@ -33,6 +33,6 @@ export const toolText:ToolDefinition = {
     type: 'text',
     isComposited: false,
     menu:  {text:"Text", category:'basic',icon: <TextFormatOutlined /> },
-    initData: 'test',
+    initData: {type:'text', content:'test'},
     def: (props:{data:any, active:boolean})=><BlockText {...props} />
 }

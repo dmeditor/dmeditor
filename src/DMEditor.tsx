@@ -35,7 +35,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
         if( type ){
             const defaultData = getDef(type).initData;
             let allBlocks = [...blocks];            
-            allBlocks.splice(activeBlock+1, 0, {type: type, content: defaultData });
+            allBlocks.splice(activeBlock+1, 0, defaultData);
             setBlocks( allBlocks );
             setActiveBlock(activeBlock+1);
         }

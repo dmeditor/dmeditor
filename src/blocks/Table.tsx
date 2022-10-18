@@ -10,7 +10,7 @@ import { Block } from "../Block";
 import { ToolDefinition } from "../ToolDefinition";
 
 export const Table = (props:any)=>{
-    const [content, SetContent] = useState([["Hello", "Test"]]);
+    const [content, SetContent] = useState(props.data.content as Array<Array<string>>);
 
     return <div style={{...props.data.layout}}>
                     <BlockProperty title={'Table'} active={props.active}>
@@ -44,6 +44,6 @@ export const Table = (props:any)=>{
  export const toolTable:ToolDefinition = {
     type: 'table',
     menu: {text:"Table", category:'basic', icon: <GridOn /> }, 
-    initData: [["Test", "Test2"]],    
+    initData: {type:'table', content:[["Test", "Test2"]]},    
     def: (props:{data:any, active:boolean})=><Table {...props} />
  }
