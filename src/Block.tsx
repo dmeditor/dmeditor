@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { BlockButton } from "./blocks/BlockButton"
 import { BlockImage } from "./blocks/BlockImage"
 import { BlockText } from "./blocks/BlockText"
+import { Table } from "./blocks/Table"
 
 export type BlockInfo = {
     type: string
@@ -34,6 +35,8 @@ export const Block = (props:BlockProps)=>{
             return <BlockImage data={props.data} active={isActive} />
         }else if(props.data.type=='button'){
             return <BlockButton data={props.data} active={isActive} />      
+        }else if(props.data.type=='table'){
+            return <Table data={props.data} active={isActive} />
         }else{
             return 'Unknown type';
         }

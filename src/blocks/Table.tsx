@@ -6,8 +6,9 @@ import { Ranger } from "../utils/Ranger";
 import './Table.css';
 import { BlockProperty } from "../BlockProperty";
 import React from "react";
+import { Block } from "../Block";
 
-const Table = (props:any)=>{
+export const Table = (props:any)=>{
     const [content, SetContent] = useState([["Hello", "Test"]]);
 
     return <div style={{...props.data.layout}}>
@@ -49,5 +50,5 @@ const Table = (props:any)=>{
             layout:{padding: 0},
             data: [['test table', 'test table1']]};
     },
-    def: ()=><Table data={{type:'text'}}/>
+    def: ()=><Block data={{type:'table'}} onActiveChange={()=>{}} />
  }
