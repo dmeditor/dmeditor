@@ -114,7 +114,7 @@ registerTool(
 
 registerTool(
   { type: "tab",
-    menu: { text: "Tab", category: "util", icon: <TabOutlined /> },
+    menu: { text: "Tab", category: "intractive", icon: <TabOutlined /> },
     initData: 'test',
     def: ()=> <div>Not implemented</div>}
 );
@@ -123,7 +123,7 @@ registerTool(
   { type: "expandable_list",
     menu: {
       text: "Expandable list",
-      category: "util",
+      category: "intractive",
       icon: <ViewListOutlined />,
     },
     initData: 'test',

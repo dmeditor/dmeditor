@@ -19,3 +19,20 @@ export const registerTool = (toolDef:ToolDefinition)=>{
 export const getDef = (type:string):ToolDefinition=>{
     return defMap[type];
 }
+
+const toolCategories = [
+    {identifier: 'basic', text: 'Basic'},
+    {identifier: 'intractive', text: 'Intractive'},
+    {identifier: 'content_block', text: 'Content'},
+    {identifier: 'form', text: 'Form'},        
+    {identifier: 'superoffice', text: 'SuperOffice'},
+    {identifier: 'social_network', text: 'Social Network'}        
+    ];
+
+export const GetCategories = () => {
+    return toolCategories;
+};
+
+export const registerCategory = (category:{identifier:string, text: string})=>{
+    toolCategories.push(category);
+}

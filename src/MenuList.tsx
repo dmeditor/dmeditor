@@ -2,17 +2,11 @@ import { Input } from '@mui/material';
 import { useState } from 'react';
 import { blockManager } from './BlockManager';
 import './MenuList.css';
-import { GetToolDefinitions } from './ToolDefinition';
+import { GetCategories, GetToolDefinitions } from './ToolDefinition';
 
 export const MenuList = (props:{onSelect:any})=>{
-    const blockCategory = [
-        {identifier: 'basic', text: 'Basic'},
-        {identifier: 'content_block', text: 'Content'},
-        {identifier: 'pre_designed', text: 'Pre designed'},        
-        {identifier: 'util', text: 'Utility'},
-        {identifier: 'superoffice', text: 'SuperOffice'},
-        {identifier: 'social_network', text: 'Social Network'}        
-        ];
+   
+    const blockCategory = GetCategories();
 
     const registeredTypes = GetToolDefinitions();
 
