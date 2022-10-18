@@ -141,7 +141,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
             )}  
          </div>                    
         </div>
-        <div className='layout-properties'> mode: {mode}
+        <div className='layout-properties'>
             {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
             {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
             <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}></div>
