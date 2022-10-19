@@ -35,7 +35,7 @@ export const Block = (props:BlockProps)=>{
             let ToolRender = def.def;
             return <ToolRender data={props.data} active={isActive} />
         }else{
-            return 'Unknown type';
+            return 'Unknown type:'+props.data.type;
         }
     };
 
@@ -58,7 +58,8 @@ export const DefBlock = (props:{required:boolean, type:string,
     onActiveChange?:(active:boolean)=>void,
     active?:boolean,
     max?:number})=>{
-    return <Block data={{type:props.type}} onActiveChange={props.onActiveChange} />
+    let defaultData = getDef(props.type).initData;
+    return <Block data={defaultData} onActiveChange={props.onActiveChange} />
 }
 
 
