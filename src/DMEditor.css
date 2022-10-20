@@ -68,7 +68,8 @@
 
 a{
     text-decoration: none;
-    color: #12913e
+    color: #12913e;
+    box-shadow: none!important;
 }
 
 a:hover{

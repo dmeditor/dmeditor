@@ -9,6 +9,7 @@ export const Ranger=(props:{defaultValue?:number ,min:number, max: number, step:
   min={props.min}
   max={props.max}
   onChange={(e:any)=>props.onChange(e.target.value)}
+  value={typeof props.defaultValue === 'number' ? props.defaultValue : 0}
   />
   </Stack>
 
