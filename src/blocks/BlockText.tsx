@@ -217,10 +217,10 @@ export const BlockText = (props:any)=>{
                       inputProps={{'aria-label': 'Without label' }}
                     >
                       <MenuItem value="none">
-                        <em>none</em>
+                        <em>None</em>
                       </MenuItem>
                       <MenuItem  value="button">
-                        botton
+                        Button
                       </MenuItem>
                     </Select>
                   </FormControl>
