@@ -4,7 +4,6 @@ import { FullImageHandler } from "./blocks/FullImage";
 import { HeadingHandler } from "./blocks/Heading";
 import { TextMediaHandler } from "./blocks/TextMedia";
 import { QuoteHandler } from './blocks/Quote' //start 2022-9-28
-import {toolTable} from "./blocks/Table";
 import { ParagraphHandler } from "./blocks/Paragraph";
 import { ContentBlockHandler } from "./blocks/ContentBlock";
 import {
@@ -30,12 +29,12 @@ import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
 import { toolButton } from "./blocks/BlockButton";
 import { toolImage } from "./blocks/BlockImage";
-
+import { toolTable } from "./blocks/BlockTable"; 
 registerTool(toolText);
 registerTool(toolImageText);
 registerTool(toolButton);
 registerTool(toolImage);
-
+registerTool(toolTable);
 registerTool(
   { type: 'heading',
     isComposited: false,
@@ -43,8 +42,6 @@ registerTool(
     initData: 'test',
     def: ()=> <div>Not implemented</div>}
 );
-
-registerTool( toolTable );
 
 // registerTool(
 //   { type: 'full_image',
