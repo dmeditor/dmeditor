@@ -24,7 +24,7 @@ export const BlockContainer = (props:BlockContainerProps)=>{
                     return <BlockContainer data={child as BlockContainerType} />;
                 }else{
                     return <div>
-                             <Block data={child as BlockInfo} onActiveChange={()=>{}}/>
+                             <Block onSave={(data)=>{}} data={child as BlockInfo} onActiveChange={()=>{}}/>
                        </div>;
                 }
             }

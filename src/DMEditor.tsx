@@ -129,7 +129,10 @@ export const DMEditor = (props:{data:Array<any>})=>{
                                 setMode('select');
                             }
                         }
-                    }} onAddAbove={()=>onAddMore(-1)} onAddUnder={()=>onAddMore(1)} /></>;         
+                    }} 
+                    onSave={data=>{blocks[index]=data;setBlocks(blocks)}}
+                    onAddAbove={()=>onAddMore(-1)} 
+                    onAddUnder={()=>onAddMore(1)} /></>;         
              }
              return a();        
             }

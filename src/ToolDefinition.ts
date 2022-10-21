@@ -3,7 +3,7 @@ export interface ToolDefinition {
     isComposited?: boolean,
     menu?: {text: string, category: string, icon: React.ReactElement},
     initData: any,
-    def: (props:{data:any, active:boolean})=>React.ReactElement,    
+    def: (props:{data:any, active:boolean, onSave:(data:any)=>void})=>React.ReactElement,    
 }
 
 let defMap: {[key: string]: ToolDefinition} = {};

@@ -89,7 +89,6 @@ hr{
 .tool{
   position: absolute;
   left: 48%;
-  z-index: 100;
 }
 
 .tool-above{

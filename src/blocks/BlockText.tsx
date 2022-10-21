@@ -71,6 +71,7 @@ export const BlockText = (props:any)=>{
 
     const change = (val:any)=>{
       setValue(val)
+      props.onSave({type:'text',content:{initialValue:val}});
     }
 
     const changeFontFormat = (v:any,format:any,e?:any)=>{
@@ -331,5 +332,5 @@ export const toolText:ToolDefinition = {
         ],
       }
     },
-    def: (props:{data:any, active:boolean})=><BlockText {...props} />
+    def: (props:{data:any, active:boolean, onSave:(data:any)=>void})=><BlockText {...props} />
 }

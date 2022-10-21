@@ -426,5 +426,5 @@ export const toolTable: ToolDefinition = {
   type: "table",
   menu: { text: "Table", category: "basic", icon: <GridOn /> },
   initData: { type: "table", content: null },
-  def: (props: { data: any; active: boolean }) => <Table {...props} />,
+  def: (props: { data: any; active: boolean, onSave:(data:any)=>void }) => <Table {...props} />,
 };
