@@ -30,6 +30,10 @@
     min-height: 100vh;
 }
 
+.block-container{
+  position: relative;
+}
+
 .layout-main.viewmode-pc{
     width: 900px;
 }
@@ -94,6 +98,7 @@ hr{
   
   .block:hover, .active{
     outline: 1px solid #00721f;
+    outline-offset: 3px;
   }
   
   .blockcontainer:hover{
@@ -116,3 +121,17 @@ hr{
     display: inline-block;
   }
   
+  
+
+  .tool{
+    position: absolute;
+    left: 45%;
+  }
+
+  .tool-above{
+    top: -30px;
+  }
+
+  .tool-under{
+    bottom: -30px;
+  }
