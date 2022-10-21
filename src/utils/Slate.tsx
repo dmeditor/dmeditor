@@ -188,15 +188,23 @@ export const SlateFun:any = {
    
     return ele
   },
+  IsFocus:()=>{
+    const inFocus = useFocused();
+    return inFocus
+  },
   // hoverTool
   HoveringToolbar : (props:any) => {
     const ref = useRef<HTMLDivElement | null>(null)
     const editor = useSlate()
     const inFocus = useFocused()
-    // console.log('HoveringToolbar------config',props)
+    //  console.log('HoveringToolbar------config',props)
+    //  console.log('HoveringToolbar------inFocus',inFocus)
     useEffect(() => {
       const el:any = ref.current
       const { selection } = editor
+      if(props.setFocus){
+        props.setFocus(inFocus)
+      }
       if (!el) {
         return
       }
@@ -260,14 +268,39 @@ export const SlateFun:any = {
     arr = config?SlateFun[type].filter((item:any)=> config.includes(item)):SlateFun[type]
     return arr
   },
-  toggleBlock : (editor:any, format:string) => {
+  //star new 20221021--s
+  MarkButton :({ format, icon }:any) => {
+    const editor = useSlate()
+    return (
+      <SlateFun.FormatButton  formats={format}  onMouseDown={(event:any) => {
+        event.preventDefault()
+        SlateFun.toggleMark(editor, format)
+      }}/>
+      
+    )
+  },
+
+  toggleMark : (editor:any, format:string,value?:any) => {
+    const isActive = SlateFun.isMarkActive(editor, format)
+  
+    if (isActive) {
+      Editor.removeMark(editor, format)
+    } else {
+      Editor.addMark(editor, format, value?value:true)
+    }
+  },
+  isMarkActive : (editor:any, format:string) => {
+    const marks:any = Editor.marks(editor)
+    // console.log('marks',marks)
+    return marks ? marks[format] === true : false
+  },
+  toggleBlock : (editor:any, format:string,value?:any) => {
     const isActive = SlateFun.isBlockActive(
       editor,
       format,
       SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
     )
     const isList = SlateFun.LIST_TYPES.includes(format)
-  
     Transforms.unwrapNodes(editor, {
       match: (n:any) =>SlateFun.LIST_TYPES.includes(n.type)&&
         !Editor.isEditor(n) &&
@@ -278,21 +311,25 @@ export const SlateFun:any = {
     // let newProperties: Partial<SlateElement>
     let newProperties: any
     if (SlateFun.TEXT_ALIGN_TYPES.includes(format)) {
+      // let property = SlateFun.TEXT_FORMAT_TYPES.includes(format) ? 'type' : 'style';
       newProperties = {
         align: isActive ? undefined : format,
+        // [format]: isActive ? null : (property==='type'?true:value)
       }
     } else {
+      // let property = SlateFun.TEXT_FORMAT_TYPES.includes(format) ? 'type' : 'style';
       newProperties = {
         type: isActive ? 'paragraph' : isList ? 'list-item' : format,
+        // [format]: isActive ? null : (property==='type'?true:value)
       }
     }
     Transforms.setNodes<SlateElement>(editor, newProperties)
-  
     if (!isActive && isList) {
       const block = { type: format, children: [] }
       Transforms.wrapNodes(editor, block)
     }
   },
+  //star new 20221021--e
   isBlockActive : (editor:any, format:string, blockType:string= 'type') => {
     const { selection } = editor
     if (!selection) return false
@@ -532,17 +569,13 @@ export const SlateFun:any = {
       SlateFun.isButtonCollapsed=true;
       const domSelection = window.getSelection()
       if(domSelection||domSelection!.anchorNode){
-        console.log('domSelection',domSelection)
         const domRange = domSelection!.getRangeAt(0)
-        console.log('domRange',domRange)
         var strongs = domSelection!.anchorNode!.parentNode;
-        console.log(strongs)
        
         if(domSelection!.rangeCount > 0) domSelection!.removeAllRanges();
         if(strongs){
           var range:any = document.createRange();
           range.selectNode(strongs);
-          console.log(range)
           setTimeout(()=>{
           domSelection!.addRange(range);
         },10)
@@ -553,9 +586,6 @@ export const SlateFun:any = {
       setTimeout(()=>{
       SlateFun.wrapButton(editor,newButton,type)
       },200)
-    
-
-    
     
     // const button:any = newButton?newButton:{
     //   type: 'button',
@@ -583,7 +613,7 @@ export const SlateFun:any = {
     // }
   },
   wrapButton:(editor:any,newButton?:any,type?:any)  => {
-    console.log('type========>',type)
+    // console.log('type========>',type)
     SlateFun.isButtonCollapsed=false;
     if(type==='none'){
       if (SlateFun.isButtonActive(editor)) {
@@ -591,7 +621,6 @@ export const SlateFun:any = {
       }
     }else{
       const { selection } = editor
-      console.log(selection)
       const isCollapsed = selection && SlateRange.isCollapsed(selection)
       // const button:any = {
       //   type: 'button',

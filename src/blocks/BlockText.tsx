@@ -60,6 +60,7 @@ export const BlockText = (props:any)=>{
     const [config,setConfig] = useState(props.data.content.config?props.data.content.config:null);
     const [isLinkActive,setIsLinkActive] = useState(false);
     const [isButtonActive,setIsButtonActive] = useState(false);
+    const [isCollapsed,setIsCollapsed]= useState(true);
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -72,7 +73,10 @@ export const BlockText = (props:any)=>{
       setValue(val)
     }
 
-    const changeFontFormat = (v:any,format:any)=>{
+    const changeFontFormat = (v:any,format:any,e?:any)=>{
+      if(e){
+        e.preventDefault()
+      }
       if(format === 'fontSize'){
         setSize(v)
       }
@@ -104,51 +108,55 @@ export const BlockText = (props:any)=>{
 
     return (
       <div>
-        
         <Slate editor={editor} value={value} onChange={v => change(v)} >
           <BlockProperty title={'Text'} active={props.active}>
-            {IsShowToolBar('font','font_family')?
-              <div>
-                <label>Family:</label>
-                  <FormControl sx={{ m: 1, minWidth: 120 }} size="small" id="ddddsededesfsds"> 
-                    <Select
-                    id="ddd--5555"
-                      value={familytype?familytype:'Abel'}
-                      onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
-                      displayEmpty
-                      inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                      <MenuItem value="none">
-                        <em>None</em>
-                      </MenuItem>
-                      {FontFamilyList.map((font, index) => (
-                        <MenuItem key={index} value={font.name}>
-                          {font.name}
-                        </MenuItem>
-                      ))
-                      }
-                    </Select>
-                  </FormControl>
-              </div>
-              :null
-            }
-            {IsShowToolBar('font','font size')?
-            <div>
-                <label>Font size:</label>
-                <Ranger min={0} max={100} step={1} onChange={(v:number)=>changeFontFormat(v,'fontSize')} defaultValue={size?size:14} />
-                {/* <Input type='text' defaultValue={size} onChange={(e)=>setSize(parseFloat(e.target.value))} /> */}
-            </div>  
-            :null
-            }
-            {IsShowToolBar('font','color')?
-              <div>
-                <label>Color:</label>
+            {!isCollapsed?
+            <>
+              {IsShowToolBar('font','font_family')?
                 <div>
-                  <PickColor color={color?color:'#000'} onChange={(v:any)=>changeFontFormat(v,'color')} />
+                  <label>Family:</label>
+                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small" id="ddddsededesfsds"> 
+                      <Select
+                      id="ddd--5555"
+                        value={familytype?familytype:'Abel'}
+                        onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
+                        displayEmpty
+                        inputProps={{ 'aria-label': 'Without label' }}
+                      >
+                        <MenuItem value="none">
+                          <em>None</em>
+                        </MenuItem>
+                        {FontFamilyList.map((font, index) => (
+                          <MenuItem key={index} value={font.name}>
+                            {font.name}
+                          </MenuItem>
+                        ))
+                        }
+                      </Select>
+                    </FormControl>
                 </div>
-              </div> 
-             :null
-            }
+                :null
+              }
+              {IsShowToolBar('font','font size')?
+                <div>
+                    <label>Font size:</label>
+                    <Ranger min={0} max={100} step={1} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
+                    {/* <Input type='text' defaultValue={size} onChange={(e)=>setSize(parseFloat(e.target.value))} /> */}
+                </div>  
+                :null
+              }
+              {IsShowToolBar('font','color')?
+                <div>
+                  <label>Color:</label>
+                  <div>
+                    <PickColor color={color?color:'#000'} onChange={(v:any)=>changeFontFormat(v,'color')} />
+                  </div>
+                </div> 
+                :null
+              }
+            </>
+            :null
+          }
             {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
               <div>
                 <label>Align:</label>
@@ -188,8 +196,7 @@ export const BlockText = (props:any)=>{
             </div> 
              :null
             }  
-            { true?
-            // isLinkActive||isButtonActive?
+            {  isLinkActive||isButtonActive?
             // SlateFun.isLinkActive(editor)&&!SlateFun.isCollapsed(editor)?
             <div>
               <label>Link style:</label>
@@ -235,6 +242,7 @@ export const BlockText = (props:any)=>{
             :null}
                  
           </BlockProperty>
+         
           <div>
             <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}/>
             <Editable
@@ -246,9 +254,10 @@ export const BlockText = (props:any)=>{
                   setSize(SlateFun.getFormat(editor,'fontSize'))
                   setColor(SlateFun.getFormat(editor,'color'))
                   setLinkstyle('none')
-                  setIsLinkActive(SlateFun.isButtonActive(editor)?true:false)
-                  setIsButtonActive(SlateFun.isLinkActive(editor)?true:false)
-                 
+                  setIsLinkActive(SlateFun.isLinkActive(editor)?true:false)
+                  setIsButtonActive(SlateFun.isButtonActive(editor)?true:false)
+                  setIsCollapsed(SlateFun.isCollapsed(editor))
+
                   if(SlateFun.isButtonActive(editor)){
                     let button:any=SlateFun.getbuttonSetting(editor)
                     let newButton:any=JSON.parse(JSON.stringify(button))
