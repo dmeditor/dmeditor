@@ -233,32 +233,31 @@ export const Table = (props: any) => {
         <PropertyItem label='Border'>
               <PropertyButton
                 title='No border'
+                selected = {border === "none"}
                 onClick={() => {
                   setBorder("none");
                 }}
               >
-                <BorderClearOutlined
-                  color={border === "none" ? "success" : "inherit"}
-                ></BorderClearOutlined>
+                <BorderClearOutlined></BorderClearOutlined>
               </PropertyButton>
               <PropertyButton
                 title='Row border'
+                selected = {border === "rowBorder"}
                 onClick={() => {
                   setBorder("rowBorder");
                 }}
               >
                 <BorderHorizontalOutlined
-                  color={border === "rowBorder" ? "success" : "inherit"}
                 ></BorderHorizontalOutlined>
               </PropertyButton>
               <PropertyButton
                 title='Cell border'
+                selected={border === "border"}
                 onClick={() => {
                   setBorder("border");
                 }}
               >
                 <BorderAll
-                  color={border === "border" ? "success" : "inherit"}
                 ></BorderAll>
               </PropertyButton>
           </PropertyItem>
@@ -269,14 +268,6 @@ export const Table = (props: any) => {
               ></PickColor>
           </PropertyItem>
           <PropertyItem label='Row'>
-              <PropertyButton 
-                title='Insert on top'
-                disabled={!(type.ikey && type.jkey)}
-                color="success"
-                onClick={() => setAlign("top")}
-              >
-                <BorderTop />
-              </PropertyButton>
               <PropertyButton
                 title='Insert on bottom'
                 disabled={!(type.ikey && type.jkey)}
@@ -285,6 +276,14 @@ export const Table = (props: any) => {
               >
                 <BorderBottom></BorderBottom>
               </PropertyButton>
+              <PropertyButton 
+                title='Insert on top'
+                disabled={!(type.ikey && type.jkey)}
+                color="success"
+                onClick={() => setAlign("top")}
+              >
+                <BorderTop />
+              </PropertyButton>              
               <PropertyButton
                 title='Delete row'
                 disabled={!(type.ikey && type.jkey)}

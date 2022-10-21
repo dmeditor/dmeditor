@@ -15,10 +15,14 @@ export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?
   </Grid>
 }
 
-export const PropertyButton = (props:ButtonProps&{title?:string})=>{
-    const sx={color: '#999999', marginRight: '2px', ':hover': {
+export const PropertyButton = (props:ButtonProps&{title?:string, selected?:boolean})=>{
+    let sx:any={color: '#8a8a8a', marginRight: '2px', ':hover': {
         bgcolor: '#eaeaea',
       }};
+
+    if( props.selected ){
+        sx= {...sx, 'color': 'green'};
+    }
 
     if(props.title){
         return <Tooltip title={props.title}><Button sx={sx} {...props} /></Tooltip> 

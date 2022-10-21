@@ -20,7 +20,7 @@
     height: 30px;
 } */
 .tdActive {
-  border: 1px solid #1e6fff !important;
+  outline: 1px dotted #1e6fff !important;
 }
 tr:nth-child(odd){
   background-color: var(--odd-color);
