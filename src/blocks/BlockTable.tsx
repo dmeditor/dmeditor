@@ -1,4 +1,4 @@
-import { Diversity2Sharp, GridOn } from "@mui/icons-material";
+import { GridOn } from "@mui/icons-material";
 import {
   BorderBottom,
   Delete,
@@ -425,6 +425,6 @@ export const Table = (props: any) => {
 export const toolTable: ToolDefinition = {
   type: "table",
   menu: { text: "Table", category: "basic", icon: <GridOn /> },
-  initData: { type: "table", content: [["Test", "Test2"]] },
+  initData: { type: "table", content: null },
   def: (props: { data: any; active: boolean }) => <Table {...props} />,
 };

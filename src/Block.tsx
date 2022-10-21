@@ -1,8 +1,4 @@
 import { useEffect, useRef, useState } from "react"
-import { BlockButton } from "./blocks/BlockButton"
-import { BlockImage } from "./blocks/BlockImage"
-import { BlockText } from "./blocks/BlockText"
-import { Table } from "./blocks/Table"
 import { getDef } from "./ToolDefinition"
 
 export type BlockInfo = {
