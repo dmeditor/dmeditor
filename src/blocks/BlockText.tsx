@@ -160,7 +160,7 @@ export const BlockText = (props:any)=>{
           }
             {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
               <div>
-                <label>Align</label>
+                <label>List</label>
                 <div>
                 {IsShowToolBar('tools','list')||IsShowToolBar('tools','order_list')?
 
@@ -175,6 +175,10 @@ export const BlockText = (props:any)=>{
                     }
                   )
                   :null}
+                </div>
+                <div>
+                <label>Align</label>
+                <div>
                   {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{           
                       return (
                       <Button key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
@@ -184,6 +188,7 @@ export const BlockText = (props:any)=>{
                     }
                   ):null}
                 </div>
+                </div>
               </div>   
               :null
             } 
@@ -191,8 +196,9 @@ export const BlockText = (props:any)=>{
             <div>
               <label>Insert</label>
               <div>
-              <ImageOutlined onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}/>
-               
+              <Button onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}>
+                <ImageOutlined />
+              </Button>               
               </div>
             </div> 
              :null
