@@ -3,7 +3,6 @@ import { blockManager } from "./BlockManager";
 import { FullImageHandler } from "./blocks/FullImage";
 import { HeadingHandler } from "./blocks/Heading";
 import { TextMediaHandler } from "./blocks/TextMedia";
-import { QuoteHandler } from './blocks/Quote' //start 2022-9-28
 import { ParagraphHandler } from "./blocks/Paragraph";
 import { ContentBlockHandler } from "./blocks/ContentBlock";
 import {
@@ -29,11 +28,14 @@ import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
 import { toolButton } from "./blocks/BlockButton";
 import { toolImage } from "./blocks/BlockImage";
+import { toolQuote } from "./blocks/Quote";
+// import { toolHeading } from "./blocks/Heading";
 import { toolTable } from "./blocks/BlockTable"; 
 registerTool(toolText);
 registerTool(toolImageText);
 registerTool(toolButton);
 registerTool(toolImage);
+// registerTool( toolHeading );
 registerTool(toolTable);
 registerTool(
   { type: 'heading',
@@ -50,12 +52,14 @@ registerTool(
 //     def: ()=> <div>Not implemented</div>}
 // );
 
-registerTool(
-  { type: 'quote',
-    menu: { text: 'Quote', category: 'basic', icon: <TitleOutlined /> },
-    initData: 'test',
-    def: ()=> <div>Not implemented</div>}
-);
+registerTool( toolQuote )
+
+// registerTool(
+//   { type: 'quote',
+//     menu: { text: 'Quote', category: 'basic', icon: <TitleOutlined /> },
+//     initData: 'test',
+//     def: ()=> <div>Not implemented</div>}
+// );
 
 registerTool(
   { type: "video",

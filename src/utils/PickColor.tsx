@@ -4,11 +4,11 @@ export const PickColor=(props:any)=>{
   const [showColorPicker, setShowColorPicker] = useState(false);
   const modalRef= useRef(null);
   let originalColor:string = '';
-  const changeColor = (color: any)=>{
+  const changeColor = (color: any,e:any)=>{
+    e.preventDefault();
       if(originalColor===''){
           originalColor = props.color?props.color:'';
       }
-      console.log(color)
       change(color.hex)
   }
   const change = (colorV:any)=>{
@@ -34,9 +34,11 @@ export const PickColor=(props:any)=>{
       <>
         <span
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
             setShowColorPicker(!showColorPicker);
           }}
+          onMouseDown={(event:any) =>{ event.preventDefault()}}
           style={{
             display: "inline-block",
             border: "1px solid #cccccc",
