@@ -22,6 +22,7 @@ import { ToolDefinition } from "../ToolDefinition";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "@mui/material";
 import { PickColor } from "../utils/PickColor";
+import { PropertyButton, PropertyItem } from "../utils/Property";
 
 const changeColor = (name: string, value: string) => {
   document.documentElement.style.setProperty(name, value);
@@ -229,11 +230,9 @@ export const Table = (props: any) => {
   return (
     <div style={{ ...props.data.layout }}>
       <BlockProperty title={"Table"} active={props.active}>
-        <div style={{ width: "100%" }}>        
-          <div>
-            <label>Border</label>
-            <div>
-              <Button
+        <PropertyItem label='Border'>
+              <PropertyButton
+                title='No border'
                 onClick={() => {
                   setBorder("none");
                 }}
@@ -241,8 +240,9 @@ export const Table = (props: any) => {
                 <BorderClearOutlined
                   color={border === "none" ? "success" : "inherit"}
                 ></BorderClearOutlined>
-              </Button>
-              <Button
+              </PropertyButton>
+              <PropertyButton
+                title='Row border'
                 onClick={() => {
                   setBorder("rowBorder");
                 }}
@@ -250,8 +250,9 @@ export const Table = (props: any) => {
                 <BorderHorizontalOutlined
                   color={border === "rowBorder" ? "success" : "inherit"}
                 ></BorderHorizontalOutlined>
-              </Button>
-              <Button
+              </PropertyButton>
+              <PropertyButton
+                title='Cell border'
                 onClick={() => {
                   setBorder("border");
                 }}
@@ -259,92 +260,76 @@ export const Table = (props: any) => {
                 <BorderAll
                   color={border === "border" ? "success" : "inherit"}
                 ></BorderAll>
-              </Button>
-            </div>
-          </div>
-          <div>
-            <label>Border color</label>
-            <div>
+              </PropertyButton>
+          </PropertyItem>
+          <PropertyItem label='Border color' autoWidth>
               <PickColor
                 color={color?.borderColor}
                 onChange={changeBorderColor}
               ></PickColor>
-            </div>
-          </div>
-          <div>
-            <label>Row</label>
-            <div>
-              <Button
+          </PropertyItem>
+          <PropertyItem label='Row'>
+              <PropertyButton 
+                title='Insert on top'
                 disabled={!(type.ikey && type.jkey)}
                 color="success"
                 onClick={() => setAlign("top")}
               >
                 <BorderTop />
-              </Button>
-              <Button
+              </PropertyButton>
+              <PropertyButton
+                title='Insert on bottom'
                 disabled={!(type.ikey && type.jkey)}
                 color="success"
                 onClick={() => setAlign("bottom")}
               >
                 <BorderBottom></BorderBottom>
-              </Button>
-              <Button
+              </PropertyButton>
+              <PropertyButton
+                title='Delete row'
                 disabled={!(type.ikey && type.jkey)}
                 color="warning"
                 onClick={() => del("row")}
               >
                 <Delete></Delete>
-              </Button>              
-            </div>
-          </div>
-          <div>
-            {" "}
-            <label>Column</label>
-            <div>                        
-            <Button
-                disabled={!(type.ikey && type.jkey)}
-                color="success"
-                onClick={() => setAlign("right")}
-              >
-                <BorderRight></BorderRight>
-              </Button>
-              <Button
-                disabled={!(type.ikey && type.jkey)}
-                color="success"
-                onClick={() => setAlign("left")}
-              >
-                <BorderLeft></BorderLeft>
-              </Button>    
-              <Button
-                disabled={!(type.ikey && type.jkey)}
-                color="warning"
-                onClick={() => del("col")}
-              >
-                <DeleteSweep></DeleteSweep>
-              </Button>
-            </div>
-          </div>
-          <div>
-            <label>Header background</label>
-            <div>
+              </PropertyButton>                        
+          </PropertyItem>
+          <PropertyItem label="Column">
+          <PropertyButton title="Insert on right"
+              disabled={!(type.ikey && type.jkey)}
+              color="success"
+              onClick={() => setAlign("right")}
+            >
+              <BorderRight></BorderRight>
+            </PropertyButton>
+            <PropertyButton  title="Insert on left"
+              disabled={!(type.ikey && type.jkey)}
+              color="success"
+              onClick={() => setAlign("left")}
+            >
+              <BorderLeft></BorderLeft>
+            </PropertyButton>    
+            <PropertyButton  title="Delete column"
+              disabled={!(type.ikey && type.jkey)}
+              color="warning"
+              onClick={() => del("col")}
+            >
+              <DeleteSweep></DeleteSweep>
+            </PropertyButton>
+          </PropertyItem>
+          <PropertyItem label='Header background' autoWidth>
               <PickColor
                 color={color?.headerColor}
                 onChange={changeHeaderColor}
               ></PickColor>
-            </div>
-          </div>
-          <div>
-            <label>Row(odd) background</label>
-            <div>
+            </PropertyItem>
+          <PropertyItem label='Odd row background' autoWidth>
               <PickColor
                 color={color?.oddColor}
                 onChange={changeOddColor}
               ></PickColor>
-            </div>
-          </div>
-          <div>
-            <label>Cell padding</label>
-            <div>
+          </PropertyItem>
+          <PropertyItem label='Padding'>
               <Ranger
                 defaultValue={3}
                 min={1}
@@ -352,11 +337,8 @@ export const Table = (props: any) => {
                 step={1}
                 onChange={() => {}}
               />
-            </div>
-          </div>
-          <div>
-            <label>Rows</label>
-            <div>
+          </PropertyItem>
+          <PropertyItem label='Rows'>
               <Ranger
                 defaultValue={content.length}
                 min={1}
@@ -366,11 +348,8 @@ export const Table = (props: any) => {
                   updateRow(num);
                 }}
               />
-            </div>
-          </div>
-          <div>
-            <label>Columns</label>
-            <div>
+          </PropertyItem>
+          <PropertyItem label='Columns'>
               <Ranger
                 defaultValue={content[0].row.length}
                 min={1}
@@ -380,9 +359,7 @@ export const Table = (props: any) => {
                   updateColumn(num);
                 }}
               />
-            </div>
-          </div>          
-        </div>
+          </PropertyItem>          
       </BlockProperty>
       <div className={border === "border" ? "table-container" : ""}>
         <table

@@ -177,9 +177,9 @@ export const BlockText = (props:any)=>{
                     (item==='numbered-list' && IsShowToolBar('tools','order_list'))|| (item==='bulleted-list'&&IsShowToolBar('tools','list'))
                   ).map((format:any,index:any)=>{          
                       return (
-                      <Button key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
+                      <PropertyButton key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
                         <BlockButton formats={format} />
-                      </Button>    
+                      </PropertyButton>    
                       )             
                     }
                   )
@@ -189,9 +189,9 @@ export const BlockText = (props:any)=>{
             } 
             {IsShowToolBar('tools','image')?
             <PropertyItem label='Insert'>
-              <Button onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}>
+              <PropertyButton title='Image' onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}>
                 <ImageOutlined />
-              </Button>               
+              </PropertyButton>               
             </PropertyItem> 
              :null
             }  
