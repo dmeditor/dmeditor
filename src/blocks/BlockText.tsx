@@ -52,7 +52,7 @@ export const BlockText = (props:any)=>{
     // }
     const [size, setSize] = useState(1.1);
     // const [align, setAlign] = useState('left' as 'left'|'center'|'right');
-    const [familytype,setFamilytype] = useState('Abel')
+    const [familytype,setFamilytype] = useState('')
     const [color,setColor] = useState()
     const [linkstyle,setLinkstyle] = useState('none' as 'none'|'button')
     const [buttonVariant, setButtonVariant] = useState('contained' as ('contained' | 'outlined' ));
@@ -119,13 +119,13 @@ export const BlockText = (props:any)=>{
                       id="ddd--5555"
                       size="small"
                       fullWidth
-                        value={familytype?familytype:'Arial'}
+                        value={familytype}
                         onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Without label' }}
                       >
-                        <MenuItem value="none">
-                          <em>None</em>
+                        <MenuItem value="">
+                          <em>Default</em>
                         </MenuItem>
                         {FontFamilyList.map((font, index) => (
                           <MenuItem key={index} value={font.name}>
