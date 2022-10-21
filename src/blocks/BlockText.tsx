@@ -14,6 +14,7 @@ import { SlateFun } from '../utils/Slate'
 import { Ranger } from "../utils/Ranger";
 import { PickColor } from "../utils/PickColor";
 import FontFamilyList from '../utils/FontFamilyList'
+import {PropertyButton, PropertyItem} from '../utils/Property';
 
 const BlockButton = ({formats}:any) => {
   let ele:any
@@ -113,10 +114,11 @@ export const BlockText = (props:any)=>{
           <BlockProperty title={'Text'} active={props.active}>
             {IsShowToolBar('font','font_family')?
                 <div>
-                  <label>Font:</label>
-                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small" id="ddddsededesfsds"> 
+                  <PropertyItem label="Font">
                       <Select
                       id="ddd--5555"
+                      size="small"
+                      fullWidth
                         value={familytype?familytype:'Arial'}
                         onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
                         displayEmpty
@@ -132,50 +134,43 @@ export const BlockText = (props:any)=>{
                         ))
                         }
                       </Select>
-                    </FormControl>
+                  </PropertyItem>
                 </div>
                 :null
               }
             {!isCollapsed?
             <>              
               {IsShowToolBar('font','font size')?
-                <div>
-                    <label>Size:</label>
-                    <Ranger min={0} max={100} step={1} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
+                <PropertyItem label='Size'>
+                    <Ranger min={0} max={24} step={1} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
                     {/* <Input type='text' defaultValue={size} onChange={(e)=>setSize(parseFloat(e.target.value))} /> */}
-                </div>  
+                </PropertyItem>  
                 :null
               }
               {IsShowToolBar('font','color')?
-                <div>
-                  <label>Color:</label>
-                  <div>
+                <PropertyItem label='Color'>
                     <PickColor color={color?color:'#000'} onChange={(v:any)=>changeFontFormat(v,'color')} />
-                  </div>
-                </div> 
+                </PropertyItem> 
                 :null
               }
             </>
             :null
           }
             <div>
-                <label>Align</label>
-                <div>
+            <PropertyItem label="Align">
                   {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{           
                       return (
-                      <Button key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
+                      <PropertyButton key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
                         <BlockButton formats={format} />
-                      </Button>    
+                      </PropertyButton>    
                       )             
                     }
                   ):null}
-                </div>
-                </div>
+                </PropertyItem>
+              </div>
 
             {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
-              <div>
-                <label>List</label>
-                <div>
+              <PropertyItem label="List">
                 {IsShowToolBar('tools','list')||IsShowToolBar('tools','order_list')?
 
                   SlateFun.LIST_TYPES.filter((item:any)=>
@@ -189,19 +184,15 @@ export const BlockText = (props:any)=>{
                     }
                   )
                   :null}
-                </div>                
-              </div>   
+              </PropertyItem>   
               :null
             } 
             {IsShowToolBar('tools','image')?
-            <div>
-              <label>Insert</label>
-              <div>
+            <PropertyItem label='Insert'>
               <Button onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}>
                 <ImageOutlined />
               </Button>               
-              </div>
-            </div> 
+            </PropertyItem> 
              :null
             }  
             {  isLinkActive||isButtonActive?
