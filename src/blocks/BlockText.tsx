@@ -111,15 +111,13 @@ export const BlockText = (props:any)=>{
       <div>
         <Slate editor={editor} value={value} onChange={v => change(v)} >
           <BlockProperty title={'Text'} active={props.active}>
-            {!isCollapsed?
-            <>
-              {IsShowToolBar('font','font_family')?
+            {IsShowToolBar('font','font_family')?
                 <div>
-                  <label>Family:</label>
+                  <label>Font:</label>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small" id="ddddsededesfsds"> 
                       <Select
                       id="ddd--5555"
-                        value={familytype?familytype:'Abel'}
+                        value={familytype?familytype:'Arial'}
                         onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Without label' }}
@@ -138,9 +136,11 @@ export const BlockText = (props:any)=>{
                 </div>
                 :null
               }
+            {!isCollapsed?
+            <>              
               {IsShowToolBar('font','font size')?
                 <div>
-                    <label>Font size:</label>
+                    <label>Size:</label>
                     <Ranger min={0} max={100} step={1} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
                     {/* <Input type='text' defaultValue={size} onChange={(e)=>setSize(parseFloat(e.target.value))} /> */}
                 </div>  
