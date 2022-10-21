@@ -4,6 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { Block, BlockInfo } from "./Block"
 import { BlockProperty } from "./BlockProperty";
+import { PropertyButton, PropertyItem } from "./utils/Property";
 
 
 export type BlockContainerType = {
@@ -80,19 +81,16 @@ export const DefContainer = (props:{ required?:boolean,
     return <div className={'block blockcontainer'+(props.type?' block-type-'+props.type:'')+' '+(horizontal?'blockcontainer-horizontal':'')+(align?(' blockcontainer-align-'+align):'')} onClick={()=>setIsActive(true)}>
         <BlockProperty active={isActive} title='Container'>
             <div>
-                <label>Align:</label>
-                <div>
-                    <Button onClick={()=>setAlign('left')} variant={(align==='left'||align==undefined)?'outlined':undefined}><FormatAlignLeft /></Button>
-                    <Button onClick={()=>setAlign('center')} variant={align==='center'?'outlined':undefined}><FormatAlignCenter /></Button>
-                    <Button onClick={()=>setAlign('right')} variant={align==='right'?'outlined':undefined}><FormatAlignRight /></Button>
-                </div>
-            </div>        
-            <div>
-            <label>Direction:</label>
-            <div>
-               <Button onClick={()=>setHorizontal(false)} variant={horizontal?undefined:'outlined'}><AlignHorizontalLeft /></Button>
-               <Button onClick={()=>setHorizontal(true)} variant={horizontal?"outlined":undefined}><AlignVerticalTop /></Button>
-            </div>
+                <PropertyItem label='Align'>
+                    <PropertyButton onClick={()=>setAlign('left')} selected={align==='left'||align==undefined}><FormatAlignLeft />
+                    </PropertyButton>
+                    <PropertyButton onClick={()=>setAlign('center')} selected={align==='center'}><FormatAlignCenter /></PropertyButton>
+                    <PropertyButton onClick={()=>setAlign('right')} selected={align==='right'}><FormatAlignRight /></PropertyButton>
+                </PropertyItem>
+            <PropertyItem label='Direction'>
+               <PropertyButton onClick={()=>setHorizontal(false)} selected={!horizontal}><AlignHorizontalLeft /></PropertyButton>
+               <PropertyButton onClick={()=>setHorizontal(true)} selected={horizontal}><AlignVerticalTop /></PropertyButton>
+            </PropertyItem>
         </div>
         </BlockProperty>
         {renderChildren()}
