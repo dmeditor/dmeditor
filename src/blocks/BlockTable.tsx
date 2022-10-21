@@ -229,47 +229,7 @@ export const Table = (props: any) => {
   return (
     <div style={{ ...props.data.layout }}>
       <BlockProperty title={"Table"} active={props.active}>
-        <div style={{ width: "100%" }}>
-          <div>
-            <label>Rows</label>
-            <div>
-              <Ranger
-                defaultValue={content.length}
-                min={1}
-                max={10}
-                step={1}
-                onChange={(num: number) => {
-                  updateRow(num);
-                }}
-              />
-            </div>
-          </div>
-          <div>
-            <label>Columns</label>
-            <div>
-              <Ranger
-                defaultValue={content[0].row.length}
-                min={1}
-                max={5}
-                step={1}
-                onChange={(num: number) => {
-                  updateColumn(num);
-                }}
-              />
-            </div>
-          </div>
-          <div>
-            <label>Cell padding</label>
-            <div>
-              <Ranger
-                defaultValue={3}
-                min={1}
-                max={5}
-                step={1}
-                onChange={() => {}}
-              />
-            </div>
-          </div>
+        <div style={{ width: "100%" }}>        
           <div>
             <label>Border</label>
             <div>
@@ -382,6 +342,46 @@ export const Table = (props: any) => {
               ></PickColor>
             </div>
           </div>
+          <div>
+            <label>Cell padding</label>
+            <div>
+              <Ranger
+                defaultValue={3}
+                min={1}
+                max={5}
+                step={1}
+                onChange={() => {}}
+              />
+            </div>
+          </div>
+          <div>
+            <label>Rows</label>
+            <div>
+              <Ranger
+                defaultValue={content.length}
+                min={1}
+                max={10}
+                step={1}
+                onChange={(num: number) => {
+                  updateRow(num);
+                }}
+              />
+            </div>
+          </div>
+          <div>
+            <label>Columns</label>
+            <div>
+              <Ranger
+                defaultValue={content[0].row.length}
+                min={1}
+                max={5}
+                step={1}
+                onChange={(num: number) => {
+                  updateColumn(num);
+                }}
+              />
+            </div>
+          </div>          
         </div>
       </BlockProperty>
       <div className={border === "border" ? "table-container" : ""}>
