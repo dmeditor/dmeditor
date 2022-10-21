@@ -271,7 +271,7 @@ export const Table = (props: any) => {
             </div>
           </div>
           <div>
-            <label>Borders</label>
+            <label>Border</label>
             <div>
               <Button
                 onClick={() => {
@@ -303,7 +303,7 @@ export const Table = (props: any) => {
             </div>
           </div>
           <div>
-            <label>borderColor</label>
+            <label>Border color</label>
             <div>
               <PickColor
                 color={color?.borderColor}
@@ -312,7 +312,7 @@ export const Table = (props: any) => {
             </div>
           </div>
           <div>
-            <label>add:</label>
+            <label>Insert</label>
             <div>
               <Button
                 disabled={!(type.ikey && type.jkey)}
@@ -324,16 +324,16 @@ export const Table = (props: any) => {
               <Button
                 disabled={!(type.ikey && type.jkey)}
                 color="success"
-                onClick={() => setAlign("right")}
+                onClick={() => setAlign("bottom")}
               >
-                <BorderRight></BorderRight>
+                <BorderBottom></BorderBottom>
               </Button>
               <Button
                 disabled={!(type.ikey && type.jkey)}
                 color="success"
-                onClick={() => setAlign("bottom")}
+                onClick={() => setAlign("right")}
               >
-                <BorderBottom></BorderBottom>
+                <BorderRight></BorderRight>
               </Button>
               <Button
                 disabled={!(type.ikey && type.jkey)}
@@ -346,7 +346,7 @@ export const Table = (props: any) => {
           </div>
           <div>
             {" "}
-            <label>delete:</label>
+            <label>Delete</label>
             <div>
               <Button
                 disabled={!(type.ikey && type.jkey)}
@@ -365,7 +365,7 @@ export const Table = (props: any) => {
             </div>
           </div>
           <div>
-            <label>borderColor</label>
+            <label>Header background</label>
             <div>
               <PickColor
                 color={color?.headerColor}
@@ -374,7 +374,7 @@ export const Table = (props: any) => {
             </div>
           </div>
           <div>
-            <label>rowOddColor</label>
+            <label>Row(odd) background</label>
             <div>
               <PickColor
                 color={color?.oddColor}
