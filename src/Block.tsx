@@ -1,3 +1,4 @@
+import { AddBoxOutlined } from "@mui/icons-material"
 import { useEffect, useRef, useState } from "react"
 import { getDef } from "./ToolDefinition"
 
@@ -10,7 +11,9 @@ export type BlockInfo = {
 interface BlockProps{
     data: any,
     active?:boolean,
-    onActiveChange?: (active:boolean)=>void
+    onActiveChange?: (active:boolean)=>void,
+    onAddAbove?:any,
+    onAddUnder?:any
 }
 
 export const Block = (props:BlockProps)=>{
@@ -36,9 +39,17 @@ export const Block = (props:BlockProps)=>{
     };
 
     
-    return <div ref={ref} className={"block block-type-"+props.data.type+(isActive?' active':'')} 
-    onClick={(e:any)=>{changeActive(true);}}>
-        {render()}       
+    return <div ref={ref} className={'block-container'+(isActive?' active':'')} onClick={(e:any)=>changeActive(true)}>
+            {isActive&&<div className="tool tool-above">                             
+                            <a className="tool-item" href="javascript:void(0);" title="Add above" onClick={()=>props.onAddAbove()}>
+                                <AddBoxOutlined /></a>
+                        </div>}            
+        <div className={"block block-type-"+props.data.type}>
+        {render()}  
+        </div>   
+    {isActive&&<div className="tool tool-under">                             
+                <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>props.onAddUnder()}><AddBoxOutlined /></a>
+            </div>}  
     </div>
 
 }

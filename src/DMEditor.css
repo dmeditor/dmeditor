@@ -88,7 +88,8 @@ hr{
 
 .tool{
   position: absolute;
-  left: 45%;
+  left: 48%;
+  z-index: 100;
 }
 
 .tool-above{
@@ -110,6 +111,7 @@ hr{
 
 .block:hover, .active{
   outline: 1px solid #00721f;
+  outline-offset: 3px;
 }
 
 .blockcontainer:hover{
@@ -138,6 +140,11 @@ hr{
 }
 
 ::-moz-selection {
-    color:blue;
+    color:auto;
     background:#ccc;
+}
+
+
+.block-type-text span{
+  vertical-align: initial !important;
 }

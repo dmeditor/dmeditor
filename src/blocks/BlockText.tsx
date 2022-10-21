@@ -159,7 +159,7 @@ export const BlockText = (props:any)=>{
           }
             {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
               <div>
-                <label>Align:</label>
+                <label>Align</label>
                 <div>
                 {IsShowToolBar('tools','list')||IsShowToolBar('tools','order_list')?
 
@@ -188,7 +188,7 @@ export const BlockText = (props:any)=>{
             } 
             {IsShowToolBar('tools','image')?
             <div>
-              <label>Inset:</label>
+              <label>Insert</label>
               <div>
               <ImageOutlined onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}/>
                

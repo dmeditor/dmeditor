@@ -121,21 +121,18 @@ export const DMEditor = (props:{data:Array<any>})=>{
             {blocks.map((block, index)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
-                return <div onClick={()=>{setActiveBlock(index); if(!currentSelected){ setMode('select')}}}>
-                 {currentSelected && <div className="tool tool-above">                             
-                    <a className="tool-item" href="javascript:void(0);" title="Add above" onClick={()=>onAddMore(-1)}><AddBoxOutlined /></a>
-                </div>}   
-                    <Block data={block} active={currentSelected} />
-                 {currentSelected&&<div className="tool tool-under">                             
-                    <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>onAddMore(1)}><AddBoxOutlined /></a>
-                </div>}
-                </div>;         
+                return  <><Block key={currentSelected+''} data={block} active={currentSelected} onActiveChange={(active:boolean)=>{
+                        if(active){
+                            setActiveBlock(index);
+                            //changed from other's to current
+                            if( !currentSelected ){
+                                setMode('select');
+                            }
+                        }
+                    }} onAddAbove={()=>onAddMore(-1)} onAddUnder={()=>onAddMore(1)} /></>;         
              }
              return a();        
             }
-                // <Block key={index+block.type} onUpdateProperty={updatePropertyParams} addAbove={addAbove} addMore={onAddMore} onDelete={onDelete} onSelect={()=>select(index)} onChange={onChange} active={activeBlock==index} addUnder={addUnder} data={block} />
-                
-                // <Block data={block} />
             )}  
          </div>                    
         </div>
