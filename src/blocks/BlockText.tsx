@@ -158,6 +158,20 @@ export const BlockText = (props:any)=>{
             </>
             :null
           }
+            <div>
+                <label>Align</label>
+                <div>
+                  {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{           
+                      return (
+                      <Button key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
+                        <BlockButton formats={format} />
+                      </Button>    
+                      )             
+                    }
+                  ):null}
+                </div>
+                </div>
+
             {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
               <div>
                 <label>List</label>
@@ -175,20 +189,7 @@ export const BlockText = (props:any)=>{
                     }
                   )
                   :null}
-                </div>
-                <div>
-                <label>Align</label>
-                <div>
-                  {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{           
-                      return (
-                      <Button key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
-                        <BlockButton formats={format} />
-                      </Button>    
-                      )             
-                    }
-                  ):null}
-                </div>
-                </div>
+                </div>                
               </div>   
               :null
             } 

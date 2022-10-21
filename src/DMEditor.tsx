@@ -95,8 +95,15 @@ export const DMEditor = (props:{data:Array<any>})=>{
         components:{
           MuiButtonBase:{
             defaultProps:{
-              disableRipple:true,        
-            }
+              disableRipple:true,   
+            },
+            styleOverrides: {
+                root: {
+                '&.MuiButton-root': {
+                  minWidth: '30px',
+                  padding: '5px'
+                }},
+              },
           }
         }
       });
