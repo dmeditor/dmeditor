@@ -7,7 +7,7 @@ export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?
 
     return <Grid container spacing={2} columns={12}>
     <Grid item xs={autoWidth?false:(vertical?12:3)}>
-      <label>{props.label}</label>
+      <label style={{fontSize: '14px'}}>{props.label}</label>
     </Grid>
     <Grid item sx={{padding: 1}} xs={autoWidth?false:(vertical?12:9)}>
       {props.children}
@@ -16,7 +16,7 @@ export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?
 }
 
 export const PropertyButton = (props:ButtonProps&{title?:string})=>{
-    const sx={color: '#666666', ':hover': {
+    const sx={color: '#999999', marginRight: '2px', ':hover': {
         bgcolor: '#eaeaea',
       }};
 

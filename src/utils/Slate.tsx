@@ -13,6 +13,16 @@ export const SlateFun:any = {
   TEXT_FORMAT_TYPES :['bold','italic','underline','link','linkoff'],
   TEXT_ALIGN_TYPES : ['left', 'center', 'right', 'justify'],
   LIST_TYPES : ['numbered-list', 'bulleted-list'],
+  getToolText:(tool:string)=>{
+    const texts:{[key:string]:string} = {'numbered-list':'Number list',
+    'bulleted-list':'Bullet list',
+    'left':'Left',
+    'center':'Center',
+    'right':'Right',
+    'justify':'Justify'
+     };
+    return texts[tool]?(texts[tool]):'';
+  },  
   isButtonCollapsed:false,
   //slate element
   Element :(props:any) => {

@@ -160,7 +160,7 @@ export const BlockText = (props:any)=>{
             <PropertyItem label="Align">
                   {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{           
                       return (
-                      <PropertyButton key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
+                      <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
                         <BlockButton formats={format} />
                       </PropertyButton>    
                       )             
@@ -172,12 +172,11 @@ export const BlockText = (props:any)=>{
             {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
               <PropertyItem label="List">
                 {IsShowToolBar('tools','list')||IsShowToolBar('tools','order_list')?
-
                   SlateFun.LIST_TYPES.filter((item:any)=>
                     (item==='numbered-list' && IsShowToolBar('tools','order_list'))|| (item==='bulleted-list'&&IsShowToolBar('tools','list'))
                   ).map((format:any,index:any)=>{          
                       return (
-                      <PropertyButton key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
+                      <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} variant={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')?'outlined':undefined}>
                         <BlockButton formats={format} />
                       </PropertyButton>    
                       )             
