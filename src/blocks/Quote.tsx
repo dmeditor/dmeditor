@@ -2,67 +2,64 @@ import { TitleOutlined } from '@mui/icons-material'
 import { RenderMainProps, RenderSettingProps } from '../blocktype'
 import { BlockData, BlockLayoutData } from '../types'
 import { CommonSetting } from '../Property'
-import { Ranger } from '../utils/Ranger'
+import { BlockProperty } from "../BlockProperty"
+import { ToolDefinition } from "../ToolDefinition";
+import { useState,useEffect } from 'react'
 
-export interface DataQuote {
-  text: string
-  style: {
-    level: number
-  }
-}
 
-const Quote = (props: {
-  data: BlockData
-  isActive: boolean
-  onChange?: any
-}) => {
-  const content = props.data.data as DataQuote
-
+export const Quote = (props:any)=>{
+    // const changeCommon = (settings: BlockLayoutData) => {
+    //   let data = props.data
+    //   data.layout = settings
+    //   props.onSetting(data)
+    // }
+   const [content,setConent] = useState(props.data.content)
+  useEffect(()=>{
+    console.log(props)
+  },[])
+  
   const change = (e: any) => {
     const text = e.target.innerText
-    if (props.onChange) {
-      content.text = text
-      let newData = props.data
-      newData.data = content
-      props.onChange(newData)
-    }
+    console.log(text)
+    let newData={...content};
+    newData.data=text
+    setConent(newData)
+    console.log(newData)
   }
 
   const common = {
     onBlur: change,
-    contentEditable: props.isActive,
-    style: { ...props.data.layout },
+    contentEditable: props.active,
+    style: { ...content.layout },
   }
 
-  return <q className='block-quote' {...common}>{content.text}</q>
- 
-}
-
-const QuoteSettings = (props: RenderSettingProps) => {
-
-  const changeCommon = (settings: BlockLayoutData) => {
-    let data = props.data
-    data.layout = settings
-    props.onSetting(data)
-  }
+  // const changeCommon = (settings: any) => {
+  //   let data = {...content};
+  //   data.layout = settings
+  //   setConent(data)
+  //   console.log(data)
+  //   // props.onSetting(data)
+  // }
 
   return (
-    <div>
-      <label>Quote</label>
-           <CommonSetting settings={props.data.layout} onChange={changeCommon} />
-    </div>
+    <>
+        <BlockProperty title={'Quote'} active={props.active}>
+          {/* <CommonSetting settings={content.layout} onChange={changeCommon} /> */}
+        </BlockProperty>
+        <q className='block-quote' {...common} >{content.data}</q>
+    </> 
   )
+  
 }
 
-export const QuoteHandler = {
+
+export const toolQuote:ToolDefinition = {
   type: 'quote',
-  menu: { text: 'Quote', category: 'basic', icon: <TitleOutlined /> },
-  renderMain: (props: RenderMainProps) => <Quote {...props} />,
-  getDefaultData: (): BlockData => {
-    return {
-      layout: {},
-      data: { text: 'Test111222', style: { level: 2 } },
-    }
-  },
-  renderSetting: (props: RenderSettingProps) => <QuoteSettings {...props} />,
+  isComposited: false,
+  menu:  {text:"Quote", category:'basic',icon: <TitleOutlined /> },
+  initData: {type:'quote', content:{
+    layout:{},
+    data:'quotetest'
+  }},
+  def: (props:{data:any, active:boolean})=><Quote {...props} />
 }
