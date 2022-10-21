@@ -235,6 +235,7 @@ export const SlateFun:any = {
           className={css`
             padding: 8px 7px 6px;
             position: absolute;
+            cursor: pointer;
             z-index: 1;
             top: -10000px;
             left: -10000px;
