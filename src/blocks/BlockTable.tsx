@@ -312,7 +312,7 @@ export const Table = (props: any) => {
             </div>
           </div>
           <div>
-            <label>Insert</label>
+            <label>Row</label>
             <div>
               <Button
                 disabled={!(type.ikey && type.jkey)}
@@ -330,6 +330,19 @@ export const Table = (props: any) => {
               </Button>
               <Button
                 disabled={!(type.ikey && type.jkey)}
+                color="warning"
+                onClick={() => del("row")}
+              >
+                <Delete></Delete>
+              </Button>              
+            </div>
+          </div>
+          <div>
+            {" "}
+            <label>Column</label>
+            <div>                        
+            <Button
+                disabled={!(type.ikey && type.jkey)}
                 color="success"
                 onClick={() => setAlign("right")}
               >
@@ -341,20 +354,7 @@ export const Table = (props: any) => {
                 onClick={() => setAlign("left")}
               >
                 <BorderLeft></BorderLeft>
-              </Button>
-            </div>
-          </div>
-          <div>
-            {" "}
-            <label>Delete</label>
-            <div>
-              <Button
-                disabled={!(type.ikey && type.jkey)}
-                color="warning"
-                onClick={() => del("row")}
-              >
-                <Delete></Delete>
-              </Button>
+              </Button>    
               <Button
                 disabled={!(type.ikey && type.jkey)}
                 color="warning"
