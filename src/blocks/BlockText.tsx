@@ -201,14 +201,12 @@ export const BlockText = (props:any)=>{
             {  isLinkActive||isButtonActive?
             // SlateFun.isLinkActive(editor)&&!SlateFun.isCollapsed(editor)?
             <PropertyGroup header="Link"> 
-            <div>
-              <label>Link style:</label>
-              <div>
-              <FormControl sx={{ m: 1, minWidth: 120 }} size="small"> 
+              <PropertyItem label="Style">
                     <Select
                       value={linkstyle?linkstyle:'none'}
                       onChange={(e)=>{changeLinkFormat(e.target.value)}}
                       displayEmpty
+                      size='small'
                       inputProps={{'aria-label': 'Without label' }}
                     >
                       <MenuItem value="none">
@@ -218,9 +216,7 @@ export const BlockText = (props:any)=>{
                         Button
                       </MenuItem>
                     </Select>
-                  </FormControl>
-              </div>
-            </div> 
+            </PropertyItem> 
             </PropertyGroup>
             :null}
             {}
