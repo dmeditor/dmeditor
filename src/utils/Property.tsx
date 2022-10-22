@@ -18,7 +18,7 @@ export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?
 export const PropertyGroup = (props:{header: string, children:any})=>{
     return <div>
         <div><label style={{color:'#004f00'}}>{props.header}</label></div>
-        <div style={{paddingLeft: '10px', paddingTop: '10px'}}>{props.children}</div>
+        <div style={{paddingLeft: '10px', paddingTop: '5px'}}>{props.children}</div>
     </div>
 }
 

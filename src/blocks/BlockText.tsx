@@ -112,6 +112,7 @@ export const BlockText = (props:any)=>{
       <div>
         <Slate editor={editor} value={value} onChange={v => change(v)} >
           <BlockProperty title={'Text'} active={props.active}>
+          <PropertyGroup header="Basic">
             {IsShowToolBar('font','font_family')?
                 <div>
                   <PropertyItem label="Font">
@@ -188,6 +189,7 @@ export const BlockText = (props:any)=>{
               </PropertyItem>   
               :null
             }
+            </PropertyGroup>
             <PropertyGroup header="Insert">
               {IsShowToolBar('tools','image')?
               <PropertyItem label='Insert'>
