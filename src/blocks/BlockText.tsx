@@ -14,7 +14,7 @@ import { SlateFun } from '../utils/Slate'
 import { Ranger } from "../utils/Ranger";
 import { PickColor } from "../utils/PickColor";
 import FontFamilyList from '../utils/FontFamilyList'
-import {PropertyButton, PropertyItem} from '../utils/Property';
+import {PropertyButton, PropertyGroup, PropertyItem} from '../utils/Property';
 
 const BlockButton = ({formats}:any) => {
   let ele:any
@@ -187,17 +187,20 @@ export const BlockText = (props:any)=>{
                   :null}
               </PropertyItem>   
               :null
-            } 
-            {IsShowToolBar('tools','image')?
-            <PropertyItem label='Insert'>
-              <PropertyButton title='Image' onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}>
-                <ImageOutlined />
-              </PropertyButton>               
-            </PropertyItem> 
-             :null
-            }  
+            }
+            <PropertyGroup header="Insert">
+              {IsShowToolBar('tools','image')?
+              <PropertyItem label='Insert'>
+                <PropertyButton title='Image' onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}>
+                  <ImageOutlined />
+                </PropertyButton>               
+              </PropertyItem> 
+              :null
+              }  
+            </PropertyGroup> 
             {  isLinkActive||isButtonActive?
             // SlateFun.isLinkActive(editor)&&!SlateFun.isCollapsed(editor)?
+            <PropertyGroup header="Link"> 
             <div>
               <label>Link style:</label>
               <div>
@@ -218,6 +221,7 @@ export const BlockText = (props:any)=>{
                   </FormControl>
               </div>
             </div> 
+            </PropertyGroup>
             :null}
             {}
             {  (isLinkActive&&linkstyle==='button')||isButtonActive?

@@ -15,6 +15,13 @@ export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?
   </Grid>
 }
 
+export const PropertyGroup = (props:{header: string, children:any})=>{
+    return <div>
+        <div><label style={{color:'#004f00'}}>{props.header}</label></div>
+        <div style={{paddingLeft: '10px', paddingTop: '10px'}}>{props.children}</div>
+    </div>
+}
+
 export const PropertyButton = (props:ButtonProps&{title?:string, selected?:boolean})=>{
     let sx:any={color: '#8a8a8a', marginRight: '2px', ':hover': {
         bgcolor: '#eaeaea',

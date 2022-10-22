@@ -22,7 +22,7 @@ import { ToolDefinition } from "../ToolDefinition";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "@mui/material";
 import { PickColor } from "../utils/PickColor";
-import { PropertyButton, PropertyItem } from "../utils/Property";
+import { PropertyButton, PropertyGroup, PropertyItem } from "../utils/Property";
 
 const changeColor = (name: string, value: string) => {
   document.documentElement.style.setProperty(name, value);
@@ -230,6 +230,7 @@ export const Table = (props: any) => {
   return (
     <div style={{ ...props.data.layout }}>
       <BlockProperty title={"Table"} active={props.active}>
+        <PropertyGroup header='Border'>
         <PropertyItem label='Border'>
               <PropertyButton
                 title='No border'
@@ -267,6 +268,8 @@ export const Table = (props: any) => {
                 onChange={changeBorderColor}
               ></PickColor>
           </PropertyItem>
+          </PropertyGroup>
+          <PropertyGroup header='Cells'>
           <PropertyItem label='Row'>
               <PropertyButton
                 title='Insert on bottom'
@@ -316,6 +319,8 @@ export const Table = (props: any) => {
               <DeleteSweep></DeleteSweep>
             </PropertyButton>
           </PropertyItem>
+          </PropertyGroup>
+          <PropertyGroup header='Background'>
           <PropertyItem label='Header background' autoWidth>
               <PickColor
                 color={color?.headerColor}
@@ -328,6 +333,7 @@ export const Table = (props: any) => {
                 onChange={changeOddColor}
               ></PickColor>
           </PropertyItem>
+          </PropertyGroup>
           <PropertyItem label='Padding'>
               <Ranger
                 defaultValue={3}
