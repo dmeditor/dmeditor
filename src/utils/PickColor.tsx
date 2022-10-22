@@ -43,9 +43,9 @@ export const PickColor=(props:any)=>{
             display: "inline-block",
             border: "1px solid #cccccc",
             cursor: "pointer",
-            width: "30px",
-            height: "30px",
-            borderRadius: 20,
+            width: "26px",
+            height: "26px",
+            borderRadius: 15,
             background: props.color,
           }}
         ></span>
