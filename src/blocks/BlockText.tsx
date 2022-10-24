@@ -120,7 +120,7 @@ export const BlockText = (props:any)=>{
                       id="ddd--5555"
                       size="small"
                       fullWidth
-                        value={familytype}
+                        value={familytype?familytype:''}
                         onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Without label' }}
