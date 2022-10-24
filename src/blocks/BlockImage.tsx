@@ -10,7 +10,7 @@ export const BlockImage = (props:any)=>{
     return <div style={{width: width}}>
             <BlockProperty title={'Image'} active={props.active}>
                 <div>
-                    <label>Width: </label>
+                    <label>Width: {props.adding?'adding':'not adding'}</label>
                     <input type="text" defaultValue={width} onChange={(e)=>setWidth(parseInt(e.target.value))} />
                 </div>
             </BlockProperty>
@@ -25,5 +25,5 @@ export const toolImage:ToolDefinition = {
     type: 'image',
     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
     initData: {type:'image', content:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/2312px-Picture_icon_BLACK.svg.png'},
-    def: (props:{data:any, active:boolean})=><BlockImage {...props} />
+    render: (props:{data:any, adding?:boolean, active:boolean})=><BlockImage {...props} />
 }

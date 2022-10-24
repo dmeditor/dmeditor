@@ -11,6 +11,7 @@ export type BlockInfo = {
 interface BlockProps{
     data: any,
     active?:boolean,
+    adding?:boolean,
     onActiveChange?: (active:boolean)=>void,
     onAddAbove?:any,
     onAddUnder?:any,
@@ -32,8 +33,8 @@ export const Block = (props:BlockProps)=>{
     const render = ()=>{
         let def = getDef( props.data.type );
         if( def){
-            let ToolRender = def.def;
-            return <ToolRender onChange={props.onChange} data={props.data} active={isActive} />
+            let ToolRender = def.render;
+            return <ToolRender adding={props.adding} onChange={props.onChange} data={props.data} active={isActive} />
         }else{
             return 'Unknown type:'+props.data.type;
         }

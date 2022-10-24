@@ -61,5 +61,5 @@ export const toolQuote:ToolDefinition = {
     layout:{},
     data:'quotetest'
   }},
-  def: (props:{data:any, active:boolean})=><Quote {...props} />
+  render: (props:{data:any, active:boolean})=><Quote {...props} />
 }

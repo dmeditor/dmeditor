@@ -42,7 +42,7 @@ registerTool(
     isComposited: false,
     menu: {text:'Heading',category:'basic',icon: <TitleOutlined /> },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 // registerTool(
@@ -69,7 +69,7 @@ registerTool(
       icon: <VideocamOutlined />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 registerTool(
@@ -80,7 +80,7 @@ registerTool(
       icon: <CodeOutlined />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 registerTool(
@@ -88,7 +88,7 @@ registerTool(
     type: 'content_grid',
     menu: {text:"Content grid", category:'content_block', icon: <GridViewOutlined /> },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 registerTool(
@@ -99,7 +99,7 @@ registerTool(
       icon: <SquareOutlined />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 registerTool(
@@ -110,14 +110,14 @@ registerTool(
       icon: <CollectionsOutlined />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 registerTool(
   { type: "tab",
     menu: { text: "Tab", category: "intractive", icon: <TabOutlined /> },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 registerTool(
@@ -128,7 +128,7 @@ registerTool(
       icon: <ViewListOutlined />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 registerTool(
@@ -139,7 +139,7 @@ registerTool(
       icon: <CalendarMonth />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 
 registerTool(
@@ -150,7 +150,7 @@ registerTool(
       icon: <AppRegistrationOutlined />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 registerTool(
   { type: "gallery",
@@ -160,7 +160,7 @@ registerTool(
       icon: <CollectionsOutlined />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 registerTool(
   { type: "facebook",
@@ -170,7 +170,7 @@ registerTool(
       icon: <FacebookOutlined />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 registerTool(
   { type: "twitter",
@@ -180,6 +180,6 @@ registerTool(
       icon: <Twitter />,
     },
     initData: 'test',
-    def: ()=> <div>Not implemented</div>}
+    render: ()=> <div>Not implemented</div>}
 );
 

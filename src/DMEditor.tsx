@@ -18,6 +18,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
     const [mode, setMode] = useState('add' as 'add'|'select');
     const [propertyParams, setPropertyParams] = useState('');
     const [viewmode, setViewmode] = useState('pc');
+    const [addingBlock, setAddingBlock] = useState(-1);
 
     const addAbove = (type: string)=>{
         if( type ){
@@ -38,6 +39,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
             allBlocks.splice(activeBlock+1, 0, defaultData);
             setBlocks( allBlocks );
             setActiveBlock(activeBlock+1);
+            setAddingBlock(activeBlock+1);
         }
         setMode('add');
         setAddMore(0);
@@ -46,6 +48,9 @@ export const DMEditor = (props:{data:Array<any>})=>{
     const select = (index:number)=>{
         if( index !== activeBlock ){
             setActiveBlock(index);            
+        }
+        if( addingBlock !== -1 ){
+            setAddingBlock(-1);
         }
         setAddMore(0);
     }
@@ -128,7 +133,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
             {blocks.map((block, index)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
-                return  <><Block key={currentSelected+''} data={block} active={currentSelected} onActiveChange={(active:boolean)=>{
+                return  <><Block key={currentSelected+''} adding={index===addingBlock} data={block} active={currentSelected} onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);
                             //changed from other's to current
