@@ -49,7 +49,7 @@ https://github.com/digimakergo/dmeditor-sample
     type: 'image',
     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
     initData: {type:'image', content:'http://test.com/svg.png'},
-    def: (props:{data:any, active:boolean})=><BlockImage {...props} />
+    render: (props:ToolRenderProps)=><BlockImage {...props} />
 };
   
 ```
