@@ -24,10 +24,10 @@ export const Block = (props:BlockProps)=>{
     useOnClickOutside(ref, () => changeActive(false));
 
     const changeActive = (active:boolean)=>{
-        setIsActive(active);
-        if( props.onActiveChange ){
-            props.onActiveChange(active);
-        }
+        // setIsActive(active);
+        // if( props.onActiveChange ){
+        //     props.onActiveChange(active);
+        // }
     }
 
     const render = ()=>{
