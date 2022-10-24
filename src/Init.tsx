@@ -3,7 +3,7 @@ import { blockManager } from "./BlockManager";
 import { FullImageHandler } from "./blocks/FullImage";
 import { HeadingHandler } from "./blocks/Heading";
 import { TextMediaHandler } from "./blocks/TextMedia";
-import { ParagraphHandler } from "./blocks/Paragraph";
+// import { ParagraphHandler } from "./blocks/Paragraph";
 import { ContentBlockHandler } from "./blocks/ContentBlock";
 import {
   AppRegistrationOutlined,
