@@ -31,8 +31,14 @@ export const PropertyButton = (props:ButtonProps&{title?:string, selected?:boole
         sx= {...sx, 'color': 'green'};
     }
 
+
+    let buttonProps = {...props};
+    if( buttonProps['title'] ){
+      delete buttonProps['title'];
+    }
+
     if(props.title){
-        return <Tooltip title={props.title}><Button sx={sx} {...props} /></Tooltip> 
+        return <Tooltip title={props.title}><Button sx={sx} {...buttonProps} /></Tooltip> 
     }else{
         return <Button sx={sx} {...props} />
     }
