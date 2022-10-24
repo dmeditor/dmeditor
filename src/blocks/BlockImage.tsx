@@ -30,7 +30,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
                     <DialogContent>
                         <Box>
                             <Input onChange={e=>setInputUrl(e.target.value)} />
-                            <Button onClick={submitImage}>Submit</Button>
+                            <Button onClick={submitImage} variant="contained">Submit</Button>
                         </Box>
                     </DialogContent>                  
                     </Dialog>

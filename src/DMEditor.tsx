@@ -22,9 +22,9 @@ export const DMEditor = (props:{data:Array<any>})=>{
 
     const addAbove = (type: string)=>{
         if( type ){
+            const defaultData = getDef(type).initData;
             let allBlocks = [...blocks];
-            const defaultData = blockManager.getBlockType(type).getDefaultData();
-            allBlocks.splice(activeBlock, 0, {type: type, content: defaultData} );
+            allBlocks.splice(activeBlock, 0, defaultData );
             setBlocks(allBlocks);
         }
         setMode('add');
