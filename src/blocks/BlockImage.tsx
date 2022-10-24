@@ -10,8 +10,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
     const [inputUrl, setInputUrl] = useState('');
     const [imageUrl, setImageUrl] = useState(props.data.content);
-    
-    
+        
     const submitImage = ()=>{
         setImageUrl( inputUrl );
         props.onChange({type:'image', content: inputUrl});
@@ -19,7 +18,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     }
 
     return <div style={{width: width}}>
-            {props.active&&adding&&<div>
+            {adding&&<div>
                 <Dialog
                     open={adding}
                     onClose={()=>setAdding(false)}
