@@ -1,6 +1,6 @@
 {
   "name": "dmeditor",
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-alpha.5",
   "description": "dmeditor is a block-styled visual editor. Data is in json format.",
   "keywords": [
     "online editor",
@@ -15,7 +15,21 @@
   "license": "GPL v2",
   "dependencies": {
     "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.8.4"
+    "@mui/material": "^5.8.4",
+    "slate": "^0.82.1",
+    "slate-history": "^0.66.0",
+    "slate-react": "^0.83.2",
+    "uuid":"9.0.0",
+    "web-vitals": "^2.1.4",
+    "react-color": "^2.19.3",
+    "@types/is-url": "^1.2.30",
+    "@types/react-color": "^3.0.6",
+    "@emotion/css": "^11.10.0",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@types/uuid": "8.3.4",
+    "image-extensions": "^1.1.0",
+    "is-url": "^1.2.4"
   },
   "scripts": {
     "dist": "rm -rf dist/* && cp -r ./package.json README.md ./dist && tsc && cp -r ./src/*.css ./dist && cp -r ./src/blocks/*.css ./dist/blocks"
@@ -40,31 +54,16 @@
   },
   "types": "src/types.d.ts",
   "devDependencies": {
-    "@emotion/css": "^11.10.0",
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/is-url": "^1.2.30",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.41",
     "@types/react": "^18.0.14",
-    "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.0.5",
-    "@types/uuid": "8.3.4",
-    "html-react-parser": "^2.0.0",
-    "image-extensions": "^1.1.0",
-    "is-url": "^1.2.4",
     "react": "^18.2.0",
-    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "slate": "^0.82.1",
-    "slate-history": "^0.66.0",
-    "slate-react": "^0.83.2",
-    "typescript": "^4.7.3",
-    "uuid":"9.0.0",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1" ,
+    "typescript": "^4.7.3"  
   }
 }
