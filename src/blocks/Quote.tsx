@@ -24,7 +24,7 @@ export const Quote = (props:any)=>{
     let newData={...content};
     newData.data=text
     setConent(newData)
-    console.log(newData)
+    props.onChange({type:'quote',content:newData});
   }
 
   const common = {
