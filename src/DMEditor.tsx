@@ -137,7 +137,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
                             }
                         }
                     }} 
-                    onSave={data=>{blocks[index]=data;setBlocks(blocks)}}
+                    onChange={data=>{blocks[index]=data;setBlocks(blocks)}}
                     onAddAbove={()=>onAddMore(-1)} 
                     onAddUnder={()=>onAddMore(1)} /></>;         
              }
