@@ -1,13 +1,39 @@
 import { Image, ImageNotSupported, ImageOutlined } from "@mui/icons-material";
+import { Box, Button, Dialog, DialogContent, DialogTitle, Input, Modal } from "@mui/material";
 import { useState } from "react";
 import { BlockProperty } from "../BlockProperty";
-import { ToolDefinition } from "../ToolDefinition";
+import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 
 
-export const BlockImage = (props:any)=>{
+export const BlockImage = (props:ToolRenderProps)=>{
     const [width, setWidth] = useState(300);
+    const [adding, setAdding] = useState(props.adding?true:false);
+    const [inputUrl, setInputUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState(props.data.content);
+        
+    const submitImage = ()=>{
+        setImageUrl( inputUrl );
+        props.onChange({type:'image', content: inputUrl});
+        setAdding(false);
+    }
 
     return <div style={{width: width}}>
+            {adding&&<div>
+                <Dialog
+                    open={adding}
+                    onClose={()=>setAdding(false)}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                    >
+                    <DialogTitle>Input url</DialogTitle>
+                    <DialogContent>
+                        <Box>
+                            <Input onChange={e=>setInputUrl(e.target.value)} />
+                            <Button onClick={submitImage} variant="contained">Submit</Button>
+                        </Box>
+                    </DialogContent>                  
+                    </Dialog>
+                    </div>}
             <BlockProperty title={'Image'} active={props.active}>
                 <div>
                     <label>Width: </label>
@@ -15,9 +41,8 @@ export const BlockImage = (props:any)=>{
                 </div>
             </BlockProperty>
 
-            {props.data.content?<img width={'100%'} src={props.data.content} />:            
-            <div><img width={'100%'} src={'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/2312px-Picture_icon_BLACK.svg.png'} /></div>
-            }
+                <img width={'100%'} src={imageUrl} />
+            
             </div>
 }
 
@@ -25,5 +50,5 @@ export const toolImage:ToolDefinition = {
     type: 'image',
     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
     initData: {type:'image', content:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/2312px-Picture_icon_BLACK.svg.png'},
-    def: (props:{data:any, active:boolean})=><BlockImage {...props} />
+    render: (props:ToolRenderProps)=><BlockImage {...props} />
 }

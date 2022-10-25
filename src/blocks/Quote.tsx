@@ -24,7 +24,7 @@ export const Quote = (props:any)=>{
     let newData={...content};
     newData.data=text
     setConent(newData)
-    console.log(newData)
+    props.onChange({type:'quote',content:newData});
   }
 
   const common = {
@@ -61,5 +61,5 @@ export const toolQuote:ToolDefinition = {
     layout:{},
     data:'quotetest'
   }},
-  def: (props:{data:any, active:boolean})=><Quote {...props} />
+  render: (props:{data:any, active:boolean})=><Quote {...props} />
 }

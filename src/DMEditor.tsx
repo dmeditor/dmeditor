@@ -18,12 +18,13 @@ export const DMEditor = (props:{data:Array<any>})=>{
     const [mode, setMode] = useState('add' as 'add'|'select');
     const [propertyParams, setPropertyParams] = useState('');
     const [viewmode, setViewmode] = useState('pc');
+    const [addingBlock, setAddingBlock] = useState(-1);
 
     const addAbove = (type: string)=>{
         if( type ){
+            const defaultData = getDef(type).initData;
             let allBlocks = [...blocks];
-            const defaultData = blockManager.getBlockType(type).getDefaultData();
-            allBlocks.splice(activeBlock, 0, {type: type, content: defaultData} );
+            allBlocks.splice(activeBlock, 0, defaultData );
             setBlocks(allBlocks);
         }
         setMode('add');
@@ -38,6 +39,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
             allBlocks.splice(activeBlock+1, 0, defaultData);
             setBlocks( allBlocks );
             setActiveBlock(activeBlock+1);
+            setAddingBlock(activeBlock+1);
         }
         setMode('add');
         setAddMore(0);
@@ -128,16 +130,17 @@ export const DMEditor = (props:{data:Array<any>})=>{
             {blocks.map((block, index)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
-                return  <><Block key={currentSelected+''} data={block} active={currentSelected} onActiveChange={(active:boolean)=>{
+                return  <><Block key={currentSelected+''} adding={currentSelected&&index===addingBlock} data={block} active={currentSelected} onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);
+                            setAddingBlock(-1);
                             //changed from other's to current
                             if( !currentSelected ){
                                 setMode('select');
                             }
                         }
                     }} 
-                    onSave={data=>{blocks[index]=data;setBlocks(blocks)}}
+                    onChange={data=>{blocks[index]=data;setBlocks(blocks)}}
                     onAddAbove={()=>onAddMore(-1)} 
                     onAddUnder={()=>onAddMore(1)} /></>;         
              }

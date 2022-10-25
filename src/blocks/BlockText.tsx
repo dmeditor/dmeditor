@@ -72,7 +72,7 @@ export const BlockText = (props:any)=>{
 
     const change = (val:any)=>{
       setValue(val)
-      props.onSave({type:'text',content:{initialValue:val}});
+      props.onChange({type:'text',content:{initialValue:val}});
     }
 
     const changeFontFormat = (v:any,format:any,e?:any)=>{
@@ -120,7 +120,7 @@ export const BlockText = (props:any)=>{
                       id="ddd--5555"
                       size="small"
                       fullWidth
-                        value={familytype}
+                        value={familytype?familytype:''}
                         onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
                         displayEmpty
                         inputProps={{ 'aria-label': 'Without label' }}
@@ -333,5 +333,5 @@ export const toolText:ToolDefinition = {
         ],
       }
     },
-    def: (props:{data:any, active:boolean, onSave:(data:any)=>void})=><BlockText {...props} />
+    render: (props:{data:any, active:boolean, onChange:(data:any)=>void})=><BlockText {...props} />
 }

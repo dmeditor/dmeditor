@@ -27,7 +27,7 @@ export const SlateFun:any = {
   //slate element
   Element :(props:any) => {
     const { attributes, children, element } = props
-    const style = { textAlign: element.align }
+    const style = { textAlign: element.align,fontFamily:element.fontFamily }
     // console.log('Element',props)
     switch (element.type) {
       case 'block-quote':
@@ -135,12 +135,40 @@ export const SlateFun:any = {
   toggleFormat : (editor:any, format:string,value?:any) => {
     const isActive = SlateFun.isFormatActive(editor, format)
     let property = SlateFun.TEXT_FORMAT_TYPES.includes(format) ? 'type' : 'style';
-    Transforms.setNodes(
-      editor,
-      { [format]: isActive ? null : (property==='type'?true:value)},
-      { match: Text.isText, split: true }
-    ) 
+    let newProperty:any
+    if(format=='fontFamily'){
+      newProperty= { [format]: value};
+      if(SlateFun.isCollapsed(editor)){
+        let child=JSON.parse(JSON.stringify(editor.children))
+        SlateFun.resetChildren(child,format,value)
+        editor.children=child;
+        console.log(editor)
+        Transforms.setNodes(editor,newProperty)
+      }else{
+        Transforms.setNodes(
+          editor,
+          newProperty,
+          { match: Text.isText, split: true }
+        ) 
+      }
+    }else{
+      Transforms.setNodes(
+        editor,
+        { [format]: isActive ? null: (property==='type'?true:value)},
+        { match: Text.isText, split: true }
+      ) 
+    }
   },
+  resetChildren:(arr:any,format:any,value:any)=>{
+    arr.forEach((item:any)=>{
+      if(item.children&&item.children.length>0){
+        SlateFun.resetChildren(item.children,format,value)
+      }else{
+        item[format]=value
+      }
+    })
+  },
+
   isFormatActive : (editor:any,format:string) => {
     const [match] = Editor.nodes(editor, {
       match: (n:any) => n[format] === true,

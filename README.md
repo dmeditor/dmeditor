@@ -22,32 +22,9 @@ npm install dmeditor
 Check [Sample code](https://github.com/digimakergo/dmeditor-sample/blob/main/src/App.tsx) for source code.
 ```typescript
 
-const sampleData:Array<BlockInfo> = [
-    {
-    type:'heading',
-    content: {
-      layout: {},
-      data: {
-        text: "UN whistleblowing complaints 'dismissed too early'",
-        style: {level: 1}
-      }
-    },
-  },
-  {
-    type:'full_image',
-    content: {
-      layout: {},
-      data: {
-        src: "https://ichef.bbci.co.uk/news/976/cpsprodpb/83F8/production/_125548733_stillspurna3new.jpg",
-        style: {padding: 0, borderWidth:0, background:'#ffffff'}
-      }
-    },
-  }
-];
-
 return (
     <div className="App">
-        <DMEditor data={sampleData} />
+        <DMEditor data={[]} />
     </div>);
 ```
 
@@ -64,28 +41,20 @@ https://github.com/digimakergo/dmeditor-sample
 ### Extending
 #### 1.Create a customized block type(widget)
 
-*Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/FullImage.tsx) as example*
+*Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/BlockImage.tsx) as example*
 1. Create a block handler
 ```typescript
- export const FullImageHandler = {
-    type: 'full_image',
-    menu:  {text:"Full image", category:'basic',icon: <ImageOutlined /> },
-    renderMain: (props:RenderMainProps)=><FullImage {...props} />,
-    getDefaultData:():BlockData=>{
-       return {
-        layout:{padding: 0},
-        data:{
-            src:'https://sample.com/test.jpg',
-            style: {padding: 2, borderWidth: 0, background:''}}}
-        },
-    renderSetting: (props:RenderSettingProps)=><FullImageSettings {...props} />
- }
+//define a tool
+  export const toolImage:ToolDefinition = {
+    type: 'image',
+    menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
+    initData: {type:'image', content:'http://test.com/svg.png'},
+    render: (props:ToolRenderProps)=><BlockImage {...props} />
+};
+  
 ```
-2. Register the block handler(can be in App.tsx)
+2. Register the tool (can be in App.tsx)
 
 ```typescript
-import { FullImageHandler } from "./blocks/FullImage";
-
-
-blockManager.registerBlockType(ContentBlockHandler);
+  registerTool(toolImage);
 ```

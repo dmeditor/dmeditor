@@ -1,9 +1,16 @@
+export interface ToolRenderProps {
+    data:any, 
+    active:boolean,
+     adding?:boolean, 
+     onChange:(data:any)=>void
+} 
+
 export interface ToolDefinition {
     type:string,
     isComposited?: boolean,
     menu?: {text: string, category: string, icon: React.ReactElement},
     initData: any,
-    def: (props:{data:any, active:boolean, onSave:(data:any)=>void})=>React.ReactElement,    
+    render: (props:ToolRenderProps)=>React.ReactElement,    
 }
 
 let defMap: {[key: string]: ToolDefinition} = {};

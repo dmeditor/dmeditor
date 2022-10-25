@@ -11,10 +11,11 @@ export type BlockInfo = {
 interface BlockProps{
     data: any,
     active?:boolean,
+    adding?:boolean,
     onActiveChange?: (active:boolean)=>void,
     onAddAbove?:any,
     onAddUnder?:any,
-    onSave:(data:any)=>void,
+    onChange:(data:any)=>void,
 }
 
 export const Block = (props:BlockProps)=>{
@@ -32,8 +33,8 @@ export const Block = (props:BlockProps)=>{
     const render = ()=>{
         let def = getDef( props.data.type );
         if( def){
-            let ToolRender = def.def;
-            return <ToolRender onSave={props.onSave} data={props.data} active={isActive} />
+            let ToolRender = def.render;
+            return <ToolRender adding={props.adding} onChange={props.onChange} data={props.data} active={isActive} />
         }else{
             return 'Unknown type:'+props.data.type;
         }
@@ -67,7 +68,7 @@ export const DefBlock = (props:{required:boolean, type:string,
     active?:boolean,
     max?:number})=>{
     let defaultData = getDef(props.type).initData;
-    return <Block onSave={()=>{}} data={defaultData} onActiveChange={props.onActiveChange} />
+    return <Block onChange={()=>{}} data={defaultData} onActiveChange={props.onActiveChange} />
 }
 
 
