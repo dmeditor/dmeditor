@@ -131,7 +131,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
             {blocks.map((block, index)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
-                return  <><Block key={currentSelected+''} adding={currentSelected&&index===addingBlock} data={block} active={currentSelected} onActiveChange={(active:boolean)=>{
+                return  <><Block adding={currentSelected&&index===addingBlock} data={block} active={currentSelected} onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);
                             setAddingBlock(-1);

@@ -19,22 +19,27 @@ interface BlockProps{
 }
 
 export const Block = (props:BlockProps)=>{
-    const [isActive, setIsActive] = useState(props.active?true:false);
+    const isActive = props.active?true:false;
     const ref:any = useRef();
-    useOnClickOutside(ref, () => changeActive(false));
+    // useOnClickOutside(ref, () => changeActive(false));
 
     const changeActive = (active:boolean)=>{
-        // setIsActive(active);
-        // if( props.onActiveChange ){
-        //     props.onActiveChange(active);
-        // }
+        if( active != isActive ){
+            if( props.onActiveChange ){
+                props.onActiveChange(active);
+            }
+        }
+    }
+
+    const onDataChange = (data:any) =>{        
+        props.onChange(data);
     }
 
     const render = ()=>{
         let def = getDef( props.data.type );
         if( def){
             let ToolRender = def.render;
-            return <ToolRender adding={props.adding} onChange={props.onChange} data={props.data} active={isActive} />
+            return <ToolRender adding={props.adding} onChange={onDataChange} data={props.data} active={isActive} />
         }else{
             return 'Unknown type:'+props.data.type;
         }
