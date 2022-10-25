@@ -24,7 +24,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
             {adding&&<div>
                 <Dialog
                     open={adding}
-                    onClose={()=>setAdding(false)}
+                    onClose={props.onCancel}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                     >

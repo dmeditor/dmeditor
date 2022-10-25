@@ -16,6 +16,7 @@ interface BlockProps{
     onAddAbove?:any,
     onAddUnder?:any,
     onChange:(data:any)=>void,
+    onCancel?:()=>void
 }
 
 export const Block = (props:BlockProps)=>{
@@ -39,7 +40,7 @@ export const Block = (props:BlockProps)=>{
         let def = getDef( props.data.type );
         if( def){
             let ToolRender = def.render;
-            return <ToolRender adding={props.adding} onChange={onDataChange} data={props.data} active={isActive} />
+            return <ToolRender adding={props.adding} onChange={onDataChange} data={props.data} active={isActive} onCancel={props.onCancel} />
         }else{
             return 'Unknown type:'+props.data.type;
         }

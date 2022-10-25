@@ -1,8 +1,9 @@
 export interface ToolRenderProps {
     data:any, 
     active:boolean,
-     adding?:boolean, 
-     onChange:(data:any)=>void
+    adding?:boolean, 
+    onChange:(data:any)=>void,
+    onCancel?:()=>void
 } 
 
 export interface ToolDefinition {
