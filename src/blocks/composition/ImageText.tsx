@@ -7,7 +7,7 @@ import { ToolDefinition } from "../../ToolDefinition";
 export const toolImageText: ToolDefinition = {
     type: 'imagetext',
     isComposited: true,
-    menu:  {text:"Image text", category:'basic',icon: <CollectionsOutlined /> },
+    menu:  {text:"Image text", category:'blocks',icon: <CollectionsOutlined /> },
     initData: {
         type:'imagetext',
         settings:{childrenHorizontal: true},

@@ -38,13 +38,6 @@ registerTool(toolTable);
 registerTool( toolQuote )
 registerTool( toolVideo )
 
-// registerTool(
-//   { type: 'full_image',
-//     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
-//     initData: 'test',
-//     def: ()=> <div>Not implemented</div>}
-// );
-
 registerTool(
   { type: "code",
     menu: {
