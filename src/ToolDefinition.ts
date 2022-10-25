@@ -32,7 +32,6 @@ const toolCategories = [
     {identifier: 'blocks', text: 'Blocks'},
     {identifier: 'content_block', text: 'Content'},
     {identifier: 'form', text: 'Form'},        
-    {identifier: 'superoffice', text: 'SuperOffice'},
     {identifier: 'social_network', text: 'Social Network'}        
     ];
 

@@ -114,16 +114,6 @@ registerTool(
 );
 
 registerTool(
-  { type: "superoffice_form",
-    menu: {
-      text: "SuperOffice form",
-      category: "superoffice",
-      icon: <AppRegistrationOutlined />,
-    },
-    initData: 'test',
-    render: ()=> <div>Not implemented</div>}
-);
-registerTool(
   { type: "gallery",
     menu: {
       text: "Gallery",
@@ -133,16 +123,7 @@ registerTool(
     initData: 'test',
     render: ()=> <div>Not implemented</div>}
 );
-registerTool(
-  { type: "facebook",
-    menu: {
-      text: "Facebook page",
-      category: "social_network",
-      icon: <FacebookOutlined />,
-    },
-    initData: 'test',
-    render: ()=> <div>Not implemented</div>}
-);
+
 registerTool(
   { type: "twitter",
     menu: {
