@@ -29,6 +29,9 @@ import { toolQuote } from "./blocks/Quote";
 import { toolHeading } from "./blocks/Heading";
 import { toolTable } from "./blocks/BlockTable"; 
 import { toolVideo } from "./blocks/BlockVideo"; 
+import { toolIframe } from "./blocks/IFrame"; 
+
+
 registerTool(toolText);
 registerTool(toolImageText);
 registerTool(toolButton);
@@ -48,6 +51,8 @@ registerTool(
     initData: 'test',
     render: ()=> <div>Not implemented</div>}
 );
+
+registerTool(toolIframe);
 
 registerTool(
   { 
@@ -81,7 +86,7 @@ registerTool(
 
 registerTool(
   { type: "tab",
-    menu: { text: "Tab", category: "intractive", icon: <TabOutlined /> },
+    menu: { text: "Tab", category: "blocks", icon: <TabOutlined /> },
     initData: 'test',
     render: ()=> <div>Not implemented</div>}
 );
@@ -90,7 +95,7 @@ registerTool(
   { type: "expandable_list",
     menu: {
       text: "Expandable list",
-      category: "intractive",
+      category: "blocks",
       icon: <ViewListOutlined />,
     },
     initData: 'test',

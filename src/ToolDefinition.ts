@@ -30,7 +30,6 @@ export const getDef = (type:string):ToolDefinition=>{
 const toolCategories = [
     {identifier: 'basic', text: 'Basic'},
     {identifier: 'blocks', text: 'Blocks'},
-    {identifier: 'intractive', text: 'Intractive'},
     {identifier: 'content_block', text: 'Content'},
     {identifier: 'form', text: 'Form'},        
     {identifier: 'superoffice', text: 'SuperOffice'},
