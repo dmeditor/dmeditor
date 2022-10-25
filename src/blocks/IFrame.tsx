@@ -43,7 +43,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                     </DialogContent>                  
                     </Dialog>
                     </div>}
-            <BlockProperty title={'Image'} active={props.active}>
+            <BlockProperty title={'Iframe'} active={props.active}>
                 <PropertyItem label="Width">
                     <Ranger min={300} max={1000} step={10} defaultValue={width} onChange={(v:number)=>setWidth(v)} />                    
                 </PropertyItem>
