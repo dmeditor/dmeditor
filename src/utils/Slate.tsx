@@ -28,7 +28,6 @@ export const SlateFun:any = {
   Element :(props:any) => {
     const { attributes, children, element } = props
     const style = { textAlign: element.align,fontFamily:element.fontFamily }
-    // console.log('Element',props)
     switch (element.type) {
       case 'block-quote':
         return (
@@ -83,7 +82,6 @@ export const SlateFun:any = {
   //slate leaf
   Leaf : (props:any) => {
     let { attributes, children, leaf } = props
-    //  console.log('leaf',props)
     if (leaf.bold) {
       children = <strong>{children}</strong>
     }
@@ -142,7 +140,6 @@ export const SlateFun:any = {
         let child=JSON.parse(JSON.stringify(editor.children))
         SlateFun.resetChildren(child,format,value)
         editor.children=child;
-        console.log(editor)
         Transforms.setNodes(editor,newProperty)
       }else{
         Transforms.setNodes(
@@ -235,8 +232,6 @@ export const SlateFun:any = {
     const ref = useRef<HTMLDivElement | null>(null)
     const editor = useSlate()
     const inFocus = useFocused()
-    //  console.log('HoveringToolbar------config',props)
-    //  console.log('HoveringToolbar------inFocus',inFocus)
     useEffect(() => {
       const el:any = ref.current
       const { selection } = editor
@@ -330,7 +325,6 @@ export const SlateFun:any = {
   },
   isMarkActive : (editor:any, format:string) => {
     const marks:any = Editor.marks(editor)
-    // console.log('marks',marks)
     return marks ? marks[format] === true : false
   },
   toggleBlock : (editor:any, format:string,value?:any) => {
@@ -625,34 +619,8 @@ export const SlateFun:any = {
       setTimeout(()=>{
       SlateFun.wrapButton(editor,newButton,type)
       },200)
-    
-    // const button:any = newButton?newButton:{
-    //   type: 'button',
-    //   children: isCollapsed ? [{ text: 'Edit me!' }] : [],
-    // }
-    // if (isCollapsed) {
-    //   return;
-    //   Transforms.insertNodes(editor, button)
-    // } else {
-    //   if (SlateFun.isButtonActive(editor)) {
-    //     SlateFun.unwrapButton(editor)
-    //   }
-    //   Transforms.wrapNodes(editor, button, { split: true })
-    //   Transforms.collapse(editor, { edge: 'end' })
-    // }
-  
-    // if (isCollapsed) {
-    //   Transforms.insertNodes(editor, button)
-    // } else {
-    //   if (SlateFun.isButtonActive(editor)) {
-    //     SlateFun.unwrapButton(editor)
-    //   }
-    //   Transforms.wrapNodes(editor, button, { split: true })
-    //   Transforms.collapse(editor, { edge: 'end' })
-    // }
   },
   wrapButton:(editor:any,newButton?:any,type?:any)  => {
-    // console.log('type========>',type)
     SlateFun.isButtonCollapsed=false;
     if(type==='none'){
       if (SlateFun.isButtonActive(editor)) {
@@ -661,10 +629,6 @@ export const SlateFun:any = {
     }else{
       const { selection } = editor
       const isCollapsed = selection && SlateRange.isCollapsed(selection)
-      // const button:any = {
-      //   type: 'button',
-      //   children: isCollapsed ? [{ text: 'Edit me!' }] : [],
-      // }
       const button:any = newButton?newButton:{
         type: 'button',
         children: isCollapsed ? [{ text: 'Edit me!' }] : [],
@@ -680,6 +644,7 @@ export const SlateFun:any = {
         Transforms.collapse(editor, { edge: 'end' })
       }
     }
+    ReactEditor.focus(editor)
   },
   toggleButtonFormat : (editor:any, format:string,value?:any) => {
     if(SlateFun.isButtonActive(editor)){
@@ -701,7 +666,6 @@ export const SlateFun:any = {
     }
    
   },
- 
   getbuttonSetting:(editor:any)=>{
       const [button] = Editor.nodes(editor, {
         match: (n:any) =>n.type === 'button'&&!Editor.isEditor(n) && SlateElement.isElement(n),
@@ -712,13 +676,7 @@ export const SlateFun:any = {
     const { selection } = editor
     const  isCollapsed= selection && SlateRange.isCollapsed(selection)
     return isCollapsed
-  }
-  
-  
-  
-  
-  
-
+  },
 
 }
 
