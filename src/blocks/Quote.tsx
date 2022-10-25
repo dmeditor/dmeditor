@@ -4,7 +4,7 @@ import { BlockData, BlockLayoutData } from '../types'
 import { CommonSetting } from '../Property'
 import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition } from "../ToolDefinition";
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useRef } from 'react'
 
 
 export const Quote = (props:any)=>{
@@ -14,13 +14,9 @@ export const Quote = (props:any)=>{
     //   props.onSetting(data)
     // }
    const [content,setConent] = useState(props.data.content)
-  useEffect(()=>{
-    console.log(props)
-  },[])
-  
-  const change = (e: any) => {
-    const text = e.target.innerText
-    console.log(text)
+   const QuoteRef:any=useRef(null);
+  const change = (e?: any) => {
+    const text=QuoteRef.current.innerText
     let newData={...content};
     newData.data=text
     setConent(newData)
@@ -40,13 +36,16 @@ export const Quote = (props:any)=>{
   //   console.log(data)
   //   // props.onSetting(data)
   // }
+  useEffect(()=>{
+    change();
+  },[props.active])
 
   return (
     <>
         <BlockProperty title={'Quote'} active={props.active}>
           {/* <CommonSetting settings={content.layout} onChange={changeCommon} /> */}
         </BlockProperty>
-        <q className='block-quote' {...common} >{content.data}</q>
+        <q ref={QuoteRef} className='block-quote' {...common} >{content.data}</q>
     </> 
   )
   
