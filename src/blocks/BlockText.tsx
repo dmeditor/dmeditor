@@ -7,7 +7,7 @@ import { ToolDefinition } from "../ToolDefinition";
 
 import React, { useMemo, useRef, useEffect ,useState,useCallback} from 'react';
 import {Editor,Transforms,Text,createEditor,Descendant, Range as SlateRange,Element as SlateElement,} from 'slate';
-import { Slate, Editable, withReact, useSlate, useFocused } from 'slate-react';
+import { Slate, Editable, withReact,ReactEditor, useSlate, useFocused } from 'slate-react';
 import { withHistory } from 'slate-history'
 
 import { SlateFun } from '../utils/Slate'
@@ -40,16 +40,6 @@ const BlockButton = ({formats}:any) => {
 }
 
 export const BlockText = (props:any)=>{
-    // if(!props.data.content){
-    //   props.data.content= {
-    //       initialValue:[],
-    //       config:{
-    //         hover_toolbar:['bold','italic','underline','link','linkoff'],
-    //         font: ["font_family", "font size", "color"],
-    //         tools: ["list", "order_list", "align", "image"]
-    //       }
-    //   }
-    // }
     const [size, setSize] = useState(1.1);
     // const [align, setAlign] = useState('left' as 'left'|'center'|'right');
     const [familytype,setFamilytype] = useState('')
@@ -62,6 +52,7 @@ export const BlockText = (props:any)=>{
     const [isLinkActive,setIsLinkActive] = useState(false);
     const [isButtonActive,setIsButtonActive] = useState(false);
     const [isCollapsed,setIsCollapsed]= useState(true);
+    const [isSelect,setIsSelect]= useState(false);
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -88,7 +79,7 @@ export const BlockText = (props:any)=>{
       if(format === 'fontFamily'){
         setFamilytype(v)
       }
-      
+      setIsSelect(!isSelect)
       SlateFun.toggleFormat(editor,format,v)
     }
     const IsShowToolBar = (type:any,format:string)=>{
@@ -97,6 +88,8 @@ export const BlockText = (props:any)=>{
     const changeLinkFormat = (v:any)=>{
       setLinkstyle(v)
       SlateFun.setButtonFormat(editor,'',v)
+      setIsLinkActive(v==='none'?true:false)
+      setIsButtonActive(v==='button'?true:false)
     }
     const changeButtonFormat = (v:any,format:any)=>{
       if(format === 'variant'){
@@ -107,6 +100,10 @@ export const BlockText = (props:any)=>{
       }
       SlateFun.toggleButtonFormat(editor,format,v)
     }
+    
+    useEffect(()=>{
+      ReactEditor.focus(editor)
+    },[isSelect])
 
     return (
       <div>
@@ -117,7 +114,6 @@ export const BlockText = (props:any)=>{
                 <div>
                   <PropertyItem label="Font">
                       <Select
-                      id="ddd--5555"
                       size="small"
                       fullWidth
                         value={familytype?familytype:''}
@@ -125,11 +121,11 @@ export const BlockText = (props:any)=>{
                         displayEmpty
                         inputProps={{ 'aria-label': 'Without label' }}
                       >
-                        <MenuItem value="">
+                        <MenuItem value="" onMouseUp={(e)=>{e.preventDefault()}}>
                           <em>Default</em>
                         </MenuItem>
                         {FontFamilyList.map((font, index) => (
-                          <MenuItem key={index} value={font.name}>
+                          <MenuItem key={index} value={font.name} onMouseUp={(e)=>{e.preventDefault()}}>
                             {font.name}
                           </MenuItem>
                         ))
@@ -244,7 +240,6 @@ export const BlockText = (props:any)=>{
             :null}
                  
           </BlockProperty>
-         
           <div>
             <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}/>
             <Editable
@@ -258,8 +253,9 @@ export const BlockText = (props:any)=>{
                   setLinkstyle('none')
                   setIsLinkActive(SlateFun.isLinkActive(editor)?true:false)
                   setIsButtonActive(SlateFun.isButtonActive(editor)?true:false)
-                  setIsCollapsed(SlateFun.isCollapsed(editor))
-
+                  setTimeout(()=>{
+                    setIsCollapsed(SlateFun.isCollapsed(editor))
+                  },10)
                   if(SlateFun.isButtonActive(editor)){
                     let button:any=SlateFun.getbuttonSetting(editor)
                     let newButton:any=JSON.parse(JSON.stringify(button))
@@ -294,24 +290,6 @@ export const BlockText = (props:any)=>{
         </Slate>
       </div> 
     )
-
-    // return <div>
-    //         <BlockProperty title={'Text'} active={props.active}>
-    //             <div>
-    //                 <label>Font size:</label>
-    //                 <Input type='text' defaultValue={size} onChange={(e)=>setSize(parseFloat(e.target.value))} />
-    //             </div>  
-    //             <div>
-    //             <label>Align:</label>
-    //             <div>
-    //                 <Button onClick={()=>setAlign('left')} variant={(align==='left'||align==undefined)?'outlined':undefined}><FormatAlignLeft /></Button>
-    //                 <Button onClick={()=>setAlign('center')} variant={align==='center'?'outlined':undefined}><FormatAlignCenter /></Button>
-    //                 <Button onClick={()=>setAlign('right')} variant={align==='right'?'outlined':undefined}><FormatAlignRight /></Button>
-    //             </div>
-    //             </div>            
-    //         </BlockProperty>
-    //         <div style={{fontSize: size+'em', textAlign:align}} dangerouslySetInnerHTML={{__html:props.data.content?props.data.content:'default text1111'}} />
-    //         </div>
 }
 
 
