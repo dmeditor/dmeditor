@@ -126,7 +126,7 @@ export const BlockText = (props:any)=>{
                         </MenuItem>
                         {FontFamilyList.map((font, index) => (
                           <MenuItem key={index} value={font.name} onMouseUp={(e)=>{e.preventDefault()}}>
-                            {font.name}
+                            <span style={{fontFamily: font.name}}>{font.name}</span>
                           </MenuItem>
                         ))
                         }
