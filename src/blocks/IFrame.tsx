@@ -24,7 +24,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
 
     useEffect(()=>{
         props.onChange({...props.data, content:url, settings:{width: width, height: height, align: align} })
-    }, [url, width, height]);
+    }, [url, width, align, height]);
 
     return <div>
             {props.adding&&<div>
