@@ -1,4 +1,5 @@
 import { GridOn } from "@mui/icons-material";
+import {css} from '@emotion/css'
 import {
   BorderBottom,
   Delete,
@@ -24,9 +25,6 @@ import { Button } from "@mui/material";
 import { PickColor } from "../utils/PickColor";
 import { PropertyButton, PropertyGroup, PropertyItem } from "../utils/Property";
 
-const changeColor = (name: string, value: string) => {
-  document.documentElement.style.setProperty(name, value);
-};
 
 type add = "top" | "right" | "bottom" | "left";
 type deleteType = "col" | "row";
@@ -45,8 +43,12 @@ interface colType {
   // style?: any;
   // width?: string | number;
 }
+interface styelProp {
+  [propName: string]: any;
+}
 
 export const Table = (props: any) => {
+  console.log(props);
   const [content, SetContent] = useState<colType[]>(() => {
     return (
       props?.data?.content || [
@@ -71,19 +73,20 @@ export const Table = (props: any) => {
       ]
     );
   });
+  const [padding, setPadding] = useState(0);
   const [type, changeType] = useState(() => {
     return { ikey: "", jkey: "", i: -1, j: -1 };
   });
   const clicks = (ikey: string, jkey: string, i: number, j: number) => {
-      changeType({ ikey, jkey, i, j });
+    changeType({ ikey, jkey, i, j });
   };
   const [headerStyle, setHeaderStyle] = useState(() => {
     return {};
   });
   const [color, setColor] = useState({
     borderColor: "#cccccc",
-    headerColor: '',
-    oddColor:''
+    headerColor: "",
+    oddColor: "",
   });
   const [border, setBorderProp] = useState<bordersType>("rowBorder");
   const setAlign = (v: add) => {
@@ -150,18 +153,22 @@ export const Table = (props: any) => {
     }
     SetContent(_arr);
     setTimeout(() => {
-      changeType({ ikey: "", jkey: "", i: -1, j: -1 });
+      let ikey: string, jkey: string, i: number, j: number;
+      i = type.i > _arr.length - 1 ? _arr.length - 1 : type.i;
+      j = type.j > _arr[0].row.length - 1 ? _arr[0].row.length - 1 : type.j;
+      ikey = _arr[i].key;
+      jkey = _arr[i].row[j].key;
+      changeType((value) => ({ ...value, ikey, jkey }));
     });
   };
   const setBorder = (value: bordersType) => {
     setBorderProp(value);
   };
   const changeBorderColor = (color: string) => {
-    changeColor("--border-color", color);
-    setColor(value => {
-      value.borderColor = color
-      return {...value}
-    })
+    setColor((value) => {
+      value.borderColor = color;
+      return { ...value };
+    });
   };
   const changeHeaderColor = (color: string) => {
     setHeaderStyle({
@@ -173,17 +180,41 @@ export const Table = (props: any) => {
     });
   };
   const changeOddColor = (color: string) => {
-    changeColor("--odd-color", color);
-     setColor((value) => {
-       value.oddColor = color;
-       return { ...value };
-     });
+    setColor((value) => {
+      value.oddColor = color;
+      return { ...value };
+    });
   };
   const setStyle = (i: number) => {
     if (i === 0) {
       return headerStyle;
     }
     return {};
+  };
+  const tableContainer = () => {
+    let style: styelProp = {};
+    if (border === "border") {
+      style.borderLeft = `1px solid ${color.borderColor}`;
+      style.borderTop = `1px solid ${color.borderColor}`;
+    }
+    if (border === 'rowBorder') {
+      style.borderTop = `1px solid ${color.borderColor}`;
+    }
+    return style;
+  };
+  const tdStyle = () => {
+    let style: styelProp = {};
+    if (border === "border") {
+      style.borderRight = `1px solid ${color.borderColor}`;
+      style.borderBottom = `1px solid ${color.borderColor}`;
+    } else if (border === "none") {
+      style.borderRight = "none";
+      style.borderBottom = "none";
+    }
+    if (border === "rowBorder") {
+      style.borderBottom = `1px solid ${color.borderColor}`;
+    }
+    return style;
   };
   const updateRow = (value: number) => {
     let dataRow: colType = {
@@ -227,91 +258,95 @@ export const Table = (props: any) => {
       return [...v];
     });
   };
+  const updatePadding = (num: number) => {
+    setPadding(num);
+  };
   return (
     <div style={{ ...props.data.layout }}>
       <BlockProperty title={"Table"} active={props.active}>
-        <PropertyGroup header='Border'>
-        <PropertyItem label='Border'>
-              <PropertyButton
-                title='No border'
-                selected = {border === "none"}
-                onClick={() => {
-                  setBorder("none");
-                }}
-              >
-                <BorderClearOutlined></BorderClearOutlined>
-              </PropertyButton>
-              <PropertyButton
-                title='Row border'
-                selected = {border === "rowBorder"}
-                onClick={() => {
-                  setBorder("rowBorder");
-                }}
-              >
-                <BorderHorizontalOutlined
-                ></BorderHorizontalOutlined>
-              </PropertyButton>
-              <PropertyButton
-                title='Cell border'
-                selected={border === "border"}
-                onClick={() => {
-                  setBorder("border");
-                }}
-              >
-                <BorderAll
-                ></BorderAll>
-              </PropertyButton>
+        <PropertyGroup header="Border">
+          <PropertyItem label="Border">
+            <PropertyButton
+              title="No border"
+              selected={border === "none"}
+              onClick={() => {
+                setBorder("none");
+              }}
+            >
+              <BorderClearOutlined></BorderClearOutlined>
+            </PropertyButton>
+            <PropertyButton
+              title="Row border"
+              selected={border === "rowBorder"}
+              onClick={() => {
+                setBorder("rowBorder");
+              }}
+            >
+              <BorderHorizontalOutlined></BorderHorizontalOutlined>
+            </PropertyButton>
+            <PropertyButton
+              title="Cell border"
+              selected={border === "border"}
+              onClick={() => {
+                setBorder("border");
+              }}
+            >
+              <BorderAll></BorderAll>
+            </PropertyButton>
           </PropertyItem>
-          <PropertyItem label='Border color' autoWidth>
-              <PickColor
-                color={color?.borderColor}
-                onChange={changeBorderColor}
-              ></PickColor>
+          <PropertyItem label="Border color" autoWidth>
+            <PickColor
+              color={color?.borderColor}
+              onChange={changeBorderColor}
+            ></PickColor>
           </PropertyItem>
-          </PropertyGroup>
-          <PropertyGroup header='Cells'>
-          <PropertyItem label='Row'>
-              <PropertyButton
-                title='Insert on bottom'
-                disabled={!(type.ikey && type.jkey)}
-                color="success"
-                onClick={() => setAlign("bottom")}
-              >
-                <BorderBottom></BorderBottom>
-              </PropertyButton>
-              <PropertyButton 
-                title='Insert on top'
-                disabled={!(type.ikey && type.jkey)}
-                color="success"
-                onClick={() => setAlign("top")}
-              >
-                <BorderTop />
-              </PropertyButton>              
-              <PropertyButton
-                title='Delete row'
-                disabled={!(type.ikey && type.jkey)}
-                color="warning"
-                onClick={() => del("row")}
-              >
-                <Delete></Delete>
-              </PropertyButton>                        
+        </PropertyGroup>
+        <PropertyGroup header="Cells">
+          <PropertyItem label="Row">
+            <PropertyButton
+              title="Insert on bottom"
+              disabled={!(type.ikey && type.jkey)}
+              color="success"
+              onClick={() => setAlign("bottom")}
+            >
+              <BorderBottom></BorderBottom>
+            </PropertyButton>
+            <PropertyButton
+              title="Insert on top"
+              disabled={!(type.ikey && type.jkey)}
+              color="success"
+              onClick={() => setAlign("top")}
+            >
+              <BorderTop />
+            </PropertyButton>
+            <PropertyButton
+              title="Delete row"
+              disabled={!(type.ikey && type.jkey)}
+              color="warning"
+              onClick={() => del("row")}
+            >
+              <Delete></Delete>
+            </PropertyButton>
           </PropertyItem>
           <PropertyItem label="Column">
-          <PropertyButton title="Insert on right"
+            <PropertyButton
+              title="Insert on right"
               disabled={!(type.ikey && type.jkey)}
               color="success"
               onClick={() => setAlign("right")}
             >
               <BorderRight></BorderRight>
             </PropertyButton>
-            <PropertyButton  title="Insert on left"
+            <PropertyButton
+              title="Insert on left"
               disabled={!(type.ikey && type.jkey)}
               color="success"
               onClick={() => setAlign("left")}
             >
               <BorderLeft></BorderLeft>
-            </PropertyButton>    
-            <PropertyButton  title="Delete column"
+            </PropertyButton>
+            <PropertyButton
+              title="Delete column"
               disabled={!(type.ikey && type.jkey)}
               color="warning"
               onClick={() => del("col")}
@@ -319,86 +354,100 @@ export const Table = (props: any) => {
               <DeleteSweep></DeleteSweep>
             </PropertyButton>
           </PropertyItem>
-          </PropertyGroup>
-          <PropertyGroup header='Background'>
-          <PropertyItem label='Header background' autoWidth>
-              <PickColor
-                color={color?.headerColor}
-                onChange={changeHeaderColor}
-              ></PickColor>
-            </PropertyItem>
-          <PropertyItem label='Odd row background' autoWidth>
-              <PickColor
-                color={color?.oddColor}
-                onChange={changeOddColor}
-              ></PickColor>
+        </PropertyGroup>
+        <PropertyGroup header="Background">
+          <PropertyItem label="Header background" autoWidth>
+            <PickColor
+              color={color?.headerColor}
+              onChange={changeHeaderColor}
+            ></PickColor>
           </PropertyItem>
-          </PropertyGroup>
-          <PropertyItem label='Padding'>
-              <Ranger
-                defaultValue={3}
-                min={1}
-                max={5}
-                step={1}
-                onChange={() => {}}
-              />
+          <PropertyItem label="Odd row background" autoWidth>
+            <PickColor
+              color={color?.oddColor}
+              onChange={changeOddColor}
+            ></PickColor>
           </PropertyItem>
-          <PropertyItem label='Rows'>
-              <Ranger
-                defaultValue={content.length}
-                min={1}
-                max={10}
-                step={1}
-                onChange={(num: number) => {
-                  updateRow(num);
-                }}
-              />
-          </PropertyItem>
-          <PropertyItem label='Columns'>
-              <Ranger
-                defaultValue={content[0].row.length}
-                min={1}
-                max={5}
-                step={1}
-                onChange={(num: number) => {
-                  updateColumn(num);
-                }}
-              />
-          </PropertyItem>          
+        </PropertyGroup>
+        <PropertyItem label="Padding">
+          <Ranger
+            defaultValue={padding}
+            min={1}
+            max={15}
+            step={1}
+            onChange={(num: number) => {
+              updatePadding(num);
+            }}
+          />
+        </PropertyItem>
+        <PropertyItem label="Rows">
+          <Ranger
+            defaultValue={content.length}
+            min={1}
+            max={10}
+            step={1}
+            onChange={(num: number) => {
+              updateRow(num);
+            }}
+          />
+        </PropertyItem>
+        <PropertyItem label="Columns">
+          <Ranger
+            defaultValue={content[0].row.length}
+            min={1}
+            max={10}
+            step={1}
+            onChange={(num: number) => {
+              updateColumn(num);
+            }}
+          />
+        </PropertyItem>
       </BlockProperty>
-      <div className={border === "border" ? "table-container" : ""}>
-        <table
-          width={"100%"}
-          border={0}
-          cellSpacing="0"
-          cellPadding="0"
-          className="table"
-          suppressContentEditableWarning
-          contentEditable={props.active}
-        >
-          <tbody>
-            {content.map((row, i) => {
-              return (
-                <tr key={row.key} style={setStyle(i)}>
-                  {row.row.map((col, j) => (
-                    <td
-                      key={col.key}
-                      onClick={() => clicks(row.key, col.key, i, j)}
-                      className={`table__cell ${border} ${
-                        row.key + col.key === type.ikey + type.jkey &&
-                        props.active
-                          ? "tdActive"
-                          : ""
-                      }`}
-                    >
-                      <div className={`cell`}>{col.context}</div>
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="bani">
+        <div style={{ padding: padding + "px" }}>
+          <table
+            width={"100%"}
+            border={0}
+            cellSpacing="0"
+            cellPadding="0"
+            className="bani-table"
+            style={tableContainer()}
+            suppressContentEditableWarning
+            contentEditable={props.active}
+          >
+            <tbody>
+              {content.map((row, i) => {
+                return (
+                  <tr
+                    key={row.key}
+                    style={setStyle(i)}
+                    className={css({
+                      "&:nth-child(odd)": {
+                          backgroundColor: color.oddColor
+                      },
+                    })}
+                  >
+                    {row.row.map((col, j) => (
+                      <td
+                        key={col.key}
+                        onClick={() => clicks(row.key, col.key, i, j)}
+                        className={`table__cell ${
+                          row.key + col.key === type.ikey + type.jkey &&
+                          props.active
+                            ? "tdActive"
+                            : ""
+                        }`}
+                        style={tdStyle()}
+                      >
+                        <div className={`cell`}>{col.context}</div>
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -407,6 +456,8 @@ export const Table = (props: any) => {
 export const toolTable: ToolDefinition = {
   type: "table",
   menu: { text: "Table", category: "basic", icon: <GridOn /> },
-  initData: { type: "table", content: null },
-  def: (props: { data: any; active: boolean, onSave:(data:any)=>void }) => <Table {...props} />,
+  initData: { type: "table", content: {} },
+  def: (props: { data: any; active: boolean; onSave: (data: any) => void }) => (
+    <Table {...props} />
+  ),
 };
