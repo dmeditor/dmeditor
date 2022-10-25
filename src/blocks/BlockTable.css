@@ -1,10 +1,4 @@
-/* :root{
-  --border-color: #cccccc;
-  --odd-color: transparent;
-} */
-
 .bani .bani-table{
-    /* border-left: 1px solid #cccccc;*/
     border-right:none;
     border-bottom: none;
     border-spacing: 0px;
@@ -14,9 +8,6 @@
 .bani .tdActive {
   outline: 1px dotted #1e6fff !important;
 }
-/* tr:nth-child(odd){
-  background-color: var(--odd-color);
-} */
 
 .bani .table__cell {
   padding: 8px 0;
@@ -27,24 +18,6 @@
   position: relative;
   text-align: left;
   z-index: 1;
-}
-/* .bani .table__cell.none{
-   border-right: none;
-   border-bottom: none;
-} */
-/* .table__cell.border{
-   border-right: 1px solid var(--border-color);
-   border-bottom: 1px solid var(--border-color);
-} */
-/* .table__cell.rowBorder{
-  border-bottom:1px solid var(--border-color);
-} */
-/* .table-container{
-  border-left: 1px solid var(--border-color);
-  border-top: 1px solid var(--border-color);
-} */
-.table tr:nth-child(odd){
-  background-color: var(--odd-color);
 }
 
 .bani .table__cell .cell {

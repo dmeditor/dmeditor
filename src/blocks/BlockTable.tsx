@@ -1,5 +1,5 @@
 import { GridOn } from "@mui/icons-material";
-import {css} from '@emotion/css'
+import { css } from "@emotion/css";
 import {
   BorderBottom,
   Delete,
@@ -11,7 +11,7 @@ import {
   BorderRight,
   BorderTop,
 } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RenderMainProps, RenderSettingProps } from "../blocktype";
 import { BlockData, BlockLayoutData } from "../types";
 import { Ranger } from "../utils/Ranger";
@@ -24,7 +24,6 @@ import { v4 as uuidv4 } from "uuid";
 import { Button } from "@mui/material";
 import { PickColor } from "../utils/PickColor";
 import { PropertyButton, PropertyGroup, PropertyItem } from "../utils/Property";
-
 
 type add = "top" | "right" | "bottom" | "left";
 type deleteType = "col" | "row";
@@ -50,45 +49,44 @@ interface styelProp {
 export const Table = (props: any) => {
   console.log(props);
   const [content, SetContent] = useState<colType[]>(() => {
-    return (
-      props?.data?.content || [
-        {
-          key: uuidv4(),
-          row: [
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-          ],
-        },
-        {
-          key: uuidv4(),
-          row: [
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-          ],
-        },
-      ]
-    );
+    return props?.data?.content;
   });
-  const [padding, setPadding] = useState(0);
+  const [padding, setPadding] = useState(() => {
+    let padding: number = 0;
+    if (props?.data?.settings?.padding) {
+      if (typeof props?.data?.settings?.padding === "number") {
+        padding = props?.data?.settings?.padding;
+      } else if (typeof props?.data?.settings?.padding === "string") {
+        padding = parseInt(props?.data?.settings?.padding);
+      }
+    }
+    return padding;
+  });
+  const [color, setColor] = useState({
+    borderColor: props?.data?.settings?.borderColor || "#cccccc",
+    headerColor: props?.data?.settings?.headerColor || "",
+    oddColor: props?.data?.settings?.oddColor || "",
+  });
+
+  const [border, setBorderProp] = useState<bordersType>(() => {
+    return props?.data?.settings?.border || "rowBorder";
+  });
+
   const [type, changeType] = useState(() => {
     return { ikey: "", jkey: "", i: -1, j: -1 };
   });
   const clicks = (ikey: string, jkey: string, i: number, j: number) => {
     changeType({ ikey, jkey, i, j });
   };
-  const [headerStyle, setHeaderStyle] = useState(() => {
-    return {};
+
+  useEffect(() => {
+    props?.onChange({
+      content,
+      settings: { ...color, padding, border },
+      type: "table",
+    });
   });
-  const [color, setColor] = useState({
-    borderColor: "#cccccc",
-    headerColor: "",
-    oddColor: "",
-  });
-  const [border, setBorderProp] = useState<bordersType>("rowBorder");
+
   const setAlign = (v: add) => {
     let _arr = [...content];
     let dataRow: colType = {
@@ -171,9 +169,6 @@ export const Table = (props: any) => {
     });
   };
   const changeHeaderColor = (color: string) => {
-    setHeaderStyle({
-      backgroundColor: color,
-    });
     setColor((value) => {
       value.headerColor = color;
       return { ...value };
@@ -185,19 +180,13 @@ export const Table = (props: any) => {
       return { ...value };
     });
   };
-  const setStyle = (i: number) => {
-    if (i === 0) {
-      return headerStyle;
-    }
-    return {};
-  };
   const tableContainer = () => {
     let style: styelProp = {};
     if (border === "border") {
       style.borderLeft = `1px solid ${color.borderColor}`;
       style.borderTop = `1px solid ${color.borderColor}`;
     }
-    if (border === 'rowBorder') {
+    if (border === "rowBorder") {
       style.borderTop = `1px solid ${color.borderColor}`;
     }
     return style;
@@ -260,6 +249,17 @@ export const Table = (props: any) => {
   };
   const updatePadding = (num: number) => {
     setPadding(num);
+  };
+  const change = (
+    e: React.FocusEvent<HTMLDivElement>,
+    ikey: string,
+    jkey: string,
+    i: number,
+    j: number
+  ) => {
+    console.log(e.target.innerText);
+    content[i].row[j].context = e.target.innerText
+    SetContent({...content})
   };
   return (
     <div style={{ ...props.data.layout }}>
@@ -373,7 +373,7 @@ export const Table = (props: any) => {
           <Ranger
             defaultValue={padding}
             min={1}
-            max={15}
+            max={40}
             step={1}
             onChange={(num: number) => {
               updatePadding(num);
@@ -411,19 +411,21 @@ export const Table = (props: any) => {
             cellSpacing="0"
             cellPadding="0"
             className="bani-table"
-            style={tableContainer()}
             suppressContentEditableWarning
             contentEditable={props.active}
+            style={tableContainer()}
           >
             <tbody>
               {content.map((row, i) => {
                 return (
                   <tr
                     key={row.key}
-                    style={setStyle(i)}
+                    style={{
+                      backgroundColor: i === 0 ? color.headerColor : "",
+                    }}
                     className={css({
                       "&:nth-child(odd)": {
-                          backgroundColor: color.oddColor
+                        backgroundColor: color.oddColor,
                       },
                     })}
                   >
@@ -437,6 +439,9 @@ export const Table = (props: any) => {
                             ? "tdActive"
                             : ""
                         }`}
+                        onBlur={(e) => {
+                          change(e, row.key, col.key, i, j);
+                        }}
                         style={tdStyle()}
                       >
                         <div className={`cell`}>{col.context}</div>
@@ -456,6 +461,29 @@ export const Table = (props: any) => {
 export const toolTable: ToolDefinition = {
   type: "table",
   menu: { text: "Table", category: "basic", icon: <GridOn /> },
-  initData: { type: "table", content: null },
-  render: (props: { data: any; active: boolean, onChange:(data:any)=>void }) => <Table {...props} />,
+  initData: { type: "table", content: [
+       {
+          key: uuidv4(),
+          row: [
+            { key: uuidv4(), context: "new" },
+            { key: uuidv4(), context: "new" },
+            { key: uuidv4(), context: "new" },
+            { key: uuidv4(), context: "new" },
+          ],
+        },
+        {
+          key: uuidv4(),
+          row: [
+            { key: uuidv4(), context: "new" },
+            { key: uuidv4(), context: "new" },
+            { key: uuidv4(), context: "new" },
+            { key: uuidv4(), context: "new" },
+          ],
+        },
+    ] },
+  render: (props: {
+    data: any;
+    active: boolean;
+    onChange: (data: any) => void;
+  }) => <Table {...props} />,
 };
