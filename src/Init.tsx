@@ -1,6 +1,5 @@
 import { BlockHandler, RenderMainProps, RenderSettingProps } from "./blocktype";
 import { blockManager } from "./BlockManager";
-import { HeadingHandler } from "./blocks/Heading";
 // import { ParagraphHandler } from "./blocks/Paragraph";
 import { ContentBlockHandler } from "./blocks/ContentBlock";
 import {
@@ -27,21 +26,17 @@ import { toolImageText } from "./blocks/composition/ImageText";
 import { toolButton } from "./blocks/BlockButton";
 import { toolImage } from "./blocks/BlockImage";
 import { toolQuote } from "./blocks/Quote";
-// import { toolHeading } from "./blocks/Heading";
+import { toolHeading } from "./blocks/Heading";
 import { toolTable } from "./blocks/BlockTable"; 
+import { toolVideo } from "./blocks/BlockVideo"; 
 registerTool(toolText);
 registerTool(toolImageText);
 registerTool(toolButton);
 registerTool(toolImage);
-// registerTool( toolHeading );
+registerTool( toolHeading );
 registerTool(toolTable);
-registerTool(
-  { type: 'heading',
-    isComposited: false,
-    menu: {text:'Heading',category:'basic',icon: <TitleOutlined /> },
-    initData: 'test',
-    render: ()=> <div>Not implemented</div>}
-);
+registerTool( toolQuote )
+registerTool( toolVideo )
 
 // registerTool(
 //   { type: 'full_image',
@@ -49,26 +44,6 @@ registerTool(
 //     initData: 'test',
 //     def: ()=> <div>Not implemented</div>}
 // );
-
-registerTool( toolQuote )
-
-// registerTool(
-//   { type: 'quote',
-//     menu: { text: 'Quote', category: 'basic', icon: <TitleOutlined /> },
-//     initData: 'test',
-//     def: ()=> <div>Not implemented</div>}
-// );
-
-registerTool(
-  { type: "video",
-    menu: {
-      text: "Video",
-      category: "basic",
-      icon: <VideocamOutlined />,
-    },
-    initData: 'test',
-    render: ()=> <div>Not implemented</div>}
-);
 
 registerTool(
   { type: "code",
