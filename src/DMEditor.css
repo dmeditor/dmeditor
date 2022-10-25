@@ -34,7 +34,7 @@
   position: relative;
 }
 
-.layout-main.viewmode-pc{
+.layout-main.viewmode-pc, .layout-main.viewmode-edit{
     width: 900px;
 }
 

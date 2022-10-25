@@ -5,7 +5,7 @@ import { Property } from './Property';
 import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
-import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
+import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 import { BlockInfo } from './types';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
@@ -17,7 +17,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
     const [addMore, setAddMore] = useState(1);   
     const [mode, setMode] = useState('add' as 'add'|'select');
     const [propertyParams, setPropertyParams] = useState('');
-    const [viewmode, setViewmode] = useState('pc');
+    const [viewmode, setViewmode] = useState('edit');
     const [addingBlock, setAddingBlock] = useState(-1);
 
     const addAbove = (type: string)=>{
@@ -119,6 +119,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
             <div className='left-tool'>
                 <a href="https://github.com/digimakergo/dmeditor" title='help' target="_blank"><HelpOutlined /></a>
                 <hr />
+                <a href='javascript:void(0)' className={viewmode=='edit'?'current':''} onClick={()=>setViewmode('edit')} title='Edit'><ModeEditOutline /></a>
                 <a href='javascript:void(0)' className={viewmode=='pc'?'current':''} onClick={()=>setViewmode('pc')} title='PC'><LaptopMacOutlined /></a>
                 <a href='javascript:void(0)' className={viewmode=='mobile'?'current':''}  onClick={()=>setViewmode('mobile')} title='Mobile'> <PhoneIphoneOutlined /></a>
                 <a href='javascript:void(0)' className={viewmode=='tablet'?'current':''}  onClick={()=>setViewmode('tablet')} title='Tablet'><TabletMacOutlined /></a>
