@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Block } from './Block';
 import './DMEditor.css';
 import { Property } from './Property';
@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef } from './ToolDefinition';
 
-export const DMEditor = (props:{data:Array<any>})=>{
+export const DMEditor = (props:{data:Array<any>, menu?:React.ReactElement})=>{
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
@@ -114,7 +114,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
         <ThemeProvider theme={outerTheme}>
             <div className='dmeditor-layout'>
         <div className='layout-left'>
-            <a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>            
+            {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>}
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
             <div className='left-tool'>
                 <a href="https://github.com/digimakergo/dmeditor" title='help' target="_blank"><HelpOutlined /></a>
