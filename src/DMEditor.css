@@ -92,6 +92,10 @@ hr{
   z-index: 1;
 }
 
+.is-preview .tool{
+  display: none;
+}
+
 .tool-above{
   top: -30px;
 }
@@ -109,7 +113,7 @@ hr{
   outline: 1px solid rgba(0,0,0,0);
 }
 
-.block:hover, .active{
+.viewmode-edit .block:hover, .viewmode-edit .active{
   outline: 1px solid #00721f;
   outline-offset: 3px;
 }

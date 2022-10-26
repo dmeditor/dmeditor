@@ -170,7 +170,8 @@ export const Table = (props: ToolRenderProps) => {
   };
   const tdStyle = () => {
     let style: styelProp = {
-      padding: padding + "px",
+      paddingTop: padding + "px",
+      paddingBottom: padding + "px"
     };
     if (border === "border") {
       style.borderRight = `1px solid ${color.borderColor}`;
@@ -421,7 +422,7 @@ export const Table = (props: ToolRenderProps) => {
                         }}
                         style={tdStyle()}
                       >
-                        <div className={`cell`}>{data}</div>
+                       {data}
                       </td>
                     ))}
                   </tr>
@@ -444,6 +445,7 @@ export const toolTable: ToolDefinition = {
       ["new", "new", "new", "new"],
       ["new", "new", "new", "new"],
     ],
+    settings:{padding: 6}
   },
   render: (props: ToolRenderProps) => <Table {...props} />,
 };

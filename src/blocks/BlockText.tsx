@@ -139,8 +139,7 @@ export const BlockText = (props:any)=>{
             <>              
               {IsShowToolBar('font','font size')?
                 <PropertyItem label='Size'>
-                    <Ranger min={0} max={24} step={1} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
-                    {/* <Input type='text' defaultValue={size} onChange={(e)=>setSize(parseFloat(e.target.value))} /> */}
+                    <Ranger min={8} max={36} step={2} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
                 </PropertyItem>  
                 :null
               }

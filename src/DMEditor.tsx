@@ -126,7 +126,7 @@ export const DMEditor = (props:{data:Array<any>})=>{
                 </div></div>
         </div>  
         <div id="dmeditor-main" className='layout-main-container'>               
-         <div className={'layout-main '+' viewmode-'+viewmode}>
+         <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
             <div style={{width: '100%', height: 1}}></div>
             {blocks.map((block, index)=>{
              const a = ()=>{

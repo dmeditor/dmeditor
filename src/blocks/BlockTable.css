@@ -3,14 +3,14 @@
     border-bottom: none;
     border-spacing: 0px;
     width: 100%;
-    min-height: 100px;
 }
 .bani .tdActive {
   outline: 1px dotted #1e6fff !important;
 }
 
 .bani .table__cell {
-  padding: 8px 0;
+  padding-left: 5px;
+  padding-right: 5px;
   min-width: 0;
   box-sizing: border-box;
   text-overflow: ellipsis;
