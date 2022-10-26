@@ -22,7 +22,8 @@ export const DMEditor = (props:{data:Array<any>, menu?:React.ReactElement})=>{
 
     const addAbove = (type: string)=>{
         if( type ){
-            const defaultData = getDef(type).initData;
+            //todo: optimize this to clone or initData()
+            const defaultData = JSON.parse( JSON.stringify( getDef(type).initData ) );
             let allBlocks = [...blocks];
             allBlocks.splice(activeBlock, 0, defaultData );
             setBlocks(allBlocks);
@@ -34,8 +35,9 @@ export const DMEditor = (props:{data:Array<any>, menu?:React.ReactElement})=>{
 
     const addUnder = (type: string)=>{
         if( type ){
-            const defaultData = getDef(type).initData;
-            let allBlocks = [...blocks];            
+            //todo: optimize this to clone or initData()
+            const defaultData = JSON.parse( JSON.stringify(getDef(type).initData) );
+            let allBlocks = [...blocks];                        
             allBlocks.splice(activeBlock+1, 0, defaultData);
             setBlocks( allBlocks );
             setActiveBlock(activeBlock+1);
