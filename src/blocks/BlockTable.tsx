@@ -358,7 +358,7 @@ export const Table = (props: ToolRenderProps) => {
         <PropertyItem label="Rows">
           {content.length <= 10 && (
             <Ranger
-              defaultValue={content.length}
+              value={content.length}
               min={1}
               max={10}
               step={1}
@@ -371,7 +371,7 @@ export const Table = (props: ToolRenderProps) => {
         <PropertyItem label="Columns">
           {content[0].length <= 10 && (
             <Ranger
-              defaultValue={content[0].length}
+              value={content[0].length}
               min={1}
               max={10}
               step={1}
