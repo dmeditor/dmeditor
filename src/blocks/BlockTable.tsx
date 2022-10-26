@@ -79,7 +79,7 @@ export const Table = (props: ToolRenderProps) => {
         content.splice(
           type.i,
           0,
-          content[0].map(() => "newTop")
+          content[0].map(() => "")
         );
         type.i++;
         changeType({
@@ -88,7 +88,7 @@ export const Table = (props: ToolRenderProps) => {
         break;
       case "left":
         content.forEach((item) => {
-          item.splice(type.j, 0, "newleft");
+          item.splice(type.j, 0, "");
         });
         type.j++;
         changeType({
@@ -97,14 +97,14 @@ export const Table = (props: ToolRenderProps) => {
         break;
       case "right":
         content.forEach((item) => {
-          item.splice(type.j + 1, 0, "newright");
+          item.splice(type.j + 1, 0, "");
         });
         break;
       case "bottom":
         content.splice(
           type.i + 1,
           0,
-          content[0].map(() => "newbottom")
+          content[0].map(() => "")
         );
         break;
     }
@@ -192,7 +192,7 @@ export const Table = (props: ToolRenderProps) => {
         let arrData = new Array(value - v.length).fill("new").map((item) => {
           let array = [];
           for (let index = 0; index < length; index++) {
-            array.push("new");
+            array.push("");
           }
           return array;
         });
@@ -232,9 +232,9 @@ export const Table = (props: ToolRenderProps) => {
     e: React.FocusEvent<HTMLDivElement>,
     i: number,
     j: number
-  ) => {
+  ) => {    
     content[i][j] = e.target.innerText;
-    SetContent([...content]);
+    SetContent(content);
   };
   return (
     <div style={{ ...props.data.layout }}>
@@ -390,8 +390,6 @@ export const Table = (props: ToolRenderProps) => {
             cellSpacing="0"
             cellPadding="0"
             className="bani-table"
-            suppressContentEditableWarning
-            contentEditable={props.active}
             style={tableContainer()}
           >
             <tbody>
@@ -422,7 +420,8 @@ export const Table = (props: ToolRenderProps) => {
                         }}
                         style={tdStyle()}
                       >
-                       {data}
+                       <div suppressContentEditableWarning
+            contentEditable={props.active}>{data}</div>
                       </td>
                     ))}
                   </tr>
@@ -442,8 +441,8 @@ export const toolTable: ToolDefinition = {
   initData: {
     type: "table",
     content: [
-      ["new", "new", "new", "new"],
-      ["new", "new", "new", "new"],
+      ["", "", "", ""],
+      ["", "", "", ""],
     ],
     settings:{padding: 6}
   },

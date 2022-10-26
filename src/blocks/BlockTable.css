@@ -20,6 +20,17 @@
   z-index: 1;
 }
 
+.table__cell:empty::before{
+  content: '\00a0';
+}
+
+.viewmode-edit .table__cell >div:empty::before{
+  content: 'Empty';
+  font-size: 12px;
+  font-style: italic;
+  color: #cccccc;
+}
+
 .bani .table__cell .cell {
   box-sizing: border-box;
   text-overflow: ellipsis;
