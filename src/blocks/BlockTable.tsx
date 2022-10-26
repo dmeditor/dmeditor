@@ -18,10 +18,7 @@ import { Ranger } from "../utils/Ranger";
 import "./BlockTable.css";
 import { BlockProperty } from "../BlockProperty";
 import React from "react";
-import { Block } from "../Block";
-import { ToolDefinition } from "../ToolDefinition";
-import { v4 as uuidv4 } from "uuid";
-import { Button } from "@mui/material";
+import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PickColor } from "../utils/PickColor";
 import { PropertyButton, PropertyGroup, PropertyItem } from "../utils/Property";
 
@@ -29,26 +26,13 @@ type add = "top" | "right" | "bottom" | "left";
 type deleteType = "col" | "row";
 
 type bordersType = "none" | "rowBorder" | "border";
-interface rowType {
-  key: string;
-  context: string;
-  // align: "right" | "left" | "center";
-  // style?: any;
-  // height: string | number;
-}
-interface colType {
-  row: rowType[];
-  key: string;
-  // style?: any;
-  // width?: string | number;
-}
+
 interface styelProp {
   [propName: string]: any;
 }
-
-export const Table = (props: any) => {
+export const Table = (props: ToolRenderProps) => {
   console.log(props);
-  const [content, SetContent] = useState<colType[]>(() => {
+  const [content, SetContent] = useState<string[][]>(() => {
     return props?.data?.content;
   });
   const [padding, setPadding] = useState(() => {
@@ -73,91 +57,84 @@ export const Table = (props: any) => {
   });
 
   const [type, changeType] = useState(() => {
-    return { ikey: "", jkey: "", i: -1, j: -1 };
+    return { i: -1, j: -1 };
   });
-  const clicks = (ikey: string, jkey: string, i: number, j: number) => {
-    changeType({ ikey, jkey, i, j });
+  const clicks = (i: number, j: number) => {
+    changeType({ i, j });
   };
 
   useEffect(() => {
-    props?.onChange({
-      content,
-      settings: { ...color, padding, border },
-      type: "table",
-    });
+    if (props.active) {
+      props?.onChange({
+        content,
+        settings: { ...color, padding, border },
+        type: "table",
+      });
+    }
   });
 
   const setAlign = (v: add) => {
-    let _arr = [...content];
-    let dataRow: colType = {
-      key: uuidv4(),
-      row: _arr[0].row.map((item) => ({
-        key: uuidv4(),
-        context: "newRol",
-      })),
-    };
-    let dataCol: rowType = {
-      key: uuidv4(),
-      context: "newCol",
-    };
     switch (v) {
       case "top":
-        if (type.i === 0) {
-          _arr.unshift(dataRow);
-        } else {
-          _arr.splice(type.i, 0, dataRow);
-        }
-        changeType((num) => {
-          const i = num.i + 1;
-          return {
-            ...num,
-            i,
-          };
+        content.splice(
+          type.i,
+          0,
+          content[0].map(() => "newTop")
+        );
+        type.i++;
+        changeType({
+          ...type,
         });
         break;
       case "left":
-        _arr.forEach((item) => {
-          item.row.splice(type.j, 0, dataCol);
+        content.forEach((item) => {
+          item.splice(type.j, 0, "newleft");
         });
-        changeType((num) => {
-          return {
-            ...num,
-            j: num.j++,
-          };
+        type.j++;
+        changeType({
+          ...type,
         });
         break;
       case "right":
-        _arr.forEach((item) => {
-          item.row.splice(type.j + 1, 0, dataCol);
+        content.forEach((item) => {
+          item.splice(type.j + 1, 0, "newright");
         });
         break;
       case "bottom":
-        _arr.splice(type.i + 1, 0, dataRow);
+        content.splice(
+          type.i + 1,
+          0,
+          content[0].map(() => "newbottom")
+        );
         break;
     }
-    SetContent(_arr);
+    SetContent([...content]);
   };
   const del = (v: deleteType) => {
-    let _arr = [...content];
+    let array = [...content];
     switch (v) {
       case "col":
-        _arr.forEach((item) => {
-          item.row.splice(type.j, 1);
+        content.forEach((item) => {
+          item.splice(type.j, 1);
         });
+        if (type.j === array[0].length - 1) {
+          changeType({
+            i: type.i,
+            j: array[0].length - 1,
+          });
+        }
         break;
       case "row":
-        _arr.splice(type.i, 1);
+        content.splice(type.i, 1);
+        if (type.i === array.length - 1) {
+          changeType({
+            i: content.length - 1,
+            j: type.j,
+          });
+        }
         break;
     }
-    SetContent(_arr);
-    setTimeout(() => {
-      let ikey: string, jkey: string, i: number, j: number;
-      i = type.i > _arr.length - 1 ? _arr.length - 1 : type.i;
-      j = type.j > _arr[0].row.length - 1 ? _arr[0].row.length - 1 : type.j;
-      ikey = _arr[i].key;
-      jkey = _arr[i].row[j].key;
-      changeType((value) => ({ ...value, ikey, jkey }));
-    });
+    SetContent([...content]);
   };
   const setBorder = (value: bordersType) => {
     setBorderProp(value);
@@ -192,7 +169,9 @@ export const Table = (props: any) => {
     return style;
   };
   const tdStyle = () => {
-    let style: styelProp = {};
+    let style: styelProp = {
+      padding: padding + "px",
+    };
     if (border === "border") {
       style.borderRight = `1px solid ${color.borderColor}`;
       style.borderBottom = `1px solid ${color.borderColor}`;
@@ -206,43 +185,41 @@ export const Table = (props: any) => {
     return style;
   };
   const updateRow = (value: number) => {
-    let dataRow: colType = {
-      key: uuidv4(),
-      row: content[0].row.map((item) => ({
-        key: uuidv4(),
-        context: "newRol",
-      })),
-    };
     SetContent((v) => {
       if (value > v.length) {
-        let arrData = new Array(value - v.length).fill(dataRow);
+        let length = v[0].length;
+        let arrData = new Array(value - v.length).fill("new").map((item) => {
+          let array = [];
+          for (let index = 0; index < length; index++) {
+            array.push("new");
+          }
+          return array;
+        });
         v = v.concat(arrData);
       } else {
-        if (type.i + 1 > value) {
-          changeType({ ikey: "", jkey: "", i: -1, j: -1 });
-        }
         v.splice(value);
+        if (type.i + 1 > value) {
+          type.i = v.length - 1;
+          changeType({ ...type });
+        }
       }
       return [...v];
     });
   };
   const updateColumn = (value: number) => {
-    let dataCol: rowType = {
-      key: uuidv4(),
-      context: "newCol",
-    };
     SetContent((v) => {
-      if (value > v[0]?.row.length) {
+      if (value > v[0]?.length) {
         v.forEach((item) => {
-          item.row.push(dataCol);
+          item.push("new");
         });
       } else {
-        if (type.j + 1 > value) {
-          changeType({ ikey: "", jkey: "", i: -1, j: -1 });
-        }
         v.forEach((item) => {
-          item.row.splice(value);
+          item.splice(value);
         });
+        if (type.j + 1 > value) {
+          type.j = v[0].length - 1;
+          changeType({ ...type });
+        }
       }
       return [...v];
     });
@@ -252,14 +229,11 @@ export const Table = (props: any) => {
   };
   const change = (
     e: React.FocusEvent<HTMLDivElement>,
-    ikey: string,
-    jkey: string,
     i: number,
     j: number
   ) => {
-    console.log(e.target.innerText);
-    content[i].row[j].context = e.target.innerText
-    SetContent({...content})
+    content[i][j] = e.target.innerText;
+    SetContent([...content]);
   };
   return (
     <div style={{ ...props.data.layout }}>
@@ -305,7 +279,7 @@ export const Table = (props: any) => {
           <PropertyItem label="Row">
             <PropertyButton
               title="Insert on bottom"
-              disabled={!(type.ikey && type.jkey)}
+              disabled={type.i === -1 && type.j === -1}
               color="success"
               onClick={() => setAlign("bottom")}
             >
@@ -313,7 +287,7 @@ export const Table = (props: any) => {
             </PropertyButton>
             <PropertyButton
               title="Insert on top"
-              disabled={!(type.ikey && type.jkey)}
+              disabled={type.i === -1 && type.j === -1}
               color="success"
               onClick={() => setAlign("top")}
             >
@@ -321,7 +295,7 @@ export const Table = (props: any) => {
             </PropertyButton>
             <PropertyButton
               title="Delete row"
-              disabled={!(type.ikey && type.jkey)}
+              disabled={type.i === -1 && type.j === -1}
               color="warning"
               onClick={() => del("row")}
             >
@@ -331,7 +305,7 @@ export const Table = (props: any) => {
           <PropertyItem label="Column">
             <PropertyButton
               title="Insert on right"
-              disabled={!(type.ikey && type.jkey)}
+              disabled={type.i === -1 && type.j === -1}
               color="success"
               onClick={() => setAlign("right")}
             >
@@ -339,7 +313,7 @@ export const Table = (props: any) => {
             </PropertyButton>
             <PropertyButton
               title="Insert on left"
-              disabled={!(type.ikey && type.jkey)}
+              disabled={type.i === -1 && type.j === -1}
               color="success"
               onClick={() => setAlign("left")}
             >
@@ -347,7 +321,7 @@ export const Table = (props: any) => {
             </PropertyButton>
             <PropertyButton
               title="Delete column"
-              disabled={!(type.ikey && type.jkey)}
+              disabled={type.i === -1 && type.j === -1}
               color="warning"
               onClick={() => del("col")}
             >
@@ -381,30 +355,34 @@ export const Table = (props: any) => {
           />
         </PropertyItem>
         <PropertyItem label="Rows">
-          <Ranger
-            defaultValue={content.length}
-            min={1}
-            max={10}
-            step={1}
-            onChange={(num: number) => {
-              updateRow(num);
-            }}
-          />
+          {content.length <= 10 && (
+            <Ranger
+              defaultValue={content.length}
+              min={1}
+              max={10}
+              step={1}
+              onChange={(num: number) => {
+                updateRow(num);
+              }}
+            />
+          )}
         </PropertyItem>
         <PropertyItem label="Columns">
-          <Ranger
-            defaultValue={content[0].row.length}
-            min={1}
-            max={10}
-            step={1}
-            onChange={(num: number) => {
-              updateColumn(num);
-            }}
-          />
+          {content[0].length <= 10 && (
+            <Ranger
+              defaultValue={content[0].length}
+              min={1}
+              max={10}
+              step={1}
+              onChange={(num: number) => {
+                updateColumn(num);
+              }}
+            />
+          )}
         </PropertyItem>
       </BlockProperty>
       <div className="bani">
-        <div style={{ padding: padding + "px" }}>
+        <div>
           <table
             width={"100%"}
             border={0}
@@ -416,10 +394,10 @@ export const Table = (props: any) => {
             style={tableContainer()}
           >
             <tbody>
-              {content.map((row, i) => {
+              {content.map((item, i) => {
                 return (
                   <tr
-                    key={row.key}
+                    key={i}
                     style={{
                       backgroundColor: i === 0 ? color.headerColor : "",
                     }}
@@ -429,22 +407,21 @@ export const Table = (props: any) => {
                       },
                     })}
                   >
-                    {row.row.map((col, j) => (
+                    {item.map((data, j) => (
                       <td
-                        key={col.key}
-                        onClick={() => clicks(row.key, col.key, i, j)}
+                        key={j}
+                        onClick={() => clicks(i, j)}
                         className={`table__cell ${
-                          row.key + col.key === type.ikey + type.jkey &&
-                          props.active
+                          i === type.i && j === type.j && props.active
                             ? "tdActive"
                             : ""
                         }`}
                         onBlur={(e) => {
-                          change(e, row.key, col.key, i, j);
+                          change(e, i, j);
                         }}
                         style={tdStyle()}
                       >
-                        <div className={`cell`}>{col.context}</div>
+                        <div className={`cell`}>{data}</div>
                       </td>
                     ))}
                   </tr>
@@ -461,29 +438,12 @@ export const Table = (props: any) => {
 export const toolTable: ToolDefinition = {
   type: "table",
   menu: { text: "Table", category: "basic", icon: <GridOn /> },
-  initData: { type: "table", content: [
-       {
-          key: uuidv4(),
-          row: [
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-          ],
-        },
-        {
-          key: uuidv4(),
-          row: [
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-            { key: uuidv4(), context: "new" },
-          ],
-        },
-    ] },
-  render: (props: {
-    data: any;
-    active: boolean;
-    onChange: (data: any) => void;
-  }) => <Table {...props} />,
+  initData: {
+    type: "table",
+    content: [
+      ["new", "new", "new", "new"],
+      ["new", "new", "new", "new"],
+    ],
+  },
+  render: (props: ToolRenderProps) => <Table {...props} />,
 };
