@@ -26,7 +26,7 @@
 
 .viewmode-edit .table__cell >div:empty::before{
   content: 'Empty';
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
   color: #cccccc;
 }
