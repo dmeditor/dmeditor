@@ -23,12 +23,13 @@ export const Code = (props: ToolRenderProps) => {
       <BlockProperty title={"Code"} active={props.active}></BlockProperty>
       <code
         className={css({
-          padding: "0.2em 0.4em",
+          padding: "0.5em 0.8em",
           margin: 0,
           fontSize: "85%",
-          backgroundColor: "rgba(175, 184, 193, .2)",
+          backgroundColor: "rgba(175, 184, 193, .1)",
           width: "100%",
           display: "block",
+          whiteSpace:"pre-line",
           boxSizing: "border-box",
           color: "#333333",
         })}
