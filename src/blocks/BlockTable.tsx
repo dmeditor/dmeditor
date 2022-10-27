@@ -32,28 +32,27 @@ interface styelProp {
 }
 export const Table = (props: ToolRenderProps) => {
   console.log(props);
+  const {
+    padding: Padding,
+    borderColor,
+    headerColor,
+    oddColor,
+    border:Border,
+  } = props.data.settings;
   const [content, SetContent] = useState<string[][]>(() => {
     return props?.data?.content;
   });
   const [padding, setPadding] = useState(() => {
-    let padding: number = 0;
-    if (props?.data?.settings?.padding) {
-      if (typeof props?.data?.settings?.padding === "number") {
-        padding = props?.data?.settings?.padding;
-      } else if (typeof props?.data?.settings?.padding === "string") {
-        padding = parseInt(props?.data?.settings?.padding);
-      }
-    }
-    return padding;
+    return Padding;
   });
   const [color, setColor] = useState({
-    borderColor: props?.data?.settings?.borderColor || "#cccccc",
-    headerColor: props?.data?.settings?.headerColor || "",
-    oddColor: props?.data?.settings?.oddColor || "",
+    borderColor,
+    headerColor: headerColor || "",
+    oddColor: oddColor || "",
   });
 
   const [border, setBorderProp] = useState<bordersType>(() => {
-    return props?.data?.settings?.border || "rowBorder";
+    return Border
   });
 
   const [type, changeType] = useState(() => {
@@ -65,7 +64,7 @@ export const Table = (props: ToolRenderProps) => {
 
   useEffect(() => {
     if (props.active) {
-      props?.onChange({
+      props.onChange({
         content,
         settings: { ...color, padding, border },
         type: "table",
@@ -211,7 +210,7 @@ export const Table = (props: ToolRenderProps) => {
     SetContent((v) => {
       if (value > v[0]?.length) {
         v.forEach((item) => {
-          item.push("new");
+          item.push("");
         });
       } else {
         v.forEach((item) => {
@@ -444,7 +443,7 @@ export const toolTable: ToolDefinition = {
       ["", "", "", ""],
       ["", "", "", ""],
     ],
-    settings:{padding: 6}
+    settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
   },
   render: (props: ToolRenderProps) => <Table {...props} />,
 };
