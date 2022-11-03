@@ -121,10 +121,10 @@ export const DMEditor = (props:{data:Array<any>, menu?:React.ReactElement})=>{
             <div className='left-tool'>
                 <a href="https://github.com/digimakergo/dmeditor" title='help' target="_blank"><HelpOutlined /></a>
                 <hr />
-                <a href='javascript:void(0)' className={viewmode=='edit'?'current':''} onClick={()=>setViewmode('edit')} title='Edit'><ModeEditOutline /></a>
-                <a href='javascript:void(0)' className={viewmode=='pc'?'current':''} onClick={()=>setViewmode('pc')} title='PC'><LaptopMacOutlined /></a>
-                <a href='javascript:void(0)' className={viewmode=='mobile'?'current':''}  onClick={()=>setViewmode('mobile')} title='Mobile'> <PhoneIphoneOutlined /></a>
-                <a href='javascript:void(0)' className={viewmode=='tablet'?'current':''}  onClick={()=>setViewmode('tablet')} title='Tablet'><TabletMacOutlined /></a>
+                <a href='/' className={viewmode=='edit'?'current':''} onClick={(e)=>{e.preventDefault();setViewmode('edit')}} title='Edit'><ModeEditOutline /></a>
+                <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{e.preventDefault();setViewmode('pc')}} title='PC'><LaptopMacOutlined /></a>
+                <a href='/' className={viewmode=='mobile'?'current':''}  onClick={(e)=>{e.preventDefault();setViewmode('mobile')}} title='Mobile'> <PhoneIphoneOutlined /></a>
+                <a href='/' className={viewmode=='tablet'?'current':''}  onClick={(e)=>{e.preventDefault();setViewmode('tablet')}} title='Tablet'><TabletMacOutlined /></a>
                 </div></div>
         </div>  
         <div id="dmeditor-main" className='layout-main-container'>               
