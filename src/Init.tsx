@@ -1,23 +1,6 @@
-import { BlockHandler, RenderMainProps, RenderSettingProps } from "./blocktype";
-import { blockManager } from "./BlockManager";
 // import { ParagraphHandler } from "./blocks/Paragraph";
-import { ContentBlockHandler } from "./blocks/ContentBlock";
 import {
-  AppRegistrationOutlined,
-  CalendarMonth,
-  CodeOutlined,
-  CollectionsOutlined,
-  FacebookOutlined,
-  FormatQuoteOutlined,
-  GridOn,
-  GridViewOutlined,
-  ImageOutlined,
-  SquareOutlined,
   TabOutlined,
-  TextFormatOutlined,
-  TitleOutlined,
-  Twitter,
-  VideocamOutlined,
   ViewListOutlined,
 } from "@mui/icons-material";
 import { registerTool } from "./ToolDefinition";
@@ -41,52 +24,8 @@ registerTool(toolTable);
 registerTool(toolQuote);
 registerTool(toolVideo);
 registerTool(toolCode);
-
-// registerTool({
-//   type: "code",
-//   menu: {
-//     text: "Code",
-//     category: "basic",
-//     icon: <CodeOutlined />,
-//   },
-//   initData: "test",
-//   render: () => <div>Not implemented</div>,
-// });
-
 registerTool(toolIframe);
 
-registerTool({
-  type: "content_grid",
-  menu: {
-    text: "Content grid",
-    category: "content_block",
-    icon: <GridViewOutlined />,
-  },
-  initData: "test",
-  render: () => <div>Not implemented</div>,
-});
-
-registerTool({
-  type: "content_block",
-  menu: {
-    text: "Embed content",
-    category: "content_block",
-    icon: <SquareOutlined />,
-  },
-  initData: "test",
-  render: () => <div>Not implemented</div>,
-});
-
-registerTool({
-  type: "carousel",
-  menu: {
-    text: "Carousel",
-    category: "content_block",
-    icon: <CollectionsOutlined />,
-  },
-  initData: "test",
-  render: () => <div>Not implemented</div>,
-});
 
 registerTool({
   type: "tab",
@@ -101,39 +40,6 @@ registerTool({
     text: "Expandable list",
     category: "blocks",
     icon: <ViewListOutlined />,
-  },
-  initData: "test",
-  render: () => <div>Not implemented</div>,
-});
-
-registerTool({
-  type: "calendar",
-  menu: {
-    text: "Calendar events",
-    category: "content_block",
-    icon: <CalendarMonth />,
-  },
-  initData: "test",
-  render: () => <div>Not implemented</div>,
-});
-
-registerTool({
-  type: "gallery",
-  menu: {
-    text: "Gallery",
-    category: "content_block",
-    icon: <CollectionsOutlined />,
-  },
-  initData: "test",
-  render: () => <div>Not implemented</div>,
-});
-
-registerTool({
-  type: "twitter",
-  menu: {
-    text: "Twitter tweet",
-    category: "social_network",
-    icon: <Twitter />,
   },
   initData: "test",
   render: () => <div>Not implemented</div>,
