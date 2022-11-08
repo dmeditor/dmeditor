@@ -51,6 +51,7 @@ import {PropertyGroup, PropertyItem, Ranger} from 'dmeditor/utils';
 //Implementation
 export const BlockImage = (props:ToolRenderProps)=>{
    ///add status control here
+   const [width, setWidth] = useState(300);
 
     return <div>
     {* property */}           
@@ -60,7 +61,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
                 </PropertyItem>               
             </BlockProperty>
 
-                <img width={'100%'} src={imageUrl} />        
+                <img width={width} src={imageUrl} />        
             </div>
 }
 
