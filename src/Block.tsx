@@ -49,14 +49,14 @@ export const Block = (props:BlockProps)=>{
     
     return <div ref={ref} className={'block-container'+(isActive?' active':'')} onClick={(e:any)=>changeActive(true)}>
             {isActive&&<div className="tool tool-above">                             
-                            <a className="tool-item" href="javascript:void(0);" title="Add above" onClick={()=>props.onAddAbove()}>
+                            <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();props.onAddAbove()}}>
                                 <AddBoxOutlined /></a>
                         </div>}            
         <div className={"block block-type-"+props.data.type}>
         {render()}  
         </div>   
     {isActive&&<div className="tool tool-under">                             
-                <a className="tool-item" href="javascript:void(0);" title="Add under" onClick={()=>props.onAddUnder()}><AddBoxOutlined /></a>
+                <a className="tool-item" href="/" title="Add under" onClick={(e)=>{e.preventDefault();props.onAddUnder()}}><AddBoxOutlined /></a>
             </div>}  
     </div>
 

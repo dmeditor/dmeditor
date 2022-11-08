@@ -79,7 +79,7 @@ export const PickColor=(props:any)=>{
               disableAlpha={true}
               onChange={changeColor}
             />
-            <div style={{padding:5}}><a href='javascript:void(0)' onClick={resetColor}>Reset</a></div>
+            <div style={{padding:5}}><a href='/' onClick={(e)=>{e.preventDefault();resetColor()}}>Reset</a></div>
           </div>
         )}
       </>
