@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Block } from './Block';
 import './DMEditor.css';
 import { Property } from './Property';
@@ -11,7 +11,13 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef } from './ToolDefinition';
 
-export const DMEditor = (props:{data:Array<any>, menu?:React.ReactElement})=>{
+export interface DMEditorProps{
+    data:Array<any>, 
+    menu?:React.ReactElement, 
+    onChange?:(data:Array<any>)=>void
+}
+
+export const DMEditor = (props:DMEditorProps)=>{
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
@@ -32,6 +38,11 @@ export const DMEditor = (props:{data:Array<any>, menu?:React.ReactElement})=>{
         setAddMore(0);
     }
 
+    useEffect(()=>{
+        if( props.onChange){
+            props.onChange(blocks)
+        }
+    }, [blocks]);
 
     const addUnder = (type: string)=>{
         if( type ){
@@ -136,6 +147,7 @@ export const DMEditor = (props:{data:Array<any>, menu?:React.ReactElement})=>{
                 return  <><Block adding={currentSelected&&index===addingBlock}
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
+                         key={index}
                          onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);
