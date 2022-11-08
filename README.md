@@ -6,11 +6,8 @@ dmeditor is a block-styled visual editor. Data is in json format.
 ### Highlights
 - Block based
 - Real WYSIWYG(What you see is what you get)
-- Widgets like heading, paragraph, table, full image, content blocks, carousel
 - Easy to create your own widget
 - Data is saved in json
-- Widgets supporting data source and showing them instantly
-- Can be embeded to a page to edit from frontend
 
 ### Installation
 
@@ -21,6 +18,7 @@ npm install dmeditor
 ### Usage
 Check [Sample code](https://github.com/digimakergo/dmeditor-sample/blob/main/src/App.tsx) for source code.
 ```typescript
+import {DMEditor} from 'dmeditor';
 
 return (
     <div className="App">
@@ -72,7 +70,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     type: 'image',
     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
     initData: {type:'image', content:'http://test.com/svg.png'},
-    render: (props:ToolRenderProps)=><BlockImage {...props} />
+    render: BlockImage
 };
   
 ```
