@@ -125,7 +125,7 @@ export const DMEditor = (props:DMEditorProps)=>{
 
     return (
         <ThemeProvider theme={outerTheme}>
-            <div className='dmeidtor dmeditor-layout'>
+            <div className='dmeditor dmeditor-layout'>
         <div className='layout-left'>
             {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>}
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
