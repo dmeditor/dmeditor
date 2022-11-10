@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
+import { PropertyTab } from "./Tab";
 
 export const BlockProperty = (props:any)=>{
     const propertyRoot = document.getElementById('dmeditor-property') as HTMLElement;
@@ -10,15 +11,22 @@ export const BlockProperty = (props:any)=>{
         return <></>;
     }
   
-
     return ReactDOM.createPortal(
-        (
+        (   
           <div>
-            <div style={{border: '1px solid #cccccc'}}> 
-            <div style={{background:'#dddddd', padding: 5}}>{props.title}</div>
-                <div style={{padding: '5px 10px'}}>{props.children}</div>
+             <PropertyTab 
+                active={0}
+                tabs={[
+                     {title: props.title, element:
+                     <div style={{padding: '5px 10px'}}>{props.children}</div>                     
+                   },
+                    {title:'Document', element:<div>
+                    Meta keywords: <br />
+                    Meta description:
+                </div>},                             
+              ]} />
+
             </div>            
-          </div>
         ),
         propertyRoot
       )    

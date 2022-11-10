@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import { blockManager } from "./BlockManager";
 import { BlockInfo, BlockLayoutData } from "./types"
-import { DMTab } from "./Tab"
+import { PropertyTab } from "./Tab"
 import { Ranger } from "./utils/Ranger";
 import { SketchPicker } from 'react-color';
 
@@ -19,7 +19,7 @@ export const Property = (props:{current: BlockInfo, params:any, onSeting: any, o
             if( handler.canSelectElement ){
                 return settings;
             }else{
-                return <div><DMTab tabs={[{text:'Block', content: settings}]} /></div>
+                return <div><PropertyTab tabs={[{title:'Block', element: settings}]} /></div>
             }
         }else{
             return <div>Unknown type {current.type}</div>;

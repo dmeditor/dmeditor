@@ -118,6 +118,10 @@
   outline-offset: 3px;
 }
 
+.tab-active{
+  color:green !important;
+}
+
 .blockcontainer:hover{
   outline: 1px dotted #333333;
 }
