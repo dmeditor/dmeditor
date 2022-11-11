@@ -182,7 +182,7 @@ export const SlateFun:any = {
       return marks ? marks[format] === true : false
     }
   },
-  FormatButton:({ formats}:any)=>{
+  FormatButton:({ formats,changeDialogLink}:any)=>{
     const editor = useSlate()
     let ele:any
     if(formats ==='bold'){
@@ -205,10 +205,8 @@ export const SlateFun:any = {
           match: (n:any) =>n.type === 'link'&& 
             !Editor.isEditor(n) && SlateElement.isElement(n)
         })
-        let defalutUrl=link?link[0].url:''
-         const url = window.prompt('Enter the URL of the link:',defalutUrl)
-         if (!url) return
-         SlateFun.insertLink(editor, url)
+        let defalutUrl=link?link[0]:''
+        changeDialogLink(defalutUrl);
       } }/>
     }
     if(formats ==='linkoff'){
@@ -286,7 +284,7 @@ export const SlateFun:any = {
           
          {SlateFun.resetTypes('TEXT_FORMAT_TYPES',props.config).map((format:any,index:any)=>{           
             return (
-                  <SlateFun.FormatButton key={index} formats={format} />
+                  <SlateFun.FormatButton key={index} formats={format} changeDialogLink={props.changeDialogLink}/>
                 )             
               }
             )
@@ -425,16 +423,22 @@ export const SlateFun:any = {
     return editor
   },
   // link
-  wrapLink:(editor:any, url: string) => {
+  wrapLink:(editor:any, url: any,type?:any) => {
     if (SlateFun.isLinkActive(editor)) {
       SlateFun.unwrapLink(editor)
     }
     const { selection } = editor
     const isCollapsed = selection && SlateRange.isCollapsed(selection)
+    let source = type==='select'?{
+      sourceType:'select',
+      sourceData:url
+    }:{sourceType:'input'}
+    let valUrl = type==='select'?url.id:url
     const link: any = {
       type: 'link',
-      url,
+      url:valUrl,
       children: isCollapsed ? [{ text: url }] : [],
+      source:source
     }
   
     if (isCollapsed) {
@@ -458,17 +462,18 @@ export const SlateFun:any = {
     })
     return !!link
   },
-  insertLink : (editor:any, url:string) => {
+  insertLink : (editor:any, url:string,type:any) => {
     if (editor.selection) {
-      SlateFun.wrapLink(editor, url)
+      SlateFun.wrapLink(editor, url,type)
     }
   },
   LinkComponent : ({ attributes, children, element }:any) => {
     const selected = useSelected()
+    let link= element.source.sourceType==='select'?'{link:'+element.source.sourceData.content_type+','+element.url+'}':element.url
     return (
       <a
         {...attributes}
-        href={element.url}
+        href={link}
         className={
           selected
             ? css`
@@ -509,17 +514,22 @@ export const SlateFun:any = {
     const ext:any = new URL(url).pathname.split('.').pop()
     return imageExtensions.includes(ext)
   },
-  insertImage: (editor:any, url:string) => {
+  insertImage: (editor:any, url:any,type?:string) => {
     const text = { text: '' }
-    const image:any = { type: 'image', url, children: [text] }
+    let imgUrl= type==='select'?url.id:url
+    let source = type==='select'?{
+      sourceType:'select',
+      sourceData:url
+    }:{sourceType:'input'}
+    const image:any = { type: 'image', url:imgUrl, children: [text],source:source}
     Transforms.insertNodes(editor, image)
   },
   ImageComponent: ({ attributes, children, element }:any) => {
     const editor:any = useSlateStatic()
     const path:any = ReactEditor.findPath(editor, element)
-  
     const selected = useSelected()
     const focused = useFocused()
+    let link= element.source.sourceType==='select'?'{image:'+element.url+'}':element.url
     return (
       <div {...attributes}>
         {children}
@@ -530,7 +540,7 @@ export const SlateFun:any = {
           `}
         >
           <img
-            src={element.url}
+            src={link}
             className={css`
               display: block;
               max-width: 100%;
@@ -621,6 +631,32 @@ export const SlateFun:any = {
       },200)
   },
   wrapButton:(editor:any,newButton?:any,type?:any)  => {
+    SlateFun.isButtonCollapsed=false;
+    if(type==='none'){
+      if (SlateFun.isButtonActive(editor)) {
+        SlateFun.unwrapButton(editor)
+      }
+    }else{
+      const { selection } = editor
+      const isCollapsed = selection && SlateRange.isCollapsed(selection)
+      const button:any = newButton?newButton:{
+        type: 'button',
+        children: isCollapsed ? [{ text: 'Edit me!' }] : [],
+      }
+      if (isCollapsed) {
+        return;
+        // Transforms.insertNodes(editor, button)
+      } else {
+        if (SlateFun.isButtonActive(editor)) {
+          SlateFun.unwrapButton(editor)
+        }
+        Transforms.wrapNodes(editor, button, { split: true })
+        Transforms.collapse(editor, { edge: 'end' })
+      }
+    }
+    ReactEditor.focus(editor)
+  },
+  wrapButtonOld:(editor:any,newButton?:any,type?:any)  => {
     SlateFun.isButtonCollapsed=false;
     if(type==='none'){
       if (SlateFun.isButtonActive(editor)) {

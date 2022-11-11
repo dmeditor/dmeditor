@@ -15,6 +15,7 @@ import { Ranger } from "../utils/Ranger";
 import { PickColor } from "../utils/PickColor";
 import FontFamilyList from '../utils/FontFamilyList'
 import {PropertyButton, PropertyGroup, PropertyItem} from '../utils/Property';
+import { Util } from '../utils/Util';
 
 const BlockButton = ({formats}:any) => {
   let ele:any
@@ -41,7 +42,6 @@ const BlockButton = ({formats}:any) => {
 
 export const BlockText = (props:any)=>{
     const [size, setSize] = useState(1.1);
-    // const [align, setAlign] = useState('left' as 'left'|'center'|'right');
     const [familytype,setFamilytype] = useState('')
     const [color,setColor] = useState()
     const [linkstyle,setLinkstyle] = useState('none' as 'none'|'button')
@@ -53,6 +53,9 @@ export const BlockText = (props:any)=>{
     const [isButtonActive,setIsButtonActive] = useState(false);
     const [isCollapsed,setIsCollapsed]= useState(true);
     const [isSelect,setIsSelect]= useState(false);
+    const [adding, setAdding] = useState(props.adding?true:false);
+    const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
+    const [linkVal, setLinkVal] = useState('');
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -90,6 +93,8 @@ export const BlockText = (props:any)=>{
       SlateFun.setButtonFormat(editor,'',v)
       setIsLinkActive(v==='none'?true:false)
       setIsButtonActive(v==='button'?true:false)
+      setButtonVariant('contained')
+      setButtonSize('small')
     }
     const changeButtonFormat = (v:any,format:any)=>{
       if(format === 'variant'){
@@ -99,6 +104,29 @@ export const BlockText = (props:any)=>{
         setButtonSize(v)
       }
       SlateFun.toggleButtonFormat(editor,format,v)
+    }
+
+    //insert image
+    const handleClickOpen = (event:any)=>{
+      event.preventDefault()
+      setDialogType('image')
+      setAdding(true);
+      setAdding(false);
+      setTimeout(()=>{setAdding(true);},10)
+    }
+    const submitImage = (val:any,type:string)=>{
+      SlateFun.insertImage(editor, val,type)
+    }
+    //inset Link
+    const changeDialogLinkfun = (value:any)=>{
+      setLinkVal(value);
+      setDialogType('link')
+      setAdding(true);
+      setAdding(false);
+      setTimeout(()=>{setAdding(true);},10)
+    }
+    const submitLink = (value:any,type:any)=>{
+      SlateFun.insertLink(editor,value,type)
     }
     
     useEffect(()=>{
@@ -188,7 +216,7 @@ export const BlockText = (props:any)=>{
             <PropertyGroup header="Insert">
               {IsShowToolBar('tools','image')?
               <PropertyItem label='Insert'>
-                <PropertyButton title='Image' onClick={(e)=>{SlateFun.InsertImageButtonFun(e,editor)}}>
+                <PropertyButton title='Image' onClick={(e)=>{handleClickOpen(e)}}>
                   <ImageOutlined />
                 </PropertyButton>               
               </PropertyItem> 
@@ -196,7 +224,6 @@ export const BlockText = (props:any)=>{
               }  
             </PropertyGroup> 
             {  isLinkActive||isButtonActive?
-            // SlateFun.isLinkActive(editor)&&!SlateFun.isCollapsed(editor)?
             <PropertyGroup header="Link"> 
               <PropertyItem label="Style">
                     <Select
@@ -218,7 +245,6 @@ export const BlockText = (props:any)=>{
             :null}
             {}
             {  (isLinkActive&&linkstyle==='button')||isButtonActive?
-            // ((SlateFun.isLinkActive(editor)&&linkstyle=='button')||SlateFun.isButtonActive(editor))&&!SlateFun.isCollapsed(editor)?
              <>
               <div>
                 <label>Button style:</label>
@@ -240,7 +266,7 @@ export const BlockText = (props:any)=>{
                  
           </BlockProperty>
           <div>
-            <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}/>
+            <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null} changeDialogLink={changeDialogLinkfun}/>
             <Editable
                 renderLeaf={renderLeaf}
                 renderElement={renderElement}
@@ -287,6 +313,10 @@ export const BlockText = (props:any)=>{
             />
           </div>
         </Slate>
+        {adding&&<div>
+          {dialogType=='image'&& Util.renderBrowseImage({onConfirm:submitImage,adding:adding})}
+          {dialogType=='link'&& Util.renderBrowseLink({onConfirm:submitLink,adding:adding,defalutValue:linkVal})}
+        </div>}
       </div> 
     )
 }

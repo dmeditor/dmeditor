@@ -10,14 +10,19 @@ import { BlockInfo } from './types';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef } from './ToolDefinition';
+import { Util } from './utils/Util';
 
 export interface DMEditorProps{
     data:Array<any>, 
     menu?:React.ReactElement, 
-    onChange?:(data:Array<any>)=>void
+    onChange?:(data:Array<any>)=>void,
+    imageBrowse?:any,
+    linkBrowse?:any
 }
 
 export const DMEditor = (props:DMEditorProps)=>{
+    Util.BrowseImage = props.imageBrowse
+    Util.BrowseLink = props.linkBrowse
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
@@ -171,6 +176,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
             {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
             <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}></div>
+            {/* {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />} */}
         </div>
     </div></ThemeProvider>);
 }
