@@ -385,7 +385,6 @@ export const Table = (props: ToolRenderProps) => {
         <div>
           <table
             width={"100%"}
-            border={0}
             cellSpacing="0"
             cellPadding="0"
             className="bani-table"
