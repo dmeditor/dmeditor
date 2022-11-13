@@ -180,3 +180,25 @@ export const DMEditor = (props:DMEditorProps)=>{
         </div>
     </div></ThemeProvider>);
 }
+
+export const DMEditorView = (props:{data:Array<any>})=>{
+    return <div className='dmeditor dmeditor-view'>
+    {props.data.map((block, index)=>{
+        const blockElement = ()=>{
+           return  <><Block adding={false}
+                    data={block} active={false} 
+                    onCancel={()=>{}}
+                    key={index}
+                    onActiveChange={()=>{}} 
+                    onChange={()=>{}}
+                    onAddAbove={()=>{}} 
+                    onAddUnder={()=>{}} 
+                    view={true}
+                    />                   
+                    </>;         
+        }
+        return blockElement();        
+       }
+       )}
+       </div>
+}

@@ -11,6 +11,7 @@ export interface ToolDefinition {
     isComposited?: boolean,
     menu?: {text: string, category: string, icon: React.ReactElement},
     initData: any,
+    view:(props:{data:any})=>React.ReactElement
     render: (props:ToolRenderProps)=>React.ReactElement,    
 }
 

@@ -141,5 +141,6 @@ const Heading = (props:any)=>{
     layout:{padding: 0},
     data: {text:'heading', style:{level: 2}}
   }},
+  view: (props:{data:any})=><Heading data={props.data} active={false} onChange={()=>{}} />,
   render: (props:{data:any, active:boolean})=><Heading {...props} />
 }

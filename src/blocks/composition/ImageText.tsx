@@ -15,6 +15,7 @@ export const toolImageText: ToolDefinition = {
         {type:'text', content:'<p>Hello</p><p>Good</p>', settings:{}},
         {type:'image', content:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOdlzDI3LftAb4bwkJOWODiyLE9bpB3Wr8r9A60RGy1A&s', settings:{}}
         ], allowedType:["text"]},
+    view: (props:{data:any})=><div>Not implemented</div>,
     render: (props:{data:any, active:boolean})=><DefContainer type='imagetext' horizontal allowedType={["image", "container"]}>
         <DefBlock type="image" required={true} allowedSettings={['leftright']} />
         <DefContainer required={true} allowedType={["text", "container"]}>

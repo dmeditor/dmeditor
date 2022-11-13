@@ -57,5 +57,6 @@ export const toolImage:ToolDefinition = {
     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
     initData: {type:'image', content:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/2312px-Picture_icon_BLACK.svg.png',
                 settings:{},source:{sourceType:'input'}},
+    view: (props:{data:any})=><BlockImage data={props.data} active={false} onChange={()=>{}} />,
     render: (props:ToolRenderProps)=><BlockImage {...props} />
 }
