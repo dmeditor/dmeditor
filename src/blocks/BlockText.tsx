@@ -366,5 +366,6 @@ export const toolText:ToolDefinition = {
         ],
       }
     },
+    view: (props:{data:any})=><BlockText data={props.data} active={false} onChange={()=>{}} />,
     render: (props:{data:any, active:boolean, onChange:(data:any)=>void})=><BlockText {...props} />
 }

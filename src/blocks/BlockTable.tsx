@@ -385,7 +385,6 @@ export const Table = (props: ToolRenderProps) => {
         <div>
           <table
             width={"100%"}
-            border={0}
             cellSpacing="0"
             cellPadding="0"
             className="bani-table"
@@ -445,5 +444,6 @@ export const toolTable: ToolDefinition = {
     ],
     settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
   },
+  view: (props:{data:any})=><Table data={props.data} active={false} onChange={()=>{}} />,
   render: (props: ToolRenderProps) => <Table {...props} />,
 };

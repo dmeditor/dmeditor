@@ -146,6 +146,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         <div id="dmeditor-main" className='layout-main-container'>               
          <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
             <div style={{width: '100%', height: 1}}></div>
+            {viewmode==='edit'&&<>
             {blocks.map((block, index)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
@@ -169,7 +170,8 @@ export const DMEditor = (props:DMEditorProps)=>{
              }
              return a();        
             }
-            )}  
+            )} </>}
+            {viewmode!=='edit'&&<DMEditorView data={blocks} />}
          </div>                    
         </div>
         <div className='layout-properties'>
@@ -179,4 +181,26 @@ export const DMEditor = (props:DMEditorProps)=>{
             {/* {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />} */}
         </div>
     </div></ThemeProvider>);
+}
+
+export const DMEditorView = (props:{data:Array<any>})=>{
+    return <div className='dmeditor-view'>
+    {props.data.map((block, index)=>{
+        const blockElement = ()=>{
+           return  <><Block adding={false}
+                    data={block} active={false} 
+                    onCancel={()=>{}}
+                    key={index}
+                    onActiveChange={()=>{}} 
+                    onChange={()=>{}}
+                    onAddAbove={()=>{}} 
+                    onAddUnder={()=>{}} 
+                    view={true}
+                    />                   
+                    </>;         
+        }
+        return blockElement();        
+       }
+       )}
+       </div>
 }

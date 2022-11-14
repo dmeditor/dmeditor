@@ -16,7 +16,8 @@ interface BlockProps{
     onAddAbove?:any,
     onAddUnder?:any,
     onChange:(data:any)=>void,
-    onCancel?:()=>void
+    onCancel?:()=>void,
+    view?:boolean
 }
 
 export const Block = (props:BlockProps)=>{
@@ -39,8 +40,13 @@ export const Block = (props:BlockProps)=>{
     const render = ()=>{
         let def = getDef( props.data.type );
         if( def){
-            let ToolRender = def.render;
-            return <ToolRender adding={props.adding} onChange={onDataChange} data={props.data} active={isActive} onCancel={props.onCancel} />
+            if(props.view){
+                let ViewRender = def.view;                
+                return <ViewRender data={props.data} />
+            }else{
+                let ToolRender = def.render;
+                return <ToolRender adding={props.adding} onChange={onDataChange} data={props.data} active={isActive} onCancel={props.onCancel} />
+            }
         }else{
             return 'Unknown type:'+props.data.type;
         }
