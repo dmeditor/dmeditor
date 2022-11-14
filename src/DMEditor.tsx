@@ -153,7 +153,6 @@ export const DMEditor = (props:DMEditorProps)=>{
             {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>}
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
             <div className='left-tool'>
-                <a href="https://github.com/digimakergo/dmeditor" title='help' target="_blank"><HelpOutlined /></a>
                 <hr />
                 <a href='/' className={viewmode=='edit'?'current':''} onClick={(e)=>{e.preventDefault();setViewmode('edit')}} title='Edit'><ModeEditOutline /></a>
                 <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{e.preventDefault();setViewmode('pc')}} title='PC'><LaptopMacOutlined /></a>
