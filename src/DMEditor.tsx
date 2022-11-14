@@ -199,7 +199,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
             {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
             <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}>
-                <div style={{position:"absolute",bottom:0,height:'100px',width:'100%',padding:'10px'}}>
+                {viewmode==='edit'&&mode=='select'&&<div style={{position:"absolute",bottom:0,height:'100px',width:'100%',padding:'10px'}}>
                     <div style={{marginBottom:'15px'}} >
                       <a href="#" title="Move up" onClick={()=>{onMove('up')}}><ArrowUpwardOutlined /> </a> 
                       <a href="#"  title="Move down" onClick={()=>{onMove('down')}}><ArrowDownwardOutlined /></a>
@@ -207,7 +207,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                     <Button fullWidth variant="contained" color='error' title="Delete" onClick={onDelete}>
                       <DeleteOutline />Delete block
                     </Button>
-                </div> 
+                </div>} 
             </div>
         </div>
     </div></ThemeProvider>);
