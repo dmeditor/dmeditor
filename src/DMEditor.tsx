@@ -11,6 +11,9 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef } from './ToolDefinition';
 import { Util } from './utils/Util';
+import { Context } from './utils/Context';
+import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
+import { Button } from "@mui/material";
 
 export interface DMEditorProps{
     data:Array<any>, 
@@ -108,6 +111,22 @@ export const DMEditor = (props:DMEditorProps)=>{
         }
     }
 
+    const onMove = (type:string)=>{
+      let fullBlocks = [...blocks];
+      console.log('移动位置')
+      if(type=='up'){
+        if(activeBlock==0)return;
+        fullBlocks[activeBlock] = fullBlocks.splice(activeBlock-1, 1, fullBlocks[activeBlock])[0]
+        setActiveBlock(activeBlock-1);
+      }
+      if(type=='down'){
+        if(activeBlock==fullBlocks.length-1)return;
+        fullBlocks[activeBlock] = fullBlocks.splice(activeBlock+1, 1, fullBlocks[activeBlock])[0]
+        setActiveBlock(activeBlock+1);
+      }
+      setBlocks(fullBlocks);
+    }
+
     const outerTheme= createTheme({
         palette:{
           primary:grey,
@@ -146,6 +165,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         <div id="dmeditor-main" className='layout-main-container'>               
          <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
             <div style={{width: '100%', height: 1}}></div>
+            <Context.Provider value = {{onMove,onDelete}}>
             {viewmode==='edit'&&<>
             {blocks.map((block, index)=>{
              const a = ()=>{
@@ -171,14 +191,24 @@ export const DMEditor = (props:DMEditorProps)=>{
              return a();        
             }
             )} </>}
+            </Context.Provider>
             {viewmode!=='edit'&&<DMEditorView data={blocks} />}
          </div>                    
         </div>
         <div className='layout-properties'>
             {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
             {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
-            <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}></div>
-            {/* {(addMore==0&&activeBlock>=0)&&<Property params={propertyParams} current={blocks[activeBlock]} onSeting={setting} onDelete={onDelete} />} */}
+            <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}>
+                <div style={{position:"absolute",bottom:0,height:'100px',width:'100%',padding:'10px'}}>
+                    <div style={{marginBottom:'15px'}} >
+                      <a href="#" title="Move up" onClick={()=>{onMove('up')}}><ArrowUpwardOutlined /> </a> 
+                      <a href="#"  title="Move down" onClick={()=>{onMove('down')}}><ArrowDownwardOutlined /></a>
+                    </div> 
+                    <Button fullWidth variant="contained" color='error' title="Delete" onClick={onDelete}>
+                      <DeleteOutline />Delete block
+                    </Button>
+                </div> 
+            </div>
         </div>
     </div></ThemeProvider>);
 }
