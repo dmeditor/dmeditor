@@ -142,7 +142,7 @@ export const BlockText = (props:any)=>{
 
     return (
       <div>
-        <Slate editor={editor} value={value} onChange={v => change(v)} >
+        <Slate editor={editor} value={value} onChange={v => change(v)}>
           <BlockProperty title={'Text'} active={props.active}>
           <PropertyGroup header="Basic">
             {IsShowToolBar('font','font_family')?
@@ -275,6 +275,7 @@ export const BlockText = (props:any)=>{
           <div>
             <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null} changeDialogLink={changeDialogLinkfun}/>
             <Editable
+                readOnly={props.view?props.view:false}
                 renderLeaf={renderLeaf}
                 renderElement={renderElement}
                 placeholder="Enter some plain text..." 
@@ -366,6 +367,6 @@ export const toolText:ToolDefinition = {
         ],
       }
     },
-    view: (props:{data:any})=><BlockText data={props.data} active={false} onChange={()=>{}} />,
+    view: (props:{data:any})=><BlockText data={props.data} active={false} onChange={()=>{}} view={true}/>,
     render: (props:{data:any, active:boolean, onChange:(data:any)=>void})=><BlockText {...props} />
 }
