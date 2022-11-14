@@ -113,7 +113,6 @@ export const DMEditor = (props:DMEditorProps)=>{
 
     const onMove = (type:string)=>{
       let fullBlocks = [...blocks];
-      console.log('移动位置')
       if(type=='up'){
         if(activeBlock==0)return;
         fullBlocks[activeBlock] = fullBlocks.splice(activeBlock-1, 1, fullBlocks[activeBlock])[0]
@@ -201,8 +200,8 @@ export const DMEditor = (props:DMEditorProps)=>{
             <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}>
                 {viewmode==='edit'&&mode=='select'&&<div style={{position:"absolute",bottom:0,height:'100px',width:'100%',padding:'10px'}}>
                     <div style={{marginBottom:'15px'}} >
-                      <a href="#" title="Move up" onClick={()=>{onMove('up')}}><ArrowUpwardOutlined /> </a> 
-                      <a href="#"  title="Move down" onClick={()=>{onMove('down')}}><ArrowDownwardOutlined /></a>
+                      <a href="/" title="Move up" onClick={(e)=>{e.preventDefault();onMove('up')}}><ArrowUpwardOutlined /> </a> 
+                      <a href="/" title="Move down" onClick={(e)=>{e.preventDefault();onMove('down')}}><ArrowDownwardOutlined /></a>
                     </div> 
                     <Button fullWidth variant="contained" color='error' title="Delete" onClick={onDelete}>
                       <DeleteOutline />Delete block
