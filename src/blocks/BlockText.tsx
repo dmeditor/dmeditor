@@ -45,7 +45,7 @@ export const BlockText = (props:any)=>{
     const [familytype,setFamilytype] = useState('')
     const [color,setColor] = useState()
     const [linkstyle,setLinkstyle] = useState('none' as 'none'|'button')
-    const [buttonVariant, setButtonVariant] = useState('contained' as ('contained' | 'outlined' ));
+    const [buttonVariant, setButtonVariant] = useState('outlined' as ('contained' | 'outlined' ));
     const [buttonSize, setButtonSize] = useState('small' as ('small' | 'medium' | 'large' ));
     const [value,setValue] = useState(props.data.content.initialValue)
     const [config,setConfig] = useState(props.data.content.config?props.data.content.config:null);
@@ -53,9 +53,11 @@ export const BlockText = (props:any)=>{
     const [isButtonActive,setIsButtonActive] = useState(false);
     const [isCollapsed,setIsCollapsed]= useState(true);
     const [isSelect,setIsSelect]= useState(false);
-    const [adding, setAdding] = useState(props.adding?true:false);
+    const [adding, setAdding] = useState(false);
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState('');
+    const [linkValType, setLinkValType] = useState('select' as ('select' | 'input'));
+    const [linkData, setLinkData] = useState();
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -90,10 +92,12 @@ export const BlockText = (props:any)=>{
     }
     const changeLinkFormat = (v:any)=>{
       setLinkstyle(v)
-      SlateFun.setButtonFormat(editor,'',v)
+      // SlateFun.setButtonFormat(editor,'',v)
+      SlateFun.setLinkFormat(editor,v)
+      // SlateFun.insertLink(editor,value,linkValType,v)
       setIsLinkActive(v==='none'?true:false)
       setIsButtonActive(v==='button'?true:false)
-      setButtonVariant('contained')
+      setButtonVariant('outlined')
       setButtonSize('small')
     }
     const changeButtonFormat = (v:any,format:any)=>{
@@ -103,7 +107,9 @@ export const BlockText = (props:any)=>{
       if(format === 'size'){
         setButtonSize(v)
       }
-      SlateFun.toggleButtonFormat(editor,format,v)
+      let value=linkVal
+      // SlateFun.toggleButtonFormat(editor,format,v)
+      SlateFun.setLinkFormat(editor,'button',format,v)
     }
 
     //insert image
@@ -126,6 +132,7 @@ export const BlockText = (props:any)=>{
       setTimeout(()=>{setAdding(true);},10)
     }
     const submitLink = (value:any,type:any)=>{
+      setLinkValType(type);
       SlateFun.insertLink(editor,value,type)
     }
     
@@ -275,27 +282,46 @@ export const BlockText = (props:any)=>{
                   setFamilytype(SlateFun.getFormat(editor,'fontFamily'))
                   setSize(SlateFun.getFormat(editor,'fontSize'))
                   setColor(SlateFun.getFormat(editor,'color'))
-                  setLinkstyle('none')
-                  setIsLinkActive(SlateFun.isLinkActive(editor)?true:false)
-                  setIsButtonActive(SlateFun.isButtonActive(editor)?true:false)
                   setTimeout(()=>{
                     setIsCollapsed(SlateFun.isCollapsed(editor))
                   },10)
-                  if(SlateFun.isButtonActive(editor)){
-                    let button:any=SlateFun.getbuttonSetting(editor)
+                  setLinkstyle('none')
+                  setIsLinkActive(SlateFun.isLinkActive(editor)?true:false)
+                  setIsButtonActive(SlateFun.isLinkButtonActive(editor)?true:false)
+
+                  if(SlateFun.isLinkButtonActive(editor)){
+                    let button:any=SlateFun.getLinkSetting(editor)
                     let newButton:any=JSON.parse(JSON.stringify(button))
-                    if(!newButton.hasOwnProperty('setting')){
-                      let setting:any={
-                        size:'small',
-                        variant:'contained'
-                      }
-                      newButton.setting=setting
-                    }
-                      setLinkstyle('button')
-                      setButtonVariant(newButton.setting.variant)
-                      setButtonSize(newButton.setting.size)
+                    setLinkstyle('button')
+                    setButtonVariant(newButton.styleConfig.setting.variant)
+                    setButtonSize(newButton.styleConfig.setting.size)
                     
                   }
+
+
+
+
+
+
+                  // setIsButtonActive(SlateFun.isButtonActive(editor)?true:false)
+                  // setTimeout(()=>{
+                  //   setIsCollapsed(SlateFun.isCollapsed(editor))
+                  // },10)
+                  // if(SlateFun.isButtonActive(editor)){
+                  //   let button:any=SlateFun.getbuttonSetting(editor)
+                  //   let newButton:any=JSON.parse(JSON.stringify(button))
+                  //   if(!newButton.hasOwnProperty('setting')){
+                  //     let setting:any={
+                  //       size:'small',
+                  //       variant:'contained'
+                  //     }
+                  //     newButton.setting=setting
+                  //   }
+                  //     setLinkstyle('button')
+                  //     setButtonVariant(newButton.setting.variant)
+                  //     setButtonSize(newButton.setting.size)
+                    
+                  // }
                 }}
                 onDOMBeforeInput={(event: InputEvent) => {
                   switch (event.inputType) {

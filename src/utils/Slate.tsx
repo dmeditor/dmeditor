@@ -423,30 +423,44 @@ export const SlateFun:any = {
     return editor
   },
   // link
-  wrapLink:(editor:any, url: any,type?:any) => {
+  wrapLink:(editor:any, url: any,type?:any,style?:any,newUrl?:any) => {
+    SlateFun.isButtonCollapsed=false;
     if (SlateFun.isLinkActive(editor)) {
       SlateFun.unwrapLink(editor)
     }
     const { selection } = editor
     const isCollapsed = selection && SlateRange.isCollapsed(selection)
+    
     let source = type==='select'?{
       sourceType:'select',
       sourceData:url
     }:{sourceType:'input'}
+
     let valUrl = type==='select'?url.id:url
-    const link: any = {
+
+    let linkStyle=style==='button'?{
+      style:'button',setting:{size:'small',variant:'outlined'}
+    }:{style:'none'}
+
+    let link: any = {
       type: 'link',
       url:valUrl,
       children: isCollapsed ? [{ text: url }] : [],
-      source:source
+      source:source,
+      styleConfig:linkStyle
+    }
+    if(newUrl){
+      link=newUrl
     }
   
     if (isCollapsed) {
-      Transforms.insertNodes(editor, link)
+      return;
+      // Transforms.insertNodes(editor, link)
     } else {
       Transforms.wrapNodes(editor, link, { split: true })
       Transforms.collapse(editor, { edge: 'end' })
     }
+    ReactEditor.focus(editor)
   },
   //取消link
   unwrapLink : (editor:any) => {
@@ -462,24 +476,81 @@ export const SlateFun:any = {
     })
     return !!link
   },
-  insertLink : (editor:any, url:string,type:any) => {
+  isLinkButtonActive:(editor:any) => {
+    if(SlateFun.isLinkActive(editor)){
+      const [link] = Editor.nodes(editor, {
+        match: (n:any) =>n.type === 'link'&& 
+          !Editor.isEditor(n) && SlateElement.isElement(n)
+      })
+      let defalutUrl:any=link?link[0]:''
+      let newLink:any=JSON.parse(JSON.stringify(defalutUrl))
+      return newLink.styleConfig.style=='button'?true:false
+    }else{
+      return false
+    }
+  },
+  getLinkSetting:(editor:any) => {
+      const [link] = Editor.nodes(editor, {
+        match: (n:any) =>n.type === 'link'&& 
+          !Editor.isEditor(n) && SlateElement.isElement(n)
+      })
+      return link[0]
+  },
+  insertLink : (editor:any, url:any,type:any) => {
     if (editor.selection) {
-      SlateFun.wrapLink(editor, url,type)
+      if(SlateFun.isLinkActive(editor)){
+        const [link] = Editor.nodes(editor, {
+          match: (n:any) =>n.type === 'link'&& 
+            !Editor.isEditor(n) && SlateElement.isElement(n)
+         })
+        let defalutUrl:any=link?link[0]:''
+        let newLink:any=JSON.parse(JSON.stringify(defalutUrl))
+       
+        newLink.url = type==='select'?url.id:url
+        newLink.source = type==='select'?{
+          sourceType:'select',
+          sourceData:url
+        }:{sourceType:'input'}
+        
+        SlateFun.wrapLink(editor, newLink,type,newLink.styleConfig.style,newLink)
+
+      }else{
+        SlateFun.wrapLink(editor, url,type)
+      }
     }
   },
   LinkComponent : ({ attributes, children, element }:any) => {
     const selected = useSelected()
-    let link= element.source.sourceType==='select'?'{link:'+element.source.sourceData.content_type+','+element.url+'}':element.url
+    const style=element.styleConfig.style;
+    let cssName='';
+    if(element.styleConfig.style=='button'){
+      let setting=element.styleConfig.setting;
+      let size=setting.size
+      let variant=setting.variant
+      cssName='btn'
+      if (size=='small'){
+        cssName+=' btn-sm'
+      }else if(size=='large'){
+        cssName+=' btn-lg'
+      }
+      if (variant=='outlined'){
+        cssName+=' btn-outline-success'
+      }else{
+        cssName+=' btn-success'
+      }
+    }else{
+      cssName=''
+    }
+    let link:any= element.source.sourceType==='select'?'{link:'+element.source.sourceData.content_type+','+element.url+'}':element.url
+    // className={
+    //   selected? css`box-shadow: 0 0 0 3px #ddd;`+'cve': 'cv'
+    // }
     return (
       <a
         {...attributes}
         href={link}
         className={
-          selected
-            ? css`
-                box-shadow: 0 0 0 3px #ddd;
-              `
-            : ''
+          (selected? css`box-shadow: 0 0 0 3px #ddd;`+' '+cssName: cssName)
         }
       >
         <SlateFun.InlineChromiumBugfix />
@@ -488,6 +559,7 @@ export const SlateFun:any = {
       </a>
     )
   },
+
   InlineChromiumBugfix : () => (
     <span
       contentEditable={false}
@@ -498,6 +570,54 @@ export const SlateFun:any = {
       ${String.fromCodePoint(160) /* Non-breaking space */}
     </span>
   ),
+  setLinkFormat:(editor:any,style:string,format?:string,value?:any)  => {
+    const [link] = Editor.nodes(editor, {
+      match: (n:any) =>n.type === 'link'&& 
+        !Editor.isEditor(n) && SlateElement.isElement(n)
+     })
+      let defalutUrl:any=link?link[0]:''
+      let newLink:any=JSON.parse(JSON.stringify(defalutUrl))
+    if(newLink!==''){
+      if(style=='button'){
+        let size=format==='size'?value:(newLink.styleConfig.style=='none'?'small':newLink.styleConfig.setting.size)
+        let variant=format==='variant'?value:(newLink.styleConfig.style=='none'?'outlined':newLink.styleConfig.setting.variant)
+        newLink.styleConfig={
+          style:style,
+          setting:{
+            size:size?size:'small',
+            variant:variant?variant:'outlined'
+          }
+        }
+      }else{
+        newLink.styleConfig={style:'none'}
+      }
+    }
+
+    const { selection } = editor
+    const isCollapsed = selection && SlateRange.isCollapsed(selection)
+   
+    if(isCollapsed){
+      SlateFun.isButtonCollapsed=true;
+      const domSelection = window.getSelection()
+      if(domSelection||domSelection!.anchorNode){
+        const domRange = domSelection!.getRangeAt(0)
+        var strongs = domSelection!.anchorNode!.parentNode;
+       
+        if(domSelection!.rangeCount > 0) domSelection!.removeAllRanges();
+        if(strongs){
+          var range:any = document.createRange();
+          range.selectNode(strongs);
+          setTimeout(()=>{
+             domSelection!.addRange(range);
+           },10)
+        }
+        
+      }
+    }
+    setTimeout(()=>{
+      SlateFun.wrapLink(editor,newLink,newLink.source.sourceType,newLink.styleConfig.style,newLink);
+    },200)
+  },
   //image
   InsertImageButtonFun:(event:any,editor:any)=>{
     event.preventDefault()
@@ -566,7 +686,7 @@ export const SlateFun:any = {
       <Button
         color='success'
         size={element.hasOwnProperty('setting')?element.setting.size:'small'} 
-        variant={element.hasOwnProperty('setting')?element.setting.variant:'contained'}
+        variant={element.hasOwnProperty('setting')?element.setting.variant:'outlined'}
         {...attributes}
         onClick={ev => ev.preventDefault()}
         className={css`
@@ -691,7 +811,7 @@ export const SlateFun:any = {
       if(!newButton.hasOwnProperty('setting')){
         let setting:any={
           size:'small',
-          variant:'contained'
+          variant:'outlined'
         }
         newButton.setting=setting
       }
