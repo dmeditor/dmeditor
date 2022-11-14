@@ -1,0 +1,6 @@
+0.1.0-alpha.7
+- Remove help link
+- Added Image & Link browse from external api
+- Support document tab
+- Add DMEditorView
+- Support moving up/down and delete block
