@@ -1,8 +1,9 @@
 import { VideocamOutlined } from "@mui/icons-material";
-import { Box, Button, Dialog, DialogContent, DialogTitle, Input, Modal } from "@mui/material";
+import { IconButton,TextField, Button, Dialog, DialogContent, DialogTitle,DialogActions, Input, Modal } from "@mui/material";
 import { useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
+import { Util } from '../utils/Util';
 
 
 export const BlockVideo = (props:ToolRenderProps)=>{
@@ -11,29 +12,27 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
     const [inputUrl, setInputUrl] = useState('');
     const [videoUrl, setVideoUrl] = useState(props.data.content);
-        
-    const submitVideo = ()=>{
-        setVideoUrl( inputUrl );
-        props.onChange({type:'video', content: inputUrl});
+    
+    const handleClickOpen = ()=>{
+      setAdding(true);
+      setAdding(false);
+      setTimeout(()=>{setAdding(true);},10)
+    }
+
+    const submitVideo = (val:any,type:string)=>{
+        setVideoUrl( val );
+        props.onChange({type:'video', content: val});
         setAdding(false);
     }
+    const handleClose = (event?:any, reason?:any) => {
+      if (reason && reason === "backdropClick") 
+      return;
+      setAdding(false);
+    };
 
     return <div style={{width: width,height:height}}>
             {adding&&<div>
-              <Dialog
-                open={adding}
-                onClose={()=>setAdding(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                >
-                <DialogTitle>Input url</DialogTitle>
-                <DialogContent>
-                    <Box>
-                        <Input onChange={e=>setInputUrl(e.target.value)} />
-                        <Button onClick={submitVideo} variant="contained">Submit</Button>
-                    </Box>
-                </DialogContent>                  
-              </Dialog>
+              <Util.renderBroseURL type={'Video'} onConfirm={submitVideo} adding={adding} />
             </div>}
             <BlockProperty title={'Video'} active={props.active}>
                 <div>
@@ -43,6 +42,10 @@ export const BlockVideo = (props:ToolRenderProps)=>{
                 <div>
                     <label>Height: </label>
                     <input type="text" defaultValue={height} onChange={(e)=>setHeight(parseInt(e.target.value))} />
+                </div>
+                <div>
+                    <label>Source: </label>
+                    <Button onClick={handleClickOpen}>Choose</Button>
                 </div>
             </BlockProperty>
             <video width={'100%'} height={'100%'} controls src={videoUrl} >

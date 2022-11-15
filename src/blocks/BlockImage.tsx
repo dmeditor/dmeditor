@@ -34,7 +34,8 @@ export const BlockImage = (props:ToolRenderProps)=>{
 
     return <div style={fullScreen?{marginLeft:'-60px',marginRight:'-60px'}:{}}>
             {adding&&<div>
-              {Util.renderBrowseImage({onConfirm:submitImage,adding:adding})}
+              <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
+              {/* {Util.renderBrowseImage({onConfirm:submitImage,adding:adding})} */}
             </div>}
             <BlockProperty title={'Image'} active={props.active}>
                 <PropertyItem label="Width">

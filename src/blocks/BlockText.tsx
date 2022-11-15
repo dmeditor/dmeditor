@@ -135,6 +135,14 @@ export const BlockText = (props:any)=>{
       setLinkValType(type);
       SlateFun.insertLink(editor,value,type)
     }
+    const submitFun = (val:any,type:string)=>{
+      if(dialogType=='image'){
+        submitImage(val,type)
+      }
+      if(dialogType=='link'){
+        submitLink(val,type)
+      }
+    }
     
     useEffect(()=>{
       ReactEditor.focus(editor)
@@ -341,8 +349,10 @@ export const BlockText = (props:any)=>{
           </div>
         </Slate>
         {adding&&<div>
-          {dialogType=='image'&& Util.renderBrowseImage({onConfirm:submitImage,adding:adding})}
-          {dialogType=='link'&& Util.renderBrowseLink({onConfirm:submitLink,adding:adding,defalutValue:linkVal})}
+          <Util.renderBroseURL type={dialogType=='image'?'Image':"Link"} onConfirm={submitFun} adding={adding} defalutValue={dialogType=='link'?linkVal:''}/>
+
+          {/* {dialogType=='image'&& Util.renderBrowseImage({onConfirm:submitImage,adding:adding})}
+          {dialogType=='link'&& Util.renderBrowseLink({onConfirm:submitLink,adding:adding,defalutValue:linkVal})} */}
         </div>}
       </div> 
     )
