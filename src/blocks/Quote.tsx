@@ -1,7 +1,6 @@
 import { TitleOutlined } from '@mui/icons-material'
 import { RenderMainProps, RenderSettingProps } from '../blocktype'
 import { BlockData, BlockLayoutData } from '../types'
-import { CommonSetting } from '../Property'
 import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition } from "../ToolDefinition";
 import { useState,useEffect,useRef } from 'react'

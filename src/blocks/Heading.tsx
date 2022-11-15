@@ -1,7 +1,6 @@
 import { TitleOutlined } from '@mui/icons-material';
 import { RenderMainProps, RenderSettingProps } from '../blocktype';
 import { BlockData, BlockLayoutData } from '../types';
-import { CommonSetting } from '../Property';
 import { Ranger } from '../utils/Ranger';
 import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";

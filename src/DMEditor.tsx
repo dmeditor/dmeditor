@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Block } from './Block';
 import './DMEditor.css';
-import { Property } from './Property';
 import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
