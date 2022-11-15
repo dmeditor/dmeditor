@@ -2,9 +2,10 @@ import React from "react";
 import { useEffect } from "react";
 import {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
+import { CommonSettings } from "./CommonSettings";
 import { PropertyTab } from "./Tab";
 
-export const BlockProperty = (props:any)=>{
+export const BlockProperty = (props:{title:string, active:boolean, children?:React.ReactNode})=>{
     const propertyRoot = document.getElementById('dmeditor-property') as HTMLElement;
 
     if(!props.active){
@@ -18,7 +19,7 @@ export const BlockProperty = (props:any)=>{
                 active={0}
                 tabs={[
                      {title: props.title, element:
-                     <div style={{padding: '5px 10px'}}>{props.children}</div>                     
+                      <div>{props.children}</div>
                    },
                     {title:'Document', element:<div>
                     Meta keywords: <br />

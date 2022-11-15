@@ -4,48 +4,34 @@ import { BlockData, BlockLayoutData } from '../types';
 import { CommonSetting } from '../Property';
 import { Ranger } from '../utils/Ranger';
 import { BlockProperty } from "../BlockProperty"
-import { ToolDefinition } from "../ToolDefinition";
+import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import React, {useEffect ,useState,useRef} from 'react';
 import { AnyAaaaRecord } from 'dns';
-
-export interface DataHeading{
-    text: string,
-    style: {
-        level: number
-    }
-}
+import { CommonSettings } from '../CommonSettings';
+import { PropertyItem } from '../utils';
 
 let c={
   type:'heading', 
-  content:{
-    layout:{padding: 0},
-    data: {text:'heading', style:{level: 2}}
-  }
+  content:{text:'heading', level: 2 },
+  settings:{common:{}}
 }
+
 const Heading = (props:any)=>{
-    const [content,setContet] = useState(props.data.content.data as DataHeading );
-    const [text,setText] = useState(props.data.content.data.text);
-    const [style,setStyle] = useState(props.data.content.data.style);
-    const [layout,setLayout] = useState(props.data.content.layout);
+    const [text,setText] = useState(props.data.content.text);
+    const [level,setLevel] = useState(props.data.content.level);
+    const [commonSettings,setCommonSettings] = useState(props.data.settings.common);
     const headRef:any=useRef(null);
 
-   
-    const change = (e?:any)=>{
+    const changeText = (e?:any)=>{
         const texts=headRef.current.innerText
         if(props.onChange){
           setText(texts);
         }
     }
-    const changeS = ()=>{
-      let newData=JSON.parse(JSON.stringify({...props.data.content}));
-        newData.data.text=text;
-        newData.data.style=style;
-        newData.layout=layout;
-        props.onChange({type:'heading',content:newData});
-    } 
-    const common = { onBlur:change,ref:headRef, contentEditable: props.active, style:layout}
+
+    const common = { onBlur:changeText,ref:headRef, contentEditable: props.active, style:commonSettings}
     const render = ()=>{
-      switch(style.level){
+      switch(level){
         case 1:
             return <h1  {...common}>{text}</h1>
             break;
@@ -65,82 +51,36 @@ const Heading = (props:any)=>{
             return <h2 {...common}>{text}</h2>
       }
     }
-    const update = (v:number)=>{
-      let c={...style};
-      c.level=v;
-      setStyle(c);
-    }
-    const changeCommon = (settings:BlockLayoutData)=>{
-      setLayout(settings);
-    }
-    useEffect(()=>{
-      change()
-    },[props.active])
 
     useEffect(()=>{
-      changeS();
-    },[text,style,layout])
+      let newData = {type:'heading',content:{text:text, level:level},settings:{common: {...commonSettings}}}
+      console.log('new data');
+      console.log(newData);
+      props.onChange(newData);
+    },[text,level,commonSettings])
 
     return (
       <>
         <BlockProperty title={'Heading'} active={props.active}>
-        <table style={{width: '100%'}}>
-          <tbody>
-              <tr><td style={{width: '50px'}}>                
-                  <label>Level</label></td><td>
-                  {/* <Ranger defaultValue={content.style.level} min={1} max={5} step={1} onChange={(v:number)=>{update(v)}} /> */}
-                  <Ranger defaultValue={style.level} min={1} max={5} step={1} onChange={update} />
-                  </td></tr>                       
-          </tbody>
-        </table>
-          <CommonSetting settings={layout} onChange={changeCommon} />
+          <PropertyItem label="Level">
+                {/* <Ranger defaultValue={content.style.level} min={1} max={5} step={1} onChange={(v:number)=>{update(v)}} /> */}
+                <Ranger defaultValue={level} min={1} max={5} step={1} onChange={v=>setLevel(v)} />
+          </PropertyItem>       
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
         </BlockProperty>
         {render()}  
     </> 
     )
 }
 
-
-// const HeadingSettings = (props:RenderSettingProps)=>{
-
-//     let style = (props.data.data as DataHeading).style;
-
-//     const update = ()=>{
-//         let content = props.data.data as DataHeading;
-//         content.style = {...content.style, ...style};
-//         let newData = props.data;
-//         newData.data = content;
-//         props.onSetting(newData);
-//     }
-
-//     const changeCommon = (settings:BlockLayoutData)=>{
-//         let data = props.data;
-//         data.layout = settings;
-//         props.onSetting(data);
-//     }
-
-//     return <div>
-//         <label>Heading</label>
-    //     <table style={{width: '100%'}}>
-    //     <tbody>
-    //         <tr><td style={{width: '50px'}}>                
-    //             <label>Level</label></td><td>
-    //             <Ranger defaultValue={style.level} min={1} max={5} step={1} onChange={(v:number)=>{style.level=v;update()}} />
-    //             </td></tr>                       
-    //     </tbody>
-    // </table>
-//     <CommonSetting  settings={props.data.layout}  onChange={changeCommon}/>
-//     </div>
-//  }
-
  export const toolHeading:ToolDefinition = {
   type: 'heading',
   isComposited: false,
   menu:  {text:"Heading", category:'basic',icon: <TitleOutlined /> },
-  initData: {type:'heading', content:{
-    layout:{padding: 0},
-    data: {text:'heading', style:{level: 2}}
-  }},
+  initData: {type:'heading', 
+        content:{ text:'heading', level: 2},
+        settings:{},
+  },
   view: (props:{data:any})=><Heading data={props.data} active={false} onChange={()=>{}} />,
   render: (props:{data:any, active:boolean})=><Heading {...props} />
 }

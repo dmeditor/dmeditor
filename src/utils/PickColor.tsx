@@ -1,6 +1,6 @@
 import { SketchPicker } from 'react-color';
 import { useEffect, useRef, useState } from "react";
-export const PickColor=(props:any)=>{
+export const PickColor=(props:{color:string, onChange:(color:string)=>void})=>{
   const [showColorPicker, setShowColorPicker] = useState(false);
   const modalRef= useRef(null);
   let originalColor:string = '';
