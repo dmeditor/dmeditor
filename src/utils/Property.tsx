@@ -1,5 +1,6 @@
-import { Button, ButtonProps, ButtonTypeMap, ExtendButtonBase, Grid, Tooltip } from "@mui/material"
-import React from "react"
+import { ArrowDownward, ArrowRight, KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
+import { Button, ButtonProps, ButtonTypeMap, Collapse, ExtendButtonBase, Grid, Tooltip } from "@mui/material"
+import React, { useState } from "react"
 
 export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?:boolean, children:any})=>{
     const autoWidth = props.autoWidth?true:false;
@@ -15,10 +16,28 @@ export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?
   </Grid>
 }
 
-export const PropertyGroup = (props:{header: string, children:any})=>{
-    return <div>
-        <div><label style={{color:'#004f00'}}>{props.header}</label></div>
-        <div style={{paddingLeft: '10px', paddingTop: '10px'}}>{props.children}</div>
+export const PropertyGroup = (props:{header: string, children:any, expandable?:boolean, open?:boolean})=>{
+    const [open, setOpen] = useState(props.expandable&&props.open?true:false);
+
+    const renderBody = ()=>{
+      return <div style={{paddingLeft: '10px', paddingTop: '10px'}}>{props.children}</div>
+    }
+
+    return <div>          
+        <div onClick={()=>{if(props.expandable)setOpen(!open)}}>
+          <label style={{color:'#004f00'}}>
+          {props.expandable&&<span>
+            {!open&&<KeyboardArrowRight />}
+            {open&&<KeyboardArrowDown />}
+          </span>}
+            {props.header}</label>
+        </div>
+        {props.expandable&&<Collapse in={open}>
+            {renderBody()}
+        </Collapse>}
+        {!props.expandable&&<>
+            {renderBody()}
+        </>}
     </div>
 }
 
