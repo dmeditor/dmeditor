@@ -18,7 +18,7 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
             </PropertyItem>
             <PropertyItem label="Background color:" autoWidth={true}>
             <PickColor
-              color={settings.backGroundColor?settings.backGroundColor:''}
+              color={settings.backgroundColor?settings.backgroundColor:''}
               onChange={v=>setSettings({...settings, backgroundColor: v})}
             ></PickColor>
             </PropertyItem>

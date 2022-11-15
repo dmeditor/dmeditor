@@ -19,7 +19,7 @@ export const BlockProperty = (props:{title:string, active:boolean, children?:Rea
                 active={0}
                 tabs={[
                      {title: props.title, element:
-                      <div>{props.children}</div>
+                      <div style={{marginBottom:'100px'}}>{props.children}</div>
                    },
                     {title:'Document', element:<div>
                     Meta keywords: <br />

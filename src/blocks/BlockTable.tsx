@@ -21,6 +21,7 @@ import React from "react";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PickColor } from "../utils/PickColor";
 import { PropertyButton, PropertyGroup, PropertyItem } from "../utils/Property";
+import { CommonSettings } from "../CommonSettings";
 
 type add = "top" | "right" | "bottom" | "left";
 type deleteType = "col" | "row";
@@ -31,7 +32,6 @@ interface styelProp {
   [propName: string]: any;
 }
 export const Table = (props: ToolRenderProps) => {
-  console.log(props);
   const {
     padding: Padding,
     borderColor,
@@ -50,6 +50,7 @@ export const Table = (props: ToolRenderProps) => {
     headerColor: headerColor || "",
     oddColor: oddColor || "",
   });
+  const [commonSettings, setCommonSettings] = useState(props.data.settings.common);
 
   const [border, setBorderProp] = useState<bordersType>(() => {
     return Border
@@ -66,7 +67,7 @@ export const Table = (props: ToolRenderProps) => {
     if (props.active) {
       props.onChange({
         content,
-        settings: { ...color, padding, border },
+        settings: { ...color, padding, border, common: commonSettings },
         type: "table",
       });
     }
@@ -380,9 +381,11 @@ export const Table = (props: ToolRenderProps) => {
             />
           )}
         </PropertyItem>
+
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
       </BlockProperty>
       <div className="bani">
-        <div>
+        <div style={commonSettings}>
           <table
             width={"100%"}
             cellSpacing="0"
