@@ -13,23 +13,18 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
             return props.commonSettings.width
           }
         }else{
-          return '100%'
+          return 'auto'
         }
       }else{
-        return '100%'
+        return 'auto'
       }
     });
 
    
 
     useEffect(()=>{
-      if(settings.width){
-        props.onChange(settings);
-      }else{
         let s={...settings};
-        s.width='100%';
         props.onChange(s);
-      }
     },[settings]);
 
     const changeWidth = (v:any)=>{

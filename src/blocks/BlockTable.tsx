@@ -397,11 +397,10 @@ export const Table = (props: ToolRenderProps) => {
       <div className="bani">
         <div style={commonSettings}>
           <table
-            width={commonSettings?commonSettings.width:"100%"}
             cellSpacing="0"
             cellPadding="0"
             className="bani-table"
-            style={tableContainer()}
+            style={{...tableContainer(), width:(commonSettings?commonSettings.width:"initial")}}
           >
             <tbody>
               {content.map((item, i) => {
@@ -455,7 +454,7 @@ export const toolTable: ToolDefinition = {
       ["", "", "", ""],
       ["", "", "", ""],
     ],
-    settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
+    settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder", common:{width: '100%'} },
   },
   view: (props:{data:any})=><Table data={props.data} active={false} onChange={()=>{}} />,
   render: (props: ToolRenderProps) => <Table {...props} />,
