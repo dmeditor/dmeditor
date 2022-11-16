@@ -20,8 +20,6 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
       }
     });
 
-   
-
     useEffect(()=>{
         let s={...settings};
         props.onChange(s);
@@ -71,7 +69,7 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
                 </MenuItem>
               </Select>
               {widthType==='custom'&&
-                <Ranger min={50} max={500} step={5} defaultValue={settings.width?parseFloat(settings.width):150} onChange={v=>setSettings({...settings, width: v+'px'})} />
+                <Ranger min={50} max={800} step={5} defaultValue={settings.width?parseFloat(settings.width):150} onChange={v=>setSettings({...settings, width: v+'px'})} />
               }
             </PropertyItem>
         </PropertyGroup>
