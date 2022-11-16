@@ -166,6 +166,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         <div id="dmeditor-main" className='layout-main-container'>               
          <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
             <div style={{width: '100%', height: 1}}></div>
+            {/* key={index+currentSelected.toString()+blocks.length} */}
             <Context.Provider value = {{onMove,onDelete}}>
             {viewmode==='edit'&&<>
             {blocks.map((block, index)=>{
@@ -174,7 +175,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                 return  <><Block adding={currentSelected&&index===addingBlock}
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
-                         key={index+currentSelected.toString()+blocks.length}
+                         key={index}
                          onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);
@@ -200,7 +201,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
             {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
             <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}>
-                {viewmode==='edit'&&mode=='select'&&<div style={{position:"fixed",bottom:0,height:'100px',width:'20%',padding:'10px', backgroundColor:'#ffffff'}}>
+                {viewmode==='edit'&&mode=='select'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '282px',padding:'10px', backgroundColor:'#ffffff'}}>
                     <div style={{marginBottom:'15px'}} >
                       <a href="/" title="Move up" onClick={(e)=>{e.preventDefault();onMove('up')}}><ArrowUpwardOutlined /> </a> 
                       <a href="/" title="Move down" onClick={(e)=>{e.preventDefault();onMove('down')}}><ArrowDownwardOutlined /></a>

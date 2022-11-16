@@ -2,7 +2,7 @@
     border-right:none;
     border-bottom: none;
     border-spacing: 0px;
-    width: 100%;
+    /* width: 100%; */
 }
 .bani .tdActive {
   outline: 1px dotted #1e6fff !important;

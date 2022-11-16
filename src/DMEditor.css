@@ -157,3 +157,8 @@
 .block-type-text span{
   vertical-align: initial !important;
 }
+
+.pre-render{
+  position: absolute;
+  left:-105px;
+}

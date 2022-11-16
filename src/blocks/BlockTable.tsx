@@ -23,6 +23,7 @@ import { PickColor } from "../utils/PickColor";
 import { PropertyButton, PropertyGroup, PropertyItem } from "../utils/Property";
 import { CommonSettings } from "../CommonSettings";
 
+
 type add = "top" | "right" | "bottom" | "left";
 type deleteType = "col" | "row";
 
@@ -51,6 +52,7 @@ export const Table = (props: ToolRenderProps) => {
     oddColor: oddColor || "",
   });
   const [commonSettings, setCommonSettings] = useState(props.data.settings.common);
+  const [isChange, setIsChange] = useState(false);
 
   const [border, setBorderProp] = useState<bordersType>(() => {
     return Border
@@ -64,14 +66,12 @@ export const Table = (props: ToolRenderProps) => {
   };
 
   useEffect(() => {
-    if (props.active) {
       props.onChange({
         content,
         settings: { ...color, padding, border, common: commonSettings },
         type: "table",
       });
-    }
-  });
+  },[props.active,commonSettings,isChange]);
 
   const setAlign = (v: add) => {
     switch (v) {
@@ -144,18 +144,21 @@ export const Table = (props: ToolRenderProps) => {
       value.borderColor = color;
       return { ...value };
     });
+    setIsChange(!isChange)
   };
   const changeHeaderColor = (color: string) => {
     setColor((value) => {
       value.headerColor = color;
       return { ...value };
     });
+    setIsChange(!isChange)
   };
   const changeOddColor = (color: string) => {
     setColor((value) => {
       value.oddColor = color;
       return { ...value };
     });
+    setIsChange(!isChange)
   };
   const tableContainer = () => {
     let style: styelProp = {};
@@ -206,6 +209,7 @@ export const Table = (props: ToolRenderProps) => {
       }
       return [...v];
     });
+    setIsChange(!isChange)
   };
   const updateColumn = (value: number) => {
     SetContent((v) => {
@@ -224,9 +228,11 @@ export const Table = (props: ToolRenderProps) => {
       }
       return [...v];
     });
+    setIsChange(!isChange)
   };
   const updatePadding = (num: number) => {
     setPadding(num);
+    setIsChange(!isChange)
   };
   const change = (
     e: React.FocusEvent<HTMLDivElement>,
@@ -235,6 +241,7 @@ export const Table = (props: ToolRenderProps) => {
   ) => {    
     content[i][j] = e.target.innerText;
     SetContent(content);
+    setIsChange(!isChange)
   };
   return (
     <div style={{ ...props.data.layout }}>
@@ -245,6 +252,7 @@ export const Table = (props: ToolRenderProps) => {
               title="No border"
               selected={border === "none"}
               onClick={() => {
+                setIsChange(!isChange)
                 setBorder("none");
               }}
             >
@@ -254,6 +262,7 @@ export const Table = (props: ToolRenderProps) => {
               title="Row border"
               selected={border === "rowBorder"}
               onClick={() => {
+                setIsChange(!isChange)
                 setBorder("rowBorder");
               }}
             >
@@ -263,6 +272,7 @@ export const Table = (props: ToolRenderProps) => {
               title="Cell border"
               selected={border === "border"}
               onClick={() => {
+                setIsChange(!isChange)
                 setBorder("border");
               }}
             >
@@ -282,7 +292,7 @@ export const Table = (props: ToolRenderProps) => {
               title="Insert on bottom"
               disabled={type.i === -1 && type.j === -1}
               color="success"
-              onClick={() => setAlign("bottom")}
+              onClick={() => {setAlign("bottom"); setIsChange(!isChange)} }
             >
               <BorderBottom></BorderBottom>
             </PropertyButton>
@@ -290,7 +300,7 @@ export const Table = (props: ToolRenderProps) => {
               title="Insert on top"
               disabled={type.i === -1 && type.j === -1}
               color="success"
-              onClick={() => setAlign("top")}
+              onClick={() => {setAlign("top"); setIsChange(!isChange)}}
             >
               <BorderTop />
             </PropertyButton>
@@ -298,7 +308,7 @@ export const Table = (props: ToolRenderProps) => {
               title="Delete row"
               disabled={type.i === -1 && type.j === -1}
               color="warning"
-              onClick={() => del("row")}
+              onClick={() => {del("row"); setIsChange(!isChange)}}
             >
               <Delete></Delete>
             </PropertyButton>
@@ -308,7 +318,7 @@ export const Table = (props: ToolRenderProps) => {
               title="Insert on right"
               disabled={type.i === -1 && type.j === -1}
               color="success"
-              onClick={() => setAlign("right")}
+              onClick={() => {setAlign("right"); setIsChange(!isChange)}}
             >
               <BorderRight></BorderRight>
             </PropertyButton>
@@ -316,7 +326,7 @@ export const Table = (props: ToolRenderProps) => {
               title="Insert on left"
               disabled={type.i === -1 && type.j === -1}
               color="success"
-              onClick={() => setAlign("left")}
+              onClick={() => {setAlign("left"); setIsChange(!isChange)}}
             >
               <BorderLeft></BorderLeft>
             </PropertyButton>
@@ -324,7 +334,7 @@ export const Table = (props: ToolRenderProps) => {
               title="Delete column"
               disabled={type.i === -1 && type.j === -1}
               color="warning"
-              onClick={() => del("col")}
+              onClick={() => {del("col"); setIsChange(!isChange)}}
             >
               <DeleteSweep></DeleteSweep>
             </PropertyButton>
@@ -387,7 +397,7 @@ export const Table = (props: ToolRenderProps) => {
       <div className="bani">
         <div style={commonSettings}>
           <table
-            width={"100%"}
+            width={commonSettings?commonSettings.width:"100%"}
             cellSpacing="0"
             cellPadding="0"
             className="bani-table"
