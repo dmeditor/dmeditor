@@ -16,8 +16,8 @@ export const PropertyTab = (props:{tabs:Array<TabData>, active?: number})=>{
     return (<div>
         <div className='tab-header-container'>  
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs onChange={(e:any, newValue:number)=>setActive(newValue)}>
-                {props.tabs.map((tab:TabData, index:number)=><Tab style={{textTransform:'none'}} className={index===active?'tab-active':''} value={index} label={tab.title} />)}
+            <Tabs  value={false} onChange={(e:any, newValue:number)=>setActive(newValue)}>
+                {props.tabs.map((tab:TabData, index:number)=><Tab style={{textTransform:'none'}} className={index===active?'tab-active':''} label={tab.title} />)}
             </Tabs>    
             </Box>
         </div>
