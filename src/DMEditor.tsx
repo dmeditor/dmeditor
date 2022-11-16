@@ -19,12 +19,16 @@ export interface DMEditorProps{
     menu?:React.ReactElement, 
     onChange?:(data:Array<any>)=>void,
     imageBrowse?:any,
-    linkBrowse?:any
+    linkBrowse?:any,
+    customProperty?:any,
+    preBlock?:any
 }
 
 export const DMEditor = (props:DMEditorProps)=>{
     Util.BrowseImage = props.imageBrowse
     Util.BrowseLink = props.linkBrowse
+    Util.CustomProperty = props.customProperty
+    Util.PreBlock = props.preBlock
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
@@ -166,7 +170,6 @@ export const DMEditor = (props:DMEditorProps)=>{
         <div id="dmeditor-main" className='layout-main-container'>               
          <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
             <div style={{width: '100%', height: 1}}></div>
-            {/* key={index+currentSelected.toString()+blocks.length} */}
             <Context.Provider value = {{onMove,onDelete}}>
             {viewmode==='edit'&&<>
             {blocks.map((block, index)=>{
@@ -175,7 +178,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                 return  <><Block adding={currentSelected&&index===addingBlock}
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
-                         key={index}
+                         key={index+currentSelected.toString()+blocks.length}
                          onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);
