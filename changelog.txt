@@ -1,4 +1,6 @@
 0.1.0-alpha.7
+- 2022-11-15: [text]fixed link hard to select
+- 2022-11-15: [common]]Add block common settings(first for text, heading, table)
 - Remove help link
 - Added Image & Link browse from external api
 - Support document tab
