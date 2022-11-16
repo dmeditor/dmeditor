@@ -1,5 +1,5 @@
 import { AddBoxOutlined } from "@mui/icons-material"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getDef } from "./ToolDefinition"
 
 export type BlockInfo = {
@@ -37,7 +37,7 @@ export const Block = (props:BlockProps)=>{
         props.onChange(data);
     }
 
-    const render = useMemo( ()=>{
+    const render = ()=>{
         let def = getDef( props.data.type );
         if( def){
             if(props.view){
@@ -50,7 +50,7 @@ export const Block = (props:BlockProps)=>{
         }else{
             return 'Unknown type:'+props.data.type;
         }
-    }, [props.data] );
+    };
 
     
     return <div ref={ref} className={'block-container'+(isActive?' active':'')} onClick={(e:any)=>changeActive(true)}>
@@ -59,7 +59,7 @@ export const Block = (props:BlockProps)=>{
                                 <AddBoxOutlined /></a>
                         </div>}            
         <div className={"block block-type-"+props.data.type}>
-        {render}  
+        {render()}  
         </div>   
     {isActive&&<div className="tool tool-under">                             
                 <a className="tool-item" href="/" title="Add under" onClick={(e)=>{e.preventDefault();props.onAddUnder()}}><AddBoxOutlined /></a>
