@@ -106,7 +106,11 @@ export const DMEditor = (props:DMEditorProps)=>{
             setActiveBlock(-1);
             setAddMore(1);
         }else{
+          if(activeBlock===0){
+            setActiveBlock(0);
+          }else{
             setActiveBlock(activeBlock-1);
+          }
         }
     }
 
@@ -170,7 +174,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                 return  <><Block adding={currentSelected&&index===addingBlock}
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
-                         key={index}
+                         key={index+currentSelected.toString()+blocks.length}
                          onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);
@@ -181,7 +185,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                             }
                         }
                     }} 
-                    onChange={data=>{blocks[index]=data;setBlocks(blocks)}}
+                    onChange={data=>{let newBlocks = [...blocks];newBlocks[index]=data;setBlocks(newBlocks)}}
                     onAddAbove={()=>onAddMore(-1)} 
                     onAddUnder={()=>onAddMore(1)} /></>;         
              }
