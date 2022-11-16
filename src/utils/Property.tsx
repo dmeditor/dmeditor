@@ -16,7 +16,7 @@ export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?
   </Grid>
 }
 
-export const PropertyGroup = (props:{header: string, children:any, expandable?:boolean, open?:boolean})=>{
+export const PropertyGroup = (props:{header: string, children:any, expandable?:boolean, open?:boolean, onOpenClose?:(open:boolean)=>void})=>{
     const [open, setOpen] = useState(props.expandable&&props.open?true:false);
 
     const renderBody = ()=>{
@@ -24,7 +24,7 @@ export const PropertyGroup = (props:{header: string, children:any, expandable?:b
     }
 
     return <div>          
-        <div onClick={()=>{if(props.expandable)setOpen(!open)}}>
+        <div onClick={()=>{if(props.expandable){setOpen(!open); if(props.onOpenClose)props.onOpenClose(!open)}}}>
           <label style={{color:'#004f00'}}>
           {props.expandable&&<span>
             {!open&&<KeyboardArrowRight />}
