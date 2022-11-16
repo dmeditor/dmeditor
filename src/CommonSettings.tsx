@@ -4,7 +4,7 @@ import { Select,MenuItem} from "@mui/material";
 
 let blockOpen = false;
 
-export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>void})=>{    
+export const CommonSettings = (props:{commonSettings:any, settingList?: Array<string>, onChange:(data:any)=>void})=>{    
     const [settings, setSettings] = useState(props.commonSettings?props.commonSettings:{});
     const [widthType, setWidthType] = useState(()=>{
       if(props.commonSettings){
@@ -32,27 +32,35 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
       setSettings({...settings, width: v==='custom'?'150px':v})
     }
 
+    const containSetting = (setting: string) => {
+      if( !props.settingList ){
+        return true;
+      }else{
+        return props.settingList.includes(setting);
+      }
+    }
+
     return <div>
         <PropertyGroup header='Block settings' expandable={true} open={blockOpen} onOpenClose={(open)=>blockOpen=open}>
-            <PropertyItem label="To top">
+            {containSetting('marginTop')&&<PropertyItem label="To top">
                 <Ranger min={0} max={100} step={5} defaultValue={settings.marginTop?settings.marginTop:0} onChange={v=>setSettings({...settings, marginTop: v})} />
-            </PropertyItem>
-            <PropertyItem label="Padding">
+            </PropertyItem>}
+            {containSetting('padding')&&<PropertyItem label="Padding">
                 <Ranger min={0} max={30} step={1} defaultValue={settings.padding?settings.padding:0} onChange={v=>setSettings({...settings, padding: v})}/>
-            </PropertyItem>
-            <PropertyItem label="Background color:" autoWidth={true}>
+            </PropertyItem>}
+            {containSetting('backgroundColor')&&<PropertyItem label="Background color:" autoWidth={true}>
             <PickColor
               color={settings.backgroundColor?settings.backgroundColor:''}
               onChange={v=>setSettings({...settings, backgroundColor: v})}
             ></PickColor>
-            </PropertyItem>
-            <PropertyItem label="Text color:" autoWidth={true}>
+            </PropertyItem>}
+            {containSetting('color')&&<PropertyItem label="Text color:" autoWidth={true}>
             <PickColor
               color={settings.color?settings.color:'#000000'}
               onChange={v=>setSettings({...settings, color: v})}
             ></PickColor>
-            </PropertyItem>
-            <PropertyItem label="Width">
+            </PropertyItem>}
+            {containSetting('width')&&<PropertyItem label="Width">
               <Select
                 value={widthType}
                 onChange={(e)=>{changeWidth(e.target.value)}}
@@ -73,7 +81,7 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
               {widthType==='custom'&&
                 <Ranger min={50} max={800} step={5} defaultValue={settings.width?parseFloat(settings.width):150} onChange={v=>setSettings({...settings, width: v+'px'})} />
               }
-            </PropertyItem>
+            </PropertyItem>}
         </PropertyGroup>
     </div>;
 }

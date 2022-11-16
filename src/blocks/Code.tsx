@@ -3,10 +3,13 @@ import React, { useEffect, useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { css } from "@emotion/css";
+import { CommonSettings } from "../CommonSettings";
 export const Code = (props: ToolRenderProps) => {
   const [content, SetContent] = useState(() => {
     return props.data.content;
   });
+  const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
+  
   const changer = (e: React.FocusEvent<HTMLElement>) => {
     SetContent(e.target.innerText);
   };
@@ -15,12 +18,16 @@ export const Code = (props: ToolRenderProps) => {
       props.onChange({
         content,
         type: "code",
+        settings:{common: commonSettings}
       });
     }
   });
   return (
     <>
-      <BlockProperty title={"Code"} active={props.active}></BlockProperty>
+      <BlockProperty title={"Code"} active={props.active}>
+        <div><CommonSettings commonSettings={commonSettings} settingList={['marginTop']} onChange={(settings)=>setCommonSettings(settings)} /></div>
+      </BlockProperty>
+      <div style={commonSettings}>
       <code
         className={css({
           padding: "0.5em 0.8em",
@@ -41,6 +48,7 @@ export const Code = (props: ToolRenderProps) => {
       >
         {content}
       </code>
+      </div>
     </>
   );
 };
@@ -51,7 +59,7 @@ export const toolCode: ToolDefinition = {
     category: "basic",
     icon: <CodeOutlined />,
   },
-  initData: { type: "code", content: "this is a Code" },
+  initData: { type: "code", content: "this is a Code", settings:{} },
   view: (props:{data:any})=><Code data={props.data} active={false} onChange={()=>{}} />,
   render: (props: ToolRenderProps) => <Code {...props} />,
 };

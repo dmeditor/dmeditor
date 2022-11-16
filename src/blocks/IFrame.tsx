@@ -3,6 +3,7 @@ import { Box, Button, Checkbox, Dialog, DialogContent, DialogTitle, Input, Modal
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { BlockProperty } from "../BlockProperty";
+import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyItem } from "../utils/Property";
 import { Ranger } from "../utils/Ranger";
@@ -15,6 +16,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [height, setHeight] = useState(props.data.settings.height as number);    
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
     const [tempUrl, setTempUrl] = useState(props.data.content);
+    const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
     
     
     const submit = ()=>{
@@ -23,8 +25,8 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, content:url, settings:{width: width, height: height, align: align} })
-    }, [url, width, align, height]);
+        props.onChange({...props.data, content:url, settings:{width: width, height: height, align: align, common: commonSettings} })
+    }, [url, width, align, height, commonSettings]);
 
     return <div>
             {props.adding&&<div>
@@ -55,8 +57,9 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                    <PropertyButton selected={align==='center'} onClick={()=>setAlign('center')}><FormatAlignCenter /></PropertyButton>
                    <PropertyButton selected={align==='right'} onClick={()=>setAlign('right')}><FormatAlignRight /></PropertyButton>
                 </PropertyItem>
+                <div><CommonSettings commonSettings={commonSettings}  settingList={['marginTop']} onChange={(settings)=>setCommonSettings(settings)} /></div>
             </BlockProperty>
-            {url&&<div style={{textAlign:align}}><iframe src={url} width={width} height={height}></iframe></div>}
+            {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={width} height={height}></iframe></div>}
         </div>
 }
 
