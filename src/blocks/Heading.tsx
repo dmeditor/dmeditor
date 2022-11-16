@@ -18,7 +18,7 @@ let c={
 const Heading = (props:any)=>{
     const [text,setText] = useState(props.data.content.text);
     const [level,setLevel] = useState(props.data.content.level);
-    const [commonSettings,setCommonSettings] = useState(props.data.settings.common);
+    const [commonSettings,setCommonSettings] = useState(props.data.settings?props.data.settings.common:{});
     const headRef:any=useRef(null);
 
     const changeText = (e?:any)=>{
