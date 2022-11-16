@@ -162,3 +162,8 @@
   position: absolute;
   left:-105px;
 }
+
+.viewmode-edit .btn{
+  user-select:inherit;
+  -webkit-user-select:inherit;
+} 
