@@ -16,6 +16,7 @@ import { PickColor } from "../utils/PickColor";
 import FontFamilyList from '../utils/FontFamilyList'
 import {PropertyButton, PropertyGroup, PropertyItem} from '../utils/Property';
 import { Util } from '../utils/Util';
+import { CommonSettings } from "../CommonSettings";
 
 const BlockButton = ({formats}:any) => {
   let ele:any
@@ -58,6 +59,7 @@ export const BlockText = (props:any)=>{
     const [linkVal, setLinkVal] = useState('');
     const [linkValType, setLinkValType] = useState('select' as ('select' | 'input'));
     const [linkData, setLinkData] = useState();
+    const [commonSettings, setCommonSettings] = useState(props.data.settings?.common);
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -68,8 +70,11 @@ export const BlockText = (props:any)=>{
 
     const change = (val:any)=>{
       setValue(val)
-      props.onChange({type:'text',content:{initialValue:val}});
     }
+
+    useEffect(()=>{
+        props.onChange({type:'text',content:{initialValue:value}, settings:{common: commonSettings}});
+    },[value, commonSettings])
 
     const changeFontFormat = (v:any,format:any,e?:any)=>{
       if(e){
@@ -149,7 +154,7 @@ export const BlockText = (props:any)=>{
     },[isSelect])
 
     return (
-      <div>
+      <div style={...commonSettings}>
         <Slate editor={editor} value={value} onChange={v => change(v)}>
           <BlockProperty title={'Text'} active={props.active}>
           <PropertyGroup header="Basic">
@@ -278,7 +283,8 @@ export const BlockText = (props:any)=>{
               </div> 
             </>
             :null}
-                 
+
+         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>                 
           </BlockProperty>
           <div>
             <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null} changeDialogLink={changeDialogLinkfun}/>
