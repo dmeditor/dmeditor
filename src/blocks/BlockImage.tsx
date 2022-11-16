@@ -42,9 +42,9 @@ export const BlockImage = (props:ToolRenderProps)=>{
               <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
             </div>}
             <BlockProperty title={'Image'} active={props.active}>
-                <PropertyItem label="Description" autoWidth>
-                  <Checkbox checked={text?true:false} onChange={checked=>checked?setText('Description'):setText('')} />
-                </PropertyItem>
+                {!text&&<PropertyItem label="Description" autoWidth>
+                  <Button onClick={()=>setText('Description')}>Add description</Button>
+                </PropertyItem>}
                 <PropertyItem label="Full screen" autoWidth>
                     <Checkbox checked={fullScreen} onChange={(e, checked:boolean)=>setFullScreen(checked)} />
                 </PropertyItem>
@@ -56,7 +56,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
                 <div style={fullScreen?{marginLeft:'-60px',marginRight:'-60px'}:{}}>
                   <img width='100%' src={imageUrl} />  
                 </div>
-                {text&&<div contentEditable={true} onBlur={e=>setText(e.target.textContent)}>{text}</div>}
+                {text&&<div className="image-caption" contentEditable={true} onBlur={e=>setText(e.target.textContent)}>{text}</div>}
             </div>
 }
 

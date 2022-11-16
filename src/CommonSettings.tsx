@@ -42,9 +42,9 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
 
     return <div>
         <PropertyGroup header='Block settings' expandable={true} open={blockOpen} onOpenClose={(open)=>blockOpen=open}>
-            {containSetting('marginTop')&&<PropertyItem label="To top">
+            <PropertyItem label="To top">
                 <Ranger min={0} max={100} step={5} defaultValue={settings.marginTop?settings.marginTop:0} onChange={v=>setSettings({...settings, marginTop: v})} />
-            </PropertyItem>}
+            </PropertyItem>
             {containSetting('padding')&&<PropertyItem label="Padding">
                 <Ranger min={0} max={30} step={1} defaultValue={settings.padding?settings.padding:0} onChange={v=>setSettings({...settings, padding: v})}/>
             </PropertyItem>}

@@ -25,7 +25,7 @@ export const Code = (props: ToolRenderProps) => {
   return (
     <>
       <BlockProperty title={"Code"} active={props.active}>
-        <div><CommonSettings commonSettings={commonSettings} settingList={['marginTop']} onChange={(settings)=>setCommonSettings(settings)} /></div>
+        <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
       </BlockProperty>
       <div style={commonSettings}>
       <code

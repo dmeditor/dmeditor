@@ -45,7 +45,7 @@ export const Quote = (props:any)=>{
   return (
     <>
         <BlockProperty title={'Quote'} active={props.active}>
-           <div><CommonSettings commonSettings={commonSettings}  settingList={['marginTop']} onChange={(settings)=>setCommonSettings(settings)} /></div>
+           <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
         </BlockProperty>
         <div style={commonSettings}>
         <q ref={QuoteRef} className='block-quote' {...common} >{content.data}</q>
