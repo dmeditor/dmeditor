@@ -4,7 +4,7 @@ import { Select,MenuItem} from "@mui/material";
 
 export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>void})=>{    
     const [settings, setSettings] = useState(props.commonSettings?props.commonSettings:{});
-    const [width, setWidth] = useState(()=>{
+    const [widthType, setWidthType] = useState(()=>{
       if(props.commonSettings){
         if(props.commonSettings?.width){
           if(props.commonSettings.width!=='100%'&&props.commonSettings.width!=='auto'){
@@ -28,7 +28,7 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
     },[settings]);
 
     const changeWidth = (v:any)=>{
-      setWidth(v)
+      setWidthType(v)
       setSettings({...settings, width: v==='custom'?'150px':v})
     }
 
@@ -54,7 +54,7 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
             </PropertyItem>
             <PropertyItem label="Width">
               <Select
-                value={width}
+                value={widthType}
                 onChange={(e)=>{changeWidth(e.target.value)}}
                 displayEmpty
                 size='small'
@@ -70,7 +70,7 @@ export const CommonSettings = (props:{commonSettings:any, onChange:(data:any)=>v
                   custom
                 </MenuItem>
               </Select>
-              {width==='custom'&&
+              {widthType==='custom'&&
                 <Ranger min={50} max={500} step={5} defaultValue={settings.width?parseFloat(settings.width):150} onChange={v=>setSettings({...settings, width: v+'px'})} />
               }
             </PropertyItem>
