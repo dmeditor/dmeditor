@@ -10,7 +10,6 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef } from './ToolDefinition';
 import { Util } from './utils/Util';
-import { Context } from './utils/Context';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
@@ -170,7 +169,6 @@ export const DMEditor = (props:DMEditorProps)=>{
         <div id="dmeditor-main" className='layout-main-container'>               
          <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
             <div style={{width: '100%', height: 1}}></div>
-            <Context.Provider value = {{onMove,onDelete}}>
             {viewmode==='edit'&&<>
             {blocks.map((block, index)=>{
              const a = ()=>{
@@ -196,7 +194,6 @@ export const DMEditor = (props:DMEditorProps)=>{
              return a();        
             }
             )} </>}
-            </Context.Provider>
             {viewmode!=='edit'&&<DMEditorView data={blocks} />}
          </div>                    
         </div>
