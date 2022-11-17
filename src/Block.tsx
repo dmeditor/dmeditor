@@ -1,4 +1,5 @@
 import { AddBoxOutlined } from "@mui/icons-material"
+import React from "react"
 import { useEffect, useRef, useState } from "react"
 import { getDef } from "./ToolDefinition"
 
@@ -20,7 +21,7 @@ interface BlockProps{
     view?:boolean
 }
 
-export const Block = (props:BlockProps)=>{
+export const Block = React.memo((props:BlockProps)=>{
     const isActive = props.active?true:false;
     const ref:any = useRef();
     // useOnClickOutside(ref, () => changeActive(false));
@@ -66,7 +67,7 @@ export const Block = (props:BlockProps)=>{
             </div>}  
     </div>
 
-}
+});
 
 //block: type, required, max, min, containerProperties
 //container: allowedType, 
