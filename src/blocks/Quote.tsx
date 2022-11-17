@@ -5,50 +5,47 @@ import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition } from "../ToolDefinition";
 import { useState,useEffect,useRef } from 'react'
 import { CommonSettings } from '../CommonSettings';
+import { PropertyItem } from '../utils';
+import { Util } from '../utils/Util';
 
 
 export const Quote = (props:any)=>{
-    // const changeCommon = (settings: BlockLayoutData) => {
-    //   let data = props.data
-    //   data.layout = settings
-    //   props.onSetting(data)
-    // }
-   const [content,setConent] = useState(props.data.content)
-   const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
+  const [content,setConent] = useState(props.data.content)
+  const [commonSettings, setCommonSettings] = useState(props.data.settings?props.data.settings.common:{});
+  const [defalutProperty,setDefalutProperty] = useState(props.data.dm_field?props.data.dm_field:'')
+  const QuoteRef:any=useRef(null);
 
-   const QuoteRef:any=useRef(null);
   const change = (e?: any) => {
     const text=QuoteRef.current.innerText
-    let newData={...content};
-    newData.data=text
-    setConent(newData)
-    props.onChange({type:'quote',content:newData, settings:{common: commonSettings}});
+    setConent(text)
+    props.onChange({type:'quote',content:text, settings:{common: commonSettings}});
   }
 
   const common = {
     onBlur: change,
     contentEditable: props.active,
-    style: { ...content.layout },
+    style: { ...commonSettings},
   }
 
-  // const changeCommon = (settings: any) => {
-  //   let data = {...content};
-  //   data.layout = settings
-  //   setConent(data)
-  //   console.log(data)
-  //   // props.onSetting(data)
-  // }
+  const changePropery = (v: any) => {
+    let data = {...props.data};
+    data.dm_field = v
+    props.onChange({...data});
+  }
   useEffect(()=>{
     change();
-  },[props.active])
+  },[props.active,commonSettings])
 
   return (
     <>
         <BlockProperty title={'Quote'} active={props.active}>
+        <PropertyItem label="property">
+            {Util.renderCustomProperty({defalutProperty:defalutProperty,onChange:changePropery})}
+          </PropertyItem> 
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
         </BlockProperty>
         <div style={commonSettings}>
-        <q ref={QuoteRef} className='block-quote' {...common} >{content.data}</q>
+        <q ref={QuoteRef} className='block-quote' {...common} >{content}</q>
         </div>
     </> 
   )

@@ -1,6 +1,7 @@
 import { AddBoxOutlined } from "@mui/icons-material"
 import { useEffect, useRef, useState } from "react"
 import { getDef } from "./ToolDefinition"
+import { Util } from './utils/Util';
 
 export type BlockInfo = {
     type: string
@@ -57,7 +58,10 @@ export const Block = (props:BlockProps)=>{
             {isActive&&<div className="tool tool-above">                             
                             <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();props.onAddAbove()}}>
                                 <AddBoxOutlined /></a>
-                        </div>}            
+                        </div>}   
+                        <div className={"pre-render"}>
+                          {Util.renderPreBlock({blockData:props.data.dm_field?props.data.dm_field:''})}
+                          </div>         
         <div className={"block block-type-"+props.data.type}>
         {render()}  
         </div>   

@@ -2,20 +2,48 @@ import * as React from "react";
 import {IconButton, TextField,Box, Button,Dialog, DialogContent, DialogTitle,DialogActions, Input,} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
+export interface BroseProps{
+  type?:any, 
+  adding?:boolean, 
+  onConfirm?:any,
+  onCancel?:()=>void,
+  defalutValue?:any,
+}
+
+export interface CustomPropertyProps{
+  defalutProperty?:any, 
+  onChange?:any,
+  blockData?:any,
+}
+
 export const Util = {
   BrowseImage:null as any,
   BrowseLink:null as any,
-  renderBroseURL:(props:{type?:any,onConfirm?:any, onCancel?:any,adding?:boolean,defalutValue?:any})=>{
+  CustomProperty:null as any,
+  PreBlock:null as any,
+  renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
-        let A = Util.BrowseImage as (props:{onConfirm?:any, onCancel?:any,adding?:boolean})=>JSX.Element;
+        let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
         return <A onConfirm={props.onConfirm} adding={true}/>;
     }else if(props.type==='Link'&&Util.BrowseLink){
-      let A = Util.BrowseLink as (props:{onConfirm?:any, onCancel?:any,adding?:boolean,defalutValue?:any})=>JSX.Element;
+      let A = Util.BrowseLink as (props:BroseProps)=>JSX.Element;
       return <A onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue}/>;
     }else{
         return <DefaultBrowseUrl onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue} type={props.type}/> 
     }
   },
+  renderCustomProperty:(props:CustomPropertyProps)=>{
+    if(Util.CustomProperty){
+      let A = Util.CustomProperty as (props:CustomPropertyProps)=>JSX.Element;
+      return <A onChange={props.onChange}  defalutProperty={props.defalutProperty} blockData={props.blockData}/>;
+    }
+  },
+  renderPreBlock:(props:{blockData:string})=>{
+    if(Util.PreBlock){
+      let A = Util.PreBlock as (props:any)=>JSX.Element;
+      return <A  blockData={props.blockData}/>;
+    }
+  }
 }
 
 const DefaultBrowseUrl = (props:{type?:any,onConfirm?:any,onCancel?:any,adding?:boolean,defalutValue?:any})=>{
