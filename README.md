@@ -40,7 +40,7 @@ https://github.com/digimakergo/dmeditor-sample
 
 
 ### Widgets
-[dmeditor-digimaker - Content widgets(eg. content grid, Gallary) for digimaker CMF ](https://github.com/digimakergo/dmeditor-digimaker/)
+[dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
 
 ### Extending
 #### 1.Create a customized block type(widget)
