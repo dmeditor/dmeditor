@@ -38,6 +38,10 @@ https://github.com/digimakergo/dmeditor-sample
 
 <img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" width="600"/>
 
+
+### Widgets
+[dmeditor-digimaker - Content widgets(eg. content grid, Gallary) for digimaker CMF ](https://github.com/digimakergo/dmeditor-digimaker/)
+
 ### Extending
 #### 1.Create a customized block type(widget)
 
@@ -59,5 +63,3 @@ https://github.com/digimakergo/dmeditor-sample
   registerTool(toolImage);
 ```
 
-*Widgets*
-[dmeditor-digimaker - Content widgets(eg. content grid, Gallary) for digimaker CMF ](https://github.com/digimakergo/dmeditor-digimaker/)
