@@ -58,3 +58,6 @@ https://github.com/digimakergo/dmeditor-sample
 ```typescript
   registerTool(toolImage);
 ```
+
+*Widgets*
+[dmeditor-digimaker - Content widgets(eg. content grid, Gallary) for digimaker CMF ](https://github.com/digimakergo/dmeditor-digimaker/)
