@@ -22,8 +22,7 @@ export const BlockProperty = (props:{title:string, active:boolean, children?:Rea
                       <div style={{marginBottom:'100px'}}>{props.children}</div>
                    },
                     {title:'Document', element:<div>
-                    Meta keywords: <br />
-                    Meta description:
+                    
                 </div>},                             
               ]} />
 
