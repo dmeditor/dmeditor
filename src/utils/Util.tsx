@@ -27,7 +27,7 @@ export const Util = {
   BrowseLink:null as any,
   CustomProperty:null as any,
   PreBlock:null as any,
-  PrivateProperty:null as any,
+  pageTab:null as any,
   renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
         let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
@@ -55,9 +55,9 @@ export const Util = {
       return null
     }
   },
-  renderPrivateProperty:()=>{
-    if(Util.PrivateProperty){
-      let A = Util.PrivateProperty as ()=>JSX.Element;
+  renderPageTab:()=>{
+    if(Util.pageTab){
+      let A = Util.pageTab as ()=>JSX.Element;
       return <A />;
     }else{
       return null
