@@ -12,13 +12,13 @@ import { Util } from '../utils/Util';
 export const Quote = (props:any)=>{
   const [content,setConent] = useState(props.data.content)
   const [commonSettings, setCommonSettings] = useState(props.data.settings?props.data.settings.common:{});
-  const [defalutProperty,setDefalutProperty] = useState(props.data.dm_field?props.data.dm_field:'')
+  let defalutProperty=props.data.dm_field?props.data.dm_field:''
   const QuoteRef:any=useRef(null);
 
   const change = (e?: any) => {
     const text=QuoteRef.current.innerText
     setConent(text)
-    props.onChange({type:'quote',content:text, settings:{common: commonSettings}});
+    props.onChange({...props.data,content:text,settings:{common: commonSettings}});
   }
 
   const common = {
@@ -26,21 +26,16 @@ export const Quote = (props:any)=>{
     contentEditable: props.active,
     style: { ...commonSettings},
   }
-
-  const changePropery = (v: any) => {
-    let data = {...props.data};
-    data.dm_field = v
-    props.onChange({...data});
-  }
+  
   useEffect(()=>{
     change();
-  },[props.active,commonSettings])
+  },[content,commonSettings])
 
   return (
     <>
         <BlockProperty title={'Quote'} active={props.active}>
         <PropertyItem label="property">
-            {Util.renderCustomProperty({defalutProperty:defalutProperty,onChange:changePropery})}
+            {Util.renderCustomProperty({defalutProperty:defalutProperty})}
           </PropertyItem> 
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
         </BlockProperty>

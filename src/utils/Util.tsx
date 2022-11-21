@@ -16,11 +16,18 @@ export interface CustomPropertyProps{
   blockData?:any,
 }
 
+export interface PrivatePropertyProps {
+  id:number, 
+  contenttype?:string, 
+  // afterAction:any
+}
+
 export const Util = {
   BrowseImage:null as any,
   BrowseLink:null as any,
   CustomProperty:null as any,
   PreBlock:null as any,
+  PrivateProperty:null as any,
   renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
         let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
@@ -34,14 +41,26 @@ export const Util = {
   },
   renderCustomProperty:(props:CustomPropertyProps)=>{
     if(Util.CustomProperty){
-      let A = Util.CustomProperty as (props:CustomPropertyProps)=>JSX.Element;
+      let A = Util.CustomProperty as (props:any)=>JSX.Element;
       return <A onChange={props.onChange}  defalutProperty={props.defalutProperty} blockData={props.blockData}/>;
+    }else{
+      return null
     }
   },
   renderPreBlock:(props:{blockData:string})=>{
     if(Util.PreBlock){
       let A = Util.PreBlock as (props:any)=>JSX.Element;
       return <A  blockData={props.blockData}/>;
+    }else{
+      return null
+    }
+  },
+  renderPrivateProperty:()=>{
+    if(Util.PrivateProperty){
+      let A = Util.PrivateProperty as ()=>JSX.Element;
+      return <A />;
+    }else{
+      return null
     }
   }
 }

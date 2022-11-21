@@ -4,6 +4,7 @@ import {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import { CommonSettings } from "./CommonSettings";
 import { PropertyTab } from "./Tab";
+import { Util } from './utils/Util';
 
 export const BlockProperty = (props:{title:string, active:boolean, children?:React.ReactNode})=>{
     const propertyRoot = document.getElementById('dmeditor-property') as HTMLElement;
@@ -22,7 +23,7 @@ export const BlockProperty = (props:{title:string, active:boolean, children?:Rea
                       <div style={{marginBottom:'100px'}}>{props.children}</div>
                    },
                     {title:'Document', element:<div>
-                    
+                     {Util.renderPrivateProperty()}
                 </div>},                             
               ]} />
 
