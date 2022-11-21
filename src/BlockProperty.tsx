@@ -22,7 +22,7 @@ export const BlockProperty = (props:{title:string, active:boolean, children?:Rea
                      {title: props.title, element:
                       <div style={{marginBottom:'100px'}}>{props.children}</div>
                    },
-                    {title:'Document', element:<div>
+                    {title:'Page', element:<div>
                      {Util.renderPageTab()}
                 </div>},                             
               ]} />
