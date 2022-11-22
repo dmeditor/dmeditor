@@ -95,7 +95,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
   export const toolImage:ToolDefinition = {
     type: 'image',
     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
-    data: {type:'image', data:'http://test.com/svg.png', settings:{}},
+    initData: {type:'image', data:'http://test.com/svg.png', settings:{}},
     view: BlockImage,
     render: BlockImage
 };
