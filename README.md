@@ -1,11 +1,9 @@
 # DMEditor
 dmeditor is a block-styled visual editor. Data is in json format.
 
-*Progress: It's still under development and some apis may change!*
-
 ### Highlights
-- Block based
 - Real WYSIWYG(What you see is what you get)
+- Block based
 - Easy to create your own widget
 - Data is saved in json
 
