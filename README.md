@@ -7,13 +7,20 @@ dmeditor is a block-styled visual editor. Data is in json format.
 - Easy to create your own widget
 - Data is saved in json
 
+### Screenshots
+
+<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen1.png" width="600"/>
+
+
+<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" width="600"/>
+
 ### Installation
 
 ```
 npm install dmeditor
 ```
 
-### Usage
+## Usage
 Check [Sample code](https://github.com/digimakergo/dmeditor-sample/blob/main/src/App.tsx) for source code.
 ```typescript
 import {DMEditor} from 'dmeditor';
@@ -41,13 +48,6 @@ return (
 ### Sample project 
 https://github.com/digimakergo/dmeditor-sample
 
-### Screenshots
-
-<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen1.png" width="600"/>
-
-
-<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" width="600"/>
-
 
 ### DMEditor Properties
 | Property | required | Type | Description | 
@@ -60,8 +60,8 @@ https://github.com/digimakergo/dmeditor-sample
 ### Widgets
 [dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
 
-### Extending
-#### 1.Create a customized block type(widget)
+# Extending
+## Create a customized block type(widget)
 
 *Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/BlockImage.tsx) as example*
 1. Create a block handler
@@ -113,7 +113,7 @@ registerCategory({identifier:'content', text:'Content'});
 registerTool(toolImage);
 ```
 
-### Data format
+## Data format
 
 Here is an example:
 ```javascript
