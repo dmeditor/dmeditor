@@ -10,9 +10,9 @@ import { CommonSettings } from '../CommonSettings';
 import { PropertyItem } from '../utils';
 
 const Heading = (props:any)=>{
-    const [text,setText] = useState(props.data.data.text);
-    const [level,setLevel] = useState(props.data.data.level);
-    const [commonSettings,setCommonSettings] = useState(props.data.settings?props.data.settings.common:{});
+    const [text,setText] = useState(props.data.data);
+    const [level,setLevel] = useState(props.data.settings.level);
+    const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
     const headRef:any=useRef(null);
 
     const changeText = (e?:any)=>{
