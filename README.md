@@ -98,8 +98,14 @@ Here is an example:
       data:'http://test.com/svg.png'},
     { type:'heading', 
       data:'News', 
-      common_settings:{marginTop: 10},
+      common:{marginTop: 10},
       settings:{level: 2}
     },
 ]
 ```
+| Key | Description | Example  |
+|------|----|---|
+|  `type`    | Block type's identifier, unique   |  `'text'` |
+|  `data`    | Variant types depends on block type. In principle reflect the 'value'   |  `'http://test.com/svg.png'` in `image` block type |
+|  `common`    | General settings   |  `{marginTop: 10}` - margin to top is 10 pixel |
+|  `settings`    |  Variant types depends on block type  | In heading `{level: 2}` means using h2 |
