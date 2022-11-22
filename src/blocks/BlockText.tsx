@@ -1,5 +1,5 @@
-import { FormatListBulleted,FormatListNumbered,FormatAlignCenter, FormatAlignLeft, FormatAlignRight,FormatAlignJustify,ImageOutlined, TextFormatOutlined } from "@mui/icons-material";
-import { Button, Input,Select,MenuItem,FormControl} from "@mui/material";
+import { FormatListBulleted,FormatListNumbered,FormatAlignCenter, FormatAlignLeft, FormatAlignRight,FormatAlignJustify,ImageOutlined, TextFormatOutlined,BorderColorOutlined,Delete } from "@mui/icons-material";
+import { Button, Input,Select,MenuItem,TextField} from "@mui/material";
 // import { useState } from "react";
 // import { Block } from "../Block";
 import { BlockProperty } from "../BlockProperty"
@@ -17,6 +17,21 @@ import FontFamilyList from '../utils/FontFamilyList'
 import {PropertyButton, PropertyGroup, PropertyItem} from '../utils/Property';
 import { Util } from '../utils/Util';
 import { CommonSettings } from "../CommonSettings";
+
+export interface LinkValInterface{
+  source:{
+    sourceType:string
+    sourceData?:any
+  }, 
+  children:Array<any>,
+  styleConfig:{
+    style:string
+    setting?:any
+  },
+  type:string
+  url:string
+}
+
 
 const BlockButton = ({formats}:any) => {
   let ele:any
@@ -42,24 +57,22 @@ const BlockButton = ({formats}:any) => {
 }
 
 export const BlockText = (props:any)=>{
+    const [value,setValue] = useState(props.data.content.initialValue)
+    const [config,setConfig] = useState(props.data.content.config?props.data.content.config:null);
+    const [adding, setAdding] = useState(false);
+    const [commonSettings, setCommonSettings] = useState(props.data.settings?.common);
+
     const [size, setSize] = useState(1.1);
     const [familytype,setFamilytype] = useState('')
     const [color,setColor] = useState()
     const [linkstyle,setLinkstyle] = useState('none' as 'none'|'button')
     const [buttonVariant, setButtonVariant] = useState('outlined' as ('contained' | 'outlined' ));
     const [buttonSize, setButtonSize] = useState('small' as ('small' | 'medium' | 'large' ));
-    const [value,setValue] = useState(props.data.content.initialValue)
-    const [config,setConfig] = useState(props.data.content.config?props.data.content.config:null);
     const [isLinkActive,setIsLinkActive] = useState(false);
     const [isButtonActive,setIsButtonActive] = useState(false);
     const [isCollapsed,setIsCollapsed]= useState(true);
-    const [isSelect,setIsSelect]= useState(false);
-    const [adding, setAdding] = useState(false);
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
-    const [linkVal, setLinkVal] = useState('');
-    const [linkValType, setLinkValType] = useState('select' as ('select' | 'input'));
-    const [linkData, setLinkData] = useState();
-    const [commonSettings, setCommonSettings] = useState(props.data.settings?.common);
+    const [linkVal, setLinkVal] = useState("" as any);
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -89,8 +102,8 @@ export const BlockText = (props:any)=>{
       if(format === 'fontFamily'){
         setFamilytype(v)
       }
-      setIsSelect(!isSelect)
       SlateFun.toggleFormat(editor,format,v)
+      setIsCollapsed(SlateFun.isCollapsed(editor))
     }
     const IsShowToolBar = (type:any,format:string)=>{
       return config?(config[type].includes(format)?true:false):true
@@ -99,7 +112,6 @@ export const BlockText = (props:any)=>{
       setLinkstyle(v)
       // SlateFun.setButtonFormat(editor,'',v)
       SlateFun.setLinkFormat(editor,v)
-      // SlateFun.insertLink(editor,value,linkValType,v)
       setIsLinkActive(v==='none'?true:false)
       setIsButtonActive(v==='button'?true:false)
       setButtonVariant('outlined')
@@ -112,8 +124,6 @@ export const BlockText = (props:any)=>{
       if(format === 'size'){
         setButtonSize(v)
       }
-      let value=linkVal
-      // SlateFun.toggleButtonFormat(editor,format,v)
       SlateFun.setLinkFormat(editor,'button',format,v)
     }
 
@@ -137,8 +147,8 @@ export const BlockText = (props:any)=>{
       setTimeout(()=>{setAdding(true);},10)
     }
     const submitLink = (value:any,type:any)=>{
-      setLinkValType(type);
       SlateFun.insertLink(editor,value,type)
+      SlateEvents()
     }
     const submitFun = (val:any,type:string)=>{
       if(dialogType=='image'){
@@ -148,10 +158,33 @@ export const BlockText = (props:any)=>{
         submitLink(val,type)
       }
     }
+    const SlateEvents = ()=>{
+      setFamilytype(SlateFun.getFormat(editor,'fontFamily'))
+      setSize(SlateFun.getFormat(editor,'fontSize'))
+      setColor(SlateFun.getFormat(editor,'color'))
+      setTimeout(()=>{
+        setIsCollapsed(SlateFun.isCollapsed(editor))
+      },10)
+
+      //link
+      setLinkstyle('none')
+      setIsLinkActive(SlateFun.isLinkActive(editor)?true:false)
+      setIsButtonActive(SlateFun.isLinkButtonActive(editor)?true:false)
+      if(SlateFun.isLinkActive(editor)){
+        let button:any=SlateFun.getLinkSetting(editor)
+        setLinkVal(button)
+        if(SlateFun.isLinkButtonActive(editor)){
+          let newButton:any=JSON.parse(JSON.stringify(button))
+          setLinkstyle('button')
+          setButtonVariant(newButton.styleConfig.setting.variant)
+          setButtonSize(newButton.styleConfig.setting.size)
+        }
+      }
+    }
     
     useEffect(()=>{
       ReactEditor.focus(editor)
-    },[isSelect])
+    })
 
     return (
       <div style={...commonSettings}>
@@ -159,28 +192,26 @@ export const BlockText = (props:any)=>{
           <BlockProperty title={'Text'} active={props.active}>
           <PropertyGroup header="Basic">
             {IsShowToolBar('font','font_family')?
-                <div>
-                  <PropertyItem label="Font">
-                      <Select
-                      size="small"
-                      fullWidth
-                        value={familytype?familytype:''}
-                        onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
-                        displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
-                      >
-                        <MenuItem value="" onMouseUp={(e)=>{e.preventDefault()}}>
-                          <em>Default</em>
+                <PropertyItem label="Font">
+                    <Select
+                    size="small"
+                    fullWidth
+                      value={familytype?familytype:''}
+                      onChange={(e)=>{changeFontFormat(e.target.value,'fontFamily')}}
+                      displayEmpty
+                      inputProps={{ 'aria-label': 'Without label' }}
+                    >
+                      <MenuItem value="" onMouseUp={(e)=>{e.preventDefault()}}>
+                        <em>Default</em>
+                      </MenuItem>
+                      {FontFamilyList.map((font, index) => (
+                        <MenuItem key={index} value={font.name} onMouseUp={(e)=>{e.preventDefault()}}>
+                          <span style={{fontFamily: font.name}}>{font.name}</span>
                         </MenuItem>
-                        {FontFamilyList.map((font, index) => (
-                          <MenuItem key={index} value={font.name} onMouseUp={(e)=>{e.preventDefault()}}>
-                            <span style={{fontFamily: font.name}}>{font.name}</span>
-                          </MenuItem>
-                        ))
-                        }
-                      </Select>
-                  </PropertyItem>
-                </div>
+                      ))
+                      }
+                    </Select>
+                </PropertyItem>
                 :null
               }
             {!isCollapsed?
@@ -199,51 +230,52 @@ export const BlockText = (props:any)=>{
               }
             </>
             :null
-          }
-            <div>
-            <PropertyItem label="Align">
-                  {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{           
-                      return (
-                      <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}}
-                        selected={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}>
-                        <BlockButton formats={format} />
-                      </PropertyButton>    
-                      )             
-                    }
-                  ):null}
-                </PropertyItem>
-              </div>
-
-            {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
-              <PropertyItem label="List">
-                {IsShowToolBar('tools','list')||IsShowToolBar('tools','order_list')?
-                  SlateFun.LIST_TYPES.filter((item:any)=>
-                    (item==='numbered-list' && IsShowToolBar('tools','order_list'))|| (item==='bulleted-list'&&IsShowToolBar('tools','list'))
-                  ).map((format:any,index:any)=>{          
-                      return (
-                      <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} 
-                      selected={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}>
-                        <BlockButton formats={format} />
-                      </PropertyButton>    
-                      )             
-                    }
-                  )
-                  :null}
-              </PropertyItem>   
-              :null
             }
-            </PropertyGroup>
-            <PropertyGroup header="Insert">
-              {IsShowToolBar('tools','image')?
-              <PropertyItem label='Insert'>
-                <PropertyButton title='Image' onClick={(e)=>{handleClickOpen(e)}}>
-                  <ImageOutlined />
-                </PropertyButton>               
-              </PropertyItem> 
-              :null
-              }  
-            </PropertyGroup> 
-            {  isLinkActive||isButtonActive?
+            {!isButtonActive&&<>
+                <PropertyItem label="Align">
+                    {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{           
+                        return (
+                        <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}}
+                          selected={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}>
+                          <BlockButton formats={format} />
+                        </PropertyButton>    
+                        )             
+                      }
+                    ):null}
+                </PropertyItem>
+    
+                {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
+                  <PropertyItem label="List">
+                    {IsShowToolBar('tools','list')||IsShowToolBar('tools','order_list')?
+                      SlateFun.LIST_TYPES.filter((item:any)=>
+                        (item==='numbered-list' && IsShowToolBar('tools','order_list'))|| (item==='bulleted-list'&&IsShowToolBar('tools','list'))
+                      ).map((format:any,index:any)=>{          
+                          return (
+                          <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} 
+                          selected={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}>
+                            <BlockButton formats={format} />
+                          </PropertyButton>    
+                          )             
+                        }
+                      )
+                      :null}
+                  </PropertyItem>   
+                  :null
+                }
+              </>
+            }
+          </PropertyGroup>
+          <PropertyGroup header="Insert">
+            {IsShowToolBar('tools','image')?
+            <PropertyItem label='Insert'>
+              <PropertyButton title='Image' onClick={(e)=>{handleClickOpen(e)}}>
+                <ImageOutlined />
+              </PropertyButton>               
+            </PropertyItem> 
+            :null
+            }  
+          </PropertyGroup> 
+          {  isLinkActive||isButtonActive?
             <PropertyGroup header="Link"> 
               <PropertyItem label="Style">
                     <Select
@@ -261,82 +293,43 @@ export const BlockText = (props:any)=>{
                       </MenuItem>
                     </Select>
             </PropertyItem> 
-            </PropertyGroup>
-            :null}
-            {}
-            {  (isLinkActive&&linkstyle==='button')||isButtonActive?
-             <>
-              <div>
-                <label>Button style:</label>
-                <div>
-                  <Button onClick={()=>{changeButtonFormat('contained','variant');}} variant={buttonVariant==='contained'?'outlined':undefined}  >Fill</Button>
-                  <Button onClick={()=>{changeButtonFormat('outlined','variant');}} variant={buttonVariant==='outlined'?'outlined':undefined}   >Ourlined</Button>
-                </div>
-              </div> 
-              <div>
-                <label>Button size:</label>
-                <div>
-                  <Button onClick={()=>{changeButtonFormat('small','size');}} variant={buttonSize==='small'?'outlined':undefined} >small </Button>
-                  <Button onClick={()=>{changeButtonFormat('medium','size');}} variant={buttonSize==='medium'?'outlined':undefined}   >medium</Button>
-                  <Button onClick={()=>{changeButtonFormat('large','size');}} variant={buttonSize==='large'?'outlined':undefined}  >large</Button>
-                </div>
-              </div> 
-            </>
-            :null}
+            <PropertyItem label="content">
+              <div style={{overflow: 'hidden',textOverflow:'ellipsis', whiteSpace: 'nowrap'}} 
+                title={linkVal.source.sourceType==='select'?'{link:'+linkVal.source.sourceData.content_type+','+linkVal.url+'}':linkVal.url}>
+                {linkVal.source.sourceType==='select'?'{link:'+linkVal.source.sourceData.content_type+','+linkVal.url+'}':linkVal.url}
+              </div>
+              <PropertyButton title={'Edit Link'} onClick={()=>{changeDialogLinkfun(linkVal)}}><BorderColorOutlined/></PropertyButton> 
+              <PropertyButton title={'Delete Link'} onClick={()=>{ SlateFun.unwrapLink(editor);SlateEvents()}}><Delete/></PropertyButton> 
+            </PropertyItem> 
+          </PropertyGroup>
+          :null}
+          {  (isLinkActive&&linkstyle==='button')||isButtonActive?
+            <>
+            <PropertyGroup header="Link Button"> 
+              <PropertyItem label="style">
+                <Button size="small" onClick={()=>{changeButtonFormat('contained','variant');}} variant={buttonVariant==='contained'?'outlined':undefined}  >Fill</Button>
+                <Button size="small" onClick={()=>{changeButtonFormat('outlined','variant');}} variant={buttonVariant==='outlined'?'outlined':undefined}   >Ourlined</Button>
+              </PropertyItem> 
+              <PropertyItem label="size">
+                <Button size="small" onClick={()=>{changeButtonFormat('small','size');}} variant={buttonSize==='small'?'outlined':undefined} >small </Button>
+                <Button size="small" onClick={()=>{changeButtonFormat('medium','size');}} variant={buttonSize==='medium'?'outlined':undefined}   >medium</Button>
+                <Button size="small" onClick={()=>{changeButtonFormat('large','size');}} variant={buttonSize==='large'?'outlined':undefined}  >large</Button>
+              </PropertyItem> 
+          </PropertyGroup>
+          </>
+          :null}
 
          <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>                 
           </BlockProperty>
           <div>
-            <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null} changeDialogLink={changeDialogLinkfun}/>
+            <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}  changeDialogLink={changeDialogLinkfun}/>
             <Editable
                 readOnly={props.view?props.view:false}
                 renderLeaf={renderLeaf}
                 renderElement={renderElement}
-                placeholder="Enter some plain text..." 
+                placeholder="Input your content here" 
                 onMouseUp={(event:any)=>{
-                  setFamilytype(SlateFun.getFormat(editor,'fontFamily'))
-                  setSize(SlateFun.getFormat(editor,'fontSize'))
-                  setColor(SlateFun.getFormat(editor,'color'))
-                  setTimeout(()=>{
-                    setIsCollapsed(SlateFun.isCollapsed(editor))
-                  },10)
-                  setLinkstyle('none')
-                  setIsLinkActive(SlateFun.isLinkActive(editor)?true:false)
-                  setIsButtonActive(SlateFun.isLinkButtonActive(editor)?true:false)
-
-                  if(SlateFun.isLinkButtonActive(editor)){
-                    let button:any=SlateFun.getLinkSetting(editor)
-                    let newButton:any=JSON.parse(JSON.stringify(button))
-                    setLinkstyle('button')
-                    setButtonVariant(newButton.styleConfig.setting.variant)
-                    setButtonSize(newButton.styleConfig.setting.size)
-                    
-                  }
-
-
-
-
-
-
-                  // setIsButtonActive(SlateFun.isButtonActive(editor)?true:false)
-                  // setTimeout(()=>{
-                  //   setIsCollapsed(SlateFun.isCollapsed(editor))
-                  // },10)
-                  // if(SlateFun.isButtonActive(editor)){
-                  //   let button:any=SlateFun.getbuttonSetting(editor)
-                  //   let newButton:any=JSON.parse(JSON.stringify(button))
-                  //   if(!newButton.hasOwnProperty('setting')){
-                  //     let setting:any={
-                  //       size:'small',
-                  //       variant:'contained'
-                  //     }
-                  //     newButton.setting=setting
-                  //   }
-                  //     setLinkstyle('button')
-                  //     setButtonVariant(newButton.setting.variant)
-                  //     setButtonSize(newButton.setting.size)
-                    
-                  // }
+                  SlateEvents()
                 }}
                 onDOMBeforeInput={(event: InputEvent) => {
                   switch (event.inputType) {
@@ -356,9 +349,6 @@ export const BlockText = (props:any)=>{
         </Slate>
         {adding&&<div>
           <Util.renderBroseURL type={dialogType=='image'?'Image':"Link"} onConfirm={submitFun} adding={adding} defalutValue={dialogType=='link'?linkVal:''}/>
-
-          {/* {dialogType=='image'&& Util.renderBrowseImage({onConfirm:submitImage,adding:adding})}
-          {dialogType=='link'&& Util.renderBrowseLink({onConfirm:submitLink,adding:adding,defalutValue:linkVal})} */}
         </div>}
       </div> 
     )
@@ -376,7 +366,8 @@ export const toolText:ToolDefinition = {
           {type: 'paragraph',
           children:[ 
             {
-              text: 'This example shows how you can make a hovering menu appear above your content, which you can use to make text ',
+              text: '',
+              // text: 'This example shows how you can make a hovering menu appear above your content, which you can use to make text ',
             }
             ]
           }

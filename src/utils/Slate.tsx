@@ -28,6 +28,7 @@ export const SlateFun:any = {
   Element :(props:any) => {
     const { attributes, children, element } = props
     const style = { textAlign: element.align,fontFamily:element.fontFamily }
+    const styleP = { textAlign: element.align}
     switch (element.type) {
       case 'block-quote':
         return (
@@ -73,7 +74,7 @@ export const SlateFun:any = {
           return <SlateFun.ImageComponent {...props} />
       default:
         return (
-          <p style={style} {...attributes}>
+          <p style={styleP} {...attributes}>
             {children}
           </p>
         )
@@ -137,10 +138,20 @@ export const SlateFun:any = {
     if(format=='fontFamily'){
       newProperty= { [format]: value};
       if(SlateFun.isCollapsed(editor)){
-        let child=JSON.parse(JSON.stringify(editor.children))
-        SlateFun.resetChildren(child,format,value)
-        editor.children=child;
-        Transforms.setNodes(editor,newProperty)
+        if(SlateFun.isLinkButtonActive(editor)){
+          let links=SlateFun.getLinkSetting(editor,1)
+          Transforms.select(editor,links)
+          Transforms.setNodes(
+            editor,
+            newProperty,
+            { match: Text.isText, split: true }
+          ) 
+        }else{
+          let child=JSON.parse(JSON.stringify(editor.children))
+          SlateFun.resetChildren(child,format,value)
+          editor.children=child;
+          Transforms.setNodes(editor,newProperty)
+        }
       }else{
         Transforms.setNodes(
           editor,
@@ -201,11 +212,7 @@ export const SlateFun:any = {
       ele = <LinkOutlined  sx={{ color: SlateFun.isLinkActive(editor)?'white': '#aaa' }} 
       onClick={(event:any) =>{
         event.preventDefault()
-        const [link]:any = Editor.nodes(editor, {
-          match: (n:any) =>n.type === 'link'&& 
-            !Editor.isEditor(n) && SlateElement.isElement(n)
-        })
-        let defalutUrl=link?link[0]:''
+        let defalutUrl=SlateFun.getLinkSetting(editor)
         changeDialogLink(defalutUrl);
       } }/>
     }
@@ -220,10 +227,6 @@ export const SlateFun:any = {
     }
    
     return ele
-  },
-  IsFocus:()=>{
-    const inFocus = useFocused();
-    return inFocus
   },
   // hoverTool
   HoveringToolbar : (props:any) => {
@@ -308,7 +311,6 @@ export const SlateFun:any = {
         event.preventDefault()
         SlateFun.toggleMark(editor, format)
       }}/>
-      
     )
   },
 
@@ -342,16 +344,12 @@ export const SlateFun:any = {
     // let newProperties: Partial<SlateElement>
     let newProperties: any
     if (SlateFun.TEXT_ALIGN_TYPES.includes(format)) {
-      // let property = SlateFun.TEXT_FORMAT_TYPES.includes(format) ? 'type' : 'style';
       newProperties = {
         align: isActive ? undefined : format,
-        // [format]: isActive ? null : (property==='type'?true:value)
       }
     } else {
-      // let property = SlateFun.TEXT_FORMAT_TYPES.includes(format) ? 'type' : 'style';
       newProperties = {
         type: isActive ? 'paragraph' : isList ? 'list-item' : format,
-        // [format]: isActive ? null : (property==='type'?true:value)
       }
     }
     Transforms.setNodes<SlateElement>(editor, newProperties)
@@ -425,9 +423,6 @@ export const SlateFun:any = {
   // link
   wrapLink:(editor:any, url: any,type?:any,style?:any,newUrl?:any) => {
     SlateFun.isButtonCollapsed=false;
-    if (SlateFun.isLinkActive(editor)) {
-      SlateFun.unwrapLink(editor)
-    }
     const { selection } = editor
     const isCollapsed = selection && SlateRange.isCollapsed(selection)
     
@@ -457,6 +452,9 @@ export const SlateFun:any = {
       return;
       // Transforms.insertNodes(editor, link)
     } else {
+      if (SlateFun.isLinkActive(editor)) {
+        SlateFun.unwrapLink(editor)
+      }
       Transforms.wrapNodes(editor, link, { split: true })
       Transforms.collapse(editor, { edge: 'end' })
     }
@@ -478,32 +476,30 @@ export const SlateFun:any = {
   },
   isLinkButtonActive:(editor:any) => {
     if(SlateFun.isLinkActive(editor)){
-      const [link] = Editor.nodes(editor, {
-        match: (n:any) =>n.type === 'link'&& 
-          !Editor.isEditor(n) && SlateElement.isElement(n)
-      })
-      let defalutUrl:any=link?link[0]:''
+      let defalutUrl:any=SlateFun.getLinkSetting(editor)
       let newLink:any=JSON.parse(JSON.stringify(defalutUrl))
       return newLink.styleConfig.style=='button'?true:false
     }else{
       return false
     }
   },
-  getLinkSetting:(editor:any) => {
+  getLinkSetting:(editor:any,n?:any) => {
       const [link] = Editor.nodes(editor, {
         match: (n:any) =>n.type === 'link'&& 
           !Editor.isEditor(n) && SlateElement.isElement(n)
       })
-      return link[0]
+      if(n){
+        return link?link[1]:[]
+      }else{
+        return link?link[0]:''
+      }
   },
   insertLink : (editor:any, url:any,type:any) => {
-    if (editor.selection) {
+    const { selection } = editor
+    const isCollapsed = selection && SlateRange.isCollapsed(selection)
+    if (selection) {
       if(SlateFun.isLinkActive(editor)){
-        const [link] = Editor.nodes(editor, {
-          match: (n:any) =>n.type === 'link'&& 
-            !Editor.isEditor(n) && SlateElement.isElement(n)
-         })
-        let defalutUrl:any=link?link[0]:''
+        let defalutUrl:any=SlateFun.getLinkSetting(editor)
         let newLink:any=JSON.parse(JSON.stringify(defalutUrl))
        
         newLink.url = type==='select'?url.id:url
@@ -511,9 +507,11 @@ export const SlateFun:any = {
           sourceType:'select',
           sourceData:url
         }:{sourceType:'input'}
-        
+        if(isCollapsed){
+          let links=SlateFun.getLinkSetting(editor,1)
+          Transforms.select(editor,links)
+        }
         SlateFun.wrapLink(editor, newLink,type,newLink.styleConfig.style,newLink)
-
       }else{
         SlateFun.wrapLink(editor, url,type)
       }
@@ -571,12 +569,8 @@ export const SlateFun:any = {
     </span>
   ),
   setLinkFormat:(editor:any,style:string,format?:string,value?:any)  => {
-    const [link] = Editor.nodes(editor, {
-      match: (n:any) =>n.type === 'link'&& 
-        !Editor.isEditor(n) && SlateElement.isElement(n)
-     })
-      let defalutUrl:any=link?link[0]:''
-      let newLink:any=JSON.parse(JSON.stringify(defalutUrl))
+    let defalutUrl:any=SlateFun.getLinkSetting(editor)
+    let newLink:any=JSON.parse(JSON.stringify(defalutUrl))
     if(newLink!==''){
       if(style=='button'){
         let size=format==='size'?value:(newLink.styleConfig.style=='none'?'small':newLink.styleConfig.setting.size)
@@ -597,26 +591,28 @@ export const SlateFun:any = {
     const isCollapsed = selection && SlateRange.isCollapsed(selection)
    
     if(isCollapsed){
-      SlateFun.isButtonCollapsed=true;
-      const domSelection = window.getSelection()
-      if(domSelection||domSelection!.anchorNode){
-        const domRange = domSelection!.getRangeAt(0)
-        var strongs = domSelection!.anchorNode!.parentNode;
+      let links=SlateFun.getLinkSetting(editor,1)
+      Transforms.select(editor,links)
+      // SlateFun.isButtonCollapsed=true;
+      // const domSelection = window.getSelection()
+      // if(domSelection||domSelection!.anchorNode){
+      //   const domRange = domSelection!.getRangeAt(0)
+      //   var strongs = domSelection!.anchorNode!.parentNode;
        
-        if(domSelection!.rangeCount > 0) domSelection!.removeAllRanges();
-        if(strongs){
-          var range:any = document.createRange();
-          range.selectNode(strongs);
-          setTimeout(()=>{
-             domSelection!.addRange(range);
-           },10)
-        }
+      //   if(domSelection!.rangeCount > 0) domSelection!.removeAllRanges();
+      //   if(strongs){
+      //     var range:any = document.createRange();
+      //     range.selectNode(strongs);
+      //     setTimeout(()=>{
+      //        domSelection!.addRange(range);
+      //      },10)
+      //   }
         
-      }
+      // }
     }
-    setTimeout(()=>{
+    // setTimeout(()=>{
       SlateFun.wrapLink(editor,newLink,newLink.source.sourceType,newLink.styleConfig.style,newLink);
-    },200)
+    // },200)
   },
   //image
   InsertImageButtonFun:(event:any,editor:any)=>{
