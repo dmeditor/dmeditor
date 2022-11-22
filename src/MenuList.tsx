@@ -36,7 +36,9 @@ export const MenuList = (props:{onSelect:any})=>{
                 <>{index==0&&<div style={{padding: '5px 0px', color: '#4f4f4f', margin:'5px 10px' }}>{category.text}</div>}
                 <div key={index} className="moreblock" onClick={()=>props.onSelect(blockType.type)}>
                 <table style={{width:'100%'}}>
+                    <tbody>
                     <tr><td style={{width: '28px'}}>{registeredTypes[blockType.type].menu?.icon}</td><td style={{textAlign:'left'}}>{blockType.name}</td></tr>                    
+                    </tbody>
                 </table>
             </div></>
             )}
