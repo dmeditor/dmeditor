@@ -245,7 +245,7 @@ export const Table = (props: ToolRenderProps) => {
     setIsChange(!isChange)
   };
   return (
-    <div style={{ ...props.data.layout }}>
+    <div>
       <BlockProperty title={"Table"} active={props.active}>
         <PropertyGroup header="Border">
           <PropertyItem label="Border">
