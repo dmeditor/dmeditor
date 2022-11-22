@@ -51,6 +51,7 @@ import {PropertyGroup, PropertyItem, Ranger} from 'dmeditor/utils';
 //Implementation
 export const BlockImage = (props:ToolRenderProps)=>{
    ///add status control here
+   const [url, setUrl] = useState(props.data.data as string);
    const [width, setWidth] = useState(300);
 
     return <div>
@@ -61,7 +62,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
                 </PropertyItem>               
             </BlockProperty>
 
-                <img width={width} src={imageUrl} />        
+            <img width={width} src={imageUrl} />        
             </div>
 }
 
@@ -70,7 +71,8 @@ export const BlockImage = (props:ToolRenderProps)=>{
   export const toolImage:ToolDefinition = {
     type: 'image',
     menu:  {text:"Image", category:'basic',icon: <ImageOutlined /> },
-    initData: {type:'image', content:'http://test.com/svg.png'},
+    data: {type:'image', data:'http://test.com/svg.png', settings:{}},
+    view: BlockImage,
     render: BlockImage
 };
   
@@ -78,11 +80,26 @@ export const BlockImage = (props:ToolRenderProps)=>{
 2. Register the tool(and new category) (can be in App.tsx)
 
 ```typescript
-import { registerTool, registerCategory } from "dmeditor/ToolDefinition";
+import { registerTool, registerCategory } from "dmeditor";
 
 //register a category if it doesn't exist
 registerCategory({identifier:'content', text:'Content'});
 
 //register the tool
 registerTool(toolImage);
+```
+
+Data format
+-----
+Here is an example:
+```javascript
+[
+    { type:'image',
+      data:'http://test.com/svg.png'},
+    { type:'heading', 
+      data:'News', 
+      common_settings:{marginTop: 10},
+      settings:{level: 2}
+    },
+]
 ```
