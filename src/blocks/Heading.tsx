@@ -46,7 +46,7 @@ const Heading = (props:any)=>{
     }
 
     useEffect(()=>{
-      let newData = {type:'heading',data:{text:text, level:level},settings:{}, common: {...commonSettings}}
+      let newData = {type:'heading',data:text,settings:{level:level}, common: {...commonSettings}}
       props.onChange(newData);
     },[text,level,commonSettings])
 
