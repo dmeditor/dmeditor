@@ -153,7 +153,6 @@ export const DMEditor = (props:DMEditorProps)=>{
           }
         }
       });
-
     return (
         <ThemeProvider theme={outerTheme}>
             <div className='dmeditor dmeditor-layout'>

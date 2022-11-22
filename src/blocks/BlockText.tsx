@@ -1,4 +1,4 @@
-import { FormatListBulleted,FormatListNumbered,FormatAlignCenter, FormatAlignLeft, FormatAlignRight,FormatAlignJustify,ImageOutlined, TextFormatOutlined,BorderColorOutlined,Delete } from "@mui/icons-material";
+import { FormatListBulleted,FormatListNumbered,FormatAlignCenter, FormatAlignLeft, FormatAlignRight,FormatAlignJustify,ImageOutlined, TextFormatOutlined,BorderColorOutlined,LinkOffOutlined } from "@mui/icons-material";
 import { Button, Input,Select,MenuItem,TextField} from "@mui/material";
 // import { useState } from "react";
 // import { Block } from "../Block";
@@ -17,21 +17,6 @@ import FontFamilyList from '../utils/FontFamilyList'
 import {PropertyButton, PropertyGroup, PropertyItem} from '../utils/Property';
 import { Util } from '../utils/Util';
 import { CommonSettings } from "../CommonSettings";
-
-export interface LinkValInterface{
-  source:{
-    sourceType:string
-    sourceData?:any
-  }, 
-  children:Array<any>,
-  styleConfig:{
-    style:string
-    setting?:any
-  },
-  type:string
-  url:string
-}
-
 
 const BlockButton = ({formats}:any) => {
   let ele:any
@@ -57,8 +42,8 @@ const BlockButton = ({formats}:any) => {
 }
 
 export const BlockText = (props:any)=>{
-    const [value,setValue] = useState(props.data.content.initialValue)
-    const [config,setConfig] = useState(props.data.content.config?props.data.content.config:null);
+    const [value,setValue] = useState(props.data.data)
+    const [config,setConfig] = useState(props.data.settings?props.data.settings.config:null);
     const [adding, setAdding] = useState(false);
     const [commonSettings, setCommonSettings] = useState(props.data.settings?.common);
 
@@ -68,6 +53,7 @@ export const BlockText = (props:any)=>{
     const [linkstyle,setLinkstyle] = useState('none' as 'none'|'button')
     const [buttonVariant, setButtonVariant] = useState('outlined' as ('contained' | 'outlined' ));
     const [buttonSize, setButtonSize] = useState('small' as ('small' | 'medium' | 'large' ));
+    const [isFocus,setIsFocus] = useState(false);
     const [isLinkActive,setIsLinkActive] = useState(false);
     const [isButtonActive,setIsButtonActive] = useState(false);
     const [isCollapsed,setIsCollapsed]= useState(true);
@@ -86,7 +72,7 @@ export const BlockText = (props:any)=>{
     }
 
     useEffect(()=>{
-        props.onChange({type:'text',content:{initialValue:value}, settings:{common: commonSettings}});
+        props.onChange({type:'text',data:value, settings:{common: commonSettings}});
     },[value, commonSettings])
 
     const changeFontFormat = (v:any,format:any,e?:any)=>{
@@ -104,6 +90,7 @@ export const BlockText = (props:any)=>{
       }
       SlateFun.toggleFormat(editor,format,v)
       setIsCollapsed(SlateFun.isCollapsed(editor))
+      setIsFocus(!isFocus)
     }
     const IsShowToolBar = (type:any,format:string)=>{
       return config?(config[type].includes(format)?true:false):true
@@ -116,6 +103,7 @@ export const BlockText = (props:any)=>{
       setIsButtonActive(v==='button'?true:false)
       setButtonVariant('outlined')
       setButtonSize('small')
+      setIsFocus(!isFocus)
     }
     const changeButtonFormat = (v:any,format:any)=>{
       if(format === 'variant'){
@@ -125,6 +113,7 @@ export const BlockText = (props:any)=>{
         setButtonSize(v)
       }
       SlateFun.setLinkFormat(editor,'button',format,v)
+      setIsFocus(!isFocus)
     }
 
     //insert image
@@ -137,6 +126,7 @@ export const BlockText = (props:any)=>{
     }
     const submitImage = (val:any,type:string)=>{
       SlateFun.insertImage(editor, val,type)
+      setIsFocus(!isFocus)
     }
     //inset Link
     const changeDialogLinkfun = (value:any)=>{
@@ -149,6 +139,7 @@ export const BlockText = (props:any)=>{
     const submitLink = (value:any,type:any)=>{
       SlateFun.insertLink(editor,value,type)
       SlateEvents()
+      setIsFocus(!isFocus)
     }
     const submitFun = (val:any,type:string)=>{
       if(dialogType=='image'){
@@ -184,7 +175,7 @@ export const BlockText = (props:any)=>{
     
     useEffect(()=>{
       ReactEditor.focus(editor)
-    })
+    },[isFocus])
 
     return (
       <div style={...commonSettings}>
@@ -299,7 +290,7 @@ export const BlockText = (props:any)=>{
                 {linkVal.source.sourceType==='select'?'{link:'+linkVal.source.sourceData.content_type+','+linkVal.url+'}':linkVal.url}
               </div>
               <PropertyButton title={'Edit Link'} onClick={()=>{changeDialogLinkfun(linkVal)}}><BorderColorOutlined/></PropertyButton> 
-              <PropertyButton title={'Delete Link'} onClick={()=>{ SlateFun.unwrapLink(editor);SlateEvents()}}><Delete/></PropertyButton> 
+              <PropertyButton title={'Delete Link'} onClick={()=>{ SlateFun.unwrapLink(editor);SlateEvents()}}><LinkOffOutlined/></PropertyButton> 
             </PropertyItem> 
           </PropertyGroup>
           :null}
@@ -361,8 +352,7 @@ export const toolText:ToolDefinition = {
     menu:  {text:"Text", category:'basic',icon: <TextFormatOutlined /> },
     initData: {
       type:'text',
-      content:{ 
-        initialValue:[
+      data:[
           {type: 'paragraph',
           children:[ 
             {
@@ -372,7 +362,6 @@ export const toolText:ToolDefinition = {
             ]
           }
         ],
-      }
     },
     view: (props:{data:any})=><BlockText data={props.data} active={false} onChange={()=>{}} view={true}/>,
     render: (props:{data:any, active:boolean, onChange:(data:any)=>void})=><BlockText {...props} />

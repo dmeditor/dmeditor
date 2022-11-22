@@ -10,7 +10,7 @@ import { Util } from '../utils/Util';
 
 
 export const Quote = (props:any)=>{
-  const [content,setConent] = useState(props.data.content)
+  const [content,setConent] = useState(props.data.data)
   const [commonSettings, setCommonSettings] = useState(props.data.settings?props.data.settings.common:{});
   let defalutProperty=props.data.dm_field?props.data.dm_field:''
   const QuoteRef:any=useRef(null);
@@ -18,7 +18,7 @@ export const Quote = (props:any)=>{
   const change = (e?: any) => {
     const text=QuoteRef.current.innerText
     setConent(text)
-    props.onChange({...props.data,content:text,settings:{common: commonSettings}});
+    props.onChange({...props.data,data:text,settings:{common: commonSettings}});
   }
 
   const common = {
@@ -40,7 +40,7 @@ export const Quote = (props:any)=>{
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
         </BlockProperty>
         <div style={commonSettings}>
-        <q ref={QuoteRef} className='block-quote' {...common} >{content}</q>
+        <q ref={QuoteRef} className='block-quote' {...common} suppressContentEditableWarning>{content}</q>
         </div>
     </> 
   )
@@ -54,7 +54,7 @@ export const toolQuote:ToolDefinition = {
   menu:  {text:"Quote", category:'basic',icon: <TitleOutlined /> },
   initData: {type:'quote',
     settings:{},
-    content:'quotetest'
+    data:'quotetest'
   },
   view: (props:{data:any})=><Quote data={props.data} active={false} onChange={()=>{}} />,
   render: (props:{data:any, active:boolean})=><Quote {...props} />

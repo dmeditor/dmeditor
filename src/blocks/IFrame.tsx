@@ -11,11 +11,11 @@ import { Ranger } from "../utils/Ranger";
 
 export const BlockIframe = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
-    const [url, setUrl] = useState(props.data.content);
+    const [url, setUrl] = useState(props.data.data);
     const [width, setWidth] = useState(props.data.settings.width as number);
     const [height, setHeight] = useState(props.data.settings.height as number);    
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
-    const [tempUrl, setTempUrl] = useState(props.data.content);
+    const [tempUrl, setTempUrl] = useState(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
     
     
@@ -25,7 +25,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, content:url, settings:{width: width, height: height, align: align, common: commonSettings} })
+        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align, common: commonSettings} })
     }, [url, width, align, height, commonSettings]);
 
     return <div>
@@ -66,7 +66,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
 export const toolIframe:ToolDefinition = {
     type: 'iframe',
     menu:  {text:"Iframe", category:'basic',icon: <PagesOutlined /> },
-    initData: {type:'iframe', content:'',
+    initData: {type:'iframe', data:'',
                 settings:{width: 400, height: 500, align:'center'}},
     view: (props:{data:any})=><BlockIframe data={props.data} active={false} onChange={()=>{}} />,
     render: (props:ToolRenderProps)=><BlockIframe {...props} />

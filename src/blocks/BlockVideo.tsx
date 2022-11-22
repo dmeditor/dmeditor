@@ -11,7 +11,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     const [width, setWidth] = useState(300);
     const [height, setHeight] = useState(240);
     const [adding, setAdding] = useState(props.adding?true:false);
-    const [videoUrl, setVideoUrl] = useState(props.data.content);
+    const [videoUrl, setVideoUrl] = useState(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
     
     const handleClickOpen = ()=>{
@@ -31,7 +31,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     };
 
     useEffect(()=>{
-      props.onChange({type:'video', content: videoUrl, settings:{common: commonSettings}});
+      props.onChange({type:'video', data: videoUrl, settings:{common: commonSettings}});
     }, [videoUrl, commonSettings]);
 
     return <div style={{width: width,height:height, ...commonSettings}}>
@@ -63,7 +63,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
 export const toolVideo:ToolDefinition = {
     type: 'video',
     menu:  {text:"Video", category:'basic',icon: <VideocamOutlined /> },
-    initData: {type:'video', content:'https://www.runoob.com/try/demo_source/movie.ogg', settings:{}},
+    initData: {type:'video', data:'https://www.runoob.com/try/demo_source/movie.ogg', settings:{}},
     view: (props:{data:any})=><BlockVideo data={props.data} active={false} onChange={()=>{}} />,
     render: (props:ToolRenderProps)=><BlockVideo {...props} />
 }

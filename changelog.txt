@@ -1,4 +1,8 @@
 0.1.0-alpha.7
+- 2022-11-22: [data format]use 'data' insead of 'content' in data format
+- 2022-11-22: [Text]hide color/align when cursor is in link
+- 2022-11-21: support pageTab callback in DMEditor
+- 2022-11-21: support customProperty in DMEditor
 - 2022-11-15: [text]fixed link hard to select
 - 2022-11-15: [common]]Add block common settings(first for text, heading, table)
 - Remove help link

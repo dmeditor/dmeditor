@@ -41,7 +41,7 @@ export const Table = (props: ToolRenderProps) => {
     border:Border,
   } = props.data.settings;
   const [content, SetContent] = useState<string[][]>(() => {
-    return props?.data?.content;
+    return props?.data?.data;
   });
   const [padding, setPadding] = useState(() => {
     return Padding;
@@ -67,7 +67,7 @@ export const Table = (props: ToolRenderProps) => {
 
   useEffect(() => {
       props.onChange({
-        content,
+        data:content,
         settings: { ...color, padding, border, common: commonSettings },
         type: "table",
       });
@@ -450,7 +450,7 @@ export const toolTable: ToolDefinition = {
   menu: { text: "Table", category: "basic", icon: <GridOn /> },
   initData: {
     type: "table",
-    content: [
+    data: [
       ["", "", "", ""],
       ["", "", "", ""],
     ],

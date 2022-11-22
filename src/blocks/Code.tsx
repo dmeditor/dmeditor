@@ -6,7 +6,7 @@ import { css } from "@emotion/css";
 import { CommonSettings } from "../CommonSettings";
 export const Code = (props: ToolRenderProps) => {
   const [content, SetContent] = useState(() => {
-    return props.data.content;
+    return props.data.data;
   });
   const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
   
@@ -16,7 +16,7 @@ export const Code = (props: ToolRenderProps) => {
   useEffect(() => {
     if (!props.active) {
       props.onChange({
-        content,
+        data:content,
         type: "code",
         settings:{common: commonSettings}
       });
@@ -59,7 +59,7 @@ export const toolCode: ToolDefinition = {
     category: "basic",
     icon: <CodeOutlined />,
   },
-  initData: { type: "code", content: "this is a Code", settings:{} },
+  initData: { type: "code", data: "this is a Code", settings:{} },
   view: (props:{data:any})=><Code data={props.data} active={false} onChange={()=>{}} />,
   render: (props: ToolRenderProps) => <Code {...props} />,
 };
