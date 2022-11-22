@@ -13,18 +13,18 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
     const [imageUrl, setImageUrl] = useState(props.data.source==='select'?'{image:'+props.data.data.url+'}':props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
-    const [commonSettings, setCommonSettings] = useState(props.data.settings.common);
+    const [commonSettings, setCommonSettings] = useState(props.data.common);
     
         
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
         if(type === 'input'){
           setImageUrl( val );
-          props.onChange({...data,data:{url:val, text:text},source:{sourceType:type},settings:{fullScreen: fullScreen, common: commonSettings} });
+          props.onChange({...data,data:{url:val, text:text},source:{sourceType:type},settings:{fullScreen: fullScreen}, common: commonSettings});
         }else{
           let url='{image:'+val.id+'}'
           setImageUrl( url );
-          props.onChange({...data,data:{url:val.id, text:text},source:{sourceType:type,sourceData:val},settings:{fullScreen: fullScreen, common: commonSettings} });
+          props.onChange({...data,data:{url:val.id, text:text},source:{sourceType:type,sourceData:val},settings:{fullScreen: fullScreen}, common: commonSettings });
         }
     }
     const handleClickOpen = ()=>{
@@ -34,7 +34,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen, common: commonSettings} });
+        props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen}, common: commonSettings });
     }, [text, fullScreen, commonSettings])
 
     return <div style={commonSettings}>

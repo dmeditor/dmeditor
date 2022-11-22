@@ -167,3 +167,7 @@
   user-select:inherit;
   -webkit-user-select:inherit;
 } 
+
+.image-caption{
+  font-style: italic;
+}

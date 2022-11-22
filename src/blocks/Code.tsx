@@ -8,7 +8,7 @@ export const Code = (props: ToolRenderProps) => {
   const [content, SetContent] = useState(() => {
     return props.data.data;
   });
-  const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
+  const [commonSettings, setCommonSettings] = useState(props.data.common);
   
   const changer = (e: React.FocusEvent<HTMLElement>) => {
     SetContent(e.target.innerText);
@@ -18,7 +18,7 @@ export const Code = (props: ToolRenderProps) => {
       props.onChange({
         data:content,
         type: "code",
-        settings:{common: commonSettings}
+        common: commonSettings
       });
     }
   });

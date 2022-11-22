@@ -69,8 +69,9 @@ const Heading = (props:any)=>{
   menu:  {text:"Heading", category:'basic',icon: <TitleOutlined /> },
   initData: {
     type:'heading', 
-    data:{ text:'heading', level: 2},
-    settings:{common:{width:'auto'}},
+    data:'heading',
+    common:{width:'auto'},
+    settings:{level: 2},
   },
   view: (props:{data:any})=><Heading data={props.data} active={false} onChange={()=>{}} />,
   render: (props:{data:any, active:boolean})=><Heading {...props} />

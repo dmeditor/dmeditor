@@ -12,7 +12,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     const [height, setHeight] = useState(240);
     const [adding, setAdding] = useState(props.adding?true:false);
     const [videoUrl, setVideoUrl] = useState(props.data.data);
-    const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
+    const [commonSettings, setCommonSettings] = useState(props.data.common);
     
     const handleClickOpen = ()=>{
       setAdding(true);
@@ -31,7 +31,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     };
 
     useEffect(()=>{
-      props.onChange({type:'video', data: videoUrl, settings:{common: commonSettings}});
+      props.onChange({type:'video', data: videoUrl, common: commonSettings});
     }, [videoUrl, commonSettings]);
 
     return <div style={{width: width,height:height, ...commonSettings}}>

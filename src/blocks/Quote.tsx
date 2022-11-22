@@ -11,7 +11,7 @@ import { Util } from '../utils/Util';
 
 export const Quote = (props:any)=>{
   const [content,setConent] = useState(props.data.data)
-  const [commonSettings, setCommonSettings] = useState(props.data.settings?props.data.settings.common:{});
+  const [commonSettings, setCommonSettings] = useState(props.data.common?props.data.common:{});
   let defalutProperty=props.data.dm_field?props.data.dm_field:''
   const QuoteRef:any=useRef(null);
 

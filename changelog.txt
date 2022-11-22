@@ -1,4 +1,5 @@
 0.1.0-alpha.7
+- 2022-11-22: [data format]set 'common' in root instead of under settings
 - 2022-11-22: [data format]use 'data' insead of 'content' in data format
 - 2022-11-22: [Text]hide color/align when cursor is in link
 - 2022-11-21: support pageTab callback in DMEditor

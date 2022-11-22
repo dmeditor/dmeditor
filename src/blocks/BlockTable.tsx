@@ -51,7 +51,7 @@ export const Table = (props: ToolRenderProps) => {
     headerColor: headerColor || "",
     oddColor: oddColor || "",
   });
-  const [commonSettings, setCommonSettings] = useState(props.data.settings.common);
+  const [commonSettings, setCommonSettings] = useState(props.data.common);
   const [isChange, setIsChange] = useState(false);
 
   const [border, setBorderProp] = useState<bordersType>(() => {
@@ -68,7 +68,8 @@ export const Table = (props: ToolRenderProps) => {
   useEffect(() => {
       props.onChange({
         data:content,
-        settings: { ...color, padding, border, common: commonSettings },
+        settings: { ...color, padding, border },
+        common: commonSettings,
         type: "table",
       });
   },[props.active,commonSettings,isChange]);
@@ -454,7 +455,8 @@ export const toolTable: ToolDefinition = {
       ["", "", "", ""],
       ["", "", "", ""],
     ],
-    settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder", common:{width: '100%'} },
+    common:{width: '100%'},
+    settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
   },
   view: (props:{data:any})=><Table data={props.data} active={false} onChange={()=>{}} />,
   render: (props: ToolRenderProps) => <Table {...props} />,

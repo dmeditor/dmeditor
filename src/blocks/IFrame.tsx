@@ -16,7 +16,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [height, setHeight] = useState(props.data.settings.height as number);    
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
     const [tempUrl, setTempUrl] = useState(props.data.data);
-    const [commonSettings, setCommonSettings] = useState(props.data.settings.commonSettings);
+    const [commonSettings, setCommonSettings] = useState(props.data.common);
     
     
     const submit = ()=>{
@@ -25,7 +25,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align, common: commonSettings} })
+        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align}, common: commonSettings })
     }, [url, width, align, height, commonSettings]);
 
     return <div>
