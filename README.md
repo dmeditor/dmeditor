@@ -36,6 +36,10 @@ https://github.com/digimakergo/dmeditor-sample
 
 <img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" width="600"/>
 
+
+### Widgets
+[dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
+
 ### Extending
 #### 1.Create a customized block type(widget)
 
@@ -89,8 +93,8 @@ registerCategory({identifier:'content', text:'Content'});
 registerTool(toolImage);
 ```
 
-Data format
------
+### Data format
+
 Here is an example:
 ```javascript
 [
@@ -103,6 +107,7 @@ Here is an example:
     },
 ]
 ```
+
 | Key | Description | Example  |
 |------|----|---|
 |  `type`    | Block type's identifier, unique   |  `'text'` |
