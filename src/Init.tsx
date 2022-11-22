@@ -25,24 +25,3 @@ registerTool(toolQuote);
 registerTool(toolVideo);
 registerTool(toolCode);
 registerTool(toolIframe);
-
-
-registerTool({
-  type: "tab",
-  menu: { text: "Tab", category: "blocks", icon: <TabOutlined /> },
-  initData: "test",
-  view:()=><div>Not implemented</div>,
-  render: () => <div>Not implemented</div>,
-});
-
-registerTool({
-  type: "expandable_list",
-  menu: {
-    text: "Expandable list",
-    category: "blocks",
-    icon: <ViewListOutlined />,
-  },
-  initData: "test",
-  view:()=><div>Not implemented</div>,
-  render: () => <div>Not implemented</div>,
-});
