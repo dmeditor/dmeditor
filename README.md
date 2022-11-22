@@ -49,6 +49,14 @@ https://github.com/digimakergo/dmeditor-sample
 <img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" width="600"/>
 
 
+### DMEditor Properties
+| Property | required | Type | Description | 
+|----|--|-|---|
+| `data` | true | `Array<any>` | Data of blocks in array | 
+| `onChange` | false | `(data:Array<any>)=>void`  | Callback when change. |
+| `menu` | false | `React.ReactElement`  | Customized menu on toolbar |
+
+
 ### Widgets
 [dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
 
