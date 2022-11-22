@@ -23,6 +23,20 @@ return (
         <DMEditor data={[]} />
     </div>);
 ```
+View(Output only)
+```typescript
+import {DMEditorView} from 'dmeditor';
+
+return (
+    <div>
+        <DMEditorView data={[{ type:'heading', 
+          data:'News', 
+          common:{marginTop: 10},
+          settings:{level: 2}
+        }]} />
+    </div>);
+```
+
 
 ### Sample project 
 https://github.com/digimakergo/dmeditor-sample
