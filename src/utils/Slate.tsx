@@ -10,7 +10,7 @@ import { Button} from "@mui/material";
 
 
 export const SlateFun:any = {
-  TEXT_FORMAT_TYPES :['bold','italic','underline','link','linkoff'],
+  TEXT_FORMAT_TYPES :['bold','italic','underline','link'],//['bold','italic','underline','link','linkoff']
   TEXT_ALIGN_TYPES : ['left', 'center', 'right', 'justify'],
   LIST_TYPES : ['numbered-list', 'bulleted-list'],
   getToolText:(tool:string)=>{
@@ -216,15 +216,15 @@ export const SlateFun:any = {
         changeDialogLink(defalutUrl);
       } }/>
     }
-    // if(formats ==='linkoff'){
-    //   ele = <LinkOffOutlined  sx={{ color: SlateFun.isLinkActive(editor)?'white': '#aaa' }} 
-    //   onClick={() => {
-    //     if (SlateFun.isLinkActive(editor)) {
-    //       SlateFun.unwrapLink(editor)
-    //     }
-    //   }}/>
+    if(formats ==='linkoff'){
+      ele = <LinkOffOutlined  sx={{ color: SlateFun.isLinkActive(editor)?'white': '#aaa' }} 
+      onClick={() => {
+        if (SlateFun.isLinkActive(editor)) {
+          SlateFun.unwrapLink(editor)
+        }
+      }}/>
 
-    // }
+    }
    
     return ele
   },
