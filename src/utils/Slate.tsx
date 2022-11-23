@@ -216,15 +216,15 @@ export const SlateFun:any = {
         changeDialogLink(defalutUrl);
       } }/>
     }
-    if(formats ==='linkoff'){
-      ele = <LinkOffOutlined  sx={{ color: SlateFun.isLinkActive(editor)?'white': '#aaa' }} 
-      onClick={() => {
-        if (SlateFun.isLinkActive(editor)) {
-          SlateFun.unwrapLink(editor)
-        }
-      }}/>
+    // if(formats ==='linkoff'){
+    //   ele = <LinkOffOutlined  sx={{ color: SlateFun.isLinkActive(editor)?'white': '#aaa' }} 
+    //   onClick={() => {
+    //     if (SlateFun.isLinkActive(editor)) {
+    //       SlateFun.unwrapLink(editor)
+    //     }
+    //   }}/>
 
-    }
+    // }
    
     return ele
   },
