@@ -7,6 +7,10 @@ import { PropertyTab } from "./Tab";
 import { Util } from './utils/Util';
 
 export const BlockProperty = (props:{title:string, active:boolean, children?:React.ReactNode})=>{
+    if (typeof window === 'undefined') {
+      return <></>;
+    }
+
     const propertyRoot = document.getElementById('dmeditor-property') as HTMLElement;
 
     if(!props.active){
