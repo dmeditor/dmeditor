@@ -65,6 +65,10 @@ export const Util = {
   }
 }
 
+export const isServer = () => {
+  return !(typeof window != 'undefined' && window.document);
+}
+
 const DefaultBrowseUrl = (props:{type?:any,onConfirm?:any,onCancel?:any,adding?:boolean,defalutValue?:any})=>{
   const [adding, setAdding] = React.useState(props.adding?true:false);
   const [inputUrl, setInputUrl] = React.useState(props.defalutValue?props.defalutValue.url:'');

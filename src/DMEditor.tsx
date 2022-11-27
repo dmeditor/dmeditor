@@ -237,3 +237,27 @@ export const DMEditorView = (props:{data:Array<any>})=>{
        )}
        </div>
 }
+
+/** server side load */
+export const serverLoad=async (data:Array<any>)=>{
+    let proms:Array<Promise<any>> = [];
+    for(let i in data){
+        let blockData = data[i];
+        let type = blockData.type;
+        let def = getDef(type);
+        if( def.onServerLoad ){
+            proms = [...proms, def.onServerLoad(blockData)];
+        }else{
+            proms = [...proms, blockData];
+        }
+    }
+
+
+    try{
+        let newData = await Promise.all(proms)
+        return newData;
+    }catch(error){
+        console.error(error);        
+        throw "Failed to fetch data";
+    }
+}
