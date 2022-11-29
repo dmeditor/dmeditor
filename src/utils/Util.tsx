@@ -28,6 +28,8 @@ export const Util = {
   CustomProperty:null as any,
   PreBlock:null as any,
   pageTab:null as any,
+  pageTabActiveIndex:0,
+  toaster:null as any,
   renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
         let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
@@ -62,6 +64,20 @@ export const Util = {
     }else{
       return null
     }
+  },
+  error:(msg:any,option?:any)=>{
+    if(Util.toaster){
+      Util.toaster.error(msg,option)
+    }else{
+      window.alert(msg)
+    }
+  },
+  message:(msg:any,option?:any)=>{
+    if(Util.toaster){
+      Util.toaster.success(msg,option)
+    }else{
+      window.alert(msg)
+    }
   }
 }
 
@@ -75,7 +91,7 @@ const DefaultBrowseUrl = (props:{type?:any,onConfirm?:any,onCancel?:any,adding?:
 
   const submitUrl = ()=>{
     if(inputUrl==''){
-      alert('Please enter the url before confirm')
+      Util.error('Please enter the url before confirm')
       return
     }
     setAdding(false);

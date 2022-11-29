@@ -21,7 +21,9 @@ export interface DMEditorProps{
     linkBrowse?:any,
     customProperty?:any,
     preBlock?:any,
-    pageTab?:any
+    pageTab?:any,
+    hotToast?:any,
+    pageTabActiveIndex?:any
 }
 
 export const DMEditor = (props:DMEditorProps)=>{
@@ -30,6 +32,8 @@ export const DMEditor = (props:DMEditorProps)=>{
     Util.CustomProperty = props.customProperty
     Util.PreBlock = props.preBlock
     Util.pageTab = props.pageTab
+    Util.toaster=props.hotToast
+    Util.pageTabActiveIndex=props.pageTabActiveIndex||0
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
