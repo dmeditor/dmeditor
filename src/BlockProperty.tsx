@@ -21,7 +21,7 @@ export const BlockProperty = (props:{title:string, active:boolean, children?:Rea
         (   
           <div>
              <PropertyTab 
-                active={0}
+                active={Util.pageTabActiveIndex}
                 tabs={[
                      {title: props.title, element:
                       <div style={{marginBottom:'100px'}}>{props.children}</div>

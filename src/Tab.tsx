@@ -1,6 +1,6 @@
 import { LaptopMacOutlined, MobileScreenShareOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 import { Box, Tabs, Tab } from '@mui/material';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import './Tab.css';
 import { Input } from './utils/Input';
 import { Ranger } from './utils/Ranger';
@@ -11,7 +11,11 @@ interface TabData{
 }
 
 export const PropertyTab = (props:{tabs:Array<TabData>, active?: number})=>{
-    const [active, setActive] = useState(props.active?props.active:0);    
+    const [active, setActive] = useState(props.active?props.active:0);  
+    
+    useEffect(()=>{
+      setActive(props.active?props.active:0)
+    },[props.active])
 
     return (<div>
         <div className='tab-header-container'>  
