@@ -29,7 +29,7 @@ export const Util = {
   PreBlock:null as any,
   pageTab:null as any,
   pageTabActiveIndex:0,
-  toaster:null as any,
+  toast:null as any,
   renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
         let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
@@ -66,15 +66,15 @@ export const Util = {
     }
   },
   error:(msg:any,option?:any)=>{
-    if(Util.toaster){
-      Util.toaster.error(msg,option)
+    if(Util.toast){
+      Util.toast.error(msg,option)
     }else{
       window.alert(msg)
     }
   },
   message:(msg:any,option?:any)=>{
-    if(Util.toaster){
-      Util.toaster.success(msg,option)
+    if(Util.toast){
+      Util.toast.success(msg,option)
     }else{
       window.alert(msg)
     }

@@ -22,7 +22,7 @@ export interface DMEditorProps{
     customProperty?:any,
     preBlock?:any,
     pageTab?:any,
-    hotToast?:any,
+    toast?:any,
     pageTabActiveIndex?:any
 }
 
@@ -32,7 +32,7 @@ export const DMEditor = (props:DMEditorProps)=>{
     Util.CustomProperty = props.customProperty
     Util.PreBlock = props.preBlock
     Util.pageTab = props.pageTab
-    Util.toaster=props.hotToast
+    Util.toast=props.toast
     Util.pageTabActiveIndex=props.pageTabActiveIndex||0
     const [blocks, setBlocks] = useState(props.data);
     const [activeBlock, setActiveBlock] = useState(-1);
