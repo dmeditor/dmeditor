@@ -171,3 +171,27 @@
 .image-caption{
   font-style: italic;
 }
+
+.dm-columns{
+  display: grid;
+}
+
+.columns-2{
+  grid-template-columns: 50% 50%;
+}
+
+.columns-3{
+  grid-template-columns: 33.3% 33.3% 33.3%;
+}
+
+.columns-4{
+  grid-template-columns: 25% 25% 25% 25%;
+}
+
+.columns-5{
+  grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+.columns-6{
+  grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6%;
+}
