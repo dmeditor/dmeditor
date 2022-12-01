@@ -38,12 +38,12 @@ export const Block = React.memo((props:BlockProps)=>{
 
     const onDataChange = (data:any,debounce?:boolean) =>{ 
       if(debounce){
-        debounceFn(data) 
+        debounceSave(data) 
       }else{
         props.onChange(data);
       }
     }
-    const debounceFn = useCallback(_debounce((data:any)=>{
+    const debounceSave = useCallback(_debounce((data:any)=>{
       props.onChange(data);
     }, 500), []);
 

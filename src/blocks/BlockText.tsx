@@ -72,7 +72,7 @@ export const BlockText = (props:any)=>{
     }
 
     useEffect(()=>{
-        props.onChange({type:'text',data:value, common: commonSettings});
+        props.onChange({type:'text',data:value, common: commonSettings}, true);
     },[value, commonSettings])
 
     const changeFontFormat = (v:any,format:any,e?:any)=>{
