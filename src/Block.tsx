@@ -3,6 +3,7 @@ import React from "react"
 import { useEffect, useRef, useState,useCallback} from "react"
 import { getDef } from "./ToolDefinition"
 import { Util } from './utils/Util';
+import _debounce from 'lodash/debounce'
 
 export type BlockInfo = {
     type: string
@@ -36,8 +37,15 @@ export const Block = React.memo((props:BlockProps)=>{
     }
 
     const onDataChange = (data:any,debounce?:boolean) =>{ 
+      if(debounce){
+        debounceFn(data) 
+      }else{
         props.onChange(data);
+      }
     }
+    const debounceFn = useCallback(_debounce((data:any)=>{
+      props.onChange(data);
+    }, 500), []);
 
     const render = ()=>{
         let def = getDef( props.data.type );
