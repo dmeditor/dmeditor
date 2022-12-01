@@ -1,8 +1,9 @@
 import { AddBoxOutlined } from "@mui/icons-material"
 import React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState,useCallback} from "react"
 import { getDef } from "./ToolDefinition"
 import { Util } from './utils/Util';
+import _debounce from 'lodash/debounce'
 
 export type BlockInfo = {
     type: string
@@ -35,9 +36,16 @@ export const Block = React.memo((props:BlockProps)=>{
         }
     }
 
-    const onDataChange = (data:any) =>{        
+    const onDataChange = (data:any,debounce?:boolean) =>{ 
+      if(debounce){
+        debounceFn(data) 
+      }else{
         props.onChange(data);
+      }
     }
+    const debounceFn = useCallback(_debounce((data:any)=>{
+      props.onChange(data);
+    }, 500), []);
 
     const render = ()=>{
         let def = getDef( props.data.type );
@@ -47,7 +55,7 @@ export const Block = React.memo((props:BlockProps)=>{
                 return <ViewRender data={props.data} />
             }else{
                 let ToolRender = def.render;
-                return <ToolRender adding={props.adding} onChange={onDataChange} data={props.data} active={isActive} onCancel={props.onCancel} />
+                return <ToolRender adding={props.adding} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />
             }
         }else{
             return 'Unknown type:'+props.data.type;
