@@ -17,6 +17,7 @@ import FontFamilyList from '../utils/FontFamilyList'
 import {PropertyButton, PropertyGroup, PropertyItem} from '../utils/Property';
 import { Util } from '../utils/Util';
 import { CommonSettings } from "../CommonSettings";
+import _debounce from 'lodash/debounce'
 
 const BlockButton = ({formats}:any) => {
   let ele:any
@@ -71,8 +72,12 @@ export const BlockText = (props:any)=>{
       setValue(val)
     }
 
+    const saveData = useCallback(_debounce((data)=>{
+      props.onChange(data);
+    }, 500), []);
+
     useEffect(()=>{
-        props.onChange({type:'text',data:value, common: commonSettings});
+      saveData({type:'text',data:value, common: commonSettings});
     },[value, commonSettings])
 
     const changeFontFormat = (v:any,format:any,e?:any)=>{
