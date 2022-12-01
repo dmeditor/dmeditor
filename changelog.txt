@@ -1,4 +1,5 @@
 0.1.0-beta.2
+- 2022-12-01 added: debounce on BlockText
 - 2022-11-27 added: [server side loading] serverLoad in DMEditor & onServerLoad(data)=>any in blocktypes
 - 2022-11-24 fixed: BlockProperty issue in server side
 
