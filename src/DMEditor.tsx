@@ -181,7 +181,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                 return  <><Block adding={currentSelected&&index===addingBlock}
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
-                         key={index+blocks.length}
+                         key={index}
                          onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);
