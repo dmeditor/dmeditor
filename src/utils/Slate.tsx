@@ -135,9 +135,10 @@ export const SlateFun:any = {
     const isActive = SlateFun.isFormatActive(editor, format)
     let property = SlateFun.TEXT_FORMAT_TYPES.includes(format) ? 'type' : 'style';
     let newProperty:any
-    if(format=='fontFamily'){
+    if(format=='fontFamily'||format ==="fontSize"){
       newProperty= { [format]: value};
       if(SlateFun.isCollapsed(editor)){
+        // isLinkActive
         if(SlateFun.isLinkButtonActive(editor)){
           let links=SlateFun.getLinkSetting(editor,1)
           Transforms.select(editor,links)
@@ -619,7 +620,7 @@ export const SlateFun:any = {
     event.preventDefault()
     const url = window.prompt('Enter the URL of the image:')
     if (url && !SlateFun.isImageUrl(url)) {
-      alert('URL is not an image')
+      // alert('URL is not an image')
       return
     }
     url && SlateFun.insertImage(editor, url)
@@ -829,6 +830,30 @@ export const SlateFun:any = {
     const  isCollapsed= selection && SlateRange.isCollapsed(selection)
     return isCollapsed
   },
+  clearFormat:(editor:any)=>{
+    // console.log(Editor)
+    // console.log(editor)
+    // console.log(Text)
+    // let [link]=Editor.nodes(editor,{
+    //   mode:'all',
+    //   match: (n:any) =>n.type === 'link'&& 
+    //   !Editor.isEditor(n) && SlateElement.isElement(n)
+    // })
+    // console.log(link)
+    // let TEXT_FORMAT_TYPES_s=SlateFun.TEXT_FORMAT_TYPES.map(item=>item!='link')
+    // Transforms.unsetNodes(editor,['bold'],
+    //   { match:(n:any) =>SlateFun.TEXT_FORMAT_TYPES_s.includes(n[.type]), 
+    //     split: true,
+    //     mode:'all'
+    //   }
+    // )
+    // Transforms.unwrapNodes(editor, {
+    //   match: (n:any) =>SlateFun.LIST_TYPES.includes(n.type)&&
+    //     !Editor.isEditor(n) &&
+    //     SlateElement.isElement(n) ,
+    //   split: true,
+    // })
+  }
 
 }
 

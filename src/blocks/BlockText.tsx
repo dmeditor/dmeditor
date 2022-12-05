@@ -210,22 +210,15 @@ export const BlockText = (props:any)=>{
                 </PropertyItem>
                 :null
               }
-            {!isCollapsed?
-            <>              
-              {IsShowToolBar('font','font size')?
-                <PropertyItem label='Size'>
-                    <Ranger min={8} max={36} step={2} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
-                </PropertyItem>  
-                :null
-              }
-              {IsShowToolBar('font','color')?
-                <PropertyItem label='Color'>
-                    <PickColor color={color?color:'#000'} onChange={(v:any)=>changeFontFormat(v,'color')} />
-                </PropertyItem> 
-                :null
-              }
-            </>
-            :null
+            {(!isCollapsed||isLinkActive)&&IsShowToolBar('font','font size')&&
+              <PropertyItem label='Size'>
+                  <Ranger min={8} max={36} step={2} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
+              </PropertyItem>  
+            }
+            {!isCollapsed&&IsShowToolBar('font','color')&&
+              <PropertyItem label='Color'>
+                  <PickColor color={color?color:'#000'} onChange={(v:any)=>changeFontFormat(v,'color')} />
+              </PropertyItem> 
             }
             {!isButtonActive&&<>
                 <PropertyItem label="Align">
