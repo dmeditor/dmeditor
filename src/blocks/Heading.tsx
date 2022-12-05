@@ -8,17 +8,22 @@ import React, {useEffect ,useState,useRef} from 'react';
 import { AnyAaaaRecord } from 'dns';
 import { CommonSettings } from '../CommonSettings';
 import { PropertyItem } from '../utils';
+import { Util } from '../utils/Util';
 
 const Heading = (props:any)=>{
     const [text,setText] = useState(props.data.data);
     const [level,setLevel] = useState(props.data.settings.level);
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
     const headRef:any=useRef(null);
-
+    let defalutProperty=props.data.dm_field?props.data.dm_field:''
+    let isFirstRender = true;
+    const [isChange,setIsChange] = useState(false);
+    // let isChange = false;
     const changeText = (e?:any)=>{
         const texts=headRef.current.innerText
         if(props.onChange){
           setText(texts);
+          setIsChange(true);
         }
     }
 
@@ -46,17 +51,27 @@ const Heading = (props:any)=>{
     }
 
     useEffect(()=>{
-      let newData = {type:'heading',data:text,settings:{level:level}, common: {...commonSettings}}
+      if( isFirstRender ){
+        isFirstRender = false;
+        return ;
+     }
+     if(isChange){
+      let newData = {...props.data,data:text,settings:{level:level}, common: {...commonSettings}}
       props.onChange(newData);
-    },[text,level,commonSettings])
+      setIsChange(false);
+     }
+    },[isChange])
 
     return (
       <>
         <BlockProperty title={'Heading'} active={props.active}>
           <PropertyItem label="Level">
-                <Ranger defaultValue={level} min={1} max={5} step={1} onChange={v=>setLevel(v)} />
-          </PropertyItem>       
-        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
+                <Ranger defaultValue={level} min={1} max={5} step={1} onChange={v=>{setLevel(v);setIsChange(true);}} />
+          </PropertyItem>   
+          <PropertyItem label="property">
+            {Util.renderCustomProperty({defalutProperty:defalutProperty})}
+          </PropertyItem> 
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
         </BlockProperty>
         {render()}  
     </> 

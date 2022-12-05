@@ -60,6 +60,7 @@ export const BlockText = (props:any)=>{
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState("" as any);
     let isFirstRender = true;
+    let defalutProperty=props.data.dm_field?props.data.dm_field:''
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -307,7 +308,9 @@ export const BlockText = (props:any)=>{
           </PropertyGroup>
           </>
           :null}
-
+          <PropertyItem label="property">
+            {Util.renderCustomProperty({defalutProperty:defalutProperty})}
+          </PropertyItem> 
          <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>                 
           </BlockProperty>
           <div>
@@ -320,6 +323,10 @@ export const BlockText = (props:any)=>{
                 onMouseUp={(event:any)=>{
                   SlateEvents()
                 }}
+                onKeyUp={(event:any)=>{
+                  SlateEvents()
+                 }
+                }
                 onDOMBeforeInput={(event: InputEvent) => {
                   switch (event.inputType) {
                     case 'formatBold':

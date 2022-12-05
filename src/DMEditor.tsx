@@ -16,7 +16,8 @@ import { Button } from "@mui/material";
 export interface DMEditorProps{
     data:Array<any>, 
     menu?:React.ReactElement, 
-    onChange?:(data:Array<any>,activeBlock:Number)=>void,
+    onChangeActive?:(activeBlock:Number)=>void,
+    onChange?:(data:Array<any>)=>void,
     imageBrowse?:any,
     linkBrowse?:any,
     customProperty?:any,
@@ -56,9 +57,14 @@ export const DMEditor = (props:DMEditorProps)=>{
 
     useEffect(()=>{
         if( props.onChange){
-            props.onChange(blocks,activeBlock)
+            props.onChange(blocks)
         }
     }, [blocks]);
+    useEffect(()=>{
+      if( props.onChangeActive){
+          props.onChangeActive(activeBlock)
+      }
+  }, [activeBlock]);
 
     const addUnder = (type: string)=>{
         if( type ){

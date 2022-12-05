@@ -22,7 +22,7 @@ export const Quote = (props:any)=>{
   }
 
   const common = {
-    onBlur: change,
+    onBlur: change,    
     contentEditable: props.active,
     style: { ...commonSettings},
   }
@@ -34,7 +34,7 @@ export const Quote = (props:any)=>{
   return (
     <>
         <BlockProperty title={'Quote'} active={props.active}>
-        <PropertyItem label="property">
+          <PropertyItem label="property">
             {Util.renderCustomProperty({defalutProperty:defalutProperty})}
           </PropertyItem> 
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>

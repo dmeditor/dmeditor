@@ -7,7 +7,7 @@ import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyItem } from "../utils/Property";
 import { Ranger } from "../utils/Ranger";
-
+import { Util } from '../utils/Util';
 
 export const BlockIframe = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
@@ -17,7 +17,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
     const [tempUrl, setTempUrl] = useState(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-    
+    let defalutProperty=props.data.dm_field?props.data.dm_field:''
     
     const submit = ()=>{
         setUrl( tempUrl );
@@ -57,6 +57,9 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                    <PropertyButton selected={align==='center'} onClick={()=>setAlign('center')}><FormatAlignCenter /></PropertyButton>
                    <PropertyButton selected={align==='right'} onClick={()=>setAlign('right')}><FormatAlignRight /></PropertyButton>
                 </PropertyItem>
+                <PropertyItem label="property">
+                  {Util.renderCustomProperty({defalutProperty:defalutProperty})}
+                </PropertyItem> 
                 <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
             </BlockProperty>
             {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={width} height={height}></iframe></div>}
