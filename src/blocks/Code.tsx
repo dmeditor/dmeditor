@@ -4,12 +4,15 @@ import { BlockProperty } from "../BlockProperty";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { css } from "@emotion/css";
 import { CommonSettings } from "../CommonSettings";
+import { PropertyItem } from '../utils';
+import { Util } from '../utils/Util';
 export const Code = (props: ToolRenderProps) => {
   const [content, SetContent] = useState(() => {
     return props.data.data;
   });
   const [commonSettings, setCommonSettings] = useState(props.data.common);
-  
+  let defalutProperty=props.data.dm_field?props.data.dm_field:''
+
   const changer = (e: React.FocusEvent<HTMLElement>) => {
     SetContent(e.target.innerText);
   };
@@ -25,6 +28,9 @@ export const Code = (props: ToolRenderProps) => {
   return (
     <>
       <BlockProperty title={"Code"} active={props.active}>
+        <PropertyItem label="property">
+          {Util.renderCustomProperty({defalutProperty:defalutProperty})}
+        </PropertyItem> 
         <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
       </BlockProperty>
       <div style={commonSettings}>

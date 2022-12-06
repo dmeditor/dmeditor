@@ -1,5 +1,5 @@
 export interface ToolRenderProps {
-    data: {data:any, settings?:any, common?:any, source?:any }, 
+    data: {data:any, settings?:any, common?:any, source?:any,dm_field?:string, }, 
     active:boolean,
     adding?:boolean, 
     onChange:(data:any)=>void,

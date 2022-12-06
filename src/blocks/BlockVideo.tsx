@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
+import { PropertyItem } from '../utils';
 import { Util } from '../utils/Util';
 
 
@@ -13,7 +14,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
     const [videoUrl, setVideoUrl] = useState(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-    
+    let defalutProperty=props.data.dm_field?props.data.dm_field:'';
     const handleClickOpen = ()=>{
       setAdding(true);
       setAdding(false);
@@ -51,6 +52,9 @@ export const BlockVideo = (props:ToolRenderProps)=>{
                     <label>Source: </label>
                     <Button onClick={handleClickOpen}>Choose</Button>
                 </div>
+                <PropertyItem label="property">
+                {Util.renderCustomProperty({defalutProperty:defalutProperty})}
+              </PropertyItem> 
                 <div><CommonSettings commonSettings={commonSettings}  settingList={['marginTop']} onChange={(settings)=>setCommonSettings(settings)} /></div>
             </BlockProperty>
             <video width={'100%'} height={'100%'} controls src={videoUrl} >
