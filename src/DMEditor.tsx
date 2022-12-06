@@ -34,7 +34,7 @@ export const DMEditor = (props:DMEditorProps)=>{
     Util.pageTab = props.pageTab
     Util.toast=props.toast
     Util.pageTabActiveIndex=props.pageTabActiveIndex||0
-    const [blocks, setBlocks] = useState(props.data);
+    const [blocks, setBlocks] = useState(props.data?props.data:[]);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
     const [mode, setMode] = useState('add' as 'add'|'select');
