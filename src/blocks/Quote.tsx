@@ -14,11 +14,12 @@ export const Quote = (props:any)=>{
   const [commonSettings, setCommonSettings] = useState(props.data.common?props.data.common:{});
   let defalutProperty=props.data.dm_field?props.data.dm_field:''
   const QuoteRef:any=useRef(null);
+  const [isChange,setIsChange] = useState(false);
 
   const change = (e?: any) => {
     const text=QuoteRef.current.innerText
     setConent(text)
-    props.onChange({...props.data,data:text,settings:{common: commonSettings}});
+    setIsChange(true)
   }
 
   const common = {
@@ -28,8 +29,11 @@ export const Quote = (props:any)=>{
   }
   
   useEffect(()=>{
-    change();
-  },[content,commonSettings])
+   if(isChange){
+    props.onChange({...props.data,data:content,settings:{common: commonSettings}});
+    setIsChange(false)
+   }
+  },[isChange])
 
   return (
     <>
@@ -37,7 +41,7 @@ export const Quote = (props:any)=>{
           <PropertyItem label="property">
             {Util.renderCustomProperty({defalutProperty:defalutProperty})}
           </PropertyItem> 
-           <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
+           <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
         </BlockProperty>
         <div style={commonSettings}>
         <q ref={QuoteRef} className='block-quote' {...common} suppressContentEditableWarning>{content}</q>

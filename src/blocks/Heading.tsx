@@ -16,7 +16,6 @@ const Heading = (props:any)=>{
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
     const headRef:any=useRef(null);
     let defalutProperty=props.data.dm_field?props.data.dm_field:''
-    let isFirstRender = true;
     const [isChange,setIsChange] = useState(false);
     // let isChange = false;
     const changeText = (e?:any)=>{
@@ -51,10 +50,6 @@ const Heading = (props:any)=>{
     }
 
     useEffect(()=>{
-      if( isFirstRender ){
-        isFirstRender = false;
-        return ;
-     }
      if(isChange){
       let newData = {...props.data,data:text,settings:{level:level}, common: {...commonSettings}}
       props.onChange(newData);

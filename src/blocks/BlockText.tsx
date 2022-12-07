@@ -59,7 +59,6 @@ export const BlockText = (props:any)=>{
     const [isCollapsed,setIsCollapsed]= useState(true);
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState("" as any);
-    let isFirstRender = true;
     let defalutProperty=props.data.dm_field?props.data.dm_field:''
 
     const editor = useMemo(
@@ -74,10 +73,6 @@ export const BlockText = (props:any)=>{
     }
 
     useEffect(()=>{
-       if( isFirstRender ){
-          isFirstRender = false;
-          return;
-       }
         props.onChange({type:'text',data:value, common: commonSettings}, true);
     },[value, commonSettings])
 
