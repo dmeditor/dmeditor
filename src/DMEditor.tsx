@@ -13,6 +13,7 @@ import { Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
+import { nanoid } from 'nanoid';
 
 export interface DMEditorProps{
     data:Array<any>, 
@@ -48,6 +49,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         if( type ){
             //todo: optimize this to clone or initData()
             const defaultData = JSON.parse( JSON.stringify( getDef(type).initData ) );
+            defaultData.id = nanoid();
             let allBlocks = [...blocks];
             allBlocks.splice(activeBlock, 0, defaultData );
             setBlocks(allBlocks);
@@ -71,6 +73,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         if( type ){
             //todo: optimize this to clone or initData()
             const defaultData = JSON.parse( JSON.stringify(getDef(type).initData) );
+            defaultData.id = nanoid();
             let allBlocks = [...blocks];                        
             allBlocks.splice(activeBlock+1, 0, defaultData);
             setBlocks( allBlocks );
@@ -188,7 +191,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                 return  <><Block adding={currentSelected&&index===addingBlock}
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
-                         key={index+blocks.length.toString()}
+                         key={block.id}
                          onActiveChange={(active:boolean)=>{
                         if(active){
                             setActiveBlock(index);

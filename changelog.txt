@@ -1,4 +1,5 @@
 0.1.0-beta.2
+- 2022-12-08 add id in every block data
 - 2022-12-08 removed title and active in BlockProperty(active is used outside)
 - 2022-12-08 put Page into root intead of BlockProperty to avoid multi rendering
 - 2022-12-08 added: image text(first version) for composite block type

@@ -76,7 +76,7 @@ export const BlockText = (props:any)=>{
 
     useEffect(()=>{
       if(isChange){
-        props.onChange({type:'text',data:value, common: commonSettings}, true);
+        props.onChange({...props.data,data:value, common: commonSettings}, true);
         setIsChange(false)
       }
     },[isChange])

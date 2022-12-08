@@ -68,6 +68,7 @@ export const Table = (props: ToolRenderProps) => {
 
   useEffect(() => {
       props.onChange({
+        ...props.data,
         data:content,
         settings: { ...color, padding, border },
         common: commonSettings,
