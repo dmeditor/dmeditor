@@ -24,6 +24,7 @@ const BlockImageText = (props:ToolRenderProps)=>{
         newList[0] = newList[1];
         newList[1] = data0;
         setList(newList);
+        setActiveIndex(activeIndex==0?1:0);
     }
 
     useEffect(()=>{
