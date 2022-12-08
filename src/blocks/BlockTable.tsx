@@ -247,7 +247,7 @@ export const Table = (props: ToolRenderProps) => {
   };
   return (
     <div>
-      <BlockProperty title={"Table"} active={props.active}>
+      {props.active&&<BlockProperty>
         <PropertyGroup header="Border">
           <PropertyItem label="Border">
             <PropertyButton
@@ -397,7 +397,7 @@ export const Table = (props: ToolRenderProps) => {
             {Util.renderCustomProperty({defalutProperty:defalutProperty})}
           </PropertyItem> 
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
-      </BlockProperty>
+      </BlockProperty>}
       <div className="bani">
         <div style={commonSettings}>
           <table

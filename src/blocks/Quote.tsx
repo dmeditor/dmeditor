@@ -37,12 +37,12 @@ export const Quote = (props:any)=>{
 
   return (
     <>
-        <BlockProperty title={'Quote'} active={props.active}>
+       {props.active&&<BlockProperty>
           <PropertyItem label="property">
             {Util.renderCustomProperty({defalutProperty:defalutProperty})}
           </PropertyItem> 
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
-        </BlockProperty>
+        </BlockProperty>}
         <div style={commonSettings}>
         <q ref={QuoteRef} className='block-quote' {...common} suppressContentEditableWarning>{content}</q>
         </div>

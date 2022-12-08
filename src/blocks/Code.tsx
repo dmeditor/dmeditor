@@ -27,12 +27,12 @@ export const Code = (props: ToolRenderProps) => {
   
   return (
     <>
-      <BlockProperty title={"Code"} active={props.active}>
+      {props.active&&<BlockProperty>
         <PropertyItem label="property">
           {Util.renderCustomProperty({defalutProperty:defalutProperty})}
         </PropertyItem> 
         <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
-      </BlockProperty>
+      </BlockProperty>}
       <div style={commonSettings}>
       <code
         className={css({

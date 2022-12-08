@@ -39,7 +39,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
             {adding&&<div>
               <Util.renderBroseURL type={'Video'} onConfirm={submitVideo} adding={adding} />
             </div>}
-            <BlockProperty title={'Video'} active={props.active}>
+            {props.active&&<BlockProperty>
                 <div>
                     <label>Width: </label>
                     <input type="text" defaultValue={width} onChange={(e)=>setWidth(parseInt(e.target.value))} />
@@ -56,7 +56,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
                 {Util.renderCustomProperty({defalutProperty:defalutProperty})}
               </PropertyItem> 
                 <div><CommonSettings commonSettings={commonSettings}  settingList={['marginTop']} onChange={(settings)=>setCommonSettings(settings)} /></div>
-            </BlockProperty>
+            </BlockProperty>}
             <video width={'100%'} height={'100%'} controls src={videoUrl} >
               <object data={videoUrl} width={'100%'} height={'100%'}>
                 <embed src={videoUrl} width={'100%'} height={'100%'} />

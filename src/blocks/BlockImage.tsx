@@ -41,7 +41,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
             {adding&&<div>
               <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
             </div>}
-            <BlockProperty title={'Image'} active={props.active}>
+            {props.active&&<BlockProperty>
                 {!text&&<PropertyItem label="Description" autoWidth>
                   <Button onClick={()=>setText('Description')}>Add description</Button>
                 </PropertyItem>}
@@ -55,7 +55,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
                   {Util.renderCustomProperty({defalutProperty:defalutProperty})}
                 </PropertyItem> 
                 <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
-            </BlockProperty>
+            </BlockProperty>}
                 <div style={fullScreen?{marginLeft:'-60px',marginRight:'-60px'}:{}}>
                   <img width='100%' src={imageUrl} />  
                 </div>

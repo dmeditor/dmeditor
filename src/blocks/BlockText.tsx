@@ -186,7 +186,7 @@ export const BlockText = (props:any)=>{
     return (
       <div style={...commonSettings}>
         <Slate editor={editor} value={value} onChange={v => change(v)}>
-          <BlockProperty title={'Text'} active={props.active}>
+        {props.active&&<BlockProperty>
           <PropertyGroup header="Basic">
             {IsShowToolBar('font','font_family')?
                 <PropertyItem label="Font">
@@ -312,7 +312,7 @@ export const BlockText = (props:any)=>{
             {Util.renderCustomProperty({defalutProperty:defalutProperty})}
           </PropertyItem> 
          <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>                 
-          </BlockProperty>
+          </BlockProperty>}
           <div>
             <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}  changeDialogLink={changeDialogLinkfun}/>
             <Editable

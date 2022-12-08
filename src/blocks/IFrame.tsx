@@ -45,7 +45,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                     </DialogContent>                  
                     </Dialog>
                     </div>}
-            <BlockProperty title={'Iframe'} active={props.active}>
+                {props.active&&<BlockProperty>
                 <PropertyItem label="Width">
                     <Ranger min={300} max={1000} step={10} defaultValue={width} onChange={(v:number)=>setWidth(v)} />                    
                 </PropertyItem>
@@ -61,7 +61,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                   {Util.renderCustomProperty({defalutProperty:defalutProperty})}
                 </PropertyItem> 
                 <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
-            </BlockProperty>
+            </BlockProperty>}
             {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={width} height={height}></iframe></div>}
         </div>
 }

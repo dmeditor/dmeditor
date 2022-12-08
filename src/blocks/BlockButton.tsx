@@ -11,7 +11,7 @@ export const BlockButton = (props:any)=>{
 
 
     return <div>
-            <BlockProperty title={'Button'} active={props.active}>
+            {props.active&&<BlockProperty>
                 <div>
                     <label>Size:</label>
                     <Button onClick={()=>setSize('small')}>Small</Button>
@@ -30,7 +30,7 @@ export const BlockButton = (props:any)=>{
                     <Button variant="text" onClick={()=>setVariant('outlined')}>Ourlined</Button>
                     <Button variant="text" onClick={()=>setVariant('text')}>Text</Button>
                 </div>
-            </BlockProperty>
+            </BlockProperty>}
 
             {props.data.content?<Button />:<Button color={color} size={size} variant={variant}><span>default button</span></Button>}
             </div>

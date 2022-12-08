@@ -59,7 +59,7 @@ const Heading = (props:any)=>{
 
     return (
       <>
-        <BlockProperty title={'Heading'} active={props.active}>
+        {props.active&&<BlockProperty>
           <PropertyItem label="Level">
                 <Ranger defaultValue={level} min={1} max={5} step={1} onChange={v=>{setLevel(v);setIsChange(true);}} />
           </PropertyItem>   
@@ -67,7 +67,7 @@ const Heading = (props:any)=>{
             {Util.renderCustomProperty({defalutProperty:defalutProperty})}
           </PropertyItem> 
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
-        </BlockProperty>
+        </BlockProperty>}
         {render()}  
     </> 
     )

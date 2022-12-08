@@ -79,7 +79,7 @@ export const DefContainer = (props:{ required?:boolean,
        
 
     return <div className={'block blockcontainer'+(props.type?' block-type-'+props.type:'')+' '+(horizontal?'blockcontainer-horizontal':'')+(align?(' blockcontainer-align-'+align):'')} onClick={()=>setIsActive(true)}>
-        <BlockProperty active={isActive} title='Container'>
+        {props.active&&<BlockProperty>
             <div>
                 <PropertyItem label='Align'>
                     <PropertyButton onClick={()=>setAlign('left')} selected={align==='left'||align==undefined}><FormatAlignLeft />
@@ -92,7 +92,7 @@ export const DefContainer = (props:{ required?:boolean,
                <PropertyButton onClick={()=>setHorizontal(true)} selected={horizontal}><AlignVerticalTop /></PropertyButton>
             </PropertyItem>
         </div>
-        </BlockProperty>
+        </BlockProperty>}
         {renderChildren()}
     </div>;
 }
