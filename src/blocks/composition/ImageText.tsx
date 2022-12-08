@@ -28,7 +28,7 @@ const BlockImageText = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, data: list});
+        props.onChange({...props.data, data: list, common: commonSettings});
     }, [list, commonSettings]);
 
     let imageLeft = list[0].type==='image';
