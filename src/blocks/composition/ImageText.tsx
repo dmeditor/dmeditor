@@ -1,8 +1,56 @@
-import { CollectionsOutlined } from "@mui/icons-material";
-import React from "react";
-import { DefBlock } from "../../Block";
+import { AlignHorizontalLeftOutlined, AlignHorizontalRightOutlined, CollectionsOutlined } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { Block, DefBlock } from "../../Block";
 import {DefContainer} from '../../BlockContainer';
-import { ToolDefinition } from "../../ToolDefinition";
+import { BlockProperty } from "../../BlockProperty";
+import { CommonSettings } from "../../CommonSettings";
+import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
+import { PropertyButton, PropertyItem } from "../../utils";
+
+const BlockImageText = (props:ToolRenderProps)=>{
+    const [list, setList] = useState<Array<any>>(props.data.data);
+    const [commonSettings, setCommonSettings] = useState(props.data.common);
+    
+    const onChange = (data:any, index:number)=>{
+        let newList = [...list];
+        newList[index]= data;
+        setList(newList);
+    }
+
+    const changeAlign = ()=>{
+        let newList = [...list];
+        let data0 = newList[0];
+        newList[0] = newList[1];
+        newList[1] = data0;
+        setList(newList);
+    }
+
+    useEffect(()=>{
+        props.onChange({...props.data, data: list});
+    }, [list, commonSettings]);
+
+    let imageLeft = list[0].type==='image';
+
+    return <div style={...commonSettings}>
+        <BlockProperty title="Image text" active={props.active}>
+            <PropertyItem label="Image position" autoWidth>
+                <PropertyButton selected={imageLeft} onClick={()=>{if(!imageLeft){changeAlign()}}}>
+                    <AlignHorizontalLeftOutlined />
+                </PropertyButton>
+                <PropertyButton selected={!imageLeft} onClick={()=>{if(imageLeft){changeAlign()}}}><AlignHorizontalRightOutlined /></PropertyButton>
+            </PropertyItem>
+            <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} /></div>                 
+        </BlockProperty>
+        <div className="row">
+            <div className="col-6">
+                <Block data={list[0]} active={props.active} onChange={data=>onChange(data, 0)} />
+            </div>
+            <div className="col-6">
+                <Block data={list[1]} active={false} onChange={data=>onChange(data, 1)} />
+            </div>
+        </div>
+    </div>
+}
 
 export const toolImageText: ToolDefinition = {
     type: 'imagetext',
@@ -11,18 +59,14 @@ export const toolImageText: ToolDefinition = {
     initData: {
         type:'imagetext',
         settings:{childrenHorizontal: true},
-        children: [
-        {type:'text', content:'<p>Hello</p><p>Good</p>', settings:{}},
-        {type:'image', content:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOdlzDI3LftAb4bwkJOWODiyLE9bpB3Wr8r9A60RGy1A&s', settings:{}}
-        ], allowedType:["text"]},
+        data:[ 
+                {type:'image', data:{url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhze-QNnca2liBrhRj4CjswGZSkqbhvSDJsQ&usqp=CAU'},settings:{}},
+                {"type":"text","data":[
+                    {"type":"paragraph","children":[{"text":"Default text"},
+                    {"type":"paragraph","align":"center","children":[{"text":""},{"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}},{"text":""}]}            
+            ]},                                                           
+            ],"common":{}}
+             ]},
     view: (props:{data:any})=><div>Not implemented</div>,
-    render: (props:{data:any, active:boolean})=><DefContainer type='imagetext' horizontal allowedType={["image", "container"]}>
-        <DefBlock type="image" required={true} allowedSettings={['leftright']} />
-        <DefContainer required={true} allowedType={["text", "container"]}>
-            <DefBlock required={true} type="text" />
-            <DefContainer align='center' allowedType="button">
-                <DefBlock type="button" required={true} max={3} min={1} />
-            </DefContainer>
-        </DefContainer>
-    </DefContainer>
+    render:BlockImageText    
 }
