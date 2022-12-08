@@ -192,15 +192,13 @@ export const DMEditor = (props:DMEditorProps)=>{
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
                          key={block.id}
-                         onActiveChange={(active:boolean)=>{
-                        if(active){
+                         onActivate={()=>{
                             setActiveBlock(index);
                             setAddingBlock(-1);
                             //changed from other's to current
                             if( !currentSelected ){
                                 setMode('select');
-                            }
-                        }
+                            }                        
                     }} 
                     onChange={data=>{
                       let newBlocks = [...blocks];
@@ -255,7 +253,7 @@ export const DMEditorView = (props:{data:Array<any>})=>{
                     data={block} active={false} 
                     onCancel={()=>{}}
                     key={index}
-                    onActiveChange={()=>{}} 
+                    onActivate={()=>{}} 
                     onChange={()=>{}}
                     onAddAbove={()=>{}} 
                     onAddUnder={()=>{}} 

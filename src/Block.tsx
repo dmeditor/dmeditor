@@ -15,7 +15,7 @@ interface BlockProps{
     data: any,
     active?:boolean,
     adding?:boolean,
-    onActiveChange?: (active:boolean)=>void,
+    onActivate?: ()=>void,
     onAddAbove?:any,
     onAddUnder?:any,
     onChange:(data:any)=>void,
@@ -24,16 +24,20 @@ interface BlockProps{
 }
 
 export const Block = React.memo((props:BlockProps)=>{
-    const isActive = props.active?true:false;
-    const ref:any = useRef();
+    const [isActive, setIsActive] = useState(props.active?true:false);
+    // const ref:any = useRef();
     // useOnClickOutside(ref, () => changeActive(false));
 
-    const changeActive = (active:boolean)=>{
-        if( active != isActive ){
-            if( props.onActiveChange ){
-                props.onActiveChange(active);
-            }
-        }
+    //update is active from props
+    useEffect(()=>{
+      setIsActive(props.active?true:false)
+    }, [props.active]);
+
+    const activeBlock = ()=>{
+      setIsActive(true);
+      if(props.onActivate){
+        props.onActivate();
+      }
     }
 
     const onDataChange = (data:any,debounce?:boolean) =>{ 
@@ -62,8 +66,7 @@ export const Block = React.memo((props:BlockProps)=>{
         }
     };
 
-    
-    return <div ref={ref} className={'block-container'+(isActive?' active':'')} onClick={(e:any)=>changeActive(true)}>
+    return <div className={'block-container'+(isActive?' active':'')} onClick={(e:any)=>activeBlock()}>
             {isActive&&<div className="tool tool-above">                             
                             <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();props.onAddAbove()}}>
                                 <AddBoxOutlined /></a>
@@ -89,11 +92,11 @@ export const Block = React.memo((props:BlockProps)=>{
 export const DefBlock = (props:{required:boolean, type:string, 
     min?:number, 
     allowedSettings?: string[],
-    onActiveChange?:(active:boolean)=>void,
+    onActivate?:()=>void,
     active?:boolean,
     max?:number})=>{
     let defaultData = getDef(props.type).initData;
-    return <Block onChange={()=>{}} data={defaultData} onActiveChange={props.onActiveChange} />
+    return <Block onChange={()=>{}} data={defaultData} onActivate={props.onActivate} />
 }
 
 

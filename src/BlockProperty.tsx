@@ -11,16 +11,16 @@ export const BlockProperty = (props:{children?:React.ReactNode})=>{
       return <></>;
     }
 
-    const propertyRoot = document.getElementById('dmeditor-property') as HTMLElement;
+    const propertyRoot = document.getElementById('dmeditor-property');
   
-    return ReactDOM.createPortal(
+    return propertyRoot?ReactDOM.createPortal(
         (   
           <div>
             {props.children}
           </div>            
         ),
-        propertyRoot
-      )    
+        propertyRoot as HTMLElement
+      ):<></>
 }
 
 // export class BlockProperty extends PureComponent<{children:any, active:boolean, title:string},{}>{

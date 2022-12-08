@@ -10,6 +10,7 @@ import { PropertyButton, PropertyItem } from "../../utils";
 const BlockImageText = (props:ToolRenderProps)=>{
     const [list, setList] = useState<Array<any>>(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [activeIndex, setActiveIndex] = useState(0);
     
     const onChange = (data:any, index:number)=>{
         let newList = [...list];
@@ -43,10 +44,10 @@ const BlockImageText = (props:ToolRenderProps)=>{
         </BlockProperty>}
         <div className="row">
             <div className="col-6">
-                <Block data={list[0]} active={props.active} onChange={data=>onChange(data, 0)} />
+                <Block data={list[0]} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
             </div>
             <div className="col-6">
-                <Block data={list[1]} active={false} onChange={data=>onChange(data, 1)} />
+                <Block data={list[1]} active={props.active&&activeIndex==1} onActivate={()=>setActiveIndex(1)} onChange={data=>onChange(data, 1)} />
             </div>
         </div>
     </div>
