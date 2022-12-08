@@ -195,3 +195,7 @@
 .columns-6{
   grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6%;
 }
+
+.menu-blocktype{
+  font-size: 15px;
+}

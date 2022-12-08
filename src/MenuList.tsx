@@ -31,6 +31,7 @@ export const MenuList = (props:{onSelect:any})=>{
         <div style={{background:'white'}}>
         <Input fullWidth placeholder='Type to search' onChange={search} autoFocus style={{padding: '6px'}} />
         </div>
+        <div className='menu-blocktype'>
         {blockCategory.map((category)=><div>
             {list.filter(item=>registeredTypes[item.type].menu?.category==category.identifier).map((blockType, index)=>
                 <>{index==0&&<div style={{padding: '5px 0px', color: '#4f4f4f', margin:'5px 10px' }}>{category.text}</div>}
@@ -43,6 +44,7 @@ export const MenuList = (props:{onSelect:any})=>{
             </div></>
             )}
         </div>)}
+        </div>
     </div>)
     
 }
