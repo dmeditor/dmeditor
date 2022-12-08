@@ -12,26 +12,26 @@ export const Code = (props: ToolRenderProps) => {
   });
   const [commonSettings, setCommonSettings] = useState(props.data.common);
   let defalutProperty=props.data.dm_field?props.data.dm_field:''
+  const [isChange,setIsChange] = useState(false);
 
   const changer = (e: React.FocusEvent<HTMLElement>) => {
     SetContent(e.target.innerText);
+    setIsChange(true)
   };
-  useEffect(() => {
-    if (!props.active) {
-      props.onChange({
-        data:content,
-        type: "code",
-        common: commonSettings
-      });
+  useEffect(()=>{
+    if(isChange){
+     props.onChange({...props.data,data:content,settings:{common: commonSettings}});
+     setIsChange(false)
     }
-  });
+   },[isChange])
+  
   return (
     <>
       <BlockProperty title={"Code"} active={props.active}>
         <PropertyItem label="property">
           {Util.renderCustomProperty({defalutProperty:defalutProperty})}
         </PropertyItem> 
-        <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
+        <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
       </BlockProperty>
       <div style={commonSettings}>
       <code

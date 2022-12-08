@@ -26,6 +26,7 @@ export interface DMEditorProps{
     toast?:any,
     pageTabActiveIndex?:any
 }
+let PreBlocks:any=[]
 
 export const DMEditor = (props:DMEditorProps)=>{
     Util.BrowseImage = props.imageBrowse
@@ -58,6 +59,7 @@ export const DMEditor = (props:DMEditorProps)=>{
     useEffect(()=>{
         if( props.onChange){
             props.onChange(blocks)
+            PreBlocks=JSON.parse(JSON.stringify(blocks));
         }
     }, [blocks]);
     useEffect(()=>{
@@ -198,7 +200,11 @@ export const DMEditor = (props:DMEditorProps)=>{
                             }
                         }
                     }} 
-                    onChange={data=>{let newBlocks = [...blocks];newBlocks[index]=data;setBlocks(newBlocks)}}
+                    onChange={data=>{
+                      let newBlocks = [...PreBlocks];
+                      newBlocks[index]=data;
+                      setBlocks(newBlocks)
+                    }}
                     onAddAbove={()=>onAddMore(-1)} 
                     onAddUnder={()=>onAddMore(1)} /></>;         
              }

@@ -59,6 +59,7 @@ export const BlockText = (props:any)=>{
     const [isCollapsed,setIsCollapsed]= useState(true);
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState("" as any);
+    const [isChange,setIsChange] = useState(false)
     let defalutProperty=props.data.dm_field?props.data.dm_field:''
 
     const editor = useMemo(
@@ -70,11 +71,15 @@ export const BlockText = (props:any)=>{
 
     const change = (val:any)=>{
       setValue(val)
+      setIsChange(true)
     }
 
     useEffect(()=>{
+      if(isChange){
         props.onChange({type:'text',data:value, common: commonSettings}, true);
-    },[value, commonSettings])
+        setIsChange(false)
+      }
+    },[isChange])
 
     const changeFontFormat = (v:any,format:any,e?:any)=>{
       if(e){
@@ -306,7 +311,7 @@ export const BlockText = (props:any)=>{
           <PropertyItem label="property">
             {Util.renderCustomProperty({defalutProperty:defalutProperty})}
           </PropertyItem> 
-         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>                 
+         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>                 
           </BlockProperty>
           <div>
             <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}  changeDialogLink={changeDialogLinkfun}/>
