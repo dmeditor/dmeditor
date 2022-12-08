@@ -27,9 +27,9 @@ export const MenuList = (props:{onSelect:any})=>{
     };
 
     return (<div style={{background: 'white'}}>
-        <div style={{fontSize:'20px', padding: '10px 4px'}}>Please choose a block type</div>
+        <div style={{fontSize:'18px', padding: '10px 4px'}}>Please choose a block type</div>
         <div style={{background:'white'}}>
-        <Input fullWidth placeholder='Type to search' onChange={search} autoFocus style={{padding: '10px'}} />
+        <Input fullWidth placeholder='Type to search' onChange={search} autoFocus style={{padding: '6px'}} />
         </div>
         {blockCategory.map((category)=><div>
             {list.filter(item=>registeredTypes[item.type].menu?.category==category.identifier).map((blockType, index)=>

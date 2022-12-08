@@ -1,4 +1,6 @@
 0.1.0-beta.2
+- 2022-12-08 put Page into root intead of BlockProperty to avoid multi rendering
+- 2022-12-08 added: image text(first version) for composite block type
 - 2022-12-01 added: debounce on BlockText
 - 2022-11-30 toast
 - 2022-11-27 added: [server side loading] serverLoad in DMEditor & onServerLoad(data)=>any in blocktypes

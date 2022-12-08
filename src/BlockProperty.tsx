@@ -20,18 +20,8 @@ export const BlockProperty = (props:{title:string, active:boolean, children?:Rea
     return ReactDOM.createPortal(
         (   
           <div>
-             <PropertyTab 
-                active={Util.pageTabActiveIndex}
-                tabs={[
-                     {title: props.title, element:
-                      <div style={{marginBottom:'100px'}}>{props.children}</div>
-                   },
-                    {title:'Page', element:<div>
-                     {Util.renderPageTab()}
-                </div>},                             
-              ]} />
-
-            </div>            
+            {props.children}
+          </div>            
         ),
         propertyRoot
       )    

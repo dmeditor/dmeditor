@@ -12,6 +12,7 @@ import { getDef } from './ToolDefinition';
 import { Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { PropertyTab } from './Tab';
 
 export interface DMEditorProps{
     data:Array<any>, 
@@ -213,18 +214,31 @@ export const DMEditor = (props:DMEditorProps)=>{
          </div>                    
         </div>
         <div className='layout-properties'>
-            {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
-            {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
-            <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}>
-                {viewmode==='edit'&&mode=='select'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '282px',padding:'10px', backgroundColor:'#ffffff'}}>
-                    <div style={{marginBottom:'15px'}} >
-                      <a href="/" title="Move up" onClick={(e)=>{e.preventDefault();onMove('up')}}><ArrowUpwardOutlined /> </a> 
-                      <a href="/" title="Move down" onClick={(e)=>{e.preventDefault();onMove('down')}}><ArrowDownwardOutlined /></a>
-                    </div> 
-                    <Button fullWidth variant="contained" color='error' title="Delete" onClick={onDelete}>
-                      <DeleteOutline />Delete block
-                    </Button>
-                </div>} 
+            <div>
+            <PropertyTab 
+                active={0}
+                tabs={[
+                     {title: mode=='select'?(getDef(blocks[activeBlock].type).menu.text):'Add block', 
+                     element:
+                      <div style={{marginBottom:'100px'}}>
+                        <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}/>
+                        {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
+                        {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
+                        {viewmode==='edit'&&mode=='select'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '282px',padding:'10px', backgroundColor:'#ffffff'}}>
+                            <div style={{marginBottom:'15px'}} >
+                            <a href="/" title="Move up" onClick={(e)=>{e.preventDefault();onMove('up')}}><ArrowUpwardOutlined /> </a> 
+                            <a href="/" title="Move down" onClick={(e)=>{e.preventDefault();onMove('down')}}><ArrowDownwardOutlined /></a>
+                            </div> 
+                            <Button fullWidth variant="contained" color='error' title="Delete" onClick={onDelete}>
+                            <DeleteOutline />Delete block
+                            </Button>
+                        </div>} 
+                      </div>
+                   },
+                    {title:'Page', element:<div>
+                     {Util.renderPageTab()}
+                </div>},                             
+              ]} />                
             </div>
         </div>
     </div></ThemeProvider>);

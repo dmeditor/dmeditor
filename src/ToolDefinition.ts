@@ -9,7 +9,7 @@ export interface ToolRenderProps {
 export interface ToolDefinition {
     type:string,
     isComposited?: boolean,
-    menu?: {text: string, category: string, icon: React.ReactElement},
+    menu: {text: string, category: string, icon: React.ReactElement},
     initData: any,
     onServerLoad?: (data:any)=>Promise<any>, //invoked in server side before loading
     view:(props:{data:any})=>React.ReactElement
