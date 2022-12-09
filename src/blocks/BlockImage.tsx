@@ -44,9 +44,9 @@ export const BlockImage = (props:ToolRenderProps)=>{
                 {!text&&<PropertyItem label="Description" autoWidth>
                   <Button onClick={()=>setText('Description')}>Add description</Button>
                 </PropertyItem>}
-                <PropertyItem label="Full screen" autoWidth>
+                {(!props.inBlock)&&<PropertyItem label="Full screen" autoWidth>
                     <Checkbox checked={fullScreen} onChange={(e, checked:boolean)=>setFullScreen(checked)} />
-                </PropertyItem>
+                </PropertyItem>}
                 <PropertyItem label='Source'>
                   <Button onClick={handleClickOpen}>Choose</Button>
                 </PropertyItem>
