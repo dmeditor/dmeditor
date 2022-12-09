@@ -38,8 +38,6 @@ export const DMEditor = (props:DMEditorProps)=>{
         Util.pageTab = props.pageTab
         Util.toast=props.toast
         Util.pageTabActiveIndex=props.pageTabActiveIndex||0
-        console.log('Set page tab');
-        console.log(props.pageTab);
     },[]);
     const [blocks, setBlocks] = useState(props.data?props.data:[]);
     const [activeBlock, setActiveBlock] = useState(-1);
