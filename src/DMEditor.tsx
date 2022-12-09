@@ -171,6 +171,7 @@ export const DMEditor = (props:DMEditorProps)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
                 return  <><Block adding={currentSelected&&index===addingBlock}
+                         siblingDirection='vertical'
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
                          key={block.id}

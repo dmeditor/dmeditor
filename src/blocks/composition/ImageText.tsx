@@ -43,11 +43,11 @@ const BlockImageText = (props:ToolRenderProps)=>{
             </PropertyItem>
             <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} /></div>                 
         </BlockProperty>}
-        <div className="row">
-            <div className="col-6">
+        <div className="dm-columns columns-2">
+            <div>
                 <Block data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
             </div>
-            <div className="col-6">
+            <div>
                 <Block data={list[1]} inBlock={true} active={props.active&&activeIndex==1} onActivate={()=>setActiveIndex(1)} onChange={data=>onChange(data, 1)} />
             </div>
         </div>

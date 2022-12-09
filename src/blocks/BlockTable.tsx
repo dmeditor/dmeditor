@@ -459,6 +459,6 @@ export const toolTable: ToolDefinition = {
     common:{width: '100%'},
     settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
   },
-  view: (props:{data:any})=><Table data={props.data} active={false} onChange={()=>{}} />,
+  view: (props:{data:any})=><Table data={props.data} inBlock={false} active={false} onChange={()=>{}} />,
   render: (props: ToolRenderProps) => <Table {...props} />,
 };

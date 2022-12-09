@@ -119,6 +119,11 @@
   outline-offset: 3px;
 }
 
+.viewmode-edit .inblock .block:hover, .viewmode-edit .active.inblock{
+  outline: 1px dashed #00721f;
+  outline-offset: 1px;
+}
+
 .tab-active{
   color:green !important;
 }
