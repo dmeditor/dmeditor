@@ -60,6 +60,7 @@ export const BlockText = (props:any)=>{
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState("" as any);
     const [isChange,setIsChange] = useState(false)
+    let isFirstRender=true;
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -70,15 +71,16 @@ export const BlockText = (props:any)=>{
 
     const change = (val:any)=>{
       setValue(val)
-      setIsChange(true)
     }
 
     useEffect(()=>{
-      if(isChange){
+      if(isFirstRender){
+        isFirstRender=false;
+        return;
+      }
         props.onChange({...props.data,data:value, common: commonSettings}, true);
         setIsChange(false)
-      }
-    },[isChange])
+    },[value,commonSettings])
 
     const changeFontFormat = (v:any,format:any,e?:any)=>{
       if(e){
