@@ -43,7 +43,6 @@ export const DMEditor = (props:DMEditorProps)=>{
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
     const [mode, setMode] = useState('add' as 'add'|'select');
-    const [propertyParams, setPropertyParams] = useState('');
     const [viewmode, setViewmode] = useState('edit');
     const [addingBlock, setAddingBlock] = useState(-1);
 
@@ -84,26 +83,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         }
         setMode('add');
         setAddMore(0);
-    }
-
-    const select = (index:number)=>{
-        if( index !== activeBlock ){
-            setActiveBlock(index);            
-        }
-        setAddMore(0);
-    }
-
-    const setting = (content:any)=>{
-        let allBlocks = [...blocks];
-        allBlocks[activeBlock].content = content;
-        setBlocks(allBlocks);
-    }
-
-    const onChange = (data:any)=>{
-        let allBlocks = [...blocks];
-        allBlocks[activeBlock].content=data;
-        setBlocks(allBlocks);
-    }
+    }    
 
     const onAddMore = (position:number)=>{
         setMode('add');
