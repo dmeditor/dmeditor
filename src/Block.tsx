@@ -20,7 +20,8 @@ interface BlockProps{
     onAddUnder?:any,
     onChange:(data:any)=>void,
     onCancel?:()=>void,
-    view?:boolean
+    view?:boolean,
+    inBlock?:boolean
 }
 
 export const Block = React.memo((props:BlockProps)=>{
@@ -59,7 +60,7 @@ export const Block = React.memo((props:BlockProps)=>{
                 return <ViewRender data={props.data} />
             }else{
                 let ToolRender = def.render;
-                return <ToolRender adding={props.adding} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />
+                return <ToolRender adding={props.adding} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />
             }
         }else{
             return 'Unknown type:'+props.data.type;

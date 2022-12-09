@@ -36,7 +36,7 @@ export const Quote = (props:any)=>{
 
   return (
     <>
-       {props.active&&<BlockProperty>
+       {props.active&&<BlockProperty  blocktype="quote" inBlock={props.inBlock}>
            {Util.renderCustomProperty(props.data)}
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
         </BlockProperty>}

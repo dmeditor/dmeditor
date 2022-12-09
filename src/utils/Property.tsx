@@ -16,7 +16,7 @@ export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?
   </Grid>
 }
 
-export const PropertyGroup = (props:{header: string, children:any, expandable?:boolean, open?:boolean, onOpenClose?:(open:boolean)=>void})=>{
+export const PropertyGroup = (props:{header: React.ReactNode, children:any, expandable?:boolean, open?:boolean, onOpenClose?:(open:boolean)=>void})=>{
     const [open, setOpen] = useState(props.expandable&&props.open?true:false);
 
     const renderBody = ()=>{

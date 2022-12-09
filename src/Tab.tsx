@@ -5,7 +5,7 @@ import './Tab.css';
 import { Input } from './utils/Input';
 import { Ranger } from './utils/Ranger';
 
-interface TabData{
+export interface TabData{
     title: string,
     element: ReactElement
 }

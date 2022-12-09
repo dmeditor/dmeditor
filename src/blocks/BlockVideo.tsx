@@ -38,7 +38,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
             {adding&&<div>
               <Util.renderBroseURL type={'Video'} onConfirm={submitVideo} adding={adding} />
             </div>}
-            {props.active&&<BlockProperty>
+            {props.active&&<BlockProperty  blocktype="video" inBlock={props.inBlock}>
                 <div>
                     <label>Width: </label>
                     <input type="text" defaultValue={width} onChange={(e)=>setWidth(parseInt(e.target.value))} />

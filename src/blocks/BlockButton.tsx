@@ -11,7 +11,7 @@ export const BlockButton = (props:any)=>{
 
 
     return <div>
-            {props.active&&<BlockProperty>
+            {props.active&&<BlockProperty blocktype="button">
                 <div>
                     <label>Size:</label>
                     <Button onClick={()=>setSize('small')}>Small</Button>

@@ -3,7 +3,8 @@ export interface ToolRenderProps {
     active:boolean,
     adding?:boolean, 
     onChange:(data:any)=>void,
-    onCancel?:()=>void
+    onCancel?:()=>void,
+    inBlock:boolean
 } 
 
 export interface ToolDefinition {

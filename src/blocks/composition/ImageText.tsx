@@ -34,7 +34,7 @@ const BlockImageText = (props:ToolRenderProps)=>{
     let imageLeft = list[0].type==='image';
 
     return <div style={...commonSettings}>
-        {props.active&&<BlockProperty>
+        {props.active&&<BlockProperty blocktype="imagetext" inBlock={props.inBlock}>
             <PropertyItem label="Image position" autoWidth>
                 <PropertyButton selected={imageLeft} onClick={()=>{if(!imageLeft){changeAlign()}}}>
                     <AlignHorizontalLeftOutlined />
@@ -45,10 +45,10 @@ const BlockImageText = (props:ToolRenderProps)=>{
         </BlockProperty>}
         <div className="row">
             <div className="col-6">
-                <Block data={list[0]} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
+                <Block data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
             </div>
             <div className="col-6">
-                <Block data={list[1]} active={props.active&&activeIndex==1} onActivate={()=>setActiveIndex(1)} onChange={data=>onChange(data, 1)} />
+                <Block data={list[1]} inBlock={true} active={props.active&&activeIndex==1} onActivate={()=>setActiveIndex(1)} onChange={data=>onChange(data, 1)} />
             </div>
         </div>
     </div>

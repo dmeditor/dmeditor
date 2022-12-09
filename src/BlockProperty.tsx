@@ -4,9 +4,11 @@ import {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import { CommonSettings } from "./CommonSettings";
 import { PropertyTab } from "./Tab";
+import { getDef } from "./ToolDefinition";
+import { PropertyGroup } from "./utils";
 import { Util } from './utils/Util';
 
-export const BlockProperty = (props:{children?:React.ReactNode})=>{
+export const BlockProperty = (props:{blocktype: string, inBlock?:boolean, children?:React.ReactNode})=>{
     if (typeof window === 'undefined') {
       return <></>;
     }
@@ -14,37 +16,16 @@ export const BlockProperty = (props:{children?:React.ReactNode})=>{
     const propertyRoot = document.getElementById('dmeditor-property');
   
     return propertyRoot?ReactDOM.createPortal(
-        (   
+        (props.inBlock?
           <div>
-            {props.children}
+            <PropertyGroup expandable={true} open={true} header={<b>{getDef(props.blocktype).menu.text}</b>}>
+              {props.children}
+            </PropertyGroup>
+            <div></div>
           </div>            
+          :
+          <div>{props.children}</div>
         ),
         propertyRoot as HTMLElement
       ):<></>
 }
-
-// export class BlockProperty extends PureComponent<{children:any, active:boolean, title:string},{}>{
-//   containerEl:any;
-//   propertyRoot = document.getElementById('dmeditor-property') as HTMLElement;
-
-//   constructor(props:any) {
-//     super(props);
-//     this.containerEl = null;
-//   }
-
-//   componentDidMount() {
-//     this.containerEl = document.createElement('div');
-//     // this.propertyRoot.append( this.containerEl);
-//   }
-
-//   componentWillUnmount() {
-//     this.propertyRoot.removeChild(this.containerEl);
-//   }
-
-//   render() {
-//     if (!this.containerEl) {
-//       return null;
-//     } 
-//     return ReactDOM.createPortal(this.props.children,this.containerEl);  
-//   }
-// }

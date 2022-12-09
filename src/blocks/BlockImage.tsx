@@ -40,7 +40,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
             {adding&&<div>
               <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
             </div>}
-            {props.active&&<BlockProperty>
+            {props.active&&<BlockProperty  blocktype="image" inBlock={props.inBlock}>
                 {!text&&<PropertyItem label="Description" autoWidth>
                   <Button onClick={()=>setText('Description')}>Add description</Button>
                 </PropertyItem>}

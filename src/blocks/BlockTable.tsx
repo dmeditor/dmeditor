@@ -247,7 +247,7 @@ export const Table = (props: ToolRenderProps) => {
   };
   return (
     <div>
-      {props.active&&<BlockProperty>
+      {props.active&&<BlockProperty  blocktype="table" inBlock={props.inBlock}>
         <PropertyGroup header="Border">
           <PropertyItem label="Border">
             <PropertyButton

@@ -26,7 +26,7 @@ export const Code = (props: ToolRenderProps) => {
   
   return (
     <>
-      {props.active&&<BlockProperty>
+      {props.active&&<BlockProperty  blocktype="code" inBlock={props.inBlock}>
         {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
       </BlockProperty>}

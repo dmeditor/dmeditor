@@ -187,7 +187,7 @@ export const BlockText = (props:any)=>{
     return (
       <div style={...commonSettings}>
         <Slate editor={editor} value={value} onChange={v => change(v)}>
-        {props.active&&<BlockProperty>
+        {props.active&&<BlockProperty  blocktype="text" inBlock={props.inBlock}>
           <PropertyGroup header="Basic">
             {IsShowToolBar('font','font_family')?
                 <PropertyItem label="Font">

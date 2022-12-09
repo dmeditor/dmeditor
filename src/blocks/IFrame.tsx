@@ -47,7 +47,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                {adding&&<div>
                   <Util.renderBroseURL type={'IFrame'} onConfirm={submit} adding={adding} />
                 </div>}
-                {props.active&&<BlockProperty>
+                {props.active&&<BlockProperty  blocktype="iframe" inBlock={props.inBlock}>
                 <PropertyItem label="Width">
                     <Ranger min={300} max={1000} step={10} defaultValue={width} onChange={(v:number)=>setWidth(v)} />                    
                 </PropertyItem>

@@ -58,7 +58,7 @@ const Heading = (props:any)=>{
 
     return (
       <>
-        {props.active&&<BlockProperty>
+        {props.active&&<BlockProperty  blocktype="heading" inBlock={props.inBlock}>
           <PropertyItem label="Level">
                 <Ranger defaultValue={level} min={1} max={5} step={1} onChange={v=>{setLevel(v);setIsChange(true);}} />
           </PropertyItem>   
