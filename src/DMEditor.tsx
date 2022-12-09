@@ -30,13 +30,17 @@ export interface DMEditorProps{
 }
 
 export const DMEditor = (props:DMEditorProps)=>{
-    Util.BrowseImage = props.imageBrowse
-    Util.BrowseLink = props.linkBrowse
-    Util.CustomProperty = props.customProperty
-    Util.PreBlock = props.preBlock
-    Util.pageTab = props.pageTab
-    Util.toast=props.toast
-    Util.pageTabActiveIndex=props.pageTabActiveIndex||0
+    useEffect(()=>{
+        Util.BrowseImage = props.imageBrowse
+        Util.BrowseLink = props.linkBrowse
+        Util.CustomProperty = props.customProperty
+        Util.PreBlock = props.preBlock
+        Util.pageTab = props.pageTab
+        Util.toast=props.toast
+        Util.pageTabActiveIndex=props.pageTabActiveIndex||0
+        console.log('Set page tab');
+        console.log(props.pageTab);
+    },[]);
     const [blocks, setBlocks] = useState(props.data?props.data:[]);
     const [activeBlock, setActiveBlock] = useState(-1);
     const [addMore, setAddMore] = useState(1);   
