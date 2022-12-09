@@ -60,7 +60,6 @@ export const BlockText = (props:any)=>{
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState("" as any);
     const [isChange,setIsChange] = useState(false)
-    let defalutProperty=props.data.dm_field?props.data.dm_field:''
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -308,9 +307,7 @@ export const BlockText = (props:any)=>{
           </PropertyGroup>
           </>
           :null}
-          <PropertyItem label="property">
-            {Util.renderCustomProperty({defalutProperty:defalutProperty})}
-          </PropertyItem> 
+          {Util.renderCustomProperty(props.data)}
          <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>                 
           </BlockProperty>}
           <div>

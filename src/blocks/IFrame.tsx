@@ -17,10 +17,9 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
     const [tempUrl, setTempUrl] = useState(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-    let defalutProperty=props.data.dm_field?props.data.dm_field:''
     
-    const submit = ()=>{
-        setUrl( tempUrl );
+    const submit = (val:any,type:string)=>{
+        setUrl( val );
         setAdding(false);
     }
 
@@ -29,7 +28,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     }, [url, width, align, height, commonSettings]);
 
     return <div>
-            {props.adding&&<div>
+            {/* {props.adding&&<div>
                 <Dialog
                     open={adding}
                     onClose={props.onCancel}
@@ -44,7 +43,10 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                         </Box>
                     </DialogContent>                  
                     </Dialog>
-                    </div>}
+                    </div>} */}
+               {adding&&<div>
+                  <Util.renderBroseURL type={'IFrame'} onConfirm={submit} adding={adding} />
+                </div>}
                 {props.active&&<BlockProperty>
                 <PropertyItem label="Width">
                     <Ranger min={300} max={1000} step={10} defaultValue={width} onChange={(v:number)=>setWidth(v)} />                    
@@ -57,9 +59,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                    <PropertyButton selected={align==='center'} onClick={()=>setAlign('center')}><FormatAlignCenter /></PropertyButton>
                    <PropertyButton selected={align==='right'} onClick={()=>setAlign('right')}><FormatAlignRight /></PropertyButton>
                 </PropertyItem>
-                <PropertyItem label="property">
-                  {Util.renderCustomProperty({defalutProperty:defalutProperty})}
-                </PropertyItem> 
+                {Util.renderCustomProperty(props.data)}
                 <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
             </BlockProperty>}
             {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={width} height={height}></iframe></div>}

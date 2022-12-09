@@ -12,7 +12,6 @@ import { Util } from '../utils/Util';
 export const Quote = (props:any)=>{
   const [content,setConent] = useState(props.data.data)
   const [commonSettings, setCommonSettings] = useState(props.data.common?props.data.common:{});
-  let defalutProperty=props.data.dm_field?props.data.dm_field:''
   const QuoteRef:any=useRef(null);
   const [isChange,setIsChange] = useState(false);
 
@@ -38,9 +37,7 @@ export const Quote = (props:any)=>{
   return (
     <>
        {props.active&&<BlockProperty>
-          <PropertyItem label="property">
-            {Util.renderCustomProperty({defalutProperty:defalutProperty})}
-          </PropertyItem> 
+           {Util.renderCustomProperty(props.data)}
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
         </BlockProperty>}
         <div style={commonSettings}>

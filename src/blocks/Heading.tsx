@@ -15,7 +15,6 @@ const Heading = (props:any)=>{
     const [level,setLevel] = useState(props.data.settings.level);
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
     const headRef:any=useRef(null);
-    let defalutProperty=props.data.dm_field?props.data.dm_field:''
     const [isChange,setIsChange] = useState(false);
     // let isChange = false;
     const changeText = (e?:any)=>{
@@ -63,9 +62,7 @@ const Heading = (props:any)=>{
           <PropertyItem label="Level">
                 <Ranger defaultValue={level} min={1} max={5} step={1} onChange={v=>{setLevel(v);setIsChange(true);}} />
           </PropertyItem>   
-          <PropertyItem label="property">
-            {Util.renderCustomProperty({defalutProperty:defalutProperty})}
-          </PropertyItem> 
+          {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
         </BlockProperty>}
         {render()}  

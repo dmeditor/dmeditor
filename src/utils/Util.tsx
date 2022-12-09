@@ -10,18 +10,6 @@ export interface BroseProps{
   defalutValue?:any,
 }
 
-export interface CustomPropertyProps{
-  defalutProperty?:any, 
-  onChange?:any,
-  blockData?:any,
-}
-
-export interface PrivatePropertyProps {
-  id:number, 
-  contenttype?:string, 
-  // afterAction:any
-}
-
 export const Util = {
   BrowseImage:null as any,
   BrowseLink:null as any,
@@ -41,10 +29,10 @@ export const Util = {
         return <DefaultBrowseUrl onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue} type={props.type}/> 
     }
   },
-  renderCustomProperty:(props:CustomPropertyProps)=>{
+  renderCustomProperty:(props:any)=>{
     if(Util.CustomProperty){
       let A = Util.CustomProperty as (props:any)=>JSX.Element;
-      return <A onChange={props.onChange}  defalutProperty={props.defalutProperty} blockData={props.blockData}/>;
+      return <A data={props}/>;
     }else{
       return null
     }

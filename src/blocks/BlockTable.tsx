@@ -54,7 +54,6 @@ export const Table = (props: ToolRenderProps) => {
   });
   const [commonSettings, setCommonSettings] = useState(props.data.common);
   const [isChange, setIsChange] = useState(false);
-  let defalutProperty=props.data.dm_field?props.data.dm_field:'';
   const [border, setBorderProp] = useState<bordersType>(() => {
     return Border
   });
@@ -394,9 +393,7 @@ export const Table = (props: ToolRenderProps) => {
             />
           )}
         </PropertyItem>
-        <PropertyItem label="property">
-            {Util.renderCustomProperty({defalutProperty:defalutProperty})}
-          </PropertyItem> 
+        {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
       </BlockProperty>}
       <div className="bani">

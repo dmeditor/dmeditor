@@ -11,7 +11,6 @@ export const Code = (props: ToolRenderProps) => {
     return props.data.data;
   });
   const [commonSettings, setCommonSettings] = useState(props.data.common);
-  let defalutProperty=props.data.dm_field?props.data.dm_field:''
   const [isChange,setIsChange] = useState(false);
 
   const changer = (e: React.FocusEvent<HTMLElement>) => {
@@ -28,9 +27,7 @@ export const Code = (props: ToolRenderProps) => {
   return (
     <>
       {props.active&&<BlockProperty>
-        <PropertyItem label="property">
-          {Util.renderCustomProperty({defalutProperty:defalutProperty})}
-        </PropertyItem> 
+        {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
       </BlockProperty>}
       <div style={commonSettings}>

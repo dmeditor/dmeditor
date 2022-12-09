@@ -14,7 +14,6 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [imageUrl, setImageUrl] = useState(props.data.source==='select'?'{image:'+props.data.data.url+'}':props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-    let defalutProperty=props.data.dm_field?props.data.dm_field:''
         
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
@@ -51,9 +50,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
                 <PropertyItem label='Source'>
                   <Button onClick={handleClickOpen}>Choose</Button>
                 </PropertyItem>
-                <PropertyItem label="property">
-                  {Util.renderCustomProperty({defalutProperty:defalutProperty})}
-                </PropertyItem> 
+                {Util.renderCustomProperty(props.data)}
                 <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
             </BlockProperty>}
                 <div style={fullScreen?{marginLeft:'-60px',marginRight:'-60px'}:{}}>
