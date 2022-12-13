@@ -66,7 +66,8 @@ https://github.com/digimakergo/dmeditor-sample
 
 *Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/BlockImage.tsx) as example*
 1. Create a block handler
-```typescript
+
+```javascript
 
 //define a tool
 import { ToolRenderProps } from "dmeditor";
@@ -117,6 +118,7 @@ registerTool(toolImage);
 ### Data format
 
 Here is an example:
+
 ```javascript
 [
     { type:'image',
