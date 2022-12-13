@@ -50,8 +50,9 @@ https://github.com/digimakergo/dmeditor-sample
 
 
 ### DMEditor Properties
+
 | Property | required | Type | Description | 
-|----|---|---|---|
+|-----|-----|-----|-----|
 | `data` | true | `Array<any>` | Data of blocks in array | 
 | `onChange` | false | `(data:Array<any>)=>void`  | Callback when change. |
 | `menu` | false | `React.ReactElement`  | Customized menu on toolbar |
