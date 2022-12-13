@@ -1,6 +1,8 @@
 # DMEditor
 dmeditor is a block-styled visual editor. Data is in json format.
 
+[Go to github project](https://github.com/digimakergo/dmeditor)
+
 ### Highlights
 - Real WYSIWYG(What you see is what you get)
 - Block based
