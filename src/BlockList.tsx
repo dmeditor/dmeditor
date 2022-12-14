@@ -7,24 +7,27 @@ import { BlockProperty } from "./BlockProperty";
 import { PropertyButton, PropertyItem } from "./utils/Property";
 
 
-interface ContainerProps{
+interface ListProps{
     data:Array<any>,
-    common?:any,
+    common?:any,    
+    active?:boolean,
     settings?:{
-        direction?:'vertical'|'horizontal',
-        allowedType?:string[]
-    }
+        direction?:'vertical'|'horizontal'
+    },
+    allowedType?:string[]
 }
 
-export const Container = (props:ContainerProps)=>{
+export const BlockList = (props:ListProps)=>{
+    const [activeIndex, setActiveIndex] = useState(props.active?0:-1);
+
     return <div className={'block blockcontainer'}>
-        {props.data.map( (childData)=>
+        {props.data.map( (childData, index)=>
             {
                 // if( child.hasOwnProperty('children') ){
                 //     return <Container data={child as BlockContainerType} />;
                 // }else{
                     return <div>
-                             <Block onChange={(data)=>{}} data={childData} />
+                             <Block inBlock={true} active={activeIndex==index} onChange={(data)=>{}} onActivate={()=>setActiveIndex(index)} data={childData} />
                        </div>;
                 // }
             }

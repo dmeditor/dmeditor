@@ -1,12 +1,13 @@
 import { AlignHorizontalLeftOutlined, AlignHorizontalRightOutlined, CollectionsOutlined } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { Block, DefBlock } from "../../Block";
+import { Block } from "../../Block";
+import {BlockList} from '../../BlockList';
 import { BlockProperty } from "../../BlockProperty";
 import { CommonSettings } from "../../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { PropertyButton, PropertyItem } from "../../utils";
 
-const BlockImageText = (props:ToolRenderProps)=>{
+const ImageHeadingText = (props:ToolRenderProps)=>{
     const [list, setList] = useState<Array<any>>(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -47,27 +48,30 @@ const BlockImageText = (props:ToolRenderProps)=>{
                 <Block data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
             </div>
             <div>
-                <Block data={list[1]} inBlock={true} active={props.active&&activeIndex==1} onActivate={()=>setActiveIndex(1)} onChange={data=>onChange(data, 1)} />
+                <BlockList allowedType={['text', 'heading']} data={list[1].data} />
             </div>
         </div>
     </div>
 }
 
-export const toolImageText: ToolDefinition = {
-    type: 'imagetext',
+export const toolImageHeadingText: ToolDefinition = {
+    type: 'image_heading_text',
     isComposited: true,
-    menu:  {text:"Image text", category:'blocks',icon: <CollectionsOutlined /> },
+    menu:  {text:"Image heading text", category:'blocks',icon: <CollectionsOutlined /> },
     initData: {
-        type:'imagetext',
+        type:'image_heading_text',
         settings:{childrenHorizontal: true},
         data:[ 
-                {type:'image', data:{url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhze-QNnca2liBrhRj4CjswGZSkqbhvSDJsQ&usqp=CAU'},settings:{}},
+            {type:'image', data:{url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhze-QNnca2liBrhRj4CjswGZSkqbhvSDJsQ&usqp=CAU'},settings:{}},
+            {type:'container', data:[
+                {type:'heading', data:'Title', common:{color: '#ff0000'}, settings:{level: 2}},
                 {"type":"text","data":[
-                    {"type":"paragraph","children":[{"text":"Default text"},
-                    {"type":"paragraph","align":"center","children":[{"text":""},{"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}},{"text":""}]}            
+                    {type:"paragraph","children":[{"text":"Default text"},
+                    {type:"paragraph","align":"center","children":[{"text":""},{"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}},{"text":""}]}            
+            ]}
             ]},                                                           
-            ],"common":{}}
-             ]},
-    view: (props:{data:any})=><div>Not implemented</div>,
-    render:BlockImageText    
+            ],"common":{}, "setting":{}}
+            ]},
+    view: (props:{data:any})=><ImageHeadingText data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
+    render:ImageHeadingText    
 }
