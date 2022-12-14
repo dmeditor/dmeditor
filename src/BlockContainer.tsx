@@ -7,39 +7,30 @@ import { BlockProperty } from "./BlockProperty";
 import { PropertyButton, PropertyItem } from "./utils/Property";
 
 
-export type BlockContainerType = {
-    settings:{ childrenHorizontal?: boolean},
-    children: Array<BlockContainerType|BlockInfo>,
-    allowedType:Array<string>
-} & BlockInfo;
-
-interface BlockContainerProps{
-    data:BlockContainerType
+interface ContainerProps{
+    data:Array<any>,
+    common?:any,
+    settings?:{
+        direction?:'vertical'|'horizontal',
+        allowedType?:string[]
+    }
 }
 
-export const BlockContainer = (props:BlockContainerProps)=>{
-    return <div className={'block blockcontainer block-type-'+props.data.type+' '+(props.data.settings.childrenHorizontal?'blockcontainer-horizontal':'')}>
-        {props.data.children.map( (child)=>
+export const Container = (props:ContainerProps)=>{
+    return <div className={'block blockcontainer'}>
+        {props.data.map( (childData)=>
             {
-                if( child.hasOwnProperty('children') ){
-                    return <BlockContainer data={child as BlockContainerType} />;
-                }else{
+                // if( child.hasOwnProperty('children') ){
+                //     return <Container data={child as BlockContainerType} />;
+                // }else{
                     return <div>
-                             <Block onChange={(data)=>{}} data={child as BlockInfo} />
+                             <Block onChange={(data)=>{}} data={childData} />
                        </div>;
-                }
+                // }
             }
         )}
     </div>
 }
-
-
-
-export type BlockContainerDefinition = {
-    allowedType: Array<string>,
-    
-}
-
 
 export const DefContainer = (props:{ required?:boolean,
                             type?:string,
