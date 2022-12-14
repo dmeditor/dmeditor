@@ -1,5 +1,6 @@
-# DMEditor
 dmeditor is a block-styled visual editor. Data is in json format.
+
+[Go to github project](https://github.com/digimakergo/dmeditor)
 
 ### Highlights
 - Real WYSIWYG(What you see is what you get)
@@ -46,12 +47,13 @@ return (
 
 
 ### Sample project 
-https://github.com/digimakergo/dmeditor-sample
+[https://github.com/digimakergo/dmeditor-sample](https://github.com/digimakergo/dmeditor-sample)
 
 
 ### DMEditor Properties
+
 | Property | required | Type | Description | 
-|----|--|-|---|
+|-----|-----|-----|-----|
 | `data` | true | `Array<any>` | Data of blocks in array | 
 | `onChange` | false | `(data:Array<any>)=>void`  | Callback when change. |
 | `menu` | false | `React.ReactElement`  | Customized menu on toolbar |
@@ -65,7 +67,8 @@ https://github.com/digimakergo/dmeditor-sample
 
 *Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/BlockImage.tsx) as example*
 1. Create a block handler
-```typescript
+
+```javascript
 
 //define a tool
 import { ToolRenderProps } from "dmeditor";
@@ -116,6 +119,7 @@ registerTool(toolImage);
 ### Data format
 
 Here is an example:
+
 ```javascript
 [
     { type:'image',
