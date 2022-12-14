@@ -14,11 +14,19 @@ interface ListProps{
     settings?:{
         direction?:'vertical'|'horizontal'
     },
-    allowedType?:string[]
+    allowedType?:string[],
+    onActivate?:()=>void
 }
 
 export const BlockList = (props:ListProps)=>{
     const [activeIndex, setActiveIndex] = useState(props.active?0:-1);
+
+    const activate = (index:number)=>{
+        setActiveIndex(index);
+        if(!props.active && props.onActivate ){
+            props.onActivate();
+        }
+    }
 
     return <div className={'block blockcontainer'}>
         {props.data.map( (childData, index)=>
@@ -27,7 +35,7 @@ export const BlockList = (props:ListProps)=>{
                 //     return <Container data={child as BlockContainerType} />;
                 // }else{
                     return <div>
-                             <Block inBlock={true} active={activeIndex==index} onChange={(data)=>{}} onActivate={()=>setActiveIndex(index)} data={childData} />
+                             <Block inBlock={true} active={activeIndex==index} onChange={(data)=>{}} onActivate={()=>activate(index)} data={childData} />
                        </div>;
                 // }
             }
