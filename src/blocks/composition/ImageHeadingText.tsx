@@ -27,9 +27,9 @@ const ImageHeadingText = (props:ToolRenderProps)=>{
         setActiveIndex(activeIndex==0?1:0);
     }
 
-    useEffect(()=>{
-        props.onChange({...props.data, data: list, common: commonSettings});
-    }, [list, commonSettings]);
+    // useEffect(()=>{
+    //     props.onChange({...props.data, data: list, common: commonSettings});
+    // }, [list, commonSettings]);
 
     let imageLeft = list[0].type==='image';
 
@@ -48,7 +48,7 @@ const ImageHeadingText = (props:ToolRenderProps)=>{
                 <Block data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
             </div>
             <div>
-                <BlockList allowedType={['text', 'heading']} data={list[1].data} onActivate={()=>setActiveIndex(1)} />
+                <BlockList allowedType={['text', 'heading']} active={props.active&&activeIndex==1} data={list[1].data} onActivate={()=>setActiveIndex(1)} />
             </div>
         </div>
     </div>
@@ -64,12 +64,18 @@ export const toolImageHeadingText: ToolDefinition = {
         data:[ 
             {type:'image', data:{url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhze-QNnca2liBrhRj4CjswGZSkqbhvSDJsQ&usqp=CAU'},settings:{}},
             {type:'container', data:[
-                {type:'heading', data:'Title', common:{color: '#ff0000'}, settings:{level: 2}},
-                {"type":"text","data":[
-                    {type:"paragraph","children":[{"text":"Default text"},
-                    {type:"paragraph","align":"center","children":[{"text":""},{"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}},{"text":""}]}            
-            ]}
-            ]},                                                           
+                {type:'heading', id:'1', data:'Title', common:{color: '#ff0000'}, settings:{level: 2}},
+                {"type":"text", id:'2', "data":[
+                    {type:"paragraph","children":[
+                        {"text":"Default text"}
+                    ]},
+                    {type:"paragraph","align":"center","children":[
+                        {"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}}
+                    ]}
+                    ]}, 
+                {"type":"text", id:'3', "data":[
+                {type:"paragraph","align":"right","children":[{"text":""},{"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Read more"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}},{"text":""}]}            
+              ]}
             ],"common":{}, "setting":{}}
             ]},
     view: (props:{data:any})=><ImageHeadingText data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
