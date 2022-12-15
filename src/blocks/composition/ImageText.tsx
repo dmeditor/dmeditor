@@ -62,11 +62,14 @@ export const toolImageText: ToolDefinition = {
         settings:{childrenHorizontal: true},
         data:[ 
                 {type:'image', data:{url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhze-QNnca2liBrhRj4CjswGZSkqbhvSDJsQ&usqp=CAU'},settings:{}},
-                {"type":"text","data":[
-                    {"type":"paragraph","children":[{"text":"Default text"},
-                    {"type":"paragraph","align":"center","children":[{"text":""},{"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}},{"text":""}]}            
-            ]},                                                           
-            ],"common":{}}
+                {"type":"text", id:'2', "data":[
+                    {type:"paragraph","children":[
+                        {"text":"Default text"}
+                    ]},
+                    {type:"paragraph","align":"center","children":[
+                        {"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}}
+                    ]}
+                    ]}
              ]},
     view: (props:{data:any})=><div>Not implemented</div>,
     render:BlockImageText    
