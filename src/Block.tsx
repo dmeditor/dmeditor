@@ -60,8 +60,8 @@ export const Block = React.memo((props:BlockProps)=>{
     }, 500), []);
 
     const startAdd = (under:number)=>{
-      setAddUnder(under);
       setAdding(true);
+      setAddUnder(under);
     }
 
     const addBlock = (type:string)=>{
@@ -108,7 +108,7 @@ export const Block = React.memo((props:BlockProps)=>{
 
 });
 
-const RenderMenu=(props:{onAdd:any, onCancel:()=>void, allowedType?:string[]})=>{
+export const RenderMenu=(props:{onAdd:(type:string)=>void, onCancel:()=>void, allowedType?:string[]})=>{
   const menuRoot = document.getElementById('dmeditor-add-menu');
 
   const emptyContainer=()=>{

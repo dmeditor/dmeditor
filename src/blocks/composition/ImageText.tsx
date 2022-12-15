@@ -1,6 +1,6 @@
 import { AlignHorizontalLeftOutlined, AlignHorizontalRightOutlined, CollectionsOutlined } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { Block, DefBlock } from "../../Block";
+import { Block } from "../../Block";
 import { BlockProperty } from "../../BlockProperty";
 import { CommonSettings } from "../../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";

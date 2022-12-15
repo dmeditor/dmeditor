@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Block } from './Block';
+import { Block, RenderMenu } from './Block';
 import './DMEditor.css';
 import './Init';
 import { MenuList } from './MenuList';
@@ -40,7 +40,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         Util.pageTabActiveIndex=props.pageTabActiveIndex||0
     },[]);
     const [blocks, setBlocks] = useState(props.data?props.data:[]);
-    const [activeBlock, setActiveBlock] = useState(0);
+    const [activeBlock, setActiveBlock] = useState(blocks.length>0?0:-1);
     const [viewmode, setViewmode] = useState('edit');
 
     const addAbove = (type: string, index:number)=>{
@@ -144,7 +144,9 @@ export const DMEditor = (props:DMEditorProps)=>{
         <div id="dmeditor-main" className='layout-main-container'>               
          <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
             <div style={{width: '100%', height: 1}}></div>
+            
             {viewmode==='edit'&&<>
+
             {blocks.map((block, index)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
@@ -175,13 +177,17 @@ export const DMEditor = (props:DMEditorProps)=>{
             <PropertyTab 
                 active={0}
                 tabs={[
-                     {title: getDef(blocks[activeBlock].type).menu.text, 
+                     {title: blocks[activeBlock]?(getDef(blocks[activeBlock].type).menu.text):'Insert', 
                      element:
                       <div style={{marginBottom:'100px'}}>
                         <div id="dmeditor-property" />
-                        <div id="dmeditor-add-menu" />
+                        <div id="dmeditor-add-menu">
+                          {blocks.length===0&&<MenuList onSelect={(type:string)=>{addUnder(type, -1)}} /> }
+                        </div>
                         {/* {mode==='add'&&<MenuList onSelect={confirmAddMore} />} */}
                         {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
+
+
                         {viewmode==='edit'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '282px',padding:'10px', backgroundColor:'#ffffff'}}>
                             <div style={{marginBottom:'15px'}} >
                             <a href="/" title="Move up" onClick={(e)=>{e.preventDefault();onMove('up')}}><ArrowUpwardOutlined /> </a> 
