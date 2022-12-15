@@ -24,6 +24,7 @@ interface BlockProps{
     onCancel?:()=>void,
     view?:boolean,
     inBlock?:boolean,
+    newBlock?:boolean,
     addedType?:string[],
     //undefined means can not have sibling
     siblingDirection?:'vertical'|'horizontal',
@@ -82,7 +83,7 @@ export const Block = React.memo((props:BlockProps)=>{
                 return <ViewRender data={props.data} />
             }else{
                 let ToolRender = def.render;
-                return <ToolRender adding={adding} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />
+                return <ToolRender adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />
             }
         }else{
             return 'Unknown type:'+props.data.type;

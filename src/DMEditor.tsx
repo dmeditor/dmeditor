@@ -41,6 +41,7 @@ export const DMEditor = (props:DMEditorProps)=>{
     },[]);
     const [blocks, setBlocks] = useState(props.data?props.data:[]);
     const [activeBlock, setActiveBlock] = useState(blocks.length>0?0:-1);
+    const [newBlock, setNewBlock] = useState(false);
     const [viewmode, setViewmode] = useState('edit');
 
     const addAbove = (type: string, index:number)=>{
@@ -51,6 +52,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             let allBlocks = [...blocks];
             allBlocks.splice(index, 0, defaultData );
             setBlocks(allBlocks);
+            setNewBlock(true);
             setActiveBlock(index-1);
         }
     }
@@ -74,6 +76,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             let allBlocks = [...blocks];                        
             allBlocks.splice(index+1, 0, defaultData);
             setBlocks( allBlocks );
+            setNewBlock(true);
             setActiveBlock(index+1);
         }
     }    
@@ -153,15 +156,18 @@ export const DMEditor = (props:DMEditorProps)=>{
                 return  <><Block
                          siblingDirection='vertical'
                          data={block} active={currentSelected} 
+                         newBlock={currentSelected&&newBlock?true:false}
                          onCancel={onDelete}
                          key={block.id}
                          onActivate={()=>{
-                            setActiveBlock(index);                                                
+                            setActiveBlock(index);      
+                            setNewBlock(false)                                          
                     }} 
                     onChange={data=>{
                       let newBlocks = [...blocks];
                       newBlocks[index]=data;
                       setBlocks(newBlocks)
+                      setNewBlock(false)
                     }}
                     onAddAbove={(type:string)=>addAbove(type, index)} 
                     onAddUnder={(type:string)=>addUnder(type, index)} /></>;         
