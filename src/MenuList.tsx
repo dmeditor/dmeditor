@@ -4,17 +4,20 @@ import { blockManager } from './BlockManager';
 import './MenuList.css';
 import { GetCategories, GetToolDefinitions } from './ToolDefinition';
 
-export const MenuList = (props:{onSelect:any})=>{
+export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
    
     const blockCategory = GetCategories();
 
     const registeredTypes = GetToolDefinitions();
 
     let names: Array<{type: string, name: string}> = [];
-    for( let item of Object.keys( registeredTypes ) ){
-        const toolType = registeredTypes[item];
+    for( let blockType of Object.keys( registeredTypes ) ){
+        if( props.allowedType && !props.allowedType.includes(blockType) ){
+            continue;
+        }
+        const toolType = registeredTypes[blockType];
         if( toolType.menu ){
-            names = [...names, {type: item, name: toolType.menu.text}];
+            names = [...names, {type: blockType, name: toolType.menu.text}];
         }
     }
 

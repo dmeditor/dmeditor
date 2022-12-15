@@ -40,23 +40,19 @@ export const DMEditor = (props:DMEditorProps)=>{
         Util.pageTabActiveIndex=props.pageTabActiveIndex||0
     },[]);
     const [blocks, setBlocks] = useState(props.data?props.data:[]);
-    const [activeBlock, setActiveBlock] = useState(-1);
-    const [addMore, setAddMore] = useState(1);   
-    const [mode, setMode] = useState('add' as 'add'|'select');
+    const [activeBlock, setActiveBlock] = useState(0);
     const [viewmode, setViewmode] = useState('edit');
-    const [addingBlock, setAddingBlock] = useState(-1);
 
-    const addAbove = (type: string)=>{
+    const addAbove = (type: string, index:number)=>{
         if( type ){
             //todo: optimize this to clone or initData()
             const defaultData = JSON.parse( JSON.stringify( getDef(type).initData ) );
             defaultData.id = nanoid();
             let allBlocks = [...blocks];
-            allBlocks.splice(activeBlock, 0, defaultData );
+            allBlocks.splice(index, 0, defaultData );
             setBlocks(allBlocks);
+            setActiveBlock(index-1);
         }
-        setMode('add');
-        setAddMore(0);
     }
 
     useEffect(()=>{
@@ -70,34 +66,17 @@ export const DMEditor = (props:DMEditorProps)=>{
       }
   }, [activeBlock]);
 
-    const addUnder = (type: string)=>{
+    const addUnder = (type: string, index:number)=>{
         if( type ){
             //todo: optimize this to clone or initData()
             const defaultData = JSON.parse( JSON.stringify(getDef(type).initData) );
             defaultData.id = nanoid();
             let allBlocks = [...blocks];                        
-            allBlocks.splice(activeBlock+1, 0, defaultData);
+            allBlocks.splice(index+1, 0, defaultData);
             setBlocks( allBlocks );
-            setActiveBlock(activeBlock+1);
-            setAddingBlock(activeBlock+1);
+            setActiveBlock(index+1);
         }
-        setMode('add');
-        setAddMore(0);
     }    
-
-    const onAddMore = (position:number)=>{
-        setMode('add');
-        setAddMore(position);
-    }
-
-    const confirmAddMore = (type: string)=>{
-        if( addMore > 0 ){
-            addUnder( type );
-        }else if(addMore < 0){
-            addAbove(type);
-        }
-        setMode('select');
-    }
 
     const onDelete = ()=>{
         let fullBlocks = [...blocks];
@@ -105,7 +84,6 @@ export const DMEditor = (props:DMEditorProps)=>{
         setBlocks(fullBlocks);
         if( fullBlocks.length===0 ){
             setActiveBlock(-1);
-            setAddMore(1);
         }else{
           if(activeBlock===0){
             setActiveBlock(0);
@@ -170,26 +148,21 @@ export const DMEditor = (props:DMEditorProps)=>{
             {blocks.map((block, index)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
-                return  <><Block adding={currentSelected&&index===addingBlock}
+                return  <><Block
                          siblingDirection='vertical'
                          data={block} active={currentSelected} 
                          onCancel={onDelete}
                          key={block.id}
                          onActivate={()=>{
-                            setActiveBlock(index);
-                            setAddingBlock(-1);
-                            //changed from other's to current
-                            if( !currentSelected ){
-                                setMode('select');
-                            }                        
+                            setActiveBlock(index);                                                
                     }} 
                     onChange={data=>{
                       let newBlocks = [...blocks];
                       newBlocks[index]=data;
                       setBlocks(newBlocks)
                     }}
-                    onAddAbove={()=>onAddMore(-1)} 
-                    onAddUnder={()=>onAddMore(1)} /></>;         
+                    onAddAbove={(type:string)=>addAbove(type, index)} 
+                    onAddUnder={(type:string)=>addUnder(type, index)} /></>;         
              }
              return a();        
             }
@@ -202,13 +175,14 @@ export const DMEditor = (props:DMEditorProps)=>{
             <PropertyTab 
                 active={0}
                 tabs={[
-                     {title: mode=='select'?(getDef(blocks[activeBlock].type).menu.text):'Add block', 
+                     {title: getDef(blocks[activeBlock].type).menu.text, 
                      element:
                       <div style={{marginBottom:'100px'}}>
-                        <div id="dmeditor-property" style={{display: mode==='select'?'block':'none'}}/>
-                        {mode==='add'&&<MenuList onSelect={confirmAddMore} />}
+                        <div id="dmeditor-property" />
+                        <div id="dmeditor-add-menu" />
+                        {/* {mode==='add'&&<MenuList onSelect={confirmAddMore} />} */}
                         {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
-                        {viewmode==='edit'&&mode=='select'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '282px',padding:'10px', backgroundColor:'#ffffff'}}>
+                        {viewmode==='edit'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '282px',padding:'10px', backgroundColor:'#ffffff'}}>
                             <div style={{marginBottom:'15px'}} >
                             <a href="/" title="Move up" onClick={(e)=>{e.preventDefault();onMove('up')}}><ArrowUpwardOutlined /> </a> 
                             <a href="/" title="Move down" onClick={(e)=>{e.preventDefault();onMove('down')}}><ArrowDownwardOutlined /></a>
@@ -232,7 +206,7 @@ export const DMEditorView = (props:{data:Array<any>})=>{
     return <div className='dmeditor-view'>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
-           return  <><Block adding={false}
+           return  <><Block
                     data={block} active={false} 
                     onCancel={()=>{}}
                     key={index}

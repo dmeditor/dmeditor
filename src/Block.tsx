@@ -1,9 +1,12 @@
-import { AddBoxOutlined } from "@mui/icons-material"
+import { AddBoxOutlined, CancelOutlined } from "@mui/icons-material"
 import React from "react"
 import { useEffect, useRef, useState,useCallback} from "react"
 import { getDef } from "./ToolDefinition"
 import { Util } from './utils/Util';
 import _debounce from 'lodash/debounce'
+import ReactDOM from "react-dom";
+import { MenuList } from "./MenuList";
+import { Button } from "@mui/material";
 
 export type BlockInfo = {
     type: string
@@ -14,22 +17,22 @@ export type BlockInfo = {
 interface BlockProps{
     data: any,
     active?:boolean,
-    adding?:boolean,
     onActivate?: ()=>void,
-    onAddAbove?:any,
-    onAddUnder?:any,
+    onAddAbove?:(type:string)=>void,
+    onAddUnder?:(type:string)=>void,
     onChange:(data:any)=>void,
     onCancel?:()=>void,
     view?:boolean,
     inBlock?:boolean,
+    addedType?:string[],
     //undefined means can not have sibling
     siblingDirection?:'vertical'|'horizontal',
 }
 
 export const Block = React.memo((props:BlockProps)=>{
     const [isActive, setIsActive] = useState(props.active?true:false);
-    // const ref:any = useRef();
-    // useOnClickOutside(ref, () => changeActive(false));
+    const [adding, setAdding] = useState(false);
+    const [addUnder, setAddUnder] = useState(0);  
 
     //update is active from props
     useEffect(()=>{
@@ -37,9 +40,11 @@ export const Block = React.memo((props:BlockProps)=>{
     }, [props.active]);
 
     const activeBlock = ()=>{
-      setIsActive(true);
-      if(props.onActivate){
-        props.onActivate();
+      if(!isActive){
+        setIsActive(true);
+        if(props.onActivate){
+          props.onActivate();
+        }
       }
     }
 
@@ -54,6 +59,21 @@ export const Block = React.memo((props:BlockProps)=>{
       props.onChange(data);
     }, 500), []);
 
+    const startAdd = (under:number)=>{
+      setAddUnder(under);
+      setAdding(true);
+    }
+
+    const addBlock = (type:string)=>{
+      if( addUnder > 0 && props.onAddUnder ){
+        props.onAddUnder(type);
+      }
+
+      if( addUnder < 0 && props.onAddAbove ){
+        props.onAddAbove(type);
+      }
+    }
+
     const render = ()=>{
         let def = getDef( props.data.type );
         if( def){
@@ -62,26 +82,27 @@ export const Block = React.memo((props:BlockProps)=>{
                 return <ViewRender data={props.data} />
             }else{
                 let ToolRender = def.render;
-                return <ToolRender adding={props.adding} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />
+                return <ToolRender adding={adding} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />
             }
         }else{
             return 'Unknown type:'+props.data.type;
         }
     };
 
-    return <div className={'block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} onClick={(e:any)=>activeBlock()}>
+    return <div className={'block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')}>
+            {adding&&<RenderMenu onAdd={addBlock} onCancel={()=>setAdding(false)} allowedType ={props.addedType} />}
             {props.siblingDirection==='vertical'&&<div className="tool tool-above">
-                            <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();props.onAddAbove()}}>
+                            <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
                                 <AddBoxOutlined /></a>
                         </div>}   
                         <div className={"pre-render"}>
                           {Util.renderPreBlock({blockData:props.data.dm_field?props.data.dm_field:''})}
                           </div>         
-        <div className={"block block-type-"+props.data.type}>
+        <div className={"block block-type-"+props.data.type}  onClick={(e:any)=>activeBlock()}>
         {render()}  
         </div>   
     {props.siblingDirection==='vertical'&&<div className="tool tool-under">
-                <a className="tool-item" href="/" title="Add under" onClick={(e)=>{e.preventDefault();props.onAddUnder()}}><AddBoxOutlined /></a>
+                <a className="tool-item" href="/" title="Add under" onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(1)}}><AddBoxOutlined /></a>
             </div>}  
     </div>
 
@@ -123,4 +144,29 @@ const useOnClickOutside = (ref:any, handler:any)=> {
       },
       [ref, handler]
     );
+}
+
+
+const RenderMenu=(props:{onAdd:any, onCancel:()=>void, allowedType?:string[]})=>{
+  const menuRoot = document.getElementById('dmeditor-add-menu');
+
+  const emptyContainer=()=>{
+    if(menuRoot){
+      menuRoot.innerHTML = '';
+    }
+  }
+  
+  return menuRoot?ReactDOM.createPortal(
+        <div>
+          <div style={{float:'right', marginRight:'5px'}}>
+            <Button onClick={()=>{emptyContainer();}}><CancelOutlined /></Button>
+          </div>
+          <MenuList allowedType={props.allowedType} onSelect={(type:string)=>{if(props.onAdd){
+            props.onAdd(type);
+            emptyContainer();
+            }}} />          
+        </div>            
+      ,
+      menuRoot as HTMLElement
+    ):<></>
 }
