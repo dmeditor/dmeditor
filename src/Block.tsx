@@ -70,7 +70,7 @@ export const Block = React.memo((props:BlockProps)=>{
     };
 
     return <div className={'block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} onClick={(e:any)=>activeBlock()}>
-            {isActive&&props.siblingDirection==='vertical'&&<div className="tool tool-above">                             
+            {props.siblingDirection==='vertical'&&<div className="tool tool-above">
                             <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();props.onAddAbove()}}>
                                 <AddBoxOutlined /></a>
                         </div>}   
@@ -80,7 +80,7 @@ export const Block = React.memo((props:BlockProps)=>{
         <div className={"block block-type-"+props.data.type}>
         {render()}  
         </div>   
-    {isActive&&props.siblingDirection==='vertical'&&<div className="tool tool-under">                             
+    {props.siblingDirection==='vertical'&&<div className="tool tool-under">
                 <a className="tool-item" href="/" title="Add under" onClick={(e)=>{e.preventDefault();props.onAddUnder()}}><AddBoxOutlined /></a>
             </div>}  
     </div>
