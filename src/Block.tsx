@@ -108,45 +108,6 @@ export const Block = React.memo((props:BlockProps)=>{
 
 });
 
-//block: type, required, max, min, containerProperties
-//container: allowedType, 
-//common: activatedOnSelect(boolean)
-
-//next: trigger
-export const DefBlock = (props:{required:boolean, type:string, 
-    min?:number, 
-    allowedSettings?: string[],
-    onActivate?:()=>void,
-    active?:boolean,
-    max?:number})=>{
-    let defaultData = getDef(props.type).initData;
-    return <Block onChange={()=>{}} data={defaultData} onActivate={props.onActivate} />
-}
-
-
-const useOnClickOutside = (ref:any, handler:any)=> {
-    useEffect(
-      () => {
-        const listener = (event:any) => {
-          if (!ref.current || ref.current.contains(event.target)) {
-            return;
-          }
-          handler(event);
-        };
-  
-        document.getElementById('dmeditor-main')?.addEventListener("mousedown", listener);
-        document.getElementById('dmeditor-main')?.addEventListener("touchstart", listener);
-  
-        return () => {
-          document.getElementById('dmeditor-main')?.removeEventListener("mousedown", listener);
-          document.getElementById('dmeditor-main')?.removeEventListener("touchstart", listener);
-        };
-      },
-      [ref, handler]
-    );
-}
-
-
 const RenderMenu=(props:{onAdd:any, onCancel:()=>void, allowedType?:string[]})=>{
   const menuRoot = document.getElementById('dmeditor-add-menu');
 
