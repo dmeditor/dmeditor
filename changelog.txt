@@ -1,6 +1,7 @@
 0.1.0-beta.2
-- 2022-12-16 added BlockList for api use
-- 2022-12-16 added ImageHeadingText
+- 2022-12-16 improved: hoved to show adding tool
+- 2022-12-16 added: BlockList for api use
+- 2022-12-16 added: ImageHeadingText
 - 2022-12-14 updated: put MenuList in Block instead of DMEditor
 - 2022-12-14 added: ImageText
 - 2022-12-09 updated: DMEditor setting should only execute once
