@@ -37,8 +37,15 @@ export const Block = React.memo((props:BlockProps)=>{
 
     //update is active from props
     useEffect(()=>{
-      setIsActive(props.active?true:false)
+      setIsActive(props.active?true:false);      
     }, [props.active]);
+
+
+    useEffect(()=>{
+      if( !isActive ){
+          setAdding(false);
+      }
+    }, [isActive])
 
     const activeBlock = ()=>{
       if(!isActive){
@@ -73,6 +80,7 @@ export const Block = React.memo((props:BlockProps)=>{
       if( addUnder < 0 && props.onAddAbove ){
         props.onAddAbove(type);
       }
+      setAdding(false);
     }
 
     const render = ()=>{
@@ -112,22 +120,15 @@ export const Block = React.memo((props:BlockProps)=>{
 export const RenderMenu=(props:{onAdd:(type:string)=>void, onCancel:()=>void, allowedType?:string[]})=>{
   const menuRoot = document.getElementById('dmeditor-add-menu');
 
-  const emptyContainer=()=>{
-    if(menuRoot){
-      menuRoot.innerHTML = '';
-    }
-  }
-  
   return menuRoot?ReactDOM.createPortal(
         <div>
           <div style={{float:'right', marginRight:'5px'}}>
-            <Button onClick={()=>{emptyContainer();}}><CancelOutlined /></Button>
+            <Button onClick={props.onCancel}><CancelOutlined /></Button>
           </div>
           <MenuList allowedType={props.allowedType} onSelect={(type:string)=>{if(props.onAdd){
             props.onAdd(type);
-            emptyContainer();
             }}} />          
-        </div>            
+        </div>          
       ,
       menuRoot as HTMLElement
     ):<></>
