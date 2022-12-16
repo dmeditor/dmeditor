@@ -190,8 +190,6 @@ export const DMEditor = (props:DMEditorProps)=>{
                         <div id="dmeditor-add-menu">
                           {blocks.length===0&&<MenuList onSelect={(type:string)=>{addUnder(type, -1)}} /> }
                         </div>
-                        {/* {mode==='add'&&<MenuList onSelect={confirmAddMore} />} */}
-                        {/* {(addMore==0&&activeBlock>=0)&&<div id="dmeditor-property"></div> } */}
 
 
                         {viewmode==='edit'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '282px',padding:'10px', backgroundColor:'#ffffff'}}>
