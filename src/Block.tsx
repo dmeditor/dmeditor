@@ -32,7 +32,7 @@ interface BlockProps{
 
 export const Block = React.memo((props:BlockProps)=>{
     const [isActive, setIsActive] = useState(props.active?true:false);
-    const [adding, setAdding] = useState(false);
+    const [selectingTool, setSelectingTool] = useState(false);
     const [addUnder, setAddUnder] = useState(0);  
 
     //update is active from props
@@ -43,7 +43,7 @@ export const Block = React.memo((props:BlockProps)=>{
 
     useEffect(()=>{
       if( !isActive ){
-          setAdding(false);
+          setSelectingTool(false);
       }
     }, [isActive])
 
@@ -68,7 +68,7 @@ export const Block = React.memo((props:BlockProps)=>{
     }, 500), []);
 
     const startAdd = (under:number)=>{
-      setAdding(true);
+      setSelectingTool(true);
       setAddUnder(under);
     }
 
@@ -80,7 +80,7 @@ export const Block = React.memo((props:BlockProps)=>{
       if( addUnder < 0 && props.onAddAbove ){
         props.onAddAbove(type);
       }
-      setAdding(false);
+      setSelectingTool(false);
     }
 
     const render = ()=>{
@@ -99,7 +99,7 @@ export const Block = React.memo((props:BlockProps)=>{
     };
 
     return <div className={'block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')}>
-            {adding&&<RenderMenu onAdd={addBlock} onCancel={()=>setAdding(false)} allowedType ={props.addedType} />}
+            {selectingTool&&<RenderMenu onAdd={addBlock} onCancel={()=>setSelectingTool(false)} allowedType ={props.addedType} />}
             {props.siblingDirection==='vertical'&&<div className="tool tool-above">
                             <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
                                 <AddBoxOutlined /></a>
