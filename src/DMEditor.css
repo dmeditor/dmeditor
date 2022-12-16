@@ -39,7 +39,7 @@
   display: none;
 }
 
-.block-container:hover > .tool{
+.viewmode-edit .block-container:hover > .tool, .viewmode-edit .block-container.active > .tool{
   display: block;
 }
 
@@ -98,8 +98,8 @@
 .tool{
   position: absolute;
   z-index: 15;
-  left: 0px;
-  width: 100%;
+  left: 48%;
+  width: 50px;
   text-align: center;
 }
 
@@ -108,14 +108,14 @@
 }
 
 .tool-above{
-  top: -30px;
-  height: 30px;
+  top: -26px;
+  height: 26px;
 }
 
 .tool-under{
-  bottom: -30px;
-  height: 30px;
-  padding-top: 5px;
+  bottom: -26px;
+  height: 26px;
+  padding-top: 2px;
 }
 
 .blockcontainer-horizontal{
@@ -127,13 +127,18 @@
   outline: 1px solid rgba(0,0,0,0);
 }
 
-.viewmode-edit .block-container:hover, .viewmode-edit .active{
-  outline: 1px solid #00721f;
-  outline-offset: 3px;
+.viewmode-edit .block-container.active{
+  outline: 1px solid #00721f !important;
+  outline-offset: 1px;
+}
+
+.viewmode-edit .block-container:hover{
+  outline: 1px dashed #00721f;
+  outline-offset: 1px;
 }
 
 .viewmode-edit .inblock.block-container:hover, .viewmode-edit .active.inblock{
-  outline: 1px dashed #00721f;
+  outline: 1px dashed #00721f !important;
   outline-offset: 1px;
 }
 
