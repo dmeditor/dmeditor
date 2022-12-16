@@ -16,19 +16,12 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const handleClickOpen = ()=>{
       setAdding(true);
-      setAdding(false);
-      setTimeout(()=>{setAdding(true);},10)
     }
 
     const submitVideo = (val:any,type:string)=>{
         setVideoUrl( val );
         setAdding(false);
-    }
-    const handleClose = (event?:any, reason?:any) => {
-      if (reason && reason === "backdropClick") 
-      return;
-      setAdding(false);
-    };
+    }  
 
     useEffect(()=>{
       props.onChange({type:'video', data: videoUrl, common: commonSettings});
@@ -36,7 +29,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
 
     return <div style={{width: width,height:height, ...commonSettings}}>
             {adding&&<div>
-              <Util.renderBroseURL type={'Video'} onConfirm={submitVideo} adding={adding} />
+              <Util.renderBroseURL defalutValue={videoUrl} type={'Video'} onConfirm={submitVideo} adding={adding} />
             </div>}
             {props.active&&<BlockProperty  blocktype="video" inBlock={props.inBlock}>
                 <div>
