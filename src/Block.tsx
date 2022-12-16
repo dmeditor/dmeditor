@@ -8,6 +8,7 @@ import ReactDOM from "react-dom";
 import { MenuList } from "./MenuList";
 import { Button } from "@mui/material";
 import { BlockProperty } from "./BlockProperty";
+import { PropertyButton } from "./utils";
 
 export type BlockInfo = {
     type: string
@@ -112,7 +113,7 @@ export const Block = React.memo((props:BlockProps)=>{
         <div className={"block block-type-"+props.data.type}  onClick={(e:any)=>activeBlock()}>
         {isActive&&props.onDelete&&<BlockProperty blocktype={props.data.type}>
           <div style={{float: 'right'}}>
-            <Button color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></Button>
+            <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>
           </div>
           </BlockProperty>}
         {render()}  

@@ -42,7 +42,7 @@ export const PropertyGroup = (props:{header: React.ReactNode, children:any, expa
 }
 
 export const PropertyButton = (props:ButtonProps&{title?:string, selected?:boolean})=>{
-    let sx:any={color: '#8a8a8a', marginRight: '2px', ':hover': {
+    let sx:any={color: props.color?props.color:'#8a8a8a', marginRight: '2px', ':hover': {
         bgcolor: '#eaeaea',
       }};
 
