@@ -42,6 +42,19 @@ export const BlockList = (props:BlockListProps)=>{
         }
     }
 
+    const onDelete = (index:number)=>{
+        let blocks = [...data];
+        blocks.splice(activeIndex, 1);         
+        setData(blocks);  
+        {
+          if(activeIndex===0){
+            setActiveIndex(0);
+          }else{
+            setActiveIndex(activeIndex-1);
+          }
+        }
+    }
+
     return <div className={'blocklist'}>
         {data.map( (childData, index)=>
             {
@@ -49,7 +62,7 @@ export const BlockList = (props:BlockListProps)=>{
                 //     return <Container data={child as BlockContainerType} />;
                 // }else{
                     return <div key={childData.id}>
-                             <Block addedType={props.allowedType} onAddUnder={addUnder} siblingDirection={'vertical'} inBlock={true} active={(props.active&&activeIndex==index)?true:false} onChange={(data)=>{}} onActivate={()=>activate(index)} data={childData} />
+                             <Block addedType={props.allowedType} onDelete={()=>onDelete(index)} onAddUnder={addUnder} siblingDirection={'vertical'} inBlock={true} active={(props.active&&activeIndex==index)?true:false} onChange={(data)=>{}} onActivate={()=>activate(index)} data={childData} />
                        </div>;
                 // }
             }

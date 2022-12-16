@@ -1,4 +1,4 @@
-import { AddBoxOutlined, CancelOutlined } from "@mui/icons-material"
+import { AddBoxOutlined, CancelOutlined, DeleteOutline } from "@mui/icons-material"
 import React from "react"
 import { useEffect, useRef, useState,useCallback} from "react"
 import { getDef } from "./ToolDefinition"
@@ -7,6 +7,7 @@ import _debounce from 'lodash/debounce'
 import ReactDOM from "react-dom";
 import { MenuList } from "./MenuList";
 import { Button } from "@mui/material";
+import { BlockProperty } from "./BlockProperty";
 
 export type BlockInfo = {
     type: string
@@ -28,6 +29,7 @@ interface BlockProps{
     addedType?:string[],
     //undefined means can not have sibling
     siblingDirection?:'vertical'|'horizontal',
+    onDelete?:()=>void
 }
 
 export const Block = React.memo((props:BlockProps)=>{
@@ -108,6 +110,11 @@ export const Block = React.memo((props:BlockProps)=>{
                           {Util.renderPreBlock({blockData:props.data.dm_field?props.data.dm_field:''})}
                           </div>         
         <div className={"block block-type-"+props.data.type}  onClick={(e:any)=>activeBlock()}>
+        {isActive&&props.onDelete&&<BlockProperty blocktype={props.data.type}>
+          <div style={{float: 'right'}}>
+            <Button color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></Button>
+          </div>
+          </BlockProperty>}
         {render()}  
         </div>   
     {props.siblingDirection==='vertical'&&<div className="tool tool-under">
