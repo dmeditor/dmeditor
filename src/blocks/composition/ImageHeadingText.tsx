@@ -8,7 +8,7 @@ import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { PropertyButton, PropertyItem } from "../../utils";
 
 const ImageHeadingText = (props:ToolRenderProps)=>{
-    const [list, setList] = useState<Array<any>>(props.data.data);
+    const [list, setList] = useState<Array<any>>(props.data.children?props.data.children:[]);
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const [activeIndex, setActiveIndex] = useState(0);
     
@@ -18,31 +18,7 @@ const ImageHeadingText = (props:ToolRenderProps)=>{
         setList(newList);
     }
 
-    const changeAlign = ()=>{
-        let newList = [...list];
-        let data0 = newList[0];
-        newList[0] = newList[1];
-        newList[1] = data0;
-        setList(newList);
-        setActiveIndex(activeIndex==0?1:0);
-    }
-
-    // useEffect(()=>{
-    //     props.onChange({...props.data, data: list, common: commonSettings});
-    // }, [list, commonSettings]);
-
-    let imageLeft = list[0].type==='image';
-
-    return <div style={...commonSettings}>
-        {props.active&&<BlockProperty blocktype="imagetext" inBlock={props.inBlock}>
-            <PropertyItem label="Image position" autoWidth>
-                <PropertyButton selected={imageLeft} onClick={()=>{if(!imageLeft){changeAlign()}}}>
-                    <AlignHorizontalLeftOutlined />
-                </PropertyButton>
-                <PropertyButton selected={!imageLeft} onClick={()=>{if(imageLeft){changeAlign()}}}><AlignHorizontalRightOutlined /></PropertyButton>
-            </PropertyItem>
-            <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} /></div>                 
-        </BlockProperty>}
+    return <div style={...commonSettings}>       
         <div className="dm-columns columns-2">
             <div>
                 <Block data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
@@ -61,7 +37,8 @@ export const toolImageHeadingText: ToolDefinition = {
     initData: {
         type:'image_heading_text',
         settings:{childrenHorizontal: true},
-        data:[ 
+        data:'',
+        children:[ 
             {type:'image', data:{url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhze-QNnca2liBrhRj4CjswGZSkqbhvSDJsQ&usqp=CAU'},settings:{}},
             {type:'container', data:[
                 {type:'heading', id:'1', data:'Title', common:{color: '#ff0000'}, settings:{level: 2}},
