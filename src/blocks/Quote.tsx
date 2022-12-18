@@ -54,9 +54,11 @@ export const toolQuote:ToolDefinition = {
   isComposited: false,
   name:"Quote", 
   menu:  {category:'basic',icon: <TitleOutlined /> },
-  initData: {type:'quote',
+  initData: ()=>{
+    return {type:'quote',
     settings:{},
     data:'quotetest'
+  } 
   },
   view: (props:{data:any})=><Quote data={props.data} active={false} onChange={()=>{}} />,
   render: (props:{data:any, active:boolean})=><Quote {...props} />

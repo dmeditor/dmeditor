@@ -451,14 +451,16 @@ export const toolTable: ToolDefinition = {
   type: "table",
   name: "Table", 
   menu: {category: "basic", icon: <GridOn /> },
-  initData: {
-    type: "table",
-    data: [
-      ["", "", "", ""],
-      ["", "", "", ""],
-    ],
-    common:{width: '100%'},
-    settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
+  initData: ()=>{  
+    return {
+      type: "table",
+      data: [
+        ["", "", "", ""],
+        ["", "", "", ""],
+      ],
+      common:{width: '100%'},
+      settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
+    }
   },
   view: (props:{data:any})=><Table data={props.data} inBlock={false} active={false} onChange={()=>{}} />,
   render: (props: ToolRenderProps) => <Table {...props} />,

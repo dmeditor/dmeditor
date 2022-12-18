@@ -355,19 +355,21 @@ export const toolText:ToolDefinition = {
     name: 'Text',
     isComposited: false,
     menu:  {category:'basic',icon: <TextFormatOutlined /> },
-    initData: {
-      type:'text',
-      data:[
-          {type: 'paragraph',
-          children:[ 
-            {
-              text: '',
-              // text: 'This example shows how you can make a hovering menu appear above your content, which you can use to make text ',
+    initData: ()=>{
+      return {
+        type:'text',
+        data:[
+            {type: 'paragraph',
+            children:[ 
+              {
+                text: '',
+                // text: 'This example shows how you can make a hovering menu appear above your content, which you can use to make text ',
+              }
+              ]
             }
-            ]
-          }
-        ],
-    },
+          ],
+      }
+  },
     view: (props:{data:any})=><BlockText data={props.data} active={false} onChange={()=>{}} view={true}/>,
     render: (props:{data:any, active:boolean, onChange:(data:any)=>void})=><BlockText {...props} />
 }

@@ -14,7 +14,7 @@ export interface TemplateDefinition{
     identifier: string,
     name: string,
     icon?: React.ReactElement,
-    initData:any,
+    initData:()=>any,
     css?:string,   //customized css
     options?: {[setting:string]:any} //customization
 }
@@ -25,7 +25,7 @@ export interface ToolDefinition {
     templates?: {[identifier: string]:TemplateDefinition},
     name: string,
     menu: {category: string, icon: React.ReactElement},
-    initData: any,
+    initData: ()=>any,
     onServerLoad?: (data:any)=>Promise<any>, //invoked in server side before loading
     view:(props:{data:any})=>React.ReactElement
     render: (props:ToolRenderProps)=>React.ReactElement,
@@ -94,15 +94,14 @@ export const newBlockData = (type:string, template?:string)=>{
     const def = getDef(type);
     if( template ){
       if( def.templates && def.templates[template] ){
-        //todo: optimize this to clone or initData()
-        defaultData = JSON.parse( JSON.stringify( def.templates[template].initData ) );
+        defaultData = def.templates[template].initData();
         defaultData.template = template;
       }else{
         throw "template "+template+ " not found";
       }
     }else{
       //todo: optimize this to clone or initData()
-      defaultData = JSON.parse( JSON.stringify( def.initData ) );
+      defaultData = def.initData();
     }
 
     defaultData.id = nanoid();   

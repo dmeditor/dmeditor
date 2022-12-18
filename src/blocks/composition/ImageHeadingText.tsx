@@ -36,7 +36,8 @@ export const toolImageHeadingText: ToolDefinition = {
     isComposited: true,
     name:"Image heading text",
     menu:  {category:'blocks',icon: <CollectionsOutlined /> },
-    initData: {
+    initData: ()=>{
+        return {
         type:'image_heading_text',
         settings:{childrenHorizontal: true},
         data:'',
@@ -56,7 +57,8 @@ export const toolImageHeadingText: ToolDefinition = {
                 {type:"paragraph","align":"right","children":[{"text":""},{"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Read more"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}},{"text":""}]}            
               ]}
             ],"common":{}, "setting":{}}
-            ]},
+            ]}
+    },
     view: (props:{data:any})=><ImageHeadingText data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
     render:ImageHeadingText    
 }

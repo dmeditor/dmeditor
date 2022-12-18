@@ -75,11 +75,13 @@ const Heading = (props:any)=>{
   isComposited: false,
   name:"Heading", 
   menu:  {category:'basic',icon: <TitleOutlined /> },
-  initData: {
-    type:'heading', 
-    data:'heading',
-    common:{width:'auto'},
-    settings:{level: 2},
+  initData: ()=>{
+    return {
+      type:'heading', 
+      data:'heading',
+      common:{width:'auto'},
+      settings:{level: 2},
+   }
   },
   view: (props:{data:any})=><Heading data={props.data} active={false} onChange={()=>{}} />,
   render: (props:{data:any, active:boolean})=><Heading {...props} />

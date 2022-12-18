@@ -37,7 +37,6 @@ export const BlockList = (props:BlockListProps)=>{
 
     const addUnder = (type:string, template?:string)=>{
         if( type ){
-            //todo: optimize this to clone or initData()
             const defaultData = newBlockData(type, template)                     
             let allBlocks = [...list];                        
             allBlocks.splice(activeIndex+1, 0, defaultData);

@@ -58,7 +58,8 @@ export const toolImageText: ToolDefinition = {
     isComposited: true,
     name:"Image text",
     menu:  {category:'blocks',icon: <CollectionsOutlined /> },
-    initData: {
+    initData: ()=>{
+        return {
         type:'imagetext',
         settings:{childrenHorizontal: true},
         data:[ 
@@ -71,7 +72,8 @@ export const toolImageText: ToolDefinition = {
                         {"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}}
                     ]}
                     ]}
-             ]},
+             ]}
+    },
     view: (props:{data:any})=><div>Not implemented</div>,
     render:BlockImageText    
 }
