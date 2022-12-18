@@ -9,7 +9,7 @@ import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, ModeEditOutline, Phone
 import { BlockInfo } from './types';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { getDef } from './ToolDefinition';
+import { getDef, newBlockData } from './ToolDefinition';
 import { Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
@@ -47,21 +47,7 @@ export const DMEditor = (props:DMEditorProps)=>{
 
     const addAbove = (type: string, index:number, template?:string)=>{
         if( type ){
-            //todo: optimize this to clone or initData()
-            var defaultData;
-            const def = getDef(type);
-            if( template ){
-              if( def.templates && def.templates[template] ){
-                defaultData = JSON.parse( JSON.stringify( def.templates[template].initData ) );
-                defaultData.template = template;
-              }else{
-                throw "template "+template+ " not found";
-              }
-            }else{
-              defaultData = JSON.parse( JSON.stringify( def.initData ) );
-            }
-
-            defaultData.id = nanoid();          
+            const defaultData = newBlockData(type, template);
             let allBlocks = [...blocks];
             allBlocks.splice(index, 0, defaultData );
             setBlocks(allBlocks);
@@ -83,21 +69,7 @@ export const DMEditor = (props:DMEditorProps)=>{
 
     const addUnder = (type: string, index:number, template?:string)=>{
         if( type ){
-            //todo: optimize this to clone or initData()
-            var defaultData;
-            const def = getDef(type);
-            if( template ){
-              if( def.templates && def.templates[template] ){
-                defaultData = JSON.parse( JSON.stringify( def.templates[template].initData ) );
-                defaultData.template = template;
-              }else{
-                throw "template "+template+ " not found";
-              }
-            }else{
-              defaultData = JSON.parse( JSON.stringify( def.initData ) );
-            }
-
-            defaultData.id = nanoid();            
+            const defaultData = newBlockData(type, template);       
             let allBlocks = [...blocks];                        
             allBlocks.splice(index+1, 0, defaultData);
             setBlocks( allBlocks );

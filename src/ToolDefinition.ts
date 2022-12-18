@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+
 export interface ToolRenderProps {
     data: {data:any, id:string, template?:string, settings?:any, common?:any, source?:any,[propName:string]:any, children?:Array<any> }, 
     active:boolean,
@@ -85,4 +87,24 @@ export const getAllTemplates = ()=>{
 
 export const registerCategory = (category:{identifier:string, text: string})=>{
     toolCategories.push(category);
+}
+
+export const newBlockData = (type:string, template?:string)=>{
+    var defaultData;
+    const def = getDef(type);
+    if( template ){
+      if( def.templates && def.templates[template] ){
+        //todo: optimize this to clone or initData()
+        defaultData = JSON.parse( JSON.stringify( def.templates[template].initData ) );
+        defaultData.template = template;
+      }else{
+        throw "template "+template+ " not found";
+      }
+    }else{
+      //todo: optimize this to clone or initData()
+      defaultData = JSON.parse( JSON.stringify( def.initData ) );
+    }
+
+    defaultData.id = nanoid();   
+    return defaultData;
 }

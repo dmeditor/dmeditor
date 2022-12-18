@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Block, BlockInfo } from "./Block"
 import { BlockProperty } from "./BlockProperty";
-import { getDef } from "./ToolDefinition";
+import { getDef, newBlockData } from "./ToolDefinition";
 
 
 interface BlockListProps{
@@ -38,19 +38,7 @@ export const BlockList = (props:BlockListProps)=>{
     const addUnder = (type:string, template?:string)=>{
         if( type ){
             //todo: optimize this to clone or initData()
-            var defaultData;
-            const def = getDef(type);
-            if( template ){
-              if( def.templates && def.templates[template] ){
-                defaultData = JSON.parse( JSON.stringify( def.templates[template].initData ) );
-                defaultData.template = template;
-              }else{
-                throw "template "+template+ " not found";
-              }
-            }else{
-              defaultData = JSON.parse( JSON.stringify( def.initData ) );
-            }
-            
+            const defaultData = newBlockData(type, template)                     
             let allBlocks = [...list];                        
             allBlocks.splice(activeIndex+1, 0, defaultData);
             setList( allBlocks );
