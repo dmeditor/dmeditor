@@ -38,11 +38,19 @@ export const BlockList = (props:BlockListProps)=>{
     const addUnder = (type:string, template?:string)=>{
         if( type ){
             //todo: optimize this to clone or initData()
-            const defaultData = JSON.parse( JSON.stringify(getDef(type).initData) );
-            defaultData.id = nanoid();
+            var defaultData;
+            const def = getDef(type);
             if( template ){
+              if( def.templates && def.templates[template] ){
+                defaultData = JSON.parse( JSON.stringify( def.templates[template].initData ) );
                 defaultData.template = template;
+              }else{
+                throw "template "+template+ " not found";
+              }
+            }else{
+              defaultData = JSON.parse( JSON.stringify( def.initData ) );
             }
+            
             let allBlocks = [...list];                        
             allBlocks.splice(activeIndex+1, 0, defaultData);
             setList( allBlocks );

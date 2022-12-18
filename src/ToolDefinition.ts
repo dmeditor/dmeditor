@@ -12,6 +12,7 @@ export interface TemplateDefinition{
     identifier: string,
     name: string,
     icon?: React.ReactElement,
+    initData:any,
     css?:string,   //customized css
     options?: {[setting:string]:any} //customization
 }
