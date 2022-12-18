@@ -34,4 +34,5 @@ registerTemplate('heading', { identifier:'blocktext_heading',
     name:'Block heading', 
     initData: {...toolHeading.initData, data:'Hello', common:{...toolHeading.initData.common, color: '#9C27B0' }}, 
     icon:toolHeading.menu.icon })
-registerTemplate('imagetext', { identifier:'loose', name:'Loose image text', initData: toolImageHeadingText.initData, icon:toolImageText.menu.icon })
+registerTemplate('imagetext', { identifier:'loose', name:'Loose image text', 
+    initData: {...toolImageText.initData, common:{...toolImageText.initData.common, color: '#ffffff', backgroundColor: '#133e48'}}, icon:toolImageText.menu.icon })
