@@ -1,9 +1,10 @@
 // import { ParagraphHandler } from "./blocks/Paragraph";
 import {
+  CollectionsOutlined,
   TabOutlined,
   ViewListOutlined,
 } from "@mui/icons-material";
-import { registerTool } from "./ToolDefinition";
+import { registerTemplate, registerTool } from "./ToolDefinition";
 import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
 import { toolImageHeadingText } from "./blocks/composition/ImageHeadingText";
@@ -27,3 +28,6 @@ registerTool(toolQuote);
 registerTool(toolVideo);
 registerTool(toolCode);
 registerTool(toolIframe);
+
+//templates
+registerTemplate('imagetext', { identifier:'loose', name:'Loose image text', icon:toolImageText.menu.icon })

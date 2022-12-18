@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Block, RenderMenu } from './Block';
 import './DMEditor.css';
+import './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
@@ -44,11 +45,14 @@ export const DMEditor = (props:DMEditorProps)=>{
     const [newBlock, setNewBlock] = useState(false);
     const [viewmode, setViewmode] = useState('edit');
 
-    const addAbove = (type: string, index:number)=>{
+    const addAbove = (type: string, index:number, template?:string)=>{
         if( type ){
             //todo: optimize this to clone or initData()
             const defaultData = JSON.parse( JSON.stringify( getDef(type).initData ) );
             defaultData.id = nanoid();
+            if( template ){
+              defaultData.template = template;
+            }
             let allBlocks = [...blocks];
             allBlocks.splice(index, 0, defaultData );
             setBlocks(allBlocks);
@@ -68,11 +72,14 @@ export const DMEditor = (props:DMEditorProps)=>{
       }
   }, [activeBlock]);
 
-    const addUnder = (type: string, index:number)=>{
+    const addUnder = (type: string, index:number, template?:string)=>{
         if( type ){
             //todo: optimize this to clone or initData()
             const defaultData = JSON.parse( JSON.stringify(getDef(type).initData) );
             defaultData.id = nanoid();
+            if( template ){
+              defaultData.template = template;
+            }
             let allBlocks = [...blocks];                        
             allBlocks.splice(index+1, 0, defaultData);
             setBlocks( allBlocks );
@@ -169,8 +176,8 @@ export const DMEditor = (props:DMEditorProps)=>{
                       setBlocks(newBlocks)
                       setNewBlock(false)
                     }}
-                    onAddAbove={(type:string)=>addAbove(type, index)} 
-                    onAddUnder={(type:string)=>addUnder(type, index)} /></>;         
+                    onAddAbove={(type:string, template?:string)=>addAbove(type, index, template)} 
+                    onAddUnder={(type:string, template?:string)=>addUnder(type, index, template)} /></>;         
              }
              return a();        
             }
@@ -188,7 +195,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                       <div style={{marginBottom:'100px'}}>
                         <div id="dmeditor-property" />
                         <div id="dmeditor-add-menu">
-                          {blocks.length===0&&<MenuList onSelect={(type:string)=>{addUnder(type, -1)}} /> }
+                          {blocks.length===0&&<MenuList onSelect={(type:string, template?:string)=>{addUnder(type, -1, template)}} /> }
                         </div>
 
 

@@ -35,11 +35,14 @@ export const BlockList = (props:BlockListProps)=>{
         props.onChange(list);
     }, [list])
 
-    const addUnder = (type:string)=>{
+    const addUnder = (type:string, template?:string)=>{
         if( type ){
             //todo: optimize this to clone or initData()
             const defaultData = JSON.parse( JSON.stringify(getDef(type).initData) );
             defaultData.id = nanoid();
+            if( template ){
+                defaultData.template = template;
+            }
             let allBlocks = [...list];                        
             allBlocks.splice(activeIndex+1, 0, defaultData);
             setList( allBlocks );

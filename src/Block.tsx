@@ -20,8 +20,8 @@ interface BlockProps{
     data: any,
     active?:boolean,
     onActivate?: ()=>void,
-    onAddAbove?:(type:string)=>void,
-    onAddUnder?:(type:string)=>void,
+    onAddAbove?:(type:string, template?:string)=>void,
+    onAddUnder?:(type:string, template?:string)=>void,
     onChange:(data:any)=>void,
     onCancel?:()=>void,
     view?:boolean,
@@ -75,13 +75,13 @@ export const Block = React.memo((props:BlockProps)=>{
       setAddUnder(under);
     }
 
-    const addBlock = (type:string)=>{
+    const addBlock = (type:string, template?:string)=>{
       if( addUnder > 0 && props.onAddUnder ){
-        props.onAddUnder(type);
+        props.onAddUnder(type, template);
       }
 
       if( addUnder < 0 && props.onAddAbove ){
-        props.onAddAbove(type);
+        props.onAddAbove(type, template);
       }
       setSelectingTool(false);
     }
@@ -110,7 +110,7 @@ export const Block = React.memo((props:BlockProps)=>{
                         <div className={"pre-render"}>
                           {Util.renderPreBlock({blockData:props.data.dm_field?props.data.dm_field:''})}
                           </div>         
-        <div className={"block block-type-"+props.data.type}  onClick={(e:any)=>activeBlock()}>
+        <div className={"block block-type-"+props.data.type+(props.data.template?' dmeditor-template-'+props.data.type+'-'+props.data.template:'')}  onClick={(e:any)=>activeBlock()}>
         {isActive&&props.onDelete&&<BlockProperty blocktype={props.data.type}>
           <div style={{float: 'right'}}>
             <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>
@@ -125,7 +125,7 @@ export const Block = React.memo((props:BlockProps)=>{
 
 });
 
-export const RenderMenu=(props:{onAdd:(type:string)=>void, onCancel:()=>void, allowedType?:string[]})=>{
+export const RenderMenu=(props:{onAdd:(type:string, template?:string)=>void, onCancel:()=>void, allowedType?:string[]})=>{
   const menuRoot = document.getElementById('dmeditor-add-menu');
 
   return menuRoot?ReactDOM.createPortal(
@@ -133,8 +133,8 @@ export const RenderMenu=(props:{onAdd:(type:string)=>void, onCancel:()=>void, al
           <div style={{float:'right', marginRight:'5px'}}>
             <Button onClick={props.onCancel}><CancelOutlined /></Button>
           </div>
-          <MenuList allowedType={props.allowedType} onSelect={(type:string)=>{if(props.onAdd){
-            props.onAdd(type);
+          <MenuList allowedType={props.allowedType} onSelect={(type:string, template?:string)=>{if(props.onAdd){
+            props.onAdd(type, template);
             }}} />          
         </div>          
       ,

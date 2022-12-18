@@ -1,5 +1,5 @@
 export interface ToolRenderProps {
-    data: {data:any, id:string, settings?:any, common?:any, source?:any,[propName:string]:any, children?:Array<any> }, 
+    data: {data:any, id:string, template?:string, settings?:any, common?:any, source?:any,[propName:string]:any, children?:Array<any> }, 
     active:boolean,
     adding?:boolean, 
     onChange:(data:any)=>void,
@@ -7,9 +7,19 @@ export interface ToolRenderProps {
     inBlock:boolean
 } 
 
+
+export interface TemplateDefinition{
+    identifier: string,
+    name: string,
+    icon?: React.ReactElement,
+    css?:string,   //customized css
+    options?: {[setting:string]:any} //customization
+}
+
 export interface ToolDefinition {
     type:string,
     isComposited?: boolean,
+    templates?: {[identifier: string]:TemplateDefinition},
     name: string,
     menu: {category: string, icon: React.ReactElement},
     initData: any,
@@ -20,7 +30,7 @@ export interface ToolDefinition {
 
 let defMap: {[key: string]: ToolDefinition} = {};
 
-export const GetToolDefinitions = () => {
+export const getToolDefinitions = () => {
     return defMap;
 };
 
@@ -32,6 +42,21 @@ export const getDef = (type:string):ToolDefinition=>{
     return defMap[type];
 }
 
+export const registerTemplate = (tool:string,template:TemplateDefinition)=>{
+    const def = getDef(tool);
+    if(!def){
+        console.log("Tool not found: "+ tool);
+    }else{
+        if( !def.templates ){
+            let newTemplates = {} as {[identifier: string]:TemplateDefinition};
+            newTemplates[template.identifier] = template;
+            def.templates = newTemplates;
+        }else{
+            def.templates[template.identifier] = template;
+        }
+    }
+}
+
 const toolCategories = [
     {identifier: 'basic', text: 'Basic'},
     {identifier: 'blocks', text: 'Blocks'},
@@ -40,9 +65,22 @@ const toolCategories = [
     {identifier: 'social_network', text: 'Social Network'}        
     ];
 
-export const GetCategories = () => {
+export const getCategories = () => {
     return toolCategories;
 };
+
+export const getAllTemplates = ()=>{
+    let result:Array<{tool: string, templateDef:TemplateDefinition}> = [];
+    for(const tool of Object.keys(defMap)){
+        const templates = defMap[tool].templates;
+        if( templates ){
+            for( const template of Object.keys(templates) ){
+                result = [...result, {tool: tool, templateDef: templates[template]} ];
+            }
+        }
+    }
+    return result;
+}
 
 export const registerCategory = (category:{identifier:string, text: string})=>{
     toolCategories.push(category);
