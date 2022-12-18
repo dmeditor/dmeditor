@@ -34,7 +34,8 @@ const ImageHeadingText = (props:ToolRenderProps)=>{
 export const toolImageHeadingText: ToolDefinition = {
     type: 'image_heading_text',
     isComposited: true,
-    menu:  {text:"Image heading text", category:'blocks',icon: <CollectionsOutlined /> },
+    name:"Image heading text",
+    menu:  {category:'blocks',icon: <CollectionsOutlined /> },
     initData: {
         type:'image_heading_text',
         settings:{childrenHorizontal: true},

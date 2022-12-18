@@ -68,7 +68,8 @@ export const BlockIframe = (props:ToolRenderProps)=>{
 
 export const toolIframe:ToolDefinition = {
     type: 'iframe',
-    menu:  {text:"Iframe", category:'basic',icon: <PagesOutlined /> },
+    name: 'IFrame',
+    menu:  {category:'basic',icon: <PagesOutlined /> },
     initData: {type:'iframe', data:'',
                 settings:{width: 400, height: 500, align:'center'}},
     view: (props:{data:any})=><BlockIframe data={props.data}  inBlock={false} active={false} onChange={()=>{}} />,

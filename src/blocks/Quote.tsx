@@ -52,7 +52,8 @@ export const Quote = (props:any)=>{
 export const toolQuote:ToolDefinition = {
   type: 'quote',
   isComposited: false,
-  menu:  {text:"Quote", category:'basic',icon: <TitleOutlined /> },
+  name:"Quote", 
+  menu:  {category:'basic',icon: <TitleOutlined /> },
   initData: {type:'quote',
     settings:{},
     data:'quotetest'

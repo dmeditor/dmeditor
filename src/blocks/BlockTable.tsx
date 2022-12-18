@@ -449,7 +449,8 @@ export const Table = (props: ToolRenderProps) => {
 
 export const toolTable: ToolDefinition = {
   type: "table",
-  menu: { text: "Table", category: "basic", icon: <GridOn /> },
+  name: "Table", 
+  menu: {category: "basic", icon: <GridOn /> },
   initData: {
     type: "table",
     data: [

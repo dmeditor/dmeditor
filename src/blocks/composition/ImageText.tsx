@@ -56,7 +56,8 @@ const BlockImageText = (props:ToolRenderProps)=>{
 export const toolImageText: ToolDefinition = {
     type: 'imagetext',
     isComposited: true,
-    menu:  {text:"Image text", category:'blocks',icon: <CollectionsOutlined /> },
+    name:"Image text",
+    menu:  {category:'blocks',icon: <CollectionsOutlined /> },
     initData: {
         type:'imagetext',
         settings:{childrenHorizontal: true},

@@ -57,8 +57,8 @@ export const Code = (props: ToolRenderProps) => {
 };
 export const toolCode: ToolDefinition = {
   type: "code",
+  name: "Code",
   menu: {
-    text: "Code",
     category: "basic",
     icon: <CodeOutlined />,
   },

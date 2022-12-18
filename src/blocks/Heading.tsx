@@ -73,7 +73,8 @@ const Heading = (props:any)=>{
  export const toolHeading:ToolDefinition = {
   type: 'heading',
   isComposited: false,
-  menu:  {text:"Heading", category:'basic',icon: <TitleOutlined /> },
+  name:"Heading", 
+  menu:  {category:'basic',icon: <TitleOutlined /> },
   initData: {
     type:'heading', 
     data:'heading',

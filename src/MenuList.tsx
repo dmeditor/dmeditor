@@ -5,10 +5,10 @@ import './MenuList.css';
 import { GetCategories, GetToolDefinitions } from './ToolDefinition';
 
 export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
-   
-    const blockCategory = GetCategories();
+    const [blockCategory] = useState(GetCategories());
+    const [registeredTypes] = useState(GetToolDefinitions());
+    
 
-    const registeredTypes = GetToolDefinitions();
 
     let names: Array<{type: string, name: string}> = [];
     for( let blockType of Object.keys( registeredTypes ) ){
@@ -16,8 +16,8 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
             continue;
         }
         const toolType = registeredTypes[blockType];
-        if( toolType.menu ){
-            names = [...names, {type: blockType, name: toolType.menu.text}];
+        if( toolType.name ){
+            names = [...names, {type: blockType, name: toolType.name}];
         }
     }
 

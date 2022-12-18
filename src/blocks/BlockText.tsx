@@ -352,8 +352,9 @@ export const BlockText = (props:any)=>{
 
 export const toolText:ToolDefinition = {
     type: 'text',
+    name: 'Text',
     isComposited: false,
-    menu:  {text:"Text", category:'basic',icon: <TextFormatOutlined /> },
+    menu:  {category:'basic',icon: <TextFormatOutlined /> },
     initData: {
       type:'text',
       data:[
