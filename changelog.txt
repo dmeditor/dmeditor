@@ -1,4 +1,5 @@
 0.1.0-beta.3
+- 2022-12-18 added: support template of block type, where it's possible to define init data, name, css, options(eg. text colors)
 - 2022-12-16 improved: hoved to show adding tool
 - 2022-12-16 added: BlockList for api use
 - 2022-12-16 added: ImageHeadingText
