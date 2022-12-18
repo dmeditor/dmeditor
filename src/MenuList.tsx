@@ -52,14 +52,18 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
                     </div>
             
         </div>},
-        {title:'Templates', element: <div>
-            <table style={{width:'100%'}}>
-                <tbody>
-                    {templates.map(template=><tr className="moreblock" onClick={()=>props.onSelect(template.tool, template.templateDef.identifier)}>
+        {title:'Templates', element: <div>           
+                    {templates.map(template=>
+                    <div className="moreblock">
+                     <table style={{width:'100%'}}>
+                     <tbody>
+                    <tr onClick={()=>props.onSelect(template.tool, template.templateDef.identifier)}>
                         <td style={{width: '28px'}}>{template.templateDef.icon}</td>
-                        <td style={{textAlign:'left'}}>{template.templateDef.name}</td></tr>)}                
-                </tbody>
-            </table>
+                        <td style={{textAlign:'left'}}>{template.templateDef.name}</td></tr>                                 
+                        </tbody>
+                    </table>
+                    </div>
+                    )}       
         </div>}
     ]} active={0} />       
     </div>)
