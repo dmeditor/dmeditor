@@ -74,6 +74,6 @@ export const toolImageText: ToolDefinition = {
                     ]}
              ]}
     },
-    view: (props:{data:any})=><div>Not implemented</div>,
+    view: (props:{data:any})=><BlockImageText data={props.data} inBlock={false} active={false} onChange={()=>{}} />,
     render:BlockImageText    
 }
