@@ -30,5 +30,8 @@ registerTool(toolCode);
 registerTool(toolIframe);
 
 //templates
-registerTemplate('heading', { identifier:'blocktext_heading', name:'Block heading', initData: {...toolHeading.initData, data:'Hello'}, icon:toolHeading.menu.icon })
+registerTemplate('heading', { identifier:'blocktext_heading', 
+    name:'Block heading', 
+    initData: {...toolHeading.initData, data:'Hello', common:{...toolHeading.initData.common, color: '#9C27B0' }}, 
+    icon:toolHeading.menu.icon })
 registerTemplate('imagetext', { identifier:'loose', name:'Loose image text', initData: toolImageHeadingText.initData, icon:toolImageText.menu.icon })
