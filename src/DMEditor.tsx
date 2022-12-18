@@ -187,6 +187,9 @@ export const DMEditor = (props:DMEditorProps)=>{
         </div>
         <div className='layout-properties'>
             <div>
+            <div id="dmeditor-add-menu">
+              {blocks.length===0&&<MenuList onSelect={(type:string, template?:string)=>{addUnder(type, -1, template)}} /> }
+            </div>
             <PropertyTab 
                 active={0}
                 tabs={[
@@ -194,10 +197,6 @@ export const DMEditor = (props:DMEditorProps)=>{
                      element:
                       <div style={{marginBottom:'100px'}}>
                         <div id="dmeditor-property" />
-                        <div id="dmeditor-add-menu">
-                          {blocks.length===0&&<MenuList onSelect={(type:string, template?:string)=>{addUnder(type, -1, template)}} /> }
-                        </div>
-
 
                         {viewmode==='edit'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '282px',padding:'10px', backgroundColor:'#ffffff'}}>
                             <div style={{marginBottom:'15px'}} >
