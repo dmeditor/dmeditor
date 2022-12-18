@@ -183,7 +183,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             <PropertyTab 
                 active={0}
                 tabs={[
-                     {title: blocks[activeBlock]?(getDef(blocks[activeBlock].type).menu.text):'Insert', 
+                     {title: blocks[activeBlock]?(getDef(blocks[activeBlock].type).name):'Insert', 
                      element:
                       <div style={{marginBottom:'100px'}}>
                         <div id="dmeditor-property" />

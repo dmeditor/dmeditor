@@ -38,8 +38,8 @@ export const BlockButton = (props:any)=>{
 
 export const toolButton:ToolDefinition = {
     type: 'button',
-    name: '',
-    menu:{text:'Button', category:'_internal', icon: <span></span> },
+    name:'Button', 
+    menu:{category:'_internal', icon: <span></span> },
     initData: {type:'button', content:''},
     view: (props:{data:any})=><BlockButton data={props.data} active={false} onChange={()=>{}} />,
     render: (props:{data:any, active:boolean})=><BlockButton {...props} />

@@ -18,7 +18,7 @@ export const BlockProperty = (props:{blocktype: string, inBlock?:boolean, childr
     return propertyRoot?ReactDOM.createPortal(
         (props.inBlock?
           <div>
-            <PropertyGroup expandable={true} open={true} header={<b>{getDef(props.blocktype).menu.text}</b>}>
+            <PropertyGroup expandable={true} open={true} header={<b>{getDef(props.blocktype).name}</b>}>
               {props.children}
             </PropertyGroup>
             <div></div>
