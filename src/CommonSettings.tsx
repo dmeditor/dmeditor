@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { PickColor, PropertyGroup, PropertyItem, Ranger } from './utils';
 import { Select,MenuItem} from "@mui/material";
 
-let blockOpen = false;
-
 export const CommonSettings = (props:{commonSettings:any, settingList?: Array<string>, onChange:(data:any)=>void})=>{    
     const [settings, setSettings] = useState(props.commonSettings?props.commonSettings:{});
     const [isChange,setIsChange] = useState(false)
+    const [blockOpen, setBlockOpen] = useState(false);
     const [widthType, setWidthType] = useState(()=>{
       if(props.commonSettings){
         if(props.commonSettings?.width){
@@ -46,7 +45,7 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
     }
 
     return <div>
-        <PropertyGroup header='Block settings' expandable={true} open={blockOpen} onOpenClose={(open)=>blockOpen=open}>
+        <PropertyGroup header='Block settings' expandable={true} open={blockOpen} onOpenClose={(open)=>setBlockOpen(open)}>
             <PropertyItem label="To top">
                 <Ranger min={0} max={100} step={5} defaultValue={settings.marginTop?settings.marginTop:0} onChange={v=>{setSettings({...settings, marginTop: v});setIsChange(true)}} />
             </PropertyItem>
