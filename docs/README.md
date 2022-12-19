@@ -1,4 +1,4 @@
-DM Editor is a block-styled visual editor. Data is in json format.
+**DM Editor** is a block-styled visual editor. Data is in json format.
 
 [Go to github project](https://github.com/digimakergo/dmeditor)
 
