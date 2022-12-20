@@ -10,7 +10,7 @@ import { CommonSettings } from '../CommonSettings';
 import { PropertyItem } from '../utils';
 import { Util } from '../utils/Util';
 
-const Heading = (props:any)=>{
+const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
     const [level,setLevel] = useState(props.data.settings.level);
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
@@ -19,10 +19,8 @@ const Heading = (props:any)=>{
     // let isChange = false;
     const changeText = (e?:any)=>{
         const texts=headRef.current.innerText
-        if(props.onChange){
           setText(texts);
           setIsChange(true);
-        }
     }
 
     const common = { onBlur:changeText,ref:headRef, contentEditable: props.active, style:commonSettings,}
@@ -83,6 +81,6 @@ const Heading = (props:any)=>{
       settings:{level: 2},
    }
   },
-  view: (props:{data:any})=><Heading data={props.data} active={false} onChange={()=>{}} />,
-  render: (props:{data:any, active:boolean})=><Heading {...props} />
+  view: (props:{data:any})=><Heading inBlock={false} data={props.data} active={false} onChange={()=>{}} />,
+  render: Heading
 }

@@ -3,7 +3,7 @@ import { Button, Input,Select,MenuItem,TextField} from "@mui/material";
 // import { useState } from "react";
 // import { Block } from "../Block";
 import { BlockProperty } from "../BlockProperty"
-import { ToolDefinition } from "../ToolDefinition";
+import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 
 import React, { useMemo, useRef, useEffect ,useState,useCallback} from 'react';
 import {Editor,Transforms,Text,createEditor,Descendant, Range as SlateRange,Element as SlateElement,} from 'slate';
@@ -41,7 +41,7 @@ const BlockButton = ({formats}:any) => {
   return ele
 }
 
-export const BlockText = (props:any)=>{
+export const BlockText = (props:ToolRenderProps)=>{
     const [value,setValue] = useState(props.data.data)
     const [config,setConfig] = useState(props.data.settings?props.data.settings.config:null);
     const [adding, setAdding] = useState(false);
@@ -370,6 +370,6 @@ export const toolText:ToolDefinition = {
           ],
       }
   },
-    view: (props:{data:any})=><BlockText data={props.data} active={false} onChange={()=>{}} view={true}/>,
-    render: (props:{data:any, active:boolean, onChange:(data:any)=>void})=><BlockText {...props} />
+    view: (props:{data:any})=><BlockText inBlock={false} data={props.data} active={false} onChange={()=>{}} />,
+    render: BlockText
 }
