@@ -5,7 +5,7 @@ export interface ToolRenderProps {
     active:boolean,
     adding?:boolean, 
     options?: any,
-    onChange:(data:any)=>void,
+    onChange:(data:any, debounce?:boolean)=>void,
     onCancel?:()=>void,
     inBlock:boolean
 } 

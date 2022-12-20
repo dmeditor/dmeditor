@@ -315,7 +315,7 @@ export const BlockText = (props:ToolRenderProps)=>{
           <div>
             <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}  changeDialogLink={changeDialogLinkfun}/>
             <Editable
-                readOnly={props.view?props.view:false}
+                readOnly={props.active?false:true}
                 renderLeaf={renderLeaf}
                 renderElement={renderElement}
                 placeholder="Input your content here" 
