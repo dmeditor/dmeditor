@@ -1,3 +1,5 @@
+0.1.0-beta.4
+
 0.1.0-beta.3
 - 2022-12-20 updated: support using external js for templates. format: var dmeditor={templates:[]}
 - 2022-12-18 updated: initData from property to function to avoid referance's value change
