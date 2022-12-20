@@ -97,7 +97,7 @@ export const Block = React.memo((props:BlockProps)=>{
           }
         }
         if( def){           
-            return <div className={"block block-type-"+props.data.type+(props.data.template?' dmeditor-template-'+props.data.type+'-'+props.data.template:'')+' '+templateCss}  onClick={(e:any)=>activeBlock()}>
+            return <div className={"dmeditor-block block-type-"+props.data.type+(props.data.template?' dmeditor-template-'+props.data.type+'-'+props.data.template:'')+' '+templateCss}  onClick={(e:any)=>activeBlock()}>
               {props.view && <def.view data={props.data} />}
               {!props.view&&<def.render adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />}
             </div>

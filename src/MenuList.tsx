@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { blockManager } from './BlockManager';
 import './MenuList.css';
 import { PropertyTab } from './Tab';
-import { getAllTemplates, getCategories, getToolDefinitions } from './ToolDefinition';
+import { getAllTemplates, getCategories, getDef, getToolDefinitions } from './ToolDefinition';
 
 export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
     const [blockCategory] = useState(getCategories());
@@ -58,7 +58,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
                      <table style={{width:'100%'}}>
                      <tbody>
                     <tr onClick={()=>props.onSelect(template.tool, template.templateDef.identifier)}>
-                        <td style={{width: '28px'}}>{template.templateDef.icon}</td>
+                        <td style={{width: '28px'}}>{template.templateDef.icon?template.templateDef.icon:getDef(template.tool).menu.icon}</td>
                         <td style={{textAlign:'left'}}>{template.templateDef.name}</td></tr>                                 
                         </tbody>
                     </table>
