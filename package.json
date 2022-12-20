@@ -5,9 +5,11 @@
   "keywords": [
     "online editor",
     "digimaker",
+    "dmeditor",
     "WYSIWYG",
     "visual editor"
   ],
+  "homepage":"https://dmeditor.io",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/digimakergo/dmeditor.git"
