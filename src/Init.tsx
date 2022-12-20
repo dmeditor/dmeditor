@@ -30,18 +30,27 @@ registerTool(toolCode);
 registerTool(toolIframe);
 
 //templates
-registerTemplate('heading', { identifier:'blocktext_heading', 
+registerTemplate({ blocktype: 'heading', identifier:'blocktext_heading', 
     name:'Block heading', 
     initData: ()=>{
       const data = toolHeading.initData();
       return {...data, data:'Hello', common:{...data.common, color: '#9C27B0' }}
     }, 
     icon:toolHeading.menu.icon });
-    
-registerTemplate('imagetext', { identifier:'loose', name:'Loose image text', 
+registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose image text', 
     initData: ()=>{
       const data = toolImageText.initData();
       return {...data, common:{...data.common, color: '#ffffff', backgroundColor: '#133e48'}}; 
     },
     icon:toolImageText.menu.icon }
     );
+
+//global
+if( (window as any).dmeditor ){
+  let templates = (window as any).dmeditor.templates;
+  if(templates){
+    for( const template of templates ){
+      registerTemplate(template)
+    }
+  }
+}
