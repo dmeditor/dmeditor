@@ -4,6 +4,7 @@ export interface ToolRenderProps {
     data: {data:any, id:string, template?:string, settings?:any, common?:any, source?:any,[propName:string]:any, children?:Array<any> }, 
     active:boolean,
     adding?:boolean, 
+    options?: any,
     onChange:(data:any)=>void,
     onCancel?:()=>void,
     inBlock:boolean
@@ -11,6 +12,7 @@ export interface ToolRenderProps {
 
 
 export interface TemplateDefinition{
+    blocktype: string,
     identifier: string,
     name: string,
     icon?: React.ReactElement,
@@ -45,7 +47,8 @@ export const getDef = (type:string):ToolDefinition=>{
     return defMap[type];
 }
 
-export const registerTemplate = (tool:string,template:TemplateDefinition)=>{
+export const registerTemplate = (template:TemplateDefinition)=>{
+    const tool = template.blocktype;
     const def = getDef(tool);
     if(!def){
         console.log("Tool not found: "+ tool);

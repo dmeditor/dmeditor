@@ -9,6 +9,7 @@ import { MenuList } from "./MenuList";
 import { Button } from "@mui/material";
 import { BlockProperty } from "./BlockProperty";
 import { PropertyButton } from "./utils";
+import { css } from "@emotion/css";
 
 export type BlockInfo = {
     type: string
@@ -88,14 +89,18 @@ export const Block = React.memo((props:BlockProps)=>{
 
     const render = ()=>{
         let def = getDef( props.data.type );
-        if( def){
-            if(props.view){
-                let ViewRender = def.view;                
-                return <ViewRender data={props.data} />
-            }else{
-                let ToolRender = def.render;
-                return <ToolRender adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />
-            }
+        let templateCss = '';
+        if( props.data.template && def.templates ){
+          const templateDef = def.templates[props.data.template];
+          if( templateDef.css ){
+             templateCss = css(templateDef.css);
+          }
+        }
+        if( def){           
+            return <div className={"block block-type-"+props.data.type+(props.data.template?' dmeditor-template-'+props.data.type+'-'+props.data.template:'')+' '+templateCss}  onClick={(e:any)=>activeBlock()}>
+              {props.view && <def.view data={props.data} />}
+              {!props.view&&<def.render adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} />}
+            </div>
         }else{
             return 'Unknown type:'+props.data.type;
         }
@@ -110,14 +115,12 @@ export const Block = React.memo((props:BlockProps)=>{
                         <div className={"pre-render"}>
                           {Util.renderPreBlock({blockData:props.data.dm_field?props.data.dm_field:''})}
                           </div>         
-        <div className={"block block-type-"+props.data.type+(props.data.template?' dmeditor-template-'+props.data.type+'-'+props.data.template:'')}  onClick={(e:any)=>activeBlock()}>
         {isActive&&props.onDelete&&<BlockProperty blocktype={props.data.type}>
           <div style={{float: 'right'}}>
             <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>
           </div>
           </BlockProperty>}
         {render()}  
-        </div>   
     {props.siblingDirection==='vertical'&&<div className="tool tool-under">
                 <a className="tool-item" href="/" title="Add under" onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(1)}}><AddBoxOutlined /></a>
             </div>}  
