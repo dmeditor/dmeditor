@@ -5,7 +5,7 @@ import './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
-import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
+import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
@@ -130,7 +130,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         <ThemeProvider theme={outerTheme}>
             <div className='dmeditor dmeditor-layout'>
         <div className='layout-left'>
-            {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://github.com/digimakergo/dmeditor"><img src="/logo.png" style={{marginTop:10}} width={28} /></a>}
+            {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><Menu /></div></a>}
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
             <div className='left-tool'>
                 <hr />
