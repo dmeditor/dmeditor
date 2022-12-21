@@ -34,7 +34,7 @@
     "slate-react": "^0.83.2"
   },
   "scripts": {
-    "dist": "rm -rf dist/* && cp -r ./package.json README.md ./dist && tsc && cp -r ./*.txt ./dist && cp -r ./src/*.css ./dist && cp -r ./src/blocks/*.css ./dist/blocks && mkdir dist/templates && cp -r ./src/templates/*.css ./dist/templates/",
+    "dist": "rm -rf dist/* && cp -r ./package.json README.md ./dist && tsc -d && tsc && cp -r ./*.txt ./dist && cp -r ./src/*.css ./dist && cp -r ./src/blocks/*.css ./dist/blocks && mkdir dist/templates && cp -r ./src/templates/*.css ./dist/templates/",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "docz:serve": "docz build && docz serve"
