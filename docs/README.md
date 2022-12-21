@@ -10,10 +10,10 @@
 
 ### Screenshots
 
-<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen1.png" width="600"/>
+<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen1.png" />
 
 
-<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" width="600"/>
+<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" />
 
 ## Installation
 
