@@ -1,4 +1,5 @@
 0.1.0-beta.4
+- 2022-12-21 Fixed: type issue in typescript
 
 0.1.0-beta.3
 - 2022-12-20 updated: support using external js for templates. format: var dmeditor={templates:[]}
