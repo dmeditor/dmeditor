@@ -1,10 +1,13 @@
-# DMEditor
-dmeditor is a block-styled visual editor. Data is in json format.
+# DM Editor
+
+<ins>**DM Editor**</ins> is a block-styled visual editor.
+
+[Go to github project](https://github.com/digimakergo/dmeditor)
 
 ### Highlights
-- Real WYSIWYG(What you see is what you get)
-- Block based
-- Easy to create your own widget
+- Block based Real WYSIWYG(What you see is what you get)
+- Easy to create your own widgets
+- Style widgets like scoped css
 - Data is saved in json
 
 ### Screenshots
@@ -14,14 +17,16 @@ dmeditor is a block-styled visual editor. Data is in json format.
 
 <img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" width="600"/>
 
-### Installation
+## Installation
 
 ```
 npm install dmeditor
 ```
 
-## Usage
-Check [Sample code](https://github.com/digimakergo/dmeditor-sample/blob/main/src/App.tsx) for source code.
+### Usage
+
+[Sample project](https://github.com/digimakergo/dmeditor-sample)
+
 ```typescript
 import {DMEditor} from 'dmeditor';
 
@@ -29,43 +34,71 @@ return (
     <div className="App">
         <DMEditor data={[]} />
     </div>);
+
+//View: <DMEditorView data={data} />
 ```
-View(Output only)
-```typescript
-import {DMEditorView} from 'dmeditor';
-
-return (
-    <div>
-        <DMEditorView data={[{ type:'heading', 
-          data:'News', 
-          common:{marginTop: 10},
-          settings:{level: 2}
-        }]} />
-    </div>);
-```
-
-
-### Sample project 
-https://github.com/digimakergo/dmeditor-sample
-
 
 ### DMEditor Properties
+
 | Property | required | Type | Description | 
-|----|--|-|---|
+|-----|-----|-----|-----|
 | `data` | true | `Array<any>` | Data of blocks in array | 
 | `onChange` | false | `(data:Array<any>)=>void`  | Callback when change. |
 | `menu` | false | `React.ReactElement`  | Customized menu on toolbar |
 
 
-### Widgets
-[dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
+## Create your widget
+### 1. Create a styled widget(customizing from existing widgets)
+You can register template from react project, or external js
 
-## Extending
-### Create a customized block type(widget)
+#### 1.1 Register from react
+
+```javascript
+import { registerTemplate } from "dmeditor";
+
+registerTemplate(
+        blocktype: 'heading',        
+        identifier:'blocktext_heading_sample', 
+        name:'Block heading text', 
+        css:`background:#ffcc00; 
+        h2{
+            text-align:center;
+        }`,
+        initData: ()=>{
+          const data = {type:'heading', settings:{level: 2}};
+          return {...data, data:'Hello1', common:{...data.common, color: '#9C27B0' }}
+        }
+);
+```
+#### 1.2 Register from global `<script>`
+DMEditor reads global variable `dmeditor`'s `templates` property for all templates.
+
+```javascript
+var dmeditor = {
+templates:[
+  {
+          blocktype: 'heading',        
+          identifier:'blocktext_heading_sample', 
+          name:'Block heading text', 
+          css:`background:#ffcc00; 
+          h2{
+              text-align:center;
+          }`,
+          initData: ()=>{
+            const data = {type:'heading', settings:{level: 2}};
+            return {...data, data:'Hello1', common:{...data.common, color: '#9C27B0' }}
+          }, 
+      }
+]
+}
+```
+
+### 2. Create your own block type(widget)
 
 *Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/BlockImage.tsx) as example*
 1. Create a block handler
-```typescript
+
+```javascript
 
 //define a tool
 import { ToolRenderProps } from "dmeditor";
@@ -116,6 +149,7 @@ registerTool(toolImage);
 ### Data format
 
 Here is an example:
+
 ```javascript
 [
     { type:'image',
@@ -135,3 +169,7 @@ Here is an example:
 |  `common`    | General settings   |  `{marginTop: 10}` - margin to top is 10 pixel |
 |  `settings`    |  Variant types depends on block type  | In heading `{level: 2}` means using h2 |
 |  `source`    |  Variant types depends on block type. In principle reflect fixed or dyanmic data source  | In image: `source:{sourceType: 'input'}`|
+
+
+### Widget list
+[dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
