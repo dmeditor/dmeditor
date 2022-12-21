@@ -13,7 +13,6 @@ import {
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { RenderMainProps, RenderSettingProps } from "../blocktype";
-import { BlockData, BlockLayoutData } from "../types";
 import { Ranger } from "../utils/Ranger";
 import "./BlockTable.css";
 import { BlockProperty } from "../BlockProperty";

@@ -6,7 +6,6 @@ import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
 import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
-import { BlockInfo } from './types';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';

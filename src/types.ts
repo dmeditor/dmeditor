@@ -5,13 +5,3 @@ export interface BlockLayoutData{
     marginTop?: number,
     backgroundColor?:string
 }
-
-export interface BlockData{
-    layout:BlockLayoutData,
-    data: unknown, //depends on the block type
-}
-
-export interface BlockInfo{
-    type: string
-    content: BlockData
-}
