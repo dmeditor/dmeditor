@@ -1,6 +1,6 @@
 {
   "name": "dmeditor",
-  "version": "0.1.0-beta.4",
+  "version": "0.1.0-beta.5",
   "description": "dmeditor is a block-styled visual editor. Data is in json format.",
   "keywords": [
     "online editor",
