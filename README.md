@@ -5,7 +5,7 @@
 [Go to github project](https://github.com/digimakergo/dmeditor)
 
 ### Highlights
-- Block based Real WYSIWYG(What you see is what you get)
+- Block based, real WYSIWYG(What you see is what you get)
 - Easy to create your own widgets
 - Style widgets like scoped css
 - Data is saved in json
