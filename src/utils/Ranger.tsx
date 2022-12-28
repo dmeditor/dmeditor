@@ -1,6 +1,6 @@
 import { Slider, Stack } from "@mui/material"
 
-export const Ranger=(props:{defaultValue?:number, value?:number, min:number, max: number, step: number, onChange?:(v:number, event:any)=>void, onFinish?:(v:number)=>void})=>{
+export const Ranger=(props:{defaultValue?:number, value?:number, min:number, max: number, step?: number, onChange?:(v:number, event:any)=>void, onFinish?:(v:number)=>void})=>{
     return <Stack spacing={props.defaultValue} direction="row" sx={{ mb: 1 }} alignItems="center">
     <Slider aria-label="Temperature"
   defaultValue={props.defaultValue}
