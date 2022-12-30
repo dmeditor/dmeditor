@@ -36,7 +36,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
       setAccordionList(newAccordionList);
     }
 
-    const changeExpandableItemName = (e:any,index:any)=>{
+    const changeAccordionName = (e:any,index:any)=>{
       let newAccordionList=[...accordionList]
       newAccordionList[index].contentEditable=false;
       const texts=e.target.innerText
@@ -46,7 +46,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
       setAccordionList([...newAccordionList])
     }
 
-    const deletExpandableItem  = (index:any)=>{
+    const deletAccordion  = (index:any)=>{
       let newAccordionList=[...accordionList]
       newAccordionList.splice(index,1)
       setActiveTabIndex(-1);
@@ -64,7 +64,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
       }
     }
     
-    const addExpandableItem = ()=>{
+    const addAccordion = ()=>{
       let newAccordionList=[...accordionList]
       let list={
         type:'list',id:nanoid(),data:'', children:[
@@ -102,19 +102,19 @@ const BlockAccordion = (props:ToolRenderProps)=>{
                     setActiveTabIndex(index)
                   }
                 } 
-                onBlur={(e)=>{changeExpandableItemName(e,index)}} 
+                onBlur={(e)=>{changeAccordionName(e,index)}} 
                 suppressContentEditableWarning 
                 contentEditable={item.contentEditable}>
                   {item.data}
               </div>
-              <div><PropertyButton color="warning" title="Delete"  onClick={()=>{deletExpandableItem(index)}}><DeleteOutline /></PropertyButton></div>
+              <div><PropertyButton color="warning" title="Delete"  onClick={()=>{deletAccordion(index)}}><DeleteOutline /></PropertyButton></div>
             </div>
           )
         })
       }
       <div className="item">
         <div></div>
-        <div><PropertyButton color="warning" title="Add"  onClick={()=>{addExpandableItem()}}><AddCircleOutlineOutlined /></PropertyButton></div>
+        <div><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
     </BlockProperty>}
