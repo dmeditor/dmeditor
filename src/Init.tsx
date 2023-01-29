@@ -50,7 +50,7 @@ registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose imag
     );
 
 //global
-if( (window as any).dmeditor ){
+if( (typeof window !== "undefined") && (window as any).dmeditor ){
   let templates = (window as any).dmeditor.templates;
   if(templates){
     for( const template of templates ){
