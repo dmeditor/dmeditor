@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 
-export const menulistCss = css`
+export const menulistCss = () => css`
 
 .moreblock{
     padding: 5px 15px;

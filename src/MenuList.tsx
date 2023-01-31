@@ -30,7 +30,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
         setList(list);
     };
 
-    return (<div className={menulistCss} style={{background: 'white'}}>
+    return (<div className={menulistCss()} style={{background: 'white'}}>
         <div style={{fontSize:'18px', padding: '10px 4px'}}>Please choose a block type:</div>
         <PropertyTab tabs={[{title:'Blocks', element: <div>
                     <div style={{background:'white'}}>

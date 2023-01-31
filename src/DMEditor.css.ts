@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 
-export const dmStyle = css`
+export const dmeditorCss = ()=>css`
   height: 100vh;
   background-color: #f0f0f0;
   display: grid;
@@ -192,6 +192,22 @@ hr{
   -webkit-user-select:inherit;
 } 
 
+.menu-blocktype{
+  font-size: 15px;
+}
+
+#dmeditor-add-menu > div{
+  position: absolute;
+  top:0px;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index:100;
+}
+`;
+
+
+export const dmeditorViewCss = ()=>css`
 .image-caption{
   font-style: italic;
 }
@@ -218,18 +234,5 @@ hr{
 
 .columns-6{
   grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6%;
-}
-
-.menu-blocktype{
-  font-size: 15px;
-}
-
-#dmeditor-add-menu > div{
-  position: absolute;
-  top:0px;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-  z-index:100;
 }
 `;

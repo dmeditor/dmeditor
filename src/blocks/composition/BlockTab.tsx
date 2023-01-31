@@ -91,7 +91,7 @@ const BlockTab = (props:ToolRenderProps)=>{
   
     return <>
     {props.active&&<BlockProperty blocktype="tab" inBlock={true}>
-    <div className={blockTabCss}>
+    <div className={blockTabCss()}>
       {
         tabList.map((item,index)=>{
           return (

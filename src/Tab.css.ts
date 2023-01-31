@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 
-export const tabCss = css`
+export const tabCss = ()=> css`
 .tab-header{
     cursor: pointer;
     padding: 8px;

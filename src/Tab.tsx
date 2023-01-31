@@ -17,7 +17,7 @@ export const PropertyTab = (props:{tabs:Array<TabData>, active?: number})=>{
       setActive(props.active?props.active:0)
     },[props.active])
 
-    return (<div className={tabCss}>
+    return (<div className={tabCss()}>
         <div className='tab-header-container'>  
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs  value={false} onChange={(e:any, newValue:number)=>setActive(newValue)}>

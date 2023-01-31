@@ -88,7 +88,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
   
     return <>
     {props.active&&<BlockProperty  blocktype="accordion" inBlock={true}>
-    <div className={blockTabCss}>
+    <div className={blockTabCss()}>
       {
         accordionList.map((item,index)=>{
           return (

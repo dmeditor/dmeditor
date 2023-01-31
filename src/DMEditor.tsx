@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Block, RenderMenu } from './Block';
-import {dmStyle} from './DMEditor.css';
+import {dmeditorCss, dmeditorViewCss} from './DMEditor.css';
 import {templateCss} from './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
@@ -128,7 +128,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
         <ThemeProvider theme={outerTheme}>
-            <div className={dmStyle+' '+templateCss}>
+            <div className={dmeditorCss()+' '+templateCss()}>
         <div className='layout-left'>
             {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><Menu /></div></a>}
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
@@ -208,7 +208,7 @@ export const DMEditor = (props:DMEditorProps)=>{
 }
 
 export const DMEditorView = (props:{data:Array<any>})=>{
-    return <div className='dmeditor-view'>
+    return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
            return  <><Block
