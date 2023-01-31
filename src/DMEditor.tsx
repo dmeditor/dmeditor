@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Block, RenderMenu } from './Block';
-import './DMEditor.css';
-import './templates/templates.css';
+import {dmStyle} from './DMEditor.css';
+import {templateCss} from './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
 import { blockManager } from './BlockManager';
 import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, css, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
 import { Util } from './utils/Util';
@@ -128,7 +128,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
         <ThemeProvider theme={outerTheme}>
-            <div className='dmeditor dmeditor-layout'>
+            <div className={dmStyle+' '+templateCss}>
         <div className='layout-left'>
             {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><Menu /></div></a>}
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>

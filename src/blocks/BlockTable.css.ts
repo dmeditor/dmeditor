@@ -1,3 +1,6 @@
+import { css } from "@emotion/css";
+
+export const tableCss = css`
 .bani .bani-table{
     border-right:none;
     border-bottom: none;
@@ -39,3 +42,4 @@
   line-height: 23px;
   padding: 0 12px;
 }
+`;

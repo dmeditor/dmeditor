@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { RenderMainProps, RenderSettingProps } from "../blocktype";
 import { Ranger } from "../utils/Ranger";
-import "./BlockTable.css";
+import {tableCss} from "./BlockTable.css";
 import { BlockProperty } from "../BlockProperty";
 import React from "react";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
@@ -245,7 +245,7 @@ export const Table = (props: ToolRenderProps) => {
     setIsChange(!isChange)
   };
   return (
-    <div>
+    <div className={tableCss}>
       {props.active&&<BlockProperty  blocktype="table" inBlock={props.inBlock}>
         <PropertyGroup header="Border">
           <PropertyItem label="Border">

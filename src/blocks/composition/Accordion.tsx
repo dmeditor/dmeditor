@@ -1,5 +1,5 @@
 import { ViewListOutlined,DeleteOutline,AddCircleOutlineOutlined} from "@mui/icons-material";
-import "./BlockTab.css";
+import {blockTabCss} from "./BlockTab.css";
 import React, {useEffect ,useState,useRef} from 'react';
 import {BlockList} from '../../BlockList';
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
@@ -88,6 +88,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
   
     return <>
     {props.active&&<BlockProperty  blocktype="accordion" inBlock={true}>
+    <div className={blockTabCss}>
       {
         accordionList.map((item,index)=>{
           return (
@@ -115,6 +116,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
       <div className="item">
         <div></div>
         <div><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
+      </div>
       </div>
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
     </BlockProperty>}

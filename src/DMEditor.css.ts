@@ -1,14 +1,15 @@
-.dmeditor-layout{
-    height: 100vh;
-    background-color: #f0f0f0;
-    display: grid;
-    grid-template-columns: 40px auto 300px;
-    color: #333333;
-    margin: auto;
-    border-left: 1px solid #cccccc;
-    border-right: 1px solid #cccccc;
-    box-shadow: 0px 0px 3px #cccccc;
-}
+import { css } from "@emotion/css";
+
+export const dmStyle = css`
+  height: 100vh;
+  background-color: #f0f0f0;
+  display: grid;
+  grid-template-columns: 40px auto 300px;
+  color: #333333;
+  margin: auto;
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+  box-shadow: 0px 0px 3px #cccccc;
 
 .layout-properties{
     border-left: 1px solid #dddddd;
@@ -55,13 +56,13 @@
     width: 375px;
 }
 
-.dmeditor .left-tool a{
+.left-tool a{
     color: #666666;
     display: inline-block;
     padding: 5px 0px;
 }
 
-.dmeditor .left-tool a.current{
+.left-tool a.current{
     color: green
 }
 
@@ -79,17 +80,17 @@
     box-shadow: 0px 0px 4px #12913e;
 }
 
-.dmeditor a{
+a{
     text-decoration: none;
     color: #12913e;
     box-shadow: none!important;
 }
 
-.dmeditor a:hover{
+a:hover{
     color:#046726
 }
 
-.dmeditor hr{
+hr{
     border-top: 1px solid #cccccc;
     border-bottom: none;
 }
@@ -231,3 +232,4 @@
   background-color: white;
   z-index:100;
 }
+`;

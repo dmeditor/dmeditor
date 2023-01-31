@@ -1,5 +1,5 @@
 import { TabOutlined,DeleteOutline,AddCircleOutlineOutlined} from "@mui/icons-material";
-import "./BlockTab.css";
+import {blockTabCss} from "./BlockTab.css";
 import React, {useEffect ,useState,useRef} from 'react';
 import {BlockList} from '../../BlockList';
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
@@ -90,7 +90,8 @@ const BlockTab = (props:ToolRenderProps)=>{
 
   
     return <>
-    {props.active&&<BlockProperty  blocktype="tab" inBlock={true}>
+    {props.active&&<BlockProperty blocktype="tab" inBlock={true}>
+    <div className={blockTabCss}>
       {
         tabList.map((item,index)=>{
           return (
@@ -118,6 +119,7 @@ const BlockTab = (props:ToolRenderProps)=>{
       <div className="item">
         <div></div>
         <div><PropertyButton color="warning" title="Add"  onClick={()=>{addTab()}}><AddCircleOutlineOutlined /></PropertyButton></div>
+      </div>
       </div>
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
     </BlockProperty>}

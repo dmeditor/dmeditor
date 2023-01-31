@@ -1,3 +1,6 @@
+import { css } from "@emotion/css";
+
+export const blockTabCss = css`
 .item{
   display:grid;
   grid-template-columns: auto 40px;
@@ -27,3 +30,4 @@
   font-style: italic;
   color: #cccccc;
 }
+`;

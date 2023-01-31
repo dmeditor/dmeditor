@@ -1,3 +1,7 @@
+import { css } from "@emotion/css";
+
+export const menulistCss = css`
+
 .moreblock{
     padding: 5px 15px;
     background-color: white;
@@ -11,3 +15,4 @@
     border-bottom: 1px solid #c0edcc;
     color: #005b1a;
 }
+`;

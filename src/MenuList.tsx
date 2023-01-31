@@ -1,7 +1,7 @@
 import { Input } from '@mui/material';
 import { useState } from 'react';
 import { blockManager } from './BlockManager';
-import './MenuList.css';
+import {menulistCss} from './MenuList.css';
 import { PropertyTab } from './Tab';
 import { getAllTemplates, getCategories, getDef, getToolDefinitions } from './ToolDefinition';
 
@@ -30,7 +30,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
         setList(list);
     };
 
-    return (<div style={{background: 'white'}}>
+    return (<div className={menulistCss} style={{background: 'white'}}>
         <div style={{fontSize:'18px', padding: '10px 4px'}}>Please choose a block type:</div>
         <PropertyTab tabs={[{title:'Blocks', element: <div>
                     <div style={{background:'white'}}>
@@ -52,7 +52,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
                     </div>
             
         </div>},
-        {title:'Templates', element: <div>           
+        {title:'Custom', element: <div>
                     {templates.map(template=>
                     <div className="moreblock">
                      <table style={{width:'100%'}}>
