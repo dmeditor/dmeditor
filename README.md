@@ -2,7 +2,7 @@
 
 <ins>**DM Editor**</ins> is a block-styled visual editor.
 
-[Roadmap](https://github.com/orgs/digimakergo/projects/3/views/1) , contact [@xc](mailto:chen.xcmail@gmail.com) if you want to discuss:).
+[Roadmap](https://github.com/orgs/digimakergo/projects/3/views/1) , mail [xc](mailto:chen.xcmail@gmail.com) if you want to discuss:).
 
 ### Highlights
 - Block based, real WYSIWYG(What you see is what you get)
