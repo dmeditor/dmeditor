@@ -25,7 +25,7 @@ const ImageHeadingText = (props:ToolRenderProps)=>{
                 <Block data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
             </div>
             <div>
-                <BlockList allowedType={['text', 'heading']} onChange={data=>onChange({...data[1], children:data}, 1)} active={props.active&&activeIndex==1} list={list[1].children} onActivate={()=>setActiveIndex(1)} />
+                <BlockList allowedType={['text', 'heading']} onChange={data=>onChange({...list[1], children:data}, 1)} active={props.active&&activeIndex==1} list={list[1].children} onActivate={()=>setActiveIndex(1)} />
             </div>
         </div>
     </div>
