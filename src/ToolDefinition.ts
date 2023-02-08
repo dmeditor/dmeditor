@@ -89,7 +89,8 @@ export const getAllTemplates = ()=>{
 }
 
 export const registerCategory = (category:{identifier:string, text: string})=>{
-    toolCategories.push(category);
+  let i=toolCategories.findIndex(item=>item.identifier==category.identifier);
+  if(i==-1) toolCategories.push(category);
 }
 
 export const newBlockData = (type:string, template?:string)=>{
