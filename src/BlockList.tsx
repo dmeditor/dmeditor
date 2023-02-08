@@ -16,6 +16,7 @@ interface BlockListProps{
         direction?:'vertical'|'horizontal' //if not set, will be vertical
     },
     allowedType?:string[],
+    view?:boolean,
     onChange:(data:any)=>void,
     onActivate?:()=>void
 }
@@ -65,7 +66,16 @@ export const BlockList = (props:BlockListProps)=>{
                 //     return <Container data={child as BlockContainerType} />;
                 // }else{
                     return <div key={childData.id}>
-                             <Block addedType={props.allowedType} onDelete={()=>onDelete(index)} 
+                          {props.view&&<Block
+                            data={childData} active={false} 
+                            onCancel={()=>{}}
+                            onActivate={()=>{}} 
+                            onChange={()=>{}}
+                            onAddAbove={()=>{}} 
+                            onAddUnder={()=>{}} 
+                            view={true}
+                            />  }
+                            {!props.view&&<Block addedType={props.allowedType} onDelete={()=>onDelete(index)} 
                              onAddUnder={addUnder} 
                              siblingDirection={'vertical'} inBlock={true} 
                              active={(props.active&&activeIndex==index)?true:false}
@@ -73,7 +83,13 @@ export const BlockList = (props:BlockListProps)=>{
                                 let newList = [...list];
                                 newList[index] = newData;
                                 setList(newList);
-                             }} onActivate={()=>activate(index)} data={childData} />
+                             }} onActivate={()=>activate(index)} data={childData}
+                             />
+                            }
+
+
+
+                             
                        </div>;
                 // }
             }
