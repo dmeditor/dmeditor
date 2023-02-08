@@ -128,7 +128,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
         <ThemeProvider theme={outerTheme}>
-            <div className={dmeditorCss()+' '+templateCss()}>
+            <div className={dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()}>
         <div className='layout-left'>
             {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><Menu /></div></a>}
             <div style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
