@@ -106,7 +106,7 @@ export const Block = React.memo((props:BlockProps)=>{
         }
     };
 
-    return <div className={'block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')}>
+    return <div className={'block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} id={props.data.id}>
             {selectingTool&&<RenderMenu onAdd={addBlock} onCancel={()=>setSelectingTool(false)} allowedType ={props.addedType} />}
             {props.siblingDirection==='vertical'&&<div className="tool tool-above">
                             <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
