@@ -108,6 +108,6 @@ export const newBlockData = (type:string, template?:string)=>{
       defaultData = def.initData();
     }
 
-    defaultData.id = nanoid();   
+    defaultData.id = 'a'+nanoid();   
     return defaultData;
 }
