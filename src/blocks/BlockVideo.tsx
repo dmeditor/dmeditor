@@ -24,7 +24,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     }  
 
     useEffect(()=>{
-      props.onChange({type:'video', data: videoUrl, common: commonSettings});
+      props.onChange({...props.data,data: videoUrl, common: commonSettings});
     }, [videoUrl, commonSettings]);
 
     return <div style={{width: width,height:height, ...commonSettings}}>
