@@ -1,5 +1,10 @@
+0.1.0-beta.6
+- 2023-02-15 updated: block data id (add a before nanoid) and show id
+- 2023-02-08 updated: layout-main>viewmode-edit width
+- 2023-02-08 updated: blockList preview can edit issue
+- 2023-02-08 updated: registerCategory (Do not register if any)
+
 0.1.0-beta.5
-- 2023-02-15 updated: block data id (add a before nanoid)
 - 2022-12-30 updated: use emotion instead of global css import
 - 2022-12-30 added: Accordion and  BlockTab
 
