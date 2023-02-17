@@ -39,7 +39,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         Util.toast=props.toast
         Util.pageTabActiveIndex=props.pageTabActiveIndex||0
     },[]);
-    const [blocks, setBlocks] = useState(props.data?props.data:[]);
+    const [blocks, setBlocks] = useState(props.data?[...props.data]:[]);
     const [activeBlock, setActiveBlock] = useState(blocks.length>0?0:-1);
     const [newBlock, setNewBlock] = useState(false);
     const [viewmode, setViewmode] = useState('edit');
@@ -54,7 +54,6 @@ export const DMEditor = (props:DMEditorProps)=>{
             setActiveBlock(index-1);
         }
     }
-
     useEffect(()=>{
         if( props.onChange){
             props.onChange(blocks)
@@ -64,7 +63,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       if( props.onChangeActive){
           props.onChangeActive(activeBlock)
       }
-  }, [activeBlock]);
+    }, [activeBlock]);
 
     const addUnder = (type: string, index:number, template?:string)=>{
         if( type ){

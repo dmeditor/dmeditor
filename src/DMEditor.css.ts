@@ -208,6 +208,9 @@ hr{
 
 
 export const dmeditorViewCss = ()=>css`
+.block-container{
+  position: relative;
+}
 .image-caption{
   font-style: italic;
 }
