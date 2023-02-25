@@ -4,16 +4,17 @@ import { useEffect, useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-import { PropertyItem } from '../utils';
+import { PropertyItem,Ranger } from '../utils';
 import { Util } from '../utils/Util';
 
 
 export const BlockVideo = (props:ToolRenderProps)=>{
-    const [width, setWidth] = useState(300);
-    const [height, setHeight] = useState(240);
+    const [width, setWidth] = useState(props.data.settings.width||300);
+    const [height, setHeight] = useState(props.data.settings.height||240);
     const [adding, setAdding] = useState(props.adding?true:false);
     const [videoUrl, setVideoUrl] = useState(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [isChange,setIsChange] = useState(false);
     const handleClickOpen = ()=>{
       setAdding(true);
     }
@@ -21,31 +22,30 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     const submitVideo = (val:any,type:string)=>{
         setVideoUrl( val );
         setAdding(false);
+        setIsChange(true);
     }  
 
     useEffect(()=>{
-      props.onChange({...props.data,data: videoUrl, common: commonSettings});
-    }, [videoUrl, commonSettings]);
+      props.onChange({...props.data,data: videoUrl,settings:{width:width,height:height}, common: commonSettings});
+    }, [videoUrl,width,height,commonSettings]);
 
     return <div style={{width: width,height:height, ...commonSettings}}>
             {adding&&<div>
               <Util.renderBroseURL defalutValue={videoUrl} type={'Video'} onConfirm={submitVideo} adding={adding} />
             </div>}
             {props.active&&<BlockProperty  blocktype="video" inBlock={props.inBlock}>
-                <div>
-                    <label>Width: </label>
-                    <input type="text" defaultValue={width} onChange={(e)=>setWidth(parseInt(e.target.value))} />
-                </div>
-                <div>
-                    <label>Height: </label>
-                    <input type="text" defaultValue={height} onChange={(e)=>setHeight(parseInt(e.target.value))} />
-                </div>
-                <div>
-                    <label>Source: </label>
-                    <Button onClick={handleClickOpen}>Choose</Button>
-                </div>
+                <PropertyItem label='Width'>
+                   <Ranger min={50} max={800} step={1} defaultValue={width} onChange={v=>{setWidth(v)}}/>
+                </PropertyItem>
+                <PropertyItem label='Height'>
+                  <Ranger min={50} max={800} step={1}  defaultValue={height} onChange={v=>{setHeight(v)}}/>
+                </PropertyItem>
+                <PropertyItem label='Source'>
+                  <Button onClick={handleClickOpen}>Choose</Button>
+                </PropertyItem>
+                
                 {Util.renderCustomProperty(props.data)}
-                <div><CommonSettings commonSettings={commonSettings}  settingList={['marginTop']} onChange={(settings)=>setCommonSettings(settings)} /></div>
+                <div><CommonSettings commonSettings={commonSettings}  settingList={['marginTop']} onChange={(settings)=>{setCommonSettings(settings)}} /></div>
             </BlockProperty>}
             <video width={'100%'} height={'100%'} controls src={videoUrl} >
               <object data={videoUrl} width={'100%'} height={'100%'}>
