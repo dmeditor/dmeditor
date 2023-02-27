@@ -33,38 +33,40 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
     return (<div className={menulistCss()} style={{background: 'white'}}>
         <div style={{fontSize:'18px', padding: '10px 4px'}}>Please choose a block type:</div>
         <PropertyTab tabs={[{title:'Blocks', element: <div>
-                    <div style={{background:'white'}}>
-                    <Input fullWidth placeholder='Type to search' onChange={search} autoFocus style={{padding: '6px'}} />
-                    </div>
-                    <div className='menu-blocktype'>
-                    {blockCategory.map((category)=><div>
-                        {list.filter(item=>registeredTypes[item.type].menu?.category==category.identifier).map((blockType, index)=>
-                            <>{index==0&&<div style={{padding: '5px 0px', color: '#4f4f4f', margin:'5px 10px' }}>{category.text}</div>}
-                            <div key={index} className="moreblock" onClick={()=>props.onSelect(blockType.type)}>
-                            <table style={{width:'100%'}}>
-                                <tbody>
-                                <tr><td style={{width: '28px'}}>{registeredTypes[blockType.type].menu?.icon}</td><td style={{textAlign:'left'}}>{blockType.name}</td></tr>                    
-                                </tbody>
-                            </table>
-                        </div></>
-                        )}
-                    </div>)}
-                    </div>
+          <div style={{background:'white'}}>
+            <Input fullWidth placeholder='Type to search' onChange={search} autoFocus style={{padding: '6px'}} />
+          </div>
+          <div className='menu-blocktype'>
+            {blockCategory.map((category:any,kindex:any)=><div key={category.identifier+'_'+kindex}>
+              {list.filter(item=>registeredTypes[item.type].menu?.category==category.identifier).map((blockType, blockindex)=>
+                <div key={category.identifier+'_'+kindex+'_0_'+blockindex}>
+                  {blockindex==0&&<div  style={{padding: '5px 0px', color: '#4f4f4f', margin:'5px 10px' }}>{category.text}</div>}
+                  <div className="moreblock" onClick={()=>props.onSelect(blockType.type)}>
+                    <table style={{width:'100%'}}>
+                      <tbody>
+                        <tr><td style={{width: '28px'}}>{registeredTypes[blockType.type].menu?.icon}</td><td style={{textAlign:'left'}}>{blockType.name}</td></tr>                    
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>)}
+          </div>
             
         </div>},
         {title:'Custom', element: <div>
-                    {templates.map(template=>
-                    <div className="moreblock">
-                     <table style={{width:'100%'}}>
-                     <tbody>
-                    <tr onClick={()=>props.onSelect(template.tool, template.templateDef.identifier)}>
-                        <td style={{width: '28px'}}>{template.templateDef.icon?template.templateDef.icon:getDef(template.tool).menu.icon}</td>
-                        <td style={{textAlign:'left'}}>{template.templateDef.name}</td></tr>                                 
-                        </tbody>
-                    </table>
-                    </div>
-                    )}       
-        </div>}
+          {templates.map((template:any,index:any)=>
+          <div className="moreblock" key={index}>
+            <table style={{width:'100%'}}>
+            <tbody>
+          <tr onClick={()=>props.onSelect(template.tool, template.templateDef.identifier)}>
+              <td style={{width: '28px'}}>{template.templateDef.icon?template.templateDef.icon:getDef(template.tool).menu.icon}</td>
+              <td style={{textAlign:'left'}}>{template.templateDef.name}</td></tr>                                 
+              </tbody>
+          </table>
+          </div>
+          )}       
+      </div>}
     ]} active={0} />       
     </div>)
     
