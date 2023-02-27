@@ -148,7 +148,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             {blocks.map((block, index)=>{
              const a = ()=>{
                 let currentSelected = activeBlock===index ;
-                return  <><Block
+                return  <Block
                          siblingDirection='vertical'
                          data={block} active={currentSelected} 
                          newBlock={currentSelected&&newBlock?true:false}
@@ -165,7 +165,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                       setNewBlock(false)
                     }}
                     onAddAbove={(type:string, template?:string)=>addAbove(type, index, template)} 
-                    onAddUnder={(type:string, template?:string)=>addUnder(type, index, template)} /></>;         
+                    onAddUnder={(type:string, template?:string)=>addUnder(type, index, template)} />;         
              }
              return a();        
             }
@@ -210,17 +210,17 @@ export const DMEditorView = (props:{data:Array<any>})=>{
     return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
-           return  <><Block
+           return  <Block
                     data={block} active={false} 
                     onCancel={()=>{}}
-                    key={index}
+                    key={block.id}
                     onActivate={()=>{}} 
                     onChange={()=>{}}
                     onAddAbove={()=>{}} 
                     onAddUnder={()=>{}} 
                     view={true}
                     />                   
-                    </>;         
+                    ;         
         }
         return blockElement();        
        }
