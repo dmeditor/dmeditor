@@ -1,5 +1,5 @@
-import { ArrowDownward, ArrowRight, KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
-import { Button, ButtonProps, ButtonTypeMap, Collapse, ExtendButtonBase, Grid, Tooltip } from "@mui/material"
+import {  KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
+import { Button, ButtonProps,  Collapse, Grid, Tooltip } from "@mui/material"
 import React, { useState } from "react"
 
 export const PropertyItem = (props:{label: string, autoWidth?:boolean, vertical?:boolean, children:any})=>{
@@ -57,7 +57,7 @@ export const PropertyButton = (props:ButtonProps&{title?:string, selected?:boole
     }
 
     if(props.title){
-        return <Tooltip title={props.title}><Button sx={sx} {...buttonProps} /></Tooltip> 
+        return <Tooltip title={props.title}><span><Button sx={sx} {...buttonProps} /></span></Tooltip> 
     }else{
         return <Button sx={sx} {...props} />
     }
