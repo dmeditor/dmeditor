@@ -204,6 +204,9 @@ hr{
   background-color: white;
   z-index:100;
 }
+.btn.btn-success {
+  color:#fff;
+}
 `;
 
 
