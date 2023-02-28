@@ -37,9 +37,9 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
             <Input fullWidth placeholder='Type to search' onChange={search} autoFocus style={{padding: '6px'}} />
           </div>
           <div className='menu-blocktype'>
-            {blockCategory.map((category:any,kindex:any)=><div key={category.identifier+'_'+kindex}>
+            {blockCategory.map((category:any)=><div key={category.identifier}>
               {list.filter(item=>registeredTypes[item.type].menu?.category==category.identifier).map((blockType, blockindex)=>
-                <div key={category.identifier+'_'+kindex+'_0_'+blockindex}>
+                <div key={blockType.type}>
                   {blockindex==0&&<div  style={{padding: '5px 0px', color: '#4f4f4f', margin:'5px 10px' }}>{category.text}</div>}
                   <div className="moreblock" onClick={()=>props.onSelect(blockType.type)}>
                     <table style={{width:'100%'}}>
@@ -55,8 +55,8 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
             
         </div>},
         {title:'Custom', element: <div>
-          {templates.map((template:any,index:any)=>
-          <div className="moreblock" key={index}>
+          {templates.map((template:any)=>
+          <div className="moreblock" key={template.templateDef.identifier}>
             <table style={{width:'100%'}}>
             <tbody>
           <tr onClick={()=>props.onSelect(template.tool, template.templateDef.identifier)}>
