@@ -128,7 +128,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
               <Accordion.Item  key={item.id} eventKey={`'${index}'`}>
                 <Accordion.Header>{item.data}</Accordion.Header>
                 <Accordion.Body>
-                  <BlockList allowedType={['text', 'heading','image']} onChange={data=>onChange(item,data,index)} active={props.active&&activeIndex==1} list={item.children}  onActivate={()=>setActiveIndex(1)}/>
+                  <BlockList view={props.view} allowedType={['text', 'heading','image']} onChange={data=>onChange(item,data,index)} active={props.active&&activeIndex==1} list={item.children}  onActivate={()=>setActiveIndex(1)}/>
                 </Accordion.Body>
               </Accordion.Item>
             )

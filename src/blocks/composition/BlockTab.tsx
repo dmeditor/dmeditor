@@ -135,7 +135,7 @@ const BlockTab = (props:ToolRenderProps)=>{
               return (
                 <Tab  key={item.id} eventKey={index} title={item.data}>
                   <div>
-                    <BlockList allowedType={['text', 'heading','image']} onChange={data=>onChange(item,data,index)} active={props.active&&activeIndex==1} list={item.children}  onActivate={()=>setActiveIndex(1)}/>
+                    <BlockList view={props.view} allowedType={['text', 'heading','image']} onChange={data=>onChange(item,data,index)} active={props.active&&activeIndex==1} list={item.children}  onActivate={()=>setActiveIndex(1)}/>
                   </div>
                 </Tab>
               )
@@ -183,6 +183,6 @@ export const toolBlockTab: ToolDefinition = {
           ]
         }
     },
-    view: (props:{data:any})=><BlockTab data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
+    view: (props:{data:any})=><BlockTab view={true} data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
     render:BlockTab    
 }
