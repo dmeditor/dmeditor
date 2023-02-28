@@ -24,7 +24,7 @@ export const tableCss = ()=> css`
 }
 
 .table__cell:empty::before{
-  content: '\00a0';
+  content: '\\00a0';
 }
 
 .viewmode-edit .table__cell >div:empty::before{
