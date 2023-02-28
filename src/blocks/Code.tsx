@@ -4,12 +4,9 @@ import { BlockProperty } from "../BlockProperty";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { css } from "@emotion/css";
 import { CommonSettings } from "../CommonSettings";
-import { PropertyItem } from '../utils';
-import { Util } from '../utils/Util';
+import { Util } from '../utils';
 export const Code = (props: ToolRenderProps) => {
-  const [content, SetContent] = useState(() => {
-    return props.data.data;
-  });
+  const [content, SetContent] = useState(props.data.data);
   const [commonSettings, setCommonSettings] = useState(props.data.common);
   const [isChange,setIsChange] = useState(false);
 

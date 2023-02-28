@@ -1,9 +1,3 @@
-// import { ParagraphHandler } from "./blocks/Paragraph";
-import {
-  CollectionsOutlined,
-  TabOutlined,
-  ViewListOutlined,
-} from "@mui/icons-material";
 import { registerTemplate, registerTool } from "./ToolDefinition";
 import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";

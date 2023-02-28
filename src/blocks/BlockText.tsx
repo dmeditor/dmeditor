@@ -1,21 +1,14 @@
 import { FormatListBulleted,FormatListNumbered,FormatAlignCenter, FormatAlignLeft, FormatAlignRight,FormatAlignJustify,ImageOutlined, TextFormatOutlined,BorderColorOutlined,LinkOffOutlined } from "@mui/icons-material";
-import { Button, Input,Select,MenuItem,TextField} from "@mui/material";
-// import { useState } from "react";
-// import { Block } from "../Block";
+import { Button,Select,MenuItem} from "@mui/material";
 import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-
 import React, { useMemo, useRef, useEffect ,useState,useCallback} from 'react';
-import {Editor,Transforms,Text,createEditor,Descendant, Range as SlateRange,Element as SlateElement,} from 'slate';
-import { Slate, Editable, withReact,ReactEditor, useSlate, useFocused } from 'slate-react';
+import {createEditor} from 'slate';
+import { Slate, Editable, withReact,ReactEditor} from 'slate-react';
 import { withHistory } from 'slate-history'
-
+import { Ranger,PickColor,Util,PropertyButton, PropertyGroup, PropertyItem} from "../utils";
 import { SlateFun } from '../utils/Slate'
-import { Ranger } from "../utils/Ranger";
-import { PickColor } from "../utils/PickColor";
 import FontFamilyList from '../utils/FontFamilyList'
-import {PropertyButton, PropertyGroup, PropertyItem} from '../utils/Property';
-import { Util } from '../utils/Util';
 import { CommonSettings } from "../CommonSettings";
 
 const BlockButton = ({formats}:any) => {
@@ -59,7 +52,6 @@ export const BlockText = (props:ToolRenderProps)=>{
     const [isCollapsed,setIsCollapsed]= useState(true);
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState("" as any);
-    const [isChange,setIsChange] = useState(false)
     const firstRender = useRef(true);
 
     const editor = useMemo(
@@ -72,13 +64,11 @@ export const BlockText = (props:ToolRenderProps)=>{
     const change = (val:any)=>{
       setValue(val)
     }
-
     useEffect(()=>{
         if (firstRender.current) {
           firstRender.current = false;
         }else{
           props.onChange({...props.data,data:value, common: commonSettings}, true);
-          setIsChange(false)
         }
     },[value,commonSettings])
 
@@ -104,7 +94,6 @@ export const BlockText = (props:ToolRenderProps)=>{
     }
     const changeLinkFormat = (v:any)=>{
       setLinkstyle(v)
-      // SlateFun.setButtonFormat(editor,'',v)
       SlateFun.setLinkFormat(editor,v)
       setIsLinkActive(v==='none'?true:false)
       setIsButtonActive(v==='button'?true:false)
@@ -310,7 +299,7 @@ export const BlockText = (props:ToolRenderProps)=>{
           </>
           :null}
           {Util.renderCustomProperty(props.data)}
-         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>                 
+         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} /></div>                 
           </BlockProperty>}
           <div>
             <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}  changeDialogLink={changeDialogLinkfun}/>
@@ -363,7 +352,6 @@ export const toolText:ToolDefinition = {
             children:[ 
               {
                 text: '',
-                // text: 'This example shows how you can make a hovering menu appear above your content, which you can use to make text ',
               }
               ]
             }

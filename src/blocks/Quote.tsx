@@ -1,11 +1,9 @@
 import { TitleOutlined } from '@mui/icons-material'
-import { RenderMainProps, RenderSettingProps } from '../blocktype'
 import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition } from "../ToolDefinition";
 import { useState,useEffect,useRef } from 'react'
 import { CommonSettings } from '../CommonSettings';
-import { PropertyItem } from '../utils';
-import { Util } from '../utils/Util';
+import { Util } from '../utils';
 
 
 export const Quote = (props:any)=>{

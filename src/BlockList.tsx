@@ -1,11 +1,7 @@
-import { AlignHorizontalCenter, AlignHorizontalLeft, AlignHorizontalRight, AlignVerticalCenter, AlignVerticalTop, Collections, CollectionsOutlined, FormatAlignCenter, FormatAlignLeft, FormatAlignRight, HorizontalSplit } from "@mui/icons-material";
-import { Button } from "@mui/material";
-import { nanoid } from "nanoid";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Block, BlockInfo } from "./Block"
-import { BlockProperty } from "./BlockProperty";
-import { getDef, newBlockData } from "./ToolDefinition";
+import { Block} from "./Block"
+import { newBlockData } from "./ToolDefinition";
 
 
 interface BlockListProps{
@@ -62,36 +58,28 @@ export const BlockList = (props:BlockListProps)=>{
     return <div className={'blocklist'}>
         {list.map( (childData, index)=>
             {
-                // if( child.hasOwnProperty('children') ){
-                //     return <Container data={child as BlockContainerType} />;
-                // }else{
-                    return <div key={childData.id}>
-                          {props.view&&<Block
-                            data={childData} active={false} 
-                            onCancel={()=>{}}
-                            onActivate={()=>{}} 
-                            onChange={()=>{}}
-                            onAddAbove={()=>{}} 
-                            onAddUnder={()=>{}} 
-                            view={true}
-                            />  }
-                            {!props.view&&<Block addedType={props.allowedType} onDelete={()=>onDelete(index)} 
-                             onAddUnder={addUnder} 
-                             siblingDirection={'vertical'} inBlock={true} 
-                             active={(props.active&&activeIndex==index)?true:false}
-                              onChange={(newData)=>{
-                                let newList = [...list];
-                                newList[index] = newData;
-                                setList(newList);
-                             }} onActivate={()=>activate(index)} data={childData}
-                             />
-                            }
-
-
-
-                             
-                       </div>;
-                // }
+              return <div key={childData.id}>
+                    {props.view&&<Block
+                      data={childData} active={false} 
+                      onCancel={()=>{}}
+                      onActivate={()=>{}} 
+                      onChange={()=>{}}
+                      onAddAbove={()=>{}} 
+                      onAddUnder={()=>{}} 
+                      view={true}
+                      />  }
+                      {!props.view&&<Block addedType={props.allowedType} onDelete={()=>onDelete(index)} 
+                        onAddUnder={addUnder} 
+                        siblingDirection={'vertical'} inBlock={true} 
+                        active={(props.active&&activeIndex==index)?true:false}
+                        onChange={(newData)=>{
+                          let newList = [...list];
+                          newList[index] = newData;
+                          setList(newList);
+                        }} onActivate={()=>activate(index)} data={childData}
+                        />
+                      }
+                  </div>;
             }
         )}
     </div>

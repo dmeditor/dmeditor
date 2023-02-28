@@ -1,9 +1,6 @@
-import { LaptopMacOutlined, MobileScreenShareOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 import { Box, Tabs, Tab } from '@mui/material';
 import { ReactElement, useEffect, useState } from 'react';
 import {tabCss} from './Tab.css';
-import { Input } from './utils/Input';
-import { Ranger } from './utils/Ranger';
 
 export interface TabData{
     title: string,

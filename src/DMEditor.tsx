@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Block, RenderMenu } from './Block';
+import { Block} from './Block';
 import {dmeditorCss, dmeditorViewCss} from './DMEditor.css';
 import {templateCss} from './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
-import { blockManager } from './BlockManager';
-import { AddBoxOutlined, HelpOutlined, LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
-import { createTheme, css, ThemeProvider } from '@mui/material';
+import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
+import { createTheme, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
 import { Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
-import { nanoid } from 'nanoid';
 
 export interface DMEditorProps{
     data:Array<any>, 

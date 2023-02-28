@@ -1,6 +1,5 @@
 import { Input } from '@mui/material';
 import { useState } from 'react';
-import { blockManager } from './BlockManager';
 import {menulistCss} from './MenuList.css';
 import { PropertyTab } from './Tab';
 import { getAllTemplates, getCategories, getDef, getToolDefinitions } from './ToolDefinition';
