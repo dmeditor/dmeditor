@@ -1,7 +1,7 @@
 import React, {  useRef, useEffect } from 'react';
 import {Editor,Transforms,Text,createEditor,Descendant, Range as SlateRange,Element as SlateElement,} from 'slate';
 import { Slate, Editable, withReact, useSlate, useFocused, useSelected,useSlateStatic,ReactEditor } from 'slate-react';
-import {  Menu, Portal } from './components'
+import {  Menu, Portal } from './SlateComponents'
 import isUrl from 'is-url'
 import { css } from '@emotion/css'
 import { FormatBold, FormatItalic, FormatUnderlined,LinkOutlined,LinkOffOutlined,Delete } from "@mui/icons-material";
