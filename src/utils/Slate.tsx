@@ -7,6 +7,7 @@ import { css } from '@emotion/css'
 import { FormatBold, FormatItalic, FormatUnderlined,LinkOutlined,LinkOffOutlined,Delete } from "@mui/icons-material";
 import imageExtensions from 'image-extensions'
 import { Button} from "@mui/material";
+import {Util} from "../utils"
 
 
 export const SlateFun:any = {
@@ -427,12 +428,27 @@ export const SlateFun:any = {
     const { selection } = editor
     const isCollapsed = selection && SlateRange.isCollapsed(selection)
     
-    let source = type==='select'?{
-      sourceType:'select',
-      sourceData:url
-    }:{sourceType:'input'}
+    let source:any = {sourceType:'input'}
+    let valUrl:any = url
+    let children:any=[{ text: url }]
+    if(type==='select'){
+      source = {
+        sourceType:'select',
+        sourceData:url
+      }
+      valUrl=url.id
+      children=[{text:url.title}]
+    }
 
-    let valUrl = type==='select'?url.id:url
+    if(type==='file'){
+      source = {
+        sourceType:'file',
+        sourceData:url
+      }
+      valUrl=url.url
+      children=[{text:url.title}]
+    }
+    
 
     let linkStyle=style==='button'?{
       style:'button',setting:{size:'small',variant:'outlined'}
@@ -441,7 +457,7 @@ export const SlateFun:any = {
     let link: any = {
       type: 'link',
       url:valUrl,
-      children: isCollapsed ? [{ text: url }] : [],
+      children: isCollapsed ? children: [],
       source:source,
       styleConfig:linkStyle
     }
@@ -450,8 +466,7 @@ export const SlateFun:any = {
     }
   
     if (isCollapsed) {
-      return;
-      // Transforms.insertNodes(editor, link)
+      Transforms.insertNodes(editor, link)
     } else {
       if (SlateFun.isLinkActive(editor)) {
         SlateFun.unwrapLink(editor)
@@ -503,11 +518,24 @@ export const SlateFun:any = {
         let defalutUrl:any=SlateFun.getLinkSetting(editor)
         let newLink:any=JSON.parse(JSON.stringify(defalutUrl))
        
-        newLink.url = type==='select'?url.id:url
-        newLink.source = type==='select'?{
-          sourceType:'select',
-          sourceData:url
-        }:{sourceType:'input'}
+        newLink.url =url
+        newLink.source ={sourceType:'input'}
+
+        if(type === 'select'){
+          newLink.url = url.id
+          newLink.source = {
+            sourceType:'select',
+            sourceData:url
+          }
+        }
+        if(type === 'file'){
+          newLink.url = url.path
+          newLink.source = {
+            sourceType:'file',
+            sourceData:url
+          }
+        }
+
         if(isCollapsed){
           let links=SlateFun.getLinkSetting(editor,1)
           Transforms.select(editor,links)
@@ -540,7 +568,13 @@ export const SlateFun:any = {
     }else{
       cssName=''
     }
-    let link:any= element.source.sourceType==='select'?'{link:'+element.source.sourceData.content_type+','+element.url+'}':element.url
+    let link:any=element.url
+    if(element.source.sourceType==='select'){
+      link='{link:'+element.source.sourceData.location.content_type+','+element.url+'}'
+    }
+    if(element.source.sourceType==='file'){
+      link=`${Util.getFileUrl(element.url)}`
+    }
     // className={
     //   selected? css`box-shadow: 0 0 0 3px #ddd;`+'cve': 'cv'
     // }

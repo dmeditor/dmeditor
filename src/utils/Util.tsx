@@ -8,6 +8,7 @@ export interface BroseProps{
   onConfirm?:any,
   onCancel?:()=>void,
   defalutValue?:any,
+  hovering?:boolean
 }
 
 export const Util = {
@@ -25,7 +26,7 @@ export const Util = {
         return <A onConfirm={props.onConfirm} adding={true}/>;
     }else if(props.type==='Link'&&Util.BrowseLink){
       let A = Util.BrowseLink as (props:BroseProps)=>JSX.Element;
-      return <A onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue}/>;
+      return <A onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue} hovering={props.hovering}/>;
     }else{
         return <DefaultBrowseUrl onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue} type={props.type}/> 
     }

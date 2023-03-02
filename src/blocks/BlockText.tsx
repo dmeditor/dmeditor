@@ -1,4 +1,4 @@
-import { FormatListBulleted,FormatListNumbered,FormatAlignCenter, FormatAlignLeft, FormatAlignRight,FormatAlignJustify,ImageOutlined, TextFormatOutlined,BorderColorOutlined,LinkOffOutlined } from "@mui/icons-material";
+import { FormatListBulleted,FormatListNumbered,FormatAlignCenter, FormatAlignLeft, FormatAlignRight,FormatAlignJustify,ImageOutlined, TextFormatOutlined,BorderColorOutlined,LinkOutlined,LinkOffOutlined } from "@mui/icons-material";
 import { Button,Select,MenuItem} from "@mui/material";
 import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
@@ -53,6 +53,7 @@ export const BlockText = (props:ToolRenderProps)=>{
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState("" as any);
     const firstRender = useRef(true);
+    const [hovering,setHovering] = useState(true)
 
     const editor = useMemo(
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
@@ -113,9 +114,13 @@ export const BlockText = (props:ToolRenderProps)=>{
     }
 
     //insert image
-    const handleClickOpen = (event:any)=>{
+    const handleClickOpen = (event:any,type:any)=>{
       event.preventDefault()
-      setDialogType('image')
+      setDialogType(type)
+      if(type=='link'){
+        setLinkVal(SlateFun.getLinkSetting(editor))
+        setHovering(false)
+      }
       setAdding(true);
       setAdding(false);
       setTimeout(()=>{setAdding(true);},10)
@@ -128,6 +133,7 @@ export const BlockText = (props:ToolRenderProps)=>{
     const changeDialogLinkfun = (value:any)=>{
       setLinkVal(value);
       setDialogType('link')
+      setHovering(true)
       setAdding(true);
       setAdding(false);
       setTimeout(()=>{setAdding(true);},10)
@@ -248,9 +254,12 @@ export const BlockText = (props:ToolRenderProps)=>{
           <PropertyGroup header="Insert">
             {IsShowToolBar('tools','image')?
             <PropertyItem label='Insert'>
-              <PropertyButton title='Image' onClick={(e)=>{handleClickOpen(e)}}>
+              <PropertyButton title='Image' onClick={(e)=>{handleClickOpen(e,'image')}}>
                 <ImageOutlined />
-              </PropertyButton>               
+              </PropertyButton>   
+              <PropertyButton title='link' onClick={(e)=>{handleClickOpen(e,"link")}}>
+                <LinkOutlined />
+              </PropertyButton>             
             </PropertyItem> 
             :null
             }  
@@ -275,8 +284,12 @@ export const BlockText = (props:ToolRenderProps)=>{
             </PropertyItem> 
             <PropertyItem label="content">
               <div style={{overflow: 'hidden',textOverflow:'ellipsis', whiteSpace: 'nowrap'}} 
-                title={linkVal.source.sourceType==='select'?'{link:'+linkVal.source.sourceData.content_type+','+linkVal.url+'}':linkVal.url}>
-                {linkVal.source.sourceType==='select'?'{link:'+linkVal.source.sourceData.content_type+','+linkVal.url+'}':linkVal.url}
+                title={linkVal.source.sourceType==='select'?
+                '{link:'+linkVal.source.sourceData.location.content_type+','+linkVal.url+'}':
+                (linkVal.source.sourceType==='file'?Util.getFileUrl(linkVal.url):linkVal.url)}>
+                {linkVal.source.sourceType==='select'?
+                '{link:'+linkVal.source.sourceData.location.content_type+','+linkVal.url+'}':
+                (linkVal.source.sourceType==='file'?Util.getFileUrl(linkVal.url):linkVal.url)}
               </div>
               <PropertyButton title={'Edit Link'} onClick={()=>{changeDialogLinkfun(linkVal)}}><BorderColorOutlined/></PropertyButton> 
               <PropertyButton title={'Delete Link'} onClick={()=>{ SlateFun.unwrapLink(editor);SlateEvents()}}><LinkOffOutlined/></PropertyButton> 
@@ -332,7 +345,7 @@ export const BlockText = (props:ToolRenderProps)=>{
           </div>
         </Slate>
         {adding&&<div>
-          <Util.renderBroseURL type={dialogType=='image'?'Image':"Link"} onConfirm={submitFun} adding={adding} defalutValue={dialogType=='link'?linkVal:''}/>
+          <Util.renderBroseURL type={dialogType=='image'?'Image':"Link"} hovering={hovering} onConfirm={submitFun} adding={adding} defalutValue={dialogType=='link'?linkVal:''}/>
         </div>}
       </div> 
     )
