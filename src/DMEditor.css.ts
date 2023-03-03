@@ -46,6 +46,8 @@ export const dmeditorCss = ()=>css`
 
 .layout-main.viewmode-pc, .layout-main.viewmode-edit{
     width: calc(100% - 150px);
+    min-width: 960px;
+    max-width: 1200px;
 }
 
 .layout-main.viewmode-tablet{
