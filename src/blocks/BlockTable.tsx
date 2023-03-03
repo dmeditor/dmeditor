@@ -1,6 +1,6 @@
-import { GridOn } from "@mui/icons-material";
 import { css } from "@emotion/css";
 import {
+  GridOn,
   BorderBottom,
   Delete,
   DeleteSweep,
@@ -11,17 +11,12 @@ import {
   BorderRight,
   BorderTop,
 } from "@mui/icons-material";
-import { useEffect, useState } from "react";
-import { RenderMainProps, RenderSettingProps } from "../blocktype";
-import { Ranger } from "../utils/Ranger";
+import React,{ useEffect, useState } from "react";
 import {tableCss} from "./BlockTable.css";
 import { BlockProperty } from "../BlockProperty";
-import React from "react";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-import { PickColor } from "../utils/PickColor";
-import { PropertyButton, PropertyGroup, PropertyItem } from "../utils/Property";
+import { PropertyButton, PropertyGroup, PropertyItem,Util,PickColor,Ranger} from "../utils";
 import { CommonSettings } from "../CommonSettings";
-import { Util } from '../utils/Util';
 
 
 type add = "top" | "right" | "bottom" | "left";

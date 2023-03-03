@@ -1,5 +1,5 @@
 import * as React from "react";
-import {IconButton, TextField,Box, Button,Dialog, DialogContent, DialogTitle,DialogActions, Input,} from "@mui/material";
+import {IconButton, TextField,Button,Dialog, DialogContent, DialogTitle,DialogActions, Input,} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
 export interface BroseProps{
@@ -8,6 +8,7 @@ export interface BroseProps{
   onConfirm?:any,
   onCancel?:()=>void,
   defalutValue?:any,
+  hovering?:boolean
 }
 
 export const Util = {
@@ -18,13 +19,14 @@ export const Util = {
   pageTab:null as any,
   pageTabActiveIndex:0,
   toast:null as any,
+  fileUrl:'' as any,
   renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
         let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
         return <A onConfirm={props.onConfirm} adding={true}/>;
     }else if(props.type==='Link'&&Util.BrowseLink){
       let A = Util.BrowseLink as (props:BroseProps)=>JSX.Element;
-      return <A onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue}/>;
+      return <A onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue} hovering={props.hovering}/>;
     }else{
         return <DefaultBrowseUrl onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue} type={props.type}/> 
     }
@@ -51,6 +53,13 @@ export const Util = {
       return <A />;
     }else{
       return null
+    }
+  },
+  getFileUrl:(path:any)=>{
+    if(Util.fileUrl){
+      return Util.fileUrl(path)
+    }else{
+      return path
     }
   },
   error:(msg:any,option?:any)=>{

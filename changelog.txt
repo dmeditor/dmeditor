@@ -1,4 +1,6 @@
 0.1.0-beta.6
+- 2023-03-02 updated: insertLink
+- 2023-03-02 added: fileUrl property
 - 2023-02-27 added: view prop in components
 - 2023-02-15 updated: block data id (add a before nanoid) and show id
 - 2023-02-08 updated: layout-main>viewmode-edit width

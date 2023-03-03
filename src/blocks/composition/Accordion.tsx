@@ -5,7 +5,7 @@ import {BlockList} from '../../BlockList';
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { BlockProperty } from "../../BlockProperty"
 import { CommonSettings } from '../../CommonSettings';
-import {PropertyGroup,  PropertyItem,PropertyButton } from "../../utils/Property";
+import {PropertyButton } from "../../utils";
 import Accordion from 'react-bootstrap/Accordion';
 import { nanoid } from "nanoid";
 

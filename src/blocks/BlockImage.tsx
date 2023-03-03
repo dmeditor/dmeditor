@@ -1,11 +1,10 @@
-import { Image, ImageNotSupported, ImageOutlined } from "@mui/icons-material";
-import { Box, Button, Checkbox, Dialog, DialogContent, DialogTitle, Input, Modal } from "@mui/material";
+import { ImageOutlined } from "@mui/icons-material";
+import { Button, Checkbox} from "@mui/material";
 import { useEffect, useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-import { PropertyItem } from "../utils/Property";
-import { Util } from '../utils/Util';
+import { PropertyItem,Util } from "../utils";
 
 
 export const BlockImage = (props:ToolRenderProps)=>{

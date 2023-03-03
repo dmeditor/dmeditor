@@ -1,11 +1,10 @@
 import { VideocamOutlined } from "@mui/icons-material";
-import { IconButton,TextField, Button, Dialog, DialogContent, DialogTitle,DialogActions, Input, Modal } from "@mui/material";
+import { Button} from "@mui/material";
 import { useEffect, useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-import { PropertyItem,Ranger } from '../utils';
-import { Util } from '../utils/Util';
+import { PropertyItem,Ranger,Util } from '../utils';
 
 
 export const BlockVideo = (props:ToolRenderProps)=>{
@@ -14,15 +13,14 @@ export const BlockVideo = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
     const [videoUrl, setVideoUrl] = useState(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-    const [isChange,setIsChange] = useState(false);
     const handleClickOpen = ()=>{
-      setAdding(true);
+      setAdding(false);
+      setTimeout(()=>{setAdding(true);},10)
     }
 
     const submitVideo = (val:any,type:string)=>{
         setVideoUrl( val );
         setAdding(false);
-        setIsChange(true);
     }  
 
     useEffect(()=>{

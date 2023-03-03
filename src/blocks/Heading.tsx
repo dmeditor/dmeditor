@@ -1,13 +1,9 @@
 import { TitleOutlined } from '@mui/icons-material';
-import { RenderMainProps, RenderSettingProps } from '../blocktype';
-import { Ranger } from '../utils/Ranger';
 import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import React, {useEffect ,useState,useRef} from 'react';
-import { AnyAaaaRecord } from 'dns';
 import { CommonSettings } from '../CommonSettings';
-import { PropertyItem } from '../utils';
-import { Util } from '../utils/Util';
+import { PropertyItem,Util,Ranger} from '../utils';
 
 const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
@@ -15,11 +11,10 @@ const Heading = (props:ToolRenderProps)=>{
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
     const headRef:any=useRef(null);
     const [isChange,setIsChange] = useState(false);
-    // let isChange = false;
     const changeText = (e?:any)=>{
-        const texts=headRef.current.innerText
-          setText(texts);
-          setIsChange(true);
+      const texts=headRef.current.innerText
+      setText(texts);
+      setIsChange(true);
     }
 
     const common = { onBlur:changeText,ref:headRef, contentEditable: props.active, style:commonSettings,}

@@ -1,9 +1,6 @@
-import { LaptopMacOutlined, MobileScreenShareOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/icons-material';
 import { Box, Tabs, Tab } from '@mui/material';
 import { ReactElement, useEffect, useState } from 'react';
 import {tabCss} from './Tab.css';
-import { Input } from './utils/Input';
-import { Ranger } from './utils/Ranger';
 
 export interface TabData{
     title: string,
@@ -21,11 +18,11 @@ export const PropertyTab = (props:{tabs:Array<TabData>, active?: number})=>{
         <div className='tab-header-container'>  
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs  value={false} onChange={(e:any, newValue:number)=>setActive(newValue)}>
-                {props.tabs.map((tab:TabData, index:number)=><Tab key={tab.title + '_ '+index} style={{textTransform:'none'}} className={index===active?'tab-active':''} label={tab.title} />)}
+                {props.tabs.map((tab:TabData, index:number)=><Tab key={tab.title} style={{textTransform:'none'}} className={index===active?'tab-active':''} label={tab.title} />)}
             </Tabs>    
             </Box>
         </div>
         {props.tabs.map((tab:TabData, index:number)=>
-            <div key={tab.title + '_element_ '+index} className="tab-content" style={{display:active==index?'block':'none'}}>{tab.element}</div>)}
+            <div key={tab.title} className="tab-content" style={{display:active==index?'block':'none'}}>{tab.element}</div>)}
     </div>)
 }
