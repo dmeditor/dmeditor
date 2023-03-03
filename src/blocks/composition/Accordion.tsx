@@ -167,6 +167,6 @@ export const toolAccordion: ToolDefinition = {
           ]
         }
     },
-    view: (props:{data:any})=><BlockAccordion data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
+    view: (props:{data:any})=><BlockAccordion view={true} data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
     render:BlockAccordion    
 }
