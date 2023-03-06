@@ -9,7 +9,7 @@
     "WYSIWYG",
     "visual editor"
   ],
-  "homepage":"https://dmeditor.io",
+  "homepage": "https://dmeditor.io",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/digimakergo/dmeditor.git"
@@ -28,7 +28,7 @@
     "image-extensions": "^1.1.0",
     "is-url": "^1.2.4",
     "lodash": "^4.17.21",
-    "nanoid": "^4.0.0",
+    "nanoid": "^2.1.11",
     "react-bootstrap": "^2.7.0",
     "react-color": "^2.19.3",
     "slate": "^0.82.1",

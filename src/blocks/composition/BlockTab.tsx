@@ -8,7 +8,7 @@ import { CommonSettings } from '../../CommonSettings';
 import { PropertyButton } from "../../utils";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { nanoid } from "nanoid";
+const nanoid = require('nanoid')
 
 
 const BlockTab = (props:ToolRenderProps)=>{

@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+const nanoid = require('nanoid')
 
 export interface ToolRenderProps {
     data: {data:any, id:string, template?:string, settings?:any, common?:any, source?:any,[propName:string]:any, children?:Array<any> }, 

@@ -7,7 +7,7 @@ import { BlockProperty } from "../../BlockProperty"
 import { CommonSettings } from '../../CommonSettings';
 import {PropertyButton } from "../../utils";
 import Accordion from 'react-bootstrap/Accordion';
-import { nanoid } from "nanoid";
+const nanoid = require('nanoid')
 
 
 const BlockAccordion = (props:ToolRenderProps)=>{
