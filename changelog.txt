@@ -1,4 +1,6 @@
 0.1.0-beta.6
+- 2023-03-06 fixed nanoid issue on nodejs server side
+- 2023-03-03 added: editor area min-width:960 max-width: 1200
 - 2023-03-02 updated: insertLink
 - 2023-03-02 added: fileUrl property
 - 2023-02-27 added: view prop in components
