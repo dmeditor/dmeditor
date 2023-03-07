@@ -451,7 +451,7 @@ export const SlateFun:any = {
     
 
     let linkStyle=style==='button'?{
-      style:'button',setting:{size:'small',variant:'outlined'}
+      style:'button',setting:{size:'small',variant:'outlined',color:"primary"}
     }:{style:'none'}
 
     let link: any = {
@@ -548,12 +548,12 @@ export const SlateFun:any = {
   },
   LinkComponent : ({ attributes, children, element }:any) => {
     const selected = useSelected()
-    const style=element.styleConfig.style;
     let cssName='';
     if(element.styleConfig.style=='button'){
       let setting=element.styleConfig.setting;
       let size=setting.size
       let variant=setting.variant
+      let color=setting.color
       cssName='btn'
       if (size=='small'){
         cssName+=' btn-sm'
@@ -561,9 +561,9 @@ export const SlateFun:any = {
         cssName+=' btn-lg'
       }
       if (variant=='outlined'){
-        cssName+=' btn-outline-success'
+        cssName+=' btn-outline-'+color
       }else{
-        cssName+=' btn-success'
+        cssName+=' btn-'+color
       }
     }else{
       cssName=''
@@ -610,11 +610,13 @@ export const SlateFun:any = {
       if(style=='button'){
         let size=format==='size'?value:(newLink.styleConfig.style=='none'?'small':newLink.styleConfig.setting.size)
         let variant=format==='variant'?value:(newLink.styleConfig.style=='none'?'outlined':newLink.styleConfig.setting.variant)
+        let color=format==='color'?value:(newLink.styleConfig.style=='none'?'primary':newLink.styleConfig.setting.color)
         newLink.styleConfig={
           style:style,
           setting:{
             size:size?size:'small',
-            variant:variant?variant:'outlined'
+            variant:variant?variant:'outlined',
+            color:color?color:'primary'
           }
         }
       }else{

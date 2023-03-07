@@ -83,9 +83,12 @@ export const dmeditorCss = ()=>css`
 }
 
 a{
-    text-decoration: none;
-    color: #12913e;
-    box-shadow: none!important;
+  text-decoration: none;
+  box-shadow: none!important;
+}
+
+a:not(.block-type-text a){
+  color: #12913e;
 }
 
 a:hover{

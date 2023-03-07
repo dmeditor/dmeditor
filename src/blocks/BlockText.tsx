@@ -46,6 +46,7 @@ export const BlockText = (props:ToolRenderProps)=>{
     const [linkstyle,setLinkstyle] = useState('none' as 'none'|'button')
     const [buttonVariant, setButtonVariant] = useState('outlined' as ('contained' | 'outlined' ));
     const [buttonSize, setButtonSize] = useState('small' as ('small' | 'medium' | 'large' ));
+    const [buttonColor, setButtonColor] = useState('primary' as ('primary' | 'econdary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark'));
     const [isFocus,setIsFocus] = useState(false);
     const [isLinkActive,setIsLinkActive] = useState(false);
     const [isButtonActive,setIsButtonActive] = useState(false);
@@ -109,6 +110,9 @@ export const BlockText = (props:ToolRenderProps)=>{
       if(format === 'size'){
         setButtonSize(v)
       }
+      if(format === 'color'){
+        setButtonColor(v)
+      }
       SlateFun.setLinkFormat(editor,'button',format,v)
       setIsFocus(!isFocus)
     }
@@ -171,6 +175,7 @@ export const BlockText = (props:ToolRenderProps)=>{
           setLinkstyle('button')
           setButtonVariant(newButton.styleConfig.setting.variant)
           setButtonSize(newButton.styleConfig.setting.size)
+          setButtonColor(newButton.styleConfig.setting.color)
         }
       }
     }
@@ -267,20 +272,21 @@ export const BlockText = (props:ToolRenderProps)=>{
           {  isLinkActive||isButtonActive?
             <PropertyGroup header="Link"> 
               <PropertyItem label="Style">
-                    <Select
-                      value={linkstyle?linkstyle:'none'}
-                      onChange={(e)=>{changeLinkFormat(e.target.value)}}
-                      displayEmpty
-                      size='small'
-                      inputProps={{'aria-label': 'Without label' }}
-                    >
-                      <MenuItem value="none">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem  value="button">
-                        Button
-                      </MenuItem>
-                    </Select>
+                <Select
+                  fullWidth
+                  value={linkstyle?linkstyle:'none'}
+                  onChange={(e)=>{changeLinkFormat(e.target.value)}}
+                  displayEmpty
+                  size='small'
+                  inputProps={{'aria-label': 'Without label' }}
+                >
+                  <MenuItem value="none">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem  value="button">
+                    Button
+                  </MenuItem>
+                </Select>
             </PropertyItem> 
             <PropertyItem label="content">
               <div style={{overflow: 'hidden',textOverflow:'ellipsis', whiteSpace: 'nowrap'}} 
@@ -299,6 +305,25 @@ export const BlockText = (props:ToolRenderProps)=>{
           {  (isLinkActive&&linkstyle==='button')||isButtonActive?
             <>
             <PropertyGroup header="Link Button"> 
+              <PropertyItem label="color">
+                <Select
+                  fullWidth
+                  value={buttonColor?buttonColor:'primary'}
+                  onChange={(e)=>{changeButtonFormat(e.target.value,'color')}}
+                  displayEmpty
+                  size='small'
+                  inputProps={{'aria-label': 'Without label' }}
+                >
+                  <MenuItem value="primary">primary</MenuItem>
+                  <MenuItem value="success">success</MenuItem>
+                  <MenuItem value="warning">warning</MenuItem>
+                  <MenuItem value="danger">danger</MenuItem>
+                  <MenuItem value="secondary">secondary</MenuItem>
+                  <MenuItem value="info">info</MenuItem>
+                  <MenuItem value="light">light</MenuItem>
+                  <MenuItem value="dark">dark</MenuItem>
+                </Select>
+              </PropertyItem> 
               <PropertyItem label="style">
                 <Button size="small" onClick={()=>{changeButtonFormat('contained','variant');}} variant={buttonVariant==='contained'?'outlined':undefined}  >Fill</Button>
                 <Button size="small" onClick={()=>{changeButtonFormat('outlined','variant');}} variant={buttonVariant==='outlined'?'outlined':undefined}   >Ourlined</Button>
