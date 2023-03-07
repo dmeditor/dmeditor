@@ -10,7 +10,8 @@ import { PropertyItem,Util } from "../utils";
 export const BlockImage = (props:ToolRenderProps)=>{
     const [fullScreen, setFullScreen] = useState(props.data.settings.fullScreen?true:false);    
     const [adding, setAdding] = useState(props.adding?true:false);
-    const [imageUrl, setImageUrl] = useState(props.data.source==='select'?'{image:'+props.data.data.url+'}':props.data.data.url);
+    // const [imageUrl, setImageUrl] = useState(props.data.source.sourceType==='select'?'{image:'+props.data.data.url+'}':props.data.data.url);
+    const [imageUrl, setImageUrl] = useState(props.data.source.sourceType==='select'?Util.getFileUrl(props.data.source.sourceData.image):props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
         
@@ -20,7 +21,8 @@ export const BlockImage = (props:ToolRenderProps)=>{
           setImageUrl( val );
           props.onChange({...data,data:{url:val, text:text},source:{sourceType:type},settings:{fullScreen: fullScreen}, common: commonSettings});
         }else{
-          let url='{image:'+val.id+'}'
+          // let url='{image:'+val.id+'}'
+          let url=Util.getFileUrl(val.image)
           setImageUrl( url );
           props.onChange({...data,data:{url:val.id, text:text},source:{sourceType:type,sourceData:val},settings:{fullScreen: fullScreen}, common: commonSettings });
         }
@@ -30,6 +32,13 @@ export const BlockImage = (props:ToolRenderProps)=>{
       setAdding(false);
       setTimeout(()=>{setAdding(true);},10)
     }
+    // useEffect(()=>{
+    //   if( ids.length > 0){
+    //     FetchWithAuth(process.env.REACT_APP_REMOTE_URL+'/content/list/image?cid='+ids.join(',')).then((data:any)=>{
+    //       setSelectsource(data.data.list);
+    //     });
+    // }
+    // },[])
 
     useEffect(()=>{
         props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen}, common: commonSettings });
