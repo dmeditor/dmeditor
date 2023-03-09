@@ -10,7 +10,7 @@ import { PropertyItem,Util } from "../utils";
 export const BlockImage = (props:ToolRenderProps)=>{
     const [fullScreen, setFullScreen] = useState(props.data.settings.fullScreen?true:false);    
     const [adding, setAdding] = useState(props.adding?true:false);
-    const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getFileUrl(props.data.source.sourceData.image):props.data.data.url);
+    const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
         
@@ -21,7 +21,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
           props.onChange({...data,data:{url:val, text:text},source:{sourceType:type},settings:{fullScreen: fullScreen}, common: commonSettings});
         }else{
           // let url='{image:'+val.id+'}'
-          let url=Util.getFileUrl(val.image)
+          let url=Util.getImageUrl(val.image)
           setImageUrl( url );
           props.onChange({...data,data:{url:val.id, text:text},source:{sourceType:type,sourceData:val},settings:{fullScreen: fullScreen}, common: commonSettings });
         }

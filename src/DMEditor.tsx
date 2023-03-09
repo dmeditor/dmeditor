@@ -26,6 +26,7 @@ export interface DMEditorProps{
     toast?:any,
     pageTabActiveIndex?:any
     fileUrl?:any
+    imageUrl?:any
 }
 
 export const DMEditor = (props:DMEditorProps)=>{
@@ -38,6 +39,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         Util.toast=props.toast
         Util.pageTabActiveIndex=props.pageTabActiveIndex||0
         Util.fileUrl=props.fileUrl
+        Util.imageUrl=props.imageUrl
     },[]);
     const [blocks, setBlocks] = useState(props.data?[...props.data]:[]);
     const [activeBlock, setActiveBlock] = useState(blocks.length>0?0:-1);

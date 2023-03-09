@@ -20,6 +20,7 @@ export const Util = {
   pageTabActiveIndex:0,
   toast:null as any,
   fileUrl:'' as any,
+  imageUrl:''as any,
   renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
         let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
@@ -60,6 +61,13 @@ export const Util = {
       return Util.fileUrl(path)
     }else{
       return path
+    }
+  },
+  getImageUrl:(props:any)=>{
+    if(Util.imageUrl){
+      return Util.imageUrl(props)
+    }else{
+      return props.path
     }
   },
   error:(msg:any,option?:any)=>{
