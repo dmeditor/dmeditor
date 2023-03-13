@@ -21,6 +21,9 @@ export const Util = {
   toast:null as any,
   fileUrl:'' as any,
   imageUrl:''as any,
+  getEditorArea:()=>{
+    return {width: '', marginLeft:''}
+  },
   renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
         let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
@@ -69,6 +72,19 @@ export const Util = {
     }else{
       return props.path
     }
+  },
+  poLastDiv:(obj:any)=>{
+    obj.focus();
+    // move caret to end
+    const textLength = obj.innerText.length;
+    const range = document.createRange();
+    const sel:any = window.getSelection();
+
+    range.setStart(obj.childNodes[0], textLength);
+    range.collapse(true);
+
+    sel.removeAllRanges();
+    sel.addRange(range);
   },
   error:(msg:any,option?:any)=>{
     if(Util.toast){

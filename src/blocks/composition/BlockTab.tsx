@@ -1,11 +1,11 @@
-import { TabOutlined,DeleteOutline,AddCircleOutlineOutlined} from "@mui/icons-material";
+import { TabOutlined,DeleteOutline,AddCircleOutlineOutlined,ArrowUpwardOutlined,ArrowDownwardOutlined, InsertEmoticon} from "@mui/icons-material";
 import {blockTabCss} from "./BlockTab.css";
 import React, {useEffect ,useState,useRef} from 'react';
 import {BlockList} from '../../BlockList';
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { BlockProperty } from "../../BlockProperty"
 import { CommonSettings } from '../../CommonSettings';
-import { PropertyButton } from "../../utils";
+import { PropertyButton,Util } from "../../utils";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 const nanoid = require('nanoid')
@@ -21,7 +21,7 @@ const BlockTab = (props:ToolRenderProps)=>{
         return props.data.children.map(item=>{
           return {
             ...item,
-            ...{contentEditable:false}
+            // ...{contentEditable:false}
           }
         })
       }else{
@@ -30,6 +30,7 @@ const BlockTab = (props:ToolRenderProps)=>{
     });
     const [isChange,setIsChange] = useState(false);
     const tabRef:any=useRef(null);
+    const [currentTab,setCurrentTab]= useState(null);
     
     const onChange = (item:any,data:any, index:number)=>{
         let newList = [...tabList];
@@ -39,11 +40,10 @@ const BlockTab = (props:ToolRenderProps)=>{
 
     const changeTabName = (e:any,index:any)=>{
       let newTabList=[...tabList]
-      newTabList[index].contentEditable=false;
+      // newTabList[index].contentEditable=false;
       const texts=e.target.innerText
       newTabList[index].data=texts;
-      setActiveTabIndex(-1);
-      setKey(index)
+      // setActiveTabIndex(-1);
       setTabList([...newTabList])
     }
 
@@ -82,43 +82,99 @@ const BlockTab = (props:ToolRenderProps)=>{
       setTabList([...newTabList,list])
     }
    
-
+    const moveFun = (mode:string,index:any)=>{
+      let tablist = [...tabList];
+      let newActivekey=-1;
+      if(mode==="up"){
+         if(index==0)return;
+        tablist[index] = tablist.splice(index-1, 1, tablist[index])[0]
+        if(activeTabIndex>-1){
+          if(index!=activeTabIndex){
+            if(index-1==activeTabIndex){
+              newActivekey=index
+            }
+          }else{
+            newActivekey=index-1
+          }
+        }
+       
+      }else{
+         if(index==tablist.length-1)return;
+         tablist[index] = tablist.splice(index+1, 1, tablist[index])[0]
+         if(activeTabIndex>-1){
+          if(index!=activeTabIndex){
+            if(index+1==activeTabIndex){
+              newActivekey=index
+            }
+          }else{
+            newActivekey=index+1
+          }
+          }
+      }
+      setTabList(tablist);
+      if(newActivekey>-1){
+        setActiveTabIndex(newActivekey);
+        setKey(newActivekey)
+        setTimeout(()=>{
+          let ele:any=document.querySelectorAll('.tabName')[newActivekey]
+          Util.poLastDiv(ele)
+        },500)
+      }
+    }
     useEffect(()=>{
-        props.onChange({...props.data, children:tabList})
-        setIsChange(false);
+      props.onChange({...props.data, children:tabList})
+      setIsChange(false);
     }, [tabList,isChange])
 
-  
+    useEffect(() => {
+      function handler(event: Event) {
+        var elem=event.target  as any;
+        while(elem){
+          if(elem.className&&elem.classList.contains("tabDiv")){
+            return;
+          }
+          elem=elem.parentNode;
+        }
+        setActiveTabIndex(-1)
+      }
+      window.addEventListener("click", handler);
+      return () => window.removeEventListener("click", handler);
+    }, []);
+
+    // onDoubleClick
     return <>
     {props.active&&<BlockProperty blocktype="tab" inBlock={true}>
-    <div className={blockTabCss()}>
+    <div className={blockTabCss() + ' tabDiv'} ref={tabRef} >
       {
-        tabList.map((item,index)=>{
+        tabList.map((item:any,index:any)=>{
           return (
             <div className={`item ${ index === activeTabIndex? "active": "" }`}
             key={item.id}>
-              <div ref={tabRef} 
+              <div 
                 className="tabName" 
-                onDoubleClick={()=>{
-                    let newTabList=[...tabList];
-                    newTabList[index].contentEditable=true;
-                    setTabList([...newTabList])
+                onClick={(e:any)=>{
                     setActiveTabIndex(index)
+                    setKey(index)
+                    setCurrentTab(e)
                   }
                 } 
                 onBlur={(e)=>{changeTabName(e,index)}} 
                 suppressContentEditableWarning 
-                contentEditable={item.contentEditable}>
+                contentEditable={true}>
                   {item.data}
               </div>
-              <div><PropertyButton color="warning" title="Delete"  onClick={()=>{deletTab(index)}}><DeleteOutline /></PropertyButton></div>
+              <div className="btn-groups">
+                <PropertyButton color="warning" title="move up"  style={index==0?{display:'none'}:{}}  onClick={()=>{moveFun('up',index)}}><ArrowUpwardOutlined /></PropertyButton>
+                <PropertyButton color="warning" title="move down" style={index==tabList.length-1?{display:'none'}:{}} onClick={()=>{moveFun('down',index)}}><ArrowDownwardOutlined /></PropertyButton>
+                <PropertyButton color="warning" title="Delete"  onClick={()=>{deletTab(index)}}><DeleteOutline /></PropertyButton>
+              </div>
             </div>
           )
         })
       }
       <div className="item">
         <div></div>
-        <div><PropertyButton color="warning" title="Add"  onClick={()=>{addTab()}}><AddCircleOutlineOutlined /></PropertyButton></div>
+        <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addTab()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
@@ -129,7 +185,6 @@ const BlockTab = (props:ToolRenderProps)=>{
           activeKey={key}
           onSelect={(k:any) => {setKey(k);setActiveIndex(0);setActiveTabIndex(-1);}}
         >
-
           {
             tabList.map((item,index)=>{
               return (
@@ -171,6 +226,28 @@ export const toolBlockTab: ToolDefinition = {
             },
             {type:'list',id:'2',data:'Tab2', children:[
               {type:'heading', id:'1', data:'Tab2 Title', common:{color: '#ff0000'}, settings:{level: 2}},
+              {"type":"text", id:'2', "data":[
+                  {type:"paragraph","children":[
+                      {"text":"Default text"}
+                  ]},
+                ]
+              }, 
+              ],
+              "common":{}, "setting":{}
+            },
+            {type:'list',id:'3',data:'Tab3', children:[
+              {type:'heading', id:'1', data:'Tab3 Title', common:{color: '#ff0000'}, settings:{level: 2}},
+              {"type":"text", id:'2', "data":[
+                  {type:"paragraph","children":[
+                      {"text":"Default text"}
+                  ]},
+                ]
+              }, 
+              ],
+              "common":{}, "setting":{}
+            },
+            {type:'list',id:'4',data:'Tab4', children:[
+              {type:'heading', id:'1', data:'Tab4 Title', common:{color: '#ff0000'}, settings:{level: 2}},
               {"type":"text", id:'2', "data":[
                   {type:"paragraph","children":[
                       {"text":"Default text"}
