@@ -44,10 +44,10 @@ const BlockImageText = (props:ToolRenderProps)=>{
         </BlockProperty>}
         <div className="dm-columns columns-2">
             <div>
-                <Block data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
+                <Block view={props.view} data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
             </div>
             <div>
-                <Block data={list[1]} inBlock={true} active={props.active&&activeIndex==1} onActivate={()=>setActiveIndex(1)} onChange={data=>onChange(data, 1)} />
+                <Block view={props.view} data={list[1]} inBlock={true} active={props.active&&activeIndex==1} onActivate={()=>setActiveIndex(1)} onChange={data=>onChange(data, 1)} />
             </div>
         </div>
     </div>
@@ -74,6 +74,6 @@ export const toolImageText: ToolDefinition = {
                     ]}
              ]}
     },
-    view: (props:{data:any})=><BlockImageText data={props.data} inBlock={false} active={false} onChange={()=>{}} />,
+    view: (props:{data:any})=><BlockImageText view={true} data={props.data} inBlock={false} active={false} onChange={()=>{}} />,
     render:BlockImageText    
 }

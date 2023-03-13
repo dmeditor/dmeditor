@@ -22,10 +22,10 @@ const ImageHeadingText = (props:ToolRenderProps)=>{
     return <div style={...commonSettings}>       
         <div className="dm-columns columns-2">
             <div>
-                <Block data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
+                <Block  view={props.view}  data={list[0]} inBlock={true} active={props.active&&activeIndex==0} onActivate={()=>setActiveIndex(0)} onChange={data=>onChange(data, 0)} />
             </div>
             <div>
-                <BlockList allowedType={['text', 'heading']} onChange={data=>onChange({...list[1], children:data}, 1)} active={props.active&&activeIndex==1} list={list[1].children} onActivate={()=>setActiveIndex(1)} />
+                <BlockList  view={props.view}  allowedType={['text', 'heading']} onChange={data=>onChange({...list[1], children:data}, 1)} active={props.active&&activeIndex==1} list={list[1].children} onActivate={()=>setActiveIndex(1)} />
             </div>
         </div>
     </div>
@@ -59,6 +59,6 @@ export const toolImageHeadingText: ToolDefinition = {
             ],"common":{}, "setting":{}}
             ]}
     },
-    view: (props:{data:any})=><ImageHeadingText data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
+    view: (props:{data:any})=><ImageHeadingText view={true} data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
     render:ImageHeadingText    
 }
