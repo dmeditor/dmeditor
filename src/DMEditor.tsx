@@ -235,10 +235,10 @@ export const DMEditor = (props:DMEditorProps)=>{
 }
 
 export const DMEditorView = (props:DMEditorProps)=>{
+  Util.toast=props.toast
+  Util.fileUrl=props.fileUrl
+  Util.imageUrl=props.imageUrl
   useEffect(()=>{
-    Util.toast=props.toast
-    Util.fileUrl=props.fileUrl
-    Util.imageUrl=props.imageUrl
     setRoot();
     let newRoot={
       '--dme-main-width-default':'clamp(var(--dme-main-width-min-pc),calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',

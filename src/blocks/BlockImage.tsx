@@ -10,13 +10,9 @@ import { PropertyItem,Util } from "../utils";
 export const BlockImage = (props:ToolRenderProps)=>{
     const [fullScreen, setFullScreen] = useState(props.data.settings.fullScreen?true:false);    
     const [adding, setAdding] = useState(props.adding?true:false);
-    const [imageUrl, setImageUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-    let defultImageUrl= props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url
-    useEffect(()=>{
-      setImageUrl(defultImageUrl)
-    },[defultImageUrl])
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
         if(type === 'input'){
