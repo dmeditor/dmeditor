@@ -21,8 +21,33 @@ export const Util = {
   toast:null as any,
   fileUrl:'' as any,
   imageUrl:''as any,
-  getEditorArea:()=>{
-    return {width: '', marginLeft:''}
+  getEditorArea:(type:string)=>{
+    let newCss:any={
+      width:`calc(var(--dme-container-width)  - ${Util.getScrollbarWidth()}px)`,
+      marginLeft:`calc(-1*(var(--dme-container-width) - ${Util.getScrollbarWidth()}px - var(--dme-main-width)) / 2) `,
+    }
+    if(type==='fullRightScreen'){
+      newCss['paddingLeft']=`calc((var(--dme-container-width) - ${Util.getScrollbarWidth()}px - var(--dme-main-width)) / 2) `
+    }
+    return newCss
+  },
+  getScrollbarWidth:()=> {
+    if(!Util.hasScrollbar())return 0
+    var odiv:any = document.createElement('div'),//create div
+        styles:any = {
+            width: '100px',
+            height: '100px',
+            overflowY: 'scroll'
+        }, i, scrollbarWidth;
+    for (i in styles) odiv.style[i] = styles[i];
+    document.body.appendChild(odiv);
+    scrollbarWidth = odiv.offsetWidth - odiv.clientWidth;
+    odiv.remove();//move div
+    return scrollbarWidth;
+  },
+  hasScrollbar() {
+    let dmeDiv:any=document.querySelector(".layout-main-container")
+    return (document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)) || (dmeDiv?.offsetWidth>dmeDiv?.clientWidth);
   },
   renderBroseURL:(props:BroseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
@@ -66,11 +91,11 @@ export const Util = {
       return path
     }
   },
-  getImageUrl:(props:any)=>{
+  getImageUrl:(path:any)=>{
     if(Util.imageUrl){
-      return Util.imageUrl(props)
+      return Util.imageUrl(path)
     }else{
-      return props.path
+      return path
     }
   },
   poLastDiv:(obj:any)=>{
@@ -85,6 +110,10 @@ export const Util = {
 
     sel.removeAllRanges();
     sel.addRange(range);
+  },
+  changrootValue:(newRoot:any)=>{
+    let root:any=document.querySelector(":root");
+    Object.entries(newRoot).forEach(v => root.style.setProperty(v[0], v[1]))
   },
   error:(msg:any,option?:any)=>{
     if(Util.toast){

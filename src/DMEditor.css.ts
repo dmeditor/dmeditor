@@ -1,15 +1,27 @@
 import { css } from "@emotion/css";
+import { Util } from "./utils";
+
 
 export const dmeditorCss = ()=>css`
   height: 100vh;
   background-color: #f0f0f0;
   display: grid;
-  grid-template-columns: 40px auto 300px;
+  grid-template-columns:var(--dme-layout-tool-width) var(--dme-container-width) var(--dme-layout-property-width);
   color: #333333;
   margin: auto;
   border-left: 1px solid #cccccc;
   border-right: 1px solid #cccccc;
   box-shadow: 0px 0px 3px #cccccc;
+  &.view{
+    grid-template-columns:auto;
+    .layout-left{
+      position:absolute;
+      left:0;
+      top:0;
+      z-index: 500;
+    }
+
+  }
 
 .layout-properties{
     border-left: 1px solid #dddddd;
@@ -19,17 +31,32 @@ export const dmeditorCss = ()=>css`
     position: relative;
 }
 
-.layout-left{
+
+.layout-left-menu{
     background-color: white;
     text-align: center;
     border-right: 1px solid #cccccc;
     position: relative;
+    opacity: 1;
+    height:100vh
+}
+.layout-left-menu.view{
+  opacity: 0;
+  width:0;
+  transtion:all 2s,
+}
+.layout-left:hover .layout-left-menu.view{
+  opacity: 1;
+  width:var(--dme-layout-tool-width);
 }
 
 .layout-main{
     margin:auto;
     background: white;
     min-height: 100vh;
+    @media (max-width: 1200px){
+      width:calc(100% - ${Util.getScrollbarWidth()}px)!important;
+    }
 }
 
 .block-container{
@@ -45,17 +72,22 @@ export const dmeditorCss = ()=>css`
 }
 
 .layout-main.viewmode-pc, .layout-main.viewmode-edit{
-    width: calc(100% - 150px);
-    min-width: 960px;
-    max-width: 1200px;
+  width:var(--dme-main-width);
 }
 
+
 .layout-main.viewmode-tablet{
-    width: 768px;
+    width: var(--dme-main-width-pad);
 }
 
 .layout-main.viewmode-mobile{
-    width: 375px;
+    width: var(--dme-main-width-mobile);
+}
+.layout-main.viewmode-pc .dmeditor-view, 
+.layout-main.viewmode-edit .dmeditor-view,
+.layout-main.viewmode-tablet .dmeditor-view,
+.layout-main.viewmode-mobile .dmeditor-view{
+  width: 100%!important;
 }
 
 .left-tool a{
@@ -216,6 +248,26 @@ hr{
 
 
 export const dmeditorViewCss = ()=>css`
+&.dmeditor-view{
+  margin:auto;
+  background: white;
+  min-height: 100vh;
+  width:var(--dme-main-width);
+  @media (max-width: 1200px) {
+    width:100%;
+  }
+}
+
+.layout-main.viewmode-tablet{
+    width: var(--dme-main-width-pad);
+}
+
+.layout-main.viewmode-mobile{
+    width: var(--dme-main-width-mobile);
+}
+
+
+
 .block-container{
   position: relative;
 }

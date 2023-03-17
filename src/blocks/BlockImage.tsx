@@ -10,10 +10,13 @@ import { PropertyItem,Util } from "../utils";
 export const BlockImage = (props:ToolRenderProps)=>{
     const [fullScreen, setFullScreen] = useState(props.data.settings.fullScreen?true:false);    
     const [adding, setAdding] = useState(props.adding?true:false);
-    const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
+    const [imageUrl, setImageUrl] = useState('');
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-        
+    let defultImageUrl= props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url
+    useEffect(()=>{
+      setImageUrl(defultImageUrl)
+    },[defultImageUrl])
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
         if(type === 'input'){
@@ -43,7 +46,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
         props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen}, common: commonSettings });
     }, [text, fullScreen, commonSettings])
 
-    return <div style={commonSettings}>
+    return <div style={fullScreen?{...commonSettings,...Util.getEditorArea('fullScreen')}:commonSettings}>
             {adding&&<div>
               <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
             </div>}
@@ -52,7 +55,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
                   <Button onClick={()=>setText('Description')}>Add description</Button>
                 </PropertyItem>}
                 {(!props.inBlock)&&<PropertyItem label="Full screen" autoWidth>
-                    <Checkbox checked={fullScreen} onChange={(e, checked:boolean)=>setFullScreen(checked)} />
+                    <Checkbox checked={fullScreen} onChange={(e, checked:boolean)=>{setFullScreen(checked);}} />
                 </PropertyItem>}
                 <PropertyItem label='Source'>
                   <Button onClick={handleClickOpen}>Choose</Button>
@@ -60,7 +63,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
                 {Util.renderCustomProperty(props.data)}
                 <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
             </BlockProperty>}
-                <div style={fullScreen?{marginLeft:'-60px',marginRight:'-60px'}:{}}>
+                <div >
                   <img width='100%' src={imageUrl} />  
                 </div>
                 {text&&<div className="image-caption" contentEditable={true} onBlur={e=>setText(e.target.textContent)}>{text}</div>}
@@ -74,6 +77,6 @@ export const toolImage:ToolDefinition = {
     initData: ()=>{ 
       return {type:'image', data:{url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/2312px-Picture_icon_BLACK.svg.png', text:''},
                 settings:{},source:{sourceType:'input'}}},
-    view: (props:{data:any})=><BlockImage data={props.data} inBlock={false} active={false} onChange={()=>{}} />,
+    view: (props:{data:any})=><BlockImage view={true} data={props.data} inBlock={false} active={false} onChange={()=>{}} />,
     render: (props:ToolRenderProps)=><BlockImage {...props} />
 }
