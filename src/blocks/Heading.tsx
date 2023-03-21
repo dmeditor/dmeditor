@@ -39,19 +39,14 @@ const Heading = (props:ToolRenderProps)=>{
       switch(level){
         case 1:
             return <h1 suppressContentEditableWarning {...common} id={id}>{text}</h1>
-            break;
         case 2:
             return <h2  suppressContentEditableWarning {...common} id={id}>{text}</h2>
-            break;
         case 3:
             return <h3 suppressContentEditableWarning {...common} id={id}>{text}</h3>
-            break;
         case 4:
             return <h4 suppressContentEditableWarning {...common} id={id}>{text}</h4>
-            break;
         case 5:
             return <h5 suppressContentEditableWarning {...common} id={id}>{text}</h5>
-            break;
         default:
             return <h2 suppressContentEditableWarning {...common} id={id}>{text}</h2>
       }
@@ -75,12 +70,6 @@ const Heading = (props:ToolRenderProps)=>{
     return (
       <>
         {props.active&&<BlockProperty  blocktype="heading" inBlock={props.inBlock}>
-          <PropertyItem label="ID">
-            <TextField sx={{width:'calc(100% - 37px)'}}  placeholder='Please enter ID'  value={id} size="small" hiddenLabel variant="outlined" onChange={(e)=>{setId(e.target.value);setIsChange(true);}} />
-            <PropertyButton title="Auto generate Id" onClick={()=>{autoCreateId()}}>
-              <LoopOutlined/>
-            </PropertyButton> 
-          </PropertyItem>  
           <PropertyItem label="Level">
                 <Ranger defaultValue={level} min={1} max={5} step={1} onChange={(v:any)=>{setLevel(v);setIsChange(true);}} />
           </PropertyItem>   
@@ -94,6 +83,12 @@ const Heading = (props:ToolRenderProps)=>{
                 )             
             })}
           </PropertyItem>
+          <PropertyItem label="Anchor">
+            <TextField sx={{width:'calc(100% - 37px)'}}  placeholder='Please enter ID'  value={id} size="small" hiddenLabel variant="outlined" onChange={(e)=>{setId(e.target.value);setIsChange(true);}} />
+            <PropertyButton title="Auto generate Id" onClick={()=>{autoCreateId()}}>
+              <LoopOutlined/>
+            </PropertyButton> 
+          </PropertyItem>  
           {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
         </BlockProperty>}
