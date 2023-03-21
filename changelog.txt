@@ -1,4 +1,5 @@
 0.1.0-beta.8
+- 2023-03-21 fixed: saving in accordion & tab
 - 2023-03-21 upated:hide preBLock when it is view
 - 2023-03-21 upated:Support id
 - 2023-03-17 upated:image fullscreen issue and Support for CSS variable layout
