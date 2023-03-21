@@ -42,7 +42,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
               {Util.renderCustomProperty(props.data)}
               <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
             </BlockProperty>}
-            {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={width} height={height}></iframe></div>}
+            {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={width} height={height} frameBorder="0"></iframe></div>}
         </div>
 }
 
