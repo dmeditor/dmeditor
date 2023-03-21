@@ -30,7 +30,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
     const [isChange,setIsChange] = useState(false);
     const expandableItemRef:any=useRef(null);
     
-    const onChange = (item:any,data:any, index:number)=>{
+    const onChange = (item:any,index:number)=>{
       let newAccordionList=[...accordionList]
       newAccordionList[index]= item;
       setAccordionList(newAccordionList);
@@ -128,7 +128,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
               <Accordion.Item  key={item.id} eventKey={`'${index}'`}>
                 <Accordion.Header>{item.data}</Accordion.Header>
                 <Accordion.Body>
-                  <BlockList view={props.view} allowedType={['text', 'heading','image']} onChange={data=>onChange(item,data,index)} active={props.active&&activeIndex==1} list={item.children}  onActivate={()=>setActiveIndex(1)}/>
+                  <BlockList view={props.view} allowedType={['text', 'heading','image']} onChange={data=>onChange({...item,children:data},index)} active={props.active&&activeIndex==1} list={item.children}  onActivate={()=>setActiveIndex(1)}/>
                 </Accordion.Body>
               </Accordion.Item>
             )
@@ -152,7 +152,7 @@ export const toolAccordion: ToolDefinition = {
           common:{},
           children:[ 
             {type:'list',id:'1',data:'Title', children:[
-              {type:'heading', id:'1', data:'Title Heading', common:{color: '#ff0000'}, settings:{level: 2}},
+              {type:'heading', id:'1', data:'Title Heading', common:{}, settings:{level: 2}},
               {"type":"text", id:'2', "data":[
                   {type:"paragraph","children":[
                       {"text":"Default text"}

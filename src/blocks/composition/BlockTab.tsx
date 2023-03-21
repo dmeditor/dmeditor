@@ -32,7 +32,7 @@ const BlockTab = (props:ToolRenderProps)=>{
     const tabRef:any=useRef(null);
     const [currentTab,setCurrentTab]= useState(null);
     
-    const onChange = (item:any,data:any, index:number)=>{
+    const onChange = (item:any,index:number)=>{
         let newList = [...tabList];
         newList[index]= item;
         setTabList(newList);
@@ -190,7 +190,7 @@ const BlockTab = (props:ToolRenderProps)=>{
               return (
                 <Tab  key={item.id} eventKey={index} title={item.data}>
                   <div>
-                    <BlockList view={props.view} allowedType={['text', 'heading','image']} onChange={data=>onChange(item,data,index)} active={props.active&&activeIndex==1} list={item.children}  onActivate={()=>setActiveIndex(1)}/>
+                    <BlockList view={props.view} allowedType={['text', 'heading','image']} onChange={data=>onChange({...item, children:data},index)} active={props.active&&activeIndex==1} list={item.children}  onActivate={()=>setActiveIndex(1)}/>
                   </div>
                 </Tab>
               )
@@ -214,7 +214,7 @@ export const toolBlockTab: ToolDefinition = {
           common:{},
           children:[ 
             {type:'list',id:'1',data:'Tab1', children:[
-              {type:'heading', id:'1', data:'Tab1 Title', common:{color: '#ff0000'}, settings:{level: 2}},
+              {type:'heading', id:'1', data:'Tab1 Title', common:{}, settings:{level: 2}},
               {"type":"text", id:'2', "data":[
                   {type:"paragraph","children":[
                       {"text":"Default text"}
@@ -225,7 +225,7 @@ export const toolBlockTab: ToolDefinition = {
               "common":{}, "setting":{}
             },
             {type:'list',id:'2',data:'Tab2', children:[
-              {type:'heading', id:'1', data:'Tab2 Title', common:{color: '#ff0000'}, settings:{level: 2}},
+              {type:'heading', id:'1', data:'Tab2 Title', common:{}, settings:{level: 2}},
               {"type":"text", id:'2', "data":[
                   {type:"paragraph","children":[
                       {"text":"Default text"}
@@ -234,29 +234,7 @@ export const toolBlockTab: ToolDefinition = {
               }, 
               ],
               "common":{}, "setting":{}
-            },
-            {type:'list',id:'3',data:'Tab3', children:[
-              {type:'heading', id:'1', data:'Tab3 Title', common:{color: '#ff0000'}, settings:{level: 2}},
-              {"type":"text", id:'2', "data":[
-                  {type:"paragraph","children":[
-                      {"text":"Default text"}
-                  ]},
-                ]
-              }, 
-              ],
-              "common":{}, "setting":{}
-            },
-            {type:'list',id:'4',data:'Tab4', children:[
-              {type:'heading', id:'1', data:'Tab4 Title', common:{color: '#ff0000'}, settings:{level: 2}},
-              {"type":"text", id:'2', "data":[
-                  {type:"paragraph","children":[
-                      {"text":"Default text"}
-                  ]},
-                ]
-              }, 
-              ],
-              "common":{}, "setting":{}
-            }
+            }           
           ]
         }
     },
