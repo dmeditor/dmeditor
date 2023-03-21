@@ -112,9 +112,9 @@ export const Block = React.memo((props:BlockProps)=>{
                             <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
                                 <AddBoxOutlined /></a>
                         </div>}   
-                        <div className={"pre-render"}>
+                       {!props.view&&<div className={"pre-render"}>
                           {Util.renderPreBlock({blockData:props.data.dm_field?props.data.dm_field:''})}
-                          </div>         
+                          </div>  }       
         {isActive&&props.onDelete&&<BlockProperty blocktype={props.data.type}>
           <div style={{float: 'right'}}>
             <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>

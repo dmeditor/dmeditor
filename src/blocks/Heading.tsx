@@ -1,14 +1,16 @@
-import { TitleOutlined,FormatAlignLeft,FormatAlignCenter,FormatAlignRight } from '@mui/icons-material';
+import { TitleOutlined,FormatAlignLeft,FormatAlignCenter,FormatAlignRight,LoopOutlined } from '@mui/icons-material';
 import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import React, {useEffect ,useState,useRef} from 'react';
 import { CommonSettings } from '../CommonSettings';
 import { PropertyItem,PropertyButton,Util,Ranger} from '../utils';
+import TextField from '@mui/material/TextField';
 
 const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
     const [level,setLevel] = useState(props.data.settings.level);
     const [align,setAlign] = useState(props.data.settings?.align||'left');
+    const [id,setId] = useState(props.data.settings?.id||'');
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
     const headRef:any=useRef(null);
     const [isChange,setIsChange] = useState(false);
@@ -36,28 +38,30 @@ const Heading = (props:ToolRenderProps)=>{
     const render = ()=>{
       switch(level){
         case 1:
-            return <h1 suppressContentEditableWarning {...common}>{text}</h1>
-            break;
+            return <h1 suppressContentEditableWarning {...common} id={id}>{text}</h1>
         case 2:
-            return <h2 suppressContentEditableWarning {...common}>{text}</h2>
-            break;
+            return <h2  suppressContentEditableWarning {...common} id={id}>{text}</h2>
         case 3:
-            return <h3 suppressContentEditableWarning {...common}>{text}</h3>
-            break;
+            return <h3 suppressContentEditableWarning {...common} id={id}>{text}</h3>
         case 4:
-            return <h4 suppressContentEditableWarning {...common}>{text}</h4>
-            break;
+            return <h4 suppressContentEditableWarning {...common} id={id}>{text}</h4>
         case 5:
-            return <h5 suppressContentEditableWarning {...common}>{text}</h5>
-            break;
+            return <h5 suppressContentEditableWarning {...common} id={id}>{text}</h5>
         default:
-            return <h2 suppressContentEditableWarning {...common}>{text}</h2>
+            return <h2 suppressContentEditableWarning {...common} id={id}>{text}</h2>
       }
+    }
+
+    const autoCreateId = ()=>{
+      const texts=headRef.current.innerText
+      let newId = texts.trim().replace(/\s/g,'-').replace(/[^\w\-]/g,'').toLowerCase()
+      console.log(newId);
+      setId(newId)
     }
 
     useEffect(()=>{
      if(isChange){
-      let newData = {...props.data,data:text,settings:{level:level,align:align}, common: {...commonSettings}}
+      let newData = {...props.data,data:text,settings:{level:level,align:align,id:id}, common: {...commonSettings}}
       props.onChange(newData);
       setIsChange(false);
      }
@@ -79,6 +83,12 @@ const Heading = (props:ToolRenderProps)=>{
                 )             
             })}
           </PropertyItem>
+          <PropertyItem label="Anchor">
+            <TextField sx={{width:'calc(100% - 37px)'}}  placeholder='Please enter ID'  value={id} size="small" hiddenLabel variant="outlined" onChange={(e)=>{setId(e.target.value);setIsChange(true);}} />
+            <PropertyButton title="Auto generate Id" onClick={()=>{autoCreateId()}}>
+              <LoopOutlined/>
+            </PropertyButton> 
+          </PropertyItem>  
           {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
         </BlockProperty>}
