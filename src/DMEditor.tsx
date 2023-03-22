@@ -241,7 +241,7 @@ export const DMEditorView = (props:DMEditorProps)=>{
   useEffect(()=>{
     setRoot();
     let newRoot={
-      '--dme-main-width-default':'clamp(var(--dme-main-width-min-pc),calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',
+      '--dme-main-width-default':'clamp(calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',
     }
     Util.changrootValue(newRoot)
   },[])
