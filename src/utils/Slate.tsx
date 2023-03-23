@@ -596,9 +596,7 @@ export const SlateFun:any = {
   InlineChromiumBugfix : () => (
     <span
       contentEditable={false}
-      className={css`
-        font-size: 0;
-      `}
+      style={{fontSize: 0}}
     >
       ${String.fromCodePoint(160) /* Non-breaking space */}
     </span>
