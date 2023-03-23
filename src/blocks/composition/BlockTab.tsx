@@ -121,6 +121,16 @@ const BlockTab = (props:ToolRenderProps)=>{
         },500)
       }
     }
+
+    useEffect(()=>{
+      const query = new URLSearchParams( location.search );
+      const tabKey = query.get('_dme_tab'); //todo: use id
+      if( tabKey ){
+         setKey( parseInt( tabKey ) );
+      }
+      
+    }, []);
+
     useEffect(()=>{
       props.onChange({...props.data, children:tabList})
       setIsChange(false);
