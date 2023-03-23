@@ -238,13 +238,6 @@ export const DMEditorView = (props:DMEditorProps)=>{
   Util.toast=props.toast
   Util.fileUrl=props.fileUrl
   Util.imageUrl=props.imageUrl
-  useEffect(()=>{
-    setRoot();
-    let newRoot={
-      '--dme-main-width-default':'clamp(calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',
-    }
-    Util.changrootValue(newRoot)
-  },[])
     return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
