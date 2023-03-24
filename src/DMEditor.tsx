@@ -48,7 +48,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         
         setRoot();
         let newRoot={
-          '--dme-main-width-default':viewmode!='edit'?'calc(var(--dme-container-width) - 150px)':'clamp(var(--dme-main-width-min-pc),calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',
+          '--dme-main-width':viewmode!='edit'?'calc(var(--dme-container-width) - 150px)':'clamp(var(--dme-main-width-min-pc),calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',
         }
         Util.changrootValue(newRoot)
        
@@ -122,8 +122,8 @@ export const DMEditor = (props:DMEditorProps)=>{
       setViewmode(type);
       let width=document.body.clientWidth+'px'
       let newRoot:any={
-        '--dme-container-width':type==="edit"?'var(--dme-container-width-default)':`calc(100vw - 1px)`,
-        '--dme-main-width-default':type==='edit'?
+        '--dme-container-width':type==="edit"?`calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width))`:`calc(100vw - 2px)`,
+        '--dme-main-width':type==='edit'?
         `calc(var(--dme-container-width) - ${Util.getScrollbarWidth()}px - 150px)`:
         `clamp(var(--dme-main-width-min-pc) , calc((var(--dme-container-width) - ${Util.getScrollbarWidth()}px) *0.625) , var(--dme-main-width-max-pc))`,
       }
@@ -263,20 +263,16 @@ const setRoot = ()=>{
   let dmeDiv:any=document.querySelector(".layout-main-container")
   const headTag = document.getElementsByTagName('head')[0];
   const styleTag = document.createElement("style");
-  
+   // --dme-container-width-default: calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));  --dme-main-width-default:calc(var(--dme-container-width)*0.625);
   styleTag.innerHTML = `
   :root {
     --dme-layout-tool-width:${dmeDiv==null?'0px':'40px'};
     --dme-layout-property-width:${dmeDiv==null?'0px':'300px'};
 
-    --dme-container-width-default: calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
-    --dme-container-width:var(--dme-container-width-default);
-
+    --dme-container-width:calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
+    --dme-main-width: calc(var(--dme-container-width)*0.625);
     --dme-main-width-max-pc:1600px;
     --dme-main-width-min-pc:1200px;
-
-    --dme-main-width-default:calc(var(--dme-container-width)*0.625);
-    --dme-main-width: var(--dme-main-width-default);
 
     --dme-main-width-pad: 768px;
    
