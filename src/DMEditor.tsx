@@ -8,7 +8,7 @@ import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMa
 import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
-import { Util } from './utils/Util';
+import { isServer, Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
@@ -120,12 +120,11 @@ export const DMEditor = (props:DMEditorProps)=>{
     const onChangeViewMode = (e:any,type:string)=>{
       e.preventDefault();
       setViewmode(type);
-      let width=document.body.clientWidth+'px'
-      let newRoot:any={
+      let newRoot: any = {
         '--dme-container-width':type==="edit"?`calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width))`:`calc(100vw - 2px)`,
         '--dme-main-width':type==='edit'?
-        `calc(var(--dme-container-width) - ${Util.getScrollbarWidth()}px - 150px)`:
-        `clamp(var(--dme-main-width-min-pc) , calc((var(--dme-container-width) - ${Util.getScrollbarWidth()}px) *0.625) , var(--dme-main-width-max-pc))`,
+        `calc(var(--dme-container-width) - var(--dme-scrollbarWidth) - 150px)`:
+        `clamp(var(--dme-main-width-min-pc) , calc((var(--dme-container-width) - var(--dme-scrollbarWidth)) *0.625) , var(--dme-main-width-max-pc))`,
       }
       Util.changrootValue(newRoot)
     }
@@ -277,7 +276,7 @@ const setRoot = ()=>{
     --dme-main-width-pad: 768px;
    
     --dme-main-width-mobile: 375px;
-  
+    --dme-scrollbarWidth:${Util.getScrollbarWidth()}px;
   }
   `;
   headTag.appendChild(styleTag);

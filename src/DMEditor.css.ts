@@ -55,7 +55,7 @@ export const dmeditorCss = ()=>css`
     background: white;
     min-height: 100vh;
     @media (max-width: 1200px){
-      width:calc(100% - ${Util.getScrollbarWidth()}px)!important;
+      width:calc(100% - var(--dme-scrollbarWidth))!important;
     }
 }
 
@@ -256,6 +256,10 @@ export const dmeditorViewCss = ()=>css`
   @media (max-width: 1200px) {
     width:100%;
   }
+}
+.fullScreen{
+  width:calc(var(--dme-container-width) - var(--dme-scrollbarWidth))!important;
+  margin-left: calc(-1*(var(--dme-container-width) - var(--dme-scrollbarWidth) - var(--dme-main-width)) / 2)!important;
 }
 
 .layout-main.viewmode-tablet{
