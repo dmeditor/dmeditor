@@ -23,11 +23,11 @@ export const Util = {
   imageUrl:''as any,
   getEditorArea:(type:string)=>{
     let newCss:any={
-      width:`calc(var(--dme-container-width)  - ${Util.getScrollbarWidth()}px)`,
-      marginLeft:`calc(-1*(var(--dme-container-width) - ${Util.getScrollbarWidth()}px - var(--dme-main-width)) / 2) `,
+      width:`calc(var(--dme-container-width)  - var(--dme-scrollbarWidth))`,
+      marginLeft:`calc(-1*(var(--dme-container-width) - var(--dme-scrollbarWidth) - var(--dme-main-width)) / 2) `,
     }
     if(type==='fullRightScreen'){
-      newCss['paddingLeft']=`calc((var(--dme-container-width) - ${Util.getScrollbarWidth()}px - var(--dme-main-width)) / 2) `
+      newCss['paddingLeft']=`calc((var(--dme-container-width) - var(--dme-scrollbarWidth) - var(--dme-main-width)) / 2) `
     }
     return newCss
   },
