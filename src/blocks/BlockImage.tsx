@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-import { PropertyItem,Util } from "../utils";
+import { PropertyItem,Util,PropertyGroup,Ranger,PickColor } from "../utils";
 
 
 export const BlockImage = (props:ToolRenderProps)=>{
@@ -13,6 +13,8 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||'0px');
+    const [borderColor, setBorderColor] = useState(props.data?.settings?.borderWidth||'transparent');
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
         if(type === 'input'){
@@ -40,8 +42,9 @@ export const BlockImage = (props:ToolRenderProps)=>{
     useEffect(()=>{
         props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen}, common: commonSettings });
     }, [text, fullScreen, commonSettings])
+  
 
-  return <div className={fullScreen?'fullScreen':'' } style={commonSettings}>
+  return <div className={fullScreen ? 'fullScreen' : ''} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
     {adding&&<div>
       <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
     </div>}
@@ -54,7 +57,15 @@ export const BlockImage = (props:ToolRenderProps)=>{
         </PropertyItem>}
         <PropertyItem label='Source'>
           <Button onClick={handleClickOpen}>Choose</Button>
-        </PropertyItem>
+      </PropertyItem>
+        <PropertyGroup header="Border">
+          <PropertyItem label='Width'>
+            <Ranger min={0} max={5} step={1} onChange={(v:number)=>setBorderWidth(v)} defaultValue={borderWidth?borderWidth:'0'} />
+          </PropertyItem> 
+          <PropertyItem label='Color'>
+            <PickColor color={borderColor?borderColor:'transparent'} onChange={(v:any)=>setBorderColor(v)} />
+          </PropertyItem> 
+        </PropertyGroup>
         {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
     </BlockProperty>}
