@@ -14,7 +14,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||'0px');
-    const [borderColor, setBorderColor] = useState(props.data?.settings?.borderWidth||'transparent');
+    const [borderColor, setBorderColor] = useState(props.data?.settings?.borderColor||'transparent');
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
         if(type === 'input'){
@@ -40,8 +40,8 @@ export const BlockImage = (props:ToolRenderProps)=>{
     // }
     // },[])
     useEffect(()=>{
-        props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen}, common: commonSettings });
-    }, [text, fullScreen, commonSettings])
+        props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor}, common: commonSettings });
+    }, [text, fullScreen,borderWidth,borderColor, commonSettings])
   
 
   return <div className={fullScreen ? 'fullScreen' : ''} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
@@ -60,7 +60,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
       </PropertyItem>
         <PropertyGroup header="Border">
           <PropertyItem label='Width'>
-            <Ranger min={0} max={5} step={1} onChange={(v:number)=>setBorderWidth(v)} defaultValue={borderWidth?borderWidth:'0'} />
+          <Ranger min={0} max={5} step={1} onChange={(v: number) => setBorderWidth(v)} defaultValue={borderWidth?borderWidth:'0'} />
           </PropertyItem> 
           <PropertyItem label='Color'>
             <PickColor color={borderColor?borderColor:'transparent'} onChange={(v:any)=>setBorderColor(v)} />
