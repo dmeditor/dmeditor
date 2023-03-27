@@ -1,11 +1,11 @@
-import { ViewListOutlined,DeleteOutline,AddCircleOutlineOutlined} from "@mui/icons-material";
+import { ViewListOutlined,DeleteOutline,AddCircleOutlineOutlined, ArrowDownwardOutlined, ArrowUpwardOutlined} from "@mui/icons-material";
 import {blockTabCss} from "./BlockTab.css";
 import React, {useEffect ,useState,useRef} from 'react';
 import {BlockList} from '../../BlockList';
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { BlockProperty } from "../../BlockProperty"
 import { CommonSettings } from '../../CommonSettings';
-import {PropertyButton } from "../../utils";
+import {PropertyButton, Util } from "../../utils";
 import Accordion from 'react-bootstrap/Accordion';
 const nanoid = require('nanoid')
 
@@ -14,19 +14,9 @@ const BlockAccordion = (props:ToolRenderProps)=>{
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const [activeTabIndex, setActiveTabIndex] = useState(-1);
     const [key, setKey] = useState(0);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [accordionList,setAccordionList] =  useState<Array<any>>(()=>{
-      if(props.data.children){
-        return props.data.children.map(item=>{
-          return {
-            ...item,
-            ...{contentEditable:false}
-          }
-        })
-      }else{
-        return []
-      }
-    });
+   const [activeIndex, setActiveIndex] = useState(0);
+   const [accordionList,setAccordionList] =  useState<Array<any>>(props.data?.children||[]);
+    
     const [isChange,setIsChange] = useState(false);
     const expandableItemRef:any=useRef(null);
     
@@ -38,11 +28,11 @@ const BlockAccordion = (props:ToolRenderProps)=>{
 
     const changeAccordionName = (e:any,index:any)=>{
       let newAccordionList=[...accordionList]
-      newAccordionList[index].contentEditable=false;
+      // newAccordionList[index].contentEditable=false;
       const texts=e.target.innerText
       newAccordionList[index].data=texts;
-      setActiveTabIndex(-1);
-      setKey(index)
+      // setActiveTabIndex(-1);
+      // setKey(index)
       setAccordionList([...newAccordionList])
     }
 
@@ -79,6 +69,45 @@ const BlockAccordion = (props:ToolRenderProps)=>{
       setAccordionList([...newAccordionList,list])
     }
    
+   const moveFun = (mode:string,index:any)=>{
+      let newAccordionList=[...accordionList]
+      let newActivekey=-1;
+      if(mode==="up"){
+         if(index==0)return;
+        newAccordionList[index] = newAccordionList.splice(index-1, 1, newAccordionList[index])[0]
+        if(activeTabIndex>-1){
+          if(index!=activeTabIndex){
+            if(index-1==activeTabIndex){
+              newActivekey=index
+            }
+          }else{
+            newActivekey=index-1
+          }
+        }
+       
+      }else{
+         if(index==newAccordionList.length-1)return;
+         newAccordionList[index] = newAccordionList.splice(index+1, 1, newAccordionList[index])[0]
+         if(activeTabIndex>-1){
+          if(index!=activeTabIndex){
+            if(index+1==activeTabIndex){
+              newActivekey=index
+            }
+          }else{
+            newActivekey=index+1
+          }
+          }
+      }
+      setAccordionList(newAccordionList);
+      if(newActivekey>-1){
+        setActiveTabIndex(newActivekey);
+        setKey(newActivekey)
+        setTimeout(()=>{
+          let ele:any=document.querySelectorAll('.tabName')[newActivekey]
+          Util.poLastDiv(ele)
+        },500)
+      }
+    }
 
     useEffect(()=>{
         props.onChange({...props.data, children:accordionList})
@@ -96,26 +125,28 @@ const BlockAccordion = (props:ToolRenderProps)=>{
             key={item.id}>
               <div ref={expandableItemRef} 
                 className="tabName" 
-                onDoubleClick={()=>{
-                    let newAccordionList=[...accordionList];
-                    newAccordionList[index].contentEditable=true;
-                    setAccordionList([...newAccordionList])
+                onClick={()=>{
                     setActiveTabIndex(index)
+                    setKey(index)
                   }
                 } 
                 onBlur={(e)=>{changeAccordionName(e,index)}} 
                 suppressContentEditableWarning 
-                contentEditable={item.contentEditable}>
+                contentEditable={true}>
                   {item.data}
               </div>
-              <div><PropertyButton color="warning" title="Delete"  onClick={()=>{deletAccordion(index)}}><DeleteOutline /></PropertyButton></div>
+              <div className="btn-groups">
+                <PropertyButton color="warning" title="move up"  style={index==0?{display:'none'}:{}}  onClick={()=>{moveFun('up',index)}}><ArrowUpwardOutlined /></PropertyButton>
+                <PropertyButton color="warning" title="move down" style={index==accordionList.length-1?{display:'none'}:{}} onClick={()=>{moveFun('down',index)}}><ArrowDownwardOutlined /></PropertyButton>
+                <PropertyButton color="warning" title="Delete" onClick={() => { deletAccordion(index) }}><DeleteOutline /></PropertyButton>
+              </div>
             </div>
           )
         })
       }
       <div className="item">
         <div></div>
-        <div><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
+        <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} /></div>
