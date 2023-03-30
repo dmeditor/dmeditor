@@ -1,4 +1,8 @@
 0.1.0-beta.8
+- 2023-03-30 updated:Pictures in text support drag and drop, set border width and color functions, and modify the display value to inline block
+- 2023-03-27 updated:block setting support align
+- 2023-03-27 updated:image support border width & border color
+- 2023-03-27 updated: Accordion add move up and down function
 - 2023-03-23 fixed: $issue before link in text
 - 2023-03-21 fixed: saving in accordion & tab
 - 2023-03-21 upated:hide preBLock when it is view
