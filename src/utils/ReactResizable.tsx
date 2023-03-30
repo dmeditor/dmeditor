@@ -15,17 +15,14 @@ export const ReactResizable = (props: { children:any,width?: number, height?: nu
   }
 
   const onResizeStopFunc = (e: SyntheticEvent<Element, Event>, {element, size, handle}:any) => {
-    console.log({ width: size.width, height: size.height })
     setWidth(size.width)
     setHeight(size.height )
     if (props.onChange) {
-      console.log("结束",size)
       props.onChange(size)
     }
   }
 
   const onKeyDown = (e: any) => {
-    console.log(e)
     switch (e.keyCode) {
       case 16:
         if (lockAspectRatio != true) {
@@ -40,12 +37,11 @@ export const ReactResizable = (props: { children:any,width?: number, height?: nu
   window.addEventListener("keydown", onKeyDown);
   window.addEventListener("keyup", onKeyUP);
   useEffect(() => {
-    
     return () => {
       window.removeEventListener("keydown", onKeyDown)
     };
   }, []);
-  //  
+  
   return (
     <ResizableBox className='box hover-handles' style={props.style} width={width} height={height} onResizeStart={onResizeStartFunc} onResizeStop={onResizeStopFunc} lockAspectRatio={lockAspectRatio}  resizeHandles={['sw', 'se', 'nw', 'ne']}>
       {props.children}

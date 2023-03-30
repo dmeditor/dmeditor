@@ -719,7 +719,6 @@ export const SlateFun:any = {
     let link = element.source.sourceType === 'select' ? Util.getImageUrl(element.source.sourceData.image) : element.url;
     
     let FloatStyle = element?.float || null;
-    console.log('ImageComponent===>', element)
     let Commonstyle:any = {
       display: 'inline-block',
       margin: '5px',
@@ -848,72 +847,6 @@ export const SlateFun:any = {
       </>
       
       
-    )
-  },
-  rendImage: (editor:any,selected:any,focused:any,path:any,attributes: any, children: any,element:any,changeimageStatus:any,link:any,FloatStyle:any) => {
-    return (
-      <div {...attributes} className={css`
-        width:100%;
-        height:100%
-        `}>
-      <span style={{ display:"none"}}> {children}</span>
-        <div
-          contentEditable={false}
-          className={css`
-            position: relative;
-            width:100%;
-            height:100%;
-          `}
-        >
-          <img
-            src={link}
-            onClick={() => { Transforms.select(editor, path); changeimageStatus()} }
-            className={css`
-              display: block;
-              width:100%;
-              height:100%;
-              object-fit: cover;
-              // max-width: 100%;
-              // max-height: 20em;
-              box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-            `}
-          />
-          <FormatAlignLeft className={css`
-              display: ${selected && focused ? 'inline!important' : 'none!important'};
-              position: absolute!important;
-              top: 0.5em!important;
-              left: 0.5em!important;
-              background-color: white!important;
-              color:${element?.float && element.float == 'left' ? '#12913e' : '#333'};
-              cursor:pointer;
-            `} onClick={() => {
-              let newProperty:any= FloatStyle=='left'?{float:null}:{float:'left'}
-              Transforms.setNodes(editor, newProperty, { at: path })
-            }} />
-            <FormatAlignRight className={css`
-              display: ${selected && focused ? 'inline!important' : 'none!important'};
-              position: absolute!important;
-              top: 0.5em!important;
-              left: 1.58em!important;
-              background-color: white!important;
-              color:${element?.float && element.float == 'right' ? '#12913e' : '#333'};
-              cursor: pointer;
-            `} onClick={() => {
-              let newProperty:any=FloatStyle=='right'?{float:null}: {float:'right'}
-              Transforms.setNodes(editor, newProperty, { at: path })
-            }}/>
-          <Delete className={css`
-              display: ${selected && focused ? 'inline!important' : 'none!important'};
-              position: absolute!important;
-              top: 0.5em!important;
-              left: 2.66em!important;
-              background-color: white!important;
-            `} onClick={() => {
-              Transforms.removeNodes(editor, { at: path })
-              changeimageStatus(false)
-            }} />
-        </div>
-      </div >
     )
   },
   isImageActive:(editor:any) => {
@@ -1099,15 +1032,12 @@ export const SlateFun:any = {
     return isCollapsed
   },
   clearFormat:(editor:any)=>{
-    // console.log(Editor)
-    // console.log(editor)
-    // console.log(Text)
+    
     // let [link]=Editor.nodes(editor,{
     //   mode:'all',
     //   match: (n:any) =>n.type === 'link'&& 
     //   !Editor.isEditor(n) && SlateElement.isElement(n)
     // })
-    // console.log(link)
     // let TEXT_FORMAT_TYPES_s=SlateFun.TEXT_FORMAT_TYPES.map(item=>item!='link')
     // Transforms.unsetNodes(editor,['bold'],
     //   { match:(n:any) =>SlateFun.TEXT_FORMAT_TYPES_s.includes(n[.type]), 
