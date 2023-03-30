@@ -49,7 +49,10 @@ export const BlockText = (props:ToolRenderProps)=>{
     const [buttonColor, setButtonColor] = useState('primary' as ('primary' | 'econdary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'dark'));
     const [isFocus,setIsFocus] = useState(false);
     const [isLinkActive,setIsLinkActive] = useState(false);
-    const [isButtonActive,setIsButtonActive] = useState(false);
+    const [isButtonActive, setIsButtonActive] = useState(false);
+    const [isImageActive, setIsImageActive] = useState(false);
+    const [imageBorderWidth, setImageBorderWidth] = useState(0);
+    const [imageBorderColor, setImageBorderColor] = useState(SlateFun.IMAGE_BORDER_COLOR);
     const [isCollapsed,setIsCollapsed]= useState(true);
     const [dialogType, setDialogType] = useState('image' as ('image'|'link'));
     const [linkVal, setLinkVal] = useState("" as any);
@@ -60,9 +63,14 @@ export const BlockText = (props:ToolRenderProps)=>{
       () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
       []
     )
-    const renderElement = useCallback((props:any) => <SlateFun.Element{...props} />, [])
+  const renderElement = useCallback((props: any) => <SlateFun.Element{...props}
+    view={props.view}
+    changeimageStatus={(status?:any) => {
+      setIsImageActive(status==false?false:true);
+      ImageStyle();
+    }} />, [])
     const renderLeaf = useCallback((props:any) => <SlateFun.Leaf {...props} />, [])
-
+      
     const change = (val:any)=>{
       setValue(val)
     }
@@ -133,6 +141,13 @@ export const BlockText = (props:ToolRenderProps)=>{
       SlateFun.insertImage(editor, val,type)
       setIsFocus(!isFocus)
     }
+    const ImageStyle = () => {
+      let Image: any = SlateFun.getImageSetting(editor)
+      let borderWidth = Image.setting?.borderWidth || 0;
+      let borderColor=Image.setting?.borderColor || SlateFun.IMAGE_BORDER_COLOR;
+      setImageBorderWidth(parseFloat(borderWidth));
+      setImageBorderColor(borderColor);
+    }
     //inset Link
     const changeDialogLinkfun = (value:any)=>{
       setLinkVal(value);
@@ -161,7 +176,12 @@ export const BlockText = (props:ToolRenderProps)=>{
       setColor(SlateFun.getFormat(editor,'color'))
       setTimeout(()=>{
         setIsCollapsed(SlateFun.isCollapsed(editor))
-      },10)
+      }, 10)
+      //image
+      setIsImageActive(SlateFun.isImageActive(editor) ? true : false)
+      if(SlateFun.isImageActive(editor)){
+        ImageStyle();
+      }
 
       //link
       setLinkstyle('none')
@@ -269,7 +289,7 @@ export const BlockText = (props:ToolRenderProps)=>{
             :null
             }  
           </PropertyGroup> 
-          {  isLinkActive||isButtonActive?
+          {  (isLinkActive||isButtonActive)&&
             <PropertyGroup header="Link"> 
               <PropertyItem label="Style">
                 <Select
@@ -301,8 +321,8 @@ export const BlockText = (props:ToolRenderProps)=>{
               <PropertyButton title={'Delete Link'} onClick={()=>{ SlateFun.unwrapLink(editor);SlateEvents()}}><LinkOffOutlined/></PropertyButton> 
             </PropertyItem> 
           </PropertyGroup>
-          :null}
-          {  (isLinkActive&&linkstyle==='button')||isButtonActive?
+          }
+          {  ((isLinkActive&&linkstyle==='button')||isButtonActive)&&
             <>
             <PropertyGroup header="Link Button"> 
               <PropertyItem label="color">
@@ -334,8 +354,18 @@ export const BlockText = (props:ToolRenderProps)=>{
                 <Button size="small" onClick={()=>{changeButtonFormat('large','size');}} variant={buttonSize==='large'?'outlined':undefined}  >large</Button>
               </PropertyItem> 
           </PropertyGroup>
-          </>
-          :null}
+            </>
+          }
+         { isImageActive&&
+            <PropertyGroup header="ImageBorder"> 
+              <PropertyItem label='Width'>
+                  <Ranger min={0} max={10} step={1} onChange={(v: number) => { setImageBorderWidth(v); SlateFun.setImageFormat(editor,'borderWidth',v)}} defaultValue={imageBorderWidth?imageBorderWidth:0} />
+              </PropertyItem> 
+              <PropertyItem label='Color'>
+                  <PickColor color={imageBorderColor ? imageBorderColor : 'transparent'} onChange={(v: any) => { setImageBorderColor(v);SlateFun.setImageFormat(editor,'borderColor',v) }} />
+              </PropertyItem> 
+          </PropertyGroup>
+          }
           {Util.renderCustomProperty(props.data)}
          <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} /></div>                 
           </BlockProperty>}
@@ -372,6 +402,7 @@ export const BlockText = (props:ToolRenderProps)=>{
         {adding&&<div>
           <Util.renderBroseURL type={dialogType=='image'?'Image':"Link"} hovering={hovering} onConfirm={submitFun} adding={adding} defalutValue={dialogType=='link'?linkVal:''}/>
         </div>}
+        {/* <button onClick={() => { console.log(value) }}>提取数据</button> */}
       </div> 
     )
 }
@@ -396,6 +427,6 @@ export const toolText:ToolDefinition = {
           ],
       }
   },
-    view: (props:{data:any})=><BlockText inBlock={false} data={props.data} active={false} onChange={()=>{}} />,
+    view: (props:{data:any})=><BlockText view={true} inBlock={false} data={props.data} active={false} onChange={()=>{}} />,
     render: BlockText
 }

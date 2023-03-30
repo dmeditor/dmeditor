@@ -115,6 +115,80 @@ export const Util = {
     let root:any=document.querySelector(":root");
     Object.entries(newRoot).forEach(v => root.style.setProperty(v[0], v[1]))
   },
+  imgReady: (url:any, ready?:any, load?:any, error?:any) => {
+    var list:any = [], intervalId:any = null,
+ 
+    // Used to execute the queue
+    tick =  ()=> {
+        var i = 0;
+        for (; i < list.length; i++) {
+            list[i].end ? list.splice(i--, 1) : list[i]();
+        };
+        !list.length && stop();
+    },
+     
+    // Stop all timer queues
+    stop =  ()=> {
+        clearInterval(intervalId);
+        intervalId = null;
+      };
+    return ()=> {
+        var onready:any, width:any, height:any, newWidth:any, newHeight:any,
+        img:any = new Image();
+        img.src = url;
+        // If the image is cached, the cached data is returned directly
+      if (img.complete) {
+          ready(img);
+          load && load(img);
+            // ready.call(img);
+            // load && load.call(img);
+            return;
+        };
+     
+        width = img.width;
+        height = img.height;
+     
+        // Events after loading errors
+        img.onerror = function () {
+          error && error(img);
+          //  error && error.call(img);
+          onready.end = true;
+          img = img.onload = img.onerror = null;
+        };
+     
+        // Picture size ready
+        onready = function () {
+            newWidth = img.width;
+            newHeight = img.height;
+            if (newWidth !== width || newHeight !== height ||newWidth * newHeight > 1024) {
+            // If the image has been loaded elsewhere, the usable area is detected
+              ready(img);
+                // ready.call(img);
+              onready.end = true;
+            };
+        };
+        onready();
+     
+        // Event of complete loading
+        img.onload = function () {
+            // Onload may be faster than onready within the timer time difference range
+            // Here, check and ensure that the onready is executed first
+            !onready.end && onready();
+             load && load(img);
+            // load && load.call(img);
+             
+            // IE Gif animation will cycle through onload, leaving onload empty
+            img = img.onload = img.onerror = null;
+        };
+     
+        // Join the queue for regular execution
+        if (!onready.end) {
+            list.push(onready);
+            // Allow only one timer whenever possible to reduce browser performance loss
+            if (intervalId === null) intervalId = setInterval(tick, 40);
+        };
+    };
+  },
   error:(msg:any,option?:any)=>{
     if(Util.toast){
       Util.toast.error(msg,option)

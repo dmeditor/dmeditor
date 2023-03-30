@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import { Util } from "./utils";
+import { ReactResizable } from './utils/ReactResizable';
 
 
 export const dmeditorCss = ()=>css`
@@ -214,11 +215,6 @@ hr{
     background:#ccc;
 }
 
-
-.block-type-text span{
-  vertical-align: initial !important;
-}
-
 .pre-render{
   position: absolute;
   left:-105px;
@@ -256,6 +252,16 @@ export const dmeditorViewCss = ()=>css`
   @media (max-width: 1200px) {
     width:100%;
   }
+}
+.box{
+  background: #f9f9f9;
+}
+
+.block-type-text div[data-slate-editor='true']{
+   overflow:hidden;
+}
+.block-type-text span{
+  vertical-align: top!important;
 }
 .fullScreen{
   width:calc(var(--dme-container-width) - var(--dme-scrollbarWidth))!important;
@@ -303,3 +309,78 @@ export const dmeditorViewCss = ()=>css`
   grid-template-columns: 16.6% 16.6% 16.6% 16.6% 16.6% 16.6%;
 }
 `;
+
+export const ReactResizableCss = () => css`
+.react-resizable {
+  position: relative;
+}
+.react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+');
+  background-position: bottom right;
+  padding: 0 3px 3px 0;
+}
+.react-resizable-handle-sw {
+  bottom: 0;
+  left: 0;
+  cursor: sw-resize;
+  transform: rotate(90deg);
+}
+.react-resizable-handle-se {
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+}
+.react-resizable-handle-nw {
+  top: 0;
+  left: 0;
+  cursor: nw-resize;
+  transform: rotate(180deg);
+}
+.react-resizable-handle-ne {
+  top: 0;
+  right: 0;
+  cursor: ne-resize;
+  transform: rotate(270deg);
+}
+.react-resizable-handle-w,
+.react-resizable-handle-e {
+  top: 50%;
+  margin-top: -10px;
+  cursor: ew-resize;
+}
+.react-resizable-handle-w {
+  left: 0;
+  transform: rotate(135deg);
+}
+.react-resizable-handle-e {
+  right: 0;
+  transform: rotate(315deg);
+}
+.react-resizable-handle-n,
+.react-resizable-handle-s {
+  left: 50%;
+  margin-left: -10px;
+  cursor: ns-resize;
+}
+.react-resizable-handle-n {
+  top: 0;
+  transform: rotate(225deg);
+}
+.react-resizable-handle-s {
+  bottom: 0;
+  transform: rotate(45deg);
+}
+.hover-handles .react-resizable-handle {
+  display: none;
+}
+.hover-handles:hover .react-resizable-handle {
+  display: block;
+}
+
+`

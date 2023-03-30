@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Block} from './Block';
-import {dmeditorCss, dmeditorViewCss} from './DMEditor.css';
+import {dmeditorCss, dmeditorViewCss,ReactResizableCss} from './DMEditor.css';
 import {templateCss} from './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
@@ -152,7 +152,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
       <ThemeProvider theme={outerTheme}>
-        <div className={(viewmode=='edit'?"  ":"view ") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()}>
+        <div className={(viewmode=='edit'?"  ":"view ") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><Menu /></div></a>}
@@ -237,7 +237,7 @@ export const DMEditorView = (props:DMEditorProps)=>{
   Util.toast=props.toast
   Util.fileUrl=props.fileUrl
   Util.imageUrl=props.imageUrl
-    return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()}>
+    return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()+' '+ReactResizableCss()}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
            return  <Block
