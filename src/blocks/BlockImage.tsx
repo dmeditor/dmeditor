@@ -13,7 +13,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-    const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||'0px');
+    const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||0);
     const [borderColor, setBorderColor] = useState(props.data?.settings?.borderColor||'transparent');
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
@@ -60,7 +60,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
       </PropertyItem>
         <PropertyGroup header="Border">
           <PropertyItem label='Width'>
-          <Ranger min={0} max={5} step={1} onChange={(v: number) => setBorderWidth(v)} defaultValue={borderWidth?borderWidth:'0'} />
+          <Ranger min={0} max={10} step={1} onChange={(v: number) => setBorderWidth(v)} defaultValue={borderWidth?borderWidth:'0'} />
           </PropertyItem> 
           <PropertyItem label='Color'>
             <PickColor color={borderColor?borderColor:'transparent'} onChange={(v:any)=>setBorderColor(v)} />
