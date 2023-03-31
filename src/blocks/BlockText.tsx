@@ -11,29 +11,6 @@ import { SlateFun } from '../utils/Slate'
 import FontFamilyList from '../utils/FontFamilyList'
 import { CommonSettings } from "../CommonSettings";
 
-const BlockButton = ({formats}:any) => {
-  let ele:any
-  if(formats ==='left'){
-    ele = <FormatAlignLeft />
-  }
-  if(formats ==='center'){
-    ele = <FormatAlignCenter />
-  }
-   if(formats ==='right'){
-    ele = <FormatAlignRight />
-  }
-   if(formats ==='justify'){
-    ele = <FormatAlignJustify />
-  }
-   if(formats ==='numbered-list'){
-    ele = <FormatListNumbered />
-  }
-   if(formats ==='bulleted-list'){
-    ele = <FormatListBulleted />
-  }
-  return ele
-}
-
 export const BlockText = (props:ToolRenderProps)=>{
   const [value,setValue] = useState(props.data.data)
   const [config,setConfig] = useState(props.data.settings?props.data.settings.config:null);
@@ -59,7 +36,28 @@ export const BlockText = (props:ToolRenderProps)=>{
   const firstRender = useRef(true);
   const [hovering, setHovering] = useState(true)
   const [view,setView] = useState(props.view)
-
+  const BlockButton = ({formats}:any) => {
+    let ele:any
+    if(formats ==='left'){
+      ele = <FormatAlignLeft />
+    }
+    if(formats ==='center'){
+      ele = <FormatAlignCenter />
+    }
+    if(formats ==='right'){
+      ele = <FormatAlignRight />
+    }
+    if(formats ==='justify'){
+      ele = <FormatAlignJustify />
+    }
+    if(formats ==='numbered-list'){
+      ele = <FormatListNumbered />
+    }
+    if(formats ==='bulleted-list'){
+      ele = <FormatListBulleted />
+    }
+    return ele
+  }
   const editor = useMemo(
     () =>SlateFun.withEditor(withHistory(withReact(createEditor()))) ,
     []
