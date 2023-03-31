@@ -17,7 +17,7 @@ import { BlockProperty } from "../BlockProperty";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyGroup, PropertyItem,Util,PickColor,Ranger} from "../utils";
 import { CommonSettings } from "../CommonSettings";
-
+import { BlockText } from "./BlockText";
 
 type add = "top" | "right" | "bottom" | "left";
 type deleteType = "col" | "row";
@@ -60,13 +60,13 @@ export const Table = (props: ToolRenderProps) => {
   };
 
   useEffect(() => {
-      props.onChange({
-        ...props.data,
-        data:content,
-        settings: { ...color, padding, border },
-        common: commonSettings,
-        type: "table",
-      });
+    props.onChange({
+      ...props.data,
+      data:content,
+      settings: { ...color, padding, border },
+      common: commonSettings,
+      type: "table",
+    });
   },[props.active,commonSettings,isChange]);
 
   const setAlign = (v: add) => {
@@ -231,11 +231,14 @@ export const Table = (props: ToolRenderProps) => {
     setIsChange(!isChange)
   };
   const change = (
-    e: React.FocusEvent<HTMLDivElement>,
+    val: any,
+    // e: React.FocusEvent<HTMLDivElement>,
     i: number,
     j: number
   ) => {    
-    content[i][j] = e.target.innerText;
+    console.log(val)
+    content[i][j] = val;
+    //  content[i][j] = e.target.innerText;
     SetContent(content);
     setIsChange(!isChange)
   };
@@ -412,7 +415,7 @@ export const Table = (props: ToolRenderProps) => {
                       },
                     })}
                   >
-                    {item.map((data, j) => (
+                    {item.map((data:any, j:any) => (
                       <td
                         key={j}
                         onClick={() => clicks(i, j)}
@@ -421,13 +424,15 @@ export const Table = (props: ToolRenderProps) => {
                             ? "tdActive"
                             : ""
                         }`}
-                        onBlur={(e) => {
-                          change(e, i, j);
+                        onBlur={() => {
+                          change(data, i, j);
                         }}
                         style={tdStyle()}
                       >
-                       <div suppressContentEditableWarning
-            contentEditable={props.active}>{data}</div>
+                        <BlockText data={data} active={props.active} onChange={ (value:any)=>{ change(value, i, j)}} />
+
+                       {/* <div suppressContentEditableWarning
+            contentEditable={props.active}>{data}</div> */}
                       </td>
                     ))}
                   </tr>
@@ -437,6 +442,16 @@ export const Table = (props: ToolRenderProps) => {
           </table>
         </div>
       </div>
+      <button onClick={() => {
+        let newD={
+              ...props.data,
+              data:content,
+              settings: { ...color, padding, border },
+              common: commonSettings,
+              type: "table",
+            }
+        console.log(newD)
+      }}>提取数据</button>
     </div>
   );
 };
@@ -449,8 +464,122 @@ export const toolTable: ToolDefinition = {
     return {
       type: "table",
       data: [
-        ["", "", "", ""],
-        ["", "", "", ""],
+        [
+          {
+            type: 'text',
+            id:'tableText01',
+            data:[
+              {
+                type: 'paragraph',
+                children:[ 
+                  {
+                      text: '',
+                  }
+                ]
+              }
+            ],
+          },
+          {
+            type: 'text',
+            id:'tableText02',
+            data:[
+              {
+                type: 'paragraph',
+                children:[ 
+                  {
+                      text: '',
+                  }
+                ]
+              }
+            ],
+          },
+          {
+            type: 'text',
+            id:'tableText03',
+            data:[
+              {
+                type: 'paragraph',
+                children:[ 
+                  {
+                      text: '',
+                  }
+                ]
+              }
+            ],
+          },
+          {
+            type: 'text',
+            id:'tableText04',
+            data:[
+              {
+                type: 'paragraph',
+                children:[ 
+                  {
+                      text: '',
+                  }
+                ]
+              }
+            ],
+          }
+        ],
+        [
+          {
+            type: 'text',
+            id:'tableText11',
+            data:[
+              {
+                type: 'paragraph',
+                children:[ 
+                  {
+                      text: '',
+                  }
+                ]
+              }
+            ],
+          },
+          {
+            type: 'text',
+            id:'tableText12',
+            data:[
+              {
+                type: 'paragraph',
+                children:[ 
+                  {
+                      text: '',
+                  }
+                ]
+              }
+            ],
+          },
+          {
+            type: 'text',
+            id:'tableText13',
+            data:[
+              {
+                type: 'paragraph',
+                children:[ 
+                  {
+                      text: '',
+                  }
+                ]
+              }
+            ],
+          },
+          {
+            type: 'text',
+            id:'tableText14',
+            data:[
+              {
+                type: 'paragraph',
+                children:[ 
+                  {
+                      text: '',
+                  }
+                ]
+              }
+            ],
+          }
+        ],,
       ],
       common:{width: '100%'},
       settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
