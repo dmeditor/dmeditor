@@ -201,9 +201,7 @@ hr{
   text-align: right;
 }
 
-.block-type-imagetext > .block-type-image{
-  display: inline-block;
-}
+
 
 ::selection {
   color:auto;
@@ -275,8 +273,12 @@ export const dmeditorViewCss = ()=>css`
 .layout-main.viewmode-mobile{
     width: var(--dme-main-width-mobile);
 }
-
-
+// .block-type-imagetext > .block-type-image{
+//   display: inline-block;
+// }
+.imagetext_container .block-type-image>div{
+ width:calc(var(--dme-main-width)*0.5);
+}
 
 .block-container{
   position: relative;
