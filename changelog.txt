@@ -3,6 +3,7 @@
 - 2023-03-27 updated:block setting support align
 - 2023-03-27 updated:image support border width & border color
 - 2023-03-27 updated: Accordion add move up and down function
+- 2022-03-23 added: tab support location with tab key
 - 2023-03-23 fixed: $issue before link in text
 - 2023-03-21 fixed: saving in accordion & tab
 - 2023-03-21 upated:hide preBLock when it is view
