@@ -69,7 +69,7 @@ const BlockImageText = (props: ToolRenderProps) => {
     <div className="imagetext_container" style={{display:'flex',flexWrap:flexWrap}}>
       {list.map((item: any,index:any) => {
         return (
-          <React.Fragment key={item.id}>
+          <React.Fragment key={item.id?item.id:index}>
             {item.type == 'list' && <div style={{width:blockListWidth}}>
               <BlockList  view={props.view}  allowedType={['text', 'heading']} onChange={data=>onChange({...list[index], children:data}, index)} active={props.active&&activeIndex==index} list={list[index].children} onActivate={()=>setActiveIndex(index)} />
             </div>}
