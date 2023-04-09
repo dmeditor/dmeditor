@@ -156,6 +156,14 @@ hr{
   padding-top: 2px;
 }
 
+/* .block-container:first-child .tool-above {
+  top: 0px;
+}
+
+.block-container:last-child .tool-under {
+  bottom: 0px;
+} */
+
 .blockcontainer-horizontal{
   display: grid;
   grid-template-columns: auto auto;
@@ -251,7 +259,6 @@ export const dmeditorViewCss = ()=>css`
 &.dmeditor-view{
   margin:auto;
   background: white;
-  min-height: 100vh;
   width:var(--dme-main-width);
   @media (max-width: 1200px) {
     width:100%;
