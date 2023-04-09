@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-import { PropertyItem,Util } from "../utils";
+import { PropertyItem,Util,PropertyGroup,Ranger,PickColor } from "../utils";
 
 
 export const BlockImage = (props:ToolRenderProps)=>{
@@ -13,6 +13,8 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
     const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||0);
+    const [borderColor, setBorderColor] = useState(props.data?.settings?.borderColor||'transparent');
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
         if(type === 'input'){
@@ -37,33 +39,41 @@ export const BlockImage = (props:ToolRenderProps)=>{
     //     });
     // }
     // },[])
-
     useEffect(()=>{
-        props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen}, common: commonSettings });
-    }, [text, fullScreen, commonSettings])
+        props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor}, common: commonSettings });
+    }, [text, fullScreen,borderWidth,borderColor, commonSettings])
+  
 
-    return <div style={fullScreen?{...commonSettings,...Util.getEditorArea('fullScreen')}:commonSettings}>
-            {adding&&<div>
-              <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
-            </div>}
-            {props.active&&<BlockProperty  blocktype="image" inBlock={props.inBlock}>
-                {!text&&<PropertyItem label="Description" autoWidth>
-                  <Button onClick={()=>setText('Description')}>Add description</Button>
-                </PropertyItem>}
-                {(!props.inBlock)&&<PropertyItem label="Full screen" autoWidth>
-                    <Checkbox checked={fullScreen} onChange={(e, checked:boolean)=>{setFullScreen(checked);}} />
-                </PropertyItem>}
-                <PropertyItem label='Source'>
-                  <Button onClick={handleClickOpen}>Choose</Button>
-                </PropertyItem>
-                {Util.renderCustomProperty(props.data)}
-                <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
-            </BlockProperty>}
-                <div >
-                  <img width='100%' src={imageUrl} />  
-                </div>
-                {text&&<div className="image-caption" contentEditable={true} onBlur={e=>setText(e.target.textContent)}>{text}</div>}
-            </div>
+  return <div className={fullScreen ? 'fullScreen' : ''} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
+    {adding&&<div>
+      <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
+    </div>}
+    {props.active&&<BlockProperty  blocktype="image" inBlock={props.inBlock}>
+        {!text&&<PropertyItem label="Description" autoWidth>
+          <Button onClick={()=>setText('Description')}>Add description</Button>
+        </PropertyItem>}
+        {(!props.inBlock)&&<PropertyItem label="Full screen" autoWidth>
+            <Checkbox checked={fullScreen} onChange={(e, checked:boolean)=>{setFullScreen(checked);}} />
+        </PropertyItem>}
+        <PropertyItem label='Source'>
+          <Button onClick={handleClickOpen}>Choose</Button>
+      </PropertyItem>
+        <PropertyGroup header="Border">
+          <PropertyItem label='Width'>
+          <Ranger min={0} max={10} step={1} onChange={(v: number) => setBorderWidth(v)} defaultValue={borderWidth?borderWidth:'0'} />
+          </PropertyItem> 
+          <PropertyItem label='Color'>
+            <PickColor color={borderColor?borderColor:'transparent'} onChange={(v:any)=>setBorderColor(v)} />
+          </PropertyItem> 
+        </PropertyGroup>
+        {Util.renderCustomProperty(props.data)}
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
+    </BlockProperty>}
+        <div >
+          <img width='100%' src={imageUrl} />  
+        </div>
+        {text&&<div className="image-caption" contentEditable={true} onBlur={e=>setText(e.target.textContent)}>{text}</div>}
+    </div>
 }
 
 export const toolImage:ToolDefinition = {

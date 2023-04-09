@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
     const [level,setLevel] = useState(props.data.settings.level);
-    const [align,setAlign] = useState(props.data.settings?.align||'left');
+    // const [align,setAlign] = useState(props.data.settings?.align||'left');
     const [id,setId] = useState(props.data.settings?.id||'');
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
     const headRef:any=useRef(null);
@@ -34,7 +34,7 @@ const Heading = (props:ToolRenderProps)=>{
       setIsChange(true);
     }
 
-    const common = { onBlur:changeText,ref:headRef, contentEditable: props.active, style:{...commonSettings,textAlign:align},}
+    const common = { onBlur:changeText,ref:headRef, contentEditable: props.active, style:{...commonSettings},}
     const render = ()=>{
       switch(level){
         case 1:
@@ -61,7 +61,7 @@ const Heading = (props:ToolRenderProps)=>{
 
     useEffect(()=>{
      if(isChange){
-      let newData = {...props.data,data:text,settings:{level:level,align:align,id:id}, common: {...commonSettings}}
+      let newData = {...props.data,data:text,settings:{level:level,id:id}, common: {...commonSettings}}
       props.onChange(newData);
       setIsChange(false);
      }
@@ -73,7 +73,7 @@ const Heading = (props:ToolRenderProps)=>{
           <PropertyItem label="Level">
                 <Ranger defaultValue={level} min={1} max={5} step={1} onChange={(v:any)=>{setLevel(v);setIsChange(true);}} />
           </PropertyItem>   
-          <PropertyItem label="Align">
+          {/* <PropertyItem label="Align">
             {alignList.map((format:any,index:any)=>{           
               return (
                 <PropertyButton title={format} key={format} onClick={()=>{setAlign(format);setIsChange(true);}}
@@ -82,7 +82,7 @@ const Heading = (props:ToolRenderProps)=>{
                 </PropertyButton>    
                 )             
             })}
-          </PropertyItem>
+          </PropertyItem> */}
           <PropertyItem label="Anchor">
             <TextField sx={{width:'calc(100% - 37px)'}}  placeholder='Please enter ID'  value={id} size="small" hiddenLabel variant="outlined" onChange={(e)=>{setId(e.target.value);setIsChange(true);}} />
             <PropertyButton title="Auto generate Id" onClick={()=>{autoCreateId()}}>

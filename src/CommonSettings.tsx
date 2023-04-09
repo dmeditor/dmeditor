@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { PickColor, PropertyGroup, PropertyItem, Ranger } from './utils';
-import { Select,MenuItem} from "@mui/material";
+import { PickColor, PropertyGroup, PropertyItem,PropertyButton, Ranger } from './utils';
+import { Select, MenuItem } from "@mui/material";
+import { FormatAlignLeft,FormatAlignCenter,FormatAlignRight } from '@mui/icons-material';
 
 export const CommonSettings = (props:{commonSettings:any, settingList?: Array<string>, onChange:(data:any)=>void})=>{    
     const [settings, setSettings] = useState(props.commonSettings?props.commonSettings:{});
@@ -21,6 +22,7 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
         return 'auto'
       }
     });
+    // const [align,setAlign] = useState(props.commonSettings?.align||'left');
 
     useEffect(()=>{
       if(isChange){
@@ -43,6 +45,20 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
         return props.settingList.includes(setting);
       }
     }
+    const alignList = ['left','center','right'];
+    const BlockButton = ({formats}:any) => {
+        let ele:any
+        if(formats ==='left'){
+          ele = <FormatAlignLeft />
+        }
+        if(formats ==='center'){
+          ele = <FormatAlignCenter />
+        }
+        if(formats ==='right'){
+          ele = <FormatAlignRight />
+        }
+        return ele
+      }
 
     return <div>
         <PropertyGroup header='Block settings' expandable={true} open={blockOpen} onOpenClose={(open)=>setBlockOpen(open)}>
@@ -51,7 +67,18 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
             </PropertyItem>
             {containSetting('padding')&&<PropertyItem label="Padding">
                 <Ranger min={0} max={30} step={1} defaultValue={settings.padding?settings.padding:0} onChange={v=>{setSettings({...settings, padding: v});setIsChange(true)}}/>
-            </PropertyItem>}
+        </PropertyItem>}
+        {containSetting('align') && <PropertyItem label="Align">
+          {alignList.map((format: any, index: any) => {
+            return (
+              <PropertyButton title={format} key={format} onClick={() => { setSettings({ ...settings, textAlign: format }); setIsChange(true) }}
+                selected={settings.textAlign == format ? true : false}>
+                <BlockButton formats={format} />
+              </PropertyButton>
+            )
+          })}
+        </PropertyItem>
+        }
             {containSetting('backgroundColor')&&<PropertyItem label="Background color:" autoWidth={true}>
             <PickColor
               color={settings.backgroundColor?settings.backgroundColor:''}

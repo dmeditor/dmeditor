@@ -15,22 +15,12 @@ const BlockTab = (props:ToolRenderProps)=>{
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const [activeTabIndex, setActiveTabIndex] = useState(-1);
     const [key, setKey] = useState(0);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [tabList,setTabList] =  useState<Array<any>>(()=>{
-      if(props.data.children){
-        return props.data.children.map(item=>{
-          return {
-            ...item,
-            // ...{contentEditable:false}
-          }
-        })
-      }else{
-        return []
-      }
-    });
+  const [activeIndex, setActiveIndex] = useState(0);
+  
+  const [tabList,setTabList] =  useState<Array<any>>(props.data?.children||[]);
+ 
     const [isChange,setIsChange] = useState(false);
     const tabRef:any=useRef(null);
-    const [currentTab,setCurrentTab]= useState(null);
     
     const onChange = (item:any,index:number)=>{
         let newList = [...tabList];
@@ -40,10 +30,8 @@ const BlockTab = (props:ToolRenderProps)=>{
 
     const changeTabName = (e:any,index:any)=>{
       let newTabList=[...tabList]
-      // newTabList[index].contentEditable=false;
       const texts=e.target.innerText
       newTabList[index].data=texts;
-      // setActiveTabIndex(-1);
       setTabList([...newTabList])
     }
 
@@ -165,7 +153,6 @@ const BlockTab = (props:ToolRenderProps)=>{
                 onClick={(e:any)=>{
                     setActiveTabIndex(index)
                     setKey(index)
-                    setCurrentTab(e)
                   }
                 } 
                 onBlur={(e)=>{changeTabName(e,index)}} 

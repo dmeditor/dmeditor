@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Block} from './Block';
-import {dmeditorCss, dmeditorViewCss} from './DMEditor.css';
+import {dmeditorCss, dmeditorViewCss,ReactResizableCss} from './DMEditor.css';
 import {templateCss} from './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
@@ -8,7 +8,7 @@ import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMa
 import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
-import { Util } from './utils/Util';
+import { isServer, Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
@@ -48,7 +48,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         
         setRoot();
         let newRoot={
-          '--dme-main-width-default':viewmode!='edit'?'calc(var(--dme-container-width) - 150px)':'clamp(var(--dme-main-width-min-pc),calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',
+          '--dme-main-width':viewmode!='edit'?'calc(var(--dme-container-width) - 150px)':'clamp(var(--dme-main-width-min-pc),calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',
         }
         Util.changrootValue(newRoot)
        
@@ -120,12 +120,11 @@ export const DMEditor = (props:DMEditorProps)=>{
     const onChangeViewMode = (e:any,type:string)=>{
       e.preventDefault();
       setViewmode(type);
-      let width=document.body.clientWidth+'px'
-      let newRoot:any={
-        '--dme-container-width':type==="edit"?'var(--dme-container-width-default)':`calc(100vw - 1px)`,
-        '--dme-main-width-default':type==='edit'?
-        `calc(var(--dme-container-width) - ${Util.getScrollbarWidth()}px - 150px)`:
-        `clamp(var(--dme-main-width-min-pc) , calc((var(--dme-container-width) - ${Util.getScrollbarWidth()}px) *0.625) , var(--dme-main-width-max-pc))`,
+      let newRoot: any = {
+        '--dme-container-width':type==="edit"?`calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width))`:`calc(100vw - 2px)`,
+        '--dme-main-width':type==='edit'?
+        `calc(var(--dme-container-width) - var(--dme-scrollbarWidth) - 150px)`:
+        `clamp(var(--dme-main-width-min-pc) , calc((var(--dme-container-width) - var(--dme-scrollbarWidth)) *0.625) , var(--dme-main-width-max-pc))`,
       }
       Util.changrootValue(newRoot)
     }
@@ -153,7 +152,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
       <ThemeProvider theme={outerTheme}>
-        <div className={(viewmode=='edit'?"  ":"view ") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()}>
+        <div className={(viewmode=='edit'?"  ":"view ") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><Menu /></div></a>}
@@ -238,7 +237,7 @@ export const DMEditorView = (props:DMEditorProps)=>{
   Util.toast=props.toast
   Util.fileUrl=props.fileUrl
   Util.imageUrl=props.imageUrl
-    return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()}>
+    return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()+' '+ReactResizableCss()}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
            return  <Block
@@ -263,25 +262,21 @@ const setRoot = ()=>{
   let dmeDiv:any=document.querySelector(".layout-main-container")
   const headTag = document.getElementsByTagName('head')[0];
   const styleTag = document.createElement("style");
-  
+   // --dme-container-width-default: calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));  --dme-main-width-default:calc(var(--dme-container-width)*0.625);
   styleTag.innerHTML = `
   :root {
     --dme-layout-tool-width:${dmeDiv==null?'0px':'40px'};
     --dme-layout-property-width:${dmeDiv==null?'0px':'300px'};
 
-    --dme-container-width-default: calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
-    --dme-container-width:var(--dme-container-width-default);
-
+    --dme-container-width:calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
+    --dme-main-width: calc(var(--dme-container-width)*0.625);
     --dme-main-width-max-pc:1600px;
     --dme-main-width-min-pc:1200px;
-
-    --dme-main-width-default:calc(var(--dme-container-width)*0.625);
-    --dme-main-width: var(--dme-main-width-default);
 
     --dme-main-width-pad: 768px;
    
     --dme-main-width-mobile: 375px;
-  
+    --dme-scrollbarWidth:${Util.getScrollbarWidth()}px;
   }
   `;
   headTag.appendChild(styleTag);

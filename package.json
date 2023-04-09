@@ -31,6 +31,7 @@
     "nanoid": "^2.1.11",
     "react-bootstrap": "^2.7.0",
     "react-color": "^2.19.3",
+    "react-resizable": "^3.0.5",
     "slate": "^0.82.1",
     "slate-history": "^0.66.0",
     "slate-react": "^0.83.2"
@@ -68,6 +69,7 @@
     "@types/node": "^16.11.41",
     "@types/react": ">=16.8.0",
     "@types/react-dom": ">=16.8.0",
+    "@types/react-resizable": "^3.0.4",
     "docz": "^2.4.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",

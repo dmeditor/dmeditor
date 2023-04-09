@@ -4,16 +4,20 @@ import { Slate, Editable, withReact, useSlate, useFocused, useSelected,useSlateS
 import {  Menu, Portal } from './SlateComponents'
 import isUrl from 'is-url'
 import { css } from '@emotion/css'
-import { FormatBold, FormatItalic, FormatUnderlined,LinkOutlined,LinkOffOutlined,Delete } from "@mui/icons-material";
+import { FormatBold, FormatItalic, FormatUnderlined,LinkOutlined,LinkOffOutlined,Delete,FormatAlignLeft,FormatAlignRight } from "@mui/icons-material";
 import imageExtensions from 'image-extensions'
 import { Button} from "@mui/material";
-import {Util} from "../utils"
+import { Util } from "../utils"
+import { ReactResizable } from '../utils/ReactResizable'
 
 
 export const SlateFun:any = {
   TEXT_FORMAT_TYPES :['bold','italic','underline','link'],//['bold','italic','underline','link','linkoff']
   TEXT_ALIGN_TYPES : ['left', 'center', 'right', 'justify'],
-  LIST_TYPES : ['numbered-list', 'bulleted-list'],
+  LIST_TYPES: ['numbered-list', 'bulleted-list'],
+  IMAGE_BORDER_COLOR: '#333',
+  IMAGE_WIDTH: 300,
+  IMAGE_HEIGHT:200,
   getToolText:(tool:string)=>{
     const texts:{[key:string]:string} = {'numbered-list':'Number list',
     'bulleted-list':'Bullet list',
@@ -75,9 +79,9 @@ export const SlateFun:any = {
           return <SlateFun.ImageComponent {...props} />
       default:
         return (
-          <p style={styleP} {...attributes}>
+          <div style={styleP} {...attributes}>
             {children}
-          </p>
+          </div>
         )
     }
   },
@@ -238,6 +242,7 @@ export const SlateFun:any = {
     useEffect(() => {
       const el:any = ref.current
       const { selection } = editor
+      if(SlateFun.isImageActive(editor)==true){return}
       if(props.setFocus){
         props.setFocus(inFocus)
       }
@@ -379,11 +384,10 @@ export const SlateFun:any = {
     const { insertData, insertText, isInline,isVoid } = editor
   
     editor.isInline = (element:any) =>
-      ['link', 'button'].includes(element.type) || isInline(element)
-  
-    editor.isVoid = (element:any) => {
-      return element.type === 'image' ? true : isVoid(element)
-    }
+      ['link', 'button','image'].includes(element.type) || isInline(element)
+    // editor.isVoid = (element:any) => {
+    //   return element.type === 'image' ? true : isVoid(element)
+    // }
 
     editor.insertText = (text:any) => {
       if (text && isUrl(text)) {
@@ -665,51 +669,214 @@ export const SlateFun:any = {
     const ext:any = new URL(url).pathname.split('.').pop()
     return imageExtensions.includes(ext)
   },
-  insertImage: (editor:any, url:any,type?:string) => {
-    const text = { text: '' }
+  insertImage:async(editor:any, url:any,type?:string) => {
+    const text = { text: ' ' }
     let imgUrl= type==='select'?url.id:url
     let source = type==='select'?{
       sourceType:'select',
       sourceData:url
-    }:{sourceType:'input'}
-    const image:any = { type: 'image', url:imgUrl, children: [text],source:source}
-    Transforms.insertNodes(editor, image)
+    } : { sourceType: 'input' }
+    let link = type === 'select' ? Util.getImageUrl(url.image) : url;
+    let width:any = SlateFun.IMAGE_WIDTH;
+    let height:any = SlateFun.IMAGE_HEIGHT;
+    let imageScale: any = Math.round(width / height * 100) / 100;
+    let setting: any = {
+      width: width,
+      height: height,
+      imageScale: imageScale
+    }
+    let getImageSize = Util.imgReady(link,
+      (img: any) => {
+        if (img) {
+          width = img.width;
+          height = img.height;
+          imageScale = Math.round(img.width / img.height * 100) / 100;
+          if (img.width > 300) {
+            width = 300;
+            height = Math.round(width / imageScale * 100) / 100;
+          }
+          setting = {
+            width: width,
+            height: height,
+            imageScale: imageScale
+          }
+        }
+      },
+      (img: any) => {
+        if (img) {
+          const image: any = { type: 'image', url: imgUrl, children: [text], source: source, setting: setting }
+          Transforms.insertNodes(editor, image)
+        }
+      });
+    getImageSize();
   },
-  ImageComponent: ({ attributes, children, element }:any) => {
+  ImageComponent: ({ attributes, children, element,changeimageStatus,view }:any) => {
     const editor:any = useSlateStatic()
     const path:any = ReactEditor.findPath(editor, element)
     const selected = useSelected()
     const focused = useFocused()
-    let link= element.source.sourceType==='select'?'{image:'+element.url+'}':element.url
+    // let link = element.source.sourceType === 'select' ? '{image:' + element.url + '}' : element.url
+    let link = element.source.sourceType === 'select' ? Util.getImageUrl(element.source.sourceData.image) : element.url;
+    
+    let FloatStyle = element?.float || null;
+    let Commonstyle:any = {
+      display: 'inline-block',
+      margin: '5px',
+      verticalAlign: 'top',
+    }
+    if (FloatStyle != null) {
+      Commonstyle = {
+        ...Commonstyle,
+        float: FloatStyle
+      }
+    }
+    if (element.setting) {
+      let borderWidth = element.setting?.borderWidth || '0px';
+      let borderColor = element.setting?.borderColor || SlateFun.IMAGE_BORDER_COLOR;
+      Commonstyle = {
+        ...Commonstyle,
+      }
+      if (parseFloat(borderWidth)> 0) {
+        Commonstyle['border']=`${borderWidth} solid ${borderColor}`
+      }
+    }
+  
     return (
-      <div {...attributes}>
-        {children}
+      <>
+        {view && <div style={{ ...Commonstyle,width:element.setting.width,height:element.setting.height }} >
+         <div {...attributes} className={css`
+            width:100%;
+            height:100%
+            `}>
+          <span style={{ display:"none"}}> {children}</span>
+            <div
+              contentEditable={false}
+              className={css`
+                position: relative;
+                width:100%;
+                height:100%;
+              `}
+            >
+              <img
+                src={link}
+                className={css`
+                  display: block;
+                  width:100%;
+                  height:100%;
+                  object-fit: cover;
+                  // max-width: 100%;
+                  // max-height: 20em;
+                `}
+              />
+            </div>
+          </div>
+        </div>}
+      {!view&&<ReactResizable width={element.setting.width} height={element.setting.height} imageScale={element.setting.imageScale} style={Commonstyle} onChange={(size:any) => {
+         let newProperty: any;
+         let setting: any = element?.setting ? { ...element.setting,...size } : {...size}
+        newProperty = {
+          setting:{...setting}
+        }
+        Transforms.setNodes(editor, newProperty, { at: path })
+      }}
+       isActive={selected && focused? true : false}
+        >
+        <div {...attributes} className={css`
+        width:100%;
+        height:100%
+        `}>
+       <span style={{ display:"none"}}> {children}</span>
         <div
           contentEditable={false}
           className={css`
             position: relative;
+            width:100%;
+            height:100%;
           `}
         >
           <img
             src={link}
+            onClick={() => { Transforms.select(editor, path); changeimageStatus()} }
             className={css`
               display: block;
-              max-width: 100%;
-              max-height: 20em;
+              width:100%;
+              height:100%;
+              object-fit: cover;
+              // max-width: 100%;
+              // max-height: 20em;
               box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
             `}
           />
-          
-            <Delete  onClick={() => Transforms.removeNodes(editor, { at: path })} className={css`
+          <FormatAlignLeft className={css`
               display: ${selected && focused ? 'inline!important' : 'none!important'};
               position: absolute!important;
               top: 0.5em!important;
               left: 0.5em!important;
               background-color: white!important;
-            `}/>
+              color:${element?.float && element.float == 'left' ? '#12913e' : '#333'};
+              cursor:pointer;
+            `} onClick={() => {
+              let newProperty:any= FloatStyle=='left'?{float:null}:{float:'left'}
+              Transforms.setNodes(editor, newProperty, { at: path })
+            }} />
+            <FormatAlignRight className={css`
+              display: ${selected && focused ? 'inline!important' : 'none!important'};
+              position: absolute!important;
+              top: 0.5em!important;
+              left: 1.58em!important;
+              background-color: white!important;
+              color:${element?.float && element.float == 'right' ? '#12913e' : '#333'};
+              cursor: pointer;
+            `} onClick={() => {
+              let newProperty:any=FloatStyle=='right'?{float:null}: {float:'right'}
+              Transforms.setNodes(editor, newProperty, { at: path })
+            }}/>
+          <Delete className={css`
+              display: ${selected && focused ? 'inline!important' : 'none!important'};
+              position: absolute!important;
+              top: 0.5em!important;
+              left: 2.66em!important;
+              background-color: white!important;
+            `} onClick={() => {
+              Transforms.removeNodes(editor, { at: path })
+              changeimageStatus(false)
+            }} />
         </div>
       </div>
+      </ReactResizable>}
+      </>
+      
+      
     )
+  },
+  isImageActive:(editor:any) => {
+    const [image] = Editor.nodes(editor, {
+      match: (n:any) =>n.type === 'image'&& 
+        !Editor.isEditor(n) && SlateElement.isElement(n)
+    })
+    return !!image
+  },
+  setImageFormat: (editor:any,type:any,val:any) => {
+    let element: any = SlateFun.getImageSetting(editor);
+    let path: any = SlateFun.getImageSetting(editor, 1);
+    let newProperty: any;
+    let setting: any = element?.setting?{...element.setting}:{}
+    setting[type]=type=='borderWidth'?`${val}px`:val;
+    newProperty = {
+      setting:{...setting}
+    }
+    Transforms.setNodes(editor, newProperty, { at: path })
+  },
+  getImageSetting: (editor:any,n?:any)=>{
+    const [image] = Editor.nodes(editor, {
+      match: (n:any) =>n.type === 'image'&& 
+        !Editor.isEditor(n) && SlateElement.isElement(n)
+    })
+    if(n){
+        return image?image[1]:[]
+      }else{
+        return image?image[0]:''
+      }
   },
   //button
   ButtonComponent:({ attributes, children,element }:any) => {
@@ -865,15 +1032,12 @@ export const SlateFun:any = {
     return isCollapsed
   },
   clearFormat:(editor:any)=>{
-    // console.log(Editor)
-    // console.log(editor)
-    // console.log(Text)
+    
     // let [link]=Editor.nodes(editor,{
     //   mode:'all',
     //   match: (n:any) =>n.type === 'link'&& 
     //   !Editor.isEditor(n) && SlateElement.isElement(n)
     // })
-    // console.log(link)
     // let TEXT_FORMAT_TYPES_s=SlateFun.TEXT_FORMAT_TYPES.map(item=>item!='link')
     // Transforms.unsetNodes(editor,['bold'],
     //   { match:(n:any) =>SlateFun.TEXT_FORMAT_TYPES_s.includes(n[.type]), 
