@@ -1,3 +1,5 @@
+0.1.0-beta.9
+
 0.1.0-beta.8
 - 2023-03-30 updated:Pictures in text support drag and drop, set border width and color functions, and modify the display value to inline block
 - 2023-03-27 updated:block setting support align
