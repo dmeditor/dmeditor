@@ -58,7 +58,7 @@ import {DMEditorView} from 'dmeditor';
 ### 1. Create your own widget (block type)
 
 *Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/BlockImage.tsx) as example*
-1. Create a block handler
+#### 1.1. Create a block handler
 
 ```javascript
 
@@ -96,7 +96,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
 };  
 ```
 
-2. Register the tool(and new category) (can be in App.tsx)
+#### 1.2. Register the tool(and new category) (can be in App.tsx)
 
 ```typescript
 import { registerTool, registerCategory } from "dmeditor";
