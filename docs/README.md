@@ -31,7 +31,7 @@ Leave a messge [here](https://github.com/digimakergo/dmeditor/issues/1) if you w
 
 ### Server side rendering
 
-DM Editor can be used directly in server side rendering via eg. NextJs. For non-nodejs environment(eg. .NET), you can run [dmeditor-server](https://github.com/digimakergo/dmeditor-server) to output html.
+DM Editor can be used directly in server side rendering via eg. NextJs. For non-nodejs environment(eg. .NET), you can run [dmeditor-server](https://github.com/digimakergo/dmeditor-server) to output html&js&css.
 
 ### Usage
 
