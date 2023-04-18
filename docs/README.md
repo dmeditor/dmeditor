@@ -17,19 +17,21 @@
 
 <a href="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png"><img width="500px" src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" /></a>
 
-## Installation
+### Installation
 
 ```
 npm install dmeditor
 ```
 
 
-### Widget list
+### Widgets
 [dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
+
+Leave a messge in [issue list](https://github.com/digimakergo/dmeditor/issues) if you want to promot your widgets.
 
 ### Server side rendering
 
-DM Editor can be used in server side rendering via eg. NextJs. For non-nodejs environment(eg. .NET), you can run [dmeditor-server](https://github.com/digimakergo/dmeditor-server) to output html.
+DM Editor can be used directly in server side rendering via eg. NextJs. For non-nodejs environment(eg. .NET), you can run [dmeditor-server](https://github.com/digimakergo/dmeditor-server) to output html.
 
 ### Usage
 
@@ -40,7 +42,7 @@ Edit:
 import {DMEditor} from 'dmeditor';
 
 //...
-        <DMEditor data={[]} />
+<DMEditor data={[]} />
 
 
 ```
