@@ -27,7 +27,7 @@ npm install dmeditor
 ### Widgets
 [dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
 
-Leave a messge in [issue list](https://github.com/digimakergo/dmeditor/issues) if you want to promot your widgets.
+Leave a messge [here](https://github.com/digimakergo/dmeditor/issues/1) if you want to promot your widgets.
 
 ### Server side rendering
 
