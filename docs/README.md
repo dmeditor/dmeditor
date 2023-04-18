@@ -4,16 +4,18 @@
 
 ### Highlights
 - Block based, real WYSIWYG(What you see is what you get)
-- Easy to create your own widgets
-- Style widgets like scoped css
-- Data is saved in json
+- Intractive while editing, eg. click a tab and edit a tab's content
+- Basic widgets Rich text, image, heading, table, video, iframe, 
+- Intractive widgets: tab, accordion
+- Data saved in json
+- Super easy to create styled widget(eg. line under h2)
+- Easy to create own widget
 
 ### Screenshots
 
-<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen1.png" />
+<a href="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen1.png"><img width="500px" src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen1.png" /></a>
 
-
-<img src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" />
+<a href="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png"><img width="500px" src="https://raw.githubusercontent.com/digimakergo/dmeditor/main/screen2.png" /></a>
 
 ## Installation
 
@@ -25,16 +27,23 @@ npm install dmeditor
 
 [Sample project](https://github.com/digimakergo/dmeditor-sample)
 
+Edit
 ```typescript
 import {DMEditor} from 'dmeditor';
 
-return (
-    <div className="App">
+//...
         <DMEditor data={[]} />
-    </div>);
 
-//View: <DMEditorView data={data} />
+
 ```
+View:
+```typescript
+import {DMEditorView} from 'dmeditor';
+
+//...
+<DMEditorView data={data} />
+```
+
 
 ### DMEditor Properties
 
@@ -46,52 +55,7 @@ return (
 
 
 ## Create your widget
-### 1. Create a styled widget(customizing from existing widgets)
-You can register template from react project, or external js
-
-#### 1.1 Register from react
-
-```javascript
-import { registerTemplate } from "dmeditor";
-
-registerTemplate(
-        blocktype: 'heading',        
-        identifier:'blocktext_heading_sample', 
-        name:'Block heading text', 
-        css:`background:#ffcc00; 
-        h2{
-            text-align:center;
-        }`,
-        initData: ()=>{
-          const data = {type:'heading', settings:{level: 2}};
-          return {...data, data:'Hello1', common:{...data.common, color: '#9C27B0' }}
-        }
-);
-```
-#### 1.2 Register from global `<script>`
-DMEditor reads global variable `dmeditor`'s `templates` property for all templates.
-
-```javascript
-var dmeditor = {
-templates:[
-  {
-          blocktype: 'heading',        
-          identifier:'blocktext_heading_sample', 
-          name:'Block heading text', 
-          css:`background:#ffcc00; 
-          h2{
-              text-align:center;
-          }`,
-          initData: ()=>{
-            const data = {type:'heading', settings:{level: 2}};
-            return {...data, data:'Hello1', common:{...data.common, color: '#9C27B0' }}
-          }, 
-      }
-]
-}
-```
-
-### 2. Create your own block type(widget)
+### 1. Create your own widget (block type)
 
 *Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/BlockImage.tsx) as example*
 1. Create a block handler
@@ -129,9 +93,9 @@ export const BlockImage = (props:ToolRenderProps)=>{
     initData: {type:'image', data:'http://test.com/svg.png', settings:{}},
     view: BlockImage,
     render: BlockImage
-};
-  
+};  
 ```
+
 2. Register the tool(and new category) (can be in App.tsx)
 
 ```typescript
@@ -142,6 +106,53 @@ registerCategory({identifier:'content', text:'Content'});
 
 //register the tool
 registerTool(toolImage);
+```
+
+### 2. Styled widget
+In many case, you just want to predefine a style to existing widget, eg. add a line under h2. We call it styled widget.
+
+There are 2 ways to do, first way is in App.tsx, second way is in <script> or external js file.
+
+#### 2.1 Register from react(eg. in your App.tsx)
+
+```javascript
+import { registerTemplate } from "dmeditor";
+
+registerTemplate(
+        blocktype: 'heading',        
+        identifier:'blocktext_heading_sample', 
+        name:'Block heading text', 
+        css:`background:#ffcc00; 
+        h2{
+            text-align:center;
+        }`,
+        initData: ()=>{
+          const data = {type:'heading', settings:{level: 2}};
+          return {...data, data:'Hello1', common:{...data.common, color: '#9C27B0' }}
+        }
+);
+```
+#### 2.2 Register from global `<script>`
+DMEditor reads global variable `dmeditor`'s `templates` property for all templates.
+
+```javascript
+var dmeditor = {
+templates:[
+  {
+          blocktype: 'heading',        
+          identifier:'blocktext_heading_sample', 
+          name:'Block heading text', 
+          css:`background:#ffcc00; 
+          h2{
+              text-align:center;
+          }`,
+          initData: ()=>{
+            const data = {type:'heading', settings:{level: 2}};
+            return {...data, data:'Hello1', common:{...data.common, color: '#9C27B0' }}
+          }, 
+      }
+]
+}
 ```
 
 ### Data format
@@ -171,3 +182,7 @@ Here is an example:
 
 ### Widget list
 [dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
+
+### Server side rendering
+
+DM Editor can be used in server side rendering via eg. NextJs. For non-nodejs environment(eg. .NET), you can run [dmeditor-server](https://github.com/digimakergo/dmeditor-server) to output html.
