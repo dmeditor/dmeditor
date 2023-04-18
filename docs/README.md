@@ -1,6 +1,6 @@
-<ins>**DM Editor**</ins> is a block-styled visual editor.
-
 [Home](/) | [Create a widget](/create-widget) | [github project](https://github.com/digimakergo/dmeditor)
+
+<ins>**DM Editor**</ins> is a block-styled visual editor.
 
 ### Highlights
 - Block based, real WYSIWYG(What you see is what you get)
