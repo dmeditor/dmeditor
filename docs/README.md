@@ -43,9 +43,8 @@ import {DMEditor} from 'dmeditor';
 
 //...
 <DMEditor data={[]} />
-
-
 ```
+
 View:
 ```typescript
 import {DMEditorView} from 'dmeditor';
