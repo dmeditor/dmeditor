@@ -1,10 +1,10 @@
 [Home](/) | [Create a widget](/create-widget) | [github project](https://github.com/digimakergo/dmeditor)
 
-# Create your widget
+## Create your widget
 
 You can create a new widget which has unique type, or you can create a 'style' of existing widget, eg. add a line under h2. We call it styled widget.
 
-## 1. Create your own widget (block type)
+### 1. Create your own widget (block type)
 
 *Check [Full Image implementation](https://github.com/digimakergo/dmeditor/blob/main/src/blocks/BlockImage.tsx) as example*
 #### 1.1. Create a block handler
@@ -57,7 +57,7 @@ registerCategory({identifier:'content', text:'Content'});
 registerTool(toolImage);
 ```
 
-## 2. Styled widget
+### 2. Styled widget
 
 There are 2 ways to styleize a widget, first way is in App.tsx, second way is in <script> or external js file.
 
