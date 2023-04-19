@@ -1,7 +1,6 @@
 import { registerTemplate, registerTool } from "./ToolDefinition";
 import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
-// import { toolImageHeadingText } from "./blocks/composition/ImageHeadingText";
 import { toolBlockTab } from "./blocks/composition/BlockTab";
 import { toolAccordion } from "./blocks/composition/Accordion";
 import { toolButton } from "./blocks/BlockButton";
@@ -18,7 +17,6 @@ registerTool(toolImageText);
 registerTool(toolButton);
 registerTool(toolImage);
 registerTool(toolHeading);
-// registerTool(toolImageHeadingText);
 registerTool(toolBlockTab);
 registerTool(toolAccordion);
 registerTool(toolTable);
