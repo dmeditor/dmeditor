@@ -8,7 +8,7 @@ import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMa
 import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
-import { isServer, Util } from './utils/Util';
+import { BrowseProps, isServer, Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
@@ -18,22 +18,22 @@ export interface DMEditorProps{
     menu?:React.ReactElement, 
     onChangeActive?:(activeBlock:Number)=>void,
     onChange?:(data:Array<any>)=>void,
-    imageBrowse?:any,
-    linkBrowse?:any,
-    customProperty?:any,
-    preBlock?:any,
-    pageTab?:any,
-    toast?:any,
-    pageTabActiveIndex?:any
-    fileUrl?:any
-    imageUrl?:any
+    browseImage?:(props:BrowseProps)=>JSX.Element,
+    browseLink?:(props:BrowseProps)=>JSX.Element,
+    customProperty?:(props:any)=>JSX.Element,
+    preBlock?:(props:any)=>JSX.Element,
+    pageTab?:()=>JSX.Element,
+    toast?:{error:(message:string, options:any)=>void, message:(message:string, options:any)=>void},
+    pageTabActiveIndex?:number,
+    getFileUrl?:(path:string)=>string,
+    getImageUrl?:(path:string)=>string
 }
 
 export interface DMEditorViewProps{
   data:Array<any>,
-  toast?:any,
-  fileUrl?:any
-  imageUrl?:any
+  toast?:{error:(message:string, options:any)=>void, message:(message:string, options:any)=>void},
+  getFileUrl?:(path:string)=>string,
+  getImageUrl?:(path:string)=>string,
 }
 
 export const DMEditor = (props:DMEditorProps)=>{
@@ -43,15 +43,15 @@ export const DMEditor = (props:DMEditorProps)=>{
     const [viewmode, setViewmode] = useState('edit');
 
     useEffect(()=>{
-        Util.BrowseImage = props.imageBrowse
-        Util.BrowseLink = props.linkBrowse
+        Util.BrowseImage = props.browseImage
+        Util.BrowseLink = props.browseLink
         Util.CustomProperty = props.customProperty
         Util.PreBlock = props.preBlock
         Util.pageTab = props.pageTab
         Util.toast=props.toast
         Util.pageTabActiveIndex=props.pageTabActiveIndex||0
-        Util.fileUrl=props.fileUrl
-        Util.imageUrl=props.imageUrl
+        Util.fileUrl=props.getFileUrl
+        Util.imageUrl=props.getImageUrl
         
         setRoot();
         let newRoot={
@@ -203,7 +203,7 @@ export const DMEditor = (props:DMEditorProps)=>{
               return a();        
               }
               )} </>}
-              {viewmode!=='edit'&&<DMEditorView data={blocks} fileUrl={props.fileUrl} imageUrl={props.imageUrl}/>}
+              {viewmode!=='edit'&&<DMEditorView data={blocks} getFileUrl={props.getFileUrl} getImageUrl={props.getImageUrl}/>}
           </div>                    
           </div>
           {viewmode=='edit'&&<div className='layout-properties'>
@@ -242,8 +242,8 @@ export const DMEditor = (props:DMEditorProps)=>{
 
 export const DMEditorView = (props:DMEditorViewProps)=>{
   Util.toast=props.toast
-  Util.fileUrl=props.fileUrl
-  Util.imageUrl=props.imageUrl
+  Util.fileUrl=props.getFileUrl
+  Util.imageUrl=props.getImageUrl
     return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()+' '+ReactResizableCss()}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{

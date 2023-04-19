@@ -2,7 +2,7 @@ import * as React from "react";
 import {IconButton, TextField,Button,Dialog, DialogContent, DialogTitle,DialogActions, Input,} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 
-export interface BroseProps{
+export interface BrowseProps{
   type?:any, 
   adding?:boolean, 
   onConfirm?:any,
@@ -49,12 +49,12 @@ export const Util = {
     let dmeDiv:any=document.querySelector(".layout-main-container")
     return (document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)) || (dmeDiv?.offsetWidth>dmeDiv?.clientWidth);
   },
-  renderBroseURL:(props:BroseProps)=>{
+  renderBroseURL:(props:BrowseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
-        let A = Util.BrowseImage as (props:BroseProps)=>JSX.Element;
+        let A = Util.BrowseImage as (props:BrowseProps)=>JSX.Element;
         return <A onConfirm={props.onConfirm} adding={true}/>;
     }else if(props.type==='Link'&&Util.BrowseLink){
-      let A = Util.BrowseLink as (props:BroseProps)=>JSX.Element;
+      let A = Util.BrowseLink as (props:BrowseProps)=>JSX.Element;
       return <A onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue} hovering={props.hovering}/>;
     }else{
         return <DefaultBrowseUrl onConfirm={props.onConfirm} adding={true} defalutValue={props.defalutValue} type={props.type}/> 
