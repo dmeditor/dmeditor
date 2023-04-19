@@ -29,6 +29,13 @@ export interface DMEditorProps{
     imageUrl?:any
 }
 
+export interface DMEditorViewProps{
+  data:Array<any>,
+  toast?:any,
+  fileUrl?:any
+  imageUrl?:any
+}
+
 export const DMEditor = (props:DMEditorProps)=>{
     const [blocks, setBlocks] = useState(props.data?[...props.data]:[]);
     const [activeBlock, setActiveBlock] = useState(blocks.length>0?0:-1);
@@ -233,7 +240,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       </ThemeProvider>);
 }
 
-export const DMEditorView = (props:DMEditorProps)=>{
+export const DMEditorView = (props:DMEditorViewProps)=>{
   Util.toast=props.toast
   Util.fileUrl=props.fileUrl
   Util.imageUrl=props.imageUrl
