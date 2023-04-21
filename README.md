@@ -25,7 +25,7 @@ DM Editor is a block-styled visual editor.
 
 ## Installation
 
-Seee [sample project](https://github.com/dmeditor/dmeditor-sample)
+See [sample project](https://github.com/dmeditor/dmeditor-sample)
 
 ```
 npm install dmeditor
