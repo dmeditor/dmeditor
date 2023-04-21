@@ -72,7 +72,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
         <div >
           <img width='100%' src={imageUrl} />  
         </div>
-        {text&&<div className="image-caption" contentEditable={true} onBlur={e=>setText(e.target.textContent)}>{text}</div>}
+        {text&&<div className="image-caption" contentEditable={props.active} onBlur={e=>setText(e.target.textContent)}>{text}</div>}
     </div>
 }
 

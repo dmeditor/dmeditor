@@ -1,4 +1,5 @@
 0.1.0-beta.9
+- 2023-04-21 fixed: image description is editable in view mode
 - 2023-04-21 updated: default image text data & color
 = 2023-04-21 fixed: list data losing when saving text
 - 2023-04-21 fixed: heading saving issue
