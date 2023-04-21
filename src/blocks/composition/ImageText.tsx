@@ -71,7 +71,7 @@ const BlockImageText = (props: ToolRenderProps) => {
         return (
           <React.Fragment key={item.id?item.id:index}>
             {item.type == 'list' && <div style={{width:blockListWidth}}>
-              <BlockList  view={props.view}  allowedType={['text', 'heading']} onChange={data=>onChange({...list[index], children:data}, index)} active={props.active&&activeIndex==index} list={list[index].children} onActivate={()=>setActiveIndex(index)} />
+              <BlockList  view={props.view}  allowedType={['text', 'image', 'heading']} onChange={data=>onChange({...list[index], children:data}, index)} active={props.active&&activeIndex==index} list={list[index].children} onActivate={()=>setActiveIndex(index)} />
             </div>}
           {item.type!='list'&& <Block  view={props.view}  data={list[index]} inBlock={true} active={props.active&&activeIndex==index} onActivate={()=>setActiveIndex(index)} onChange={data=>onChange(data, index)} />}
           </React.Fragment>
@@ -95,13 +95,10 @@ export const toolImageText: ToolDefinition = {
         children:[ 
             {type:'image', data:{url:'https://p3.itc.cn/q_70/images03/20210617/7391a10649bb4756b97925dddfb26f65.jpeg'},settings:{}},
             {type:'list', children:[
-                {type:'heading', id:'1', data:'Title', common:{color: '#ff0000'}, settings:{level: 2}},
+                {type:'heading', id:'1', data:'Title', common:{}, settings:{level: 2}},
                 {"type":"text", id:'2', "data":[
                     {type:"paragraph","children":[
                         {"text":"Default text"}
-                    ]},
-                    {type:"paragraph","align":"center","children":[
-                        {"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Button"}],"styleConfig":{"style":"button","setting":{"size":"small","variant":"contained"}}}
                     ]}
                     ]}, 
                 {"type":"text", id:'3', "data":[
