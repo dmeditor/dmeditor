@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Block} from './Block';
 import {dmeditorCss, dmeditorViewCss,ReactResizableCss} from './DMEditor.css';
 import {templateCss} from './templates/templates.css';
@@ -41,6 +41,7 @@ export const DMEditor = (props:DMEditorProps)=>{
     const [activeBlock, setActiveBlock] = useState(blocks.length>0?0:-1);
     const [newBlock, setNewBlock] = useState(false);
     const [viewmode, setViewmode] = useState('edit');
+    const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
 
     useEffect(()=>{
         Util.BrowseImage = props.browseImage
@@ -73,6 +74,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         }
     }
     useEffect(()=>{
+        blocksRef.current = blocks;
         if( props.onChange){
             props.onChange(blocks)
         }
@@ -192,7 +194,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                               setNewBlock(false)                                          
                       }} 
                       onChange={data=>{
-                        let newBlocks = [...blocks];
+                        let newBlocks = [...blocksRef.current]; //use updated ref to avoid old data
                         newBlocks[index]=data;
                         setBlocks(newBlocks)
                         setNewBlock(false)

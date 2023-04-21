@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { Block} from "./Block"
 import { newBlockData } from "./ToolDefinition";
@@ -20,6 +20,7 @@ interface BlockListProps{
 export const BlockList = (props:BlockListProps)=>{
     const [activeIndex, setActiveIndex] = useState(props.active?0:-1);
     const [list, setList] = useState(props.list);    
+    const listRef = useRef(list); //use ref to avoid data issue when it's debounce change.
 
     const activate = (index:number)=>{
         setActiveIndex(index);
@@ -29,6 +30,7 @@ export const BlockList = (props:BlockListProps)=>{
     }
 
     useEffect(()=>{
+        listRef.current = list;
         props.onChange(list);
     }, [list])
 
@@ -73,7 +75,7 @@ export const BlockList = (props:BlockListProps)=>{
                         siblingDirection={'vertical'} inBlock={true} 
                         active={(props.active&&activeIndex==index)?true:false}
                         onChange={(newData)=>{
-                          let newList = [...list];
+                          let newList = [...listRef.current];
                           newList[index] = newData;
                           setList(newList);
                         }} onActivate={()=>activate(index)} data={childData}
