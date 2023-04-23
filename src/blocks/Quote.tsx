@@ -54,7 +54,7 @@ export const toolQuote:ToolDefinition = {
   initData: ()=>{
     return {type:'quote',
     settings:{},
-    data:'quotetest'
+    data:''
   } 
   },
   view: (props:{data:any})=><Quote data={props.data} active={false} onChange={()=>{}} />,

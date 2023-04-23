@@ -60,7 +60,7 @@ export const toolCode: ToolDefinition = {
     icon: <CodeOutlined />,
   },
   initData: ()=>{
-    return { type: "code", data: "this is a Code", settings:{} };
+    return { type: "code", data: "<script></script>", settings:{} };
   },
   view: (props:{data:any})=><Code data={props.data}  inBlock={false} active={false} onChange={()=>{}} />,
   render: (props: ToolRenderProps) => <Code {...props} />,

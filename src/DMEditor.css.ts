@@ -166,6 +166,12 @@ hr{
   grid-template-columns: auto auto;
 }
 
+.block-quote{
+  text-align: center;
+  font-size: 1.3rem;
+  display: block;
+}
+
 .blockcontainer{
   outline: 1px solid rgba(0,0,0,0);
 }
