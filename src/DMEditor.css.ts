@@ -43,7 +43,6 @@ export const dmeditorCss = ()=>css`
 }
 .layout-left-menu.view{
   opacity: 0;
-  width:0;
   transtion:all 2s,
 }
 .layout-left:hover .layout-left-menu.view{

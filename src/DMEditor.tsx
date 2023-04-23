@@ -4,7 +4,7 @@ import {dmeditorCss, dmeditorViewCss,ReactResizableCss} from './DMEditor.css';
 import {templateCss} from './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
-import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined,MoreHorizOutlined } from '@mui/icons-material';
+import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined,MoreHorizOutlined, LinkOutlined, Help, HelpOutline } from '@mui/icons-material';
 import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
@@ -165,7 +165,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         <div className={(viewmode=='edit'?"  ":"view ") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
-              {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><Menu /></div></a>}
+              {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
               <div className='left-tool' style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
                 <hr />
                 <a href='/' className={viewmode=='edit'?'current':''} onClick={(e)=>{onChangeViewMode(e,'edit')}} title='Edit'><ModeEditOutline /></a>
@@ -281,7 +281,7 @@ const setRoot = ()=>{
     --dme-container-width:calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
     --dme-main-width: calc(var(--dme-container-width)*0.625);
     --dme-main-width-max-pc:1600px;
-    --dme-main-width-min-pc:1200px;
+    --dme-main-width-min-pc:960px;
 
     --dme-main-width-pad: 768px;
    
