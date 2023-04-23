@@ -30,7 +30,6 @@ export const BlockList = (props:BlockListProps)=>{
     }
 
     useEffect(()=>{
-        listRef.current = list;
         props.onChange(list);
     }, [list])
 
@@ -40,6 +39,7 @@ export const BlockList = (props:BlockListProps)=>{
             let allBlocks = [...list];                        
             allBlocks.splice(activeIndex+1, 0, defaultData);
             setList( allBlocks );
+            listRef.current = allBlocks;
             setActiveIndex(activeIndex+1);
         }
     }
