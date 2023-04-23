@@ -33,27 +33,39 @@ export const BlockList = (props:BlockListProps)=>{
         props.onChange(list);
     }, [list])
 
-    const addUnder = (type:string, template?:string)=>{
+    const addAbove = (type:string, index:number, template?:string)=>{
+      if( type ){
+          const defaultData = newBlockData(type, template)                     
+          let allBlocks = [...list];                        
+          allBlocks.splice(index, 0, defaultData);
+          updateData(allBlocks);
+          setActiveIndex(index);
+      }
+  }
+
+    const addUnder = (type:string, index:number, template?:string)=>{
         if( type ){
             const defaultData = newBlockData(type, template)                     
             let allBlocks = [...list];                        
-            allBlocks.splice(activeIndex+1, 0, defaultData);
-            setList( allBlocks );
-            listRef.current = allBlocks;
-            setActiveIndex(activeIndex+1);
+            allBlocks.splice(index+1, 0, defaultData);
+            updateData(allBlocks);
+            setActiveIndex(index+1);
         }
+    }
+
+    const updateData = (listData:any)=>{
+      setList( listData );
+      listRef.current = listData;
     }
 
     const onDelete = (index:number)=>{
         let blocks = [...list];
-        blocks.splice(activeIndex, 1);         
-        setList(blocks);  
-        {
-          if(activeIndex===0){
-            setActiveIndex(0);
-          }else{
-            setActiveIndex(activeIndex-1);
-          }
+        blocks.splice(activeIndex, 1);  
+        updateData(blocks);
+        if(activeIndex===0){
+          setActiveIndex(0);
+        }else{
+          setActiveIndex(activeIndex-1);
         }
     }
 
@@ -71,7 +83,8 @@ export const BlockList = (props:BlockListProps)=>{
                       view={true}
                       />  }
                       {!props.view&&<Block addedType={props.allowedType} onDelete={()=>onDelete(index)} 
-                        onAddUnder={addUnder} 
+                        onAddUnder={(type:string, template?:string)=>addUnder(type, index, template)} 
+                        onAddAbove={(type:string, template?:string)=>addAbove(type, index, template)}
                         siblingDirection={'vertical'} inBlock={true} 
                         active={(props.active&&activeIndex==index)?true:false}
                         onChange={(newData)=>{
