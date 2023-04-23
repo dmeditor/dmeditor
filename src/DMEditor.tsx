@@ -68,17 +68,18 @@ export const DMEditor = (props:DMEditorProps)=>{
             const defaultData = newBlockData(type, template);
             let allBlocks = [...blocks];
             allBlocks.splice(index, 0, defaultData );
-            setBlocks(allBlocks);
+            updateData(allBlocks);
             setNewBlock(true);
             setActiveBlock(index);
         }
     }
-    useEffect(()=>{
+    const updateData = (blocks:any)=>{
         blocksRef.current = blocks;
+        setBlocks(blocks);
         if( props.onChange){
             props.onChange(blocks)
         }
-    }, [blocks]);
+    };
     useEffect(()=>{
       if( props.onChangeActive){
           props.onChangeActive(activeBlock)
@@ -90,7 +91,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             const defaultData = newBlockData(type, template);       
             let allBlocks = [...blocks];                        
             allBlocks.splice(index+1, 0, defaultData);
-            setBlocks( allBlocks );
+            updateData(allBlocks);            
             setNewBlock(true);
             setActiveBlock(index+1);
         }
@@ -99,7 +100,7 @@ export const DMEditor = (props:DMEditorProps)=>{
     const onDelete = ()=>{
         let fullBlocks = [...blocks];
         fullBlocks.splice(activeBlock, 1);           
-        setBlocks(fullBlocks);
+        updateData(fullBlocks);
         if( fullBlocks.length===0 ){
             setActiveBlock(-1);
         }else{
@@ -123,7 +124,7 @@ export const DMEditor = (props:DMEditorProps)=>{
         fullBlocks[activeBlock] = fullBlocks.splice(activeBlock+1, 1, fullBlocks[activeBlock])[0]
         setActiveBlock(activeBlock+1);
       }
-      setBlocks(fullBlocks);
+      updateData(fullBlocks);
     }
 
     const onChangeViewMode = (e:any,type:string)=>{
@@ -196,7 +197,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                       onChange={data=>{
                         let newBlocks = [...blocksRef.current]; //use updated ref to avoid old data
                         newBlocks[index]=data;
-                        setBlocks(newBlocks)
+                        updateData(newBlocks)
                         setNewBlock(false)
                       }}
                       onAddAbove={(type:string, template?:string)=>addAbove(type, index, template)} 
