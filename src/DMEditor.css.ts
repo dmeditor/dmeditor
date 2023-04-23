@@ -211,7 +211,13 @@ hr{
   text-align: right;
 }
 
-
+*[contenteditable="true"]:empty::before {
+  content: "Please input";
+  font-size: 14px;
+  color: #999;
+  margin-left: 5px;
+  vertical-align: middle;
+}
 
 ::selection {
   color:auto;
