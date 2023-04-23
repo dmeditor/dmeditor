@@ -449,8 +449,8 @@ export const toolTable: ToolDefinition = {
     return {
       type: "table",
       data: [
-        ["", "", "", ""],
-        ["", "", "", ""],
+        ["", ""],
+        ["", ""],
       ],
       common:{width: '100%'},
       settings: { padding: 6, borderColor: "#cccccc", border: "rowBorder" },
