@@ -35,29 +35,19 @@ interface BlockProps{
 }
 
 export const Block = React.memo((props:BlockProps)=>{
-    const [isActive, setIsActive] = useState(props.active?true:false);
     const [selectingTool, setSelectingTool] = useState(false);
     const [addUnder, setAddUnder] = useState(0);  
 
-    //update is active from props
     useEffect(()=>{
-      setIsActive(props.active?true:false);      
-    }, [props.active]);
-
-
-    useEffect(()=>{
-      if( !isActive ){
-          setSelectingTool(false);
+      if(!props.active){
+        setSelectingTool(false);
       }
-    }, [isActive])
+    }, [props.active])
 
     const activeBlock = ()=>{
-      if(!isActive){
-        setIsActive(true);
         if(props.onActivate){
           props.onActivate();
         }
-      }
     }
 
     const onDataChange = (data:any,debounce?:boolean) =>{ 
@@ -105,6 +95,8 @@ export const Block = React.memo((props:BlockProps)=>{
             return 'Unknown type:'+props.data.type;
         }
     };
+
+    const isActive = props.active?true:false;
 
     return <div className={'block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} id={props.data.id}>
             {selectingTool&&<RenderMenu onAdd={addBlock} onCancel={()=>setSelectingTool(false)} allowedType ={props.addedType} />}
