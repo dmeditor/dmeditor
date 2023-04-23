@@ -1,4 +1,10 @@
 0.1.0-beta.9
+- 2023-04-23 updated: id using 10 characters
+- 2023-04-23 added: auto focus on heading editing
+- 2023-04-23 added: empty data's place holder for all
+- 2023-04-23 updated: left menu tool colors
+- 2023-04-23 updated: use 2 column in default table
+- 2023-04-23 fixed: select wrong after adding bove
 - 2023-04-21 fixed: image description is editable in view mode
 - 2023-04-21 updated: default image text data & color
 = 2023-04-21 fixed: list data losing when saving text
