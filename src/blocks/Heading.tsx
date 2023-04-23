@@ -17,7 +17,7 @@ const Heading = (props:ToolRenderProps)=>{
       setText(texts);
     }
 
-    const common = { onKeyUp:changeText, ...(id?{id:id}:{}), contentEditable: props.active, style:{...commonSettings},}
+    const common = { ref: (input:any) => input && input.focus(),  onKeyUp:changeText, ...(id?{id:id}:{}), contentEditable: props.active, style:{...commonSettings},}
 
     const render = ()=>{
       switch(level){
@@ -40,7 +40,7 @@ const Heading = (props:ToolRenderProps)=>{
       const texts=text
       let newId = texts.trim().replace(/\s/g,'-').replace(/[^\w\-]/g,'').toLowerCase()
       setId(newId)
-    }
+    }   
 
     useEffect(()=>{
       let newData = {...props.data,data:text,settings:{level:level,id:id}, common: {...commonSettings}}
@@ -75,7 +75,7 @@ const Heading = (props:ToolRenderProps)=>{
   initData: ()=>{
     return {
       type:'heading', 
-      data:'heading',
+      data:'',
       common:{width:'auto'},
       settings:{level: 2},
    }

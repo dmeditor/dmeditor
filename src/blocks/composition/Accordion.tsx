@@ -57,7 +57,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
     const addAccordion = ()=>{
       let newAccordionList=[...accordionList]
       let list={
-        type:'list',id:nanoid(),data:'', children:[
+        type:'list',id:'a'+nanoid(10),data:'', children:[
           {"type":"text", id:nanoid(), "data":[
             {type:"paragraph","children":[
                 {"text":"Default text"}

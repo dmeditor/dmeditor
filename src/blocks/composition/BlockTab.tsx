@@ -58,8 +58,8 @@ const BlockTab = (props:ToolRenderProps)=>{
     const addTab = ()=>{
       let newTabList=[...tabList]
       let list={
-        type:'list',id:nanoid(),data:'', children:[
-          {"type":"text", id:nanoid(), "data":[
+        type:'list',id:'a'+nanoid(10),data:'', children:[
+          {"type":"text", id:'a1', "data":[
             {type:"paragraph","children":[
                 {"text":"Default text"}
             ],"common":{}, "setting":{}},
