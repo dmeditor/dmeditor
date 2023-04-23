@@ -70,7 +70,7 @@ export const DMEditor = (props:DMEditorProps)=>{
             allBlocks.splice(index, 0, defaultData );
             setBlocks(allBlocks);
             setNewBlock(true);
-            setActiveBlock(index-1);
+            setActiveBlock(index);
         }
     }
     useEffect(()=>{
