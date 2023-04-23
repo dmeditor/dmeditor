@@ -188,7 +188,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                           data={block} active={currentSelected} 
                           newBlock={currentSelected&&newBlock?true:false}
                           onCancel={onDelete}
-                          key={block.id+currentSelected}
+                          key={block.id}
                           onActivate={()=>{
                               setActiveBlock(index);      
                               setNewBlock(false)                                          
