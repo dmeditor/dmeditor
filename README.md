@@ -1,6 +1,6 @@
 # DM Editor
 
-DM Editor is a block-styled visual editor.
+DM Editor is a block-styled visual editor written in React.
 
 [Roadmap](https://github.com/orgs/digimakergo/projects/3/views/1) , mail [xc](mailto:chen.xcmail@gmail.com) if you want to discuss:).
 
