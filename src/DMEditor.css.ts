@@ -115,9 +115,12 @@ export const dmeditorCss = ()=>css`
 }
 
 a{
-  color: #12913e;
   text-decoration: none;
   box-shadow: none!important;
+}
+
+a:not(.btn){
+  color: #12913e;
 }
 
 a:hover{
@@ -227,6 +230,11 @@ hr{
 ::-moz-selection {
     color:auto;
     background:#ccc;
+}
+
+
+.tool-item{
+  background: white;
 }
 
 .pre-render{
