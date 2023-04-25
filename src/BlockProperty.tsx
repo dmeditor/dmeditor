@@ -51,13 +51,15 @@ export const BlockProperty = (props:{blocktype: string, inBlock?:boolean, childr
         // ?window.dmeditorTab(e):
     }
 
-    return propertyRoot?<>{createPortal(      
+    return propertyRoot?<>
+    {propertyRoot.children[0]?createPortal(      
       <div className="tab-header" onClick={tabClick}><button className="btn">{getDef(props.blocktype).name}</button></div>
       , 
         propertyRoot.children[0] as HTMLElement
-    )}
-    {createPortal(<div className="tab-body">{props.children}</div>, 
+    ):<></>}
+    {propertyRoot.children[1]?createPortal(<div className="tab-body">{props.children}</div>, 
     propertyRoot.children[1] as HTMLElement
-  )}</>:<></>
+  ):<></>}
+  </>:<></>
 }
 

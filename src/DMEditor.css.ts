@@ -20,8 +20,11 @@ export const dmeditorCss = ()=>css`
       left:0;
       top:0;
       z-index: 500;
-    }
+    }    
+  }
 
+  &.settings{
+      grid-template-columns: var(--dme-layout-tool-width) auto;
   }
 
 .layout-properties{
@@ -50,7 +53,10 @@ export const dmeditorCss = ()=>css`
   width:var(--dme-layout-tool-width);
 }
 
-.dme-settings{
+.dme-settings > div{
+  max-width: 900px;
+  margin: auto;
+  min-height: 100%;
   background-color: white;
 }
 

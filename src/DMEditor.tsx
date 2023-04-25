@@ -168,7 +168,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
       <ThemeProvider theme={outerTheme}>        
-        <div className={(viewmode=='edit'?"  ":"view ") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
+        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
@@ -178,13 +178,14 @@ export const DMEditor = (props:DMEditorProps)=>{
                 <a href='/' className={viewmode=='mobile'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'mobile')}} title='Mobile'> <PhoneIphoneOutlined /></a>
                 <a href='/' className={viewmode=='tablet'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'tablet')}} title='Tablet'><TabletMacOutlined /></a>
                 <hr />
-                <a href="/" title="Settings" onClick={(e)=>showSettings(e)}><SettingsOutlined /></a>
+                <a href="/" title="Settings" className={settingsShown?'current':''} onClick={(e)=>showSettings(e)}><SettingsOutlined /></a>
               </div>
             </div>
           </div>         
           {settingsShown&&<div className='dme-settings'>
-            Settings
+            <div>
               {Util.renderPageTab()}
+            </div>
           </div>} 
           <div style={settingsShown?{display:'none'}:{}} id="dmeditor-main" className='layout-main-container'>               
           <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
