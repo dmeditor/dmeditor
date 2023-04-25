@@ -50,6 +50,10 @@ export const dmeditorCss = ()=>css`
   width:var(--dme-layout-tool-width);
 }
 
+.dme-settings{
+  background-color: white;
+}
+
 .layout-main{
     margin:auto;
     background: white;
@@ -119,7 +123,7 @@ a{
   box-shadow: none!important;
 }
 
-a:not(.btn){
+a.tool-item, .layout-properties a{
   color: #12913e;
 }
 
@@ -127,9 +131,10 @@ a:hover{
     color:#046726
 }
 
-hr{
-    border-top: 1px solid #cccccc;
+.left-tool hr{
+    border-top: 1px solid #aeaeae;
     border-bottom: none;
+    margin: 5px 0px;
 }
 
 
@@ -261,6 +266,34 @@ hr{
 }
 .btn.btn-success {
   color:#fff;
+}
+
+.property-tab-container > div{
+  display: inline-block;
+}
+
+#dmeditor-property > div:first-child{
+  border-bottom: 1px solid #ccc;
+}
+
+.tab-header .btn, .tab-header.normal:last-child .btn{
+   color: rgba(0, 0, 0, 0.6)
+}
+
+.tab-header.current .btn, .tab-header:last-child .btn{
+  color: #12913e
+}
+
+.tab-body:not(:last-child){
+  display: none;
+}
+
+.tab-header{
+  padding: 5px;
+}
+
+.tab-body{
+  padding: 10px 5px;
 }
 `;
 

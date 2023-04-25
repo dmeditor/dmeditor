@@ -8,7 +8,8 @@ export interface ToolRenderProps {
     view?:boolean,
     onChange:(data:any, debounce?:boolean)=>void,
     onCancel?:()=>void,
-    inBlock?:boolean
+    inBlock?:boolean,
+    onDelete?:()=>void
 } 
 
 

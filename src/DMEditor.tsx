@@ -4,7 +4,7 @@ import {dmeditorCss, dmeditorViewCss,ReactResizableCss} from './DMEditor.css';
 import {templateCss} from './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
-import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined,MoreHorizOutlined, LinkOutlined, Help, HelpOutline } from '@mui/icons-material';
+import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined,MoreHorizOutlined, LinkOutlined, Help, HelpOutline, Settings, SettingsOutlined } from '@mui/icons-material';
 import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
@@ -41,6 +41,7 @@ export const DMEditor = (props:DMEditorProps)=>{
     const [activeBlock, setActiveBlock] = useState(blocks.length>0?0:-1);
     const [newBlock, setNewBlock] = useState(false);
     const [viewmode, setViewmode] = useState('edit');
+    const [settingsShown, setSettingsShown] = useState(false);
     const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
 
     useEffect(()=>{
@@ -62,6 +63,10 @@ export const DMEditor = (props:DMEditorProps)=>{
        
     },[]);
     
+    const showSettings = (e:any)=>{
+      e.preventDefault();
+      setSettingsShown(!settingsShown);
+    }
 
     const addAbove = (type: string, index:number, template?:string)=>{
         if( type ){
@@ -130,6 +135,7 @@ export const DMEditor = (props:DMEditorProps)=>{
     const onChangeViewMode = (e:any,type:string)=>{
       e.preventDefault();
       setViewmode(type);
+      setSettingsShown(false);
       let newRoot: any = {
         '--dme-container-width':type==="edit"?`calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width))`:`calc(100vw - 2px)`,
         '--dme-main-width':type==='edit'?
@@ -161,26 +167,29 @@ export const DMEditor = (props:DMEditorProps)=>{
         }
       });
     return (
-      <ThemeProvider theme={outerTheme}>
+      <ThemeProvider theme={outerTheme}>        
         <div className={(viewmode=='edit'?"  ":"view ") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
-              <div className='left-tool' style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>
-                <hr />
+              <div className='left-tool' style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>                
                 <a href='/' className={viewmode=='edit'?'current':''} onClick={(e)=>{onChangeViewMode(e,'edit')}} title='Edit'><ModeEditOutline /></a>
                 <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{onChangeViewMode(e,'pc')}} title='PC'><LaptopMacOutlined /></a>
                 <a href='/' className={viewmode=='mobile'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'mobile')}} title='Mobile'> <PhoneIphoneOutlined /></a>
                 <a href='/' className={viewmode=='tablet'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'tablet')}} title='Tablet'><TabletMacOutlined /></a>
+                <hr />
+                <a href="/" title="Settings" onClick={(e)=>showSettings(e)}><SettingsOutlined /></a>
               </div>
             </div>
-          </div>  
-          <div id="dmeditor-main" className='layout-main-container'>               
+          </div>         
+          {settingsShown&&<div className='dme-settings'>
+            Settings
+              {Util.renderPageTab()}
+          </div>} 
+          <div style={settingsShown?{display:'none'}:{}} id="dmeditor-main" className='layout-main-container'>               
           <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
-              <div style={{width: '100%', height: 1}}></div>
-              
+              <div style={{width: '100%', height: 1}}></div>              
               {viewmode==='edit'&&<>
-
               {blocks.map((block, index)=>{
               const a = ()=>{
                   let currentSelected = activeBlock===index ;
@@ -209,35 +218,25 @@ export const DMEditor = (props:DMEditorProps)=>{
               {viewmode!=='edit'&&<DMEditorView data={blocks} getFileUrl={props.getFileUrl} getImageUrl={props.getImageUrl}/>}
           </div>                    
           </div>
-          {viewmode=='edit'&&<div className='layout-properties'>
-            
+          {viewmode=='edit'&&<div style={settingsShown?{display:'none'}:{}} className='layout-properties'>            
               <div id="dmeditor-add-menu">
                 {blocks.length===0&&<MenuList onSelect={(type:string, template?:string)=>{addUnder(type, -1, template)}} /> }
               </div>
-              <PropertyTab 
-                  active={0}
-                  tabs={[
-                      {title: blocks[activeBlock]?(getDef(blocks[activeBlock].type).name):'Insert', 
-                      element:
-                        <div style={{marginBottom:'100px'}}>
-                          <div id="dmeditor-property" />
-
-                          {viewmode==='edit'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '262px',padding:'10px', backgroundColor:'#ffffff'}}>
-                              <div style={{marginBottom:'15px'}} >
-                              <a href="/" title="Move up" onClick={(e)=>{e.preventDefault();onMove('up')}}><ArrowUpwardOutlined /> </a> 
-                              <a href="/" title="Move down" onClick={(e)=>{e.preventDefault();onMove('down')}}><ArrowDownwardOutlined /></a>
-                              </div> 
-                              <Button fullWidth variant="contained" color='error' title="Delete" onClick={onDelete}>
-                              <DeleteOutline />Delete block
-                              </Button>
-                          </div>} 
-                        </div>
-                    },
-                      {title:'Page', element:<div>
-                      {Util.renderPageTab()}
-                  </div>},                             
-                ]} />                
-            
+              <div style={{marginBottom:'100px'}}>
+                <div id="dmeditor-property">
+                    <div className='property-tab-container'></div>
+                    <div></div>
+                </div>
+                {viewmode==='edit'&&<div style={{position:"fixed",bottom:0,height:'100px',width: '262px',padding:'10px', backgroundColor:'#ffffff'}}>
+                    <div style={{marginBottom:'15px'}} >
+                    <a href="/" title="Move up" onClick={(e)=>{e.preventDefault();onMove('up')}}><ArrowUpwardOutlined /> </a> 
+                    <a href="/" title="Move down" onClick={(e)=>{e.preventDefault();onMove('down')}}><ArrowDownwardOutlined /></a>
+                    </div> 
+                    <Button fullWidth variant="contained" color='error' title="Delete" onClick={onDelete}>
+                     <DeleteOutline />Delete block
+                    </Button>
+                </div>} 
+              </div>            
           </div>}
         </div>
       </ThemeProvider>);
