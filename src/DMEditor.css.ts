@@ -58,6 +58,7 @@ export const dmeditorCss = ()=>css`
   margin: auto;
   min-height: 100%;
   background-color: white;
+  padding: 10px;
 }
 
 .layout-main{
