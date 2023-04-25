@@ -40,7 +40,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                   <PropertyButton selected={align==='right'} onClick={()=>setAlign('right')}><FormatAlignRight /></PropertyButton>
               </PropertyItem>
               {Util.renderCustomProperty(props.data)}
-              <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} /></div>
+              <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
             </BlockProperty>}
             {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={width} height={height} frameBorder="0"></iframe></div>}
         </div>

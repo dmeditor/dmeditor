@@ -388,7 +388,7 @@ export const Table = (props: ToolRenderProps) => {
           )}
         </PropertyItem>
         {Util.renderCustomProperty(props.data)}
-        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete} /></div>
       </BlockProperty>}
       <div className="bani">
         <div style={commonSettings}>

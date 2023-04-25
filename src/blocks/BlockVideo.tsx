@@ -43,7 +43,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
                 </PropertyItem>
                 
                 {Util.renderCustomProperty(props.data)}
-                <div><CommonSettings commonSettings={commonSettings}  settingList={['marginTop']} onChange={(settings)=>{setCommonSettings(settings)}} /></div>
+                <div><CommonSettings commonSettings={commonSettings}  settingList={['marginTop']} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>
             </BlockProperty>}
             <video width={'100%'} height={'100%'} controls src={videoUrl} >
               <object data={videoUrl} width={'100%'} height={'100%'}>

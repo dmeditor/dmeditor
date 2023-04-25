@@ -64,7 +64,7 @@ const BlockImageText = (props: ToolRenderProps) => {
         </PropertyButton>
         <PropertyButton selected={!imageLeft} onClick={()=>{if(imageLeft){changeAlign()}}}><AlignHorizontalRightOutlined /></PropertyButton>
       </PropertyItem>
-      <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} /></div>                 
+      <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>                 
     </BlockProperty>}  
     <div className="imagetext_container" style={{display:'flex',flexWrap:flexWrap}}>
       {list.map((item: any,index:any) => {

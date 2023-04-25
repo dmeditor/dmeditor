@@ -366,7 +366,7 @@ export const BlockText = (props:ToolRenderProps)=>{
         </PropertyGroup>
         }
         {Util.renderCustomProperty(props.data)}
-        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} /></div>                 
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete} /></div>                 
         </BlockProperty>}
         <div>
           <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}  changeDialogLink={changeDialogLinkfun}/>

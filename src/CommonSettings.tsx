@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { PickColor, PropertyGroup, PropertyItem,PropertyButton, Ranger } from './utils';
 import { Select, MenuItem } from "@mui/material";
-import { FormatAlignLeft,FormatAlignCenter,FormatAlignRight } from '@mui/icons-material';
+import { FormatAlignLeft,FormatAlignCenter,FormatAlignRight, DeleteOutline } from '@mui/icons-material';
 
-export const CommonSettings = (props:{commonSettings:any, settingList?: Array<string>, onChange:(data:any)=>void})=>{    
+export const CommonSettings = (props:{commonSettings:any, settingList?: Array<string>, onDelete?:()=>void, onChange:(data:any)=>void})=>{    
     const [settings, setSettings] = useState(props.commonSettings?props.commonSettings:{});
     const [isChange,setIsChange] = useState(false)
     const [blockOpen, setBlockOpen] = useState(false);
@@ -114,5 +114,11 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
               }
             </PropertyItem>}
         </PropertyGroup>
+
+         {props.onDelete&&
+          <div style={{float: 'right'}}>
+            <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>
+          </div>
+        }
     </div>;
 }

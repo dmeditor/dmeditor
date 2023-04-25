@@ -67,7 +67,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
           </PropertyItem> 
         </PropertyGroup>
         {Util.renderCustomProperty(props.data)}
-        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} /></div>
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
     </BlockProperty>}
         <div >
           <img width='100%' src={imageUrl} />  

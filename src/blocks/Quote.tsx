@@ -35,7 +35,7 @@ export const Quote = (props:any)=>{
     <>
        {props.active&&<BlockProperty  blocktype="quote" inBlock={props.inBlock}>
            {Util.renderCustomProperty(props.data)}
-           <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} /></div>
+           <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
         <div style={commonSettings}>
         <q ref={QuoteRef} className='block-quote' {...common} suppressContentEditableWarning>{content}</q>
