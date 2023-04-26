@@ -78,9 +78,24 @@ export const dmeditorCss = ()=>css`
   display: none;
 }
 
-.viewmode-edit .block-container:hover > .tool, .viewmode-edit .block-container.active > .tool{
-  display: block;
-}
+.viewmode-edit{
+  .block-container:not(.inblock):hover > .tool, 
+  .block-container.active .block-container:hover > .tool,
+  .block-container.active > .tool{
+    display: block;
+  }
+
+  .block-container:not(.inblock):hover{
+    outline: 1px dashed #00721f;
+    outline-offset: 1px;
+  }
+
+  .block-container.active .inblock.block-container:hover, .viewmode-edit .active.inblock{
+    outline: 1px dashed #00721f !important;
+    outline-offset: 1px;
+  }
+
+} 
 
 .layout-main.viewmode-pc, .layout-main.viewmode-edit{
   width:var(--dme-main-width);
@@ -192,16 +207,6 @@ a:hover{
 
 .viewmode-edit .block-container.active{
   outline: 1px solid #00721f !important;
-  outline-offset: 1px;
-}
-
-.viewmode-edit .block-container:hover{
-  outline: 1px dashed #00721f;
-  outline-offset: 1px;
-}
-
-.viewmode-edit .inblock.block-container:hover, .viewmode-edit .active.inblock{
-  outline: 1px dashed #00721f !important;
   outline-offset: 1px;
 }
 
