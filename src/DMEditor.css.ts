@@ -237,7 +237,7 @@ a:hover{
 
 *[contenteditable="true"]:empty::before {
   content: "Please input";
-  font-size: 14px;
+  font-size: 1rem;
   color: #999;
   margin-left: 5px;
   vertical-align: middle;
