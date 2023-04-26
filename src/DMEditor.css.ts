@@ -205,8 +205,13 @@ a:hover{
   outline: 1px solid rgba(0,0,0,0);
 }
 
-.viewmode-edit .block-container.active{
+.viewmode-edit .block-container:not(.inblock).active{
   outline: 1px solid #00721f !important;
+  outline-offset: 1px;
+}
+
+.viewmode-edit .block-container.inblock.active{
+  outline: 1px dashed #00721f !important;
   outline-offset: 1px;
 }
 
