@@ -148,8 +148,8 @@ a:hover{
 .tool{
   position: absolute;
   z-index: 15;
-  left: 48%;
-  width: 50px;
+  left: 40%;
+  width: 20%;
   text-align: center;
 }
 
@@ -165,7 +165,6 @@ a:hover{
 .tool-under{
   bottom: -26px;
   height: 26px;
-  padding-top: 2px;
 }
 
 /* .block-container:first-child .tool-above {
@@ -299,8 +298,16 @@ a:hover{
   padding: 5px;
 }
 
+.block-container.active > .tool{
+  opacity: 0;
+}
+
+.block-container.active > .tool:hover{
+  opacity: 1;
+}
+
 .tab-body{
-  padding: 10px 5px;
+  padding: 10px;
 }
 `;
 
