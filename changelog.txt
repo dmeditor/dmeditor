@@ -1,4 +1,5 @@
 0.1.0-beta.9
+- 2023-04-27 fixed: text toolbar is below add button
 - 2023-04-26 updated: only show add button when hover into
 - 2023-04-25 updated: move delete button to BlockProperty
 - 2023-04-25 updated: use multiple tabs for composite block type(eg. imagetext)

@@ -83,6 +83,7 @@ export const dmeditorCss = ()=>css`
   .block-container.active .block-container:hover > .tool,
   .block-container.active > .tool{
     display: block;
+    z-index: 100;
   }
 
   .block-container:not(.inblock):hover{
@@ -162,7 +163,7 @@ a:hover{
 
 .tool{
   position: absolute;
-  z-index: 15;
+  z-index: 1;
   left: 40%;
   width: 20%;
   text-align: center;
