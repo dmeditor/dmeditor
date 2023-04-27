@@ -1,6 +1,7 @@
 import * as React from "react";
 import {IconButton, TextField,Button,Dialog, DialogContent, DialogTitle,DialogActions, Input,} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { useEffect, useState } from "react";
 
 export interface BrowseProps{
   type?:any, 
@@ -263,6 +264,33 @@ return (
 )
 }
 
+//set mobile manually, for simulation purpose
+let _isMobile = false;
+
+export const setIsMobile = (m:boolean)=>{
+  _isMobile = m;
+}
+
+let _mobileWidth = 768;
+//use for custom rendering
+export const useIsMobile = () => {
+    if( isServer() ){
+      return false;
+    }
+    const [width, setWidth] = useState(window.innerWidth);
+    const handleWindowSizeChange = () => {
+            setWidth(window.innerWidth);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange);
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange);
+        }
+    }, []);
+
+    return (width <= _mobileWidth) || _isMobile;
+}
 
 
 

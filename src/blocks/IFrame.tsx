@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-import { PropertyButton, PropertyItem,Ranger,Util } from "../utils";
+import { PropertyButton, PropertyItem,Ranger,Util, useIsMobile } from "../utils";
 
 export const BlockIframe = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
@@ -13,6 +13,8 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [height, setHeight] = useState(props.data.settings.height as number);    
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
     const [commonSettings, setCommonSettings] = useState(props.data.common);
+    
+    const isMobile = useIsMobile();
     
     const submit = (val:any,type:string)=>{
         setUrl( val );
@@ -42,7 +44,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
               {Util.renderCustomProperty(props.data)}
               <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
             </BlockProperty>}
-            {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={width} height={height} frameBorder="0"></iframe></div>}
+            {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={isMobile?'100%':width} height={height} frameBorder="0"></iframe></div>}
         </div>
 }
 

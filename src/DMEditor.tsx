@@ -8,7 +8,7 @@ import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMa
 import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
-import { BrowseProps, isServer, Util } from './utils/Util';
+import { BrowseProps, isServer, setIsMobile, Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
@@ -135,6 +135,11 @@ export const DMEditor = (props:DMEditorProps)=>{
     const onChangeViewMode = (e:any,type:string)=>{
       e.preventDefault();
       setViewmode(type);
+      if( type == 'mobile' ){
+        setIsMobile(true)
+      }else{
+        setIsMobile(false);
+      }
       setSettingsShown(false);
       let newRoot: any = {
         '--dme-container-width':type==="edit"?`calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width))`:`calc(100vw - 2px)`,

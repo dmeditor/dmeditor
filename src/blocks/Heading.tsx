@@ -3,7 +3,7 @@ import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import React, {useEffect ,useState,useRef} from 'react';
 import { CommonSettings } from '../CommonSettings';
-import { PropertyItem,PropertyButton,Util,Ranger} from '../utils';
+import { PropertyItem,PropertyButton,Util,Ranger, useIsMobile} from '../utils';
 import TextField from '@mui/material/TextField';
 
 const Heading = (props:ToolRenderProps)=>{

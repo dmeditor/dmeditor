@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM, { createPortal } from 'react-dom';
 import { getDef } from "./ToolDefinition";
-import { PropertyGroup } from "./utils";
+import { PropertyGroup, Util, isServer } from "./utils";
 import { PropertyTab } from "./Tab";
 
 declare global {
@@ -10,6 +10,7 @@ declare global {
   }
 }
 
+if( !isServer() ){
 window.dmeditorPropertyTab = (e:any)=>{
   var  i= 0;
   var elem = e.currentTarget;
@@ -36,6 +37,7 @@ window.dmeditorPropertyTab = (e:any)=>{
         ele.style.display = 'none';
       }
   }
+}
 }
 
 //todo: use one instance so it can put multi to multi tabs.

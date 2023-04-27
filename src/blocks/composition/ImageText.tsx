@@ -6,7 +6,7 @@ import { BlockList } from '../../BlockList';
 import { BlockProperty } from "../../BlockProperty";
 import { CommonSettings } from "../../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
-import { PropertyButton, PropertyItem } from "../../utils";
+import { PropertyButton, PropertyItem, useIsMobile } from "../../utils";
 
 const BlockImageText = (props: ToolRenderProps) => {
   const [list, setList] = useState<Array<any>>(props.data.children ? props.data.children : []);
@@ -22,6 +22,8 @@ const BlockImageText = (props: ToolRenderProps) => {
     return `calc(var(--dme-main-width) - ${imgWidth})`
   });
   const [flexWrap,setFlexWrap]=useState('nowrap' as any);
+
+  const isMobile = useIsMobile();
   
   const onChange = (data:any, index:number)=>{
     let newList = [...list];
@@ -36,6 +38,12 @@ const BlockImageText = (props: ToolRenderProps) => {
       setList(newList);
       setActiveIndex(activeIndex==0?1:0);
     }
+
+  useEffect(()=>{
+    if(isMobile && list[0].type==='list' ){
+        changeAlign();
+    }
+  }, [isMobile])
 
   useEffect(() => {
     let imageList = list.filter((item: any) => item.type == 'image');
@@ -66,7 +74,7 @@ const BlockImageText = (props: ToolRenderProps) => {
       </PropertyItem>
       <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>                 
     </BlockProperty>}  
-    <div className="imagetext_container" style={{display:'flex',flexWrap:flexWrap}}>
+    <div className="imagetext_container" style={!isMobile?{display:'flex',flexWrap:flexWrap}:{}}>
       {list.map((item: any,index:any) => {
         return (
           <React.Fragment key={item.id?item.id:index}>
