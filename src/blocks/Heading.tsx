@@ -11,12 +11,10 @@ const Heading = (props:ToolRenderProps)=>{
     const [level,setLevel] = useState(props.data.settings.level);
     const [id,setId] = useState(props.data.settings?.id||'');
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
-    const [changed, setChanged] = useState(false);
     const defaultValue:any=useRef(props.data.data);    
     const changeText = (e?:any)=>{
       const texts=e.target.innerText
       setText(texts);
-      setChanged(true);
     }
 
     const common = { ref: (input:any) => input && input.focus(),  onKeyUp:changeText, ...(id?{id:id}:{}), contentEditable: props.active, style:{...commonSettings},}
@@ -45,27 +43,24 @@ const Heading = (props:ToolRenderProps)=>{
     }     
 
     useEffect(()=>{
-      if(changed){
         let newData = {...props.data,data:text,settings:{level:level,id:id}, common: {...commonSettings}}
-        props.onChange(newData);
-        setChanged(false)
-      }
-    },[changed])
+        props.onChange(newData, true);
+    },[text, level, id, commonSettings])
 
     return (
       <>
         {props.active&&<BlockProperty  blocktype="heading" inBlock={props.inBlock}>
           <PropertyItem label="Level">
-                <Ranger defaultValue={level} min={1} max={5} step={1} onChange={(v:any)=>{setLevel(v); defaultValue.current = text; setChanged(true)}} />
+                <Ranger defaultValue={level} min={1} max={5} step={1} onChange={(v:any)=>{setLevel(v); defaultValue.current = text;}} />
           </PropertyItem>            
           <PropertyItem label="Anchor">
-            <TextField sx={{width:'calc(100% - 37px)'}}  placeholder='Please enter ID'  value={id} size="small" hiddenLabel variant="outlined" onChange={(e)=>{setId(e.target.value);setChanged(true)}} />
+            <TextField sx={{width:'calc(100% - 37px)'}}  placeholder='Please enter ID'  value={id} size="small" hiddenLabel variant="outlined" onChange={(e)=>{setId(e.target.value);}} />
             <PropertyButton title="Auto generate Id" onClick={()=>{autoCreateId()}}>
               <LoopOutlined/>
             </PropertyButton> 
           </PropertyItem>  
           {Util.renderCustomProperty(props.data)}
-        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);setChanged(true);}} onDelete={props.onDelete} /></div>
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
         {render()}  
     </> 
