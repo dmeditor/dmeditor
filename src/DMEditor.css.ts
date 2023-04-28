@@ -360,10 +360,6 @@ export const dmeditorViewCss = ()=>css`
   margin-left: calc(-1*(var(--dme-container-width) - var(--dme-main-width)) / 2)!important;
 }
 
-// .block-type-imagetext > .block-type-image{
-//   display: inline-block;
-// }
-
 .block-container{
   position: relative;
 }
