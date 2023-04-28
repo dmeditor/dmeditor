@@ -10,6 +10,7 @@ import { Ranger,PickColor,Util,PropertyButton, PropertyGroup, PropertyItem} from
 import { SlateFun } from '../utils/Slate'
 import FontFamilyList from '../utils/FontFamilyList'
 import { CommonSettings } from "../CommonSettings";
+import { ReactResizableCss } from "../DMEditor.css";
 
 export const BlockText = (props:ToolRenderProps)=>{
   const [value,setValue] = useState(props.data.data)
@@ -204,7 +205,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   },[isFocus])
 
   return (
-    <div style={...commonSettings}>
+    <div style={...commonSettings} className={ReactResizableCss()}>
       <Slate editor={editor} value={value} onChange={v => change(v)}>
       {props.active&&<BlockProperty  blocktype="text" inBlock={props.inBlock}>
         <PropertyGroup header="Basic">

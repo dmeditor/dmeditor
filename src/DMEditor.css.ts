@@ -7,7 +7,6 @@ export const dmeditorEditCss = ()=>css`
   --dme-layout-tool-width: 40px;
   --dme-layout-property-width: 300px;
   --dme-container-width:calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
-
   --dme-main-width: clamp(900px, var(--dme-container-width) - 150px, 1200px);
 
   height: 100vh;

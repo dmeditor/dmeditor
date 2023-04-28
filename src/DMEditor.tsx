@@ -251,7 +251,7 @@ export const DMEditorView = (props:DMEditorViewProps)=>{
     setWidth(width);
   }, []);
 
-    return <div ref={elRef} className={'dmeditor-view '+setMainWidthCssVariable(width+'px')+' '+dmeditorViewCss() + (device!=''?' dmeditor-view-'+device+' ':'')+' '+templateCss()+' '+ReactResizableCss()}>
+    return <div ref={elRef} className={'dmeditor-view '+setMainWidthCssVariable(width+'px')+' '+dmeditorViewCss() + (device!=''?' dmeditor-view-'+device+' ':'')+' '+templateCss()}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
            return  <Block
