@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
-import { PropertyButton, PropertyItem,Ranger,Util, useIsMobile } from "../utils";
+import { PropertyButton, PropertyItem,Ranger,Util, useGetDevice } from "../utils";
 
 export const BlockIframe = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
@@ -14,7 +14,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     
-    const isMobile = useIsMobile();
+    const isMobile = useGetDevice() === 'mobile';
     
     const submit = (val:any,type:string)=>{
         setUrl( val );

@@ -236,22 +236,33 @@ return (
 )
 }
 
-//set mobile manually, for simulation purpose
-let _isMobile = false;
+//set device manually, for simulation purpose
+let _device: DeviceType = '';
 
-export const setIsMobile = (m:boolean)=>{
-  _isMobile = m;
+export const setDevice = (d:DeviceType)=>{
+  _device = d;
 }
 
-let _mobileWidth = 768;
+let _mobileWidthMax = 560;
+let _tabletWidthMax = 960;
 //use for custom rendering
-export const useIsMobile = () => {
+
+export type DeviceType = ''|'mobile'|'tablet';
+
+export const useGetDevice = (): DeviceType => {
     if( isServer() ){
-      return false;
+      return '';
     }
-    const [width, setWidth] = useState(window.innerWidth);
+    const [device, setDevice] = useState('');
     const handleWindowSizeChange = () => {
-            setWidth(window.innerWidth);
+          const width = window.innerWidth;
+          let currentDevice = '';
+          if(width <= _mobileWidthMax){
+            currentDevice = 'mobile';
+          }else if(width <= _tabletWidthMax){
+            currentDevice = 'tablet';
+          }
+          setDevice(currentDevice);
     }
 
     useEffect(() => {
@@ -261,7 +272,10 @@ export const useIsMobile = () => {
         }
     }, []);
 
-    return (width <= _mobileWidth) || _isMobile;
+    if (_device !== '') {
+      return _device;
+    }
+    return device as DeviceType;
 }
 
 

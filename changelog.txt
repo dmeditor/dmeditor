@@ -1,4 +1,6 @@
 0.1.0-beta.9
+- 2023-04-28 updated: use useGetDevice (return 'mobile'|'tablet'|'') insteaf of useIsMobile
+- 2023-04-28 updated: optimized to use only 2 variables: --dme-main-width and --dme-container-width for developing plugin
 - 2023-04-27 added: useIsMobile() hook for mobile related rendering
 - 2023-04-27 fixed: text toolbar is below add button
 - 2023-04-26 updated: only show add button when hover into
