@@ -3,7 +3,13 @@ import { Util } from "./utils";
 import { ReactResizable } from './utils/ReactResizable';
 
 
-export const dmeditorCss = ()=>css`
+export const dmeditorEditCss = ()=>css`
+  --dme-layout-tool-width: 40px;
+  --dme-layout-property-width: 300px;
+  --dme-container-width:calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
+
+  --dme-main-width: calc(var(--dme-container-width) - 150px);
+
   height: 100vh;
   background-color: #f0f0f0;
   display: grid;
@@ -25,6 +31,15 @@ export const dmeditorCss = ()=>css`
 
   &.settings{
       grid-template-columns: var(--dme-layout-tool-width) auto;
+  }
+
+  //preview
+  .layout-main.viewmode-tablet{
+    width: 768px;
+  }
+
+  .layout-main.viewmode-mobile{
+    width: 375px;
   }
 
 .layout-properties{
@@ -103,13 +118,6 @@ export const dmeditorCss = ()=>css`
 }
 
 
-.layout-main.viewmode-tablet{
-    width: var(--dme-main-width-pad);
-}
-
-.layout-main.viewmode-mobile{
-    width: var(--dme-main-width-mobile);
-}
 .layout-main.viewmode-pc .dmeditor-view, 
 .layout-main.viewmode-edit .dmeditor-view,
 .layout-main.viewmode-tablet .dmeditor-view,
@@ -169,9 +177,17 @@ a:hover{
   text-align: center;
 }
 
-.is-preview .tool{
-  display: none;
-}
+.is-preview{
+    --dme-container-width: 100vw;
+
+    .tool{
+      display: none;
+    }
+
+   .dmeditor-view-mobile, .dmeditor-view-tablet{
+    --dme-container-width: var(--dme-main-width) !important;
+  }
+} 
 
 .tool-above{
   top: -26px;
@@ -182,14 +198,6 @@ a:hover{
   bottom: -26px;
   height: 26px;
 }
-
-/* .block-container:first-child .tool-above {
-  top: 0px;
-}
-
-.block-container:last-child .tool-under {
-  bottom: 0px;
-} */
 
 .blockcontainer-horizontal{
   display: grid;
@@ -323,14 +331,19 @@ a:hover{
 `;
 
 
+export const setMainWidthCssVariable = (dmeMainWidth:any)=>css`
+  --dme-main-width: ${dmeMainWidth};
+  &.dmeditor-view-mobile, &.dmeditor-view-tablet{
+    --dme-container-width: 100vw;
+  }
+`
+
 export const dmeditorViewCss = ()=>css`
+
 &.dmeditor-view{
   margin:auto;
   background: white;
-  width:var(--dme-main-width);
-  @media (max-width: 1200px) {
-    width:100%;
-  }
+  width:100%;
 }
 .box{
   background: #f9f9f9;
@@ -343,23 +356,13 @@ export const dmeditorViewCss = ()=>css`
   vertical-align: top!important;
 }
 .fullScreen{
-  width:calc(var(--dme-container-width) - var(--dme-scrollbarWidth))!important;
-  margin-left: calc(-1*(var(--dme-container-width) - var(--dme-scrollbarWidth) - var(--dme-main-width)) / 2)!important;
+  width: var(--dme-container-width)!important;
+  margin-left: calc(-1*(var(--dme-container-width) - var(--dme-main-width)) / 2)!important;
 }
 
-.layout-main.viewmode-tablet{
-    width: var(--dme-main-width-pad);
-}
-
-.layout-main.viewmode-mobile{
-    width: var(--dme-main-width-mobile);
-}
 // .block-type-imagetext > .block-type-image{
 //   display: inline-block;
 // }
-.imagetext_container .block-type-image>div{
- width:calc(var(--dme-main-width)*0.5);
-}
 
 .block-container{
   position: relative;

@@ -22,34 +22,6 @@ export const Util = {
   toast:null as any,
   fileUrl:'' as any,
   imageUrl:''as any,
-  getEditorArea:(type:string)=>{
-    let newCss:any={
-      width:`calc(var(--dme-container-width)  - var(--dme-scrollbarWidth))`,
-      marginLeft:`calc(-1*(var(--dme-container-width) - var(--dme-scrollbarWidth) - var(--dme-main-width)) / 2) `,
-    }
-    if(type==='fullRightScreen'){
-      newCss['paddingLeft']=`calc((var(--dme-container-width) - var(--dme-scrollbarWidth) - var(--dme-main-width)) / 2) `
-    }
-    return newCss
-  },
-  getScrollbarWidth:()=> {
-    if(!Util.hasScrollbar())return 0
-    var odiv:any = document.createElement('div'),//create div
-        styles:any = {
-            width: '100px',
-            height: '100px',
-            overflowY: 'scroll'
-        }, i, scrollbarWidth;
-    for (i in styles) odiv.style[i] = styles[i];
-    document.body.appendChild(odiv);
-    scrollbarWidth = odiv.offsetWidth - odiv.clientWidth;
-    odiv.remove();//move div
-    return scrollbarWidth;
-  },
-  hasScrollbar() {
-    let dmeDiv:any=document.querySelector(".layout-main-container")
-    return (document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)) || (dmeDiv?.offsetWidth>dmeDiv?.clientWidth);
-  },
   renderBroseURL:(props:BrowseProps)=>{
     if(props.type==='Image'&&Util.BrowseImage){
         let A = Util.BrowseImage as (props:BrowseProps)=>JSX.Element;

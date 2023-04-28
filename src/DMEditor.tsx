@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Block} from './Block';
-import {dmeditorCss, dmeditorViewCss,ReactResizableCss} from './DMEditor.css';
+import {dmeditorEditCss, dmeditorViewCss,ReactResizableCss, setMainWidthCssVariable} from './DMEditor.css';
 import {templateCss} from './templates/templates.css';
 import './Init';
 import { MenuList } from './MenuList';
@@ -8,7 +8,7 @@ import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMa
 import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
-import { BrowseProps, isServer, setIsMobile, Util } from './utils/Util';
+import { BrowseProps, DeviceType, isServer, setDevice, useGetDevice, Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
@@ -54,13 +54,6 @@ export const DMEditor = (props:DMEditorProps)=>{
         Util.pageTabActiveIndex=props.pageTabActiveIndex||0
         Util.fileUrl=props.getFileUrl
         Util.imageUrl=props.getImageUrl
-        
-        setRoot();
-        let newRoot={
-          '--dme-main-width':viewmode!='edit'?'calc(var(--dme-container-width) - 150px)':'clamp(var(--dme-main-width-min-pc),calc(var(--dme-container-width)*0.625),var(--dme-main-width-max-pc))',
-        }
-        Util.changrootValue(newRoot)
-       
     },[]);
     
     const showSettings = (e:any)=>{
@@ -135,19 +128,12 @@ export const DMEditor = (props:DMEditorProps)=>{
     const onChangeViewMode = (e:any,type:string)=>{
       e.preventDefault();
       setViewmode(type);
-      if( type == 'mobile' ){
-        setIsMobile(true)
+      if( type == 'pc' ){
+        setDevice('')
       }else{
-        setIsMobile(false);
+        setDevice(type as DeviceType);
       }
-      setSettingsShown(false);
-      let newRoot: any = {
-        '--dme-container-width':type==="edit"?`calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width))`:`calc(100vw - 2px)`,
-        '--dme-main-width':type==='edit'?
-        `calc(var(--dme-container-width) - var(--dme-scrollbarWidth) - 150px)`:
-        `clamp(var(--dme-main-width-min-pc) , calc((var(--dme-container-width) - var(--dme-scrollbarWidth)) *0.625) , var(--dme-main-width-max-pc))`,
-      }
-      Util.changrootValue(newRoot)
+      setSettingsShown(false);     
     }
     
 
@@ -173,7 +159,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
       <ThemeProvider theme={outerTheme}>        
-        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorCss()+' '+templateCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
+        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorEditCss()+' '+templateCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
@@ -194,8 +180,8 @@ export const DMEditor = (props:DMEditorProps)=>{
           </div>} 
           <div style={settingsShown?{display:'none'}:{}} id="dmeditor-main" className='layout-main-container'>               
           <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
-              <div style={{width: '100%', height: 1}}></div>              
-              {viewmode==='edit'&&<>
+            {viewmode==='edit'&&<>
+              <div style={{width: '100%', height: 1}}></div>                            
               {blocks.map((block, index)=>{
               const a = ()=>{
                   let currentSelected = activeBlock===index ;
@@ -221,7 +207,7 @@ export const DMEditor = (props:DMEditorProps)=>{
               return a();        
               }
               )} </>}
-              {viewmode!=='edit'&&<DMEditorView data={blocks} getFileUrl={props.getFileUrl} getImageUrl={props.getImageUrl}/>}
+              {viewmode!=='edit'&&<DMEditorView key={viewmode} data={blocks} getFileUrl={props.getFileUrl} getImageUrl={props.getImageUrl}/>}
           </div>                    
           </div>
           {viewmode=='edit'&&<div style={settingsShown?{display:'none'}:{}} className='layout-properties'>            
@@ -249,10 +235,23 @@ export const DMEditor = (props:DMEditorProps)=>{
 }
 
 export const DMEditorView = (props:DMEditorViewProps)=>{
+  const elRef = useRef(null);
+  const [width, setWidth] = useState(0);
+
   Util.toast=props.toast
   Util.fileUrl=props.getFileUrl
   Util.imageUrl=props.getImageUrl
-    return <div className={'dmeditor-view '+dmeditorViewCss()+' '+templateCss()+' '+ReactResizableCss()}>
+  const device = useGetDevice();
+
+  useEffect(() => {
+    if (!elRef?.current) {
+      return;
+    }
+    const width = (elRef.current as any).clientWidth;
+    setWidth(width);
+  }, []);
+
+    return <div ref={elRef} className={'dmeditor-view '+setMainWidthCssVariable(width+'px')+' '+dmeditorViewCss() + (device!=''?' dmeditor-view-'+device+' ':'')+' '+templateCss()+' '+ReactResizableCss()}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
            return  <Block
@@ -273,29 +272,6 @@ export const DMEditorView = (props:DMEditorViewProps)=>{
        </div>
 }
 
-const setRoot = ()=>{
-  let dmeDiv:any=document.querySelector(".layout-main-container")
-  const headTag = document.getElementsByTagName('head')[0];
-  const styleTag = document.createElement("style");
-   // --dme-container-width-default: calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));  --dme-main-width-default:calc(var(--dme-container-width)*0.625);
-  styleTag.innerHTML = `
-  :root {
-    --dme-layout-tool-width:${dmeDiv==null?'0px':'40px'};
-    --dme-layout-property-width:${dmeDiv==null?'0px':'300px'};
-
-    --dme-container-width:calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
-    --dme-main-width: calc(var(--dme-container-width)*0.625);
-    --dme-main-width-max-pc:1600px;
-    --dme-main-width-min-pc:960px;
-
-    --dme-main-width-pad: 768px;
-   
-    --dme-main-width-mobile: 375px;
-    --dme-scrollbarWidth:${Util.getScrollbarWidth()}px;
-  }
-  `;
-  headTag.appendChild(styleTag);
-}
 
 /** server side load */
 export const serverLoad=async (data:Array<any>)=>{
