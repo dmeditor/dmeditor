@@ -84,10 +84,6 @@ export const dmeditorEditCss = css`
     }
 }
 
-.dme-block-container{
-  position: relative;
-}
-
 .tool{
   display: none;
 }

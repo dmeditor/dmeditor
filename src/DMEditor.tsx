@@ -158,7 +158,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
       <ThemeProvider theme={outerTheme}>        
-        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorEditCss+' '+dmeditorViewCss+' '+ReactResizableCss}>
+        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorEditCss+' '+ReactResizableCss}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
@@ -179,8 +179,8 @@ export const DMEditor = (props:DMEditorProps)=>{
           </div>} 
           <div style={settingsShown?{display:'none'}:{}} id="dmeditor-main" className='layout-main-container'>               
           <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
-            {viewmode==='edit'&&<>
-              <div style={{width: '100%', height: 1}}></div>                            
+            {viewmode==='edit'&&<div className={dmeditorViewCss}>
+              <div style={{width: '100%', height: 1}}></div>          
               {blocks.map((block, index)=>{
               const a = ()=>{
                   let currentSelected = activeBlock===index ;
@@ -205,7 +205,7 @@ export const DMEditor = (props:DMEditorProps)=>{
               }
               return a();        
               }
-              )} </>}
+              )} </div>}
               {viewmode!=='edit'&&<DMEditorView key={viewmode} data={blocks} getFileUrl={props.getFileUrl} getImageUrl={props.getImageUrl}/>}
           </div>                    
           </div>
