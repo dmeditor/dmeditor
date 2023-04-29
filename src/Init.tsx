@@ -11,6 +11,7 @@ import { toolTable } from "./blocks/BlockTable";
 import { toolVideo } from "./blocks/BlockVideo";
 import { toolIframe } from "./blocks/IFrame";
 import { toolCode } from "./blocks/Code";
+import { css } from "@emotion/css";
 
 registerTool(toolText);
 registerTool(toolImageText);
@@ -26,12 +27,20 @@ registerTool(toolCode);
 registerTool(toolIframe);
 
 //templates
-registerTemplate({ blocktype: 'heading', identifier:'blocktext_heading', 
-    name:'Block heading', 
+registerTemplate({ blocktype: 'heading', identifier:'gradient', 
+    name:'Gradient', 
     initData: ()=>{
       const data = toolHeading.initData();
       return {...data, data:'Hello', common:{...data.common, color: '#9C27B0' }}
     }, 
+    css: css`
+       h1, h2, h3, h4, h5{
+        background-image: linear-gradient(45deg, #2c00ff, #ff009b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+      }
+    `,
     icon:toolHeading.menu.icon });
 registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose image text', 
     initData: ()=>{

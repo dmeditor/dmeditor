@@ -53,7 +53,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
           </div>
             
         </div>},
-        {title:'Custom', element: <div>
+        {title:'Templates', element: <div>
           {templates.map((template:any)=>
           <div className="moreblock" key={template.templateDef.identifier}>
             <table style={{width:'100%'}}>

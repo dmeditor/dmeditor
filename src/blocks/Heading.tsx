@@ -5,6 +5,7 @@ import React, {useEffect ,useState,useRef} from 'react';
 import { CommonSettings } from '../CommonSettings';
 import { PropertyItem,PropertyButton,Util,Ranger} from '../utils';
 import TextField from '@mui/material/TextField';
+import { TemplateSettings } from '../templates/TemplateSettings';
 
 const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
@@ -17,22 +18,22 @@ const Heading = (props:ToolRenderProps)=>{
       setText(texts);
     }
 
-    const common = { ref: (input:any) => input && input.focus(),  onKeyUp:changeText, ...(id?{id:id}:{}), contentEditable: props.active, style:{...commonSettings},}
+    const common = { ref: (input:any) => input && input.focus(),  onKeyUp:changeText, ...(id?{id:id}:{}), contentEditable: props.active}
 
     const render = ()=>{
       switch(level){
         case 1:
-            return <h1 suppressContentEditableWarning {...common}>{defaultValue.current}</h1>
+            return <h1 {...common} suppressContentEditableWarning>{defaultValue.current}</h1>
         case 2:
-            return <h2  suppressContentEditableWarning {...common}>{defaultValue.current}</h2>
+            return <h2 {...common} suppressContentEditableWarning>{defaultValue.current}</h2>
         case 3:
-            return <h3 suppressContentEditableWarning {...common}>{defaultValue.current}</h3>
+            return <h3 {...common} suppressContentEditableWarning>{defaultValue.current}</h3>
         case 4:
-            return <h4 suppressContentEditableWarning {...common}>{defaultValue.current}</h4>
+            return <h4 {...common} suppressContentEditableWarning>{defaultValue.current}</h4>
         case 5:
-            return <h5 suppressContentEditableWarning {...common}>{defaultValue.current}</h5>
+            return <h5 {...common} suppressContentEditableWarning>{defaultValue.current}</h5>
         default:
-            return <h2 suppressContentEditableWarning {...common}>{defaultValue.current}</h2>
+            return <h2 {...common} suppressContentEditableWarning>{defaultValue.current}</h2>
       }
     }
 
@@ -50,6 +51,7 @@ const Heading = (props:ToolRenderProps)=>{
     return (
       <>
         {props.active&&<BlockProperty  blocktype="heading" inBlock={props.inBlock}>
+          <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{props.onChange({...props.data, template: identifier})}} />
           <PropertyItem label="Level">
                 <Ranger defaultValue={level} min={1} max={5} step={1} onChange={(v:any)=>{setLevel(v); defaultValue.current = text;}} />
           </PropertyItem>            
@@ -62,7 +64,9 @@ const Heading = (props:ToolRenderProps)=>{
           {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
-        {render()}  
+        <div style={...commonSettings}>
+          {render()}
+        </div>
     </> 
     )
 }
