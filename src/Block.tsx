@@ -84,9 +84,14 @@ export const Block = React.memo((props:BlockProps)=>{
         let templateCss = '';
         if( props.data.template && def.templates ){
           const templateDef = def.templates[props.data.template];
-          if( templateDef.css ){
-             templateCss = css(templateDef.css);
+          if( templateDef ){
+            if( templateDef.css ){
+              templateCss = css(templateDef.css);
+           }
+          }else{
+            console.warn("Template "+props.data.template+" not found.");
           }
+          
         }
         if( def){           
             return <div className={"dmeditor-block block-type-"+props.data.type+(props.data.template?' dmeditor-template-'+props.data.type+'-'+props.data.template:'')+' '+templateCss}  onClick={(e:any)=>activeBlock()}>
