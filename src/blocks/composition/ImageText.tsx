@@ -8,6 +8,7 @@ import { CommonSettings } from "../../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { PropertyButton, PropertyItem, useGetDevice } from "../../utils";
 import { css } from "@emotion/css";
+import { TemplateSettings } from "../../templates/TemplateSettings";
 
 const imagetextStyle = css`
   //mobile style
@@ -92,6 +93,7 @@ const BlockImageText = (props: ToolRenderProps) => {
         </PropertyButton>
         <PropertyButton selected={!imageLeft} onClick={()=>{if(imageLeft){changeAlign()}}}><AlignHorizontalRightOutlined /></PropertyButton>
       </PropertyItem>
+      <TemplateSettings template={props.data.template||''} blocktype='imagetext' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
       <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>                 
     </BlockProperty>}  
     <div className="imagetext_container" style={!isMobile?{display:'flex',flexWrap:flexWrap}:{}}>

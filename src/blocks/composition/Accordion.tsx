@@ -7,6 +7,7 @@ import { BlockProperty } from "../../BlockProperty"
 import { CommonSettings } from '../../CommonSettings';
 import {PropertyButton, Util } from "../../utils";
 import Accordion from 'react-bootstrap/Accordion';
+import { TemplateSettings } from "../../templates/TemplateSettings";
 const nanoid = require('nanoid')
 
 
@@ -116,7 +117,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
 
   
     return <>
-    {props.active&&<BlockProperty  blocktype="accordion" inBlock={true}>
+    {props.active&&<BlockProperty  blocktype="accordion" inBlock={false}>
     <div className={blockTabCss()}>
       {
         accordionList.map((item,index)=>{
@@ -149,6 +150,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
+      <TemplateSettings template={props.data.template||''} blocktype='accordion' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
     <div style={...commonSettings}>  

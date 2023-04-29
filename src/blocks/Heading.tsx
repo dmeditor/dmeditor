@@ -51,7 +51,6 @@ const Heading = (props:ToolRenderProps)=>{
     return (
       <>
         {props.active&&<BlockProperty  blocktype="heading" inBlock={props.inBlock}>
-          <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{props.onChange({...props.data, template: identifier})}} />
           <PropertyItem label="Level">
                 <Ranger defaultValue={level} min={1} max={5} step={1} onChange={(v:any)=>{setLevel(v); defaultValue.current = text;}} />
           </PropertyItem>            
@@ -62,7 +61,8 @@ const Heading = (props:ToolRenderProps)=>{
             </PropertyButton> 
           </PropertyItem>  
           {Util.renderCustomProperty(props.data)}
-        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
+            <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{props.onChange({...props.data, template: identifier})}} />
+            <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
         <div style={...commonSettings}>
           {render()}

@@ -8,6 +8,7 @@ import { CommonSettings } from '../../CommonSettings';
 import { PropertyButton,Util } from "../../utils";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import { TemplateSettings } from "../../templates/TemplateSettings";
 const nanoid = require('nanoid')
 
 
@@ -174,6 +175,7 @@ const BlockTab = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addTab()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
+      <TemplateSettings template={props.data.template||''} blocktype='tab' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
     <div style={...commonSettings}>  

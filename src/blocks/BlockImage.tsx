@@ -5,6 +5,7 @@ import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyItem,Util,PropertyGroup,Ranger,PickColor } from "../utils";
+import { TemplateSettings } from "../templates/TemplateSettings";
 
 
 export const BlockImage = (props:ToolRenderProps)=>{
@@ -67,6 +68,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
           </PropertyItem> 
         </PropertyGroup>
         {Util.renderCustomProperty(props.data)}
+        <TemplateSettings template={props.data.template||''} blocktype='image' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
     </BlockProperty>}
         <div >

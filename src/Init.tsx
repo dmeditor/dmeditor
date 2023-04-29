@@ -3,7 +3,6 @@ import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
 import { toolBlockTab } from "./blocks/composition/BlockTab";
 import { toolAccordion } from "./blocks/composition/Accordion";
-import { toolButton } from "./blocks/BlockButton";
 import { toolImage } from "./blocks/BlockImage";
 import { toolQuote } from "./blocks/Quote";
 import { toolHeading } from "./blocks/Heading";
@@ -15,7 +14,6 @@ import { css } from "@emotion/css";
 
 registerTool(toolText);
 registerTool(toolImageText);
-registerTool(toolButton);
 registerTool(toolImage);
 registerTool(toolHeading);
 registerTool(toolBlockTab);

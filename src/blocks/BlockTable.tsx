@@ -17,6 +17,7 @@ import { BlockProperty } from "../BlockProperty";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyGroup, PropertyItem,Util,PickColor,Ranger} from "../utils";
 import { CommonSettings } from "../CommonSettings";
+import { TemplateSettings } from "../templates/TemplateSettings";
 
 
 type add = "top" | "right" | "bottom" | "left";
@@ -388,6 +389,7 @@ export const Table = (props: ToolRenderProps) => {
           )}
         </PropertyItem>
         {Util.renderCustomProperty(props.data)}
+        <TemplateSettings template={props.data.template||''} blocktype='table' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete} /></div>
       </BlockProperty>}
       <div className="bani">
