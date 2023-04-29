@@ -7,7 +7,7 @@ import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMa
 import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
-import { BrowseProps, DeviceType, isServer, setDevice, useGetDevice, Util } from './utils/Util';
+import { BrowseProps, DeviceType, isServer, sanitizeBlockData, setDevice, useGetDevice, Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
@@ -196,6 +196,7 @@ export const DMEditor = (props:DMEditorProps)=>{
                       }} 
                       onChange={data=>{
                         let newBlocks = [...blocksRef.current]; //use updated ref to avoid old data
+                        data = sanitizeBlockData(data);
                         newBlocks[index]=data;
                         updateData(newBlocks)
                         setNewBlock(false)

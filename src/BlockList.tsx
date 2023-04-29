@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { Block} from "./Block"
 import { newBlockData } from "./ToolDefinition";
+import { sanitizeBlockData } from "./utils/Util";
 
 
 interface BlockListProps{
@@ -89,6 +90,7 @@ export const BlockList = (props:BlockListProps)=>{
                         active={(props.active&&activeIndex==index)?true:false}
                         onChange={(newData)=>{
                           let newList = [...listRef.current];
+                          newData = sanitizeBlockData(newData);
                           newList[index] = newData;
                           setList(newList);
                         }} onActivate={()=>activate(index)} data={childData}
