@@ -206,7 +206,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   },[isFocus])
 
   return (
-    <div style={...commonSettings} className={ReactResizableCss()}>
+    <div style={...commonSettings} className={ReactResizableCss}>
       <Slate editor={editor} value={value} onChange={v => change(v)}>
       {props.active&&<BlockProperty  blocktype="text" inBlock={props.inBlock}>
         <PropertyGroup header="Basic">

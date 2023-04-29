@@ -241,7 +241,7 @@ export const Table = (props: ToolRenderProps) => {
     setIsChange(!isChange)
   };
   return (
-    <div className={tableCss()}>
+    <div className={tableCss}>
       {props.active&&<BlockProperty  blocktype="table" inBlock={props.inBlock}>
         <PropertyGroup header="Border">
           <PropertyItem label="Border">

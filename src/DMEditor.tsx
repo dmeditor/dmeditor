@@ -158,7 +158,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
       <ThemeProvider theme={outerTheme}>        
-        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorEditCss()+' '+dmeditorViewCss()+' '+ReactResizableCss()}>
+        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorEditCss+' '+dmeditorViewCss+' '+ReactResizableCss}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
@@ -250,7 +250,7 @@ export const DMEditorView = (props:DMEditorViewProps)=>{
     setWidth(width);
   }, []);
 
-    return <div ref={elRef} className={'dmeditor-view '+setMainWidthCssVariable(width+'px')+' '+dmeditorViewCss() + (device!=''?' dmeditor-view-'+device+' ':'')}>
+    return <div ref={elRef} className={'dmeditor-view '+setMainWidthCssVariable(width+'px')+' '+dmeditorViewCss + (device!=''?' dmeditor-view-'+device+' ':'')}>
     {props.data.map((block, index)=>{
         const blockElement = ()=>{
            return  <Block

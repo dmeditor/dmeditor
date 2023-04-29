@@ -3,7 +3,7 @@ import { Util } from "./utils";
 import { ReactResizable } from './utils/ReactResizable';
 
 
-export const dmeditorEditCss = ()=>css`
+export const dmeditorEditCss = css`
   --dme-layout-tool-width: 40px;
   --dme-layout-property-width: 300px;
   --dme-container-width:calc(100vw -  2px - var(--dme-layout-tool-width) - var(--dme-layout-property-width));
@@ -338,7 +338,7 @@ export const setMainWidthCssVariable = (dmeMainWidth:any)=>css`
   }
 `
 
-export const dmeditorViewCss = ()=>css`
+export const dmeditorViewCss = css`
 
 &.dmeditor-view{
   margin:auto;
@@ -391,7 +391,7 @@ export const dmeditorViewCss = ()=>css`
 }
 `;
 
-export const ReactResizableCss = () => css`
+export const ReactResizableCss = css`
 .react-resizable {
   position: relative;
 }
