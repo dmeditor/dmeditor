@@ -84,7 +84,7 @@ export const dmeditorEditCss = ()=>css`
     }
 }
 
-.block-container{
+.dme-block-container{
   position: relative;
 }
 
@@ -93,19 +93,19 @@ export const dmeditorEditCss = ()=>css`
 }
 
 .viewmode-edit{
-  .block-container:not(.inblock):hover > .tool, 
-  .block-container.active .block-container:hover > .tool,
-  .block-container.active > .tool{
+  .dme-block-container:not(.inblock):hover > .tool, 
+  .dme-block-container.active .dme-block-container:hover > .tool,
+  .dme-block-container.active > .tool{
     display: block;
     z-index: 100;
   }
 
-  .block-container:not(.inblock):hover{
+  .dme-block-container:not(.inblock):hover{
     outline: 1px dashed #00721f;
     outline-offset: 1px;
   }
 
-  .block-container.active .inblock.block-container:hover, .viewmode-edit .active.inblock{
+  .dme-block-container.active .inblock.dme-block-container:hover, .viewmode-edit .active.inblock{
     outline: 1px dashed #00721f !important;
     outline-offset: 1px;
   }
@@ -213,12 +213,12 @@ a:hover{
   outline: 1px solid rgba(0,0,0,0);
 }
 
-.viewmode-edit .block-container:not(.inblock).active{
+.viewmode-edit .dme-block-container:not(.inblock).active{
   outline: 1px solid #00721f !important;
   outline-offset: 1px;
 }
 
-.viewmode-edit .block-container.inblock.active{
+.viewmode-edit .dme-block-container.inblock.active{
   outline: 1px dashed #00721f !important;
   outline-offset: 1px;
 }
@@ -316,11 +316,11 @@ a:hover{
   padding: 5px;
 }
 
-.block-container.active > .tool{
+.dme-block-container.active > .tool{
   opacity: 0;
 }
 
-.block-container.active > .tool:hover{
+.dme-block-container.active > .tool:hover{
   opacity: 1;
 }
 
@@ -348,10 +348,10 @@ export const dmeditorViewCss = ()=>css`
   background: #f9f9f9;
 }
 
-.block-type-text div[data-slate-editor='true']{
+.dme-blocktype-text div[data-slate-editor='true']{
    overflow:hidden;
 }
-.block-type-text span{
+.dme-blocktype-text span{
   vertical-align: top!important;
 }
 .fullScreen{
@@ -359,7 +359,7 @@ export const dmeditorViewCss = ()=>css`
   margin-left: calc(-1*(var(--dme-container-width) - var(--dme-main-width)) / 2)!important;
 }
 
-.block-container{
+.dme-block-container{
   position: relative;
 }
 .image-caption{

@@ -94,7 +94,7 @@ export const Block = React.memo((props:BlockProps)=>{
           
         }
         if( def){           
-            return <div className={"dmeditor-block block-type-"+props.data.type+(props.data.template?' dmeditor-template-'+props.data.type+'-'+props.data.template:'')+' '+templateCss}  onClick={(e:any)=>activeBlock()}>
+            return <div className={"dmeditor-block dme-blocktype-"+props.data.type+(props.data.template?' dme-template-'+props.data.type+'-'+props.data.template:'')+' '+templateCss}  onClick={(e:any)=>activeBlock()}>
               {props.view && <def.view data={props.data} />}
               {!props.view&&<def.render adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} onDelete={props.onDelete} />}
             </div>
@@ -103,7 +103,7 @@ export const Block = React.memo((props:BlockProps)=>{
         }
     };
 
-    return <div className={'block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} id={props.data.id}>
+    return <div className={'dme-block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} id={props.data.id}>
             {selectingTool&&<RenderMenu onAdd={addBlock} onCancel={()=>setSelectingTool(false)} allowedType ={props.addedType} />}
             {!props.view&&props.siblingDirection==='vertical'&&<div className="tool tool-above">
                             <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
