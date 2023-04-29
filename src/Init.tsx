@@ -11,6 +11,7 @@ import { toolVideo } from "./blocks/BlockVideo";
 import { toolIframe } from "./blocks/IFrame";
 import { toolCode } from "./blocks/Code";
 import { css } from "@emotion/css";
+import { initTemplates } from "./templates/InitTemplates";
 
 registerTool(toolText);
 registerTool(toolImageText);
@@ -24,36 +25,4 @@ registerTool(toolVideo);
 registerTool(toolCode);
 registerTool(toolIframe);
 
-//templates
-registerTemplate({ blocktype: 'heading', identifier:'gradient', 
-    name:'Gradient', 
-    initData: ()=>{
-      const data = toolHeading.initData();
-      return {...data, data:'Hello', common:{...data.common, color: '#9C27B0' }}
-    }, 
-    css: css`
-       h1, h2, h3, h4, h5{
-        background-image: linear-gradient(45deg, #2c00ff, #ff009b);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
-      }
-    `,
-    icon:toolHeading.menu.icon });
-registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose image text', 
-    initData: ()=>{
-      const data = toolImageText.initData();
-      return {...data, common:{...data.common, color: '#ffffff', backgroundColor: '#133e48'}}; 
-    },
-    icon:toolImageText.menu.icon }
-    );
-
-//global
-if( (typeof window !== "undefined") && (window as any).dmeditor ){
-  let templates = (window as any).dmeditor.templates;
-  if(templates){
-    for( const template of templates ){
-      registerTemplate(template)
-    }
-  }
-}
+initTemplates()
