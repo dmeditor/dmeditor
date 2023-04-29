@@ -1,4 +1,4 @@
-import { registerTemplate, registerTool } from "./ToolDefinition";
+import { registerTool } from "./ToolDefinition";
 import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
 import { toolBlockTab } from "./blocks/composition/BlockTab";
@@ -10,7 +10,6 @@ import { toolTable } from "./blocks/BlockTable";
 import { toolVideo } from "./blocks/BlockVideo";
 import { toolIframe } from "./blocks/IFrame";
 import { toolCode } from "./blocks/Code";
-import { css } from "@emotion/css";
 import { initTemplates } from "./templates/InitTemplates";
 
 registerTool(toolText);

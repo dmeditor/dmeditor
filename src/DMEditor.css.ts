@@ -342,7 +342,6 @@ export const dmeditorViewCss = ()=>css`
 
 &.dmeditor-view{
   margin:auto;
-  background: white;
   width:100%;
 }
 .box{
