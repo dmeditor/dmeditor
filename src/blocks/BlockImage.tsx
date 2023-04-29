@@ -6,6 +6,7 @@ import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyItem,Util,PropertyGroup,Ranger,PickColor } from "../utils";
 import { TemplateSettings } from "../templates/TemplateSettings";
+import { getTemplateCss } from "../Block";
 
 
 export const BlockImage = (props:ToolRenderProps)=>{
@@ -16,6 +17,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||0);
     const [borderColor, setBorderColor] = useState(props.data?.settings?.borderColor||'transparent');
+    const [template, setTemplate] = useState(props.data.template);
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
         if(type === 'input'){
@@ -41,11 +43,11 @@ export const BlockImage = (props:ToolRenderProps)=>{
     // }
     // },[])
     useEffect(()=>{
-        props.onChange({...props.data, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor}, common: commonSettings });
-    }, [text, fullScreen,borderWidth,borderColor, commonSettings])
+        props.onChange({...props.data, template:template, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor}, common: commonSettings });
+    }, [text, fullScreen,borderWidth,borderColor, commonSettings, template])
   
 
-  return <div className={fullScreen ? 'fullScreen' : ''} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
+  return <div className={(fullScreen ? 'fullScreen' : '')+' '+ getTemplateCss('image', template)} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
     {adding&&<div>
       <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
     </div>}
@@ -68,7 +70,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
           </PropertyItem> 
         </PropertyGroup>
         {Util.renderCustomProperty(props.data)}
-        <TemplateSettings template={props.data.template||''} blocktype='image' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
+        <TemplateSettings template={props.data.template||''} blocktype='image'  onChange={(identifier:string)=>setTemplate( identifier)} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
     </BlockProperty>}
         <div >

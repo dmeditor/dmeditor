@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Block} from './Block';
-import {dmeditorEditCss, dmeditorViewCss,ReactResizableCss, setMainWidthCssVariable} from './DMEditor.css';
+import {dmeditorEditCss, dmeditorViewCss, setMainWidthCssVariable} from './DMEditor.css';
 import './Init';
 import { MenuList } from './MenuList';
 import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined,MoreHorizOutlined, LinkOutlined, Help, HelpOutline, Settings, SettingsOutlined } from '@mui/icons-material';
@@ -158,7 +158,7 @@ export const DMEditor = (props:DMEditorProps)=>{
       });
     return (
       <ThemeProvider theme={outerTheme}>        
-        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorEditCss+' '+ReactResizableCss}>
+        <div className={(viewmode=='edit'?"  ":"view ") + (settingsShown?"settings ":"") + dmeditorEditCss}>
           <div className="layout-left">
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}

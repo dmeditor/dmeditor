@@ -6,11 +6,13 @@ import { CommonSettings } from '../CommonSettings';
 import { PropertyItem,PropertyButton,Util,Ranger} from '../utils';
 import TextField from '@mui/material/TextField';
 import { TemplateSettings } from '../templates/TemplateSettings';
+import { getTemplateCss } from '../Block';
 
 const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
     const [level,setLevel] = useState(props.data.settings.level);
     const [id,setId] = useState(props.data.settings?.id||'');
+    const [template, setTemplate] = useState(props.data.template);
     const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
     const defaultValue:any=useRef(props.data.data);    
     const changeText = (e?:any)=>{
@@ -44,9 +46,9 @@ const Heading = (props:ToolRenderProps)=>{
     }     
 
     useEffect(()=>{
-        let newData = {...props.data,data:text,settings:{level:level,id:id}, common: {...commonSettings}}
+        let newData = {...props.data,data:text,settings:{level:level,id:id}, common: {...commonSettings}, template: template}
         props.onChange(newData, true);
-    },[text, level, id, commonSettings])
+    },[text, level, id, commonSettings, template])
 
     return (
       <>
@@ -61,10 +63,10 @@ const Heading = (props:ToolRenderProps)=>{
             </PropertyButton> 
           </PropertyItem>  
           {Util.renderCustomProperty(props.data)}
-            <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{props.onChange({...props.data, template: identifier})}} />
+            <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{setTemplate(identifier)}} />
             <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
-        <div style={...commonSettings}>
+        <div style={...commonSettings} className={getTemplateCss('heading', template)}>
           {render()}
         </div>
     </> 

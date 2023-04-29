@@ -1,7 +1,7 @@
 import { AlignHorizontalLeftOutlined, AlignHorizontalRightOutlined,CollectionsOutlined } from "@mui/icons-material";
 // import React from "react";
 import React,{ useEffect, useState } from "react";
-import { Block } from "../../Block";
+import { Block, getTemplateCss } from "../../Block";
 import { BlockList } from '../../BlockList';
 import { BlockProperty } from "../../BlockProperty";
 import { CommonSettings } from "../../CommonSettings";
@@ -39,6 +39,7 @@ const BlockImageText = (props: ToolRenderProps) => {
     }
     return imgWidth;
   });
+  const [template, setTemplate] = useState(props.data.template);
   const [flexWrap,setFlexWrap]=useState('nowrap' as any);
 
   const isMobile = useGetDevice() == 'mobile';
@@ -80,12 +81,12 @@ const BlockImageText = (props: ToolRenderProps) => {
       setFlexWrap('nowrap')
     }
     
-    props.onChange({...props.data, children:list, common: commonSettings})
-  }, [list,commonSettings])
+    props.onChange({...props.data, children:list, template: template, common: commonSettings})
+  }, [list,commonSettings, template])
 
   let imageLeft = list[0].type==='image';
   
-  return <div style={...commonSettings} className={imagetextStyle}>
+  return <div style={...commonSettings} className={imagetextStyle+' '+ getTemplateCss('imagetext', template)}>
     {props.active&&<BlockProperty blocktype="imagetext" inBlock={props.inBlock}>
       <PropertyItem label="Image position" autoWidth>
         <PropertyButton selected={imageLeft} onClick={()=>{if(!imageLeft){changeAlign()}}}>
@@ -93,7 +94,7 @@ const BlockImageText = (props: ToolRenderProps) => {
         </PropertyButton>
         <PropertyButton selected={!imageLeft} onClick={()=>{if(imageLeft){changeAlign()}}}><AlignHorizontalRightOutlined /></PropertyButton>
       </PropertyItem>
-      <TemplateSettings template={props.data.template||''} blocktype='imagetext' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
+      <TemplateSettings template={props.data.template||''} blocktype='imagetext' onChange={(identifier:string)=>setTemplate( identifier)} />
       <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>                 
     </BlockProperty>}  
     <div className="imagetext_container" style={!isMobile?{display:'flex',flexWrap:flexWrap}:{}}>

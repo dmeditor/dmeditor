@@ -8,6 +8,7 @@ import { CommonSettings } from '../../CommonSettings';
 import {PropertyButton, Util } from "../../utils";
 import Accordion from 'react-bootstrap/Accordion';
 import { TemplateSettings } from "../../templates/TemplateSettings";
+import { getTemplateCss } from "../../Block";
 const nanoid = require('nanoid')
 
 
@@ -15,9 +16,10 @@ const BlockAccordion = (props:ToolRenderProps)=>{
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const [activeTabIndex, setActiveTabIndex] = useState(-1);
     const [key, setKey] = useState(0);
-   const [activeIndex, setActiveIndex] = useState(0);
-   const [accordionList,setAccordionList] =  useState<Array<any>>(props.data?.children||[]);
-    
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [accordionList,setAccordionList] =  useState<Array<any>>(props.data?.children||[]);
+    const [template, setTemplate] = useState(props.data.template); 
+   
     const [isChange,setIsChange] = useState(false);
     const expandableItemRef:any=useRef(null);
     
@@ -111,7 +113,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, children:accordionList})
+        props.onChange({...props.data, template:template, children:accordionList})
         setIsChange(false);
     }, [accordionList,isChange])
 
@@ -150,10 +152,10 @@ const BlockAccordion = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
-      <TemplateSettings template={props.data.template||''} blocktype='accordion' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
+      <TemplateSettings template={props.data.template||''} blocktype='accordion' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
-    <div style={...commonSettings}>  
+    <div style={...commonSettings}  className={getTemplateCss('heading', template)}>  
       <Accordion className="expandableList" defaultActiveKey="0">
         {
           accordionList.map((item,index)=>{

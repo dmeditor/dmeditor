@@ -6,6 +6,7 @@ import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyItem,Ranger,Util, useGetDevice } from "../utils";
 import { TemplateSettings } from "../templates/TemplateSettings";
+import { getTemplateCss } from "../Block";
 
 export const BlockIframe = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
@@ -14,6 +15,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [height, setHeight] = useState(props.data.settings.height as number);    
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
     const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [template, setTemplate] = useState(props.data.template);
     
     const isMobile = useGetDevice() === 'mobile';
     
@@ -23,10 +25,10 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align}, common: commonSettings })
-    }, [url, width, align, height, commonSettings]);
+        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align}, common: commonSettings, template:template })
+    }, [url, width, align, height, commonSettings, template]);
 
-    return <div>
+    return <div className={getTemplateCss('iframe', template)}>
             {adding&&<div>
               <Util.renderBroseURL type={'IFrame'} onConfirm={submit} adding={adding} />
             </div>}
@@ -43,7 +45,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                   <PropertyButton selected={align==='right'} onClick={()=>setAlign('right')}><FormatAlignRight /></PropertyButton>
               </PropertyItem>
               {Util.renderCustomProperty(props.data)}
-              <TemplateSettings template={props.data.template||''} blocktype='iframe' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
+              <TemplateSettings template={props.data.template||''} blocktype='iframe' onChange={(identifier:string)=>setTemplate( identifier)} />
               <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
             </BlockProperty>}
             {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={isMobile?'100%':width} height={height} frameBorder="0"></iframe></div>}

@@ -80,21 +80,9 @@ export const Block = React.memo((props:BlockProps)=>{
     }
 
     const render = ()=>{
-        let def = getDef( props.data.type );
-        let templateCss = '';
-        if( props.data.template && def.templates ){
-          const templateDef = def.templates[props.data.template];
-          if( templateDef ){
-            if( templateDef.css ){
-              templateCss = css(templateDef.css);
-           }
-          }else{
-            console.warn("Template "+props.data.template+" not found.");
-          }
-          
-        }
+        let def = getDef( props.data.type );       
         if( def){           
-            return <div className={"dmeditor-block dme-blocktype-"+props.data.type+(props.data.template?' dme-template-'+props.data.type+'-'+props.data.template:'')+' '+templateCss}  onClick={(e:any)=>activeBlock()}>
+            return <div className={"dmeditor-block dme-blocktype-"+props.data.type+(props.data.template?' dme-template-'+props.data.type+'-'+props.data.template:'')}  onClick={(e:any)=>activeBlock()}>
               {props.view && <def.view data={props.data} />}
               {!props.view&&<def.render adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} onDelete={props.onDelete} />}
             </div>
@@ -135,4 +123,20 @@ export const RenderMenu=(props:{onAdd:(type:string, template?:string)=>void, onC
       ,
       menuRoot as HTMLElement
     ):<></>
+}
+
+export const getTemplateCss = ( blocktype: string, template?: string) =>{
+  let def = getDef(blocktype );
+  let templateCss = '';
+  if( template && def.templates ){
+    const templateDef = def.templates[template];
+    if( templateDef ){
+      if( templateDef.css ){
+        templateCss = css(templateDef.css);
+      }
+    }else{
+      console.warn("Template "+template+" not found.");
+    }          
+  }
+  return templateCss;
 }

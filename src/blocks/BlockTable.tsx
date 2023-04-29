@@ -18,6 +18,7 @@ import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyGroup, PropertyItem,Util,PickColor,Ranger} from "../utils";
 import { CommonSettings } from "../CommonSettings";
 import { TemplateSettings } from "../templates/TemplateSettings";
+import { getTemplateCss } from "../Block";
 
 
 type add = "top" | "right" | "bottom" | "left";
@@ -49,6 +50,7 @@ export const Table = (props: ToolRenderProps) => {
   });
   const [commonSettings, setCommonSettings] = useState(props.data.common);
   const [isChange, setIsChange] = useState(false);
+  const [template, setTemplate] = useState(props.data.template);
   const [border, setBorderProp] = useState<bordersType>(() => {
     return Border
   });
@@ -66,6 +68,7 @@ export const Table = (props: ToolRenderProps) => {
         data:content,
         settings: { ...color, padding, border },
         common: commonSettings,
+        template: template,
         type: "table",
       });
   },[props.active,commonSettings,isChange]);
@@ -241,7 +244,7 @@ export const Table = (props: ToolRenderProps) => {
     setIsChange(!isChange)
   };
   return (
-    <div className={tableCss}>
+    <div className={tableCss+' '+ getTemplateCss('table', template)}>
       {props.active&&<BlockProperty  blocktype="table" inBlock={props.inBlock}>
         <PropertyGroup header="Border">
           <PropertyItem label="Border">
@@ -389,7 +392,7 @@ export const Table = (props: ToolRenderProps) => {
           )}
         </PropertyItem>
         {Util.renderCustomProperty(props.data)}
-        <TemplateSettings template={props.data.template||''} blocktype='table' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
+        <TemplateSettings template={props.data.template||''} blocktype='table' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete} /></div>
       </BlockProperty>}
       <div className="bani">

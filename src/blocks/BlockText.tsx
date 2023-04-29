@@ -12,6 +12,7 @@ import FontFamilyList from '../utils/FontFamilyList'
 import { CommonSettings } from "../CommonSettings";
 import { ReactResizableCss } from "../DMEditor.css";
 import { TemplateSettings } from "../templates/TemplateSettings";
+import { getTemplateCss } from "../Block";
 
 export const BlockText = (props:ToolRenderProps)=>{
   const [value,setValue] = useState(props.data.data)
@@ -38,6 +39,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   const firstRender = useRef(true);
   const [hovering, setHovering] = useState(true)
   const [view,setView] = useState(props.view)
+  const [template, setTemplate] = useState(props.data.template);
   const BlockButton = ({formats}:any) => {
     let ele:any
     if(formats ==='left'){
@@ -79,9 +81,9 @@ export const BlockText = (props:ToolRenderProps)=>{
       if (firstRender.current) {
         firstRender.current = false;
       }else{
-        props.onChange({...props.data,data:value, common: commonSettings}, true);
+        props.onChange({...props.data,data:value, template:template, common: commonSettings}, true);
       }
-  },[value,commonSettings])
+  },[value,commonSettings, template])
 
   const changeFontFormat = (v:any,format:any,e?:any)=>{
     if(e){
@@ -206,7 +208,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   },[isFocus])
 
   return (
-    <div style={...commonSettings} className={ReactResizableCss}>
+    <div style={...commonSettings} className={ReactResizableCss+' '+ getTemplateCss('text', template)}>
       <Slate editor={editor} value={value} onChange={v => change(v)}>
       {props.active&&<BlockProperty  blocktype="text" inBlock={props.inBlock}>
         <PropertyGroup header="Basic">
@@ -368,7 +370,7 @@ export const BlockText = (props:ToolRenderProps)=>{
         </PropertyGroup>
         }
         {Util.renderCustomProperty(props.data)}
-        <TemplateSettings template={props.data.template||''} blocktype='text' onChange={(identifier:string)=>{props.onChange({...props.data, template: identifier})}} />
+        <TemplateSettings template={props.data.template||''} blocktype='text' onChange={(identifier:string)=>setTemplate( identifier)} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete} /></div>                 
         </BlockProperty>}
         <div>
@@ -404,7 +406,6 @@ export const BlockText = (props:ToolRenderProps)=>{
       {adding&&<div>
         <Util.renderBroseURL type={dialogType=='image'?'Image':"Link"} hovering={hovering} onConfirm={submitFun} adding={adding} defalutValue={dialogType=='link'?linkVal:''}/>
       </div>}
-      {/* <button onClick={() => { console.log(value) }}>提取数据</button> */}
     </div> 
   )
 }
