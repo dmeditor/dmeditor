@@ -78,12 +78,12 @@ export const getCategories = () => {
 };
 
 export const getAllTemplates = ()=>{
-    let result:Array<{tool: string, templateDef:TemplateDefinition}> = [];
+    let result:Array<{tool: string, toolDef:ToolDefinition, templateDef:TemplateDefinition}> = [];
     for(const tool of Object.keys(defMap)){
         const templates = defMap[tool].templates;
         if( templates ){
             for( const template of Object.keys(templates) ){
-                result = [...result, {tool: tool, templateDef: templates[template]} ];
+                result = [...result, {tool: tool, toolDef:defMap[tool], templateDef: templates[template]} ];
             }
         }
     }

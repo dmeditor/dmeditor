@@ -20,7 +20,7 @@ registerTemplate({ blocktype: 'heading', identifier:'gradient',
       }
     `,
     icon:toolHeading.menu.icon });
-registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose image text', 
+registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose', 
     initData: ()=>{
       const data = toolImageText.initData();
       return {...data, common:{...data.common, color: '#ffffff', backgroundColor: '#133e48'}}; 
