@@ -1,3 +1,4 @@
+import { css } from "@emotion/css";
 import { registerTemplate } from "../ToolDefinition";
 import { toolHeading } from "../blocks/Heading";
 import { toolImageText } from "../blocks/composition/ImageText";
@@ -11,7 +12,7 @@ registerTemplate({ blocktype: 'heading', identifier:'gradient',
       const data = toolHeading.initData();
       return {...data, data:'Hello', common:{...data.common, textAlign:'center' }}
     }, 
-    css: `
+    css: css`
        h1, h2, h3, h4, h5{
         background-image: linear-gradient(45deg, #2c00ff, #ff009b);
         -webkit-background-clip: text;
@@ -25,7 +26,7 @@ registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose',
       const data = toolImageText.initData();
       return {...data, common:{...data.common, color: '#ffffff', backgroundColor: '#133e48'}}; 
     },
-    css: ` 
+    css: css` 
         padding: 20px 30px;
         .dme-imagetext-container > div:first-child .dme-blocklist{
            padding-right: 10px;
@@ -45,7 +46,8 @@ registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose',
 if( (typeof window !== "undefined") && (window as any).dmeditor ){
   let templates = (window as any).dmeditor.templates;
   if(templates){
-    for( const template of templates ){
+    for( let template of templates ){
+      template.css = css(template.css); //generate css
       registerTemplate(template)
     }
   }
