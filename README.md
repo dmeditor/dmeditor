@@ -33,6 +33,12 @@ npm install dmeditor
 #note: for react version 18 you may need --legacy-peer-deps
 ```
 
+### Templates
+Use below in index.html for open source templates ([the template repo](https://github.com/dmeditor/templates)): 
+```
+<script src="https://cdn.jsdelivr.net/gh/dmeditor/templates@main/templates.js"></script>
+```
+
 
 ### Widget list
 [dmeditor-digimaker](https://github.com/digimakergo/dmeditor-digimaker/):  - Content widgets(eg. content grid, Gallary) for digimaker CMF
