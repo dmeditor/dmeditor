@@ -34,7 +34,7 @@ npm install dmeditor
 ```
 
 ### Templates
-Use below in index.html for open source templates ([the template repo](https://github.com/dmeditor/templates)): 
+Put below in index.html to use open source templates ([the template repo](https://github.com/dmeditor/templates)): 
 ```
 <script src="https://cdn.jsdelivr.net/gh/dmeditor/templates@main/templates.js"></script>
 ```
