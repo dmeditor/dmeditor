@@ -8,9 +8,8 @@ export const initTemplates = ()=>{
 //templates
 registerTemplate({ blocktype: 'heading', identifier:'gradient', 
     name:'Gradient', 
-    initData: ()=>{
-      const data = toolHeading.initData();
-      return {...data, data:'Hello', common:{...data.common, textAlign:'center' }}
+    getData: (data)=>{
+      return {...data, common:{...data.common, textAlign:'center' }}
     }, 
     css: css`
        h1, h2, h3, h4, h5{
@@ -22,8 +21,7 @@ registerTemplate({ blocktype: 'heading', identifier:'gradient',
     `,
     icon:toolHeading.menu.icon });
 registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose', 
-    initData: ()=>{
-      const data = toolImageText.initData();
+    getData: (data)=>{
       return {...data, common:{...data.common, color: '#ffffff', backgroundColor: '#133e48'}}; 
     },
     css: css` 

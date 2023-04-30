@@ -1,4 +1,5 @@
 0.1.0-beta.10
+- 2023-04-30 changed initData to getData(data) for template
 
 0.1.0-beta.9
 - 2023-04-29 added: TemplateSettings & heading template changed to gradient

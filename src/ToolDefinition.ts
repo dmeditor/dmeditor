@@ -17,8 +17,8 @@ export interface TemplateDefinition{
     blocktype: string,
     identifier: string,
     name: string,
-    icon?: React.ReactElement,
-    initData:()=>any,
+    icon?: React.ReactElement,    
+    getData?:(data:any)=>any,
     css?:string,   //customized css
     options?: {[setting:string]:any} //customization
 }
@@ -96,20 +96,20 @@ export const registerCategory = (category:{identifier:string, text: string})=>{
 }
 
 export const newBlockData = (type:string, template?:string)=>{
-    var defaultData;
     const def = getDef(type);
+    let defaultData = def.initData();
+    defaultData.id = 'a'+nanoid(10);
     if( template ){
       if( def.templates && def.templates[template] ){
-        defaultData = def.templates[template].initData();
+        const templateDef = def.templates[template];
+        if( templateDef.getData ){
+            defaultData = templateDef.getData(defaultData);
+        }
         defaultData.template = template;
       }else{
         throw "template "+template+ " not found";
       }
-    }else{
-      //todo: optimize this to clone or initData()
-      defaultData = def.initData();
     }
 
-    defaultData.id = 'a'+nanoid(10);   
     return defaultData;
 }
