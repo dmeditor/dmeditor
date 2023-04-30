@@ -70,7 +70,7 @@ export const BlockList = (props:BlockListProps)=>{
         }
     }
 
-    return <div className={'blocklist'}>
+    return <div className={'dme-blocklist'}>
         {list.map( (childData, index)=>
             {
               return <div key={childData.id}>

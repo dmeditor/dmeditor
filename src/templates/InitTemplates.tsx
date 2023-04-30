@@ -27,6 +27,16 @@ registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose',
     },
     css: ` 
         padding: 20px 30px;
+        .dme-imagetext-container > div:first-child .dme-blocklist{
+           padding-right: 10px;
+        }
+        .dme-imagetext-container > div:last-child .dme-blocklist{
+          padding-left: 10px;
+       }
+
+       .dmeditor-view-mobile .dme-blocklist{
+          padding: 0px !important;
+       }
     `,
     icon:toolImageText.menu.icon }
     );

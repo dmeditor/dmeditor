@@ -17,7 +17,7 @@ const imagetextStyle = css`
       width: 100% !important;
     }
 
-    .imagetext_container > div{
+    .dme-imagetext-container > div{
       width: 100% !important;
     }
 }
@@ -97,7 +97,7 @@ const BlockImageText = (props: ToolRenderProps) => {
       <TemplateSettings template={props.data.template||''} blocktype='imagetext' onChange={(identifier:string)=>setTemplate( identifier)} />
       <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>                 
     </BlockProperty>}  
-    <div className="imagetext_container" style={!isMobile?{display:'flex',flexWrap:flexWrap}:{}}>
+    <div className="dme-imagetext-container" style={!isMobile?{display:'flex',flexWrap:flexWrap}:{}}>
       {list.map((item: any,index:any) => {
         return (
           <React.Fragment key={item.id?item.id:index}>
