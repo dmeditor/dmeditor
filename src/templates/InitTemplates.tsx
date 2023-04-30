@@ -34,7 +34,7 @@ registerTemplate( {  blocktype:'imagetext', identifier:'loose', name:'Loose',
           padding-left: 10px;
        }
 
-       .dmeditor-view-mobile .dme-blocklist{
+       .dmeditor-view-mobile & .dme-blocklist{
           padding: 0px !important;
        }
     `,
