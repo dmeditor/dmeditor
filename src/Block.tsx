@@ -132,7 +132,7 @@ export const getTemplateCss = ( blocktype: string, template?: string) =>{
     const templateDef = def.templates[template];
     if( templateDef ){
       if( templateDef.css ){
-        templateCss = css(templateDef.css);
+        templateCss = templateDef.css;
       }
     }else{
       console.warn("Template "+template+" not found.");
