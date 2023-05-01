@@ -350,7 +350,7 @@ export const dmeditorViewCss = css`
 .dme-blocktype-text span{
   vertical-align: top!important;
 }
-.fullScreen{
+.fullscreen{
   width: var(--dme-container-width)!important;
   margin-left: calc(-1*(var(--dme-container-width) - var(--dme-main-width)) / 2)!important;
 }

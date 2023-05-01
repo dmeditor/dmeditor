@@ -47,7 +47,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     }, [text, fullScreen,borderWidth,borderColor, commonSettings, template])
   
 
-  return <div className={(fullScreen ? 'fullScreen' : '')+' '+ getTemplateCss('image', template)} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
+  return <div className={(fullScreen ? 'fullscreen' : '')+' '+ getTemplateCss('image', template)} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
     {adding&&<div>
       <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
     </div>}
