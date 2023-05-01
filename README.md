@@ -29,7 +29,6 @@ See [sample project](https://github.com/dmeditor/dmeditor-sample)
 ```
 npm install dmeditor
 
-#note: for react version 18 you may need --legacy-peer-deps
 ```
 
 ### Templates
