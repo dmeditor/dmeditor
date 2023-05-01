@@ -28,8 +28,8 @@ See [sample project](https://github.com/dmeditor/dmeditor-sample)
 
 ```
 npm install dmeditor
-
 ```
+*Note: to develop widgets, suggest to install `@mui/material` and `@emotion/css` so you get all benefits of mui and emotion css. See sample project for detail.*
 
 ### Templates
 Put below in index.html to use open source templates ([the template repo](https://github.com/dmeditor/templates)): 
