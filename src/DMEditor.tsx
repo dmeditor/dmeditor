@@ -164,7 +164,7 @@ export const DMEditor = (props:DMEditorProps)=>{
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
               <div className='left-tool' style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>                
                 <a href='/' className={viewmode=='edit'?'current':''} onClick={(e)=>{onChangeViewMode(e,'edit')}} title='Edit'><ModeEditOutline /></a>
-                <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{onChangeViewMode(e,'pc')}} title='PC'><LaptopMacOutlined /></a>
+                <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{onChangeViewMode(e,'pc')}} title='Desktop'><LaptopMacOutlined /></a>
                 <a href='/' className={viewmode=='mobile'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'mobile')}} title='Mobile'> <PhoneIphoneOutlined /></a>
                 <a href='/' className={viewmode=='tablet'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'tablet')}} title='Tablet'><TabletMacOutlined /></a>
                 <hr />
