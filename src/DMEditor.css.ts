@@ -96,6 +96,10 @@ export const dmeditorEditCss = css`
     z-index: 100;
   }
 
+  .dmeditor-block a{
+    pointer-events : none;
+  }
+
   .dme-block-container:not(.inblock):hover{
     outline: 1px dashed #00721f;
     outline-offset: 1px;
