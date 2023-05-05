@@ -79,9 +79,9 @@ export const SlateFun:any = {
           return <SlateFun.ImageComponent {...props} />
       default:
         return (
-          <div style={styleP} {...attributes}>
+          <p style={styleP} {...attributes}>
             {children}
-          </div>
+          </p>
         )
     }
   },
