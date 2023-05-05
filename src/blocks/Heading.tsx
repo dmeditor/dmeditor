@@ -1,6 +1,6 @@
 import { TitleOutlined,FormatAlignLeft,FormatAlignCenter,FormatAlignRight,LoopOutlined } from '@mui/icons-material';
 import { BlockProperty } from "../BlockProperty"
-import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
+import { ToolDefinition, ToolRenderProps, getDef } from "../ToolDefinition";
 import React, {useEffect ,useState,useRef} from 'react';
 import { CommonSettings } from '../CommonSettings';
 import { PropertyItem,PropertyButton,Util,Ranger} from '../utils';
@@ -63,7 +63,17 @@ const Heading = (props:ToolRenderProps)=>{
             </PropertyButton> 
           </PropertyItem>  
           {Util.renderCustomProperty(props.data)}
-            <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{setTemplate(identifier)}} />
+            <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{
+                const def = getDef('heading');
+                let data = props.data;
+                if( def.templates && def.templates[identifier] ){
+                  const templateDef = def.templates[identifier];
+                  if( templateDef.getData ){
+                      data = templateDef.getData(props.data);
+                  }
+                  data.template = identifier;
+                  props.onChange(data);
+            }}} />
             <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
         <div style={...commonSettings} className={getTemplateCss('heading', template)}>
