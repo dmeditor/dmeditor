@@ -5,7 +5,6 @@ import { FormatAlignLeft,FormatAlignCenter,FormatAlignRight, DeleteOutline } fro
 
 export const CommonSettings = (props:{commonSettings:any, settingList?: Array<string>, onDelete?:()=>void, onChange:(data:any)=>void})=>{    
     const [settings, setSettings] = useState(props.commonSettings?props.commonSettings:{});
-    const [isChange,setIsChange] = useState(false)
     const [blockOpen, setBlockOpen] = useState(false);
     const [widthType, setWidthType] = useState(()=>{
       if(props.commonSettings){
@@ -25,17 +24,13 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
     // const [align,setAlign] = useState(props.commonSettings?.align||'left');
 
     useEffect(()=>{
-      if(isChange){
         let s={...settings};
         props.onChange(s);
-        setIsChange(false)
-      }
-    },[isChange]);
+    },[settings]);
 
     const changeWidth = (v:any)=>{
       setWidthType(v)
       setSettings({...settings, width: v==='custom'?'150px':v})
-      setIsChange(true)
     }
 
     const containSetting = (setting: string) => {
@@ -63,15 +58,15 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
     return <div>
         <PropertyGroup header='Block settings' expandable={true} open={blockOpen} onOpenClose={(open)=>setBlockOpen(open)}>
             <PropertyItem label="To top">
-                <Ranger min={0} max={100} step={5} defaultValue={settings.marginTop?settings.marginTop:0} onChange={v=>{setSettings({...settings, marginTop: v});setIsChange(true)}} />
+                <Ranger min={0} max={100} step={5} defaultValue={settings.marginTop?settings.marginTop:0} onChange={v=>{setSettings({...settings, marginTop: v})}} />
             </PropertyItem>
             {containSetting('padding')&&<PropertyItem label="Padding">
-                <Ranger min={0} max={30} step={1} defaultValue={settings.padding?settings.padding:0} onChange={v=>{setSettings({...settings, padding: v});setIsChange(true)}}/>
+                <Ranger min={0} max={30} step={1} defaultValue={settings.padding?settings.padding:0} onChange={v=>{setSettings({...settings, padding: v})}}/>
         </PropertyItem>}
         {containSetting('align') && <PropertyItem label="Align">
           {alignList.map((format: any, index: any) => {
             return (
-              <PropertyButton title={format} key={format} onClick={() => { setSettings({ ...settings, textAlign: format }); setIsChange(true) }}
+              <PropertyButton title={format} key={format} onClick={() => { setSettings({ ...settings, textAlign: format }) }}
                 selected={settings.textAlign == format ? true : false}>
                 <BlockButton formats={format} />
               </PropertyButton>
@@ -82,13 +77,13 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
             {containSetting('backgroundColor')&&<PropertyItem label="Background color:" autoWidth={true}>
             <PickColor
               color={settings.backgroundColor?settings.backgroundColor:''}
-              onChange={v=>{setSettings({...settings, backgroundColor: v});setIsChange(true)}}
+              onChange={v=>{setSettings({...settings, backgroundColor: v})}}
             ></PickColor>
             </PropertyItem>}
             {containSetting('color')&&<PropertyItem label="Text color:" autoWidth={true}>
             <PickColor
               color={settings.color?settings.color:'#000000'}
-              onChange={v=>{setSettings({...settings, color: v});setIsChange(true)}}
+              onChange={v=>{setSettings({...settings, color: v})}}
             ></PickColor>
             </PropertyItem>}
             {containSetting('width')&&<PropertyItem label="Width">
@@ -110,7 +105,7 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
                 </MenuItem>
               </Select>
               {widthType==='custom'&&
-                <Ranger min={50} max={800} step={5} defaultValue={settings.width?parseFloat(settings.width):150} onChange={v=>{setSettings({...settings, width: v+'px'});setIsChange(true)}} />
+                <Ranger min={50} max={800} step={5} defaultValue={settings.width?parseFloat(settings.width):150} onChange={v=>{setSettings({...settings, width: v+'px'})}} />
               }
             </PropertyItem>}
         </PropertyGroup>
