@@ -99,7 +99,7 @@ export const BlockText = (props:ToolRenderProps)=>{
     if(format === 'fontFamily'){
       setFamilytype(v)
     }
-    if (isCollapsed !== SlateFun.isCollapsed(editor)) {
+    if (cacheSelection.current && isCollapsed !== SlateFun.isCollapsed(editor)) {
       editor.selection = cacheSelection.current;
     } else {
       cacheSelection.current = JSON.parse(JSON.stringify(editor.selection));
