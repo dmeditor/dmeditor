@@ -3,10 +3,11 @@ import { BlockProperty } from "../BlockProperty"
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import React, {useEffect ,useState,useRef} from 'react';
 import { CommonSettings } from '../CommonSettings';
-import { PropertyItem,PropertyButton,Util,Ranger} from '../utils';
+import { PropertyItem,PropertyButton,Util,Ranger, getCommonVariables, defaultCommonCss} from '../utils';
 import TextField from '@mui/material/TextField';
 import { TemplateSettings } from '../templates/TemplateSettings';
 import { getTemplateCss } from '../Block';
+import { css } from '@emotion/css';
 
 const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
@@ -66,7 +67,7 @@ const Heading = (props:ToolRenderProps)=>{
             <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{setTemplate(identifier)}} />
             <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
-        <div style={...commonSettings} className={getTemplateCss('heading', template)}>
+        <div style={getCommonVariables(commonSettings)} className={'dme-common-vars-initial '+defaultCommonCss+' '+getTemplateCss('heading', template)}>
           {render()}
         </div>
     </> 

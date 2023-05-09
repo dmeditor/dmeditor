@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { Util } from "./utils";
+import { Util, getCommonInitVariables } from "./utils";
 import { ReactResizable } from './utils/ReactResizable';
 
 
@@ -344,6 +344,11 @@ export const dmeditorViewCss = css`
   margin:auto;
   width:100%;
 }
+
+.dme-common-vars-initial{
+  ${getCommonInitVariables()}
+}
+
 .box{
   background: #f9f9f9;
 }

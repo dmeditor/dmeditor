@@ -2,6 +2,7 @@ import * as React from "react";
 import {IconButton, TextField,Button,Dialog, DialogContent, DialogTitle,DialogActions, Input,} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from "react";
+import { css } from "@emotion/css";
 
 export interface BrowseProps{
   type?:any, 
@@ -284,3 +285,41 @@ export const sanitizeBlockData = (data:any)=>{
   }
   return data;
 }
+
+const commonSettingPreifx = '--dme-common';
+const commonCssVariables = {'padding':`${commonSettingPreifx}-padding`, 
+                      'margin-top': `${commonSettingPreifx}-margin-top`, 
+                      'text-align':`${commonSettingPreifx}-text-align`,
+                      'background-color':`${commonSettingPreifx}-background-color`,
+                      'text-color':`${commonSettingPreifx}-text-color`,
+                      'width':`${commonSettingPreifx}-width`,
+                    } as any;
+
+export const getCommonVariables = (commonSettings:any) => {
+  const result = {} as any;
+  for(const key in commonCssVariables){
+    const varName = commonCssVariables[key];
+    if( commonSettings[key] ){
+      result[varName] = commonSettings[key];
+    }
+  }
+  return result as React.CSSProperties;
+}
+
+export const getCommonInitVariables = ()=>{
+  let result = '';
+  for(const key in commonCssVariables){
+    const varName = commonCssVariables[key];
+    result += varName +':initial;';
+  }
+  return result;
+}
+
+export const defaultCommonCss = css`
+  margin-top: var(--dme-common-margin-top);
+  padding: var(--dme-common-padding);
+  text-align: var(--dme-common-text-align);
+  background-color: var(--dme-common-background-color);
+  color: var(--dme-common-text-color);
+  width: var(--dme-common-width);
+`;

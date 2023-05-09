@@ -59,36 +59,44 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
         }
         return ele
       }
+    
+    const pxToNumber = (v:any)=>{
+      let result = 0;
+      if(v.endsWith('px')){
+        result = parseInt(v)
+      }
+      return result
+    }
 
     return <div>
         <PropertyGroup header='Block settings' expandable={true} open={blockOpen} onOpenClose={(open)=>setBlockOpen(open)}>
             <PropertyItem label="To top">
-                <Ranger min={0} max={100} step={5} defaultValue={settings.marginTop?settings.marginTop:0} onChange={v=>{setSettings({...settings, marginTop: v});setIsChange(true)}} />
+                <Ranger min={0} max={100} step={5} defaultValue={settings['margin-top']?pxToNumber(settings['margin-top']):0} onChange={v=>{setSettings({...settings, 'margin-top': v+'px'});setIsChange(true)}} />
             </PropertyItem>
             {containSetting('padding')&&<PropertyItem label="Padding">
-                <Ranger min={0} max={30} step={1} defaultValue={settings.padding?settings.padding:0} onChange={v=>{setSettings({...settings, padding: v});setIsChange(true)}}/>
+                <Ranger min={0} max={30} step={1} defaultValue={settings.padding?pxToNumber(settings.padding):0} onChange={v=>{setSettings({...settings, padding: v+'px'});setIsChange(true)}}/>
         </PropertyItem>}
         {containSetting('align') && <PropertyItem label="Align">
           {alignList.map((format: any, index: any) => {
             return (
-              <PropertyButton title={format} key={format} onClick={() => { setSettings({ ...settings, textAlign: format }); setIsChange(true) }}
-                selected={settings.textAlign == format ? true : false}>
+              <PropertyButton title={format} key={format} onClick={() => { setSettings({ ...settings, 'text-align': format }); setIsChange(true) }}
+                selected={settings['text-align'] == format ? true : false}>
                 <BlockButton formats={format} />
               </PropertyButton>
             )
           })}
         </PropertyItem>
         }
-            {containSetting('backgroundColor')&&<PropertyItem label="Background color:" autoWidth={true}>
+            {containSetting('background-color')&&<PropertyItem label="Background color:" autoWidth={true}>
             <PickColor
-              color={settings.backgroundColor?settings.backgroundColor:''}
-              onChange={v=>{setSettings({...settings, backgroundColor: v});setIsChange(true)}}
+              color={settings['background-color']||''}
+              onChange={v=>{setSettings({...settings, 'background-color': v});setIsChange(true)}}
             ></PickColor>
             </PropertyItem>}
-            {containSetting('color')&&<PropertyItem label="Text color:" autoWidth={true}>
+            {containSetting('text-color')&&<PropertyItem label="Text color:" autoWidth={true}>
             <PickColor
-              color={settings.color?settings.color:'#000000'}
-              onChange={v=>{setSettings({...settings, color: v});setIsChange(true)}}
+              color={settings['text-color']||'#000000'}
+              onChange={v=>{setSettings({...settings, 'text-color': v});setIsChange(true)}}
             ></PickColor>
             </PropertyItem>}
             {containSetting('width')&&<PropertyItem label="Width">
