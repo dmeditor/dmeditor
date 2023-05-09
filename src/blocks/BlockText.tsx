@@ -85,6 +85,7 @@ export const BlockText = (props:ToolRenderProps)=>{
       }
   },[value,commonSettings, template])
 
+  const cacheSelection = useRef()
   const changeFontFormat = (v:any,format:any,e?:any)=>{
     if(e){
       e.preventDefault()
@@ -97,6 +98,11 @@ export const BlockText = (props:ToolRenderProps)=>{
     }
     if(format === 'fontFamily'){
       setFamilytype(v)
+    }
+    if (isCollapsed !== SlateFun.isCollapsed(editor)) {
+      editor.selection = cacheSelection.current;
+    } else {
+      cacheSelection.current = JSON.parse(JSON.stringify(editor.selection));
     }
     SlateFun.toggleFormat(editor,format,v)
     setIsCollapsed(SlateFun.isCollapsed(editor))
