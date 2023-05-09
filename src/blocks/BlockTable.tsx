@@ -19,6 +19,7 @@ import { PropertyButton, PropertyGroup, PropertyItem,Util,PickColor,Ranger} from
 import { CommonSettings } from "../CommonSettings";
 import { TemplateSettings } from "../templates/TemplateSettings";
 import { getTemplateCss } from "../Block";
+import {Checkbox} from '@mui/material'
 
 
 type add = "top" | "right" | "bottom" | "left";
@@ -28,6 +29,56 @@ type bordersType = "none" | "rowBorder" | "border";
 
 interface styelProp {
   [propName: string]: any;
+}
+const RenderTr = ({otherPorp, item, i, isHeader}: {item: string[], i: any, isHeader: boolean, otherPorp: any}) => {
+  const {color, tdStyle, type, clicks, change, active} = otherPorp
+  return <tr
+      key={`row${i}`}
+      style={{
+        backgroundColor: i === 0 ? color.headerColor : "",
+      }}
+      className={!isHeader ? css({
+        "&:nth-child(odd)": {
+          backgroundColor: color.oddColor,
+        },
+      }): ''}
+  >
+    {item.map((data, j) => (
+        isHeader ? <th
+                key={`cell${i}${j}`}
+                onClick={() => clicks(i, j)}
+                className={`table__cell ${
+                    i === type.i && j === type.j && active
+                        ? 'tdActive'
+                        : ''
+                }`}
+                onBlur={(e) => {
+                  change(e, i, j)
+                }}
+                style={tdStyle()}
+            >
+              <div suppressContentEditableWarning
+                   contentEditable={active}>{data}</div>
+            </th>
+            :
+            <td
+                key={`cell${i}${j}`}
+                onClick={() => clicks(i, j)}
+                className={`table__cell ${
+                    i === type.i && j === type.j && active
+                        ? 'tdActive'
+                        : ''
+                }`}
+                onBlur={(e) => {
+                  change(e, i, j)
+                }}
+                style={tdStyle()}
+            >
+              <div suppressContentEditableWarning
+                   contentEditable={active}>{data}</div>
+            </td>
+    ))}
+  </tr>
 }
 export const Table = (props: ToolRenderProps) => {
   const {
@@ -40,6 +91,7 @@ export const Table = (props: ToolRenderProps) => {
   const [content, SetContent] = useState<string[][]>(() => {
     return props?.data?.data;
   });
+  const [hasHeader, setHasHeader] = useState(props.data.settings?.hasHeader ?? false)
   const [padding, setPadding] = useState(() => {
     return Padding;
   });
@@ -66,7 +118,7 @@ export const Table = (props: ToolRenderProps) => {
       props.onChange({
         ...props.data,
         data:content,
-        settings: { ...color, padding, border },
+        settings: { ...color, padding, border, hasHeader },
         common: commonSettings,
         template: template,
         type: "table",
@@ -349,9 +401,16 @@ export const Table = (props: ToolRenderProps) => {
           </PropertyItem>
           <PropertyItem label="Odd row background" autoWidth>
             <PickColor
-              color={color?.oddColor}
-              onChange={changeOddColor}
+                color={color?.oddColor}
+                onChange={changeOddColor}
             ></PickColor>
+          </PropertyItem>
+          <PropertyItem label="Has header"
+                        autoWidth>
+            <Checkbox checked={hasHeader}
+                      onChange={(e, checked: boolean) => {
+                        setHasHeader(checked)
+                      }}/>
           </PropertyItem>
         </PropertyGroup>
         <PropertyItem label="Padding">
@@ -403,41 +462,24 @@ export const Table = (props: ToolRenderProps) => {
             className="bani-table"
             style={{...tableContainer(), width:(commonSettings?commonSettings.width:"initial")}}
           >
+            {hasHeader && <thead>
+            <RenderTr
+                isHeader={true}
+                item={content[0]}
+                i={0}
+                otherPorp={{color, tdStyle, type, clicks, change, active: props.active}}
+            />
+            </thead>}
             <tbody>
-              {content.map((item, i) => {
-                return (
-                  <tr
-                    key={i}
-                    style={{
-                      backgroundColor: i === 0 ? color.headerColor : "",
-                    }}
-                    className={css({
-                      "&:nth-child(odd)": {
-                        backgroundColor: color.oddColor,
-                      },
-                    })}
-                  >
-                    {item.map((data, j) => (
-                      <td
-                        key={j}
-                        onClick={() => clicks(i, j)}
-                        className={`table__cell ${
-                          i === type.i && j === type.j && props.active
-                            ? "tdActive"
-                            : ""
-                        }`}
-                        onBlur={(e) => {
-                          change(e, i, j);
-                        }}
-                        style={tdStyle()}
-                      >
-                       <div suppressContentEditableWarning
-            contentEditable={props.active}>{data}</div>
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
+            {content.slice(hasHeader ? 1 : 0).map((item, i) => {
+              return <RenderTr
+                  key={`RenderTr${i}`}
+                  isHeader={false}
+                  item={item}
+                  i={hasHeader ? (i + 1) : i}
+                  otherPorp={{color, tdStyle, type, clicks, change, active: props.active}}
+              />
+            })}
             </tbody>
           </table>
         </div>
