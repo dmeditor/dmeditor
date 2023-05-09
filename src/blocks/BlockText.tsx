@@ -73,7 +73,7 @@ export const BlockText = (props:ToolRenderProps)=>{
       ImageStyle();
     }} />, [])
   const renderLeaf = useCallback((props:any) => <SlateFun.Leaf {...props} />, [])
-    
+
   const change = (val:any)=>{
     setValue(val)
   }
@@ -85,6 +85,7 @@ export const BlockText = (props:ToolRenderProps)=>{
       }
   },[value,commonSettings, template])
 
+  const cacheSelection = useRef()
   const changeFontFormat = (v:any,format:any,e?:any)=>{
     if(e){
       e.preventDefault()
@@ -97,6 +98,11 @@ export const BlockText = (props:ToolRenderProps)=>{
     }
     if(format === 'fontFamily'){
       setFamilytype(v)
+    }
+    if (isCollapsed !== SlateFun.isCollapsed(editor)) {
+      editor.selection = cacheSelection.current;
+    } else {
+      cacheSelection.current = JSON.parse(JSON.stringify(editor.selection));
     }
     SlateFun.toggleFormat(editor,format,v)
     setIsCollapsed(SlateFun.isCollapsed(editor))
@@ -202,7 +208,7 @@ export const BlockText = (props:ToolRenderProps)=>{
       }
     }
   }
-  
+
   useEffect(()=>{
     ReactEditor.focus(editor)
   },[isFocus])
@@ -238,42 +244,42 @@ export const BlockText = (props:ToolRenderProps)=>{
           {(!isCollapsed||isLinkActive)&&IsShowToolBar('font','font size')&&
             <PropertyItem label='Size'>
                 <Ranger min={8} max={36} step={2} onChange={(v:number,e:any)=>changeFontFormat(v,'fontSize',e)} defaultValue={size?size:14} />
-            </PropertyItem>  
+            </PropertyItem>
           }
           {!isCollapsed&&IsShowToolBar('font','color')&&
             <PropertyItem label='Color'>
                 <PickColor color={color?color:'#000'} onChange={(v:any)=>changeFontFormat(v,'color')} />
-            </PropertyItem> 
+            </PropertyItem>
           }
           {!isButtonActive&&<>
               <PropertyItem label="Align">
-                  {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{           
+                  {IsShowToolBar('tools','align')?SlateFun.TEXT_ALIGN_TYPES.map((format:any,index:any)=>{
                       return (
                       <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}}
                         selected={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}>
                         <BlockButton formats={format} />
-                      </PropertyButton>    
-                      )             
+                      </PropertyButton>
+                      )
                     }
                   ):null}
               </PropertyItem>
-  
+
               {IsShowToolBar('tools','align')||IsShowToolBar('tools','order_list')||IsShowToolBar('tools','list')?
                 <PropertyItem label="List">
                   {IsShowToolBar('tools','list')||IsShowToolBar('tools','order_list')?
                     SlateFun.LIST_TYPES.filter((item:any)=>
                       (item==='numbered-list' && IsShowToolBar('tools','order_list'))|| (item==='bulleted-list'&&IsShowToolBar('tools','list'))
-                    ).map((format:any,index:any)=>{          
+                    ).map((format:any,index:any)=>{
                         return (
-                        <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}} 
+                        <PropertyButton title={SlateFun.getToolText(format)} key={index} onClick={()=>{SlateFun.toggleBlock(editor, format)}}
                         selected={SlateFun.isBlockActive(editor,format,SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}>
                           <BlockButton formats={format} />
-                        </PropertyButton>    
-                        )             
+                        </PropertyButton>
+                        )
                       }
                     )
                     :null}
-                </PropertyItem>   
+                </PropertyItem>
                 :null
               }
             </>
@@ -284,16 +290,16 @@ export const BlockText = (props:ToolRenderProps)=>{
           <PropertyItem label='Insert'>
             <PropertyButton title='Image' onClick={(e)=>{handleClickOpen(e,'image')}}>
               <ImageOutlined />
-            </PropertyButton>   
+            </PropertyButton>
             <PropertyButton title='link' onClick={(e)=>{handleClickOpen(e,"link")}}>
               <LinkOutlined />
-            </PropertyButton>             
-          </PropertyItem> 
+            </PropertyButton>
+          </PropertyItem>
           :null
-          }  
-        </PropertyGroup> 
+          }
+        </PropertyGroup>
         {  (isLinkActive||isButtonActive)&&
-          <PropertyGroup header="Link"> 
+          <PropertyGroup header="Link">
             <PropertyItem label="Style">
               <Select
                 fullWidth
@@ -310,9 +316,9 @@ export const BlockText = (props:ToolRenderProps)=>{
                   Button
                 </MenuItem>
               </Select>
-          </PropertyItem> 
+          </PropertyItem>
           <PropertyItem label="content">
-            <div style={{overflow: 'hidden',textOverflow:'ellipsis', whiteSpace: 'nowrap'}} 
+            <div style={{overflow: 'hidden',textOverflow:'ellipsis', whiteSpace: 'nowrap'}}
               title={linkVal.source.sourceType==='select'?
               '{link:'+linkVal.source.sourceData.location.content_type+','+linkVal.url+'}':
               (linkVal.source.sourceType==='file'?Util.getFileUrl(linkVal.url):linkVal.url)}>
@@ -320,14 +326,14 @@ export const BlockText = (props:ToolRenderProps)=>{
               '{link:'+linkVal.source.sourceData.location.content_type+','+linkVal.url+'}':
               (linkVal.source.sourceType==='file'?Util.getFileUrl(linkVal.url):linkVal.url)}
             </div>
-            <PropertyButton title={'Edit Link'} onClick={()=>{changeDialogLinkfun(linkVal)}}><BorderColorOutlined/></PropertyButton> 
-            <PropertyButton title={'Delete Link'} onClick={()=>{ SlateFun.unwrapLink(editor);SlateEvents()}}><LinkOffOutlined/></PropertyButton> 
-          </PropertyItem> 
+            <PropertyButton title={'Edit Link'} onClick={()=>{changeDialogLinkfun(linkVal)}}><BorderColorOutlined/></PropertyButton>
+            <PropertyButton title={'Delete Link'} onClick={()=>{ SlateFun.unwrapLink(editor);SlateEvents()}}><LinkOffOutlined/></PropertyButton>
+          </PropertyItem>
         </PropertyGroup>
         }
         {  ((isLinkActive&&linkstyle==='button')||isButtonActive)&&
           <>
-          <PropertyGroup header="Link Button"> 
+          <PropertyGroup header="Link Button">
             <PropertyItem label="color">
               <Select
                 fullWidth
@@ -346,32 +352,32 @@ export const BlockText = (props:ToolRenderProps)=>{
                 <MenuItem value="light">light</MenuItem>
                 <MenuItem value="dark">dark</MenuItem>
               </Select>
-            </PropertyItem> 
+            </PropertyItem>
             <PropertyItem label="style">
               <Button size="small" onClick={()=>{changeButtonFormat('contained','variant');}} variant={buttonVariant==='contained'?'outlined':undefined}  >Fill</Button>
               <Button size="small" onClick={()=>{changeButtonFormat('outlined','variant');}} variant={buttonVariant==='outlined'?'outlined':undefined}   >Ourlined</Button>
-            </PropertyItem> 
+            </PropertyItem>
             <PropertyItem label="size">
               <Button size="small" onClick={()=>{changeButtonFormat('small','size');}} variant={buttonSize==='small'?'outlined':undefined} >small </Button>
               <Button size="small" onClick={()=>{changeButtonFormat('medium','size');}} variant={buttonSize==='medium'?'outlined':undefined}   >medium</Button>
               <Button size="small" onClick={()=>{changeButtonFormat('large','size');}} variant={buttonSize==='large'?'outlined':undefined}  >large</Button>
-            </PropertyItem> 
+            </PropertyItem>
         </PropertyGroup>
           </>
         }
         { isImageActive&&
-          <PropertyGroup header="ImageBorder"> 
+          <PropertyGroup header="ImageBorder">
             <PropertyItem label='Width'>
                 <Ranger min={0} max={10} step={1} onChange={(v: number) => { setImageBorderWidth(v); SlateFun.setImageFormat(editor,'borderWidth',v)}} defaultValue={imageBorderWidth?imageBorderWidth:0} />
-            </PropertyItem> 
+            </PropertyItem>
             <PropertyItem label='Color'>
                 <PickColor color={imageBorderColor ? imageBorderColor : 'transparent'} onChange={(v: any) => { setImageBorderColor(v);SlateFun.setImageFormat(editor,'borderColor',v) }} />
-            </PropertyItem> 
+            </PropertyItem>
         </PropertyGroup>
         }
         {Util.renderCustomProperty(props.data)}
         <TemplateSettings template={props.data.template||''} blocktype='text' onChange={(identifier:string)=>setTemplate( identifier)} />
-        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete} /></div>                 
+        <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
         <div>
           <SlateFun.HoveringToolbar config={config?config.hover_toolbar:null}  changeDialogLink={changeDialogLinkfun}/>
@@ -379,7 +385,7 @@ export const BlockText = (props:ToolRenderProps)=>{
               readOnly={props.active?false:true}
               renderLeaf={renderLeaf}
               renderElement={renderElement}
-              placeholder="Input your content here" 
+              placeholder="Input your content here"
               onMouseUp={(event:any)=>{
                 SlateEvents()
               }}
@@ -406,7 +412,7 @@ export const BlockText = (props:ToolRenderProps)=>{
       {adding&&<div>
         <Util.renderBroseURL type={dialogType=='image'?'Image':"Link"} hovering={hovering} onConfirm={submitFun} adding={adding} defalutValue={dialogType=='link'?linkVal:''}/>
       </div>}
-    </div> 
+    </div>
   )
 }
 
@@ -421,7 +427,7 @@ export const toolText:ToolDefinition = {
         type:'text',
         data:[
             {type: 'paragraph',
-            children:[ 
+            children:[
               {
                 text: '',
               }
