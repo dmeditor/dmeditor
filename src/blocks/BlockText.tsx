@@ -12,7 +12,7 @@ import FontFamilyList from '../utils/FontFamilyList'
 import { CommonSettings } from "../CommonSettings";
 import { ReactResizableCss } from "../DMEditor.css";
 import { TemplateSettings } from "../templates/TemplateSettings";
-import { getTemplateCss } from "../Block";
+import { getCommonBlockCss, getTemplateCss } from "../Block";
 
 export const BlockText = (props:ToolRenderProps)=>{
   const [value,setValue] = useState(props.data.data)
@@ -208,7 +208,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   },[isFocus])
 
   return (
-    <div style={...commonSettings} className={ReactResizableCss+' '+ getTemplateCss('text', template)}>
+    <div style={...commonSettings} className={getCommonBlockCss('text', template)+' '+ReactResizableCss}>
       <Slate editor={editor} value={value} onChange={v => change(v)}>
       {props.active&&<BlockProperty  blocktype="text" inBlock={props.inBlock}>
         <PropertyGroup header="Basic">

@@ -6,7 +6,7 @@ import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyItem,Util,PropertyGroup,Ranger,PickColor } from "../utils";
 import { TemplateSettings } from "../templates/TemplateSettings";
-import { getTemplateCss } from "../Block";
+import { getCommonBlockCss, getTemplateCss } from "../Block";
 
 
 export const BlockImage = (props:ToolRenderProps)=>{
@@ -47,7 +47,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     }, [text, fullScreen,borderWidth,borderColor, commonSettings, template])
   
 
-  return <div className={(fullScreen ? 'fullscreen' : '')+' '+ getTemplateCss('image', template)} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
+  return <div className={getCommonBlockCss('image', template)+(fullScreen ? ' fullscreen' : '')} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
     {adding&&<div>
       <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
     </div>}

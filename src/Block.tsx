@@ -47,7 +47,7 @@ export const Block = React.memo((props:BlockProps)=>{
     }, [props.active])
 
     const activeBlock = ()=>{
-        if(props.onActivate){
+        if(props.onActivate && !isActive){
           props.onActivate();
         }
     }
@@ -82,16 +82,16 @@ export const Block = React.memo((props:BlockProps)=>{
     const render = ()=>{
         let def = getDef( props.data.type );       
         if( def){           
-            return <div className={"dmeditor-block dme-blocktype-"+props.data.type+(props.data.template?' dme-template-'+props.data.type+'-'+props.data.template:'')}  onClick={(e:any)=>activeBlock()}>
+            return <>
               {props.view && <def.view data={props.data} />}
               {!props.view&&<def.render adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} onDelete={props.onDelete} />}
-            </div>
+            </>
         }else{
             return 'Unknown type:'+props.data.type;
         }
     };
 
-    return <div className={'dme-block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} id={props.data.id}>
+    return <div className={'dme-block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} id={props.data.id} onClick={(e:any)=>activeBlock()}>
             {selectingTool&&<RenderMenu onAdd={addBlock} onCancel={()=>setSelectingTool(false)} allowedType ={props.addedType} />}
             {!props.view&&props.siblingDirection==='vertical'&&<div className="tool tool-above">
                             <a className="tool-item" href="/" title="Add above" onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
@@ -139,4 +139,14 @@ export const getTemplateCss = ( blocktype: string, template?: string) =>{
     }          
   }
   return templateCss;
+}
+
+
+export const getCommonBlockCss = (blockType:string, template?:string)=>{
+  let result = "dme-block dme-blocktype-"+blockType;
+  if(template){
+    result += ' dme-template-'+blockType+'-'+template;
+    result += ' '+getTemplateCss(blockType, template);
+  }
+  return result;
 }

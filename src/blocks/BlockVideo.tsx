@@ -5,6 +5,7 @@ import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyItem,Ranger,Util } from '../utils';
+import { getCommonBlockCss } from "../Block";
 
 
 export const BlockVideo = (props:ToolRenderProps)=>{
@@ -27,7 +28,7 @@ export const BlockVideo = (props:ToolRenderProps)=>{
       props.onChange({...props.data,data: videoUrl,settings:{width:width,height:height}, common: commonSettings});
     }, [videoUrl,width,height,commonSettings]);
 
-    return <div style={{width: width,height:height, ...commonSettings}}>
+    return <div style={{width: width,height:height, ...commonSettings}} className={getCommonBlockCss('video')}>
             {adding&&<div>
               <Util.renderBroseURL defalutValue={videoUrl} type={'Video'} onConfirm={submitVideo} adding={adding} />
             </div>}

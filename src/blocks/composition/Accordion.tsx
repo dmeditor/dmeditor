@@ -8,7 +8,7 @@ import { CommonSettings } from '../../CommonSettings';
 import {PropertyButton, Util } from "../../utils";
 import Accordion from 'react-bootstrap/Accordion';
 import { TemplateSettings } from "../../templates/TemplateSettings";
-import { getTemplateCss } from "../../Block";
+import { getCommonBlockCss, getTemplateCss } from "../../Block";
 const nanoid = require('nanoid')
 
 
@@ -155,7 +155,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
       <TemplateSettings template={props.data.template||''} blocktype='accordion' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
-    <div style={...commonSettings}  className={getTemplateCss('heading', template)}>  
+    <div style={...commonSettings}  className={getCommonBlockCss('accordion', template)}>  
       <Accordion className="expandableList" defaultActiveKey="0">
         {
           accordionList.map((item,index)=>{

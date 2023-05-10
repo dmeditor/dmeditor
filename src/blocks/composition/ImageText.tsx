@@ -1,7 +1,7 @@
 import { AlignHorizontalLeftOutlined, AlignHorizontalRightOutlined,CollectionsOutlined } from "@mui/icons-material";
 // import React from "react";
 import React,{ useEffect, useState } from "react";
-import { Block, getTemplateCss } from "../../Block";
+import { Block, getCommonBlockCss, getTemplateCss } from "../../Block";
 import { BlockList } from '../../BlockList';
 import { BlockProperty } from "../../BlockProperty";
 import { CommonSettings } from "../../CommonSettings";
@@ -13,7 +13,7 @@ import { TemplateSettings } from "../../templates/TemplateSettings";
 const imagetextStyle = css`
   //mobile style
   .dmeditor-view-mobile & {
-      .block-type-image > div{
+      .block-type-image{
       width: 100% !important;
     }
 
@@ -86,7 +86,7 @@ const BlockImageText = (props: ToolRenderProps) => {
 
   let imageLeft = list[0].type==='image';
   
-  return <div style={...commonSettings} className={imagetextStyle+' '+ getTemplateCss('imagetext', template)}>
+  return <div style={...commonSettings} className={getCommonBlockCss('imagetext', template)+' '+imagetextStyle}>
     {props.active&&<BlockProperty blocktype="imagetext" inBlock={props.inBlock}>
       <PropertyItem label="Image position" autoWidth>
         <PropertyButton selected={imageLeft} onClick={()=>{if(!imageLeft){changeAlign()}}}>

@@ -18,7 +18,7 @@ import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyGroup, PropertyItem,Util,PickColor,Ranger} from "../utils";
 import { CommonSettings } from "../CommonSettings";
 import { TemplateSettings } from "../templates/TemplateSettings";
-import { getTemplateCss } from "../Block";
+import { getCommonBlockCss, getTemplateCss } from "../Block";
 import {Checkbox} from '@mui/material'
 
 
@@ -296,7 +296,7 @@ export const Table = (props: ToolRenderProps) => {
     setIsChange(!isChange)
   };
   return (
-    <div className={tableCss+' '+ getTemplateCss('table', template)}>
+    <div className={getCommonBlockCss('table', template) + tableCss}>
       {props.active&&<BlockProperty  blocktype="table" inBlock={props.inBlock}>
         <PropertyGroup header="Border">
           <PropertyItem label="Border">

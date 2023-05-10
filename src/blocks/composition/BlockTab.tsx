@@ -9,7 +9,7 @@ import { PropertyButton,Util } from "../../utils";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { TemplateSettings } from "../../templates/TemplateSettings";
-import { getTemplateCss } from "../../Block";
+import { getCommonBlockCss, getTemplateCss } from "../../Block";
 const nanoid = require('nanoid')
 
 
@@ -145,7 +145,7 @@ const BlockTab = (props:ToolRenderProps)=>{
     // onDoubleClick
     return <>
     {props.active&&<BlockProperty blocktype="tab" inBlock={true}>
-    <div className={blockTabCss() + ' tabDiv'} ref={tabRef} >
+    <div className={getCommonBlockCss('tab', template)+ ' ' + blockTabCss() + ' tabDiv'} ref={tabRef} >
       {
         tabList.map((item:any,index:any)=>{
           return (

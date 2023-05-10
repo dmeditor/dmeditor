@@ -6,7 +6,7 @@ import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyItem,Ranger,Util, useGetDevice } from "../utils";
 import { TemplateSettings } from "../templates/TemplateSettings";
-import { getTemplateCss } from "../Block";
+import { getCommonBlockCss, getTemplateCss } from "../Block";
 
 export const BlockIframe = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
@@ -28,7 +28,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
         props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align}, common: commonSettings, template:template })
     }, [url, width, align, height, commonSettings, template]);
 
-    return <div className={getTemplateCss('iframe', template)}>
+    return <div className={getCommonBlockCss('iframe', template)}>
             {adding&&<div>
               <Util.renderBroseURL type={'IFrame'} onConfirm={submit} adding={adding} />
             </div>}

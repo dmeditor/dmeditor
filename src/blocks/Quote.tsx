@@ -4,6 +4,7 @@ import { ToolDefinition } from "../ToolDefinition";
 import { useState,useEffect,useRef } from 'react'
 import { CommonSettings } from '../CommonSettings';
 import { Util } from '../utils';
+import { getCommonBlockCss } from '../Block';
 
 
 export const Quote = (props:any)=>{
@@ -37,7 +38,7 @@ export const Quote = (props:any)=>{
            {Util.renderCustomProperty(props.data)}
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
-        <div style={commonSettings}>
+        <div style={commonSettings} className={getCommonBlockCss('quote')}>
         <q ref={QuoteRef} className='block-quote' {...common} suppressContentEditableWarning>{content}</q>
         </div>
     </> 

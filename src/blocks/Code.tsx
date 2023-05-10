@@ -5,6 +5,7 @@ import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { css } from "@emotion/css";
 import { CommonSettings } from "../CommonSettings";
 import { Util } from '../utils';
+import { getCommonBlockCss } from "../Block";
 export const Code = (props: ToolRenderProps) => {
   const [content, SetContent] = useState(props.data.data);
   const [commonSettings, setCommonSettings] = useState(props.data.common);
@@ -27,7 +28,7 @@ export const Code = (props: ToolRenderProps) => {
         {Util.renderCustomProperty(props.data)}
         <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete} /></div>
       </BlockProperty>}
-      <div style={commonSettings}>
+      <div style={commonSettings} className={getCommonBlockCss('code')}>
       <code
         className={css({
           padding: "0.5em 0.8em",
