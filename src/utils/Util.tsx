@@ -315,6 +315,7 @@ export const getCommonInitVariables = ()=>{
   return result;
 }
 
+//todo: maybe can use object way so it's possible to merge
 export const defaultCommonCss = css`
   margin-top: var(--dme-common-margin-top);
   padding: var(--dme-common-padding);
