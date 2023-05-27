@@ -10,6 +10,7 @@ import { toolTable } from "./blocks/BlockTable";
 import { toolVideo } from "./blocks/BlockVideo";
 import { toolIframe } from "./blocks/IFrame";
 import { toolCode } from "./blocks/Code";
+import { toolCollapsableText } from "./blocks/CollapsableText";
 import { initTemplates } from "./templates/InitTemplates";
 
 registerTool(toolText);
@@ -23,5 +24,6 @@ registerTool(toolQuote);
 registerTool(toolVideo);
 registerTool(toolCode);
 registerTool(toolIframe);
+registerTool(toolCollapsableText);
 
 initTemplates()
