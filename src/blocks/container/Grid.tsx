@@ -27,7 +27,7 @@ export const ContainerGrid = (props:any)=>{
     <>
        {props.active&&<BlockProperty  blocktype="container_grid" inBlock={props.inBlock}>
            <PropertyItem label="Columns">
-              <Ranger value={columns} min={1} max={5} onChange={v=>setColumns(v)} />
+              <Ranger value={columns} min={1} max={5} onChange={v=>{setColumns(v);setIsChange(true)}} />
             </PropertyItem>
            {Util.renderCustomProperty(props.data)}
            <TemplateSettings template={props.data.template||''} blocktype='container_grid' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
