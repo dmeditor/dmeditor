@@ -11,23 +11,23 @@ import { BlockList } from '../BlockList';
 import { Input } from '@mui/material';
 
 const defaultCss = css`
-& .dme-common-title{
+& .dme-common-title span{
   cursor: pointer;
   font-weight: bold;
 }
 
-& .dme-common-title::after {
+& .dme-common-title span::after {
     content: '\\25be';
     color: #333333;
     margin-left: 3px;
     font-size: 1.3rem;
 }
 
-& .dme-common-title.dme-common-open::after{
+& .dme-common-title.dme-common-open span::after{
     content: '\\25b4';
 }
 
-& .dme-common-title:hover{
+& .dme-common-title span:hover{
   background-color: #f0f0f0;
 }
 `;
@@ -57,7 +57,9 @@ export const CollapsableText = (props:any)=>{
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
         <div style={commonSettings} className={defaultCss +' '+getCommonBlockCss('collapsable_text')}>
-            <div className={'dme-common-title'+(open?' dme-common-open':'')} onClick={()=>setOpen(!open)}>{title}</div>
+            <div className={'dme-common-title'+(open?' dme-common-open':'')} onClick={()=>setOpen(!open)}>
+              <span>{title}</span>
+            </div>
             <Collapse in={open}>
                 <div className='dme-common-body'>
                 <BlockList view={props.view} allowedType={['text', 'heading','image']} onChange={data=>{setBody(data); setIsChange(true)}} active={props.active} list={body}  onActivate={()=>{}}/>
