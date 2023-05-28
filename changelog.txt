@@ -1,4 +1,6 @@
 0.1.0-beta.10
+- 2023-05-28 added: grid with collapable text sample
+- 2023-05-28 added: collapable text
 - 2023-05-02 updated: disabled all link while editing
 - 2023-04-30 changed initData to getData(data) for template
 

@@ -96,6 +96,10 @@ export const dmeditorEditCss = css`
     z-index: 100;
   }
 
+  .dme-block-container.inblock.active > .tool{
+    z-index: 200;
+  }
+
   .dmeditor-block a{
     pointer-events : none;
   }

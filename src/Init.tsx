@@ -1,4 +1,4 @@
-import { registerTool } from "./ToolDefinition";
+import { registerCategory, registerTool } from "./ToolDefinition";
 import { toolText } from "./blocks/BlockText";
 import { toolImageText } from "./blocks/composition/ImageText";
 import { toolBlockTab } from "./blocks/composition/BlockTab";
@@ -11,6 +11,7 @@ import { toolVideo } from "./blocks/BlockVideo";
 import { toolIframe } from "./blocks/IFrame";
 import { toolCode } from "./blocks/Code";
 import { toolCollapsableText } from "./blocks/CollapsableText";
+import { toolContainerGrid } from "./blocks/container/Grid";
 import { initTemplates } from "./templates/InitTemplates";
 
 registerTool(toolText);
@@ -25,5 +26,7 @@ registerTool(toolVideo);
 registerTool(toolCode);
 registerTool(toolIframe);
 registerTool(toolCollapsableText);
+
+registerTool(toolContainerGrid);
 
 initTemplates()
