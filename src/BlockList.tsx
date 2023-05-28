@@ -7,6 +7,7 @@ import { sanitizeBlockData } from "./utils/Util";
 
 interface BlockListProps{
     list:Array<any>,
+    columns?: number,
     common?:any,    
     active?:boolean,
     settings?:{
@@ -70,7 +71,9 @@ export const BlockList = (props:BlockListProps)=>{
         }
     }
 
-    return <div className={'dme-blocklist'}>
+    const columnCss = (props.columns&&props.columns>1)?(' dm-columns columns-'+props.columns):'';
+
+    return <div className={'dme-blocklist'+columnCss}>
         {list.map( (childData, index)=>
             {
               return <div key={childData.id}>
