@@ -1,4 +1,6 @@
 0.1.0-beta.10
+- 2023-05-29 updated: template list support sorting by name
+- 2023-05-29 fixed: useDevice useEffect not executed in client in dmeditor-server
 - 2023-05-28 added: grid with collapable text sample
 - 2023-05-28 added: collapable text
 - 2023-05-02 updated: disabled all link while editing

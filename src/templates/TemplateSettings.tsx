@@ -14,7 +14,16 @@ export const TemplateSettings = (props:{blocktype:string, template:string, onCha
         return <></>;
     }
 
-    const keys = Object.keys(templates);
+    //get keys sorted by name
+    const keys = Object.keys(templates).sort((a:string, b:string)=>{
+        if( templates[a].name<templates[b].name ){
+            return -1;
+        }else if( templates[a].name > templates[b].name ){
+            return 1;
+        }else{
+            return 0;
+        }
+    });
 
     return <div>
         <PropertyItem label="Template">            
