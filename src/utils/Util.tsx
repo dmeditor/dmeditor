@@ -249,12 +249,9 @@ let _tabletWidthMax = 960;
 
 export type DeviceType = ''|'mobile'|'tablet';
 
-export const useGetDevice = (): DeviceType => {
-    if( isServer() ){
-      return '';
-    }
+export const useGetDevice = (): DeviceType => {    
     const [device, setDevice] = useState('');
-    const handleWindowSizeChange = () => {
+    const setCurrentDevice = () => {
           const width = window.innerWidth;
           let currentDevice = '';
           if(width <= _mobileWidthMax){
@@ -265,10 +262,11 @@ export const useGetDevice = (): DeviceType => {
           setDevice(currentDevice);
     }
 
-    useEffect(() => {
-        window.addEventListener('resize', handleWindowSizeChange);
+    useEffect(() => {       
+        setCurrentDevice();
+        window.addEventListener('resize', setCurrentDevice);
         return () => {
-            window.removeEventListener('resize', handleWindowSizeChange);
+            window.removeEventListener('resize', setCurrentDevice);
         }
     }, []);
 
