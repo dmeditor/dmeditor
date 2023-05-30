@@ -6,7 +6,7 @@ export const ReactResizable = (props: { children:any,width?: number, height?: nu
   const [width, setWidth] = useState(props?.width||SlateFun.IMAGE_WIDTH);
   const [height, setHeight] = useState(props?.height || SlateFun.IMAGE_HEIGHT);
   const [imageScale,setImageScale] = useState(props?.imageScale || Math.round(width / height * 100) / 100)
-  const [lockAspectRatio, setLockAspectRatio] = useState(false);
+  const [lockAspectRatio, setLockAspectRatio] = useState(true);
   
   const onResizeStartFunc = (e: SyntheticEvent<Element, Event>, {element, size, handle}:any) => {
     if (lockAspectRatio) {
@@ -25,14 +25,14 @@ export const ReactResizable = (props: { children:any,width?: number, height?: nu
   const onKeyDown = (e: any) => {
     switch (e.keyCode) {
       case 16:
-        if (lockAspectRatio != true) {
-          setLockAspectRatio(true);
+        if (lockAspectRatio != false) {
+          setLockAspectRatio(false);
         }
         break
     }
   }
   const onKeyUP = () => {
-    setLockAspectRatio(false);
+    setLockAspectRatio(true);
   }
   window.addEventListener("keydown", onKeyDown);
   window.addEventListener("keyup", onKeyUP);
