@@ -18,7 +18,6 @@ const defaultCss = css`
 
 & .dme-common-title span::after {
     content: '\\25be';
-    color: #333333;
     margin-left: 3px;
     font-size: 1.3rem;
 }
