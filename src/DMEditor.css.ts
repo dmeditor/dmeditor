@@ -29,7 +29,14 @@ export const dmeditorEditCss = css`
   }
 
   &.settings{
-      grid-template-columns: var(--dme-layout-tool-width) auto;
+     display:block;
+     height: auto;
+     .layout-left{
+      position: fixed;
+      left:0;
+      top:0;
+      width:var(--dme-layout-tool-width);
+     }
   }
 
   //preview

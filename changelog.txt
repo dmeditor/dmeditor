@@ -1,4 +1,5 @@
 0.1.0-beta.10
+- 2023-05-30 fixed: setting's left menu should be fixed position
 - 2023-05-29 updated: template list support sorting by name
 - 2023-05-29 fixed: useDevice useEffect not executed in client in dmeditor-server
 - 2023-05-28 added: grid with collapable text sample
