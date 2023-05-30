@@ -1,6 +1,6 @@
 import { TitleOutlined } from '@mui/icons-material'
 import { BlockProperty } from "../BlockProperty"
-import { ToolDefinition } from "../ToolDefinition";
+import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { useState,useEffect,useRef } from 'react'
 import { CommonSettings } from '../CommonSettings';
 import { PropertyItem, Util } from '../utils';
@@ -91,6 +91,6 @@ export const toolCollapsableText:ToolDefinition = {
         ] }
   } 
   },
-  view: (props:{data:any})=><CollapsableText data={props.data} active={false} onChange={()=>{}} />,
-  render: (props:{data:any, active:boolean})=><CollapsableText {...props} />
+  view: (props:{data:any})=><CollapsableText view={true} data={props.data} active={false} onChange={()=>{}} />,
+  render: (props:ToolRenderProps)=><CollapsableText {...props} />
 }

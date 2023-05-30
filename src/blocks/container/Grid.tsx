@@ -1,6 +1,6 @@
 import { GridViewOutlined, TitleOutlined } from '@mui/icons-material'
 import { BlockProperty } from "../../BlockProperty"
-import { ToolDefinition } from "../../ToolDefinition";
+import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { useState,useEffect,useRef } from 'react'
 import { CommonSettings } from '../../CommonSettings';
 import { PropertyItem, Ranger, Util } from '../../utils';
@@ -64,6 +64,6 @@ export const toolContainerGrid:ToolDefinition = {
   }] 
   }
   },
-  view: (props:{data:any})=><ContainerGrid data={props.data} active={false} onChange={()=>{}} />,
-  render: (props:{data:any, active:boolean})=><ContainerGrid {...props} />
+  view: (props:{data:any})=><ContainerGrid view={true} data={props.data} active={false} onChange={()=>{}} />,
+  render: (props:ToolRenderProps)=><ContainerGrid {...props} />
 }
