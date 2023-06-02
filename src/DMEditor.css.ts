@@ -469,10 +469,10 @@ export const ReactResizableCss = css`
   transform: rotate(45deg);
 }
 .hover-handles .react-resizable-handle {
-  display: none;
+  visibility: hidden;
 }
 .hover-handles:hover .react-resizable-handle {
-  display: block;
+  visibility: visible;
 }
 
 `

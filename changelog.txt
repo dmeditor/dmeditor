@@ -1,4 +1,5 @@
 0.1.0-beta.10
+- 2023-06-02 fixed: image resize flashing issue in text
 - 2023-06-02 added: container_list
 - 2023-05-30 updated: image in text resize in ratio by default
 - 2023-05-30 fixed: setting's left menu should be fixed position
