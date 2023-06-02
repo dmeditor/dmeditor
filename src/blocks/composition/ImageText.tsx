@@ -138,6 +138,5 @@ export const toolImageText: ToolDefinition = {
             ],"common":{}, "setting":{}}
             ]}
     },
-    view: (props:{data:any})=><BlockImageText view={true} data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
     render:BlockImageText    
 }

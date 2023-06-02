@@ -55,6 +55,5 @@ export const toolContainerList:ToolDefinition = {
         }]          
     }   
   },
-  view: (props:{data:any})=><ContainerList view={true} data={props.data} active={false} onChange={()=>{}} />,
   render: (props:ToolRenderProps)=><ContainerList {...props} />
 }

@@ -239,6 +239,5 @@ export const toolBlockTab: ToolDefinition = {
           ]
         }
     },
-    view: (props:{data:any})=><BlockTab view={true} data={props.data} active={false} onChange={()=>{}} inBlock={false} />,
     render:BlockTab    
 }

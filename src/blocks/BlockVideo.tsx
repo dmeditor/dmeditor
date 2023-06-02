@@ -60,6 +60,5 @@ export const toolVideo:ToolDefinition = {
     initData: ()=>{
       return {type:'video', data:'https://www.runoob.com/try/demo_source/movie.ogg', settings:{}}
     },
-    view: (props:{data:any})=><BlockVideo data={props.data}  inBlock={false} active={false} onChange={()=>{}} />,
     render: (props:ToolRenderProps)=><BlockVideo {...props} />
 }

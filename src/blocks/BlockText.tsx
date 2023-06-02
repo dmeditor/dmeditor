@@ -430,6 +430,5 @@ export const toolText:ToolDefinition = {
           ],
       }
   },
-    view: (props:{data:any})=><BlockText view={true} inBlock={false} data={props.data} active={false} onChange={()=>{}} />,
     render: BlockText
 }

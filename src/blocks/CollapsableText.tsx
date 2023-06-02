@@ -91,6 +91,5 @@ export const toolCollapsableText:ToolDefinition = {
         ] }
   } 
   },
-  view: (props:{data:any})=><CollapsableText view={true} data={props.data} active={false} onChange={()=>{}} />,
   render: (props:ToolRenderProps)=><CollapsableText {...props} />
 }

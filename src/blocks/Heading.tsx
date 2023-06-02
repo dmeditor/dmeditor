@@ -86,6 +86,5 @@ const Heading = (props:ToolRenderProps)=>{
       settings:{level: 2},
    }
   },
-  view: (props:{data:any})=><Heading inBlock={false} data={props.data} active={false} onChange={()=>{}} />,
   render: Heading
 }

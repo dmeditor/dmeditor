@@ -64,6 +64,5 @@ export const toolContainerGrid:ToolDefinition = {
   }] 
   }
   },
-  view: (props:{data:any})=><ContainerGrid view={true} data={props.data} active={false} onChange={()=>{}} />,
   render: (props:ToolRenderProps)=><ContainerGrid {...props} />
 }

@@ -58,6 +58,5 @@ export const toolQuote:ToolDefinition = {
     data:''
   } 
   },
-  view: (props:{data:any})=><Quote data={props.data} active={false} onChange={()=>{}} />,
   render: (props:{data:any, active:boolean})=><Quote {...props} />
 }
