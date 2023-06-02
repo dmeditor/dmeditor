@@ -12,6 +12,7 @@ import { toolIframe } from "./blocks/IFrame";
 import { toolCode } from "./blocks/Code";
 import { toolCollapsableText } from "./blocks/CollapsableText";
 import { toolContainerGrid } from "./blocks/container/Grid";
+import { toolContainerList } from "./blocks/container/List";
 import { initTemplates } from "./templates/InitTemplates";
 
 registerTool(toolText);
@@ -28,5 +29,6 @@ registerTool(toolIframe);
 registerTool(toolCollapsableText);
 
 registerTool(toolContainerGrid);
+registerTool(toolContainerList);
 
 initTemplates()

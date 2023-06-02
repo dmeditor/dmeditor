@@ -34,7 +34,7 @@ export const ContainerGrid = (props:any)=>{
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
         <div style={commonSettings} className={getCommonBlockCss('container_grid', template)}>
-                <BlockList columns={columns} view={props.view} allowedType={['collapsable_text', 'text']} onChange={data=>{setChildren(data);setIsChange(true)}} active={props.active} list={children}  onActivate={()=>{}}/>
+                <BlockList columns={columns} view={props.view} allowedType={['collapsable_text','container_list', 'text']} onChange={data=>{setChildren(data);setIsChange(true)}} active={props.active} list={children}  onActivate={()=>{}}/>
         </div>
     </> 
   )
