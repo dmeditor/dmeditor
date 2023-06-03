@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { Block} from "./Block"
+import { Block, RenderMenu} from "./Block"
 import { newBlockData } from "./ToolDefinition";
 import { sanitizeBlockData } from "./utils/Util";
+import { AddOutlined } from "@mui/icons-material";
+import { Alert, Button } from "@mui/material";
 
 
 interface BlockListProps{
@@ -15,14 +17,16 @@ interface BlockListProps{
     },
     allowedType?:string[],
     view?:boolean,
+    adding?:boolean,
     onChange:(data:any)=>void,
     onActivate?:()=>void
 }
 
 export const BlockList = (props:BlockListProps)=>{
     const [activeIndex, setActiveIndex] = useState(props.active?0:-1);
-    const [list, setList] = useState(props.list);    
+    const [list, setList] = useState(props.list||[]);    
     const listRef = useRef(list); //use ref to avoid data issue when it's debounce change.
+    const [adding, setAdding] = useState(props.adding);
 
     const activate = (index:number)=>{
         setActiveIndex(index);
@@ -73,7 +77,21 @@ export const BlockList = (props:BlockListProps)=>{
 
     const columnCss = (props.columns&&props.columns>1)?(' dm-columns columns-'+props.columns):'';
 
-    return <div className={'dme-blocklist'+columnCss}>
+    return <>
+    {!props.view&&list.length===0&&<>            
+      <div className="dme-message">
+        <Alert severity="info">
+          {!adding&&<>
+          <span>Block is empty. </span><Button onClick={()=>setAdding(true)}><AddOutlined /> Add</Button>
+          </>}
+          {adding&&<>
+            Please select block in the right menu to add.
+          </>}
+        </Alert>
+      </div>
+    </>}
+    <div className={'dme-blocklist'+columnCss}>        
+        {adding&&<RenderMenu onAdd={(type:string, template?:string)=>{addUnder(type, -1, template); setAdding(false)}} onCancel={()=>setAdding(false)} allowedType ={props.allowedType} />}
         {list.map( (childData, index)=>
             {
               return <div key={childData.id}>
@@ -103,4 +121,5 @@ export const BlockList = (props:BlockListProps)=>{
             }
         )}
     </div>
+    </>
 }
