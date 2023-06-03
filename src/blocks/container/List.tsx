@@ -1,9 +1,9 @@
-import { GridViewOutlined, ListAltOutlined, TitleOutlined } from '@mui/icons-material'
+import { DeleteOutline, GridViewOutlined, ListAltOutlined, TitleOutlined } from '@mui/icons-material'
 import { BlockProperty } from "../../BlockProperty"
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { useState,useEffect,useRef } from 'react'
 import { CommonSettings } from '../../CommonSettings';
-import { PropertyItem, Ranger, Util } from '../../utils';
+import { PropertyButton, PropertyItem, Ranger, Util } from '../../utils';
 import { getCommonBlockCss } from '../../Block';
 import { BlockList } from '../../BlockList';
 import { TemplateSettings } from '../../templates/TemplateSettings';
@@ -26,6 +26,11 @@ export const ContainerList = (props:any)=>{
     <>
        {props.active&&<BlockProperty  blocktype="container_list" inBlock={props.inBlock}>           
            <TemplateSettings template={props.data.template||''} blocktype='container_list' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
+           {props.onDelete&&
+            <div style={{float: 'right'}}>
+              <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>
+            </div>
+          }
         </BlockProperty>}
         <div className={getCommonBlockCss('container_list', template)}>
             <BlockList view={props.view} allowedType={['heading','image', 'text','collapsable_text' ]} onChange={data=>{setChildren(data);setIsChange(true)}} active={props.active} list={children}  onActivate={()=>{}}/>
