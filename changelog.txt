@@ -1,4 +1,5 @@
 0.1.0-beta.10
+- 2023-06-03 updated: grid use empty children with adding button(also appy to list when it's empty)
 - 2023-06-02 [api change] removed view in block, use render instead & add type in title of add button
 - 2023-06-02 fixed: image resize flashing issue in text
 - 2023-06-02 added: container_list

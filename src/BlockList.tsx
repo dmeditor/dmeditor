@@ -17,6 +17,7 @@ interface BlockListProps{
     },
     allowedType?:string[],
     view?:boolean,
+    //adding when children is 0
     adding?:boolean,
     onChange:(data:any)=>void,
     onActivate?:()=>void
@@ -89,9 +90,9 @@ export const BlockList = (props:BlockListProps)=>{
           </>}
         </Alert>
       </div>
+      {adding&&<RenderMenu onAdd={(type:string, template?:string)=>{addUnder(type, -1, template); setAdding(false)}} onCancel={()=>setAdding(false)} allowedType ={props.allowedType} />}
     </>}
     <div className={'dme-blocklist'+columnCss}>        
-        {adding&&<RenderMenu onAdd={(type:string, template?:string)=>{addUnder(type, -1, template); setAdding(false)}} onCancel={()=>setAdding(false)} allowedType ={props.allowedType} />}
         {list.map( (childData, index)=>
             {
               return <div key={childData.id}>
