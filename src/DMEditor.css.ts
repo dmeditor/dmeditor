@@ -107,6 +107,14 @@ export const dmeditorEditCss = css`
     z-index: 200;
   }
 
+  .dme-block-container.active .dme-block-container.active  > .tool{
+    z-index: 300;
+  }
+
+  .dme-block-container.active .dme-block-container.active .dme-block-container.active  > .tool{
+    z-index: 400;
+  }
+
   .dmeditor-block a{
     pointer-events : none;
   }
