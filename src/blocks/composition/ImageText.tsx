@@ -124,7 +124,7 @@ export const toolImageText: ToolDefinition = {
         settings:{childrenHorizontal: true},
         data:'',
         children:[ 
-            {type:'image', data:{url:'https://p3.itc.cn/q_70/images03/20210617/7391a10649bb4756b97925dddfb26f65.jpeg'},settings:{}},
+            {type:'image', data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'},settings:{}},
             {type:'list', children:[
                 {type:'heading', id:'1', data:'Title', common:{}, settings:{level: 2}},
                 {"type":"text", id:'2', "data":[

@@ -1,6 +1,7 @@
 0.1.0-beta.10
-- 2023-06-04 added: differeciate tempalte(a pre-defined widget from exisiting widget) with style(a style)
-- 2023-06-03 fixed: multi layer add above & under tool
+- 2023-06-05 updated: default image to use dmeditor's template repo
+- 2023-06-05 added: differeciate tempalte(a pre-defined widget from exisiting widget) with style(a style)
+- 2023-06-04 fixed: multi layer add above & under tool
 - 2023-06-03 updated: grid use empty children with adding button(also appy to list when it's empty)
 - 2023-06-02 [api change] removed view in block, use render instead & add type in title of add button
 - 2023-06-02 fixed: image resize flashing issue in text

@@ -12,7 +12,7 @@ registerTemplate(
         type: 'container_list',
         children: [
             {type:'image', 
-            data:{url:'https://p3.itc.cn/q_70/images03/20210617/7391a10649bb4756b97925dddfb26f65.jpeg'}},
+            data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'}},
             {type:'heading', 
             settings:{level:2},
             data:'Heading'},
@@ -39,7 +39,7 @@ registerTemplate(
                     type: 'container_list',
                     children: [
                         {type:'image', 
-                        data:{url:'https://p3.itc.cn/q_70/images03/20210617/7391a10649bb4756b97925dddfb26f65.jpeg'}},
+                        data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'}},
                         {type:'heading', 
                         settings:{level:2},
                         data:'Heading'},
@@ -54,7 +54,7 @@ registerTemplate(
                         type: 'container_list',
                         children: [
                             {type:'image', 
-                            data:{url:'https://p3.itc.cn/q_70/images03/20210617/7391a10649bb4756b97925dddfb26f65.jpeg'}},
+                            data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'}},
                             {type:'heading', 
                             settings:{level:2},
                             data:'Heading'},
@@ -69,7 +69,7 @@ registerTemplate(
                         type: 'container_list',
                         children: [
                             {type:'image', 
-                            data:{url:'https://p3.itc.cn/q_70/images03/20210617/7391a10649bb4756b97925dddfb26f65.jpeg'}},
+                            data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'}},
                             {type:'heading', 
                             settings:{level:2},
                             data:'Heading'},
