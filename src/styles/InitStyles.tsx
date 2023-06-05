@@ -17,7 +17,7 @@ registerStyle({ blocktype: 'heading', identifier:'gradient',
       }
     `,
     icon:toolHeading.menu.icon });
-registerStyle({ blocktype: 'container_grid', identifier:'space-small', 
+registerStyle({ blocktype: 'grid', identifier:'space-small', 
     name:'Small space', 
     css: css`
        .dm-columns > div{

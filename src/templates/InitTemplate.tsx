@@ -5,11 +5,11 @@ import { registerTemplate } from "../ToolDefinition";
 export const initTemplates = ()=>{
 //templates
 registerTemplate(
-    { blocktype: 'container_list', 
+    { blocktype: 'list', 
     id:'heading_text', 
     name:'Heading text',  
     data:{
-        type: 'container_list',
+        type: 'list',
         children: [
             {type:'image', 
             data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'}},
@@ -27,16 +27,16 @@ registerTemplate(
      );
 
 registerTemplate(
-        { blocktype: 'container_grid', 
+        { blocktype: 'grid', 
         id:'heading_text', 
         name:'Heading text grid',  
         data:{
-            type: 'container_grid',
+            type: 'grid',
             settings:{columns:2},
             template: 'space-small',
             children: [
                 {
-                    type: 'container_list',
+                    type: 'list',
                     children: [
                         {type:'image', 
                         data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'}},
@@ -51,7 +51,7 @@ registerTemplate(
                         }]          
                     },
                     {
-                        type: 'container_list',
+                        type: 'list',
                         children: [
                             {type:'image', 
                             data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'}},
@@ -66,7 +66,7 @@ registerTemplate(
                             }]          
                         },
                     {
-                        type: 'container_list',
+                        type: 'list',
                         children: [
                             {type:'image', 
                             data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'}},

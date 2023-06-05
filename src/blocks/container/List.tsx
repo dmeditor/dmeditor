@@ -24,15 +24,15 @@ export const ContainerList = (props:any)=>{
 
   return (
     <>
-       {props.active&&<BlockProperty  blocktype="container_list" inBlock={props.inBlock}>           
-           <StyleSettings template={props.data.template||''} blocktype='container_list' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
+       {props.active&&<BlockProperty  blocktype="list" inBlock={props.inBlock}>           
+           <StyleSettings template={props.data.template||''} blocktype='list' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
            {props.onDelete&&
             <div style={{float: 'right'}}>
               <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>
             </div>
           }
         </BlockProperty>}
-        <div className={getCommonBlockCss('container_list', template)}>
+        <div className={getCommonBlockCss('list', template)}>
             <BlockList view={props.view} allowedType={['heading','image', 'text','collapsable_text' ]} onChange={data=>{setChildren(data);setIsChange(true)}} active={props.active} list={children}  onActivate={()=>{}}/>
         </div>
     </>
@@ -42,13 +42,13 @@ export const ContainerList = (props:any)=>{
 
 
 export const toolContainerList:ToolDefinition = {
-  type: 'container_list',
+  type: 'list',
   isComposited: false,
   name:"List", 
   menu:  {category:'basic',icon: <ListAltOutlined /> },
   initData: ()=>{
     return  {
-    type: 'container_list',
+    type: 'list',
     children: [{type:'heading', 
     settings:{level:2},
     data:'Heading'},

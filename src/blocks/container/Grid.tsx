@@ -25,16 +25,16 @@ export const ContainerGrid = (props:any)=>{
 
   return (
     <>
-       {props.active&&<BlockProperty  blocktype="container_grid" inBlock={props.inBlock}>
+       {props.active&&<BlockProperty  blocktype="grid" inBlock={props.inBlock}>
            <PropertyItem label="Columns">
               <Ranger value={columns} min={1} max={5} onChange={v=>{setColumns(v);setIsChange(true)}} />
             </PropertyItem>
            {Util.renderCustomProperty(props.data)}
-           <StyleSettings template={props.data.template||''} blocktype='container_grid' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
+           <StyleSettings template={props.data.template||''} blocktype='grid' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
-        <div style={commonSettings} className={getCommonBlockCss('container_grid', template)}>
-                <BlockList adding={props.adding} columns={columns} view={props.view} allowedType={['collapsable_text','container_list', 'text']} onChange={data=>{setChildren(data);setIsChange(true)}} active={props.active} list={children}  onActivate={()=>{}}/>
+        <div style={commonSettings} className={getCommonBlockCss('grid', template)}>
+                <BlockList adding={props.adding} columns={columns} view={props.view} allowedType={['collapsable_text','list', 'text']} onChange={data=>{setChildren(data);setIsChange(true)}} active={props.active} list={children}  onActivate={()=>{}}/>
         </div>
     </> 
   )
@@ -43,13 +43,13 @@ export const ContainerGrid = (props:any)=>{
 
 
 export const toolContainerGrid:ToolDefinition = {
-  type: 'container_grid',
+  type: 'grid',
   isComposited: false,
   name:"Grid", 
   menu:  {category:'basic',icon: <GridViewOutlined /> },
   initData: ()=>{
     return  {
-    type: 'container_grid',
+    type: 'grid',
     settings:{columns:2},
     children: [] 
   }
