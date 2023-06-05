@@ -5,12 +5,12 @@ import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyItem,Util,PropertyGroup,Ranger,PickColor } from "../utils";
-import { TemplateSettings } from "../templates/TemplateSettings";
-import { getCommonBlockCss, getTemplateCss } from "../Block";
+import { StyleSettings } from "../styles/StyleSettings";
+import { getCommonBlockCss, getStyleCss } from "../Block";
 
 
 export const BlockImage = (props:ToolRenderProps)=>{
-    const [fullScreen, setFullScreen] = useState(props.data.settings.fullScreen?true:false);    
+    const [fullScreen, setFullScreen] = useState(props.data.settings?.fullScreen?true:false);    
     const [adding, setAdding] = useState(props.adding?true:false);
     const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
@@ -70,7 +70,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
           </PropertyItem> 
         </PropertyGroup>
         {Util.renderCustomProperty(props.data)}
-        <TemplateSettings template={props.data.template||''} blocktype='image'  onChange={(identifier:string)=>setTemplate( identifier)} />
+        <StyleSettings template={props.data.template||''} blocktype='image'  onChange={(identifier:string)=>setTemplate( identifier)} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
     </BlockProperty>}
         <div >

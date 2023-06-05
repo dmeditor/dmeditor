@@ -9,7 +9,7 @@ import { css } from '@emotion/css';
 import { Collapse } from 'react-bootstrap';
 import { BlockList } from '../BlockList';
 import { Input } from '@mui/material';
-import { TemplateSettings } from '../templates/TemplateSettings';
+import { StyleSettings } from '../styles/StyleSettings';
 
 const defaultCss = css`
 & .dme-common-title span{
@@ -54,7 +54,7 @@ export const CollapsableText = (props:any)=>{
                 <Input defaultValue={title} onChange={e=>{setTitle(e.target.value); setIsChange(true)}} />
             </PropertyItem>
            {Util.renderCustomProperty(props.data)}
-           <TemplateSettings template={props.data.template} blocktype='collapsable_text' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
+           <StyleSettings template={props.data.template} blocktype='collapsable_text' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
         <div style={commonSettings} className={defaultCss +' '+getCommonBlockCss('collapsable_text', template)}>

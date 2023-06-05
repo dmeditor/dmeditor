@@ -126,20 +126,20 @@ export const RenderMenu=(props:{onAdd:(type:string, template?:string)=>void, onC
     ):<></>
 }
 
-export const getTemplateCss = ( blocktype: string, template?: string) =>{
+export const getStyleCss = ( blocktype: string, styleIdentifier?: string) =>{
   let def = getDef(blocktype );
-  let templateCss = '';
-  if( template && def.templates ){
-    const templateDef = def.templates[template];
-    if( templateDef ){
-      if( templateDef.css ){
-        templateCss = templateDef.css;
+  let styleCss = '';
+  if( styleIdentifier && def.styles ){
+    const styleDef = def.styles[styleIdentifier];
+    if( styleDef ){
+      if( styleDef.css ){
+        styleCss = styleDef.css;
       }
     }else{
-      console.warn("Template "+template+" not found.");
+      console.warn("Style "+styleIdentifier+" not found.");
     }          
   }
-  return templateCss;
+  return styleCss;
 }
 
 
@@ -147,7 +147,7 @@ export const getCommonBlockCss = (blockType:string, template?:string)=>{
   let result = "dme-block dme-blocktype-"+blockType;
   if(template){
     result += ' dme-template-'+blockType+'-'+template;
-    result += ' '+getTemplateCss(blockType, template);
+    result += ' '+getStyleCss(blockType, template);
   }
   return result;
 }

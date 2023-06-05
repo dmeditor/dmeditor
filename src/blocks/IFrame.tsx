@@ -5,8 +5,8 @@ import { BlockProperty } from "../BlockProperty";
 import { CommonSettings } from "../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyItem,Ranger,Util, useGetDevice } from "../utils";
-import { TemplateSettings } from "../templates/TemplateSettings";
-import { getCommonBlockCss, getTemplateCss } from "../Block";
+import { StyleSettings } from "../styles/StyleSettings";
+import { getCommonBlockCss, getStyleCss } from "../Block";
 
 export const BlockIframe = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
@@ -45,7 +45,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                   <PropertyButton selected={align==='right'} onClick={()=>setAlign('right')}><FormatAlignRight /></PropertyButton>
               </PropertyItem>
               {Util.renderCustomProperty(props.data)}
-              <TemplateSettings template={props.data.template||''} blocktype='iframe' onChange={(identifier:string)=>setTemplate( identifier)} />
+              <StyleSettings template={props.data.template||''} blocktype='iframe' onChange={(identifier:string)=>setTemplate( identifier)} />
               <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
             </BlockProperty>}
             {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={isMobile?'100%':width} height={height} frameBorder="0"></iframe></div>}

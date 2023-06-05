@@ -1,14 +1,14 @@
 import { AlignHorizontalLeftOutlined, AlignHorizontalRightOutlined,CollectionsOutlined } from "@mui/icons-material";
 // import React from "react";
 import React,{ useEffect, useState } from "react";
-import { Block, getCommonBlockCss, getTemplateCss } from "../../Block";
+import { Block, getCommonBlockCss, getStyleCss } from "../../Block";
 import { BlockList } from '../../BlockList';
 import { BlockProperty } from "../../BlockProperty";
 import { CommonSettings } from "../../CommonSettings";
 import { ToolDefinition, ToolRenderProps } from "../../ToolDefinition";
 import { PropertyButton, PropertyItem, useGetDevice } from "../../utils";
 import { css } from "@emotion/css";
-import { TemplateSettings } from "../../templates/TemplateSettings";
+import { StyleSettings } from "../../styles/StyleSettings";
 
 const imagetextStyle = css`
   //mobile style
@@ -94,7 +94,7 @@ const BlockImageText = (props: ToolRenderProps) => {
         </PropertyButton>
         <PropertyButton selected={!imageLeft} onClick={()=>{if(imageLeft){changeAlign()}}}><AlignHorizontalRightOutlined /></PropertyButton>
       </PropertyItem>
-      <TemplateSettings template={props.data.template||''} blocktype='imagetext' onChange={(identifier:string)=>setTemplate( identifier)} />
+      <StyleSettings template={props.data.template||''} blocktype='imagetext' onChange={(identifier:string)=>setTemplate( identifier)} />
       <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>                 
     </BlockProperty>}  
     <div className="dme-imagetext-container" style={!isMobile?{display:'flex',flexWrap:flexWrap}:{}}>

@@ -13,20 +13,27 @@ export interface ToolRenderProps {
 } 
 
 
-export interface TemplateDefinition{
+export interface StyleDefinition{
     blocktype: string,
     identifier: string,
     name: string,
     icon?: React.ReactElement,    
-    getData?:(data:any)=>any,
     css?:string,   //customized css
     options?: {[setting:string]:any} //customization
+}
+
+export interface TemplateDefinition{
+    name: string,
+    blocktype: string,
+    id: string,
+    data: any
 }
 
 export interface ToolDefinition {
     type:string,
     isComposited?: boolean,
     templates?: {[identifier: string]:TemplateDefinition},
+    styles?: {[identifier: string]:StyleDefinition},    
     name: string,
     menu: {category: string, icon: React.ReactElement},
     initData: ()=>any,
@@ -48,6 +55,22 @@ export const getDef = (type:string):ToolDefinition=>{
     return defMap[type];
 }
 
+export const registerStyle = (style:StyleDefinition)=>{
+    const tool = style.blocktype;
+    const def = getDef(tool);
+    if(!def){
+        console.log("Tool not found: "+ tool);
+    }else{
+        if( !def.styles ){
+            let newStyles = {} as {[identifier: string]:StyleDefinition};
+            newStyles[style.identifier] = style;
+            def.styles = newStyles;
+        }else{
+            def.styles[style.identifier] = style;
+        }
+    }
+}
+
 export const registerTemplate = (template:TemplateDefinition)=>{
     const tool = template.blocktype;
     const def = getDef(tool);
@@ -56,10 +79,10 @@ export const registerTemplate = (template:TemplateDefinition)=>{
     }else{
         if( !def.templates ){
             let newTemplates = {} as {[identifier: string]:TemplateDefinition};
-            newTemplates[template.identifier] = template;
+            newTemplates[template.id] = template;
             def.templates = newTemplates;
         }else{
-            def.templates[template.identifier] = template;
+            def.templates[template.id] = template;
         }
     }
 }
@@ -101,10 +124,9 @@ export const newBlockData = (type:string, template?:string)=>{
     if( template ){
       if( def.templates && def.templates[template] ){
         const templateDef = def.templates[template];
-        if( templateDef.getData ){
-            defaultData = templateDef.getData(defaultData);
+        if( templateDef.data ){
+            defaultData = templateDef.data;
         }
-        defaultData.template = template;
       }else{
         throw "template "+template+ " not found";
       }

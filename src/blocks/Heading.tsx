@@ -5,8 +5,8 @@ import React, {useEffect ,useState,useRef} from 'react';
 import { CommonSettings } from '../CommonSettings';
 import { PropertyItem,PropertyButton,Util,Ranger} from '../utils';
 import TextField from '@mui/material/TextField';
-import { TemplateSettings } from '../templates/TemplateSettings';
-import { getCommonBlockCss, getTemplateCss } from '../Block';
+import { StyleSettings } from '../styles/StyleSettings';
+import { getCommonBlockCss, getStyleCss } from '../Block';
 
 const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
@@ -63,7 +63,7 @@ const Heading = (props:ToolRenderProps)=>{
             </PropertyButton> 
           </PropertyItem>  
           {Util.renderCustomProperty(props.data)}
-            <TemplateSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{setTemplate(identifier)}} />
+            <StyleSettings template={props.data.template||''} blocktype='heading' onChange={(identifier)=>{setTemplate(identifier)}} />
             <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
         <div style={...commonSettings} className={getCommonBlockCss('heading', template)}>

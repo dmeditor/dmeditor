@@ -17,8 +17,8 @@ import { BlockProperty } from "../BlockProperty";
 import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { PropertyButton, PropertyGroup, PropertyItem,Util,PickColor,Ranger} from "../utils";
 import { CommonSettings } from "../CommonSettings";
-import { TemplateSettings } from "../templates/TemplateSettings";
-import { getCommonBlockCss, getTemplateCss } from "../Block";
+import { StyleSettings } from "../styles/StyleSettings";
+import { getCommonBlockCss, getStyleCss } from "../Block";
 import {Checkbox} from '@mui/material'
 
 
@@ -451,7 +451,7 @@ export const Table = (props: ToolRenderProps) => {
           )}
         </PropertyItem>
         {Util.renderCustomProperty(props.data)}
-        <TemplateSettings template={props.data.template||''} blocktype='table' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
+        <StyleSettings template={props.data.template||''} blocktype='table' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete} /></div>
       </BlockProperty>}
       <div className="bani">

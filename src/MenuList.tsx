@@ -56,10 +56,10 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
         </div>},
         {title:'Templates', element: <div>
           {templates.map((template:any)=>
-          <div className="moreblock" key={template.templateDef.identifier}>
+          <div className="moreblock" key={template.templateDef.id}>
             <table style={{width:'100%'}}>
             <tbody>
-          <tr onClick={()=>props.onSelect(template.tool, template.templateDef.identifier)}>
+          <tr onClick={()=>props.onSelect(template.tool, template.templateDef.id)}>
               <td style={{width: '28px'}}>{template.templateDef.icon?template.templateDef.icon:template.toolDef.menu.icon}</td>
               <td style={{textAlign:'left'}}>{template.templateDef.name}<span className={css`font-size: 95%; color: #999999; margin-left: 5px;`}>{template.toolDef.name}</span></td></tr>                                 
               </tbody>

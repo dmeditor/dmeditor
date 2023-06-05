@@ -13,7 +13,8 @@ import { toolCode } from "./blocks/Code";
 import { toolCollapsableText } from "./blocks/CollapsableText";
 import { toolContainerGrid } from "./blocks/container/Grid";
 import { toolContainerList } from "./blocks/container/List";
-import { initTemplates } from "./templates/InitTemplates";
+import { initStyles } from "./styles/InitStyles";
+import { initTemplates } from "./templates/InitTemplate";
 
 registerTool(toolText);
 registerTool(toolImageText);
@@ -31,4 +32,6 @@ registerTool(toolCollapsableText);
 registerTool(toolContainerGrid);
 registerTool(toolContainerList);
 
-initTemplates()
+initStyles();
+
+initTemplates();

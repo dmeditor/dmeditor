@@ -6,7 +6,7 @@ import { CommonSettings } from '../../CommonSettings';
 import { PropertyItem, Ranger, Util } from '../../utils';
 import { getCommonBlockCss } from '../../Block';
 import { BlockList } from '../../BlockList';
-import { TemplateSettings } from '../../templates/TemplateSettings';
+import { StyleSettings } from '../../styles/StyleSettings';
 
 
 export const ContainerGrid = (props:any)=>{
@@ -30,7 +30,7 @@ export const ContainerGrid = (props:any)=>{
               <Ranger value={columns} min={1} max={5} onChange={v=>{setColumns(v);setIsChange(true)}} />
             </PropertyItem>
            {Util.renderCustomProperty(props.data)}
-           <TemplateSettings template={props.data.template||''} blocktype='container_grid' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
+           <StyleSettings template={props.data.template||''} blocktype='container_grid' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
         <div style={commonSettings} className={getCommonBlockCss('container_grid', template)}>

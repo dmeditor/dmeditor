@@ -6,7 +6,7 @@ import { CommonSettings } from '../../CommonSettings';
 import { PropertyButton, PropertyItem, Ranger, Util } from '../../utils';
 import { getCommonBlockCss } from '../../Block';
 import { BlockList } from '../../BlockList';
-import { TemplateSettings } from '../../templates/TemplateSettings';
+import { StyleSettings } from '../../styles/StyleSettings';
 import React from 'react';
 
 
@@ -25,7 +25,7 @@ export const ContainerList = (props:any)=>{
   return (
     <>
        {props.active&&<BlockProperty  blocktype="container_list" inBlock={props.inBlock}>           
-           <TemplateSettings template={props.data.template||''} blocktype='container_list' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
+           <StyleSettings template={props.data.template||''} blocktype='container_list' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
            {props.onDelete&&
             <div style={{float: 'right'}}>
               <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>

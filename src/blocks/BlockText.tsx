@@ -11,8 +11,8 @@ import { SlateFun } from '../utils/Slate'
 import FontFamilyList from '../utils/FontFamilyList'
 import { CommonSettings } from "../CommonSettings";
 import { ReactResizableCss } from "../DMEditor.css";
-import { TemplateSettings } from "../templates/TemplateSettings";
-import { getCommonBlockCss, getTemplateCss } from "../Block";
+import { StyleSettings } from "../styles/StyleSettings";
+import { getCommonBlockCss, getStyleCss } from "../Block";
 
 export const BlockText = (props:ToolRenderProps)=>{
   const [value,setValue] = useState(props.data.data)
@@ -370,7 +370,7 @@ export const BlockText = (props:ToolRenderProps)=>{
         </PropertyGroup>
         }
         {Util.renderCustomProperty(props.data)}
-        <TemplateSettings template={props.data.template||''} blocktype='text' onChange={(identifier:string)=>setTemplate( identifier)} />
+        <StyleSettings template={props.data.template||''} blocktype='text' onChange={(identifier:string)=>setTemplate( identifier)} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete} /></div>                 
         </BlockProperty>}
         <div>

@@ -7,8 +7,8 @@ import { BlockProperty } from "../../BlockProperty"
 import { CommonSettings } from '../../CommonSettings';
 import {PropertyButton, Util } from "../../utils";
 import Accordion from 'react-bootstrap/Accordion';
-import { TemplateSettings } from "../../templates/TemplateSettings";
-import { getCommonBlockCss, getTemplateCss } from "../../Block";
+import { StyleSettings } from "../../styles/StyleSettings";
+import { getCommonBlockCss, getStyleCss } from "../../Block";
 const nanoid = require('nanoid')
 
 
@@ -152,7 +152,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
-      <TemplateSettings template={props.data.template||''} blocktype='accordion' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
+      <StyleSettings template={props.data.template||''} blocktype='accordion' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
     <div style={...commonSettings}  className={getCommonBlockCss('accordion', template)}>  
