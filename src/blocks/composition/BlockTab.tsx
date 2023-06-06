@@ -22,7 +22,7 @@ const BlockTab = (props:ToolRenderProps)=>{
   const [tabList,setTabList] =  useState<Array<any>>(props.data?.children||[]);
  
     const [isChange,setIsChange] = useState(false);
-    const [template, setTemplate] = useState(props.data.template);
+    const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
     const tabRef:any=useRef(null);
     
     const onChange = (item:any,index:number)=>{
@@ -123,7 +123,7 @@ const BlockTab = (props:ToolRenderProps)=>{
     }, []);
 
     useEffect(()=>{
-      props.onChange({...props.data, template:template, children:tabList})
+      props.onChange({...props.data, style:styleIdentifier, children:tabList})
       setIsChange(false);
     }, [tabList,isChange])
 
@@ -145,7 +145,7 @@ const BlockTab = (props:ToolRenderProps)=>{
     // onDoubleClick
     return <>
     {props.active&&<BlockProperty blocktype="tab" inBlock={true}>
-    <div className={getCommonBlockCss('tab', template)+ ' ' + blockTabCss() + ' tabDiv'} ref={tabRef} >
+    <div className={getCommonBlockCss('tab', styleIdentifier)+ ' ' + blockTabCss() + ' tabDiv'} ref={tabRef} >
       {
         tabList.map((item:any,index:any)=>{
           return (
@@ -177,10 +177,10 @@ const BlockTab = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addTab()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
-      <StyleSettings template={props.data.template||''} blocktype='tab' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
+      <StyleSettings styleIdentifier={props.data.style||''} blocktype='tab' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
-    <div style={...commonSettings}  className={getStyleCss('heading', template)}>  
+    <div style={...commonSettings}  className={getStyleCss('heading', styleIdentifier)}>  
          <Tabs
           className="blockTab"
           activeKey={key}

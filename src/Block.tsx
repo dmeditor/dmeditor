@@ -143,11 +143,11 @@ export const getStyleCss = ( blocktype: string, styleIdentifier?: string) =>{
 }
 
 
-export const getCommonBlockCss = (blockType:string, template?:string)=>{
+export const getCommonBlockCss = (blockType:string, styleIdentifier?:string)=>{
   let result = "dme-block dme-blocktype-"+blockType;
-  if(template){
-    result += ' dme-template-'+blockType+'-'+template;
-    result += ' '+getStyleCss(blockType, template);
+  if(styleIdentifier){
+    result += ' dme-template-'+blockType+'-'+styleIdentifier;
+    result += ' '+getStyleCss(blockType, styleIdentifier);
   }
   return result;
 }

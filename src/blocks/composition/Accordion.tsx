@@ -18,7 +18,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
     const [key, setKey] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
     const [accordionList,setAccordionList] =  useState<Array<any>>(props.data?.children||[]);
-    const [template, setTemplate] = useState(props.data.template); 
+    const [styleIdentifier, setStyleIdentifier] = useState(props.data.style); 
    
     const [isChange,setIsChange] = useState(false);
     const expandableItemRef:any=useRef(null);
@@ -113,7 +113,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, template:template, children:accordionList})
+        props.onChange({...props.data, style:styleIdentifier, children:accordionList})
         setIsChange(false);
     }, [accordionList,isChange])
 
@@ -152,10 +152,10 @@ const BlockAccordion = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
-      <StyleSettings template={props.data.template||''} blocktype='accordion' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
+      <StyleSettings styleIdentifier={props.data.styleIdentifier||''} blocktype='accordion' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
-    <div style={...commonSettings}  className={getCommonBlockCss('accordion', template)}>  
+    <div style={...commonSettings}  className={getCommonBlockCss('accordion', styleIdentifier)}>  
       <Accordion className="expandableList" defaultActiveKey="0">
         {
           accordionList.map((item,index)=>{

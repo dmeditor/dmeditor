@@ -39,7 +39,7 @@ const BlockImageText = (props: ToolRenderProps) => {
     }
     return imgWidth;
   });
-  const [template, setTemplate] = useState(props.data.template);
+  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
   const [flexWrap,setFlexWrap]=useState('nowrap' as any);
 
   const isMobile = useGetDevice() == 'mobile';
@@ -81,12 +81,12 @@ const BlockImageText = (props: ToolRenderProps) => {
       setFlexWrap('nowrap')
     }
     
-    props.onChange({...props.data, children:list, template: template, common: commonSettings})
-  }, [list,commonSettings, template])
+    props.onChange({...props.data, children:list, style: styleIdentifier, common: commonSettings})
+  }, [list,commonSettings, styleIdentifier])
 
   let imageLeft = list[0].type==='image';
   
-  return <div style={...commonSettings} className={getCommonBlockCss('imagetext', template)+' '+imagetextStyle}>
+  return <div style={...commonSettings} className={getCommonBlockCss('imagetext', styleIdentifier)+' '+imagetextStyle}>
     {props.active&&<BlockProperty blocktype="imagetext" inBlock={props.inBlock}>
       <PropertyItem label="Image position" autoWidth>
         <PropertyButton selected={imageLeft} onClick={()=>{if(!imageLeft){changeAlign()}}}>
@@ -94,7 +94,7 @@ const BlockImageText = (props: ToolRenderProps) => {
         </PropertyButton>
         <PropertyButton selected={!imageLeft} onClick={()=>{if(imageLeft){changeAlign()}}}><AlignHorizontalRightOutlined /></PropertyButton>
       </PropertyItem>
-      <StyleSettings template={props.data.template||''} blocktype='imagetext' onChange={(identifier:string)=>setTemplate( identifier)} />
+      <StyleSettings styleIdentifier={props.data.style||''} blocktype='imagetext' onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
       <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>                 
     </BlockProperty>}  
     <div className="dme-imagetext-container" style={!isMobile?{display:'flex',flexWrap:flexWrap}:{}}>

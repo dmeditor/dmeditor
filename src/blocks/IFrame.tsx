@@ -15,7 +15,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [height, setHeight] = useState(props.data.settings.height as number);    
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
     const [commonSettings, setCommonSettings] = useState(props.data.common);
-    const [template, setTemplate] = useState(props.data.template);
+    const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
     
     const isMobile = useGetDevice() === 'mobile';
     
@@ -25,10 +25,10 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align}, common: commonSettings, template:template })
-    }, [url, width, align, height, commonSettings, template]);
+        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align}, common: commonSettings, style:styleIdentifier })
+    }, [url, width, align, height, commonSettings, styleIdentifier]);
 
-    return <div className={getCommonBlockCss('iframe', template)}>
+    return <div className={getCommonBlockCss('iframe', styleIdentifier)}>
             {adding&&<div>
               <Util.renderBroseURL type={'IFrame'} onConfirm={submit} adding={adding} />
             </div>}
@@ -45,7 +45,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
                   <PropertyButton selected={align==='right'} onClick={()=>setAlign('right')}><FormatAlignRight /></PropertyButton>
               </PropertyItem>
               {Util.renderCustomProperty(props.data)}
-              <StyleSettings template={props.data.template||''} blocktype='iframe' onChange={(identifier:string)=>setTemplate( identifier)} />
+              <StyleSettings styleIdentifier={props.data.style||''} blocktype='iframe' onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
               <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
             </BlockProperty>}
             {url&&<div style={{...commonSettings, textAlign:align}}><iframe src={url} width={isMobile?'100%':width} height={height} frameBorder="0"></iframe></div>}

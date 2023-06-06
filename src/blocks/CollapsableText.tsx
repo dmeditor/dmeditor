@@ -37,12 +37,12 @@ export const CollapsableText = (props:any)=>{
 
   const [commonSettings, setCommonSettings] = useState(props.data.common?props.data.common:{});
   const [isChange,setIsChange] = useState(false);
-  const [template, setTemplate] = useState(props.data.template||'');
+  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style||'');
   const [open, setOpen] = useState(false);  
   
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,template:template,data:{title:title,body: body},settings:{common: commonSettings}});
+    props.onChange({...props.data,style:styleIdentifier,data:{title:title,body: body},settings:{common: commonSettings}});
     setIsChange(false)
    }
   },[isChange])
@@ -54,10 +54,10 @@ export const CollapsableText = (props:any)=>{
                 <Input defaultValue={title} onChange={e=>{setTitle(e.target.value); setIsChange(true)}} />
             </PropertyItem>
            {Util.renderCustomProperty(props.data)}
-           <StyleSettings template={props.data.template} blocktype='collapsable_text' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
+           <StyleSettings styleIdentifier={props.data.style} blocktype='collapsable_text' onChange={(identifier)=>{setStyleIdentifier(identifier); setIsChange(true)}} />
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
-        <div style={commonSettings} className={defaultCss +' '+getCommonBlockCss('collapsable_text', template)}>
+        <div style={commonSettings} className={defaultCss +' '+getCommonBlockCss('collapsable_text', styleIdentifier)}>
             <div className={'dme-common-title'+(open?' dme-common-open':'')} onClick={()=>setOpen(!open)}>
               <span>{title}</span>
             </div>

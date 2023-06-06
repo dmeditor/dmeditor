@@ -39,7 +39,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   const firstRender = useRef(true);
   const [hovering, setHovering] = useState(true)
   const [view,setView] = useState(props.view)
-  const [template, setTemplate] = useState(props.data.template);
+  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
   const BlockButton = ({formats}:any) => {
     let ele:any
     if(formats ==='left'){
@@ -81,9 +81,9 @@ export const BlockText = (props:ToolRenderProps)=>{
       if (firstRender.current) {
         firstRender.current = false;
       }else{
-        props.onChange({...props.data,data:value, template:template, common: commonSettings}, true);
+        props.onChange({...props.data,data:value, style: styleIdentifier, common: commonSettings}, true);
       }
-  },[value,commonSettings, template])
+  },[value,commonSettings, styleIdentifier])
 
   const changeFontFormat = (v:any,format:any,e?:any)=>{
     if(e){
@@ -208,7 +208,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   },[isFocus])
 
   return (
-    <div style={...commonSettings} className={getCommonBlockCss('text', template)+' '+ReactResizableCss}>
+    <div style={...commonSettings} className={getCommonBlockCss('text', styleIdentifier)+' '+ReactResizableCss}>
       <Slate editor={editor} value={value} onChange={v => change(v)}>
       {props.active&&<BlockProperty  blocktype="text" inBlock={props.inBlock}>
         <PropertyGroup header="Basic">
@@ -370,7 +370,7 @@ export const BlockText = (props:ToolRenderProps)=>{
         </PropertyGroup>
         }
         {Util.renderCustomProperty(props.data)}
-        <StyleSettings template={props.data.template||''} blocktype='text' onChange={(identifier:string)=>setTemplate( identifier)} />
+        <StyleSettings styleIdentifier={props.data.style||''} blocktype='text' onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete} /></div>                 
         </BlockProperty>}
         <div>

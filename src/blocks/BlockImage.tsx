@@ -17,7 +17,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [commonSettings, setCommonSettings] = useState(props.data.common);
     const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||0);
     const [borderColor, setBorderColor] = useState(props.data?.settings?.borderColor||'transparent');
-    const [template, setTemplate] = useState(props.data.template);
+    const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
     const submitImage = (val:any,type:string)=>{
         let data = props.data;
         if(type === 'input'){
@@ -43,11 +43,11 @@ export const BlockImage = (props:ToolRenderProps)=>{
     // }
     // },[])
     useEffect(()=>{
-        props.onChange({...props.data, template:template, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor}, common: commonSettings });
-    }, [text, fullScreen,borderWidth,borderColor, commonSettings, template])
+        props.onChange({...props.data, style:styleIdentifier, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor}, common: commonSettings });
+    }, [text, fullScreen,borderWidth,borderColor, commonSettings, styleIdentifier])
   
 
-  return <div className={getCommonBlockCss('image', template)+(fullScreen ? ' fullscreen' : '')} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
+  return <div className={getCommonBlockCss('image', styleIdentifier)+(fullScreen ? ' fullscreen' : '')} style={{...commonSettings,border:`${borderWidth}px solid ${borderColor}`}}>
     {adding&&<div>
       <Util.renderBroseURL type={'Image'} onConfirm={submitImage} adding={adding} />
     </div>}
@@ -70,7 +70,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
           </PropertyItem> 
         </PropertyGroup>
         {Util.renderCustomProperty(props.data)}
-        <StyleSettings template={props.data.template||''} blocktype='image'  onChange={(identifier:string)=>setTemplate( identifier)} />
+        <StyleSettings styleIdentifier={props.data.style||''} blocktype='image'  onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
     </BlockProperty>}
         <div >

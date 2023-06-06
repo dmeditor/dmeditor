@@ -33,7 +33,7 @@ registerTemplate(
         data:{
             type: 'grid',
             settings:{columns:2},
-            template: 'space-small',
+            style: 'space-small',
             children: [
                 {
                     type: 'list',

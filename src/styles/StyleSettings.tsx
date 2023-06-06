@@ -4,7 +4,7 @@ import { MenuItem, Select } from "@mui/material";
 import { PropertyItem } from "../utils";
 
 
-export const StyleSettings = (props:{blocktype:string, template:string, onChange:(template:string)=>void})=>{
+export const StyleSettings = (props:{blocktype:string, styleIdentifier:string, onChange:(template:string)=>void})=>{
 
     const def = getDef(props.blocktype);
 
@@ -30,7 +30,7 @@ export const StyleSettings = (props:{blocktype:string, template:string, onChange
                 <Select
                 size="small"
                 displayEmpty
-                defaultValue={props.template}
+                defaultValue={props.styleIdentifier}
                 onChange={(e)=>props.onChange(e.target.value)}>
                 <MenuItem value=''>None</MenuItem>
                 {keys.map(identifier=><MenuItem value={identifier}>{styles[identifier].name}</MenuItem>)}            

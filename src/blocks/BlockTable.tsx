@@ -102,7 +102,7 @@ export const Table = (props: ToolRenderProps) => {
   });
   const [commonSettings, setCommonSettings] = useState(props.data.common);
   const [isChange, setIsChange] = useState(false);
-  const [template, setTemplate] = useState(props.data.template);
+  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
   const [border, setBorderProp] = useState<bordersType>(() => {
     return Border
   });
@@ -120,7 +120,7 @@ export const Table = (props: ToolRenderProps) => {
         data:content,
         settings: { ...color, padding, border, hasHeader },
         common: commonSettings,
-        template: template,
+        style: styleIdentifier,
         type: "table",
       });
   },[props.active,commonSettings,isChange]);
@@ -296,7 +296,7 @@ export const Table = (props: ToolRenderProps) => {
     setIsChange(!isChange)
   };
   return (
-    <div className={getCommonBlockCss('table', template) + tableCss}>
+    <div className={getCommonBlockCss('table', styleIdentifier) + tableCss}>
       {props.active&&<BlockProperty  blocktype="table" inBlock={props.inBlock}>
         <PropertyGroup header="Border">
           <PropertyItem label="Border">
@@ -451,7 +451,7 @@ export const Table = (props: ToolRenderProps) => {
           )}
         </PropertyItem>
         {Util.renderCustomProperty(props.data)}
-        <StyleSettings template={props.data.template||''} blocktype='table' onChange={(identifier:string)=>{setTemplate( identifier); setIsChange(true)}} />
+        <StyleSettings styleIdentifier={props.data.style||''} blocktype='table' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete} /></div>
       </BlockProperty>}
       <div className="bani">

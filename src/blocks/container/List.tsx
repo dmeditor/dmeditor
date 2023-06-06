@@ -13,11 +13,11 @@ import React from 'react';
 export const ContainerList = (props:any)=>{
   const [children, setChildren] = useState( props.data.children );
   const [isChange,setIsChange] = useState(false);
-  const [template, setTemplate] = useState(props.data.template||'');
+  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style||'');
 
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,template:template,children:children});
+    props.onChange({...props.data,style:styleIdentifier,children:children});
     setIsChange(false)
    }
   },[isChange])
@@ -25,14 +25,14 @@ export const ContainerList = (props:any)=>{
   return (
     <>
        {props.active&&<BlockProperty  blocktype="list" inBlock={props.inBlock}>           
-           <StyleSettings template={props.data.template||''} blocktype='list' onChange={(identifier)=>{setTemplate(identifier); setIsChange(true)}} />
+           <StyleSettings styleIdentifier={props.data.style||''} blocktype='list' onChange={(identifier)=>{setStyleIdentifier(identifier); setIsChange(true)}} />
            {props.onDelete&&
             <div style={{float: 'right'}}>
               <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>
             </div>
           }
         </BlockProperty>}
-        <div className={getCommonBlockCss('list', template)}>
+        <div className={getCommonBlockCss('list', styleIdentifier)}>
             <BlockList view={props.view} allowedType={['heading','image', 'text','collapsable_text' ]} onChange={data=>{setChildren(data);setIsChange(true)}} active={props.active} list={children}  onActivate={()=>{}}/>
         </div>
     </>

@@ -1,7 +1,7 @@
 const nanoid = require('nanoid')
 
 export interface ToolRenderProps {
-    data: {data:any, id:string, template?:string, settings?:any, common?:any, source?:any,[propName:string]:any, children?:Array<any> }, 
+    data: {data:any, id:string, style?:string, settings?:any, common?:any, source?:any,[propName:string]:any, children?:Array<any> }, 
     active:boolean,
     adding?:boolean, 
     options?: any,

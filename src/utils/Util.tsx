@@ -277,8 +277,8 @@ export const useGetDevice = (): DeviceType => {
 }
 
 export const sanitizeBlockData = (data:any)=>{
-  if( !data.template && data["template"] !== undefined ){
-    delete data['template'];
+  if( !data.style && data["style"] !== undefined ){
+    delete data['style'];
   }
   return data;
 }
