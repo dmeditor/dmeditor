@@ -16,7 +16,9 @@ The idea behind is to have an editor which is easy to develop and style widget w
 - See immediate change while slide on padding, width, color, margin, etc
 - Intractive widgets like tab, accordion
 - Get benefits of React ecosystem for creating widget.
-- Style a widget (widget template)
+- Widgets can be inside widget
+- Extend styles of a widget
+- Create template from widget
 
 
 ### Screenshots
