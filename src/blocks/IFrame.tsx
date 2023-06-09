@@ -11,9 +11,9 @@ import { getCommonBlockCss, getStyleCss } from "../Block";
 export const BlockIframe = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
     const [url, setUrl] = useState(props.data.data);
-    const [width, setWidth] = useState(props.data.settings.width as number);
-    const [height, setHeight] = useState(props.data.settings.height as number);    
-    const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
+    const [width, setWidth] = useState(props.data.settings?.width||400);
+    const [height, setHeight] = useState(props.data.settings?.height||500);    
+    const [align, setAlign] = useState(props.data.settings?.align||'left');        
     const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
     const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
     

@@ -64,7 +64,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
           {"type":"text", id:nanoid(), "data":[
             {type:"paragraph","children":[
                 {"text":"Default text"}
-            ], "setting":{}},
+            ]},
           ]
         }, 
         ]
@@ -152,7 +152,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
-      <StyleSettings styleIdentifier={props.data.styleIdentifier||''} blocktype='accordion' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
+      <StyleSettings styleIdentifier={props.data.style||''} blocktype='accordion' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
     <div style={...commonSettings}  className={getCommonBlockCss('accordion', styleIdentifier)}>  

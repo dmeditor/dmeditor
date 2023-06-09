@@ -49,9 +49,11 @@ export const toolContainerList:ToolDefinition = {
   initData: ()=>{
     return  {
     type: 'list',
-    children: [{type:'heading', 
-    settings:{level:2},
-    data:'Heading'},
+    settings:{},
+    children: [
+      {type:'heading', 
+       settings:{level:2},
+       data:'Heading'},
         {"type":"text", id:'2', "data":[
             {type:"paragraph","children":[
                 {"text":"Default text 1"}

@@ -16,7 +16,7 @@ import { getCommonBlockCss, getStyleCss } from "../Block";
 
 export const BlockText = (props:ToolRenderProps)=>{
   const [value,setValue] = useState(props.data.data)
-  const [config,setConfig] = useState(props.data.settings?props.data.settings.config:null);
+  const [config,setConfig] = useState(props.data.settings?.config||null);
   const [adding, setAdding] = useState(false);
   const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
 

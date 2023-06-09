@@ -32,7 +32,7 @@ const BlockImageText = (props: ToolRenderProps) => {
     let imagelist =listData.filter((item: any) => item.type == 'image');
     let imgWidth='50%'
     if (imagelist.length > 0) {
-      imgWidth = imagelist[0]?.common?.width || imgWidth;
+      imgWidth = imagelist[0]?.settings?.style?.width || imgWidth;
       if( Number.isInteger( imgWidth ) ){
         imgWidth = imgWidth+ 'px';
       }

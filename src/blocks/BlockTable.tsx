@@ -87,7 +87,7 @@ export const Table = (props: ToolRenderProps) => {
     headerColor,
     oddColor,
     border:Border,
-  } = props.data.settings;
+  } = props.data.settings||{};
   const [content, SetContent] = useState<string[][]>(() => {
     return props?.data?.data;
   });

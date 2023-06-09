@@ -10,7 +10,7 @@ import { getCommonBlockCss, getStyleCss } from '../Block';
 
 const Heading = (props:ToolRenderProps)=>{
     const [text,setText] = useState(props.data.data);
-    const [level,setLevel] = useState(props.data.settings.level);
+    const [level,setLevel] = useState(props.data.settings?.level||2);
     const [id,setId] = useState(props.data.settings?.id||'');
     const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
     const [commonSettings,setCommonSettings] = useState(props.data.settings?.style||{});

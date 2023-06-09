@@ -9,8 +9,8 @@ import { getCommonBlockCss } from "../Block";
 
 
 export const BlockVideo = (props:ToolRenderProps)=>{
-    const [width, setWidth] = useState(props.data.settings.width||300);
-    const [height, setHeight] = useState(props.data.settings.height||240);
+    const [width, setWidth] = useState(props.data.settings?.width||300);
+    const [height, setHeight] = useState(props.data.settings?.height||240);
     const [adding, setAdding] = useState(props.adding?true:false);
     const [videoUrl, setVideoUrl] = useState(props.data.data);
     const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});

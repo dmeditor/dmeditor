@@ -1,8 +1,17 @@
 const nanoid = require('nanoid')
 
+
+export interface BlockData{
+    data?:any, //direct data
+    id?:string, //id
+    style?:string, //style string, eg. 'w-100', or emotion css
+    settings?:{style?:any,[propName:string]:any}, //data setting, including user style(eg. style: {marginTop:100})
+    source?:any, // data source, useful when there is dynamic data
+    children?:Array<BlockData> // children blocks
+}
+
 export interface ToolRenderProps {
-    //settings: {style:{}, ...}
-    data: {data:any, id:string, style?:string, settings?:any, source?:any,[propName:string]:any, children?:Array<any> }, 
+    data: BlockData, 
     active:boolean,
     adding?:boolean, 
     options?: any,
@@ -37,7 +46,7 @@ export interface ToolDefinition {
     styles?: {[identifier: string]:StyleDefinition},    
     name: string,
     menu: {category: string, icon: React.ReactElement},
-    initData: ()=>any,
+    initData: ()=>BlockData,
     onServerLoad?: (data:any)=>Promise<any>, //invoked in server side before loading
     render: (props:ToolRenderProps)=>React.ReactElement,
 }
