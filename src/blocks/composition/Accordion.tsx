@@ -13,7 +13,7 @@ const nanoid = require('nanoid')
 
 
 const BlockAccordion = (props:ToolRenderProps)=>{
-    const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
     const [activeTabIndex, setActiveTabIndex] = useState(-1);
     const [key, setKey] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -64,7 +64,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
           {"type":"text", id:nanoid(), "data":[
             {type:"paragraph","children":[
                 {"text":"Default text"}
-            ],"common":{}, "setting":{}},
+            ], "setting":{}},
           ]
         }, 
         ]
@@ -184,10 +184,9 @@ export const toolAccordion: ToolDefinition = {
           type:'accordion',
           settings:{childrenHorizontal: false},
           data:'',
-          common:{},
           children:[ 
             {type:'list',id:'1',data:'Title', children:[
-              {type:'heading', id:'1', data:'Title Heading', common:{}, settings:{level: 2}},
+              {type:'heading', id:'1', data:'Title Heading', settings:{level: 2}},
               {"type":"text", id:'2', "data":[
                   {type:"paragraph","children":[
                       {"text":"Default text"}
@@ -196,7 +195,7 @@ export const toolAccordion: ToolDefinition = {
                 ]
               }, 
               ],
-              "common":{}, "setting":{}
+              setting:{}
             },
             
           ]

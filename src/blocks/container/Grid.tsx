@@ -11,14 +11,14 @@ import { StyleSettings } from '../../styles/StyleSettings';
 
 export const ContainerGrid = (props:any)=>{
   const [children, setChildren] = useState( props.data.children );
-  const [commonSettings, setCommonSettings] = useState(props.data.common?props.data.common:{});
+  const [commonSettings, setCommonSettings] = useState(props.data.setting?.style||{});
   const [isChange,setIsChange] = useState(false);
   const [styleIdentifier, setStyleIdentifier] = useState(props.data.style||'');
   const [columns, setColumns] = useState(props.data.settings?.columns||1);
 
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,style:styleIdentifier,children:children,settings:{columns:columns,common: commonSettings}});
+    props.onChange({...props.data,style:styleIdentifier,children:children,settings:{columns:columns,style: commonSettings}});
     setIsChange(false)
    }
   },[isChange])

@@ -14,7 +14,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     const [adding, setAdding] = useState(props.adding?true:false);
     const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
     const [text, setText] = useState(props.data.data.text);    
-    const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
     const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||0);
     const [borderColor, setBorderColor] = useState(props.data?.settings?.borderColor||'transparent');
     const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
@@ -22,12 +22,12 @@ export const BlockImage = (props:ToolRenderProps)=>{
         let data = props.data;
         if(type === 'input'){
           setImageUrl( val );
-          props.onChange({...data,data:{url:val, text:text},source:{sourceType:type},settings:{fullScreen: fullScreen}, common: commonSettings});
+          props.onChange({...data,data:{url:val, text:text},source:{sourceType:type},settings:{style:commonSettings,fullScreen: fullScreen}});
         }else{
           // let url='{image:'+val.id+'}'
           let url=Util.getImageUrl(val.image)
           setImageUrl( url );
-          props.onChange({...data,data:{url:val.id, text:text},source:{sourceType:type,sourceData:val},settings:{fullScreen: fullScreen}, common: commonSettings });
+          props.onChange({...data,data:{url:val.id, text:text},source:{sourceType:type,sourceData:val},settings:{style:commonSettings, fullScreen: fullScreen} });
         }
     }
     const handleClickOpen = ()=>{
@@ -43,7 +43,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     // }
     // },[])
     useEffect(()=>{
-        props.onChange({...props.data, style:styleIdentifier, data:{...props.data.data, text:text}, settings:{...props.data.settings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor}, common: commonSettings });
+        props.onChange({...props.data, style:styleIdentifier, data:{...props.data.data, text:text}, settings:{...props.data.settings, style:commonSettings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor} });
     }, [text, fullScreen,borderWidth,borderColor, commonSettings, styleIdentifier])
   
 

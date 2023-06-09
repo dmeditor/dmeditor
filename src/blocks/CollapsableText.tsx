@@ -35,14 +35,14 @@ export const CollapsableText = (props:any)=>{
   const [title, setTitle] = useState( props.data.data.title );
   const [body, setBody] = useState( props.data.data.body );
 
-  const [commonSettings, setCommonSettings] = useState(props.data.common?props.data.common:{});
+  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
   const [isChange,setIsChange] = useState(false);
   const [styleIdentifier, setStyleIdentifier] = useState(props.data.style||'');
   const [open, setOpen] = useState(false);  
   
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,style:styleIdentifier,data:{title:title,body: body},settings:{common: commonSettings}});
+    props.onChange({...props.data,style:styleIdentifier,data:{title:title,body: body},settings:{style: commonSettings}});
     setIsChange(false)
    }
   },[isChange])

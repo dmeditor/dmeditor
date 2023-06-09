@@ -18,7 +18,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   const [value,setValue] = useState(props.data.data)
   const [config,setConfig] = useState(props.data.settings?props.data.settings.config:null);
   const [adding, setAdding] = useState(false);
-  const [commonSettings, setCommonSettings] = useState(props.data.common);
+  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
 
   const [size, setSize] = useState(1.1);
   const [familytype,setFamilytype] = useState('')
@@ -81,7 +81,7 @@ export const BlockText = (props:ToolRenderProps)=>{
       if (firstRender.current) {
         firstRender.current = false;
       }else{
-        props.onChange({...props.data,data:value, style: styleIdentifier, common: commonSettings}, true);
+        props.onChange({...props.data,data:value, style: styleIdentifier, settings:{style: commonSettings}}, true);
       }
   },[value,commonSettings, styleIdentifier])
 

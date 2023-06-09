@@ -9,7 +9,7 @@ import { getCommonBlockCss } from '../Block';
 
 export const Quote = (props:any)=>{
   const [content,setConent] = useState(props.data.data)
-  const [commonSettings, setCommonSettings] = useState(props.data.common?props.data.common:{});
+  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
   const QuoteRef:any=useRef(null);
   const [isChange,setIsChange] = useState(false);
 
@@ -27,7 +27,7 @@ export const Quote = (props:any)=>{
   
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,data:content,settings:{common: commonSettings}});
+    props.onChange({...props.data,data:content,settings:{style: commonSettings}});
     setIsChange(false)
    }
   },[isChange])

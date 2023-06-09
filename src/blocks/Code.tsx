@@ -8,7 +8,7 @@ import { Util } from '../utils';
 import { getCommonBlockCss } from "../Block";
 export const Code = (props: ToolRenderProps) => {
   const [content, SetContent] = useState(props.data.data);
-  const [commonSettings, setCommonSettings] = useState(props.data.common);
+  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
   const [isChange,setIsChange] = useState(false);
 
   const changer = (e: React.FocusEvent<HTMLElement>) => {
@@ -17,7 +17,7 @@ export const Code = (props: ToolRenderProps) => {
   };
   useEffect(()=>{
     if(isChange){
-     props.onChange({...props.data,data:content,settings:{common: commonSettings}});
+     props.onChange({...props.data,data:content,settings:{style: commonSettings}});
      setIsChange(false)
     }
    },[isChange])

@@ -13,7 +13,7 @@ const Heading = (props:ToolRenderProps)=>{
     const [level,setLevel] = useState(props.data.settings.level);
     const [id,setId] = useState(props.data.settings?.id||'');
     const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
-    const [commonSettings,setCommonSettings] = useState(props.data.common?props.data.common:{});
+    const [commonSettings,setCommonSettings] = useState(props.data.settings?.style||{});
     const defaultValue:any=useRef(props.data.data);    
     const changeText = (e?:any)=>{
       const texts=e.target.innerText
@@ -46,7 +46,7 @@ const Heading = (props:ToolRenderProps)=>{
     }     
 
     useEffect(()=>{
-        let newData = {...props.data,data:text,settings:{level:level,id:id}, common: {...commonSettings}, style: styleIdentifier}
+        let newData = {...props.data,data:text,settings:{level:level, style: commonSettings,id:id}, style: styleIdentifier}
         props.onChange(newData, true);
     },[text, level, id, commonSettings, styleIdentifier])
 
@@ -81,9 +81,8 @@ const Heading = (props:ToolRenderProps)=>{
   initData: ()=>{
     return {
       type:'heading', 
-      data:'',
-      common:{width:'auto'},
-      settings:{level: 2},
+      data:'',      
+      settings:{style:{width:'auto'},level: 2},
    }
   },
   render: Heading

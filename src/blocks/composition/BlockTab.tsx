@@ -14,7 +14,7 @@ const nanoid = require('nanoid')
 
 
 const BlockTab = (props:ToolRenderProps)=>{
-    const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
     const [activeTabIndex, setActiveTabIndex] = useState(-1);
     const [key, setKey] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -65,7 +65,7 @@ const BlockTab = (props:ToolRenderProps)=>{
           {"type":"text", id:'a1', "data":[
             {type:"paragraph","children":[
                 {"text":"Default text"}
-            ],"common":{}, "setting":{}},
+            ], "setting":{}},
           ]
         }, 
         ]
@@ -212,10 +212,9 @@ export const toolBlockTab: ToolDefinition = {
           type:'tab',
           settings:{childrenHorizontal: false},
           data:'',
-          common:{},
           children:[ 
             {type:'list',id:'1',data:'Tab1', children:[
-              {type:'heading', id:'1', data:'Tab1 Title', common:{}, settings:{level: 2}},
+              {type:'heading', id:'1', data:'Tab1 Title', settings:{level: 2}},
               {"type":"text", id:'2', "data":[
                   {type:"paragraph","children":[
                       {"text":"Default text"}
@@ -223,10 +222,10 @@ export const toolBlockTab: ToolDefinition = {
                 ]
               }, 
               ],
-              "common":{}, "setting":{}
+              "setting":{}
             },
             {type:'list',id:'2',data:'Tab2', children:[
-              {type:'heading', id:'1', data:'Tab2 Title', common:{}, settings:{level: 2}},
+              {type:'heading', id:'1', data:'Tab2 Title', settings:{level: 2}},
               {"type":"text", id:'2', "data":[
                   {type:"paragraph","children":[
                       {"text":"Default text"}
@@ -234,7 +233,7 @@ export const toolBlockTab: ToolDefinition = {
                 ]
               }, 
               ],
-              "common":{}, "setting":{}
+              "setting":{}
             }           
           ]
         }

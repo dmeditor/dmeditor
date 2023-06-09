@@ -14,7 +14,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     const [width, setWidth] = useState(props.data.settings.width as number);
     const [height, setHeight] = useState(props.data.settings.height as number);    
     const [align, setAlign] = useState(props.data.settings.align?props.data.settings.align:'left');        
-    const [commonSettings, setCommonSettings] = useState(props.data.common);
+    const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
     const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
     
     const isMobile = useGetDevice() === 'mobile';
@@ -25,7 +25,7 @@ export const BlockIframe = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align}, common: commonSettings, style:styleIdentifier })
+        props.onChange({...props.data, data:url, settings:{width: width, height: height, align: align,  style: commonSettings}, style:styleIdentifier })
     }, [url, width, align, height, commonSettings, styleIdentifier]);
 
     return <div className={getCommonBlockCss('iframe', styleIdentifier)}>

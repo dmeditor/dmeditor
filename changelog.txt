@@ -1,4 +1,5 @@
 0.1.0-beta.10
+- 2023-06-09 [backward compatiablity issue]updated: change 'common' into settings as style. eg{settings:{style:{marginTop: 10}}}
 - 2023-06-06 [backward compatible issue]updated: change template to be style in data
 - 2023-06-05 updated: default image to use dmeditor's template repo
 - 2023-06-05 added: differeciate tempalte(a pre-defined widget from exisiting widget) with style(a style)

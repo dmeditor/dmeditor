@@ -25,7 +25,7 @@ const imagetextStyle = css`
 
 const BlockImageText = (props: ToolRenderProps) => {
   const [list, setList] = useState<Array<any>>(props.data.children ? props.data.children : []);
-  const [commonSettings, setCommonSettings] = useState(props.data.common);
+  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
   const [activeIndex, setActiveIndex] = useState(0);
   const [imageWidth, setImageWidth] = useState(() => {
     let listData=props.data.children ? props.data.children : []
@@ -81,7 +81,7 @@ const BlockImageText = (props: ToolRenderProps) => {
       setFlexWrap('nowrap')
     }
     
-    props.onChange({...props.data, children:list, style: styleIdentifier, common: commonSettings})
+    props.onChange({...props.data, children:list, style: styleIdentifier, settings:{ style: commonSettings}})
   }, [list,commonSettings, styleIdentifier])
 
   let imageLeft = list[0].type==='image';
@@ -126,7 +126,7 @@ export const toolImageText: ToolDefinition = {
         children:[ 
             {type:'image', data:{url:'https://cdn.jsdelivr.net/gh/dmeditor/templates@main/forsythia_1280.jpg'},settings:{}},
             {type:'list', children:[
-                {type:'heading', id:'1', data:'Title', common:{}, settings:{level: 2}},
+                {type:'heading', id:'1', data:'Title', settings:{level: 2}},
                 {"type":"text", id:'2', "data":[
                     {type:"paragraph","children":[
                         {"text":"Default text"}
@@ -135,7 +135,7 @@ export const toolImageText: ToolDefinition = {
                 {"type":"text", id:'3', "data":[
                 {type:"paragraph","align":"right","children":[{"text":""},{"url":"http://google.com","type":"link","source":{"sourceType":"input"},"children":[{"text":"Read more"}],"styleConfig":{"style":"button","setting":{"size":"small","color":"primary","variant":"outlined"}}},{"text":""}]}            
               ]}
-            ],"common":{}, "setting":{}}
+            ],"setting":{}}
             ]}
     },
     render:BlockImageText    
