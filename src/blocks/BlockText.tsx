@@ -15,10 +15,10 @@ import { StyleSettings } from "../styles/StyleSettings";
 import { getCommonBlockCss, getStyleCss } from "../Block";
 
 export const BlockText = (props:ToolRenderProps)=>{
-  const [value,setValue] = useState(props.data.data)
-  const [config,setConfig] = useState(props.data.settings?.config||null);
+  const [value,setValue] = useState(props.blockdata.data)
+  const [config,setConfig] = useState(props.blockdata.settings?.config||null);
   const [adding, setAdding] = useState(false);
-  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
+  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
 
   const [size, setSize] = useState(1.1);
   const [familytype,setFamilytype] = useState('')
@@ -39,7 +39,7 @@ export const BlockText = (props:ToolRenderProps)=>{
   const firstRender = useRef(true);
   const [hovering, setHovering] = useState(true)
   const [view,setView] = useState(props.view)
-  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
+  const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
   const BlockButton = ({formats}:any) => {
     let ele:any
     if(formats ==='left'){
@@ -81,7 +81,7 @@ export const BlockText = (props:ToolRenderProps)=>{
       if (firstRender.current) {
         firstRender.current = false;
       }else{
-        props.onChange({...props.data,data:value, style: styleIdentifier, settings:{style: commonSettings}}, true);
+        props.onChange({...props.blockdata,data:value, style: styleIdentifier, settings:{style: commonSettings}}, true);
       }
   },[value,commonSettings, styleIdentifier])
 
@@ -369,8 +369,8 @@ export const BlockText = (props:ToolRenderProps)=>{
             </PropertyItem> 
         </PropertyGroup>
         }
-        {Util.renderCustomProperty(props.data)}
-        <StyleSettings styleIdentifier={props.data.style||''} blocktype='text' onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
+        {Util.renderCustomProperty(props.blockdata)}
+        <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='text' onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete} /></div>                 
         </BlockProperty>}
         <div>

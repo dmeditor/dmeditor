@@ -87,11 +87,11 @@ export const Table = (props: ToolRenderProps) => {
     headerColor,
     oddColor,
     border:Border,
-  } = props.data.settings||{};
+  } = props.blockdata.settings||{};
   const [content, SetContent] = useState<string[][]>(() => {
-    return props?.data?.data;
+    return props.blockdata.data;
   });
-  const [hasHeader, setHasHeader] = useState(props.data.settings?.hasHeader ?? false)
+  const [hasHeader, setHasHeader] = useState(props.blockdata.settings?.hasHeader ?? false)
   const [padding, setPadding] = useState(() => {
     return Padding;
   });
@@ -100,9 +100,9 @@ export const Table = (props: ToolRenderProps) => {
     headerColor: headerColor || "",
     oddColor: oddColor || "",
   });
-  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
+  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
   const [isChange, setIsChange] = useState(false);
-  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
+  const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
   const [border, setBorderProp] = useState<bordersType>(() => {
     return Border
   });
@@ -116,7 +116,7 @@ export const Table = (props: ToolRenderProps) => {
 
   useEffect(() => {
       props.onChange({
-        ...props.data,
+        ...props.blockdata,
         data:content,
         settings: { ...color, style:commonSettings, padding, border, hasHeader },
         style: styleIdentifier,
@@ -449,8 +449,8 @@ export const Table = (props: ToolRenderProps) => {
             />
           )}
         </PropertyItem>
-        {Util.renderCustomProperty(props.data)}
-        <StyleSettings styleIdentifier={props.data.style||''} blocktype='table' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
+        {Util.renderCustomProperty(props.blockdata)}
+        <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='table' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete} /></div>
       </BlockProperty>}
       <div className="bani">

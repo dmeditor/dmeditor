@@ -10,15 +10,15 @@ import { StyleSettings } from '../../styles/StyleSettings';
 
 
 export const ContainerGrid = (props:any)=>{
-  const [children, setChildren] = useState( props.data.children );
-  const [commonSettings, setCommonSettings] = useState(props.data.setting?.style||{});
+  const [children, setChildren] = useState( props.blockdata.children );
+  const [commonSettings, setCommonSettings] = useState(props.blockdata.setting?.style||{});
   const [isChange,setIsChange] = useState(false);
-  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style||'');
-  const [columns, setColumns] = useState(props.data.settings?.columns||1);
+  const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style||'');
+  const [columns, setColumns] = useState(props.blockdata.settings?.columns||1);
 
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,style:styleIdentifier,children:children,settings:{columns:columns,style: commonSettings}});
+    props.onChange({...props.blockdata,style:styleIdentifier,children:children,settings:{columns:columns,style: commonSettings}});
     setIsChange(false)
    }
   },[isChange])
@@ -29,8 +29,8 @@ export const ContainerGrid = (props:any)=>{
            <PropertyItem label="Columns">
               <Ranger value={columns} min={1} max={5} onChange={v=>{setColumns(v);setIsChange(true)}} />
             </PropertyItem>
-           {Util.renderCustomProperty(props.data)}
-           <StyleSettings styleIdentifier={props.data.style||''} blocktype='grid' onChange={(identifier)=>{setStyleIdentifier(identifier); setIsChange(true)}} />
+           {Util.renderCustomProperty(props.blockdata)}
+           <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='grid' onChange={(identifier)=>{setStyleIdentifier(identifier); setIsChange(true)}} />
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
         <div style={commonSettings} className={getCommonBlockCss('grid', styleIdentifier)}>

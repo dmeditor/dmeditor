@@ -32,17 +32,17 @@ const defaultCss = css`
 `;
 
 export const CollapsableText = (props:any)=>{
-  const [title, setTitle] = useState( props.data.data.title );
-  const [body, setBody] = useState( props.data.data.body );
+  const [title, setTitle] = useState( props.blockdata.data.title );
+  const [body, setBody] = useState( props.blockdata.data.body );
 
-  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
+  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
   const [isChange,setIsChange] = useState(false);
-  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style||'');
+  const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style||'');
   const [open, setOpen] = useState(false);  
   
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,style:styleIdentifier,data:{title:title,body: body},settings:{style: commonSettings}});
+    props.onChange({...props.blockdata,style:styleIdentifier,data:{title:title,body: body},settings:{style: commonSettings}});
     setIsChange(false)
    }
   },[isChange])
@@ -53,8 +53,8 @@ export const CollapsableText = (props:any)=>{
            <PropertyItem label="Text">
                 <Input defaultValue={title} onChange={e=>{setTitle(e.target.value); setIsChange(true)}} />
             </PropertyItem>
-           {Util.renderCustomProperty(props.data)}
-           <StyleSettings styleIdentifier={props.data.style} blocktype='collapsable_text' onChange={(identifier)=>{setStyleIdentifier(identifier); setIsChange(true)}} />
+           {Util.renderCustomProperty(props.blockdata)}
+           <StyleSettings styleIdentifier={props.blockdata.style} blocktype='collapsable_text' onChange={(identifier)=>{setStyleIdentifier(identifier); setIsChange(true)}} />
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
         <div style={commonSettings} className={defaultCss +' '+getCommonBlockCss('collapsable_text', styleIdentifier)}>

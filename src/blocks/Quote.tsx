@@ -1,15 +1,15 @@
 import { TitleOutlined } from '@mui/icons-material'
 import { BlockProperty } from "../BlockProperty"
-import { ToolDefinition } from "../ToolDefinition";
+import { ToolDefinition, ToolRenderProps } from "../ToolDefinition";
 import { useState,useEffect,useRef } from 'react'
 import { CommonSettings } from '../CommonSettings';
 import { Util } from '../utils';
 import { getCommonBlockCss } from '../Block';
 
 
-export const Quote = (props:any)=>{
-  const [content,setConent] = useState(props.data.data)
-  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
+export const Quote = (props:ToolRenderProps)=>{
+  const [content,setConent] = useState(props.blockdata.data)
+  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
   const QuoteRef:any=useRef(null);
   const [isChange,setIsChange] = useState(false);
 
@@ -27,7 +27,7 @@ export const Quote = (props:any)=>{
   
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,data:content,settings:{style: commonSettings}});
+    props.onChange({...props.blockdata,data:content,settings:{style: commonSettings}});
     setIsChange(false)
    }
   },[isChange])
@@ -35,7 +35,7 @@ export const Quote = (props:any)=>{
   return (
     <>
        {props.active&&<BlockProperty  blocktype="quote" inBlock={props.inBlock}>
-           {Util.renderCustomProperty(props.data)}
+           {Util.renderCustomProperty(props.blockdata)}
            <div><CommonSettings commonSettings={commonSettings}  settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete}/></div>
         </BlockProperty>}
         <div style={commonSettings} className={getCommonBlockCss('quote')}>
@@ -58,5 +58,5 @@ export const toolQuote:ToolDefinition = {
     data:''
   } 
   },
-  render: (props:{data:any, active:boolean})=><Quote {...props} />
+  render: (props:ToolRenderProps)=><Quote {...props} />
 }

@@ -14,15 +14,15 @@ const nanoid = require('nanoid')
 
 
 const BlockTab = (props:ToolRenderProps)=>{
-    const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
+    const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
     const [activeTabIndex, setActiveTabIndex] = useState(-1);
     const [key, setKey] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   
-  const [tabList,setTabList] =  useState<Array<any>>(props.data?.children||[]);
+  const [tabList,setTabList] =  useState<Array<any>>(props.blockdata?.children||[]);
  
     const [isChange,setIsChange] = useState(false);
-    const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
+    const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
     const tabRef:any=useRef(null);
     
     const onChange = (item:any,index:number)=>{
@@ -123,7 +123,7 @@ const BlockTab = (props:ToolRenderProps)=>{
     }, []);
 
     useEffect(()=>{
-      props.onChange({...props.data, style:styleIdentifier, children:tabList})
+      props.onChange({...props.blockdata, style:styleIdentifier, children:tabList})
       setIsChange(false);
     }, [tabList,isChange])
 
@@ -177,7 +177,7 @@ const BlockTab = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addTab()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
-      <StyleSettings styleIdentifier={props.data.style||''} blocktype='tab' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
+      <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='tab' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
     <div style={...commonSettings}  className={getStyleCss('heading', styleIdentifier)}>  

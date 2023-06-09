@@ -9,12 +9,12 @@ import { StyleSettings } from '../styles/StyleSettings';
 import { getCommonBlockCss, getStyleCss } from '../Block';
 
 const Heading = (props:ToolRenderProps)=>{
-    const [text,setText] = useState(props.data.data);
-    const [level,setLevel] = useState(props.data.settings?.level||2);
-    const [id,setId] = useState(props.data.settings?.id||'');
-    const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
-    const [commonSettings,setCommonSettings] = useState(props.data.settings?.style||{});
-    const defaultValue:any=useRef(props.data.data);    
+    const [text,setText] = useState(props.blockdata.data);
+    const [level,setLevel] = useState(props.blockdata.settings?.level||2);
+    const [id,setId] = useState(props.blockdata.settings?.id||'');
+    const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
+    const [commonSettings,setCommonSettings] = useState(props.blockdata.settings?.style||{});
+    const defaultValue:any=useRef(props.blockdata.data);    
     const changeText = (e?:any)=>{
       const texts=e.target.innerText
       setText(texts);
@@ -46,7 +46,7 @@ const Heading = (props:ToolRenderProps)=>{
     }     
 
     useEffect(()=>{
-        let newData = {...props.data,data:text,settings:{level:level, style: commonSettings,id:id}, style: styleIdentifier}
+        let newData = {...props.blockdata,data:text,settings:{level:level, style: commonSettings,id:id}, style: styleIdentifier}
         props.onChange(newData, true);
     },[text, level, id, commonSettings, styleIdentifier])
 
@@ -62,8 +62,8 @@ const Heading = (props:ToolRenderProps)=>{
               <LoopOutlined/>
             </PropertyButton> 
           </PropertyItem>  
-          {Util.renderCustomProperty(props.data)}
-            <StyleSettings styleIdentifier={props.data.style||''} blocktype='heading' onChange={(identifier)=>{setStyleIdentifier(identifier)}} />
+          {Util.renderCustomProperty(props.blockdata)}
+            <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='heading' onChange={(identifier)=>{setStyleIdentifier(identifier)}} />
             <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings);}} onDelete={props.onDelete} /></div>
         </BlockProperty>}
         <div style={...commonSettings} className={getCommonBlockCss('heading', styleIdentifier)}>

@@ -11,7 +11,7 @@ export interface BlockData{
 }
 
 export interface ToolRenderProps {
-    data: BlockData, 
+    blockdata: BlockData, 
     active:boolean,
     adding?:boolean, 
     options?: any,

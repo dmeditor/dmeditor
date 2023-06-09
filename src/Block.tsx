@@ -84,8 +84,8 @@ export const Block = React.memo((props:BlockProps)=>{
     const render = ()=>{  
         if( def){           
             return <>
-              {props.view && <def.render view={true} inBlock={props.inBlock?true:false} onChange={()=>{}} data={props.data} active={false} />}
-              {!props.view&&<def.render adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} data={props.data} active={isActive} onCancel={props.onCancel} onDelete={props.onDelete} />}
+              {props.view && <def.render view={true} inBlock={props.inBlock?true:false} onChange={()=>{}} blockdata={props.data} active={false} />}
+              {!props.view&&<def.render adding={props.newBlock} inBlock={props.inBlock?true:false} onChange={(data:any,debounce?:boolean)=>{onDataChange(data,debounce)}} blockdata={props.data} active={isActive} onCancel={props.onCancel} onDelete={props.onDelete} />}
             </>
         }else{
             return 'Unknown type:'+props.data.type;

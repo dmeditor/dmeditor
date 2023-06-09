@@ -10,16 +10,16 @@ import { getCommonBlockCss, getStyleCss } from "../Block";
 
 
 export const BlockImage = (props:ToolRenderProps)=>{
-    const [fullScreen, setFullScreen] = useState(props.data.settings?.fullScreen?true:false);    
+    const [fullScreen, setFullScreen] = useState(props.blockdata.settings?.fullScreen?true:false);    
     const [adding, setAdding] = useState(props.adding?true:false);
-    const [imageUrl, setImageUrl] = useState(props.data.source&&props.data.source.sourceType==='select'?Util.getImageUrl(props.data.source.sourceData.image):props.data.data.url);
-    const [text, setText] = useState(props.data.data.text);    
-    const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
-    const [borderWidth, setBorderWidth] = useState(props.data?.settings?.borderWidth||0);
-    const [borderColor, setBorderColor] = useState(props.data?.settings?.borderColor||'transparent');
-    const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
+    const [imageUrl, setImageUrl] = useState(props.blockdata.source&&props.blockdata.source.sourceType==='select'?Util.getImageUrl(props.blockdata.source.sourceData.image):props.blockdata.data.url);
+    const [text, setText] = useState(props.blockdata.data.text);    
+    const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
+    const [borderWidth, setBorderWidth] = useState(props.blockdata?.settings?.borderWidth||0);
+    const [borderColor, setBorderColor] = useState(props.blockdata?.settings?.borderColor||'transparent');
+    const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
     const submitImage = (val:any,type:string)=>{
-        let data = props.data;
+        let data = props.blockdata;
         if(type === 'input'){
           setImageUrl( val );
           props.onChange({...data,data:{url:val, text:text},source:{sourceType:type},settings:{style:commonSettings,fullScreen: fullScreen}});
@@ -43,7 +43,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
     // }
     // },[])
     useEffect(()=>{
-        props.onChange({...props.data, style:styleIdentifier, data:{...props.data.data, text:text}, settings:{...props.data.settings, style:commonSettings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor} });
+        props.onChange({...props.blockdata, style:styleIdentifier, data:{...props.blockdata.data, text:text}, settings:{...props.blockdata.settings, style:commonSettings, fullScreen: fullScreen,borderWidth:borderWidth,borderColor:borderColor} });
     }, [text, fullScreen,borderWidth,borderColor, commonSettings, styleIdentifier])
   
 
@@ -69,8 +69,8 @@ export const BlockImage = (props:ToolRenderProps)=>{
             <PickColor color={borderColor?borderColor:'transparent'} onChange={(v:any)=>setBorderColor(v)} />
           </PropertyItem> 
         </PropertyGroup>
-        {Util.renderCustomProperty(props.data)}
-        <StyleSettings styleIdentifier={props.data.style||''} blocktype='image'  onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
+        {Util.renderCustomProperty(props.blockdata)}
+        <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='image'  onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
         <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>setCommonSettings(settings)} onDelete={props.onDelete}/></div>
     </BlockProperty>}
         <div >

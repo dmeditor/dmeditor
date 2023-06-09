@@ -7,8 +7,8 @@ import { CommonSettings } from "../CommonSettings";
 import { Util } from '../utils';
 import { getCommonBlockCss } from "../Block";
 export const Code = (props: ToolRenderProps) => {
-  const [content, SetContent] = useState(props.data.data);
-  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
+  const [content, SetContent] = useState(props.blockdata.data);
+  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
   const [isChange,setIsChange] = useState(false);
 
   const changer = (e: React.FocusEvent<HTMLElement>) => {
@@ -17,7 +17,7 @@ export const Code = (props: ToolRenderProps) => {
   };
   useEffect(()=>{
     if(isChange){
-     props.onChange({...props.data,data:content,settings:{style: commonSettings}});
+     props.onChange({...props.blockdata,data:content,settings:{style: commonSettings}});
      setIsChange(false)
     }
    },[isChange])
@@ -25,7 +25,7 @@ export const Code = (props: ToolRenderProps) => {
   return (
     <>
       {props.active&&<BlockProperty  blocktype="code" inBlock={props.inBlock}>
-        {Util.renderCustomProperty(props.data)}
+        {Util.renderCustomProperty(props.blockdata)}
         <div><CommonSettings commonSettings={commonSettings} settingList={[]} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true)}} onDelete={props.onDelete} /></div>
       </BlockProperty>}
       <div style={commonSettings} className={getCommonBlockCss('code')}>

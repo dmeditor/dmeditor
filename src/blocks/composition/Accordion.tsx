@@ -13,12 +13,12 @@ const nanoid = require('nanoid')
 
 
 const BlockAccordion = (props:ToolRenderProps)=>{
-    const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
+    const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
     const [activeTabIndex, setActiveTabIndex] = useState(-1);
     const [key, setKey] = useState(0);
     const [activeIndex, setActiveIndex] = useState(0);
-    const [accordionList,setAccordionList] =  useState<Array<any>>(props.data?.children||[]);
-    const [styleIdentifier, setStyleIdentifier] = useState(props.data.style); 
+    const [accordionList,setAccordionList] =  useState<Array<any>>(props.blockdata?.children||[]);
+    const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style); 
    
     const [isChange,setIsChange] = useState(false);
     const expandableItemRef:any=useRef(null);
@@ -113,7 +113,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
     }
 
     useEffect(()=>{
-        props.onChange({...props.data, style:styleIdentifier, children:accordionList})
+        props.onChange({...props.blockdata, style:styleIdentifier, children:accordionList})
         setIsChange(false);
     }, [accordionList,isChange])
 
@@ -152,7 +152,7 @@ const BlockAccordion = (props:ToolRenderProps)=>{
         <div className="btn-groups"><PropertyButton color="warning" title="Add"  onClick={()=>{addAccordion()}}><AddCircleOutlineOutlined /></PropertyButton></div>
       </div>
       </div>
-      <StyleSettings styleIdentifier={props.data.style||''} blocktype='accordion' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
+      <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='accordion' onChange={(identifier:string)=>{setStyleIdentifier( identifier); setIsChange(true)}} />
       <div><CommonSettings commonSettings={commonSettings} settingList={['padding','backgroundColor','width']} onChange={(settings)=>{setCommonSettings(settings);setIsChange(true);}} onDelete={props.onDelete}/></div>
     </BlockProperty>}
     <div style={...commonSettings}  className={getCommonBlockCss('accordion', styleIdentifier)}>  

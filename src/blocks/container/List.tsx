@@ -11,13 +11,13 @@ import React from 'react';
 
 
 export const ContainerList = (props:any)=>{
-  const [children, setChildren] = useState( props.data.children );
+  const [children, setChildren] = useState( props.blockdata.children );
   const [isChange,setIsChange] = useState(false);
-  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style||'');
+  const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style||'');
 
   useEffect(()=>{
    if(isChange){
-    props.onChange({...props.data,style:styleIdentifier,children:children});
+    props.onChange({...props.blockdata,style:styleIdentifier,children:children});
     setIsChange(false)
    }
   },[isChange])
@@ -25,7 +25,7 @@ export const ContainerList = (props:any)=>{
   return (
     <>
        {props.active&&<BlockProperty  blocktype="list" inBlock={props.inBlock}>           
-           <StyleSettings styleIdentifier={props.data.style||''} blocktype='list' onChange={(identifier)=>{setStyleIdentifier(identifier); setIsChange(true)}} />
+           <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='list' onChange={(identifier)=>{setStyleIdentifier(identifier); setIsChange(true)}} />
            {props.onDelete&&
             <div style={{float: 'right'}}>
               <PropertyButton color="warning" title="Delete" onClick={()=>{if(props.onDelete)props.onDelete()}}><DeleteOutline /></PropertyButton>

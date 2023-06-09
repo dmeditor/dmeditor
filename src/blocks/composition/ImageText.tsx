@@ -24,11 +24,11 @@ const imagetextStyle = css`
 `
 
 const BlockImageText = (props: ToolRenderProps) => {
-  const [list, setList] = useState<Array<any>>(props.data.children ? props.data.children : []);
-  const [commonSettings, setCommonSettings] = useState(props.data.settings?.style||{});
+  const [list, setList] = useState<Array<any>>(props.blockdata.children ? props.blockdata.children : []);
+  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style||{});
   const [activeIndex, setActiveIndex] = useState(0);
   const [imageWidth, setImageWidth] = useState(() => {
-    let listData=props.data.children ? props.data.children : []
+    let listData=props.blockdata.children ? props.blockdata.children : []
     let imagelist =listData.filter((item: any) => item.type == 'image');
     let imgWidth='50%'
     if (imagelist.length > 0) {
@@ -39,7 +39,7 @@ const BlockImageText = (props: ToolRenderProps) => {
     }
     return imgWidth;
   });
-  const [styleIdentifier, setStyleIdentifier] = useState(props.data.style);
+  const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
   const [flexWrap,setFlexWrap]=useState('nowrap' as any);
 
   const isMobile = useGetDevice() == 'mobile';
@@ -81,7 +81,7 @@ const BlockImageText = (props: ToolRenderProps) => {
       setFlexWrap('nowrap')
     }
     
-    props.onChange({...props.data, children:list, style: styleIdentifier, settings:{ style: commonSettings}})
+    props.onChange({...props.blockdata, children:list, style: styleIdentifier, settings:{ style: commonSettings}})
   }, [list,commonSettings, styleIdentifier])
 
   let imageLeft = list[0].type==='image';
@@ -94,7 +94,7 @@ const BlockImageText = (props: ToolRenderProps) => {
         </PropertyButton>
         <PropertyButton selected={!imageLeft} onClick={()=>{if(imageLeft){changeAlign()}}}><AlignHorizontalRightOutlined /></PropertyButton>
       </PropertyItem>
-      <StyleSettings styleIdentifier={props.data.style||''} blocktype='imagetext' onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
+      <StyleSettings styleIdentifier={props.blockdata.style||''} blocktype='imagetext' onChange={(identifier:string)=>setStyleIdentifier( identifier)} />
       <div><CommonSettings commonSettings={commonSettings} onChange={(settings)=>{setCommonSettings(settings)}} onDelete={props.onDelete}/></div>                 
     </BlockProperty>}  
     <div className="dme-imagetext-container" style={!isMobile?{display:'flex',flexWrap:flexWrap}:{}}>
