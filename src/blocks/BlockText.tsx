@@ -383,6 +383,13 @@ export const BlockText = (props:ToolRenderProps)=>{
               onMouseUp={(event:any)=>{
                 SlateEvents()
               }}
+              onKeyDown={(event:any, )=>{
+                //soft break
+                if (event.key === 'Enter' && event.shiftKey ){
+                  event.preventDefault();
+                  editor.insertText('\n');
+                }
+              }}
               onKeyUp={(event:any)=>{
                 SlateEvents()
                 }
