@@ -43,6 +43,8 @@ export const DMEditor = (props:DMEditorProps)=>{
     const [settingsShown, setSettingsShown] = useState(false);
     const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
 
+    Util.fileUrl=props.getFileUrl
+    Util.imageUrl=props.getImageUrl
     useEffect(()=>{
         Util.BrowseImage = props.browseImage
         Util.BrowseLink = props.browseLink
@@ -51,8 +53,6 @@ export const DMEditor = (props:DMEditorProps)=>{
         Util.pageTab = props.pageTab
         Util.toast=props.toast
         Util.pageTabActiveIndex=props.pageTabActiveIndex||0
-        Util.fileUrl=props.getFileUrl
-        Util.imageUrl=props.getImageUrl
     },[]);
     
     const showSettings = (e:any)=>{
