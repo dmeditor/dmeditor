@@ -46,7 +46,7 @@ export const toolContainerGrid:ToolDefinition = {
   type: 'grid',
   isComposited: false,
   name:"Grid", 
-  menu:  {category:'basic',icon: <GridViewOutlined /> },
+  menu:  {category:'layout',icon: <GridViewOutlined /> },
   initData: ()=>{
     return  {
     type: 'grid',

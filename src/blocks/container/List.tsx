@@ -45,7 +45,7 @@ export const toolContainerList:ToolDefinition = {
   type: 'list',
   isComposited: false,
   name:"List", 
-  menu:  {category:'basic',icon: <ListAltOutlined /> },
+  menu:  {category:'layout',icon: <ListAltOutlined /> },
   initData: ()=>{
     return  {
     type: 'list',
