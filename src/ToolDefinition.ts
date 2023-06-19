@@ -100,8 +100,8 @@ export const registerTemplate = (template:TemplateDefinition)=>{
 const toolCategories = [
     {identifier: 'basic', text: 'Basic'},
     {identifier: 'blocks', text: 'Blocks'},
-    {identifier: 'content', text: 'Content'},
     {identifier:'layout', text:'Layout'},
+    {identifier: 'content', text: 'Content'},
     {identifier: 'form', text: 'Form'},        
     {identifier: 'social_network', text: 'Social Network'}        
     ];
