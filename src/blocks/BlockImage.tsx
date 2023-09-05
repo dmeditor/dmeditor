@@ -27,7 +27,7 @@ export const BlockImage = (props:ToolRenderProps)=>{
           // let url='{image:'+val.id+'}'
           let url=Util.getImageUrl(val.image)
           setImageUrl( url );
-          props.onChange({...data,data:{url:val.id, text:text},source:{sourceType:type,sourceData:val},settings:{style:commonSettings, fullScreen: fullScreen} });
+          props.onChange({...data,data:{url:url, text:text},source:{sourceType:type,sourceData:val},settings:{style:commonSettings, fullScreen: fullScreen} });
         }
     }
     const handleClickOpen = ()=>{
