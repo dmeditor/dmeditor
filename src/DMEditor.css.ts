@@ -286,8 +286,6 @@ a:hover{
 }
 
 .pre-render{
-  position: absolute;
-  left:-105px;
 }
 
 .viewmode-edit .btn{

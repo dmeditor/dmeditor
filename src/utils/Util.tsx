@@ -41,7 +41,7 @@ export const Util = {
       return null
     }
   },
-  renderPreBlock:(props:{blockData:string})=>{
+  renderPreBlock:(props:{blockData:any})=>{
     if(Util.PreBlock){
       let A = Util.PreBlock as (props:any)=>JSX.Element;
       return <A  blockData={props.blockData}/>;

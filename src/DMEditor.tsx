@@ -171,12 +171,12 @@ export const DMEditor = (props:DMEditorProps)=>{
                 <a href="/" title="Settings" className={settingsShown?'current':''} onClick={(e)=>showSettings(e)}><SettingsOutlined /></a>
               </div>
             </div>
-          </div>         
-          {settingsShown&&<div className='dme-settings'>
+          </div>        
+           <div className='dme-settings' style={{display:settingsShown?'block':'none'}}>
             <div>
               {Util.renderPageTab()}
             </div>
-          </div>} 
+          </div> 
           <div style={settingsShown?{display:'none'}:{}} id="dmeditor-main" className='layout-main-container'>               
           <div className={'layout-main '+' viewmode-'+viewmode+(viewmode==='edit'?'':' is-preview')}>
             {viewmode==='edit'&&<div className={dmeditorViewCss}>

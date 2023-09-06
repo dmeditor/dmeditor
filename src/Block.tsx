@@ -98,9 +98,9 @@ export const Block = React.memo((props:BlockProps)=>{
                             <a className="tool-item" href="/" title={"Add above "+def.name} onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
                                 <AddBoxOutlined /></a>
                         </div>}   
-                       {!props.view&&<div className={"pre-render"}>
-                          {Util.renderPreBlock({blockData:props.data.dm_field?props.data.dm_field:''})}
-                          </div>}              
+                       {!props.view&&<>
+                          {Util.renderPreBlock({blockData:props.data})}
+                          </>}              
         {render()}  
     {!props.view&&props.siblingDirection==='vertical'&&<div className="tool tool-under">
                 <a className="tool-item" href="/" title={"Add under "+def.name} onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(1)}}><AddBoxOutlined /></a>
