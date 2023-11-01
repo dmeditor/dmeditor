@@ -180,10 +180,10 @@ export const DMEditor = (props:DMEditorProps)=>{
                 <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{onChangeViewMode(e,'pc')}}><LaptopMacOutlined /></a>
                 </Tooltip>
                 <Tooltip title="Mobile" arrow placement='right'>
-                <a href='/' className={viewmode=='mobile'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'mobile')}} title='Mobile'> <PhoneIphoneOutlined /></a>
+                <a href='/' className={viewmode=='mobile'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'mobile')}}> <PhoneIphoneOutlined /></a>
                 </Tooltip>
                 <Tooltip title="Tablet" arrow placement='right'>
-                <a href='/' className={viewmode=='tablet'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'tablet')}} title='Tablet'><TabletMacOutlined /></a>
+                <a href='/' className={viewmode=='tablet'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'tablet')}}><TabletMacOutlined /></a>
                 </Tooltip>
                 <hr />
                 <Tooltip title="Settings" arrow placement='right'>

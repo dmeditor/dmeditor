@@ -143,7 +143,7 @@ export const dmeditorEditCss = css`
   width: 100%!important;
 }
 
-.left-tool a{
+.layout-left-menu a{
     color: #666666;
     display: inline-block;
     padding: 5px 0px;
