@@ -1,3 +1,5 @@
+import i18n from "./i18n"
+
 const nanoid = require('nanoid')
 
 
@@ -98,12 +100,12 @@ export const registerTemplate = (template:TemplateDefinition)=>{
 }
 
 const toolCategories = [
-    {identifier: 'basic', text: 'Basic'},
-    {identifier: 'blocks', text: 'Blocks'},
-    {identifier:'layout', text:'Layout'},
-    {identifier: 'content', text: 'Content'},
-    {identifier: 'form', text: 'Form'},        
-    {identifier: 'social_network', text: 'Social Network'}        
+    {identifier: 'basic', text: i18n.t('Basic', {ns:'category'})},
+    {identifier: 'blocks', text: i18n.t('Blocks', {ns:'category'})},
+    {identifier:'layout', text: i18n.t('Container', {ns:'category'})},
+    {identifier: 'content', text: i18n.t('Content', {ns:'category'})},
+    {identifier: 'form', text: i18n.t('Form', {ns:'category'})},        
+    {identifier: 'social_network', text: i18n.t('Social Network', {ns:'category'})}        
     ];
 
 export const getCategories = () => {

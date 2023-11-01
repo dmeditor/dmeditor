@@ -4,11 +4,13 @@ import {menulistCss} from './MenuList.css';
 import { PropertyTab } from './Tab';
 import { getAllTemplates, getCategories, getDef, getToolDefinitions } from './ToolDefinition';
 import { css } from '@emotion/css';
+import { useTranslation } from 'react-i18next';
 
 export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
     const [blockCategory] = useState(getCategories());
     const [registeredTypes] = useState(getToolDefinitions());
     const [templates] = useState(getAllTemplates());
+    const { t, i18n } = useTranslation();
     
 
     let names: Array<{type: string, name: string}> = [];
@@ -18,7 +20,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
         }
         const toolType = registeredTypes[blockType];
         if( toolType.name ){
-            names = [...names, {type: blockType, name: toolType.name}];
+            names = [...names, {type: blockType, name: t(toolType.name,{ns:'blocktype'})}];
         }
     }
 
@@ -31,10 +33,10 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
     };
 
     return (<div className={menulistCss()} style={{background: 'white'}}>
-        <div style={{fontSize:'18px', padding: '10px 4px'}}>Please choose a block type:</div>
-        <PropertyTab tabs={[{title:'Blocks', element: <div>
+        <div style={{fontSize:'18px', padding: '10px 4px'}}>{t('Please choose a block type:')}</div>
+        <PropertyTab tabs={[{title:t('Blocks'), element: <div>
           <div style={{background:'white'}}>
-            <Input fullWidth placeholder='Type to search' onChange={search} autoFocus style={{padding: '6px'}} />
+            <Input fullWidth placeholder={t('Type to search')} onChange={search} autoFocus style={{padding: '6px'}} />
           </div>
           <div className='menu-blocktype'>
             {blockCategory.map((category:any)=><div key={category.identifier}>
@@ -54,7 +56,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
           </div>
             
         </div>},
-        {title:'Templates', element: <div>
+        {title:t('Templates'), element: <div>
           {templates.map((template:any)=>
           <div className="moreblock" key={template.templateDef.id}>
             <table style={{width:'100%'}}>

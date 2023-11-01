@@ -11,10 +11,14 @@ import { BrowseProps, DeviceType, isServer, sanitizeBlockData, setDevice, useGet
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { PropertyTab } from './Tab';
+import './i18n';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export interface DMEditorProps{
     data:Array<any>, 
     menu?:React.ReactElement, 
+    lang?:string, //default 'eng-GB'
     onChangeActive?:(activeBlock:Number)=>void,
     onChange?:(data:Array<any>)=>void,
     browseImage?:(props:BrowseProps)=>JSX.Element,
@@ -42,10 +46,14 @@ export const DMEditor = (props:DMEditorProps)=>{
     const [viewmode, setViewmode] = useState('edit');
     const [settingsShown, setSettingsShown] = useState(false);
     const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
+    const { t, i18n } = useTranslation();
 
     Util.fileUrl=props.getFileUrl
     Util.imageUrl=props.getImageUrl
     useEffect(()=>{
+        if(props.lang){
+          i18n.changeLanguage(props.lang)
+        }
         Util.BrowseImage = props.browseImage
         Util.BrowseLink = props.browseLink
         Util.CustomProperty = props.customProperty
@@ -173,20 +181,20 @@ export const DMEditor = (props:DMEditorProps)=>{
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
               <div className='left-tool' style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>                
-                <Tooltip title="Edit" arrow placement='right'>
+                <Tooltip title={t("Edit")} arrow placement='right'>
                   <a href='/' className={viewmode=='edit'?'current':''} onClick={(e)=>{onChangeViewMode(e,'edit')}}><ModeEditOutline /></a>
                 </Tooltip>
-                <Tooltip title="Desktop" arrow placement='right'>
+                <Tooltip title={t("Desktop")} arrow placement='right'>
                 <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{onChangeViewMode(e,'pc')}}><LaptopMacOutlined /></a>
                 </Tooltip>
-                <Tooltip title="Mobile" arrow placement='right'>
+                <Tooltip title={t("Mobile")} arrow placement='right'>
                 <a href='/' className={viewmode=='mobile'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'mobile')}}> <PhoneIphoneOutlined /></a>
                 </Tooltip>
-                <Tooltip title="Tablet" arrow placement='right'>
+                <Tooltip title={t("Tablet")} arrow placement='right'>
                 <a href='/' className={viewmode=='tablet'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'tablet')}}><TabletMacOutlined /></a>
                 </Tooltip>
                 <hr />
-                <Tooltip title="Settings" arrow placement='right'>
+                <Tooltip title={t("Settings")} arrow placement='right'>
                 <a href="/" title="Settings" className={settingsShown?'current':''} onClick={(e)=>showSettings(e)}><SettingsOutlined /></a>
                 </Tooltip>
               </div>

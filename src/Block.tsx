@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 import { BlockProperty } from "./BlockProperty";
 import { PropertyButton } from "./utils";
 import { css } from "@emotion/css";
+import i18n from "./i18n";
 
 export type BlockInfo = {
     type: string
@@ -95,7 +96,7 @@ export const Block = React.memo((props:BlockProps)=>{
     return <div className={'dme-block-container'+(isActive?' active':'')+(props.inBlock?' inblock':'')} id={props.data.id} onClick={(e:any)=>activeBlock()}>
             {selectingTool&&<RenderMenu onAdd={addBlock} onCancel={()=>setSelectingTool(false)} allowedType ={props.addedType} />}
             {!props.view&&props.siblingDirection==='vertical'&&<div className="tool tool-above">
-                            <a className="tool-item" href="/" title={"Add above "+def.name} onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
+                            <a className="tool-item" href="/" title={"Add above "+i18n.t(def.name,{ns:'blocktype'})} onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(-1)}}>
                                 <AddBoxOutlined /></a>
                         </div>}   
                        {!props.view&&<>
@@ -103,7 +104,7 @@ export const Block = React.memo((props:BlockProps)=>{
                           </>}              
         {render()}  
     {!props.view&&props.siblingDirection==='vertical'&&<div className="tool tool-under">
-                <a className="tool-item" href="/" title={"Add under "+def.name} onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(1)}}><AddBoxOutlined /></a>
+                <a className="tool-item" href="/" title={"Add under "+i18n.t(def.name,{ns:'blocktype'})} onClick={(e)=>{e.preventDefault();e.stopPropagation();startAdd(1)}}><AddBoxOutlined /></a>
             </div>}  
     </div>
 

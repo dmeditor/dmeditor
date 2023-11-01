@@ -1,0 +1,19 @@
+{
+    "translation":{
+        "Edit":"Redigere",
+        "Please choose a block type:":"Velg en blokktype",
+        "Type to search":"Skriv for å søke",
+        "Blocks":"Blokker",
+        "Templates":"Maler",
+        "Mobile":"Mobil",
+        "Tablet":"Tablett",
+        "Save":"Lagre",
+        "Close":"Lukk"
+    },
+    "blocktype":{
+        "Image":"Bilder",
+        "Text":"Tekst"
+    },
+    "category":{
+    }
+}

@@ -3,6 +3,7 @@ import ReactDOM, { createPortal } from 'react-dom';
 import { getDef } from "./ToolDefinition";
 import { PropertyGroup, Util, isServer } from "./utils";
 import { PropertyTab } from "./Tab";
+import i18n from "./i18n";
 
 declare global {
   interface Window {
@@ -55,7 +56,7 @@ export const BlockProperty = (props:{blocktype: string, inBlock?:boolean, childr
 
     return propertyRoot?<>
     {propertyRoot.children[0]?createPortal(      
-      <div className="tab-header" onClick={tabClick}><button className="btn">{getDef(props.blocktype).name}</button></div>
+      <div className="tab-header" onClick={tabClick}><button className="btn">{i18n.t(getDef(props.blocktype).name, {ns:'blocktype'})}</button></div>
       , 
         propertyRoot.children[0] as HTMLElement
     ):<></>}

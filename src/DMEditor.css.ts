@@ -149,7 +149,7 @@ export const dmeditorEditCss = css`
     padding: 5px 0px;
 }
 
-.left-tool a.current{
+.layout-left-menu a.current{
     color: green
 }
 
