@@ -8,7 +8,8 @@
         "Mobile":"Mobil",
         "Tablet":"Tablett",
         "Save":"Lagre",
-        "Close":"Lukk"
+        "Close":"Lukk",
+        "Popular":"Populær"
     },
     "blocktype":{
         "Image":"Bilder",

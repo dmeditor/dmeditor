@@ -63,6 +63,16 @@ export const registerTool = (toolDef:ToolDefinition)=>{
     defMap[toolDef.type] = toolDef;
 }
 
+let popularBlocktypes = ['text','image'];
+
+export const registerPopularBlocktypes = (list:string[])=>{
+    popularBlocktypes = list; 
+}
+
+export const getPopularBlocktypes = ():string[]=>{
+    return popularBlocktypes; 
+}
+
 export const getDef = (type:string):ToolDefinition=>{
     return defMap[type];
 }

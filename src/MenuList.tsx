@@ -2,7 +2,7 @@ import { Input } from '@mui/material';
 import { useState } from 'react';
 import {menulistCss} from './MenuList.css';
 import { PropertyTab } from './Tab';
-import { getAllTemplates, getCategories, getDef, getToolDefinitions } from './ToolDefinition';
+import { getAllTemplates, getCategories, getDef, getPopularBlocktypes, getToolDefinitions } from './ToolDefinition';
 import { css } from '@emotion/css';
 import { useTranslation } from 'react-i18next';
 
@@ -32,9 +32,27 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
         setList(list);
     };
 
+    const popularBlocktypes = getPopularBlocktypes();
+
+    const renderBlockType = (blocktype:string)=>{
+      return <div className="moreblock" onClick={()=>props.onSelect(blocktype)}>
+              <table style={{width:'100%'}}>
+                <tbody>
+                  <tr><td style={{width: '28px'}}>{registeredTypes[blocktype].menu?.icon}</td><td style={{textAlign:'left'}}>{t(registeredTypes[blocktype].name, {ns:'blocktype'})}</td></tr>
+                </tbody>
+              </table>
+            </div>
+    }
+
     return (<div className={menulistCss()} style={{background: 'white'}}>
         <div style={{fontSize:'18px', padding: '10px 4px'}}>{t('Please choose a block type:')}</div>
-        <PropertyTab tabs={[{title:t('Blocks'), element: <div>
+        <PropertyTab tabs={[
+          {title:t('Popular'), element:<div>
+            {popularBlocktypes.map(blocktype=><div key={blocktype}>
+              {renderBlockType(blocktype)}
+            </div>)}
+          </div>},
+          {title:t('Blocks'), element: <div>
           <div style={{background:'white'}}>
             <Input fullWidth placeholder={t('Type to search')} onChange={search} autoFocus style={{padding: '6px'}} />
           </div>
@@ -43,13 +61,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
               {list.filter(item=>registeredTypes[item.type].menu?.category==category.identifier).map((blockType, blockindex)=>
                 <div key={blockType.type}>
                   {blockindex==0&&<div  style={{padding: '5px 0px', color: '#4f4f4f', margin:'5px 10px' }}>{category.text}</div>}
-                  <div className="moreblock" onClick={()=>props.onSelect(blockType.type)}>
-                    <table style={{width:'100%'}}>
-                      <tbody>
-                        <tr><td style={{width: '28px'}}>{registeredTypes[blockType.type].menu?.icon}</td><td style={{textAlign:'left'}}>{blockType.name}</td></tr>                    
-                      </tbody>
-                    </table>
-                  </div>
+                  {renderBlockType(blockType.type)}
                 </div>
               )}
             </div>)}
