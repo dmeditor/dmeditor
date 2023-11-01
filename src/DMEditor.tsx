@@ -4,8 +4,8 @@ import {dmeditorEditCss, dmeditorViewCss, setMainWidthCssVariable} from './DMEdi
 import './Init';
 import { MenuList } from './MenuList';
 import { LaptopMacOutlined, Menu, ModeEditOutline, PhoneIphoneOutlined, TabletMacOutlined,MoreHorizOutlined, LinkOutlined, Help, HelpOutline, Settings, SettingsOutlined } from '@mui/icons-material';
-import { createTheme, ThemeProvider ,IconButton } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { createTheme, ThemeProvider ,IconButton, Tooltip } from '@mui/material';
+import { green, grey } from '@mui/material/colors';
 import { getDef, newBlockData } from './ToolDefinition';
 import { BrowseProps, DeviceType, isServer, sanitizeBlockData, setDevice, useGetDevice, Util } from './utils/Util';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from "@mui/icons-material";
@@ -141,7 +141,17 @@ export const DMEditor = (props:DMEditorProps)=>{
         palette:{
           primary:grey,
         },
-        components:{
+        components:{          
+          MuiTooltip:{
+            styleOverrides:{   
+              tooltip:{            
+                backgroundColor: 'black',
+                '& .MuiTooltip-arrow': {
+                  color: 'black',
+                }
+              }
+            }
+          },
           MuiButtonBase:{
             defaultProps:{
               disableRipple:true,   
@@ -163,12 +173,22 @@ export const DMEditor = (props:DMEditorProps)=>{
             <div className={viewmode=='edit'?"layout-left-menu":"layout-left-menu view"}>
               {props.menu?props.menu:<a target='_blank' title='dmeditor' href="https://dmeditor.io"><div style={{paddingTop: '5px'}}><HelpOutline /></div></a>}
               <div className='left-tool' style={{position:'absolute', bottom:0, width:'100%', textAlign:'center'}}>                
-                <a href='/' className={viewmode=='edit'?'current':''} onClick={(e)=>{onChangeViewMode(e,'edit')}} title='Edit'><ModeEditOutline /></a>
-                <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{onChangeViewMode(e,'pc')}} title='Desktop'><LaptopMacOutlined /></a>
+                <Tooltip title="Edit" arrow placement='right'>
+                  <a href='/' className={viewmode=='edit'?'current':''} onClick={(e)=>{onChangeViewMode(e,'edit')}}><ModeEditOutline /></a>
+                </Tooltip>
+                <Tooltip title="Desktop" arrow placement='right'>
+                <a href='/' className={viewmode=='pc'?'current':''} onClick={(e)=>{onChangeViewMode(e,'pc')}}><LaptopMacOutlined /></a>
+                </Tooltip>
+                <Tooltip title="Mobile" arrow placement='right'>
                 <a href='/' className={viewmode=='mobile'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'mobile')}} title='Mobile'> <PhoneIphoneOutlined /></a>
+                </Tooltip>
+                <Tooltip title="Tablet" arrow placement='right'>
                 <a href='/' className={viewmode=='tablet'?'current':''}  onClick={(e)=>{onChangeViewMode(e,'tablet')}} title='Tablet'><TabletMacOutlined /></a>
+                </Tooltip>
                 <hr />
+                <Tooltip title="Settings" arrow placement='right'>
                 <a href="/" title="Settings" className={settingsShown?'current':''} onClick={(e)=>showSettings(e)}><SettingsOutlined /></a>
+                </Tooltip>
               </div>
             </div>
           </div>        
