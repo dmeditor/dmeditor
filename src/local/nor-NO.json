@@ -9,11 +9,28 @@
         "Tablet":"Tablett",
         "Save":"Lagre",
         "Close":"Lukk",
-        "Popular":"Populær"
+        "Common":"Vanlige",
+        "Move down":"Flytt ned",
+        "Move up":"Flytt opp",
+        "Add above ":"Legg til blokk over ",
+        "Add under ":"Legg til blokk under "
+        
     },
     "blocktype":{
         "Image":"Bilder",
-        "Text":"Tekst"
+        "Text":"Tekst",
+        "Heading":"Overskrift",
+        "Table":"Tabell",
+        "Quote":"Sitat",
+        "Carousel":"Bildekarusell",
+        "Gallery":"Bildegalleri",
+        "Feedback form":"Tilbakemelding",
+        "Collapsable text":"Nedtrekks-tekst",
+        "Code":"Kode",
+        "Image text":"Bilde m/tekst",
+        "Tab":"Faner",
+        "List":"Liste",
+        "Accordion":"Trekkspill"
     },
     "category":{
     }

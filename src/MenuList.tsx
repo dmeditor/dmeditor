@@ -47,7 +47,7 @@ export const MenuList = (props:{onSelect:any, allowedType?:string[]})=>{
     return (<div className={menulistCss()} style={{background: 'white'}}>
         <div style={{fontSize:'18px', padding: '10px 4px'}}>{t('Please choose a block type:')}</div>
         <PropertyTab tabs={[
-          {title:t('Popular'), element:<div>
+          {title:t('Common'), element:<div>
             {popularBlocktypes.map(blocktype=><div key={blocktype}>
               {renderBlockType(blocktype)}
             </div>)}
