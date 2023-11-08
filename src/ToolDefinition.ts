@@ -49,7 +49,7 @@ export interface ToolDefinition {
     name: string,
     menu: {category: string, icon: React.ReactElement},
     initData: ()=>BlockData,
-    onServerLoad?: (data:any)=>Promise<any>, //invoked in server side before loading
+    onServerLoad?: (data:any, context?:any)=>Promise<any>, //invoked in server side before loading
     render: (props:ToolRenderProps)=>React.ReactElement,
 }
 

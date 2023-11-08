@@ -302,14 +302,14 @@ export const DMEditorView = (props:DMEditorViewProps)=>{
 
 
 /** server side load */
-export const serverLoad=async (data:Array<any>)=>{
+export const serverLoad=async (data:Array<any>, context?:any)=>{
     let proms:Array<Promise<any>> = [];
     for(let i in data){
         let blockData = data[i];
         let type = blockData.type;
         let def = getDef(type);
         if( def.onServerLoad ){
-            proms = [...proms, def.onServerLoad(blockData)];
+            proms = [...proms, def.onServerLoad(blockData, context)];
         }else{
             proms = [...proms, blockData];
         }
