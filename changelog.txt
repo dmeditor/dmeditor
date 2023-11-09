@@ -1,4 +1,11 @@
 0.1.0-beta.11
+- 2023-11-08 added: context in onServerLoad 
+- 2023-11-01 added: common blocktypes & registerPopularBlocktypes 
+- 2023-11-01 added: translation support 
+- 2023-11-01 updated: use tooltip for toolbar 
+- 2023-09-06 updated: pass blockData to preBlock 
+- 2023-09-05 fixed: image browse saves url instead of id 
+- 2023-06-19 updated: use category layout for list and grid 
 
 0.1.0-beta.10
 - 2023-06-14 fixed: getImageUrl & getfileUrl issue when rendering

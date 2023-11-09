@@ -1,6 +1,6 @@
 {
   "name": "dmeditor",
-  "version": "0.1.0-beta.10",
+  "version": "0.1.0-beta.11",
   "description": "dmeditor is a block-style visual editor. Data is in json format.",
   "keywords": [
     "online editor",
@@ -9,7 +9,7 @@
     "WYSIWYG",
     "visual editor"
   ],
-  "homepage": "https://dmeditor.io",
+  "homepage": "https://dmeditor.github.io",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dmeditor/dmeditor.git"
