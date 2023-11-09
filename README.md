@@ -6,7 +6,7 @@ DM Editor is a block-styled visual editor written in React.
 
 [Roadmap](https://github.com/orgs/dmeditor/projects/1) , mail [xc](mailto:chen.xcmail@gmail.com) if you want to discuss:).
 
-***For full documentation please go to [dmeditor.io](https://dmeditor.io)***
+***For full documentation please go to [dmeditor.github.io](https://dmeditor.github.io)***
 
 
 The idea behind is to have an editor which is easy to develop and style widget within React ecosystem, in the end **together with developer** bring good user experience for page editing.
