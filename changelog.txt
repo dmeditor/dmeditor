@@ -1,3 +1,5 @@
+0.1.0-beta.12
+
 0.1.0-beta.11
 - 2023-11-08 added: context in onServerLoad 
 - 2023-11-01 added: common blocktypes & registerPopularBlocktypes 
