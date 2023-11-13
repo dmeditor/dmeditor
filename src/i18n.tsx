@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import norNo from './local/nor-NO.json';
-import engGB from './local/eng-GB.json';
+import norNo from './locale/nor-NO.json';
+import engGB from './locale/eng-GB.json';
 
 const resources = {
   'eng-GB': engGB,
