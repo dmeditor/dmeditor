@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { PickColor, PropertyGroup, PropertyItem,PropertyButton, Ranger } from './utils';
-import { Select, MenuItem } from "@mui/material";
+import {Select, MenuItem, TextField} from '@mui/material'
 import { FormatAlignLeft,FormatAlignCenter,FormatAlignRight, DeleteOutline } from '@mui/icons-material';
+import {css} from '@emotion/css'
 
 export const CommonSettings = (props:{commonSettings:any, settingList?: Array<string>, onDelete?:()=>void, onChange:(data:any)=>void})=>{    
     const [settings, setSettings] = useState(props.commonSettings?props.commonSettings:{});
@@ -79,6 +80,53 @@ export const CommonSettings = (props:{commonSettings:any, settingList?: Array<st
           })}
         </PropertyItem>
         }
+          {containSetting('backgroundImage')&&<>
+            <PropertyItem label="Background image url:" autoWidth={true}>
+            <TextField 
+                value={settings.backgroundImage?.replace(/url\((.*?)\)/, '$1') ?? ''}
+                onChange={v => {
+                  setSettings((settings: any) => ({
+                    ...settings,
+                    backgroundImage: `url(${v.target.value})`,
+                    backgroundAttachment: 'fixed',
+                    backgroundRepeat: 'no-repeat',
+                  }))
+                  setIsChange(true)
+                }
+                }
+            />
+            </PropertyItem>
+            <PropertyItem label="Background position x:" autoWidth={true}>
+              <TextField
+                  size={'small'}
+                  className={css`&&&{width: 82px}`}
+                  value={settings.backgroundPositionX ?? ''}
+                  onChange={v => {
+                    setSettings((settings: any) => ({
+                      ...settings,
+                      backgroundPositionX: `${v.target.value}`,
+                    }))
+                    setIsChange(true)
+                  }
+                  }
+              />
+            </PropertyItem>
+            <PropertyItem label="Background position y:" autoWidth={true}>
+              <TextField
+                  size={'small'}
+                  className={css`&&&{width: 82px}`}
+                  value={settings.backgroundPositionY ?? ''}
+                  onChange={v => {
+                    setSettings((settings: any) => ({
+                      ...settings,
+                      backgroundPositionY: `${v.target.value}`,
+                    }))
+                    setIsChange(true)
+                  }
+                  }
+              />
+            </PropertyItem>
+          </>}
             {containSetting('backgroundColor')&&<PropertyItem label="Background color:" autoWidth={true}>
             <PickColor
               color={settings.backgroundColor?settings.backgroundColor:''}
