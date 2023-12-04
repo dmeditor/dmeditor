@@ -1,30 +1,31 @@
-import { ReactElement } from "react";
-import {BlockData} from "./DMEditor";
+import { ReactElement } from 'react';
 
-export interface RenderMainProps{
-    data:BlockData,
-    isActive:boolean, 
-    onChange?:(data:any)=>void,
-    onUpdateProperty?:(data:any)=>void
+import { BlockData } from './DMEditor';
+
+export interface RenderMainProps {
+  data: BlockData;
+  isActive: boolean;
+  onChange?: (data: any) => void;
+  onUpdateProperty?: (data: any) => void;
 }
 
-export interface RenderSettingProps{
-    data:BlockData, 
-    onSetting: any, 
-    params?:any
+export interface RenderSettingProps {
+  data: BlockData;
+  onSetting: any;
+  params?: any;
 }
 
-export interface BlockTypeMenu{
-    text: string,
-    category: string,
-    icon: ReactElement
+export interface BlockTypeMenu {
+  text: string;
+  category: string;
+  icon: ReactElement;
 }
 
 export interface BlockHandler {
-    type:string;
-    menu: BlockTypeMenu;
-    canSelectElement?: boolean,
-    getDefaultData: ()=>BlockData;    //when block type is selected
-    renderMain: React.FC<RenderMainProps>,       
-    renderSetting: React.FC<RenderSettingProps>
+  type: string;
+  menu: BlockTypeMenu;
+  canSelectElement?: boolean;
+  getDefaultData: () => BlockData; //when block type is selected
+  renderMain: React.FC<RenderMainProps>;
+  renderSetting: React.FC<RenderSettingProps>;
 }

@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2015",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,8 +17,5 @@
     "noEmit": false,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src/*",
-    "src/utils/*",
-    "src/@types/*.d.ts", "src/.d.ts"  ]
+  "include": ["src/*", "src/utils/*", "src/@types/*.d.ts", "src/.d.ts"]
 }

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
-import { getDef } from "./ToolDefinition";
-import { PropertyGroup, Util, isServer } from "./utils";
-import { PropertyTab } from "./Tab";
-import i18n from "./i18n";
+
+import i18n from './i18n';
+import { PropertyTab } from './Tab';
+import { getDef } from './ToolDefinition';
+import { isServer, PropertyGroup, Util } from './utils';
 
 declare global {
   interface Window {
@@ -11,58 +12,77 @@ declare global {
   }
 }
 
-if( !isServer() ){
-window.dmeditorPropertyTab = (e:any)=>{
-  var  i= 0;
-  var elem = e.currentTarget;
-  while((elem=elem.previousSibling)!=null) ++i;
+if (!isServer()) {
+  window.dmeditorPropertyTab = (e: any) => {
+    var i = 0;
+    var elem = e.currentTarget;
+    while ((elem = elem.previousSibling) != null) ++i;
 
-  var tabContainer = document.getElementById('dmeditor-property')?.children[0] as any;
-  for(var index = 0; index< tabContainer.children.length; index++){
+    var tabContainer = document.getElementById('dmeditor-property')?.children[0] as any;
+    for (var index = 0; index < tabContainer.children.length; index++) {
       var ele = tabContainer.children.item(index);
-      if( index == i ){
-        ele.classList.remove( 'normal' );
-        ele.classList.add( 'current' );
-      }else{
-        ele.classList.remove( 'current' );
-        ele.classList.add( 'normal' );
+      if (index == i) {
+        ele.classList.remove('normal');
+        ele.classList.add('current');
+      } else {
+        ele.classList.remove('current');
+        ele.classList.add('normal');
       }
-  }
+    }
 
-  var body = document.getElementById('dmeditor-property')?.children[1] as any;
-  for(var index = 0; index< body.children.length; index++){
+    var body = document.getElementById('dmeditor-property')?.children[1] as any;
+    for (var index = 0; index < body.children.length; index++) {
       var ele = body.children.item(index);
-      if( index == i ){
+      if (index == i) {
         ele.style.display = 'block';
-      }else{
+      } else {
         ele.style.display = 'none';
       }
-  }
-}
+    }
+  };
 }
 
 //todo: use one instance so it can put multi to multi tabs.
-export const BlockProperty = (props:{blocktype: string, inBlock?:boolean, children?:React.ReactNode})=>{
-    if (typeof window === 'undefined') {
-      return <></>;
-    }
+export const BlockProperty = (props: {
+  blocktype: string;
+  inBlock?: boolean;
+  children?: React.ReactNode;
+}) => {
+  if (typeof window === 'undefined') {
+    return <></>;
+  }
 
-    const propertyRoot = document.getElementById('dmeditor-property');
-  
-    const tabClick = (e:any)=>{
-      window.dmeditorPropertyTab(e)
-        // ?window.dmeditorTab(e):
-    }
+  const propertyRoot = document.getElementById('dmeditor-property');
 
-    return propertyRoot?<>
-    {propertyRoot.children[0]?createPortal(      
-      <div className="tab-header" onClick={tabClick}><button className="btn">{i18n.t(getDef(props.blocktype).name, {ns:'blocktype'})}</button></div>
-      , 
-        propertyRoot.children[0] as HTMLElement
-    ):<></>}
-    {propertyRoot.children[1]?createPortal(<div className="tab-body">{props.children}</div>, 
-    propertyRoot.children[1] as HTMLElement
-  ):<></>}
-  </>:<></>
-}
+  const tabClick = (e: any) => {
+    window.dmeditorPropertyTab(e);
+    // ?window.dmeditorTab(e):
+  };
 
+  return propertyRoot ? (
+    <>
+      {propertyRoot.children[0] ? (
+        createPortal(
+          <div className="tab-header" onClick={tabClick}>
+            <button className="btn">
+              {i18n.t(getDef(props.blocktype).name, { ns: 'blocktype' })}
+            </button>
+          </div>,
+          propertyRoot.children[0] as HTMLElement,
+        )
+      ) : (
+        <></>
+      )}
+      {propertyRoot.children[1] ? (
+        createPortal(
+          <div className="tab-body">{props.children}</div>,
+          propertyRoot.children[1] as HTMLElement,
+        )
+      ) : (
+        <></>
+      )}
+    </>
+  ) : (
+    <></>
+  );
+};
