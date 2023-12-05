@@ -1,37 +1,35 @@
 {
-    "translation":{
-        "Edit":"Redigere",
-        "Please choose a block type:":"Velg en blokktype",
-        "Type to search":"Skriv for å søke",
-        "Blocks":"Blokker",
-        "Templates":"Maler",
-        "Mobile":"Mobil",
-        "Tablet":"Tablett",
-        "Save":"Lagre",
-        "Close":"Lukk",
-        "Common":"Vanlige",
-        "Move down":"Flytt ned",
-        "Move up":"Flytt opp",
-        "Add above ":"Legg til blokk over ",
-        "Add under ":"Legg til blokk under "
-        
-    },
-    "blocktype":{
-        "Image":"Bilder",
-        "Text":"Tekst",
-        "Heading":"Overskrift",
-        "Table":"Tabell",
-        "Quote":"Sitat",
-        "Carousel":"Bildekarusell",
-        "Gallery":"Bildegalleri",
-        "Feedback form":"Tilbakemelding",
-        "Collapsable text":"Nedtrekks-tekst",
-        "Code":"Kode",
-        "Image text":"Bilde m/tekst",
-        "Tab":"Faner",
-        "List":"Liste",
-        "Accordion":"Trekkspill"
-    },
-    "category":{
-    }
+  "translation": {
+    "Edit": "Redigere",
+    "Please choose a block type:": "Velg en blokktype",
+    "Type to search": "Skriv for å søke",
+    "Blocks": "Blokker",
+    "Templates": "Maler",
+    "Mobile": "Mobil",
+    "Tablet": "Tablett",
+    "Save": "Lagre",
+    "Close": "Lukk",
+    "Common": "Vanlige",
+    "Move down": "Flytt ned",
+    "Move up": "Flytt opp",
+    "Add above ": "Legg til blokk over ",
+    "Add under ": "Legg til blokk under "
+  },
+  "blocktype": {
+    "Image": "Bilder",
+    "Text": "Tekst",
+    "Heading": "Overskrift",
+    "Table": "Tabell",
+    "Quote": "Sitat",
+    "Carousel": "Bildekarusell",
+    "Gallery": "Bildegalleri",
+    "Feedback form": "Tilbakemelding",
+    "Collapsable text": "Nedtrekks-tekst",
+    "Code": "Kode",
+    "Image text": "Bilde m/tekst",
+    "Tab": "Faner",
+    "List": "Liste",
+    "Accordion": "Trekkspill"
+  },
+  "category": {}
 }
