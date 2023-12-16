@@ -1,2 +1,0 @@
-// register all of widgets
-
