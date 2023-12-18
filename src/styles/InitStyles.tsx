@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 
-import { toolImageText } from '../blocks/composition/ImageText';
-import { toolHeading } from '../blocks/Heading';
+import { toolImageText } from '../core/components/widget/ImageText/ImageText';
+import { toolHeading } from '../core/components/widget/Heading/Heading';
 import { registerStyle, registerTemplate } from '../ToolDefinition';
 
 export const initStyles = () => {

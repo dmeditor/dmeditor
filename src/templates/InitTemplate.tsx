@@ -6,7 +6,7 @@ export const initTemplates = () => {
   //templates
   registerTemplate({
     blocktype: 'list',
-    id: 'heading_text',
+    id: 'heading_text_1',
     name: 'Heading text',
     data: {
       type: 'list',
@@ -27,7 +27,7 @@ export const initTemplates = () => {
 
   registerTemplate({
     blocktype: 'grid',
-    id: 'heading_text',
+    id: 'heading_text_2',
     name: 'Heading text grid',
     data: {
       type: 'grid',

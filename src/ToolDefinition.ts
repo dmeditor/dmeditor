@@ -1,6 +1,5 @@
-import i18n from './i18n';
-
-const nanoid = require('nanoid');
+import i18n from './locales/i18n';
+import { nanoid } from 'nanoid'; 
 
 export interface BlockData {
   data?: any; //direct data
