@@ -35,3 +35,8 @@ export interface BlockLayoutData {
   marginTop?: number;
   backgroundColor?: string;
 }
+
+export namespace DMEditor {
+  export interface Widget {}
+  export interface Block extends Widget {}
+}

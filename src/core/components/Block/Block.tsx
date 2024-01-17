@@ -8,9 +8,11 @@ import _debounce from 'lodash/debounce';
 import i18n from '../../../locales/i18n';
 import { getDef } from '../../../ToolDefinition';
 import { PropertyButton } from '../../utils';
-import { Util } from '../../utils/Util';
-import { BlockProperty } from '../BlockProperty';
-import { MenuList } from '../widget/MenuList';
+import { Util } from '../../utils/utilx';
+import { BlockProperty } from '../block-property';
+import WidgetList from '../widgets';
+import { Heading } from '../widgets/heading';
+import { MenuList } from '../widgets/menu-list';
 
 export type BlockInfo = {
   type: string;
@@ -34,6 +36,9 @@ interface BlockProps {
   siblingDirection?: 'vertical' | 'horizontal';
   onDelete?: () => void;
 }
+
+// TODO:
+const Widget = (props: unknown) => {};
 
 export const Block = React.memo((props: BlockProps) => {
   const [selectingTool, setSelectingTool] = useState(false); //just for rerender purpose
@@ -84,6 +89,16 @@ export const Block = React.memo((props: BlockProps) => {
   };
 
   const def = getDef(props.data.type);
+  const getWidget = (type: string) => {
+    const widget = WidgetList[type];
+    if (widget) {
+      return widget;
+    } else {
+      return null;
+    }
+  };
+
+  const Widget = getWidget(props.data.type);
 
   const render = () => {
     if (def) {
@@ -114,7 +129,32 @@ export const Block = React.memo((props: BlockProps) => {
         </>
       );
     } else {
-      return 'Unknown type:' + props.data.type;
+      // return 'Unknown type:' + props.data.type;
+      return (
+        <Widget
+          adding={props.newBlock}
+          inBlock={props.inBlock ? true : false}
+          onChange={(data: any, debounce?: boolean) => {
+            onDataChange(data, debounce);
+          }}
+          blockdata={props.data}
+          active={isActive}
+          onCancel={props.onCancel}
+          onDelete={props.onDelete}
+        />
+      );
+    }
+  };
+
+  const getTitle = () => {
+    if (def?.name) {
+      return i18n.t('Add above ') + i18n.t(def.name, { ns: 'blocktype' });
+    } else {
+      Object.entries(WidgetList).forEach(([key, value]) => {
+        if (value) {
+          return i18n.t('Add above ') + i18n.t(key, { ns: 'blocktype' });
+        }
+      });
     }
   };
 
@@ -138,7 +178,8 @@ export const Block = React.memo((props: BlockProps) => {
           <a
             className="tool-item"
             href="/"
-            title={i18n.t('Add above ') + i18n.t(def.name, { ns: 'blocktype' })}
+            title={getTitle()}
+            // title={i18n.t('Add above ') + i18n.t(def.name, { ns: 'blocktype' })}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -150,13 +191,16 @@ export const Block = React.memo((props: BlockProps) => {
         </div>
       )}
       {!props.view && <>{Util.renderPreBlock({ blockData: props.data })}</>}
+
       {render()}
+
       {!props.view && props.siblingDirection === 'vertical' && (
         <div className="tool tool-under">
           <a
             className="tool-item"
             href="/"
-            title={i18n.t('Add under ') + i18n.t(def.name, { ns: 'blocktype' })}
+            title={getTitle()}
+            // title={i18n.t('Add under ') + i18n.t(def.name, { ns: 'blocktype' })}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
