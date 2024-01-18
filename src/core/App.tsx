@@ -1,16 +1,23 @@
 import * as React from 'react';
+import { nanoid } from 'nanoid';
 
-import { DMEditor } from './main/DMEditor';
+import { DMEditor } from './main/designer/DMEditor';
 
 const { useState, useRef, useEffect } = React;
 
 const App = () => {
-  const editorRef = useRef(null)
-  useEffect(() => {
-    console.log(editorRef.current)
-  })
-  const [data, setData] = useState([
-    { type: 'heading', data: 'Description:', settings: { level: 3 }, id: 'agSg0CaGuF1' },
+  const editorRef = useRef(null);
+  // const [editor] = useEditor()
+  const data = [
+    {
+      id: `widget-${nanoid()}`,
+      props: {
+        level: 5,
+        value: 'This is a heading',
+      },
+      type: 'Heading',
+      category: 'widget',
+    },
     {
       type: 'text',
       data: [{ type: 'paragraph', children: [{ text: 'This lap top has fastest CPU so far.' }] }],
@@ -36,8 +43,13 @@ const App = () => {
       },
       id: 'aZtOs7mHKCO',
     },
-  ]);
-  return <DMEditor data={data} ref={editorRef}/>;
+  ];
+  useEffect(() => {
+    // editorRef.current.setDesingerJson(jsonString(data))
+    editorRef.current?.setEditorJson(data);
+  }, []);
+
+  return <DMEditor ref={editorRef} />;
 };
 
 export default App;

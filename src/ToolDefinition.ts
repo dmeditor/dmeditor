@@ -1,5 +1,5 @@
 import i18n from './locales/i18n';
-import { nanoid } from 'nanoid'; 
+import { nanoid } from 'nanoid';
 
 export interface BlockData {
   data?: any; //direct data
@@ -16,7 +16,7 @@ export interface ToolRenderProps {
   adding?: boolean;
   options?: any;
   view?: boolean;
-  onChange: (data: any, debounce?: boolean) => void;
+  onChange: (data: any, shouldDebounce?: boolean) => void;
   onCancel?: () => void;
   inBlock?: boolean;
   onDelete?: () => void;

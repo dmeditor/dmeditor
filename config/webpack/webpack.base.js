@@ -17,9 +17,9 @@ module.exports = {
   plugins: [],
   resolve: {
     alias: {
-      'Src': path.resolve(__dirname, '../../src'),
-      'Core': path.resolve(__dirname, '../../src/core'),
       'Components': path.resolve(__dirname, '../../src/core/components'),
+      'Core': path.resolve(__dirname, '../../src/core'),
+      'Src': path.resolve(__dirname, '../../src'),
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
