@@ -1,5 +1,5 @@
 //Block entity, which is a node in the data tree
-export type EntityBlock = {
+export interface EntityBlock {
     id: string,
     type: string,
     parent?: EntityBlock,
@@ -14,7 +14,7 @@ export type EntitySection= EntityBlock;
 
 
 //example for heading
-export type EntityHeadingBlock = EntityBlock & {
+export interface EntityHeadingBlock extends EntityBlock {
     title: string,
     level: string,
     settings: {
