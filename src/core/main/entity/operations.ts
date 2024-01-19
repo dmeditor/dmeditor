@@ -1,5 +1,6 @@
 import { BlockList } from 'net';
 import { EntityBlock, EntityBlockList, EntitySection} from './entities';
+import { jsonParse } from 'Src/core/utils';
 
 //return a Block or null if not found
 // todo: this can be improved by using cache(eg. using parent path so iterateBlockTree can iterate smartly :))
@@ -80,6 +81,12 @@ const deleteBlock = (block:EntityBlock )=>{
 
 }
 
-const loadBlockList = () =>{
-
+export const loadData = (data:string| EntityBlockList): EntityBlockList =>{  
+  let list: EntityBlockList = [];
+  if (typeof data === 'string') {
+   //todo: handle error
+   list = jsonParse(data);
+  }
+  // to do build working entity, eg. id, parent
+  return list;
 }
