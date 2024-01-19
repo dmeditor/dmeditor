@@ -15,7 +15,7 @@ export type EntitySection= EntityBlock;
 
 //example for heading
 export interface EntityHeadingBlock extends EntityBlock {
-    title: string,
+    value: string,
     level: string,
     settings: {
         align: string,
