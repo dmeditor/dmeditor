@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { nanoid } from 'nanoid';
 
-import { DMEditor } from './main/designer/DMEditor';
+import { DMEditor } from '../../src/core/main/designer/DMEditor';
 import { EntityHeadingBlock } from './main/entity/entitity';
 
 const { useState, useRef, useEffect } = React;

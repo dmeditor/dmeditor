@@ -2,7 +2,10 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import App from './core/App';
+import App from './App';
+import { getBlockByID, getChildList } from '../../src/core/main/entity/operations';
+import { DMEData } from '../../src/core/components/types/blocktype';
+
 
 const renderApp = () => {
   const $el = document.getElementById('dmeditor');

@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 
 import { toolImageText } from '../core/components/widgets/image-text/ImageText';
-import { toolHeading } from '../core/components/widgets/heading/Heading';
+// import { toolHeading } from '../core/components/widgets/heading/Heading';
 import { registerStyle, registerTemplate } from '../ToolDefinition';
 
 export const initStyles = () => {
@@ -22,7 +22,6 @@ export const initStyles = () => {
         display: inline-block;
       }
     `,
-    icon: toolHeading.menu.icon,
   });
   registerStyle({
     blocktype: 'grid',
@@ -33,7 +32,6 @@ export const initStyles = () => {
         margin: 0px 4px;
       }
     `,
-    icon: toolHeading.menu.icon,
   });
   registerStyle({
     blocktype: 'imagetext',

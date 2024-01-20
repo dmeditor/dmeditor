@@ -9,7 +9,7 @@ module.exports = merge(baseConfig, {
         type: 'filesystem'
     },
     entry: {
-        main: './src/index.tsx',
+        main: './samples/demo01/index.tsx',
     },
     module: {
         rules: [
