@@ -10,10 +10,11 @@ import { isStrictlyInfinity } from 'Src/core/utils';
 
 type Store = {
   selected: {
-    selectedBlockIndex:number; //todo: revove selected
-    selectedBlock:DMEData.Block|null;
+    blockId: string;
+    blockIndex:number; //-Infinity if it's not selected
+    currentList:DMEData.BlockList; //current block list
+    listPath: Array<string>;
   };
-  currentList:DMEData.BlockList; //current block list
   storage:DMEData.BlockList; //data layer
 };
 
@@ -27,8 +28,10 @@ type Actions = {
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (index: number) => void;
+  updateCurrentList: (list: DMEData.BlockList)=>void;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   toggleProperty: (status: boolean) => void;
+  isSelected:()=>boolean;
 };
 
 // const useEditorStore = create<Store & Actions>((set) => {
@@ -49,17 +52,24 @@ const useEditorStore = create<Store & Actions>()(
       }),
     clearWidgets: () => {
       set((state) => {
-        state.selected.selectedBlock = null;
         // state.designer.selectedBlockIndex = -1;
-        state.selected.selectedBlockIndex = -Infinity;
+        state.selected.blockIndex = -Infinity;
         state.storage = [];
       });
     },
+    updateCurrentList:(list:DMEData.BlockList)=>{
+      set((state)=>{
+        state.selected.currentList = list;
+      })
+    },
     clearSelected: () => {
       set((state) => {
-        state.selected.selectedBlock = null;
-        state.selected.selectedBlockIndex = -Infinity;
+        state.selected.blockIndex = -Infinity;
       });
+    },
+    isSelected: ():boolean =>{
+      const state = get();
+      return state.selected.blockIndex !== -Infinity;
     },
     loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => {
       set((state) => {
@@ -76,15 +86,15 @@ const useEditorStore = create<Store & Actions>()(
     },
     getSelectedBlock: (index: number) => {
       const state = get();
-      if (isStrictlyInfinity(index) || index < 0 || state.storage.length <= index) {
+      if (isStrictlyInfinity(index) || index < 0 || !state.selected.currentList || state.selected.currentList.length <= index) {
         state.clearSelected();
         return;
       }
-      if (!state.storage[index]) {
+      if (!state.selected.currentList[index]) {
         state.clearSelected();
         return;
       }
-      return state.storage[index];
+      return state.selected.currentList[index];
     },
     removeBlock: (block: ReactNode) =>
       set((state) => {
@@ -125,12 +135,13 @@ const useEditorStore = create<Store & Actions>()(
             };
           }
         });
-        state.currentList = state.storage;
+        state.selected.currentList = state.storage;
       });
     },
     updateSelectedBlockIndex: (index: number) => {
       set((state) => {
-        state.selected.selectedBlockIndex = index;
+        state.selected.blockIndex = index;
+        console.log(index);
       });
     },
     updateSelectedBlockProps: (propName: string, propValue: string | number) => {
@@ -140,7 +151,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        const block = state.getSelectedBlock(state.selected.selectedBlockIndex);
+        const block = state.getSelectedBlock(state.selected.blockIndex);
         if (!block) {
           console.error('Block not found');
           return;
@@ -151,7 +162,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        state.storage[state.selected.selectedBlockIndex].props = {
+        state.storage[state.selected.blockIndex].props = {
           ...block.props,
           [propName]: propValue,
         };

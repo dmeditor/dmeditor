@@ -38,7 +38,7 @@ export const CommonSettings = (props: {
   const [settings, setSettings] = useState(props.commonSettings ? props.commonSettings : {});
   const [isChange, setIsChange] = useState(false);
   const [blockOpen, setBlockOpen] = useState(false);
-  const { getSelectedBlock, selected } = useEditorStore();
+  const { getSelectedBlock } = useEditorStore();
 
   const selectedWidget = useMemo(
     () => getSelectedBlock(props.selectedWidgetIndex), //todo: get widget. here is to get block.
@@ -139,7 +139,7 @@ export const CommonSettings = (props: {
                 selected={selectedWidget.type}
                 componentName={componentName}
                 propName={propName}
-                {...selectedWidget.props}
+                {...selectedWidget.settings}
               />
             </PropertyItem>
           ) : null;

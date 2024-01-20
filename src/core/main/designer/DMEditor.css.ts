@@ -11,6 +11,10 @@ export const dmeditorEditCss = css`
   );
   --dme-main-width: clamp(900px, var(--dme-container-width) - 150px, 1200px);
 
+
+  --dme-selected-border-color: #cccccc;
+  --dme-hover-font-color: red;
+
   height: 100vh;
   background-color: #f0f0f0;
   display: grid;
@@ -317,7 +321,7 @@ export const dmeditorEditCss = css`
   }
 
   #dmeditor-property > div:first-child {
-    border-bottom: 1px solid #ccc;
+    /* border-bottom: 1px solid #ccc; */
   }
 
   .tab-header .btn,

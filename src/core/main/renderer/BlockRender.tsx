@@ -7,13 +7,14 @@ import _debounce from 'lodash/debounce';
 
 import i18n from '../../../locales/i18n';
 import { getDef } from '../../../ToolDefinition';
-import { PropertyButton } from '../../utils';
-import { Util } from '../../utils/utilx';
 import { BlockProperty } from '../../components/block-property';
+import { DMEData } from '../../components/types/blocktype';
 import WidgetList from '../../components/widgets';
 import { Heading } from '../../components/widgets/heading';
 import { MenuList } from '../../components/widgets/menu-list';
-import { DMEData } from '../../components/types/blocktype';
+import { PropertyButton } from '../../utils';
+import { Util } from '../../utils/utilx';
+import { StyledBlock } from './styled';
 
 export type BlockInfo = {
   type: string;
@@ -27,7 +28,6 @@ interface BlockProps {
   onActivate?: () => void;
   onAddAbove?: (type: string, template?: string) => void;
   onAddUnder?: (type: string, template?: string) => void;
-  onChange: (data: any) => void;
   onCancel?: () => void;
   view?: boolean;
   inBlock?: boolean;
@@ -38,43 +38,15 @@ interface BlockProps {
   onDelete?: () => void;
 }
 
-// TODO:
-const Widget = (props: unknown) => {};
-
 export const BlockRender = React.memo((props: BlockProps) => {
-  const [selectingTool, setSelectingTool] = useState(false); //just for rerender purpose
   const [isActive, setIsActive] = useState(props.active ? true : false);
   const [addUnder, setAddUnder] = useState(0);
 
   useEffect(() => {
-    if (!props.active) {
-      setSelectingTool(false);
-    }
     setIsActive(props.active ? true : false);
   }, [props.active]);
 
-  const activeBlock = () => {
-    if (props.onActivate && !isActive) {
-      props.onActivate();
-    }
-  };
-
-  const onDataChange = (data: any, debounce?: boolean) => {
-    if (debounce) {
-      debounceSave(data);
-    } else {
-      props.onChange(data);
-    }
-  };
-  const debounceSave = useCallback(
-    _debounce((data: any) => {
-      props.onChange(data);
-    }, 500),
-    [],
-  );
-
   const startAdd = (under: number) => {
-    setSelectingTool(true);
     setAddUnder(under);
   };
 
@@ -86,10 +58,8 @@ export const BlockRender = React.memo((props: BlockProps) => {
     if (addUnder < 0 && props.onAddAbove) {
       props.onAddAbove(type, template);
     }
-    setSelectingTool(false);
   };
 
-  const def = getDef(props.data.type);
   const getWidget = (type: string) => {
     const widget = WidgetList[type];
     if (widget) {
@@ -99,124 +69,76 @@ export const BlockRender = React.memo((props: BlockProps) => {
     }
   };
 
-  console.log(1111);
-  console.log(props.data);
   const Widget = getWidget(props.data.type);
-  console.log(Widget);
-
-  const render = () => {
-    if (def) {
-      return (
-        <>
-          {props.view && (
-            <def.render
-              view={true}
-              inBlock={props.inBlock ? true : false}
-              onChange={() => {}}
-              blockdata={props.data}
-              active={false}
-            />
-          )}
-          {!props.view && (
-            <def.render
-              adding={props.newBlock}
-              inBlock={props.inBlock ? true : false}
-              onChange={(data: any, debounce?: boolean) => {
-                onDataChange(data, debounce);
-              }}
-              blockdata={props.data}
-              active={isActive}
-              onCancel={props.onCancel}
-              onDelete={props.onDelete}
-            />
-          )}
-        </>
-      );
-    } else {
-      // return 'Unknown type:' + props.data.type;
-      return (
-        <Widget
-          adding={props.newBlock}
-          inBlock={props.inBlock ? true : false}
-          onChange={(data: any, debounce?: boolean) => {
-            onDataChange(data, debounce);
-          }}
-          data={props.data}
-          active={isActive}
-          onCancel={props.onCancel}
-          onDelete={props.onDelete}
-        />
-      );
-    }
-  };
-
-  const getTitle = () => {
-    if (def?.name) {
-      return i18n.t('Add above ') + i18n.t(def.name, { ns: 'blocktype' });
-    } else {
-      Object.entries(WidgetList).forEach(([key, value]) => {
-        if (value) {
-          return i18n.t('Add above ') + i18n.t(key, { ns: 'blocktype' });
-        }
-      });
-    }
-  };
 
   return (
-    <div
-      className={
-        'dme-block-container' + (isActive ? ' active' : '') + (props.inBlock ? ' inblock' : '')
-      }
-      id={props.data.id}
-      onClick={(e: any) => activeBlock()}
+    <StyledBlock
+      active={isActive}
+      className="dme-block-container"
+      onClick={() => (props.onActivate ? props.onActivate() : () => {})}
     >
-      {selectingTool && (
-        <RenderMenu
-          onAdd={addBlock}
-          onCancel={() => setSelectingTool(false)}
-          allowedType={props.addedType}
-        />
-      )}
-      {!props.view && props.siblingDirection === 'vertical' && (
-        <div className="tool tool-above">
-          <a
-            className="tool-item"
-            href="/"
-            title={getTitle()}
-            // title={i18n.t('Add above ') + i18n.t(def.name, { ns: 'blocktype' })}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              startAdd(-1);
-            }}
-          >
-            <AddBoxOutlined />
-          </a>
-        </div>
-      )}
-      {!props.view && <>{Util.renderPreBlock({ blockData: props.data })}</>}
-
-      {render()}
-
-      {!props.view && props.siblingDirection === 'vertical' && (
-        <div className="tool tool-under">
-          <a
-            className="tool-item"
-            href="/"
-            title={getTitle()}
-            // title={i18n.t('Add under ') + i18n.t(def.name, { ns: 'blocktype' })}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              startAdd(1);
-            }}
-          >
-            <AddBoxOutlined />
-          </a>
-        </div>
-      )}
-    </div>
+      <Widget
+        adding={props.newBlock}
+        inBlock={props.inBlock ? true : false}
+        data={props.data}
+        active={isActive}
+        onCancel={props.onCancel}
+        onDelete={props.onDelete}
+      />
+    </StyledBlock>
   );
+
+  // return (
+  //   <div
+  //     className={
+  //       'dme-block-container' + (props.inBlock ? ' inblock' : '')
+  //     }
+  //   >
+  //     {selectingTool && (
+  //       <RenderMenu
+  //         onAdd={addBlock}
+  //         onCancel={() => setSelectingTool(false)}
+  //         allowedType={props.addedType}
+  //       />
+  //     )}
+  //     {!props.view && props.siblingDirection === 'vertical' && (
+  //       <div className="tool tool-above">
+  //         <a
+  //           className="tool-item"
+  //           href="/"
+  //           title={getTitle()}
+  //           // title={i18n.t('Add above ') + i18n.t(def.name, { ns: 'blocktype' })}
+  //           onClick={(e) => {
+  //             e.preventDefault();
+  //             e.stopPropagation();
+  //             startAdd(-1);
+  //           }}
+  //         >
+  //           <AddBoxOutlined />
+  //         </a>
+  //       </div>
+  //     )}
+  //     {!props.view && <>{Util.renderPreBlock({ blockData: props.data })}</>}
+
+  //     {!props.view && props.siblingDirection === 'vertical' && (
+  //       <div className="tool tool-under">
+  //         <a
+  //           className="tool-item"
+  //           href="/"
+  //           title={getTitle()}
+  //           // title={i18n.t('Add under ') + i18n.t(def.name, { ns: 'blocktype' })}
+  //           onClick={(e) => {
+  //             e.preventDefault();
+  //             e.stopPropagation();
+  //             startAdd(1);
+  //           }}
+  //         >
+  //           <AddBoxOutlined />
+  //         </a>
+  //       </div>
+  //     )}
+  //   </div>
+  // );
 });
 
 export const RenderMenu = (props: {

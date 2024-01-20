@@ -101,7 +101,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   const [viewmode, setViewmode] = useState('edit');
   const [settingsShown, setSettingsShown] = useState(false);
   const {
-    selected: { selectedBlockIndex },
+    selected: { blockIndex: selectedBlockIndex },
     storage,
     getSelectedBlock,
     updateSelectedBlockIndex,
@@ -138,7 +138,6 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   useEffect(() => {
     emitter.addListener('updateSelectedWidgetIndex', handleUpdateSelctedWidgetIndex);
     emitter.addListener('setWidgets', handleUpdateWidgets);
-    // emitter.addListener('')
     return () => {
       emitter.removeListener('updateSelectedWidgetIndex');
       emitter.removeListener('setWidgets');
@@ -380,7 +379,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                 />
               )}
             </div>
-            {isStrictlyInfinity(selectedBlockIndex) ? 'widget list' : <SettingPanel />}
+           <SettingPanel />
             <div style={{ marginBottom: '100px' }}>
               <div id="dmeditor-property">
                 <div className="property-tab-container"></div>

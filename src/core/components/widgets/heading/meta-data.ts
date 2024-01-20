@@ -18,8 +18,8 @@ const HeadingMetaData = {
   },
   // style: {},
   //todo: props changed to settings, value & level can be upper
-  value: '',
-  setting: {
+  settings: {
+    value: '',
     align: 'left',
     'background-color': '',
     color: '#000000',

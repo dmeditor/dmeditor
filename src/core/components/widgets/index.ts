@@ -12,6 +12,7 @@ try {
     const comp = modules(path).default;
     // reg ./grid/Grid.tsx to /Grid
     const name = path.replace(/\.\/(.*)\/(.*)\.tsx/, '$2');
+    console.log(name);
     components[name] = comp;
   });
 } catch (e) {
@@ -23,12 +24,12 @@ try {
   const modules = require.context('./', true, /meta\-data\.ts$/);
   modules.keys().forEach((path: string) => {
     // const { data, style, type } = modules(path).default;
-    const { props, type } = modules(path).default;
+    const { settings, type } = modules(path).default;
     // for debug
     if (type === 'Heading') {
       properties.push({
         type,
-        ...props,
+        ...settings,
       });
     }
   });

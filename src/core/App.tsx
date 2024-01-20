@@ -15,7 +15,6 @@ const App = () => {
       value: 'This is a heading',
       settings:{
         level: 5,
-        color: '#ffff',
         value: ''
       },
       type: 'Heading',
@@ -24,9 +23,22 @@ const App = () => {
           level: 5,
           value: 'This is a heading child',
           type: 'Heading',
-          props:{},
+          settings:{
+            level:2,
+            value: '',
+          },
         }
       ],
+    } as EntityHeadingBlock,   
+
+    {
+      id: `widget-${nanoid()}`,
+      value: 'This is a heading 2',
+      settings:{
+        level: 5,
+        value: ''
+      },
+      type: 'Heading',      
     } as EntityHeadingBlock,   
   ];
   // {

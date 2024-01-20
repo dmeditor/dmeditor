@@ -23,9 +23,10 @@ function createDMEditor() {
   const defaultConfig = simpleCloneDeep(getDefaultOptions());
   return {
     selected:{      
-      selectedBlockId: -Infinity,
-      selectedBlock: null,
-      selectedBlockIndex: -Infinity,
+      blockId: "",
+      blockIndex: -Infinity,
+      currentList: [] as DMEData.BlockList,
+      listPath:[],
   },
     // activeWidget: null,
     editorConfig: {
@@ -33,7 +34,6 @@ function createDMEditor() {
       layoutMode: 'pc',
     },
     steps: [],
-    currentList: [] as DMEData.BlockList,
     storage: [] as DMEData.BlockList,
 
     // initEditor() {

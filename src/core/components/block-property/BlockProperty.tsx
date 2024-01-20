@@ -12,35 +12,35 @@ declare global {
   }
 }
 
-if (!isServer()) {
-  window.dmeditorPropertyTab = (e: any) => {
-    var i = 0;
-    var elem = e.currentTarget;
-    while ((elem = elem.previousSibling) != null) ++i;
+// if (!isServer()) {
+//   window.dmeditorPropertyTab = (e: any) => {
+//     var i = 0;
+//     var elem = e.currentTarget;
+//     while ((elem = elem.previousSibling) != null) ++i;
 
-    var tabContainer = document.getElementById('dmeditor-property')?.children[0] as any;
-    for (var index = 0; index < tabContainer.children.length; index++) {
-      var ele = tabContainer.children.item(index);
-      if (index == i) {
-        ele.classList.remove('normal');
-        ele.classList.add('current');
-      } else {
-        ele.classList.remove('current');
-        ele.classList.add('normal');
-      }
-    }
+//     var tabContainer = document.getElementById('dmeditor-property')?.children[0] as any;
+//     for (var index = 0; index < tabContainer.children.length; index++) {
+//       var ele = tabContainer.children.item(index);
+//       if (index == i) {
+//         ele.classList.remove('normal');
+//         ele.classList.add('current');
+//       } else {
+//         ele.classList.remove('current');
+//         ele.classList.add('normal');
+//       }
+//     }
 
-    var body = document.getElementById('dmeditor-property')?.children[1] as any;
-    for (var index = 0; index < body.children.length; index++) {
-      var ele = body.children.item(index);
-      if (index == i) {
-        ele.style.display = 'block';
-      } else {
-        ele.style.display = 'none';
-      }
-    }
-  };
-}
+//     var body = document.getElementById('dmeditor-property')?.children[1] as any;
+//     for (var index = 0; index < body.children.length; index++) {
+//       var ele = body.children.item(index);
+//       if (index == i) {
+//         ele.style.display = 'block';
+//       } else {
+//         ele.style.display = 'none';
+//       }
+//     }
+//   };
+// }
 
 //todo: use one instance so it can put multi to multi tabs.
 export const BlockProperty = (props: {

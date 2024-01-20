@@ -30,6 +30,7 @@ interface HeadingProps {
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: HeadingProps) => {
 
+
   const { data } = props;
   console.log('wong', data);
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
@@ -61,26 +62,11 @@ const Heading = (props: HeadingProps) => {
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
       </HeadingComponent>      
-        {props.data.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
+        {/* {props.data.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
           <BlockListRender data={props.data.children} selected={0} />
-      </div>}
+      </div>} */}
     </div>
   );
-};
-
-export const toolHeading: ToolDefinition = {
-  type: 'heading',
-  isComposited: false,
-  name: 'Heading',
-  menu: { category: 'basic', icon: <TitleOutlined /> },
-  initData: () => {
-    return {
-      type: 'heading',
-      data: '',
-      settings: { style: { width: 'auto' }, level: 2 },
-    };
-  },
-  render: Heading,
 };
 
 Heading.displayName = 'heading';
