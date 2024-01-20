@@ -70,9 +70,11 @@ const SettingPanel = (props) => {
           {mode === 'list' && (
             <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
           )}
-          <SettingHeader>{selectedBlock?.type}</SettingHeader>
           {hasSelect && mode === 'setting' && (
+            <>
+            <SettingHeader>{selectedBlock?.type}</SettingHeader>
             <CommonSettings {...props} selectedWidgetIndex={selectedBlockIndex} />
+            </>
           )}
           {/* <WidgetSetting selected={selectedWidget} /> */}
         </>

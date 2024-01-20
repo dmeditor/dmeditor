@@ -23,5 +23,5 @@
       "Components/*": ["src/core/components/*"],
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "samples/demo01/App.tsx", "samples/demo01/index.tsx"]
 }
