@@ -4,7 +4,7 @@ import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
 import emitter from 'Core/utils/event';
-import type { Data } from 'Src/core/components/types/blocktype';
+import type { DMEData } from 'Src/core/components/types/blocktype';
 import { properties } from 'Src/core/components/widgets';
 import { isStrictlyInfinity } from 'Src/core/utils';
 
@@ -13,8 +13,8 @@ type Store = {
     selectedBlockIndex:number; //todo: revove selected
     selectedBlock:DMEData.Block|null;
   };
-  currentList:DMEDMEData.BlockList; //current block list
-  storage:DMEDMEData.BlockList; //data layer
+  currentList:DMEData.BlockList; //current block list
+  storage:DMEData.BlockList; //data layer
 };
 
 type Actions = {

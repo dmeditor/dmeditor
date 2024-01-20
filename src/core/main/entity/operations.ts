@@ -1,12 +1,12 @@
 import { jsonParse } from 'Src/core/utils';
-import { Data } from 'Src/core/components/types/blocktype';
+import { DMEData } from 'Src/core/components/types/blocktype';
 
 
 //todo: can these operation be object-orented way(for blocklist and block)?
 
 //return a Block or null if not found
 // todo: this can be improved by using cache(eg. using parent path so iterateBlockTree can iterate smartly :))
-export const getBlockByID = (id: string, list: DMEDMEData.BlockList): DMEData.Block | null => {
+export const getBlockByID = (id: string, list: DMEData.BlockList): DMEData.Block | null => {
   let result =  null;
   iterateBlockList(list, (item)=>{
     if (item.id === id){
@@ -27,7 +27,7 @@ export const getChildList = (block: DMEData.Block): Array<DMEData.Block> =>{
 
 
 // iterate block list including their children
-export const iterateBlockList = (blocklist: DMEDMEData.BlockList, callback: (blockItem: DMEData.Block)=>boolean|void): boolean|void =>{
+export const iterateBlockList = (blocklist: DMEData.BlockList, callback: (blockItem: DMEData.Block)=>boolean|void): boolean|void =>{
   for(const block of blocklist){
      const result = iterateBlockTree(block, callback);
      if(result === false){
@@ -82,8 +82,8 @@ const deleteBlock = (block:DMEData.Block )=>{
 
 }
 
-export const loadData = (data:string| DMEDMEData.BlockList): DMEDMEData.BlockList =>{  
-  let list: DMEDMEData.BlockList = [];
+export const loadData = (data:string| DMEData.BlockList): DMEData.BlockList =>{  
+  let list: DMEData.BlockList = [];
   if (typeof data === 'string') {
    //todo: handle error
    list = jsonParse(data);

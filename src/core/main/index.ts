@@ -1,7 +1,7 @@
 import { getBlockByID } from './dto/operations';
 // import { config } from './config';
 import { simpleCloneDeep } from '../utils';
-import {Data} from '../components/types/blocktype';
+import {DMEData} from '../components/types/blocktype';
 
 function initDefaultOptions() {}
 
@@ -33,8 +33,8 @@ function createDMEditor() {
       layoutMode: 'pc',
     },
     steps: [],
-    currentList: [] as DMEDMEData.BlockList,
-    storage: [] as DMEDMEData.BlockList,
+    currentList: [] as DMEData.BlockList,
+    storage: [] as DMEData.BlockList,
 
     // initEditor() {
     //   this.widgets = [];

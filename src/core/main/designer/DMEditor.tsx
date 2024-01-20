@@ -36,7 +36,7 @@ import Toolbar from '../../toolbar';
 import { useEditorStore } from '../store';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 import { loadData } from '../entity/operations';
-import { Data } from 'Src/core/components/types/blocktype';
+import { DMEData } from 'Src/core/components/types/blocktype';
 import { BlockListRender } from 'Src/core/main/renderer';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;

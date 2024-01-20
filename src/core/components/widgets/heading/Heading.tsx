@@ -5,7 +5,7 @@ import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRend
 import useHeadingStore from 'Src/core/setting-panel/store/heading';
 import { isHTMLElement } from 'Src/core/utils';
 import { BlockListRender } from '../../../main/renderer';
-import { Data } from '../../types/blocktype';
+import { DMEData } from '../../types/blocktype';
 import { EntityHeadingBlock } from './entity';
 
 const { useState, useRef, useEffect } = React;
@@ -25,18 +25,15 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
   );
 };
 interface HeadingProps {
-  blockdata: any;
+  data: EntityHeadingBlock;
 }
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: HeadingProps) => {
-  // TODO: chore blockdata
 
-  //const entityData:EntityHeadingBlock;
-
-  const { blockdata } = props;
-  console.log('wong', blockdata);
+  const { data } = props;
+  console.log('wong', data);
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
-  const { id, level, value } = blockdata;
+  const { id, level, value } = data;
   const defaultValue: any = useRef(value);
 
   // const changeText = (e?: any) => {
@@ -46,7 +43,7 @@ const Heading = (props: HeadingProps) => {
 
   const common = {
     style: {
-      textAlign: blockdata.props.align,
+      textAlign: data.settings?.align,
     },
     // ref: (input: any) => input && input.focus(),
     onKeyUp: (e: React.KeyboardEvent<HTMLElement>) => {
@@ -64,8 +61,8 @@ const Heading = (props: HeadingProps) => {
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
       </HeadingComponent>      
-        {props.blockdata.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
-          <BlockListRender data={props.blockdata.children} selected={0} />
+        {props.data.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
+          <BlockListRender data={props.data.children} selected={0} />
       </div>}
     </div>
   );

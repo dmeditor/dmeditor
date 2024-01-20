@@ -13,7 +13,7 @@ import { BlockProperty } from '../../components/block-property';
 import WidgetList from '../../components/widgets';
 import { Heading } from '../../components/widgets/heading';
 import { MenuList } from '../../components/widgets/menu-list';
-import { Data } from '../../components/types/blocktype';
+import { DMEData } from '../../components/types/blocktype';
 
 export type BlockInfo = {
   type: string;
@@ -141,7 +141,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
           onChange={(data: any, debounce?: boolean) => {
             onDataChange(data, debounce);
           }}
-          blockdata={props.data}
+          data={props.data}
           active={isActive}
           onCancel={props.onCancel}
           onDelete={props.onDelete}

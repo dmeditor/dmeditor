@@ -12,10 +12,11 @@ const App = () => {
   const data = [
     {
       id: `widget-${nanoid()}`,
-      level: 5,
       value: 'This is a heading',
       settings:{
-        
+        level: 5,
+        color: '#ffff',
+        value: ''
       },
       type: 'Heading',
       children:[{
