@@ -329,10 +329,9 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
             className={
               'layout-main ' + ' viewmode-' + viewmode + (viewmode === 'edit' ? '' : ' is-preview')
             }
-            onClick={(e)=>{e.stopPropagation()}}
           >
             {viewmode === 'edit' && (
-              <div className={dmeditorViewCss}>
+              <div className={dmeditorViewCss} onClick={(e)=>{e.stopPropagation()}}>
                 <BlockListRender data={storage} selected={selectedBlockIndex} />
                 {/* <div style={{ width: '100%', height: 1 }}></div> */}
                 {/* {Array.isArray(storage) &&
