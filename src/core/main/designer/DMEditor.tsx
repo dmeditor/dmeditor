@@ -106,6 +106,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     getSelectedBlock,
     updateSelectedBlockIndex,
     setStorage,
+    clearSelected,
   } = useEditorStore();
   const blockIndexRef = useRef(selectedBlockIndex);
   // const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
@@ -256,6 +257,11 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     // updateData(fullBlocks);
   };
 
+  // reset to initial status
+  const resetStatus = ()=>{
+    clearSelected();
+  }
+
   const onChangeViewMode = (e: any, type: string) => {
     e.preventDefault();
     setViewmode(type);
@@ -317,11 +323,13 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           style={settingsShown ? { display: 'none' } : {}}
           id="dmeditor-main"
           className="layout-main-container"
+          onClick={resetStatus}
         >
           <div
             className={
               'layout-main ' + ' viewmode-' + viewmode + (viewmode === 'edit' ? '' : ' is-preview')
             }
+            onClick={(e)=>{e.stopPropagation()}}
           >
             {viewmode === 'edit' && (
               <div className={dmeditorViewCss}>

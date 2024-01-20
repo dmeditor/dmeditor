@@ -14,7 +14,7 @@ import { PageTitle, RightElement, SettingHeader, Space } from './style';
 
 const { useEffect } = React;
 
-type SettingPanelMode = 'setting' | 'list' | 'page-setting';
+type SettingPanelMode = 'setting' | 'list' | 'page-setting'|'add-block';
 
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
 const SettingPanel = (props) => {
@@ -28,7 +28,11 @@ const SettingPanel = (props) => {
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
   useEffect(() => {
-    setMode('setting');
+    if(isSelected()){
+      setMode('setting');
+    }else{
+      setMode('list');
+    }
 
     //for test for now
     setPathArray([
