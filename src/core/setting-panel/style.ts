@@ -4,6 +4,11 @@ export const SettingHeader = styled.div`
   font-weight: bold;
 `;
 
+export const SettingDescription = styled.div`
+   color: #999999;
+   padding-bottom: 10px;
+`;
+
 
 export const PageTitle = styled.div`
    padding: 5px;

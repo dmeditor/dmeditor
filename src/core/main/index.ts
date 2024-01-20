@@ -28,6 +28,9 @@ function createDMEditor() {
       currentList: [] as DMEData.BlockList,
       listPath:[],
   },
+    addBlockData:{
+      index: -Infinity
+    },
     // activeWidget: null,
     editorConfig: {
       cssCode: '',

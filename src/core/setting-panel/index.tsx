@@ -5,21 +5,24 @@ import { Settings } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { useEditorStore } from '../main/store';
+import { AddBlock } from './AddBlock';
 import { CommonSettings } from './CommonSetting';
 import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
 import { Path, PathItem, PathItemProps } from './Path';
 import WidgetSetting from './property-setting/property-item';
 import { PageTitle, RightElement, SettingHeader, Space } from './style';
+import emitter from 'Core/utils/event';
 
 const { useEffect } = React;
 
-type SettingPanelMode = 'setting' | 'list' | 'page-setting'|'add-block';
+type SettingPanelMode = 'setting' | 'list' | 'page-setting' | 'add-block';
 
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
 const SettingPanel = (props) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentList },
+    addBlockData:{index: addBlockIndex, position: addBlockPosition},
     getSelectedBlock,
     isSelected,
   } = useEditorStore((state) => state);
@@ -28,10 +31,16 @@ const SettingPanel = (props) => {
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
   useEffect(() => {
-    if(isSelected()){
-      setMode('setting');
+
+    if(addBlockIndex !== -Infinity ){
+      setMode('add-block');
+      console.log('hello');
     }else{
-      setMode('list');
+      if (isSelected()) {
+        setMode('setting');
+      }else{
+        setMode('list');
+      }
     }
 
     //for test for now
@@ -39,7 +48,7 @@ const SettingPanel = (props) => {
       { text: 'Page', id: '111', level: 0 },
       { text: 'Heading', id: '112', level: 1, disableClick: true },
     ]);
-  }, [selectedBlockIndex]);
+  }, [selectedBlockIndex, addBlockIndex]);
 
   const hasSelect = isSelected();
 
@@ -56,30 +65,35 @@ const SettingPanel = (props) => {
         padding: 5px;
       `}
     >
-      <RightElement>
-        <Button title="Page settings" onClick={() => setMode('page-setting')}>
-          <Settings />
-        </Button>
-      </RightElement>
-      <PageTitle>New page</PageTitle>
-      <Space />
-      <Path pathArray={pathArray} onSelect={selectPathItem} />
-      <Space />
-      {['list', 'setting'].includes(mode) && (
+      {mode === 'add-block' && <AddBlock />}
+      {mode !== 'add-block' && (
         <>
-          {mode === 'list' && (
-            <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
-          )}
-          {hasSelect && mode === 'setting' && (
+          <RightElement>
+            <Button title="Page settings" onClick={() => setMode('page-setting')}>
+              <Settings />
+            </Button>
+          </RightElement>
+          <PageTitle>New page</PageTitle>
+          <Space />
+          <Path pathArray={pathArray} onSelect={selectPathItem} />
+          <Space />
+          {['list', 'setting'].includes(mode) && (
             <>
-            <SettingHeader>{selectedBlock?.type}</SettingHeader>
-            <CommonSettings {...props} selectedWidgetIndex={selectedBlockIndex} />
+              {mode === 'list' && (
+                <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
+              )}
+              {hasSelect && mode === 'setting' && (
+                <>
+                  <SettingHeader>{selectedBlock?.type}</SettingHeader>
+                  <CommonSettings {...props} selectedWidgetIndex={selectedBlockIndex} />
+                </>
+              )}
+              {/* <WidgetSetting selected={selectedWidget} /> */}
             </>
           )}
-          {/* <WidgetSetting selected={selectedWidget} /> */}
+          {mode === 'page-setting' && <PageSetting />}
         </>
       )}
-      {mode === 'page-setting' && <PageSetting />}
     </div>
   );
 };

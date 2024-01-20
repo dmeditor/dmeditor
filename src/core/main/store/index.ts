@@ -8,18 +8,28 @@ import type { DMEData } from 'Src/core/components/types/blocktype';
 import { properties } from 'Src/core/components/widgets';
 import { isStrictlyInfinity } from 'Src/core/utils';
 
+export type AddBlockPosition = 'before' | 'after';
+export type AddBlockStatus = 'started' | 'done';
+
 type Store = {
   selected: {
     blockId: string;
-    blockIndex:number; //-Infinity if it's not selected
-    currentList:DMEData.BlockList; //current block list
+    blockIndex: number; //-Infinity if it's not selected
+    currentList: DMEData.BlockList; //current block list
     listPath: Array<string>;
   };
-  storage:DMEData.BlockList; //data layer
+  addBlockData: {
+    index: number;
+    position?: AddBlockPosition;
+    status?: AddBlockStatus;
+  };
+  storage: DMEData.BlockList; //data layer
 };
 
 type Actions = {
-  addBlock: (block: ReactNode) => void;
+  startAddBlock: (index: number, type: AddBlockPosition) => void;
+  cancelAdding: () => void;
+  addBlock: (data: DMEData.Block) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
@@ -28,10 +38,10 @@ type Actions = {
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (index: number) => void;
-  updateCurrentList: (list: DMEData.BlockList)=>void;
+  updateCurrentList: (list: DMEData.BlockList) => void;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   toggleProperty: (status: boolean) => void;
-  isSelected:()=>boolean;
+  isSelected: () => boolean;
 };
 
 // const useEditorStore = create<Store & Actions>((set) => {
@@ -46,9 +56,38 @@ type Actions = {
 const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
     ...createDMEditor(),
-    addBlock: (widget: ReactNode) =>
+    startAddBlock: (index: number, position: AddBlockPosition) =>
       set((state) => {
-        // state.designer.storage.push(widget);
+        state.addBlockData.index = index;
+        state.addBlockData.position = position;
+        state.addBlockData.status = 'started';
+      }),
+    addBlock: (data: DMEData.Block) =>
+      set((state) => {
+        const index = state.addBlockData.index;
+        const position = state.addBlockData.position;
+        const status = state.addBlockData.status;
+        if (index == -Infinity) {
+          return;
+        }
+        if (index <= state.storage.length - 1 && state.addBlockData.position) {
+          if (position == 'before') {
+            state.storage.splice(index, 0, data);
+          } else if (position == 'after') {
+            state.storage.splice(index + 1, 0, data);
+          }
+          state.selected.currentList = state.storage;
+
+          state.addBlockData.index = -Infinity;
+          state.addBlockData.position = undefined;
+          state.addBlockData.status = undefined;
+        }
+      }),
+    cancelAdding: () =>
+      set((state) => {
+        state.addBlockData.index = -Infinity;
+        state.addBlockData.position = undefined;
+        state.addBlockData.status = undefined;
       }),
     clearWidgets: () => {
       set((state) => {
@@ -57,17 +96,17 @@ const useEditorStore = create<Store & Actions>()(
         state.storage = [];
       });
     },
-    updateCurrentList:(list:DMEData.BlockList)=>{
-      set((state)=>{
+    updateCurrentList: (list: DMEData.BlockList) => {
+      set((state) => {
         state.selected.currentList = list;
-      })
+      });
     },
     clearSelected: () => {
       set((state) => {
         state.selected.blockIndex = -Infinity;
       });
     },
-    isSelected: ():boolean =>{
+    isSelected: (): boolean => {
       const state = get();
       return state.selected.blockIndex !== -Infinity;
     },
@@ -86,7 +125,12 @@ const useEditorStore = create<Store & Actions>()(
     },
     getSelectedBlock: (index: number) => {
       const state = get();
-      if (isStrictlyInfinity(index) || index < 0 || !state.selected.currentList || state.selected.currentList.length <= index) {
+      if (
+        isStrictlyInfinity(index) ||
+        index < 0 ||
+        !state.selected.currentList ||
+        state.selected.currentList.length <= index
+      ) {
         state.clearSelected();
         return;
       }
