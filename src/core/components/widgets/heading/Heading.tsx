@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TitleOutlined } from '@mui/icons-material';
 
-import { getCommonBlockCss, getStyleCss } from '../../block/Block';
+import { getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
 import useHeadingStore from 'Src/core/setting-panel/store/heading';
 import { isHTMLElement } from 'Src/core/utils';
 
@@ -27,10 +27,13 @@ interface HeadingProps {
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: HeadingProps) => {
   // TODO: chore blockdata
+
+  //const entityData:EntityHeadingBlock;
+
   const { blockdata } = props;
   console.log('wong', blockdata);
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
-  const { id, level, value } = blockdata.props;
+  const { id, level, value } = blockdata;
   const defaultValue: any = useRef(value);
 
   // const changeText = (e?: any) => {

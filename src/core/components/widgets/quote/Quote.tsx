@@ -3,7 +3,7 @@ import { TitleOutlined } from '@mui/icons-material';
 
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { Util } from '../../../utils';
-import { getCommonBlockCss } from '../../block/Block';
+import { getCommonBlockCss } from '../../block/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';
 

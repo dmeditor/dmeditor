@@ -2,6 +2,7 @@ import * as React from 'react';
 import { nanoid } from 'nanoid';
 
 import { DMEditor } from './main/designer/DMEditor';
+import { EntityHeadingBlock } from './main/entity/entitity';
 
 const { useState, useRef, useEffect } = React;
 
@@ -11,13 +12,10 @@ const App = () => {
   const data = [
     {
       id: `widget-${nanoid()}`,
-      props: {
-        level: 5,
-        value: 'This is a heading',
-      },
-      type: 'Heading',
-      category: 'widget',
-    },
+      level: 5,
+      value: 'This is a heading',
+      type: 'Heading'
+    } as EntityHeadingBlock,
     {
       type: 'text',
       data: [{ type: 'paragraph', children: [{ text: 'This lap top has fastest CPU so far.' }] }],

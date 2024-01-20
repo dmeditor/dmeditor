@@ -38,10 +38,10 @@ export const CommonSettings = (props: {
   const [settings, setSettings] = useState(props.commonSettings ? props.commonSettings : {});
   const [isChange, setIsChange] = useState(false);
   const [blockOpen, setBlockOpen] = useState(false);
-  const { getSelectedWidget, designer } = useEditorStore();
+  const { getSelectedBlock, selected } = useEditorStore();
 
   const selectedWidget = useMemo(
-    () => getSelectedWidget(props.selectedWidgetIndex),
+    () => getSelectedBlock(props.selectedWidgetIndex), //todo: get widget. here is to get block.
     [props.selectedWidgetIndex],
   );
 
@@ -109,7 +109,7 @@ export const CommonSettings = (props: {
     if (!compName) return false;
     if (!selectedWidget) return false;
 
-    const { category, type } = selectedWidget;
+    const { category, type } = {...selectedWidget, category: 'widget'}; //todo: remove merge
     if (category === 'layout') {
       // originalWidget = getLayoutByType(type);
     } else if (category === 'widget') {

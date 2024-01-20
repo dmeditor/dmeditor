@@ -40,7 +40,7 @@ interface BlockProps {
 // TODO:
 const Widget = (props: unknown) => {};
 
-export const Block = React.memo((props: BlockProps) => {
+export const BlockRender = React.memo((props: BlockProps) => {
   const [selectingTool, setSelectingTool] = useState(false); //just for rerender purpose
   const [isActive, setIsActive] = useState(props.active ? true : false);
   const [addUnder, setAddUnder] = useState(0);

@@ -4,24 +4,29 @@ import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
 import emitter from 'Core/utils/event';
-import type { DMEditor } from 'Src/core/components/types/blocktype';
+import type { Data } from 'Src/core/components/types/blocktype';
 import { properties } from 'Src/core/components/widgets';
 import { isStrictlyInfinity } from 'Src/core/utils';
 
 type Store = {
-  designer: any;
+  selected: {
+    selectedBlockIndex:number;
+    selectedBlock:Data.Block|null;
+  };
+  currentList:Data.BlockList; //current block list
+  storage:Data.BlockList; //data layer
 };
 
 type Actions = {
-  addWidget: (widget: ReactNode) => void;
+  addBlock: (block: ReactNode) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
-  getSelectedWidget: (index: number) => DMEditor.Block | undefined;
-  removeWidget: (widget: ReactNode) => void;
+  getSelectedBlock: (index: number) => Data.Block | undefined;
+  removeBlock: (widget: ReactNode) => void;
   setSelected: (widget: ReactNode) => void;
-  updateWidgets: (widgets: DMEditor.Block[]) => void;
-  updateSelectedWidgetIndex: (index: number) => void;
+  setStorage: (data: Data.Block[]) => void;
+  updateSelectedBlockIndex: (index: number) => void;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   toggleProperty: (status: boolean) => void;
 };
@@ -37,30 +42,30 @@ type Actions = {
 
 const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
-    designer: createDMEditor(),
-    addWidget: (widget: ReactNode) =>
+    ...createDMEditor(),
+    addBlock: (widget: ReactNode) =>
       set((state) => {
-        state.designer.widgets.push(widget);
+        // state.designer.storage.push(widget);
       }),
     clearWidgets: () => {
       set((state) => {
-        state.designer.selectedWidget = null;
-        // state.designer.selectedWidgetIndex = -1;
-        state.designer.selectedWidgetIndex = -Infinity;
-        state.designer.widgets = [];
+        state.selected.selectedBlock = null;
+        // state.designer.selectedBlockIndex = -1;
+        state.selected.selectedBlockIndex = -Infinity;
+        state.storage = [];
       });
     },
     clearSelected: () => {
       set((state) => {
-        state.designer.selectedWidget = null;
-        state.designer.selectedWidgetIndex = -Infinity;
+        state.selected.selectedBlock = null;
+        state.selected.selectedBlockIndex = -Infinity;
       });
     },
     loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => {
       set((state) => {
         let flag = false;
         if (!!jsonSchema && !!jsonSchema.widgets) {
-          state.designer.widgets = jsonSchema.widgets;
+          state.storage = jsonSchema.widgets;
           flag = true;
         }
         if (flag) {
@@ -69,33 +74,33 @@ const useEditorStore = create<Store & Actions>()(
         return flag;
       });
     },
-    getSelectedWidget: (index: number) => {
+    getSelectedBlock: (index: number) => {
       const state = get();
-      if (isStrictlyInfinity(index) || index < 0 || state.designer.widgets.length <= index) {
+      if (isStrictlyInfinity(index) || index < 0 || state.storage.length <= index) {
         state.clearSelected();
         return;
       }
-      if (!state.designer.widgets[index]) {
+      if (!state.storage[index]) {
         state.clearSelected();
         return;
       }
-      return state.designer.widgets[index];
+      return state.storage[index];
     },
-    removeWidget: (widget: ReactNode) =>
+    removeBlock: (block: ReactNode) =>
       set((state) => {
-        state.designer.widgets = state.designer.widgets.filter((w) => w !== widget);
+        state.storage = state.storage.filter((w) => w !== widget);
       }),
-    setSelected: (widget: ReactNode) => {
+    setSelected: (block: ReactNode) => {
       set((state) => {
-        if (!widget) {
+        if (!block) {
           state.clearSelected();
           return;
         }
-        // state.designer.selectedWidgetIndex = selected;
-        state.designer.selectedWidget = widget;
+        // state.designer.selectedBlockIndex = selected;
+        //state.designer.selectedBlock = block;
       });
     },
-    updateWidgets: (blocks: DMEditor.Block[]) => {
+    setStorage: (blocks: Data.Block[]) => {
       set((state) => {
         const propertiesMap = properties.reduce((acc, cur) => {
           if (!cur || !cur.type) {
@@ -104,7 +109,7 @@ const useEditorStore = create<Store & Actions>()(
           acc[cur.type] = cur;
           return acc;
         }, {});
-        state.designer.widgets = blocks.map((block) => {
+        state.storage = blocks.map((block) => {
           if (!block || !block.type) {
             return block;
           }
@@ -120,11 +125,12 @@ const useEditorStore = create<Store & Actions>()(
             };
           }
         });
+        state.currentList = state.storage;
       });
     },
-    updateSelectedWidgetIndex: (index: number) => {
+    updateSelectedBlockIndex: (index: number) => {
       set((state) => {
-        state.designer.selectedWidgetIndex = index;
+        state.selected.selectedBlockIndex = index;
       });
     },
     updateSelectedBlockProps: (propName: string, propValue: string | number) => {
@@ -134,7 +140,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        const block = state.getSelectedWidget(state.designer.selectedWidgetIndex);
+        const block = state.getSelectedBlock(state.selected.selectedBlockIndex);
         if (!block) {
           console.error('Block not found');
           return;
@@ -145,7 +151,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        state.designer.widgets[state.designer.selectedWidgetIndex].props = {
+        state.storage[state.selected.selectedBlockIndex].props = {
           ...block.props,
           [propName]: propValue,
         };

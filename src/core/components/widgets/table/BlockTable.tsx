@@ -24,7 +24,7 @@ import {
   Ranger,
   Util,
 } from '../../../utils';
-import { getCommonBlockCss, getStyleCss } from '../../block/Block';
+import { getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
 import { BlockProperty } from '../../block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';
 import { tableCss } from './BlockTable.css';

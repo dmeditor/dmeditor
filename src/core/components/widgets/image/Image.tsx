@@ -5,7 +5,7 @@ import { Button, Checkbox } from '@mui/material';
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PickColor, PropertyGroup, PropertyItem, Ranger, Util } from '../../../utils';
-import { getCommonBlockCss, getStyleCss } from '../../block/Block';
+import { getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';
 

@@ -1,3 +1,3 @@
-import { Block, RenderMenu } from './Block';
+import { BlockRender, RenderMenu } from './BlockRender';
 
-export { Block, RenderMenu };
+export { BlockRender, RenderMenu };

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { VideocamOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { getCommonBlockCss } from '../../block/Block';
+import { getCommonBlockCss } from '../../block/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';

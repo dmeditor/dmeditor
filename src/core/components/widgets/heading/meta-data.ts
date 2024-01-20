@@ -1,5 +1,7 @@
 // import { widgetMetaData } from 'Components/types';
 
+import { EntityBlock } from "Src/core/main/entity/entitity";
+
 const HeadingMetaData = {
   alias: '',
   // ?category options: widget, layout, form, chart, advanced
@@ -16,6 +18,7 @@ const HeadingMetaData = {
     onBlur: () => void 0,
   },
   // style: {},
+  //todo: props changed to settings, value & level can be upper
   props: {
     align: 'left',
     'background-color': '',

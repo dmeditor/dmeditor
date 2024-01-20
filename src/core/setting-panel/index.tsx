@@ -9,17 +9,17 @@ const { useEffect } = React;
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
 const SettingPanel = (props) => {
   const {
-    designer: { selectedWidgetIndex },
-    updateSelectedWidgetIndex,
+    selected: { selectedBlockIndex },
+    updateSelectedBlockIndex,
   } = useEditorStore((state) => state);
 
   useEffect(() => {
-    updateSelectedWidgetIndex(selectedWidgetIndex);
-  }, [selectedWidgetIndex]);
+    updateSelectedBlockIndex(selectedBlockIndex);
+  }, [selectedBlockIndex]);
 
   return (
     <div>
-      <CommonSettings {...props} selectedWidgetIndex={selectedWidgetIndex}/>
+      <CommonSettings {...props} selectedWidgetIndex={selectedBlockIndex}/>
       {/* <WidgetSetting selected={selectedWidget} /> */}
     </div>
   );

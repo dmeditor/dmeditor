@@ -7,7 +7,7 @@ import {
   ViewListOutlined,
 } from '@mui/icons-material';
 import { Accordion } from 'react-bootstrap';
-import { getCommonBlockCss, getStyleCss } from '../../block/Block';
+import { getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
 import { CommonSettings } from '../../../setting-panel/common-setting';

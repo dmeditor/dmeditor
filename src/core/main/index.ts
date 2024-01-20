@@ -1,5 +1,6 @@
 // import { config } from './config';
 import { simpleCloneDeep } from '../utils';
+import {Data} from '../components/types/blocktype';
 
 function initDefaultOptions() {}
 
@@ -19,16 +20,19 @@ const getDefaultOptions = (): {
 function createDMEditor() {
   const defaultConfig = simpleCloneDeep(getDefaultOptions());
   return {
-    selectedWidgetId: -Infinity,
-    selectedWidget: null,
-    selectedWidgetIndex: -Infinity,
+    selected:{      
+      selectedBlockId: -Infinity,
+      selectedBlock: null,
+      selectedBlockIndex: -Infinity,
+  },
     // activeWidget: null,
     editorConfig: {
       cssCode: '',
       layoutMode: 'pc',
     },
     steps: [],
-    widgets: [],
+    currentList: [] as Data.BlockList,
+    storage: [] as Data.BlockList,
     // initEditor() {
     //   this.widgets = [];
     //   this.editorConfig = cloneDeep(defaultConfig);

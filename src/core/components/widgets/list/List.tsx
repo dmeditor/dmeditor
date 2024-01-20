@@ -6,7 +6,7 @@ import {
   TitleOutlined,
 } from '@mui/icons-material';
 
-import { getCommonBlockCss } from '../../block/Block';
+import { getCommonBlockCss } from '../../block/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
 import { CommonSettings } from '../../CommonSettings';

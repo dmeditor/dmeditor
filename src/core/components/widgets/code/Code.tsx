@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { CodeOutlined } from '@mui/icons-material';
 
-import { getCommonBlockCss } from '../../block/Block';
+import { getCommonBlockCss } from '../../block/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';

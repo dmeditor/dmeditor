@@ -7,7 +7,7 @@ import {
   CollectionsOutlined,
 } from '@mui/icons-material';
 
-import { Block, getCommonBlockCss, getStyleCss } from '../../block/Block';
+import { BlockRender, getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';
@@ -164,7 +164,7 @@ const BlockImageText = (props: ToolRenderProps) => {
               )}
               {item.type != 'list' && (
                 <div style={{ width: imageWidth }}>
-                  <Block
+                  <BlockRender
                     view={props.view}
                     data={list[index]}
                     inBlock={true}

@@ -30,7 +30,7 @@ import {
 } from '../../../utils';
 import FontFamilyList from '../../../utils/FontFamilyList';
 import { SlateFun } from '../../../utils/Slate';
-import { getCommonBlockCss, getStyleCss } from '../../block/Block';
+import { getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';
 

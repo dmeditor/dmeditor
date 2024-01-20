@@ -4,7 +4,7 @@ import { AddOutlined } from '@mui/icons-material';
 import { Alert, Button } from '@mui/material';
 import { newBlockData } from 'Src/ToolDefinition';
 
-import { Block, RenderMenu } from '../block';
+import { BlockRender, RenderMenu } from '../block';
 
 interface BlockListProps {
   list: Array<any>;
@@ -112,7 +112,7 @@ export const BlockList = (props: BlockListProps) => {
           return (
             <div key={childData.id}>
               {props.view && (
-                <Block
+                <BlockRender
                   data={childData}
                   active={false}
                   onCancel={() => {}}
@@ -124,7 +124,7 @@ export const BlockList = (props: BlockListProps) => {
                 />
               )}
               {!props.view && (
-                <Block
+                <BlockRender
                   addedType={props.allowedType}
                   onDelete={() => onDelete(index)}
                   onAddUnder={(type: string, template?: string) => addUnder(type, index, template)}

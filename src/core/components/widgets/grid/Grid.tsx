@@ -4,7 +4,7 @@ import { GridViewOutlined, TitleOutlined } from '@mui/icons-material';
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyItem, Ranger, Util } from '../../../utils';
-import { getCommonBlockCss } from '../../block/Block';
+import { getCommonBlockCss } from '../../block/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Block as Widget } from '../../components/block/Block';
+import { BlockRender } from '../../components/block/BlockRender';
 import { dmeditorEditCss, dmeditorViewCss, setMainWidthCssVariable } from './DMEditor.css';
 
 import '../initialize';
@@ -35,6 +35,8 @@ import SettingPanel from '../../setting-panel';
 import Toolbar from '../../toolbar';
 import { useEditorStore } from '../store';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
+import { loadData } from '../entity/operations';
+import { Data } from 'Src/core/components/types/blocktype';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
@@ -73,13 +75,9 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   useImperativeHandle(
     currentRef,
     () => ({
-      setEditorJson: (data: string | Array<Widget>) => {
-        if (typeof data === 'string') {
-          data = jsonParse(data);
-        } else {
-          data = [...data];
-        }
-        emitter.emit('setWidgets', data);
+      setEditorJson: (data: string | Array<Data.Block>) => {       
+        const list = loadData(data);
+        emitter.emit('setWidgets', list);
       },
     }),
     [],
@@ -102,12 +100,13 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   const [viewmode, setViewmode] = useState('edit');
   const [settingsShown, setSettingsShown] = useState(false);
   const {
-    designer: { widgets, selectedWidgetIndex },
-    getSelectedWidget,
-    updateSelectedWidgetIndex,
-    updateWidgets,
+    selected: {selectedBlockIndex},
+    currentList,
+    getSelectedBlock,
+    updateSelectedBlockIndex,
+    setStorage,
   } = useEditorStore();
-  const widgetIndexRef = useRef(selectedWidgetIndex);
+  const blockIndexRef = useRef(selectedBlockIndex);
   // const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
   const { t, i18n } = useTranslation();
 
@@ -126,12 +125,12 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   //   Util.pageTabActiveIndex = props.pageTabActiveIndex || 0;
   // }, []);
   const handleUpdateSelctedWidgetIndex = useCallback((index: number) => {
-    updateSelectedWidgetIndex(index);
-    widgetIndexRef.current = index;
+    updateSelectedBlockIndex(index);
+    blockIndexRef.current = index;
   }, []);
 
-  const handleUpdateWidgets = useCallback((widgets: Widget[]) => {
-    updateWidgets(widgets);
+  const handleUpdateWidgets = useCallback((data: Data.Block[]) => {
+    setStorage(data);
   }, []);
 
   // useEffectLayout
@@ -146,10 +145,10 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   }, []);
 
   useEffect(() => {
-    if (selectedWidgetIndex !== widgetIndexRef.current) {
-      handleWidgetIndexChange(selectedWidgetIndex);
+    if (selectedBlockIndex !== blockIndexRef.current) {
+      handleWidgetIndexChange(selectedBlockIndex);
     }
-  }, [selectedWidgetIndex]);
+  }, [selectedBlockIndex]);
 
   const handleWidgetIndexChange = debounce((index: number) => {
     emitter.emit('updateSelectedWidgetIndex', index);
@@ -164,10 +163,10 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   }, 0.1e3);
 
   useEffect(() => {
-    if (selectedWidgetIndex !== widgetIndexRef.current) {
-      onActiveIndexChanged(selectedWidgetIndex);
+    if (selectedBlockIndex !== blockIndexRef.current) {
+      onActiveIndexChanged(selectedBlockIndex);
     }
-  }, [selectedWidgetIndex]);
+  }, [selectedBlockIndex]);
 
   const showSettings = (e: any) => {
     e.preventDefault();
@@ -190,7 +189,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
    */
   const addAbove = (type: string, newIndex: number, template?: string) => {
     if (type) {
-      if (!!widgets[newIndex]) {
+      if (!!currentList[newIndex]) {
       }
     }
     // if (type) {
@@ -327,11 +326,11 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
             {viewmode === 'edit' && (
               <div className={dmeditorViewCss}>
                 {/* <div style={{ width: '100%', height: 1 }}></div> */}
-                {Array.isArray(widgets) &&
-                  widgets.map((widget, index) => {
-                    const currentSelected = selectedWidgetIndex === index;
+                {Array.isArray(currentList) &&
+                  currentList.map((widget, index) => {
+                    const currentSelected = selectedBlockIndex === index;
                     return (
-                      <Widget
+                      <BlockRender
                         siblingDirection="vertical"
                         data={widget}
                         active={currentSelected}
@@ -361,7 +360,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
             {viewmode !== 'edit' && (
               <DMEditorView
                 key={viewmode}
-                data={widgets}
+                data={storage}
                 getFileUrl={props.getFileUrl}
                 getImageUrl={props.getImageUrl}
               />
@@ -371,7 +370,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
         {viewmode == 'edit' && (
           <div style={settingsShown ? { display: 'none' } : {}} className="layout-properties">
             <div id="dmeditor-add-menu">
-              {widgets.length === 0 && (
+              {currentList?.length === 0 && (
                 <MenuList
                   onSelect={(type: string, template?: string) => {
                     addUnder(type, -1, template);
@@ -379,7 +378,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                 />
               )}
             </div>
-            {isStrictlyInfinity(selectedWidgetIndex) ? 'widget list' : <SettingPanel />}
+            {isStrictlyInfinity(selectedBlockIndex) ? 'widget list' : <SettingPanel />}
             <div style={{ marginBottom: '100px' }}>
               <div id="dmeditor-property">
                 <div className="property-tab-container"></div>
@@ -469,7 +468,7 @@ export const DMEditorView = (props: DMEditorViewProps) => {
       {props.data.map((block, index) => {
         const blockElement = () => {
           return (
-            <Widget
+            <BlockRender
               data={block}
               active={false}
               onCancel={() => {}}
