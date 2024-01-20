@@ -5,7 +5,7 @@ import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { Util } from '../../../utils';
 import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Core/setting-panel/common-setting';
+import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
 
 export const Quote = (props: ToolRenderProps) => {
   const [content, setConent] = useState(props.blockdata.data);

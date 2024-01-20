@@ -7,7 +7,7 @@ import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PickColor, PropertyGroup, PropertyItem, Ranger, Util } from '../../../utils';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Core/setting-panel/common-setting';
+import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
 
 export const BlockImage = (props: ToolRenderProps) => {
   const [fullScreen, setFullScreen] = useState(props.blockdata.settings?.fullScreen ? true : false);

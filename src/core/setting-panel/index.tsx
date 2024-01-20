@@ -5,7 +5,7 @@ import { Settings } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { useEditorStore } from '../main/store';
-import { CommonSettings } from './common-setting';
+import { CommonSettings } from './CommonSetting';
 import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
 import { Path, PathItem, PathItemProps } from './Path';

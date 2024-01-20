@@ -37,7 +37,7 @@ export const CommonSettings = (props: {
   const { selectedWidgetIndex, onChange = () => {}, commonChange = () => {} } = props;
   const [settings, setSettings] = useState(props.commonSettings ? props.commonSettings : {});
   const [isChange, setIsChange] = useState(false);
-  const [blockOpen, setBlockOpen] = useState(false);
+  const [blockOpen, setBlockOpen] = useState(true);
   const { getSelectedBlock } = useEditorStore();
 
   const selectedWidget = useMemo(

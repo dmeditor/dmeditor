@@ -26,7 +26,7 @@ import {
 } from '../../../utils';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from '../../block-property';
-import { CommonSettings } from 'Core/setting-panel/common-setting';
+import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
 import { tableCss } from './BlockTable.css';
 
 type add = 'top' | 'right' | 'bottom' | 'left';

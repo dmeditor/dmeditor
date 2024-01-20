@@ -4,7 +4,7 @@ import { CodeOutlined } from '@mui/icons-material';
 
 import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Core/setting-panel/common-setting';
+import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { Util } from '../../../utils';
 

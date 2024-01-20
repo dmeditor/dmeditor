@@ -7,7 +7,7 @@ import { PropertyItem, Ranger, Util } from '../../../utils';
 import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
-import { CommonSettings } from 'Core/setting-panel/common-setting';
+import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
 
 export const ContainerGrid = (props: any) => {
   const [children, setChildren] = useState(props.blockdata.children);

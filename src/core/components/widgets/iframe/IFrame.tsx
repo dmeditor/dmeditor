@@ -11,7 +11,7 @@ import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyButton, PropertyItem, Ranger, useGetDevice, Util } from '../../../utils';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Core/setting-panel/common-setting';
+import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
 
 export const BlockIframe = (props: ToolRenderProps) => {
   const [adding, setAdding] = useState(props.adding ? true : false);

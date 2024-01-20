@@ -10,7 +10,7 @@ import { Accordion } from 'react-bootstrap';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
-import { CommonSettings } from '../../../setting-panel/common-setting';
+import { CommonSettings } from '../../../setting-panel/CommonSetting';
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyButton, Util } from '../../../utils';

@@ -10,7 +10,7 @@ import {
 import { BlockRender, getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
-import { CommonSettings } from 'Core/setting-panel/common-setting';
+import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyButton, PropertyItem, useGetDevice } from '../../../utils';
