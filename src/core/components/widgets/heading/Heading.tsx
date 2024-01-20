@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { TitleOutlined } from '@mui/icons-material';
 
-import { getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
+import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import useHeadingStore from 'Src/core/setting-panel/store/heading';
 import { isHTMLElement } from 'Src/core/utils';
+import { BlockListRender } from '../../../main/renderer';
+import { Data } from '../../types/blocktype';
+import { EntityHeadingBlock } from './entity';
 
 const { useState, useRef, useEffect } = React;
 interface HeadingComponentProps extends React.HTMLAttributes<HTMLOrSVGElement> {
@@ -60,7 +63,10 @@ const Heading = (props: HeadingProps) => {
     <div className={getCommonBlockCss('heading', '')}>
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
-      </HeadingComponent>
+      </HeadingComponent>      
+        {props.blockdata.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
+          <BlockListRender data={props.blockdata.children} selected={0} />
+      </div>}
     </div>
   );
 };

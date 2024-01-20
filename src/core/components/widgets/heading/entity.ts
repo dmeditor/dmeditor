@@ -1,7 +1,7 @@
 import { Data } from "../../types/blocktype";
 
-export interface EntityHeadingBlock extends Data.Block {
-    type: 'heading',
+export interface EntityHeadingBlock extends DMEData.Block {
+    type: 'Heading',
     value: string,
     level: number,
     settings?: {

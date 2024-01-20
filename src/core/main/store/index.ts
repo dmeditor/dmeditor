@@ -10,11 +10,11 @@ import { isStrictlyInfinity } from 'Src/core/utils';
 
 type Store = {
   selected: {
-    selectedBlockIndex:number;
-    selectedBlock:Data.Block|null;
+    selectedBlockIndex:number; //todo: revove selected
+    selectedBlock:DMEData.Block|null;
   };
-  currentList:Data.BlockList; //current block list
-  storage:Data.BlockList; //data layer
+  currentList:DMEDMEData.BlockList; //current block list
+  storage:DMEDMEData.BlockList; //data layer
 };
 
 type Actions = {
@@ -22,10 +22,10 @@ type Actions = {
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
-  getSelectedBlock: (index: number) => Data.Block | undefined;
+  getSelectedBlock: (index: number) => DMEData.Block | undefined;
   removeBlock: (widget: ReactNode) => void;
   setSelected: (widget: ReactNode) => void;
-  setStorage: (data: Data.Block[]) => void;
+  setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (index: number) => void;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   toggleProperty: (status: boolean) => void;
@@ -100,7 +100,7 @@ const useEditorStore = create<Store & Actions>()(
         //state.designer.selectedBlock = block;
       });
     },
-    setStorage: (blocks: Data.Block[]) => {
+    setStorage: (blocks: DMEData.Block[]) => {
       set((state) => {
         const propertiesMap = properties.reduce((acc, cur) => {
           if (!cur || !cur.type) {

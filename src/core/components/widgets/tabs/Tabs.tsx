@@ -13,7 +13,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyButton, Util } from '../../../utils';
-import { getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
+import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';

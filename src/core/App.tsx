@@ -14,34 +14,45 @@ const App = () => {
       id: `widget-${nanoid()}`,
       level: 5,
       value: 'This is a heading',
-      type: 'Heading'
-    } as EntityHeadingBlock,
-    {
-      type: 'text',
-      data: [{ type: 'paragraph', children: [{ text: 'This lap top has fastest CPU so far.' }] }],
-      id: 'agSg0CaGuFe',
-    },
-    {
-      type: 'collapsable_text',
-      style: 'bold',
-      data: {
-        title: 'How CPU affects you',
-        body: [
-          {
-            type: 'text',
-            id: '2',
-            data: [
-              {
-                type: 'paragraph',
-                children: [{ text: 'CPU is the most important put in a computer...' }],
-              },
-            ],
-          },
-        ],
+      settings:{
+        
       },
-      id: 'aZtOs7mHKCO',
-    },
+      type: 'Heading',
+      children:[{
+          id: `widget-${nanoid()}`,
+          level: 5,
+          value: 'This is a heading child',
+          type: 'Heading',
+          props:{},
+        }
+      ],
+    } as EntityHeadingBlock,   
   ];
+  // {
+  //   type: 'text',
+  //   data: [{ type: 'paragraph', children: [{ text: 'This lap top has fastest CPU so far.' }] }],
+  //   id: 'agSg0CaGuFe',
+  // },
+  // {
+  //   type: 'collapsable_text',
+  //   style: 'bold',
+  //   data: {
+  //     title: 'How CPU affects you',
+  //     body: [
+  //       {
+  //         type: 'text',
+  //         id: '2',
+  //         data: [
+  //           {
+  //             type: 'paragraph',
+  //             children: [{ text: 'CPU is the most important put in a computer...' }],
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   id: 'aZtOs7mHKCO',
+  // },
   useEffect(() => {
     // editorRef.current.setDesingerJson(jsonString(data))
     editorRef.current?.setEditorJson(data);

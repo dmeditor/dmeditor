@@ -1,6 +1,5 @@
 // import { widgetMetaData } from 'Components/types';
 
-import { EntityBlock } from "Src/core/main/entity/entitity";
 
 const HeadingMetaData = {
   alias: '',
@@ -19,7 +18,8 @@ const HeadingMetaData = {
   },
   // style: {},
   //todo: props changed to settings, value & level can be upper
-  props: {
+  value: '',
+  setting: {
     align: 'left',
     'background-color': '',
     color: '#000000',
@@ -27,7 +27,6 @@ const HeadingMetaData = {
     'margin-top': 0,
     padding: 0,
     textColor: '#000000',
-    value: '',
     width: 'auto',
   },
   placeholder: '',

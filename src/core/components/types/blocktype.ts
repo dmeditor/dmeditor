@@ -42,20 +42,18 @@ export namespace DMEditor {
 }
 
 
-
-export namespace Data{
+export namespace DMEData{ 
 //Block entity, which is a node in the data tree
 export interface Block {
   id: string,
-  type: string,
+  type: string, //can use type for internal
   parent?: Block,
-  isInternal?: boolean, //internal block or Widget block
   children?: Array<Block>,
 }
 
 //Block list
 export interface BlockList extends Array<Block>{}
 
-//A section is alias of a block list
-export type Section= Block;
+//A section is alias of a block
+type Section= Block;
 }

@@ -2,12 +2,11 @@ import { jsonParse } from 'Src/core/utils';
 import { Data } from 'Src/core/components/types/blocktype';
 
 
-
 //todo: can these operation be object-orented way(for blocklist and block)?
 
 //return a Block or null if not found
 // todo: this can be improved by using cache(eg. using parent path so iterateBlockTree can iterate smartly :))
-export const getBlockByID = (id: string, list: Data.BlockList): Data.Block | null => {
+export const getBlockByID = (id: string, list: DMEDMEData.BlockList): DMEData.Block | null => {
   let result =  null;
   iterateBlockList(list, (item)=>{
     if (item.id === id){
@@ -18,9 +17,9 @@ export const getBlockByID = (id: string, list: Data.BlockList): Data.Block | nul
   return result;
 };
 
-export const getChildList = (block: Data.Block): Array<Data.Block> =>{
-  const result: Array<Data.Block> = [];
-  iterateBlockTree(block, (item: Data.Block)=>{
+export const getChildList = (block: DMEData.Block): Array<DMEData.Block> =>{
+  const result: Array<DMEData.Block> = [];
+  iterateBlockTree(block, (item: DMEData.Block)=>{
     result.push(item);
   } )
   return result;
@@ -28,7 +27,7 @@ export const getChildList = (block: Data.Block): Array<Data.Block> =>{
 
 
 // iterate block list including their children
-export const iterateBlockList = (blocklist: Data.BlockList, callback: (blockItem: Data.Block)=>boolean|void): boolean|void =>{
+export const iterateBlockList = (blocklist: DMEDMEData.BlockList, callback: (blockItem: DMEData.Block)=>boolean|void): boolean|void =>{
   for(const block of blocklist){
      const result = iterateBlockTree(block, callback);
      if(result === false){
@@ -38,8 +37,7 @@ export const iterateBlockList = (blocklist: Data.BlockList, callback: (blockItem
 }
 
 //iterate tree, including the root block. if return false, it means it breaks in the middle.
-export const iterateBlockTree = (block: Data.Block, callback: (blockItem: Data.Block)=>boolean|void): boolean|void=> {
-  console.log(1111);
+export const iterateBlockTree = (block: DMEData.Block, callback: (blockItem: DMEData.Block)=>boolean|void): boolean|void=> {
   const callbackResult = callback(block);
   if(callbackResult === false){
      return false
@@ -55,7 +53,7 @@ export const iterateBlockTree = (block: Data.Block, callback: (blockItem: Data.B
 }
 
 //get children's block by id. Return null if not found
-export const getChildByID = (id:string, block: Data.Block): Data.Block | null => {
+export const getChildByID = (id:string, block: DMEData.Block): DMEData.Block | null => {
     const children = block.children;
     if(children){
         return getBlockByID(id, children);
@@ -65,27 +63,27 @@ export const getChildByID = (id:string, block: Data.Block): Data.Block | null =>
 }
 
 //Insert before existing block
-const insertBefore = (newBlock: Data.Block, existingBlock: Data.Block) =>{
+const insertBefore = (newBlock: DMEData.Block, existingBlock: DMEData.Block) =>{
 
 }
 
 //Insert after existing block
-const insertAfter = (newBlock: Data.Block, existingBlock: Data.Block )=>{
+const insertAfter = (newBlock: DMEData.Block, existingBlock: DMEData.Block )=>{
 
 }
 
 //Add to last of parent block's list
-const appendToParent = (newBlock: Data.Block, parent: Data.Block) =>{
+const appendToParent = (newBlock: DMEData.Block, parent: DMEData.Block) =>{
 
 }
 
 //delete a block
-const deleteBlock = (block:Data.Block )=>{
+const deleteBlock = (block:DMEData.Block )=>{
 
 }
 
-export const loadData = (data:string| Data.BlockList): Data.BlockList =>{  
-  let list: Data.BlockList = [];
+export const loadData = (data:string| DMEDMEData.BlockList): DMEDMEData.BlockList =>{  
+  let list: DMEDMEData.BlockList = [];
   if (typeof data === 'string') {
    //todo: handle error
    list = jsonParse(data);

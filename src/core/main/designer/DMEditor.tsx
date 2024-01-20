@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { BlockRender } from '../../components/block/BlockRender';
+import { BlockRender } from '../renderer/BlockRender';
 import { dmeditorEditCss, dmeditorViewCss, setMainWidthCssVariable } from './DMEditor.css';
 
 import '../initialize';
@@ -37,6 +37,7 @@ import { useEditorStore } from '../store';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 import { loadData } from '../entity/operations';
 import { Data } from 'Src/core/components/types/blocktype';
+import { BlockListRender } from 'Src/core/main/renderer';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
@@ -75,7 +76,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   useImperativeHandle(
     currentRef,
     () => ({
-      setEditorJson: (data: string | Array<Data.Block>) => {       
+      setEditorJson: (data: string | Array<DMEData.Block>) => {       
         const list = loadData(data);
         emitter.emit('setWidgets', list);
       },
@@ -129,7 +130,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     blockIndexRef.current = index;
   }, []);
 
-  const handleUpdateWidgets = useCallback((data: Data.Block[]) => {
+  const handleUpdateWidgets = useCallback((data: DMEData.Block[]) => {
     setStorage(data);
   }, []);
 
@@ -325,8 +326,9 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           >
             {viewmode === 'edit' && (
               <div className={dmeditorViewCss}>
+                <BlockListRender data={currentList} selected={selectedBlockIndex} />
                 {/* <div style={{ width: '100%', height: 1 }}></div> */}
-                {Array.isArray(currentList) &&
+                {/* {Array.isArray(currentList) &&
                   currentList.map((widget, index) => {
                     const currentSelected = selectedBlockIndex === index;
                     return (
@@ -354,7 +356,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                         }
                       />
                     );
-                  })}
+                  })} */}
               </div>
             )}
             {viewmode !== 'edit' && (

@@ -9,10 +9,11 @@ import i18n from '../../../locales/i18n';
 import { getDef } from '../../../ToolDefinition';
 import { PropertyButton } from '../../utils';
 import { Util } from '../../utils/utilx';
-import { BlockProperty } from '../block-property';
-import WidgetList from '../widgets';
-import { Heading } from '../widgets/heading';
-import { MenuList } from '../widgets/menu-list';
+import { BlockProperty } from '../../components/block-property';
+import WidgetList from '../../components/widgets';
+import { Heading } from '../../components/widgets/heading';
+import { MenuList } from '../../components/widgets/menu-list';
+import { Data } from '../../components/types/blocktype';
 
 export type BlockInfo = {
   type: string;
@@ -21,7 +22,7 @@ export type BlockInfo = {
 };
 
 interface BlockProps {
-  data: any;
+  data: DMEData.Block;
   active?: boolean;
   onActivate?: () => void;
   onAddAbove?: (type: string, template?: string) => void;
@@ -98,7 +99,10 @@ export const BlockRender = React.memo((props: BlockProps) => {
     }
   };
 
+  console.log(1111);
+  console.log(props.data);
   const Widget = getWidget(props.data.type);
+  console.log(Widget);
 
   const render = () => {
     if (def) {

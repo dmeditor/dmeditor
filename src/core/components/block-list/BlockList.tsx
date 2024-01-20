@@ -4,7 +4,7 @@ import { AddOutlined } from '@mui/icons-material';
 import { Alert, Button } from '@mui/material';
 import { newBlockData } from 'Src/ToolDefinition';
 
-import { BlockRender, RenderMenu } from '../block';
+import { BlockRender, RenderMenu } from '../../main/renderer';
 
 interface BlockListProps {
   list: Array<any>;

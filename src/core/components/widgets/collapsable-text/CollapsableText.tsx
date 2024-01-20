@@ -7,7 +7,7 @@ import { Collapse } from 'react-bootstrap';
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyItem, Util } from '../../../utils';
-import { getCommonBlockCss } from '../../block/BlockRender';
+import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from 'Src/core/components/block-list';
 import { BlockProperty } from 'Src/core/components/block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';

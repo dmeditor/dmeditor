@@ -7,7 +7,7 @@ import {
   CollectionsOutlined,
 } from '@mui/icons-material';
 
-import { BlockRender, getCommonBlockCss, getStyleCss } from '../../block/BlockRender';
+import { BlockRender, getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
 import { CommonSettings } from 'Core/setting-panel/common-setting';
