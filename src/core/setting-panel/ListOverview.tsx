@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 
 import { DMEData } from '../components/types/blocktype';
 
-interface BlockListProps {
+interface ListOverviewProps {
   data: DMEData.BlockList;
   selectedIndex: number;
 }
@@ -23,7 +23,7 @@ const tableStyle = css`
   }
 `;
 
-export const BlockList = (props: BlockListProps) => {
+export const ListOverview = (props: ListOverviewProps) => {
   return (
     <div>
       <table className={tableStyle}>

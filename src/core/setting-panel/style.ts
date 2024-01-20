@@ -34,3 +34,7 @@ export const PathItem = styled.span<{ canClick?: boolean, selected?:boolean }>`
     `
       : ''};
 `;
+
+export const RightElement = styled.div`
+    float: right;
+`

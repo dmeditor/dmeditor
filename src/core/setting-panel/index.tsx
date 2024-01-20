@@ -5,12 +5,12 @@ import { Settings } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { useEditorStore } from '../main/store';
-import { BlockList } from './BlockList';
 import { CommonSettings } from './common-setting';
+import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
 import { Path, PathItem, PathItemProps } from './Path';
 import WidgetSetting from './property-setting/property-item';
-import { PageTitle, SettingHeader, Space } from './style';
+import { PageTitle, RightElement, SettingHeader, Space } from './style';
 
 const { useEffect } = React;
 
@@ -52,20 +52,20 @@ const SettingPanel = (props) => {
         padding: 5px;
       `}
     >
-      <div>
-        <div style={{ float: 'right' }}>
-          <Button title="Page settings" onClick={() => setMode('page-setting')}>
-            <Settings />
-          </Button>
-        </div>
-        <PageTitle>New page</PageTitle>
-      </div>
+      <RightElement>
+        <Button title="Page settings" onClick={() => setMode('page-setting')}>
+          <Settings />
+        </Button>
+      </RightElement>
+      <PageTitle>New page</PageTitle>
       <Space />
       <Path pathArray={pathArray} onSelect={selectPathItem} />
       <Space />
       {['list', 'setting'].includes(mode) && (
         <>
-          {mode === 'list' && <BlockList data={currentList} selectedIndex={selectedBlockIndex} />}
+          {mode === 'list' && (
+            <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
+          )}
           <SettingHeader>{selectedBlock?.type}</SettingHeader>
           {hasSelect && mode === 'setting' && (
             <CommonSettings {...props} selectedWidgetIndex={selectedBlockIndex} />
