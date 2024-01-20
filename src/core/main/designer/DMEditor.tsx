@@ -33,11 +33,11 @@ import { useTranslation } from 'react-i18next';
 
 import SettingPanel from '../../setting-panel';
 import Toolbar from '../../toolbar';
-import { useEditorStore } from '../store';
-import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 import { loadData } from '../entity/operations';
+import { useEditorStore } from '../store';
 import { DMEData } from 'Src/core/components/types/blocktype';
 import { BlockListRender } from 'Src/core/main/renderer';
+import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
@@ -76,7 +76,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   useImperativeHandle(
     currentRef,
     () => ({
-      setEditorJson: (data: string | Array<DMEData.Block>) => {       
+      setEditorJson: (data: string | Array<DMEData.Block>) => {
         const list = loadData(data);
         emitter.emit('setWidgets', list);
       },
@@ -101,8 +101,8 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   const [viewmode, setViewmode] = useState('edit');
   const [settingsShown, setSettingsShown] = useState(false);
   const {
-    selected: {selectedBlockIndex},
-    currentList,
+    selected: { selectedBlockIndex },
+    storage,
     getSelectedBlock,
     updateSelectedBlockIndex,
     setStorage,
@@ -190,7 +190,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
    */
   const addAbove = (type: string, newIndex: number, template?: string) => {
     if (type) {
-      if (!!currentList[newIndex]) {
+      if (!!storage[newIndex]) {
       }
     }
     // if (type) {
@@ -326,10 +326,10 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           >
             {viewmode === 'edit' && (
               <div className={dmeditorViewCss}>
-                <BlockListRender data={currentList} selected={selectedBlockIndex} />
+                <BlockListRender data={storage} selected={selectedBlockIndex} />
                 {/* <div style={{ width: '100%', height: 1 }}></div> */}
-                {/* {Array.isArray(currentList) &&
-                  currentList.map((widget, index) => {
+                {/* {Array.isArray(storage) &&
+                  storage.map((widget, index) => {
                     const currentSelected = selectedBlockIndex === index;
                     return (
                       <BlockRender
@@ -372,7 +372,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
         {viewmode == 'edit' && (
           <div style={settingsShown ? { display: 'none' } : {}} className="layout-properties">
             <div id="dmeditor-add-menu">
-              {currentList?.length === 0 && (
+              {storage?.length === 0 && (
                 <MenuList
                   onSelect={(type: string, template?: string) => {
                     addUnder(type, -1, template);
