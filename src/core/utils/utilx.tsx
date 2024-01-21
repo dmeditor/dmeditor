@@ -16,6 +16,7 @@ import { nanoid } from 'nanoid';
 // import { HeadingMetaData } from 'Components/widgets/Heading';
 import { HeadingWidget } from '../components/widgets/heading';
 import { simpleCloneDeep } from './util';
+import { BlockData } from 'Src/ToolDefinition';
 
 export interface BrowseProps {
   type?: any;
@@ -325,6 +326,10 @@ export const sanitizeBlockData = (data: any) => {
   }
   return data;
 };
+
+export const generateCommonBlockData = (type:string) =>{
+  return {id: `a_${nanoid()}`, type: type}
+}
 
 export const generatedWidgetAttrs = (type: 'heading' | 'text') => {
   let element: unknown = {

@@ -1,5 +1,6 @@
 // import { widgetMetaData } from 'Components/types';
 
+import { generateCommonBlockData } from "Src/core/utils/utilx";
 import { DMEData, Widget, WidgetSettings } from "../../types/blocktype";
 import { EntityHeadingBlock } from "./entity";
 
@@ -16,8 +17,8 @@ const HeadingWidget: Widget = {
     updateData:(settings:WidgetSettings, block:DMEData.Block)=>{},
     createBlock:():EntityHeadingBlock=>{
       return {
+        ...generateCommonBlockData('heading'),
         value: 'This is a new block',
-        type: 'heading',
         level: 2,
         settings:{
           align: 'left',
