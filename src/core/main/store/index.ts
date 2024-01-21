@@ -15,8 +15,12 @@ type Store = {
   selected: {
     blockId: string;
     blockIndex: number; //-Infinity if it's not selected
-    currentList: DMEData.BlockList; //current block list
-    listPath: Array<string>;
+    //current blocklist. 
+    //TODO: can be removed? can use getCurrentList() which find list by currentListPath from storage
+    currentList: DMEData.BlockList;
+    //current blocklist path. 
+    //eg. [0,1] means first on root level , second on second level
+    currentListPath: Array<number>;
   };
   addBlockData: {
     index: number;

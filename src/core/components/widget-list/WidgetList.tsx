@@ -27,8 +27,8 @@ interface WidgetListProps{
 export const WidgetList = (props:WidgetListProps) => {
   return (
     <div>
-      {Object.keys(widgets).map((widget) => (
-        <div className={itemStyle} onClick={()=>props.onSelect(widget)}>
+      {Object.keys(widgets).map((widgetType) => (
+        <div className={itemStyle} onClick={()=>props.onSelect(widgetType)}>
           <div
             className={css`
               width: 30px;
@@ -41,7 +41,7 @@ export const WidgetList = (props:WidgetListProps) => {
               color: #666666;
             `}
           >
-            {widget}
+            {widgets[widgetType].name}
           </div>
         </div>
       ))}

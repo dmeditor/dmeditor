@@ -3,6 +3,7 @@ import { DragIndicator, KeyboardArrowRight } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { DMEData } from '../components/types/blocktype';
+import { getWidget } from '../components/widgets';
 
 interface ListOverviewProps {
   data: DMEData.BlockList;
@@ -34,10 +35,18 @@ export const ListOverview = (props: ListOverviewProps) => {
                 <DragIndicator />
               </Button>
             </td>
-            <td className={css`
-              width: 60%
-            `}>{item.type}</td>
-            <td><Button><KeyboardArrowRight /></Button></td>
+            <td
+              className={css`
+                width: 60%;
+              `}
+            >
+              {getWidget(item.type)?.name}
+            </td>
+            <td>
+              <Button>
+                <KeyboardArrowRight />
+              </Button>
+            </td>
           </tr>
         ))}
       </table>

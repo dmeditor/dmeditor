@@ -14,7 +14,7 @@ import {
 import { nanoid } from 'nanoid';
 
 // import { HeadingMetaData } from 'Components/widgets/Heading';
-import { HeadingMetaData } from '../components/widgets/heading';
+import { HeadingWidget } from '../components/widgets/heading';
 import { simpleCloneDeep } from './util';
 
 export interface BrowseProps {
@@ -326,7 +326,7 @@ export const sanitizeBlockData = (data: any) => {
   return data;
 };
 
-export const generatedWidgetAttrs = (type: 'Heading' | 'Text') => {
+export const generatedWidgetAttrs = (type: 'heading' | 'text') => {
   let element: unknown = {
     data: {},
     id: '',
@@ -334,10 +334,10 @@ export const generatedWidgetAttrs = (type: 'Heading' | 'Text') => {
     type: '',
   };
   switch (type) {
-    case 'Heading':
-      element = simpleCloneDeep(HeadingMetaData);
+    case 'heading':
+      element = simpleCloneDeep(HeadingWidget);
       break;
-    case 'Text':
+    case 'text':
       // element = simpleCloneDeep(TextMetaData);
       break;
     // more widgets here

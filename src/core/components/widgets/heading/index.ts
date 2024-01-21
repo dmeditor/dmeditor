@@ -1,4 +1,4 @@
 import Heading from './Heading';
-import HeadingMetaData from './meta-data';
+import HeadingWidget from './definition';
 
-export { Heading, HeadingMetaData };
+export { Heading, HeadingWidget };

@@ -9,7 +9,7 @@ import i18n from '../../../locales/i18n';
 import { getDef } from '../../../ToolDefinition';
 import { BlockProperty } from '../../components/block-property';
 import { DMEData } from '../../components/types/blocktype';
-import WidgetList from '../../components/widgets';
+import { getWidgetComponent } from '../../components/widgets';
 import { Heading } from '../../components/widgets/heading';
 import { MenuList } from '../../components/widgets/menu-list';
 import { PropertyButton } from '../../utils';
@@ -60,16 +60,9 @@ export const BlockRender = React.memo((props: BlockProps) => {
     }
   };
 
-  const getWidget = (type: string) => {
-    const widget = WidgetList[type];
-    if (widget) {
-      return widget;
-    } else {
-      return null;
-    }
-  };
+  const Widget = getWidgetComponent(props.data.type);
 
-  const Widget = getWidget(props.data.type);
+
 
   return (
     <StyledBlock
@@ -77,14 +70,14 @@ export const BlockRender = React.memo((props: BlockProps) => {
       className="dme-block-container"
       onClick={() => (props.onActivate ? props.onActivate() : () => {})}
     >
-      <Widget
+      {Widget?<Widget
         adding={props.newBlock}
         inBlock={props.inBlock ? true : false}
         data={props.data}
         active={isActive}
         onCancel={props.onCancel}
         onDelete={props.onDelete}
-      />
+      />:<></>}
     </StyledBlock>
   );
 

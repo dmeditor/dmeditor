@@ -62,9 +62,9 @@ const Heading = (props: HeadingProps) => {
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
       </HeadingComponent>      
-        {/* {props.data.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
+        {props.data.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
           <BlockListRender data={props.data.children} selected={0} />
-      </div>} */}
+      </div>}
     </div>
   );
 };

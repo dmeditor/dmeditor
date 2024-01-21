@@ -1,34 +1,29 @@
-import { css } from '@emotion/css';
-
-import { WidgetList } from '../components/widget-list/WidgetList';
-import { SettingDescription, SettingHeader } from './style';
-import emitter from 'Core/utils/event';
 import { useEffect } from 'react';
-import { useEditorStore } from '../main/store';
+import { css } from '@emotion/css';
 import { nanoid } from 'nanoid';
 
-export const AddBlock = () => {
+import { WidgetList } from '../components/widget-list/WidgetList';
+import { getWidget } from '../components/widgets';
+import { useEditorStore } from '../main/store';
+import { SettingDescription, SettingHeader } from './style';
+import emitter from 'Core/utils/event';
 
+export const AddBlock = () => {
   const {
-    addBlockData:{index, position},
-    addBlock
+    addBlockData: { index, position },
+    addBlock,
   } = useEditorStore((state) => state);
 
-  const addBlockDone = (type:string)=>{
-    console.log('adding');
-      addBlock(
-        {
-          id: `widget-${nanoid()}`,
-          value: 'This is a heading added',
-          settings:{
-            level: 5,
-            value: ''
-          },
-          type: 'Heading',      
-        }   
-      )
-  }
-  
+  const addBlockDone = (type: string) => {
+    const widget = getWidget(type);
+    if (widget) {
+      const blockData = widget.events.createBlock();
+      addBlock({
+        ...blockData,
+        id: `widget-${nanoid()}`,
+      });
+    }
+  };
 
   return (
     <div>

@@ -1,3 +1,4 @@
+import { Widget } from './blocktype';
 import type { ReactElement } from 'react';
 
 import type { BlockData } from 'Src/ToolDefinition';
@@ -36,16 +37,42 @@ export interface BlockLayoutData {
   backgroundColor?: string;
 }
 
+export interface WidgetSettings{
+  [key: string]: string|number
+}
+
+export interface Widget{
+  type: string,
+  name: string,
+  icon: string, //base 64(eg. png/svg) or url
+  category: 'widget'|'layout',
+  alias?: string
+  events:{
+  //   onInput: () => void 0,
+  //   onChange: () => void 0,
+  //   onFocus: () => void 0,
+  //   onBlur: () => void 0,      
+    updateData:(settings:WidgetSettings, data: DMEData.Block)=>void,
+    //when create an emtpy block
+    createBlock:()=>DMEData.Block,
+
+    //validate data
+    validate?:(data:any)=>boolean
+  },
+  // style: {},  
+  settings: WidgetSettings
+}
+
+
 export namespace DMEditor {
   export interface Widget {}
   export interface Block extends Widget {}
 }
 
-
 export namespace DMEData{ 
 //Block entity, which is a node in the data tree
 export interface Block {
-  id: string,
+  id?: string,
   type: string, //can use type for internal
   parent?: Block,
   children?: Array<Block>,
