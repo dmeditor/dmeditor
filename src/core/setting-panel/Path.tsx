@@ -11,7 +11,12 @@ export interface PathItem {
   disableClick?: boolean;
 }
 
-export const Path = (props: { pathArray: Array<PathItem>; onSelect: (index: number) => void }) => {
+export interface PathProps {
+  pathArray: Array<PathItem>;
+  onSelect: (index: number) => void;
+}
+
+export const Path = (props: PathProps) => {
   const [selected, setSelected] = useState(-1);
 
   useEffect(() => {

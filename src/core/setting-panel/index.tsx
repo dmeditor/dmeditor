@@ -9,7 +9,7 @@ import { AddBlock } from './AddBlock';
 import { CommonSettings } from './CommonSetting';
 import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
-import { Path, PathItem, PathItemProps } from './Path';
+import { Path, PathItem } from './Path';
 import WidgetSetting from './property-setting/property-item';
 import { PageTitle, RightElement, SettingHeader, Space } from './style';
 import emitter from 'Core/utils/event';
