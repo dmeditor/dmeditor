@@ -13,7 +13,7 @@ try {
   modules.keys().forEach((path: string) => {
     const comp = modules(path).default;
     // reg ./grid/Grid.tsx to /grid(folder name)
-    const name = path.replace(/\.\/(.*)\/(.*)\.tsx/, '$1');
+    const name = path.replace(/\.\/(.*)\/render.tsx/, '$1');
     components[name] = comp;
   });
 } catch (e) {

@@ -9,7 +9,7 @@ import { toolBlockTab } from '../../components/widgets/tabs/Tabs';
 import { toolImageText } from '../../components/widgets/image-text/ImageText';
 import { toolContainerGrid } from '../../components/widgets/grid/Grid';
 import { toolContainerList } from '../../components/widgets/list/List';
-import Heading from '../../components/widgets/heading/Heading';
+import Heading from '../../components/widgets/heading/render';
 import { toolIframe } from '../../components/widgets/iframe/IFrame';
 import { toolQuote } from '../../components/widgets/quote/Quote';
 import { initStyles } from '../../../styles/InitStyles';
