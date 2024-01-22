@@ -205,12 +205,13 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        if (!block['settings'][propName]) {
+        console.log(block);
+        if (!block['data']['settings'][propName]) {
           console.error(`Property ${propName} not found`);
           return;
         }
 
-        state.storage[state.selected.blockIndex].settings = {
+        state.storage[state.selected.blockIndex].data.settings = {
           ...block.settings,
           [propName]: propValue,
         };

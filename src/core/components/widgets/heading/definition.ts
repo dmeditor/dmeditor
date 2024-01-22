@@ -17,7 +17,6 @@ const HeadingWidget: Widget = {
     updateData:(settings:WidgetSettings, block:DMEData.Block)=>{},
     createBlock:():EntityHeadingBlock=>{
       return {
-        ...generateCommonBlockData('heading'),
         value: 'This is a new block',
         level: 2,
         settings:{
@@ -27,33 +26,21 @@ const HeadingWidget: Widget = {
       };
     },
   },
-  // data:{
-  //   id: '',
-  //   settings: {
-  //     align: 'left',
-  //     'background-color': '',
-  //     color: '#000000',
-  //     level: 2,
-  //     'margin-top': 0,
-  //     padding: 0,
-  //     textColor: '#000000',
-  //     width: 'auto',
-  //   },
-  //   value: '',
-  //   level: 2,
-  //   placeholder: '',
-  // },
+  settings: [
+    {name: 'Background', type: 'color', property: 'settings.background'},
+    {name: 'Text color', type: 'color', property: 'settings.color'},
+    {name: 'Text', type: 'input', property: 'value'}
+  ],  
   settings: {
-    align: 'left',
-    value: '',
-    'background-color': '',
-    color: '#000000',
-    level: 2,
-    'margin-top': 0,
-    padding: 0,
-    textColor: '#000000',
-    width: 'auto',
-  }
+        align: 'left',
+        'background-color': '',
+        color: '#000000',
+        level: 2,
+        'margin-top': 0,
+        padding: 0,
+        textColor: '#000000',
+        width: 'auto',
+      },
 };
 
 export default HeadingWidget;

@@ -19,8 +19,9 @@ export const AddBlock = () => {
     if (widget) {
       const blockData = widget.events.createBlock();
       addBlock({
-        ...blockData,
         id: `widget-${nanoid()}`,
+        data: blockData,
+        type: type,
       });
     }
   };

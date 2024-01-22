@@ -54,7 +54,7 @@ export interface Widget{
   //   onBlur: () => void 0,      
     updateData:(settings:WidgetSettings, data: DMEData.Block)=>void,
     //when create an emtpy block
-    createBlock:()=>DMEData.Block,
+    createBlock:()=>DMEData.BlockData,
 
     //validate data
     validate?:(data:any)=>boolean
@@ -70,16 +70,27 @@ export namespace DMEditor {
 }
 
 export namespace DMEData{ 
+
+export interface BlockData{
+
+}
+
+export interface BlockStyle{
+
+}
+
 //Block entity, which is a node in the data tree
 export interface Block {
   id?: string,
   type: string, //can use type for internal
   parent?: Block,
+  data: BlockData,
+  style?:BlockStyle,
   children?: Array<Block>,
 }
 
 //Block list
-export interface BlockList extends Array<Block>{}
+export interface BlockList extends Array<BlockData>{}
 
 //A section is alias of a block
 type Section= Block;

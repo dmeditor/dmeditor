@@ -12,34 +12,40 @@ const App = () => {
   const data = [
     {
       id: `widget-${nanoid()}`,
-      value: 'This is a heading',
-      settings:{
-        level: 5,
-        value: ''
+      data: {
+        value: 'This is a heading',
+        settings: {
+          level: 5,
+          value: '',
+        },
       },
       type: 'heading',
-      children:[{
+      children: [
+        {
           id: `widget-${nanoid()}`,
-          level: 5,
-          value: 'This is a heading child',
           type: 'heading',
-          settings:{
-            level:2,
-            value: '',
+          data: {
+            level: 5,
+            value: 'This is a heading child',
+            settings: {
+              level: 2,
+              value: '',
+            },
           },
-        }
+        },
       ],
-    } as EntityHeadingBlock,   
-
+    },
     {
       id: `widget-${nanoid()}`,
-      value: 'This is a heading 2',
-      settings:{
-        level: 5,
-        value: ''
+      data: {
+        value: 'This is a heading 2',
+        settings: {
+          level: 5,
+          value: '',
+        },
       },
-      type: 'heading',      
-    } as EntityHeadingBlock,   
+      type: 'heading',
+    },
   ];
   // {
   //   type: 'text',

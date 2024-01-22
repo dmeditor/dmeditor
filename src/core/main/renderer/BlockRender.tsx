@@ -73,7 +73,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
       {Widget?<Widget
         adding={props.newBlock}
         inBlock={props.inBlock ? true : false}
-        data={props.data}
+        blockNode={props.data}
         active={isActive}
         onCancel={props.onCancel}
         onDelete={props.onDelete}

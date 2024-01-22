@@ -9,8 +9,8 @@ import { MenuItem, Select } from '@mui/material';
 
 import { useEditorStore } from '../main/store';
 import Property from './property-setting/property-item';
-import { common_properties } from './resigter';
-import { properties } from 'Components/widgets';
+import { commonProperties } from './resigter';
+import { getWidget, properties } from 'Components/widgets';
 import { PickColor, PropertyButton, PropertyGroup, PropertyItem, Ranger } from 'Core/utils';
 
 interface CommonSettingsType {
@@ -92,10 +92,10 @@ export const CommonSettings = (props: {
     if (value) commonChange(type, value);
   };
 
-  const getWidgetByType = (type: string) => {
-    const widget = properties.find((item) => item.type === type);
-    return widget;
-  };
+  // const getWidgetByType = (type: string) => {
+  //   const widget = properties.find((item) => item.type === type);
+  //   return widget;
+  // };
 
   const hasProperty = (propName: string, compName: string) => {
     if (!compName) return false;
@@ -113,7 +113,7 @@ export const CommonSettings = (props: {
     if (category === 'layout') {
       // originalWidget = getLayoutByType(type);
     } else if (category === 'widget') {
-      originalWidget = getWidgetByType(type);
+      originalWidget = getWidget(type)?.settings;
     } else {
       console.error(`Unknown category: ${category}`);
     }
@@ -124,6 +124,7 @@ export const CommonSettings = (props: {
   // const Comp = useMemo(() => {
   //   return WidgetProperties[selectedWidget.type];
   // }, [selectedWidgetIndex]);
+
   return (
     <div>
       <PropertyGroup
@@ -132,7 +133,7 @@ export const CommonSettings = (props: {
         open={blockOpen}
         onOpenClose={(open) => setBlockOpen(open)}
       >
-        {Object.entries(common_properties).map(([propName, componentName]) => {
+        {Object.entries(commonProperties).map(([propName, componentName]) => {
           return containSetting(propName, componentName) ? (
             <PropertyItem label={propName} key={propName}>
               <Property

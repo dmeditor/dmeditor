@@ -1,6 +1,6 @@
 import { DMEData } from '../../types/blocktype';
 
-export interface EntityHeadingBlock extends DMEData.Block {
+export interface EntityHeadingBlock extends DMEData.BlockData {
   value: string;
   level: number;
   settings?: {

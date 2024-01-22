@@ -25,16 +25,15 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
   );
 };
 interface HeadingProps {
-  data: EntityHeadingBlock;
+  blockNode: DMEData.Block & {data: EntityHeadingBlock};
 }
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: HeadingProps) => {
 
-
-  const { data } = props;
-  console.log('wong', data);
+  const blockNode = props.blockNode;
+  console.log('wong', blockNode);
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
-  const { id, level, value } = data;
+  const { id, data:{level, value}, data } = blockNode;
   const defaultValue: any = useRef(value);
 
   // const changeText = (e?: any) => {
@@ -62,8 +61,8 @@ const Heading = (props: HeadingProps) => {
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
       </HeadingComponent>      
-        {props.data.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
-          <BlockListRender data={props.data.children} selected={0} />
+        {props.blockNode.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
+          <BlockListRender data={props.blockNode.children} selected={0} />
       </div>}
     </div>
   );

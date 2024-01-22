@@ -2,7 +2,7 @@
  * properties register
  * Map<propName, editorComponentName>
  */
-const common_properties = {
+const commonProperties = {
   align: 'Align',
   'background-color': 'BackgroundColor',
   color: 'Color',
@@ -19,4 +19,4 @@ function regiterDMEditor() {
 // resigter component
 
 
-export { common_properties };
+export { commonProperties };
