@@ -22,7 +22,7 @@ interface CommonSettingsType {
   padding: number;
   width: number;
 
-  selectedWidgetIndex: number;
+  selectedBlockIndex: number;
 }
 
 export const CommonSettings = (props: {
@@ -32,17 +32,17 @@ export const CommonSettings = (props: {
   onChange: (data: any) => void;
   commonChange: (type: keyof CommonSettingsType, data: any) => void;
 
-  selectedWidgetIndex: number;
+  selectedBlockIndex: number;
 }) => {
-  const { selectedWidgetIndex, onChange = () => {}, commonChange = () => {} } = props;
+  const { selectedBlockIndex, onChange = () => {}, commonChange = () => {} } = props;
   const [settings, setSettings] = useState(props.commonSettings ? props.commonSettings : {});
   const [isChange, setIsChange] = useState(false);
   const [blockOpen, setBlockOpen] = useState(true);
   const { getSelectedBlock } = useEditorStore();
 
   const selectedBlock = useMemo(
-    () => getSelectedBlock(props.selectedWidgetIndex),
-    [props.selectedWidgetIndex],
+    () => getSelectedBlock(props.selectedBlockIndex),
+    [props.selectedBlockIndex],
   );
 
   const selectedWidget = useMemo(() => getWidget(selectedBlock?.type || ''), [selectedBlock?.type]);
