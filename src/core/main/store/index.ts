@@ -75,12 +75,18 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
         if (index <= state.storage.length - 1 && state.addBlockData.position) {
+          let newPosition:number = -Infinity;
           if (position == 'before') {
             state.storage.splice(index, 0, data);
+            newPosition = index - 1;
           } else if (position == 'after') {
             state.storage.splice(index + 1, 0, data);
+            newPosition = index + 1;
           }
           state.selected.currentList = state.storage;
+
+          //update to new block
+          state.selected.blockIndex = newPosition;
 
           state.addBlockData.index = -Infinity;
           state.addBlockData.position = undefined;

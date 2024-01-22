@@ -31,6 +31,7 @@ const HeadingWidget: Widget = {
     { name: 'Background', settingType: 'color', property: 'setting.background-color' },
     { name: 'Color', settingType: 'color', property: 'setting.color' },
     { name: '', settingType: 'heading', custom: true, property: '' },
+    
     // {name: 'Text', component: 'input', property: 'value'}
   ],
 };
