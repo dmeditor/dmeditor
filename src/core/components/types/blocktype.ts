@@ -80,13 +80,13 @@ export interface Block {
   id?: string,
   type: string, //can use type for internal
   parent?: Block,
-  data: object,
+  data: object, //entity data from widget
   style?:BlockStyle,
   children?: Array<Block>,
 }
 
 //Block list
-export interface BlockList extends Array<BlockData>{}
+export interface BlockList extends Array<Block>{}
 
 //A section is alias of a block
 type Section= Block;
