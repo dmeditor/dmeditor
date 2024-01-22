@@ -11,7 +11,7 @@ import { useEditorStore } from '../main/store';
 import Property from './property-setting/property-item';
 import { commonProperties } from './resigter';
 import { getWidget, properties } from 'Components/widgets';
-import { PickColor, PropertyButton, PropertyGroup, PropertyItem, Ranger } from 'Core/utils';
+import { PickColor, PropertyButton, PropertyGroup, PropertyItem, Ranger, getValueByPath } from 'Core/utils';
 
 interface CommonSettingsType {
   align: string;
@@ -40,11 +40,12 @@ export const CommonSettings = (props: {
   const [blockOpen, setBlockOpen] = useState(true);
   const { getSelectedBlock } = useEditorStore();
 
-
-  const selectedWidget = useMemo(
-    () => getWidget(getSelectedBlock(props.selectedWidgetIndex)?.type||''),
+  const selectedBlock = useMemo(
+    () => getSelectedBlock(props.selectedWidgetIndex),
     [props.selectedWidgetIndex],
   );
+
+  const selectedWidget = useMemo(() => getWidget(selectedBlock?.type || ''), [selectedBlock?.type]);
 
   const [widthType, setWidthType] = useState(() => {
     if (props.commonSettings) {
@@ -110,7 +111,7 @@ export const CommonSettings = (props: {
     if (!compName) return false;
     if (!selectedWidget) return false;
 
-    const { category, type } = {...selectedWidget, category: 'widget'}; //todo: remove merge
+    const { category, type } = { ...selectedWidget, category: 'widget' }; //todo: remove merge
     if (category === 'layout') {
       // originalWidget = getLayoutByType(type);
     } else if (category === 'widget') {
@@ -126,13 +127,14 @@ export const CommonSettings = (props: {
   //   return WidgetProperties[selectedWidget.type];
   // }, [selectedWidgetIndex]);
 
-  const getComponentName = (componentIdentifier: string):string|null=>{
+  //todo: verify component while registering widget
+  const getComponentName = (componentIdentifier: string): string | null => {
     const componentName = commonProperties[componentIdentifier];
-    if(!componentName){
+    if (!componentName) {
       return null;
     }
     return componentName;
-  }
+  };
 
   return (
     <div>
@@ -142,17 +144,19 @@ export const CommonSettings = (props: {
         open={blockOpen}
         onOpenClose={(open) => setBlockOpen(open)}
       >
-      {selectedWidget?.settings.map(setting=>
-      <PropertyItem label={setting.name} key={setting.name}>
-          <Property
-                // selected={setting.type}
-                componentName={getComponentName(setting.component)}
-                propName={setting.property}
-                {...selectedWidget.settings}
+        {selectedWidget?.settings.map((setting) => {
+          const componentName = getComponentName(setting.component);
+          return componentName ? (
+            <PropertyItem label={setting.name} key={setting.name}>
+              <Property
+                componentName={componentName}
+                {...{ value: getValueByPath(setting.property, selectedBlock?.data), property: setting.property }}
               />
-
-      </PropertyItem>
-        )}
+            </PropertyItem>
+          ) : (
+            <></>
+          );
+        })}
 
         {/* {Object.entries(commonProperties).map(([propName, componentName]) => {
           return containSetting(propName, componentName) ? (

@@ -7,8 +7,8 @@ import { useEditorStore } from 'Src/core/main/store';
 export type AlignType = 'left' | 'center' | 'right';
 const alignsList: AlignType[] = ['left', 'center', 'right'];
 
-const Align = (props: { value: AlignType }) => {
-  const { value } = props;
+const Align = (props: {property:string, value?:AlignType}) => {
+  const { value, property } = props;
   const { updateSelectedBlockProps } = useEditorStore();
 
   const BlockButton = ({ formats }: { formats: AlignType }) => {
@@ -19,8 +19,8 @@ const Align = (props: { value: AlignType }) => {
     return ele;
   };
 
-  const handleAlignChange = (type: string, value: string) => {
-    updateSelectedBlockProps(type, value);
+  const handleAlignChange = (value: AlignType) => {
+    updateSelectedBlockProps(property, value);
   }
 
   return alignsList.map((format) => {
@@ -28,7 +28,7 @@ const Align = (props: { value: AlignType }) => {
       <PropertyButton
         title={format}
         key={format}
-        onClick={() => handleAlignChange('align', format)}
+        onClick={() => handleAlignChange(format)}
         selected={value === format}
       >
         <BlockButton formats={format} />

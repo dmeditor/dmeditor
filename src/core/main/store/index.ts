@@ -205,18 +205,33 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        console.log(block);
-
         //todo: check this from entity
         // if (!block['data']['settings'][propName]) {
         //   console.error(`Property ${propName} not found`);
         //   return;
         // }
 
-        state.storage[state.selected.blockIndex].data.settings = {
-          ...block.settings,
-          [propName]: propValue,
+        //todo: put settings to separate method
+
+        const propArr = propName.split('.')
+        const realPropsName = propArr.length===1?propArr[0]:propArr[1];
+
+        if(propArr.length == 1){
+            state.storage[state.selected.blockIndex].data = {
+              ...block.data,
+              [realPropsName]: propValue,
         };
+        }else{
+          state.storage[state.selected.blockIndex].data['settings'] = {
+            ...block.settings,
+            [realPropsName]: propValue,
+          }
+        }
+
+        // state.storage[state.selected.blockIndex].data.settings = {
+        //   ...block.settings,
+        //   [propName]: propValue,
+        // };
       });
     },
     toggleProperty: (status) => set(() => ({ status })),

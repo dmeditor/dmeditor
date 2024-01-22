@@ -331,6 +331,16 @@ export const generateCommonBlockData = (type:string) =>{
   return {id: `a_${nanoid()}`, type: type}
 }
 
+export const getValueByPath = (path: string, blockData)=>{
+   const arr = path.split('.'); 
+  if(arr.length===1){
+    return blockData[arr[0]];
+  }else if(arr.length === 2){
+    return blockData['settings'][arr[1]];
+  }
+  return null;
+}
+
 export const generatedWidgetAttrs = (type: 'heading' | 'text') => {
   let element: unknown = {
     data: {},

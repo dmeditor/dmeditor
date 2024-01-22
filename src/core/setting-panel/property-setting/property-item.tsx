@@ -5,7 +5,7 @@ const Components: {
   [index: string]: React.LazyExoticComponent<React.ComponentType<unknown>>;
 } = {};
 
-const widgetProperySetting = (propName: string, componentName: string) => {
+const widgetProperySetting = (componentName: string) => {
   // widgetName = 'margin-top' converted to MarginTop
   let widgetName = componentName;
   const convertToCamelCase = (str: string) => {
@@ -32,15 +32,11 @@ const widgetProperySetting = (propName: string, componentName: string) => {
 
 const Property = ({
   componentName,
-  propName,
-  // type,
   ...rest
 }: {
   componentName: string;
-  propName: string;
-  // type: string;
 }) => {
-  const Component = widgetProperySetting(propName, componentName);
+  const Component = widgetProperySetting(componentName);
   console.log('rest', rest);
   return (
     <React.Suspense fallback="Loading...">
