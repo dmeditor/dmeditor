@@ -71,10 +71,6 @@ export namespace DMEditor {
 
 export namespace DMEData{ 
 
-export interface BlockData{
-
-}
-
 export interface BlockStyle{
 
 }
@@ -84,7 +80,7 @@ export interface Block {
   id?: string,
   type: string, //can use type for internal
   parent?: Block,
-  data: BlockData,
+  data: object,
   style?:BlockStyle,
   children?: Array<Block>,
 }
