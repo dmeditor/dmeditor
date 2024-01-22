@@ -30,19 +30,9 @@ const HeadingWidget: Widget = {
     { name: 'Align', settingType: 'align', property: 'setting.align' },
     { name: 'Background', settingType: 'color', property: 'setting.background-color' },
     { name: 'Color', settingType: 'color', property: 'setting.color' },
-    {name: 'Heading', settingType: 'heading', custom:true, property: 'setting.color'},
+    { name: '', settingType: 'heading', custom: true, property: '' },
     // {name: 'Text', component: 'input', property: 'value'}
   ],
-  // settings: {
-  //       align: 'left',
-  //       'background-color': '',
-  //       color: '#000000',
-  //       level: 2,
-  //       'margin-top': 0,
-  //       padding: 0,
-  //       textColor: '#000000',
-  //       width: 'auto',
-  //     },
 };
 
 export default HeadingWidget;
