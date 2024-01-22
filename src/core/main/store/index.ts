@@ -15,10 +15,10 @@ type Store = {
   selected: {
     blockId: string;
     blockIndex: number; //-Infinity if it's not selected
-    //current blocklist. 
+    //current blocklist.
     //TODO: can be removed? can use getCurrentList() which find list by currentListPath from storage
     currentList: DMEData.BlockList;
-    //current blocklist path. 
+    //current blocklist path.
     //eg. [0,1] means first on root level , second on second level
     currentListPath: Array<number>;
   };
@@ -213,19 +213,19 @@ const useEditorStore = create<Store & Actions>()(
 
         //todo: put settings to separate method
 
-        const propArr = propName.split('.')
-        const realPropsName = propArr.length===1?propArr[0]:propArr[1];
+        const propArr = propName.split('.');
+        const realPropsName = propArr.length === 1 ? propArr[0] : propArr[1];
 
-        if(propArr.length == 1){
-            state.storage[state.selected.blockIndex].data = {
-              ...block.data,
-              [realPropsName]: propValue,
-        };
-        }else{
+        if (propArr.length == 1) {
+          state.storage[state.selected.blockIndex].data = {
+            ...block.data,
+            [realPropsName]: propValue,
+          };
+        } else {
           state.storage[state.selected.blockIndex].data['settings'] = {
             ...block.settings,
             [realPropsName]: propValue,
-          }
+          };
         }
 
         // state.storage[state.selected.blockIndex].data.settings = {
