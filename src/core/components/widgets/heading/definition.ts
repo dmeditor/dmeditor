@@ -27,20 +27,21 @@ const HeadingWidget: Widget = {
     },
   },
   settings: [
-    {name: 'Background', type: 'color', property: 'settings.background'},
-    {name: 'Text color', type: 'color', property: 'settings.color'},
-    {name: 'Text', type: 'input', property: 'value'}
-  ],  
-  settings: {
-        align: 'left',
-        'background-color': '',
-        color: '#000000',
-        level: 2,
-        'margin-top': 0,
-        padding: 0,
-        textColor: '#000000',
-        width: 'auto',
-      },
+    {name: 'Align', component: 'align', property: 'align'},    
+    {name: 'Background', component: 'color', property: 'background-color'},
+    {name: 'Color', component: 'color', property: 'color'},
+    // {name: 'Text', component: 'input', property: 'value'}
+  ]
+  // settings: {
+  //       align: 'left',
+  //       'background-color': '',
+  //       color: '#000000',
+  //       level: 2,
+  //       'margin-top': 0,
+  //       padding: 0,
+  //       textColor: '#000000',
+  //       width: 'auto',
+  //     },
 };
 
 export default HeadingWidget;

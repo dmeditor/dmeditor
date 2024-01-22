@@ -25,20 +25,20 @@ const widgetProperySetting = (propName: string, componentName: string) => {
     widgetName = widgetName[0].toUpperCase() + widgetName.slice(1);
   }
   // register component
-  // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));
-  Components[widgetName] = React.lazy(() => import(`./${propName}/${componentName}`));
+  // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));    
+  Components[widgetName] = React.lazy(() => import(`./${componentName}`));
   return Components[componentName];
 };
 
 const Property = ({
   componentName,
   propName,
-  type,
+  // type,
   ...rest
 }: {
   componentName: string;
   propName: string;
-  type: string;
+  // type: string;
 }) => {
   const Component = widgetProperySetting(propName, componentName);
   console.log('rest', rest);

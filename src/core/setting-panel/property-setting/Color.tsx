@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { PickColor } from 'Core/utils';
 
-const BackgroundColor = ({ value }: { value: string }) => {
+const Color = ({ value }: { value: string }) => {
   return (
     <PickColor
       color={value ? value : ''}
@@ -13,4 +13,4 @@ const BackgroundColor = ({ value }: { value: string }) => {
   );
 };
 
-export default BackgroundColor;
+export default Color;

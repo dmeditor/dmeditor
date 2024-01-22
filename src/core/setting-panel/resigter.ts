@@ -2,7 +2,7 @@
  * properties register
  * Map<propName, editorComponentName>
  */
-const commonProperties = {
+const commonProperties: {[type:string]:string} = {
   align: 'Align',
   'background-color': 'BackgroundColor',
   color: 'Color',

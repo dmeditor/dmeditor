@@ -37,8 +37,12 @@ export interface BlockLayoutData {
   backgroundColor?: string;
 }
 
-export interface WidgetSettings{
-  [key: string]: string|number
+export interface WidgetSetting{
+  property: string,
+  name: string,
+  component: string //registered setting component, eg. 'color', or 'align'
+  //category:string
+  // [key: string]: string|number
 }
 
 export interface Widget{
@@ -60,7 +64,7 @@ export interface Widget{
     validate?:(data:any)=>boolean
   },
   // style: {},  
-  settings: WidgetSettings
+  settings: Array<WidgetSetting>
 }
 
 

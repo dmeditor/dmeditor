@@ -40,8 +40,9 @@ export const CommonSettings = (props: {
   const [blockOpen, setBlockOpen] = useState(true);
   const { getSelectedBlock } = useEditorStore();
 
+
   const selectedWidget = useMemo(
-    () => getSelectedBlock(props.selectedWidgetIndex), //todo: get widget. here is to get block.
+    () => getWidget(getSelectedBlock(props.selectedWidgetIndex)?.type||''),
     [props.selectedWidgetIndex],
   );
 
@@ -125,6 +126,14 @@ export const CommonSettings = (props: {
   //   return WidgetProperties[selectedWidget.type];
   // }, [selectedWidgetIndex]);
 
+  const getComponentName = (componentIdentifier: string):string|null=>{
+    const componentName = commonProperties[componentIdentifier];
+    if(!componentName){
+      return null;
+    }
+    return componentName;
+  }
+
   return (
     <div>
       <PropertyGroup
@@ -133,7 +142,19 @@ export const CommonSettings = (props: {
         open={blockOpen}
         onOpenClose={(open) => setBlockOpen(open)}
       >
-        {Object.entries(commonProperties).map(([propName, componentName]) => {
+      {selectedWidget?.settings.map(setting=>
+      <PropertyItem label={setting.name} key={setting.name}>
+          <Property
+                // selected={setting.type}
+                componentName={getComponentName(setting.component)}
+                propName={setting.property}
+                {...selectedWidget.settings}
+              />
+
+      </PropertyItem>
+        )}
+
+        {/* {Object.entries(commonProperties).map(([propName, componentName]) => {
           return containSetting(propName, componentName) ? (
             <PropertyItem label={propName} key={propName}>
               <Property
@@ -144,7 +165,7 @@ export const CommonSettings = (props: {
               />
             </PropertyItem>
           ) : null;
-        })}
+        })} */}
 
         {/* <PropertyItem label="To top">
           <Ranger
