@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { TitleOutlined } from '@mui/icons-material';
 
-import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
-import useHeadingStore from 'Src/core/setting-panel/store/heading';
-import { isHTMLElement } from 'Src/core/utils';
 import { BlockListRender } from '../../../main/renderer';
+import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { DMEData } from '../../types/blocktype';
 import { EntityHeadingBlock } from './entity';
+import useHeadingStore from 'Src/core/setting-panel/store/heading';
+import { isHTMLElement } from 'Src/core/utils';
 
 const { useState, useRef, useEffect } = React;
 interface HeadingComponentProps extends React.HTMLAttributes<HTMLOrSVGElement> {
@@ -25,15 +25,21 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
   );
 };
 interface HeadingProps {
-  blockNode: DMEData.Block & {data: EntityHeadingBlock};
+  blockNode: DMEData.Block & { data: EntityHeadingBlock };
 }
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: HeadingProps) => {
-
   const blockNode = props.blockNode;
   console.log('wong', blockNode);
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
-  const { id, data:{level, value}, data } = blockNode;
+  const {
+    id,
+    data: {
+      level,
+      value,
+    },
+    data,
+  } = blockNode;
   const defaultValue: any = useRef(value);
 
   // const changeText = (e?: any) => {
@@ -43,7 +49,8 @@ const Heading = (props: HeadingProps) => {
 
   const common = {
     style: {
-      textAlign: data.settings?.align,
+      textAlign: data.settings.align,
+      color:data.settings.color
     },
     // ref: (input: any) => input && input.focus(),
     onKeyUp: (e: React.KeyboardEvent<HTMLElement>) => {
@@ -60,10 +67,12 @@ const Heading = (props: HeadingProps) => {
     <div className={getCommonBlockCss('heading', '')}>
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
-      </HeadingComponent>      
-        {props.blockNode.children&&<div style={{padding: 10, border: '1px solid #cccccc'}}>
+      </HeadingComponent>
+      {props.blockNode.children && (
+        <div style={{ padding: 10, border: '1px solid #cccccc' }}>
           <BlockListRender data={props.blockNode.children} selected={0} />
-      </div>}
+        </div>
+      )}
     </div>
   );
 };
