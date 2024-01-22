@@ -1,13 +1,20 @@
 import * as React from 'react';
 
 import { PickColor } from 'Core/utils';
+import { useEditorStore } from 'Src/core/main/store';
+import { useState } from 'react';
 
-const Color = ({ value }: { value: string }) => {
+const Color = ( props:{ value?:string, property: string }) => {
+  const { property } = props;
+  const [value, setValue] = useState(props.value);
+  const { updateSelectedBlockProps } = useEditorStore();
+
   return (
     <PickColor
       color={value ? value : ''}
       onChange={(value) => {
-        // pickChange('backgroundColor', value);
+        setValue(value);
+        updateSelectedBlockProps(property, value)
       }}
     ></PickColor>
   );

@@ -143,7 +143,7 @@ export const BlockSettings = (props: {
       >
         {selectedWidget?.settings.map((setting) => {
           if (setting.custom) {
-            return <Property {...setting} />;
+            return <Property key={selectedBlockIndex} {...setting} />;
           } else {
             const settingType = setting.settingType;
             const value = getValueByPath(setting.property, selectedBlock?.data);

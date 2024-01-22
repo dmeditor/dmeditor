@@ -36,7 +36,7 @@ const Heading = (props: HeadingProps) => {
     id,
     data: {
       level,
-      value,
+      value,      
     },
     data,
   } = blockNode;
@@ -50,7 +50,8 @@ const Heading = (props: HeadingProps) => {
   const common = {
     style: {
       textAlign: data.settings.align,
-      color:data.settings.color
+      color:data.settings.color,
+      backgroundColor: data.settings['background-color']
     },
     // ref: (input: any) => input && input.focus(),
     onKeyUp: (e: React.KeyboardEvent<HTMLElement>) => {
