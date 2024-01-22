@@ -27,9 +27,9 @@ const HeadingWidget: Widget = {
     },
   },
   settings: [
-    {name: 'Align', component: 'align', property: 'setting.align'},    
-    {name: 'Background', component: 'color', property: 'setting.background-color'},
-    {name: 'Color', component: 'color', property: 'setting.color'},
+    {name: 'Align', settingType: 'align', property: 'setting.align'},    
+    {name: 'Background', settingType: 'color', property: 'setting.background-color'},
+    {name: 'Color', settingType: 'color', property: 'setting.color'},
     // {name: 'Text', component: 'input', property: 'value'}
   ]
   // settings: {

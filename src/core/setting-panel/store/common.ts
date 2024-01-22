@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { AlignType } from '../property-setting/Align';
+import { AlignType } from '../property-setting/align/Align';
 
 type State = {
   align: AlignType;
