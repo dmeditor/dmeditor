@@ -146,11 +146,12 @@ export const CommonSettings = (props: {
       >
         {selectedWidget?.settings.map((setting) => {
           const componentName = getComponentName(setting.component);
+          const value = getValueByPath(setting.property, selectedBlock?.data);
           return componentName ? (
-            <PropertyItem label={setting.name} key={setting.name}>
+            <PropertyItem label={setting.name} key={setting.property}>
               <Property
                 componentName={componentName}
-                {...{ value: getValueByPath(setting.property, selectedBlock?.data), property: setting.property }}
+                {...{ ...setting, value: value }}
               />
             </PropertyItem>
           ) : (

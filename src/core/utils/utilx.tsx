@@ -336,6 +336,7 @@ export const getValueByPath = (path: string, blockData)=>{
   if(arr.length===1){
     return blockData[arr[0]];
   }else if(arr.length === 2){
+    //only support settings for now
     return blockData['settings'][arr[1]];
   }
   return null;
