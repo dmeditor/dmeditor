@@ -22,9 +22,9 @@ The idea behind is to have an editor which is easy to develop and style widget w
 
 ### Screenshots
 
-<img src="https://www.digimaker.com/var/images/w/wzz/upload-2038061186-screen1.png" />
+<img src="https://dmeditor.io/var/images/w/wzz/upload-2038061186-screen1.png" />
 
-<img src="https://www.digimaker.com/var/images/l/loe/upload-103887251-screen2.png" />
+<img src="https://dmeditor.io/var/images/l/loe/upload-103887251-screen2.png" />
 
 ## Installation
 
