@@ -10,7 +10,14 @@ import { MenuItem, Select } from '@mui/material';
 import { useEditorStore } from '../main/store';
 import Property from './property-setting/property-item';
 import { getWidget, properties } from 'Components/widgets';
-import { PickColor, PropertyButton, PropertyGroup, PropertyItem, Ranger, getValueByPath } from 'Core/utils';
+import {
+  getValueByPath,
+  PickColor,
+  PropertyButton,
+  PropertyGroup,
+  PropertyItem,
+  Ranger,
+} from 'Core/utils';
 
 interface CommonSettingsType {
   align: string;
@@ -135,17 +142,19 @@ export const CommonSettings = (props: {
         onOpenClose={(open) => setBlockOpen(open)}
       >
         {selectedWidget?.settings.map((setting) => {
-          const settingType = setting.settingType;
-          const value = getValueByPath(setting.property, selectedBlock?.data);
-          return settingType ? (
-            <PropertyItem label={setting.name} key={setting.property}>
-              <Property
-                {...{ ...setting, value: value }}
-              />
-            </PropertyItem>
-          ) : (
-            <></>
-          );
+          if (setting.custom) {
+            return <Property {...setting} />;
+          } else {
+            const settingType = setting.settingType;
+            const value = getValueByPath(setting.property, selectedBlock?.data);
+            return settingType ? (
+              <PropertyItem label={setting.name} key={setting.property}>
+                <Property {...{ ...setting, value: value }} />
+              </PropertyItem>
+            ) : (
+              <></>
+            );
+          }
         })}
 
         {/* {Object.entries(commonProperties).map(([propName, componentName]) => {

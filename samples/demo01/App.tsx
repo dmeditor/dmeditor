@@ -14,8 +14,8 @@ const App = () => {
       id: `widget-${nanoid()}`,
       data: {
         value: 'This is a heading',
+        level: 2,
         settings: {
-          level: 5,
           value: '',
         },
       },
@@ -39,8 +39,8 @@ const App = () => {
       id: `widget-${nanoid()}`,
       data: {
         value: 'This is a heading 2',
+        level: 2,
         settings: {
-          level: 5,
           value: '',
         },
       },

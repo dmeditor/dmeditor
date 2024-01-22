@@ -13,7 +13,7 @@ const { useState, useRef, useEffect } = React;
 const HeadingSetting = (props: unknown) => {
   const toggleProperty = useEditorStore((state) => state.toggleProperty);
   const { headingStateChange, id, level, value } = useHeadingStore((state) => state);
-  const defaultValue: any = useRef(data);
+  // const defaultValue: any = useRef(data);
 
   const generateId = () => {
     const newId = value
@@ -44,8 +44,7 @@ const HeadingSetting = (props: unknown) => {
 
   return (
     <>
-      <BlockProperty blocktype="heading" inBlock={props.inBlock}>
-        <PropertyItem label="Level">
+        {/* <PropertyItem label="Level">
           <Ranger
             defaultValue={level}
             min={1}
@@ -57,7 +56,7 @@ const HeadingSetting = (props: unknown) => {
               handleLevelChange(value);
             }}
           />
-        </PropertyItem>
+        </PropertyItem> */}
         <PropertyItem label="Anchor">
           <TextField
             sx={{ width: 'calc(100% - 37px)' }}
@@ -74,7 +73,6 @@ const HeadingSetting = (props: unknown) => {
             <LoopOutlined />
           </PropertyButton>
         </PropertyItem>
-      </BlockProperty>
     </>
   );
 };
