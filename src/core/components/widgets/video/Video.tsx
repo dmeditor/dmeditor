@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 
 import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
+import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyItem, Ranger, Util } from '../../../utils';
 
@@ -79,7 +79,7 @@ export const BlockVideo = (props: ToolRenderProps) => {
 
           {Util.renderCustomProperty(props.blockdata)}
           <div>
-            <CommonSettings
+            <BlockSettings
               commonSettings={commonSettings}
               settingList={['marginTop']}
               onChange={(settings) => {

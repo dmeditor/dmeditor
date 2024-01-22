@@ -16,7 +16,7 @@ import { PropertyButton, Util } from '../../../utils';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
-import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
+import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 import { blockTabCss } from './BlockTab.css';
 
 const nanoid = require('nanoid');
@@ -232,7 +232,7 @@ const BlockTab = (props: ToolRenderProps) => {
             }}
           />
           <div>
-            <CommonSettings
+            <BlockSettings
               commonSettings={commonSettings}
               settingList={['padding', 'backgroundColor', 'width']}
               onChange={(settings) => {

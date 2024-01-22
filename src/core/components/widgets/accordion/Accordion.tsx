@@ -10,7 +10,7 @@ import { Accordion } from 'react-bootstrap';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
-import { CommonSettings } from '../../../setting-panel/CommonSetting';
+import { BlockSettings } from '../../../setting-panel/BlockSettings';
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyButton, Util } from '../../../utils';
@@ -204,7 +204,7 @@ const BlockAccordion = (props: ToolRenderProps) => {
             }}
           />
           <div>
-            <CommonSettings
+            <BlockSettings
               commonSettings={commonSettings}
               settingList={['padding', 'backgroundColor', 'width']}
               onChange={(settings) => {

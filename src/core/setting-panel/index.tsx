@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
-import { CommonSettings } from './CommonSetting';
+import { BlockSettings } from './BlockSettings';
 import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
 import { Path, PathItem } from './Path';
@@ -85,10 +85,9 @@ const SettingPanel = (props) => {
               {hasSelect && mode === 'setting' && (
                 <>
                   <SettingHeader>{selectedBlock?.type}</SettingHeader>
-                  <CommonSettings {...props} selectedBlockIndex={selectedBlockIndex} />
+                  <BlockSettings {...props} selectedBlockIndex={selectedBlockIndex} />
                 </>
               )}
-              {/* <WidgetSetting selected={selectedWidget} /> */}
             </>
           )}
           {mode === 'page-setting' && <PageSetting />}

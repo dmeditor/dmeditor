@@ -26,7 +26,7 @@ import {
 } from '../../../utils';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from '../../block-property';
-import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
+import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 import { tableCss } from './BlockTable.css';
 
 type add = 'top' | 'right' | 'bottom' | 'left';
@@ -485,7 +485,7 @@ export const Table = (props: ToolRenderProps) => {
             }}
           />
           <div>
-            <CommonSettings
+            <BlockSettings
               commonSettings={commonSettings}
               onChange={(settings) => setCommonSettings(settings)}
               onDelete={props.onDelete}

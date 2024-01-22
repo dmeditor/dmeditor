@@ -4,7 +4,7 @@ import { CodeOutlined } from '@mui/icons-material';
 
 import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
+import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { Util } from '../../../utils';
 
@@ -30,7 +30,7 @@ export const Code = (props: ToolRenderProps) => {
         <BlockProperty blocktype="code" inBlock={props.inBlock}>
           {Util.renderCustomProperty(props.blockdata)}
           <div>
-            <CommonSettings
+            <BlockSettings
               commonSettings={commonSettings}
               settingList={[]}
               onChange={(settings) => {

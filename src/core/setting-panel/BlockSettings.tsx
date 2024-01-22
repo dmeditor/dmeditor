@@ -31,7 +31,7 @@ interface CommonSettingsType {
   selectedBlockIndex: number;
 }
 
-export const CommonSettings = (props: {
+export const BlockSettings = (props: {
   commonSettings: any;
   settingList?: Array<string>;
   onDelete?: () => void;

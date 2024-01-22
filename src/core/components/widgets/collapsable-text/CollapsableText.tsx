@@ -10,7 +10,7 @@ import { PropertyItem, Util } from '../../../utils';
 import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { BlockList } from 'Src/core/components/block-list';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
+import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 
 const defaultCss = css`
   & .dme-common-title span {
@@ -76,7 +76,7 @@ export const CollapsableText = (props: any) => {
             }}
           />
           <div>
-            <CommonSettings
+            <BlockSettings
               commonSettings={commonSettings}
               settingList={[]}
               onChange={(settings) => {

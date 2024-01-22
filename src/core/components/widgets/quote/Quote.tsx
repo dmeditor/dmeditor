@@ -5,7 +5,7 @@ import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { Util } from '../../../utils';
 import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
+import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 
 export const Quote = (props: ToolRenderProps) => {
   const [content, setConent] = useState(props.blockdata.data);
@@ -38,7 +38,7 @@ export const Quote = (props: ToolRenderProps) => {
         <BlockProperty blocktype="quote" inBlock={props.inBlock}>
           {Util.renderCustomProperty(props.blockdata)}
           <div>
-            <CommonSettings
+            <BlockSettings
               commonSettings={commonSettings}
               settingList={[]}
               onChange={(settings) => {

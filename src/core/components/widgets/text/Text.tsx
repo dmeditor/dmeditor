@@ -32,7 +32,7 @@ import FontFamilyList from '../../../utils/FontFamilyList';
 import { SlateFun } from '../../../utils/Slate';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
-import { CommonSettings } from 'Src/core/setting-panel/CommonSetting';
+import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 
 export const BlockText = (props: ToolRenderProps) => {
   const [value, setValue] = useState(props.blockdata.data);
