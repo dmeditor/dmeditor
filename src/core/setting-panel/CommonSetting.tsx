@@ -9,7 +9,6 @@ import { MenuItem, Select } from '@mui/material';
 
 import { useEditorStore } from '../main/store';
 import Property from './property-setting/property-item';
-import { commonProperties } from './resigter';
 import { getWidget, properties } from 'Components/widgets';
 import { PickColor, PropertyButton, PropertyGroup, PropertyItem, Ranger, getValueByPath } from 'Core/utils';
 
@@ -127,15 +126,6 @@ export const CommonSettings = (props: {
   //   return WidgetProperties[selectedWidget.type];
   // }, [selectedWidgetIndex]);
 
-  //todo: verify component while registering widget
-  const getComponentName = (componentIdentifier: string): string | null => {
-    const componentName = commonProperties[componentIdentifier];
-    if (!componentName) {
-      return null;
-    }
-    return componentName;
-  };
-
   return (
     <div>
       <PropertyGroup
@@ -145,12 +135,11 @@ export const CommonSettings = (props: {
         onOpenClose={(open) => setBlockOpen(open)}
       >
         {selectedWidget?.settings.map((setting) => {
-          const componentName = getComponentName(setting.component);
+          const settingType = setting.settingType;
           const value = getValueByPath(setting.property, selectedBlock?.data);
-          return componentName ? (
+          return settingType ? (
             <PropertyItem label={setting.name} key={setting.property}>
               <Property
-                componentName={componentName}
                 {...{ ...setting, value: value }}
               />
             </PropertyItem>

@@ -40,7 +40,7 @@ export interface BlockLayoutData {
 export interface WidgetSetting{
   property: string,
   name: string,
-  component: string //registered setting component, eg. 'color', or 'align'
+  settingType: string //registered setting component, eg. 'color', or 'align'
   //category:string
   // [key: string]: string|number
 }
