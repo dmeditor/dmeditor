@@ -67,8 +67,6 @@ const SettingPanel = (props) => {
     updatePath();
   }, [selectedBlockIndex, addBlockIndex, currentListPath.join()]);
 
-  const hasSelect = isSelected();
-
   const selectPathItem = (level: number) => {
     if (level === 0) {
       const path = pathArray[level];
