@@ -61,6 +61,8 @@ const SettingPanel = (props) => {
       // selecting a block
       if (isSelected()) {
         setMode('block-setting');
+      }else{
+        setMode('list-overview');
       }
     }
 
