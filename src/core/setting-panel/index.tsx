@@ -6,22 +6,19 @@ import { Button } from '@mui/material';
 
 import { getWidget } from '../components/widgets';
 import { useEditorStore } from '../main/store';
-import { iteratePath } from '../main/store/operations';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './BlockSettings';
 import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
 import { Path, PathItem } from './Path';
-import WidgetSetting from './property-setting/property-item';
 import { PageTitle, RightElement, SettingHeader, Space } from './style';
-import emitter from 'Core/utils/event';
 
 const { useEffect } = React;
 
-type SettingPanelMode = 'setting' | 'list' | 'page-setting' | 'add-block';
+type SettingPanelMode = 'setting' | 'list' | 'page-setting' | 'adding';
 
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
-const SettingPanel = (props) => {
+const SettingPanel = () => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData: { index: addBlockIndex, position: addBlockPosition },
@@ -59,7 +56,7 @@ const SettingPanel = (props) => {
   useEffect(() => {
     //is adding mode
     if (addBlockIndex !== -Infinity) {
-      setMode('add-block');
+      setMode('adding');
     } else {
       // selecting a block
       if (isSelected()) {
@@ -87,8 +84,8 @@ const SettingPanel = (props) => {
         padding: 5px;
       `}
     >
-      {mode === 'add-block' && <AddBlock />}
-      {mode !== 'add-block' && (
+      {mode === 'adding' && <AddBlock />}
+      {mode !== 'adding' && (
         <>
           <RightElement>
             <Button title="Page settings" onClick={() => setMode('page-setting')}>
