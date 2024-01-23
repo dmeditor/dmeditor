@@ -7,6 +7,7 @@ import emitter from 'Core/utils/event';
 import type { DMEData } from 'Src/core/components/types/blocktype';
 import { properties } from 'Src/core/components/widgets';
 import { isStrictlyInfinity } from 'Src/core/utils';
+import { iteratePath } from './operations';
 
 export type AddBlockPosition = 'before' | 'after';
 export type AddBlockStatus = 'started' | 'done';
@@ -40,6 +41,7 @@ type Actions = {
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray:Array<number>, index: number) => void;
   getCurrentList: () => DMEData.BlockList;
+  getParents: ()=>Array<DMEData.Block>; //get parent Block from top to down, based on currentListPath
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
@@ -112,6 +114,14 @@ const useEditorStore = create<Store & Actions>()(
         }
       }
       return list;
+    },
+    getParents:():Array<DMEData.Block>=>{
+      const state = get();
+      const result:Array<DMEData.Block> = [];
+      iteratePath(state.selected.currentListPath, state.storage, (item)=>{
+        result.push(item);
+      })
+      return result;
     },
     clearSelected: () => {
       set((state) => {

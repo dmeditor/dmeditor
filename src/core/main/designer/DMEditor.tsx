@@ -33,7 +33,7 @@ import { useTranslation } from 'react-i18next';
 
 import SettingPanel from '../../setting-panel';
 import Toolbar from '../../toolbar';
-import { loadData } from '../entity/operations';
+import { loadData } from '../store/operations';
 import { useEditorStore } from '../store';
 import { DMEData } from 'Src/core/components/types/blocktype';
 import { BlockListRender } from 'Src/core/main/renderer';

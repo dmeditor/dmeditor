@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 
 import { getWidget } from '../components/widgets';
 import { useEditorStore } from '../main/store';
+import { iteratePath } from '../main/store/operations';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './BlockSettings';
 import { ListOverview } from './ListOverview';
@@ -22,51 +23,60 @@ type SettingPanelMode = 'setting' | 'list' | 'page-setting' | 'add-block';
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
 const SettingPanel = (props) => {
   const {
-    selected: { blockIndex: selectedBlockIndex },
+    selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData: { index: addBlockIndex, position: addBlockPosition },
     getSelectedBlock,
     getCurrentList,
+    getParents,
     isSelected,
   } = useEditorStore((state) => state);
 
   const [mode, setMode] = useState<SettingPanelMode>('setting');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
-
   const currentList = getCurrentList();
   const selectedBlock = useMemo(() => getSelectedBlock(selectedBlockIndex), [selectedBlockIndex]);
 
-  useEffect(() => {
-    if (addBlockIndex !== -Infinity) {
-      setMode('add-block');
-      console.log('hello');
-    } else {
-      if (isSelected()) {
-        setMode('setting');
-      } else {
-        setMode('list');
-      }
-    }
-
-    const pathArray:Array<PathItem> = [{ text: 'Page', id: 'page', }];
+  const updatePath = () => {
+    const pathArray: Array<PathItem> = [{ text: 'Page', id: 'page' }];
     if (isSelected()) {
-      //todo: get path data
-      pathArray.push({ text: 'container', id: '112', disableClick: true });
+      const parents = getParents();
+      for (const item of parents) {
+        pathArray.push({
+          text: getWidget(item.type)?.name || '',
+          id: item.id || '',
+        });
+      }
       pathArray.push({
         text: getWidget(selectedBlock?.type || '')?.name || '',
         id: selectedBlock?.id || '',
       });
     }
+
     setPathArray(pathArray);
-  }, [selectedBlockIndex, addBlockIndex]);
+  };
+
+  useEffect(() => {
+    //is adding mode
+    if (addBlockIndex !== -Infinity) {
+      setMode('add-block');
+    } else {
+      // selecting a block
+      if (isSelected()) {
+        setMode('setting');
+      }
+    }
+
+    updatePath();
+  }, [selectedBlockIndex, addBlockIndex, currentListPath.join()]);
 
   const hasSelect = isSelected();
 
   const selectPathItem = (level: number) => {
-    if(level===0){
+    if (level === 0) {
       const path = pathArray[level];
       setMode('list');
-    }else{
+    } else {
       setMode('setting');
     }
   };
@@ -87,20 +97,21 @@ const SettingPanel = (props) => {
           </RightElement>
           <PageTitle>New page</PageTitle>
           <Space />
-          <Path selectedId={selectedBlock?.id||'page'} pathArray={pathArray} onSelect={selectPathItem} />
+          <Path
+            selectedId={selectedBlock?.id || 'page'}
+            pathArray={pathArray}
+            onSelect={selectPathItem}
+          />
           <Space />
-          {['list', 'setting'].includes(mode) && (
-            <>
-              {mode === 'list' && (
-                <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
-              )}
-              {hasSelect && mode === 'setting' && (
-                <>
-                  <BlockSettings {...props} selectedBlockIndex={selectedBlockIndex} />
-                </>
-              )}
-            </>
+
+          {mode === 'list' && (
+            <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
           )}
+
+          {mode === 'setting' && (
+            <BlockSettings {...props} selectedBlockIndex={selectedBlockIndex} />
+          )}
+
           {mode === 'page-setting' && <PageSetting />}
         </>
       )}

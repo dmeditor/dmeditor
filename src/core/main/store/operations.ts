@@ -1,3 +1,4 @@
+import { getWidget } from 'Components/widgets';
 import { jsonParse } from 'Src/core/utils';
 import { DMEData } from 'Src/core/components/types/blocktype';
 
@@ -92,4 +93,14 @@ export const loadData = (data:string| DMEData.BlockList): DMEData.BlockList =>{
   }
   // to do build working entity, eg. id, parent
   return list;
+}
+
+
+export const iteratePath = (pathArray:Array<number>, rootList: DMEData.BlockList, callback:(item:DMEData.Block)=>void ):void=>{
+  let temp = rootList;
+  for(const i of pathArray){
+    const block = temp[i];
+    callback(block);
+    temp = block.children||[];
+  }
 }
