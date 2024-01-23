@@ -9,6 +9,7 @@ import emitter from 'Core/utils/event';
 interface BlockListProps {
   data: DMEData.BlockList;
   selected: number;
+  pathArray:Array<number>;
   columns?: number;
   active?: boolean;
   settings?: {
@@ -31,7 +32,7 @@ export const BlockListRender = (props: BlockListProps) => {
 
   const select = (index: number) => {
     if (selectedBlockIndex !== index) {
-      updateSelectedBlockIndex(index);
+      updateSelectedBlockIndex(props.pathArray, index);
     }
   };
 

@@ -13,13 +13,10 @@ export type AddBlockStatus = 'started' | 'done';
 
 type Store = {
   selected: {
-    blockId: string;
+    blockId: string; //unique id
     blockIndex: number; //-Infinity if it's not selected
-    //current blocklist.
-    //TODO: can be removed? can use getCurrentList() which find list by currentListPath from storage
-    currentList: DMEData.BlockList;
-    //current blocklist path.
-    //eg. [0,1] means first on root level , second on second level
+    //current blocklist path as context. Use getCurrentList to get current list data
+    //eg. [0,1] means first on root level, second on second level
     currentListPath: Array<number>;
   };
   addBlockData: {
@@ -41,8 +38,8 @@ type Actions = {
   removeBlock: (widget: ReactNode) => void;
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
-  updateSelectedBlockIndex: (index: number) => void;
-  updateCurrentList: (list: DMEData.BlockList) => void;
+  updateSelectedBlockIndex: (pathArray:Array<number>, index: number) => void;
+  getCurrentList: () => DMEData.BlockList;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
@@ -83,7 +80,6 @@ const useEditorStore = create<Store & Actions>()(
             state.storage.splice(index + 1, 0, data);
             newPosition = index + 1;
           }
-          state.selected.currentList = state.storage;
 
           //update to new block
           state.selected.blockIndex = newPosition;
@@ -106,10 +102,16 @@ const useEditorStore = create<Store & Actions>()(
         state.storage = [];
       });
     },
-    updateCurrentList: (list: DMEData.BlockList) => {
-      set((state) => {
-        state.selected.currentList = list;
-      });
+    getCurrentList: ():DMEData.BlockList => {
+      const state = get();
+      const currentPath = state.selected.currentListPath;
+      let list = state.storage;;
+      if(currentPath.length>0){
+        for(const i of currentPath){          
+            list = list[i].children||[];
+        }
+      }
+      return list;
     },
     clearSelected: () => {
       set((state) => {
@@ -135,20 +137,20 @@ const useEditorStore = create<Store & Actions>()(
     },
     getSelectedBlock: (index: number) => {
       const state = get();
+      const currentList = state.getCurrentList();
       if (
         isStrictlyInfinity(index) ||
         index < 0 ||
-        !state.selected.currentList ||
-        state.selected.currentList.length <= index
+        currentList.length <= index
       ) {
         state.clearSelected();
         return;
       }
-      if (!state.selected.currentList[index]) {
+      if (!currentList[index]) {
         state.clearSelected();
         return;
       }
-      return state.selected.currentList[index];
+      return state.storage[index];
     },
     removeBlock: (block: ReactNode) =>
       set((state) => {
@@ -189,12 +191,16 @@ const useEditorStore = create<Store & Actions>()(
             };
           }
         });
-        state.selected.currentList = state.storage;
+        // state.selected.currentList = state.storage;
       });
     },
-    updateSelectedBlockIndex: (index: number) => {
+    updateSelectedBlockIndex: (pathArray:Array<number>, index: number) => {
       set((state) => {
         state.selected.blockIndex = index;
+        if( state.selected.currentListPath.join() !== pathArray.join() ){
+          // switch list context
+           state.selected.currentListPath = pathArray;
+        }
         console.log(index);
       });
     },

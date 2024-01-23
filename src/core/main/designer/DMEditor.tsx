@@ -127,7 +127,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   //   Util.pageTabActiveIndex = props.pageTabActiveIndex || 0;
   // }, []);
   const handleUpdateSelctedWidgetIndex = useCallback((index: number) => {
-    updateSelectedBlockIndex(index);
+    updateSelectedBlockIndex([], index);
     blockIndexRef.current = index;
   }, []);
 
@@ -332,7 +332,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           >
             {viewmode === 'edit' && (
               <div className={dmeditorViewCss} onClick={(e)=>{e.stopPropagation()}}>
-                <BlockListRender data={storage} selected={selectedBlockIndex} />
+                <BlockListRender data={storage} pathArray={[]} selected={selectedBlockIndex} />
                 {/* <div style={{ width: '100%', height: 1 }}></div> */}
                 {/* {Array.isArray(storage) &&
                   storage.map((widget, index) => {

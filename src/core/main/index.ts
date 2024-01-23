@@ -25,7 +25,6 @@ function createDMEditor() {
     selected:{      
       blockId: "",
       blockIndex: -Infinity,
-      currentList: [] as DMEData.BlockList,
       currentListPath:[] as Array<number>,
   },
     addBlockData:{

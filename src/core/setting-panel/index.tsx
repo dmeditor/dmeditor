@@ -22,15 +22,18 @@ type SettingPanelMode = 'setting' | 'list' | 'page-setting' | 'add-block';
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
 const SettingPanel = (props) => {
   const {
-    selected: { blockIndex: selectedBlockIndex, currentList },
+    selected: { blockIndex: selectedBlockIndex },
     addBlockData: { index: addBlockIndex, position: addBlockPosition },
     getSelectedBlock,
+    getCurrentList,
     isSelected,
   } = useEditorStore((state) => state);
 
   const [mode, setMode] = useState<SettingPanelMode>('setting');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
+
+  const currentList = getCurrentList();
   const selectedBlock = useMemo(() => getSelectedBlock(selectedBlockIndex), [selectedBlockIndex]);
 
   useEffect(() => {
