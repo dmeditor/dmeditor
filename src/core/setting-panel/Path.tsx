@@ -8,38 +8,41 @@ export interface PathItem {
   text: string;
   id: string;
   disableClick?: boolean;
+  selected?:boolean
 }
 
 export interface PathProps {
   pathArray: Array<PathItem>;
+  selectedId: string;
   onSelect: (index: number) => void;
 }
 
 export const Path = (props: PathProps) => {
-  const [selected, setSelected] = useState(-1);
+
+  const [selectedId, setSelectedId] = useState(props.selectedId)
 
   useEffect(() => {
-    setSelected(-1);
-  }, []);
+    setSelectedId(props.selectedId);
+  }, [props.selectedId]);
 
   return (
     <div>
-      {props.pathArray.map((item, level) => (
+      {props.pathArray.map((item, index) => (
         <>
           <PathItem
             key={item.id}
-            canClick={!item.disableClick&&(selected !== level)}
-            selected={selected === level}
+            canClick={!item.disableClick&&(selectedId !== item.id)}
+            selected={selectedId === item.id}
             onClick={() => {
-              if (!item.disableClick && selected !== level) {
-                setSelected(level);
-                props.onSelect(level);
+              if (!item.disableClick && selectedId !== item.id) {
+                setSelectedId(item.id);
+                props.onSelect(index);
               }
             }}
           >
             {item.text}
           </PathItem>
-          {level !== props.pathArray.length - 1 && <KeyboardArrowRight fontSize="small" />}
+          {index !== props.pathArray.length - 1 && <KeyboardArrowRight fontSize="small" />}
         </>
       ))}
     </div>

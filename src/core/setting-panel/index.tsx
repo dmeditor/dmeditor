@@ -45,16 +45,16 @@ const SettingPanel = (props) => {
       }
     }
 
-    //for test for now
-    const pathArray:Array<PathItem> = [{ text: 'Page', id: '111', }];
+    const pathArray:Array<PathItem> = [{ text: 'Page', id: 'page', }];
     if (isSelected()) {
+      //todo: get path data
       pathArray.push({ text: 'container', id: '112', disableClick: true });
       pathArray.push({
         text: getWidget(selectedBlock?.type || '')?.name || '',
         id: selectedBlock?.id || '',
       });
-      setPathArray(pathArray);
     }
+    setPathArray(pathArray);
   }, [selectedBlockIndex, addBlockIndex]);
 
   const hasSelect = isSelected();
@@ -84,7 +84,7 @@ const SettingPanel = (props) => {
           </RightElement>
           <PageTitle>New page</PageTitle>
           <Space />
-          <Path pathArray={pathArray} onSelect={selectPathItem} />
+          <Path selectedId={selectedBlock?.id||'page'} pathArray={pathArray} onSelect={selectPathItem} />
           <Space />
           {['list', 'setting'].includes(mode) && (
             <>
