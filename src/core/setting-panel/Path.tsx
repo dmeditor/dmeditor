@@ -7,7 +7,6 @@ import { PathItem } from './style';
 export interface PathItem {
   text: string;
   id: string;
-  level: number;
   disableClick?: boolean;
 }
 
@@ -21,25 +20,26 @@ export const Path = (props: PathProps) => {
 
   useEffect(() => {
     setSelected(-1);
-  }, [props.pathArray]);
+  }, []);
 
   return (
     <div>
-      {props.pathArray.map((item, index) => (
+      {props.pathArray.map((item, level) => (
         <>
           <PathItem
-            canClick={!item.disableClick}
-            selected={selected === index}
+            key={item.id}
+            canClick={!item.disableClick&&(selected !== level)}
+            selected={selected === level}
             onClick={() => {
-              if (!item.disableClick) {
-                setSelected(index);
-                props.onSelect(index);
+              if (!item.disableClick && selected !== level) {
+                setSelected(level);
+                props.onSelect(level);
               }
             }}
           >
             {item.text}
           </PathItem>
-          {index !== props.pathArray.length - 1 && <KeyboardArrowRight fontSize="small" />}
+          {level !== props.pathArray.length - 1 && <KeyboardArrowRight fontSize="small" />}
         </>
       ))}
     </div>

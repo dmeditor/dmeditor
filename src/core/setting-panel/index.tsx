@@ -4,6 +4,7 @@ import { css } from '@emotion/css';
 import { Settings } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
+import { getWidget } from '../components/widgets';
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './BlockSettings';
@@ -22,7 +23,7 @@ type SettingPanelMode = 'setting' | 'list' | 'page-setting' | 'add-block';
 const SettingPanel = (props) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentList },
-    addBlockData:{index: addBlockIndex, position: addBlockPosition},
+    addBlockData: { index: addBlockIndex, position: addBlockPosition },
     getSelectedBlock,
     isSelected,
   } = useEditorStore((state) => state);
@@ -30,33 +31,41 @@ const SettingPanel = (props) => {
   const [mode, setMode] = useState<SettingPanelMode>('setting');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
-  useEffect(() => {
+  const selectedBlock = useMemo(() => getSelectedBlock(selectedBlockIndex), [selectedBlockIndex]);
 
-    if(addBlockIndex !== -Infinity ){
+  useEffect(() => {
+    if (addBlockIndex !== -Infinity) {
       setMode('add-block');
       console.log('hello');
-    }else{
+    } else {
       if (isSelected()) {
         setMode('setting');
-      }else{
+      } else {
         setMode('list');
       }
     }
 
     //for test for now
-    setPathArray([
-      { text: 'Page', id: '111', level: 0 },
-      { text: 'Heading', id: '112', level: 1, disableClick: true },
-    ]);
+    const pathArray:Array<PathItem> = [{ text: 'Page', id: '111', }];
+    if (isSelected()) {
+      pathArray.push({ text: 'container', id: '112', disableClick: true });
+      pathArray.push({
+        text: getWidget(selectedBlock?.type || '')?.name || '',
+        id: selectedBlock?.id || '',
+      });
+      setPathArray(pathArray);
+    }
   }, [selectedBlockIndex, addBlockIndex]);
 
   const hasSelect = isSelected();
 
-  const selectedBlock = useMemo(() => getSelectedBlock(selectedBlockIndex), [selectedBlockIndex]);
-
-  const selectPathItem = (index: number) => {
-    const path = pathArray[index];
-    setMode('list');
+  const selectPathItem = (level: number) => {
+    if(level===0){
+      const path = pathArray[level];
+      setMode('list');
+    }else{
+      setMode('setting');
+    }
   };
 
   return (
@@ -84,7 +93,6 @@ const SettingPanel = (props) => {
               )}
               {hasSelect && mode === 'setting' && (
                 <>
-                  <SettingHeader>{selectedBlock?.type}</SettingHeader>
                   <BlockSettings {...props} selectedBlockIndex={selectedBlockIndex} />
                 </>
               )}
