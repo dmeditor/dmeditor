@@ -18,7 +18,7 @@ const { useEffect } = React;
 type SettingPanelMode = 'setting' | 'list' | 'page-setting' | 'adding';
 
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
-const SettingPanel = () => {
+const SettingPanel = (props) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData: { index: addBlockIndex, position: addBlockPosition },
