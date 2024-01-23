@@ -15,7 +15,7 @@ import { PageTitle, RightElement, SettingHeader, Space } from './style';
 
 const { useEffect } = React;
 
-type SettingPanelMode = 'setting' | 'list' | 'page-setting' | 'adding';
+type SettingPanelMode = 'block-setting' | 'list-overview' | 'page-setting' | 'adding';
 
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
 const SettingPanel = (props) => {
@@ -28,7 +28,7 @@ const SettingPanel = (props) => {
     isSelected,
   } = useEditorStore((state) => state);
 
-  const [mode, setMode] = useState<SettingPanelMode>('list');
+  const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
   const currentList = getCurrentList();
@@ -60,7 +60,7 @@ const SettingPanel = (props) => {
     } else {
       // selecting a block
       if (isSelected()) {
-        setMode('setting');
+        setMode('block-setting');
       }
     }
 
@@ -70,9 +70,9 @@ const SettingPanel = (props) => {
   const selectPathItem = (level: number) => {
     if (level === 0) {
       const path = pathArray[level];
-      setMode('list');
+      setMode('list-overview');
     } else {
-      setMode('setting');
+      setMode('block-setting');
     }
   };
 
@@ -99,11 +99,11 @@ const SettingPanel = (props) => {
           />
           <Space />
 
-          {mode === 'list' && (
+          {mode === 'list-overview' && (
             <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
           )}
 
-          {mode === 'setting' && (
+          {mode === 'block-setting' && (
             <BlockSettings {...props} selectedBlockIndex={selectedBlockIndex} />
           )}
 
