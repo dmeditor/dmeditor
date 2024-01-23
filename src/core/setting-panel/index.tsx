@@ -31,7 +31,7 @@ const SettingPanel = (props) => {
     isSelected,
   } = useEditorStore((state) => state);
 
-  const [mode, setMode] = useState<SettingPanelMode>('setting');
+  const [mode, setMode] = useState<SettingPanelMode>('list');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
   const currentList = getCurrentList();
