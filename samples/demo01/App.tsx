@@ -19,21 +19,7 @@ const App = () => {
           value: '',
         },
       },
-      type: 'heading',
-      children: [
-        {
-          id: `widget-${nanoid()}`,
-          type: 'heading',
-          data: {
-            level: 5,
-            value: 'This is a heading child',
-            settings: {
-              level: 2,
-              value: '',
-            },
-          },
-        },
-      ],
+      type: 'heading'      
     },
     {
       id: `widget-${nanoid()}`,

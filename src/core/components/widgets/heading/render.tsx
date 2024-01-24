@@ -68,12 +68,7 @@ const Heading = (props: HeadingProps) => {
     <div className={getCommonBlockCss('heading', '')}>
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
-      </HeadingComponent>
-      {props.blockNode.children && (
-        <div style={{ padding: 10, border: '1px solid #cccccc' }}>
-          <BlockListRender data={props.blockNode.children} selected={0} />
-        </div>
-      )}
+      </HeadingComponent>      
     </div>
   );
 };
