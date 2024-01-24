@@ -33,8 +33,10 @@ import { useTranslation } from 'react-i18next';
 
 import SettingPanel from '../../setting-panel';
 import Toolbar from '../../toolbar';
-import { loadData } from '../store/helper';
+import { TopBar } from '../../topbar/Topbar';
 import { useEditorStore } from '../store';
+import { loadData } from '../store/helper';
+import { EditArea, EditContainer, MainLayout, SettingContainer } from './style';
 import { DMEData } from 'Src/core/components/types/blocktype';
 import { BlockListRender } from 'Src/core/main/renderer';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
@@ -258,9 +260,9 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   };
 
   // reset to initial status
-  const resetStatus = ()=>{
+  const resetStatus = () => {
     clearSelected();
-  }
+  };
 
   const onChangeViewMode = (e: any, type: string) => {
     e.preventDefault();
@@ -305,142 +307,48 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   });
   return (
     <ThemeProvider theme={outerTheme}>
-      <div
-        ref={currentRef}
-        className={
-          (viewmode == 'edit' ? '  ' : 'view ') +
-          (settingsShown ? 'settings ' : '') +
-          dmeditorEditCss
-        }
-      >
-        <Toolbar readonlyMode={false} />
+      <TopBar />
+      <MainLayout ref={currentRef}>
+        {/* <Toolbar readonlyMode={false} /> */}
 
-        <div className="dme-settings" style={{ display: settingsShown ? 'block' : 'none' }}>
+        {/* <div className="dme-settings" style={{ display: settingsShown ? 'block' : 'none' }}>
           <div>{Util.renderPageTab()}</div>
-        </div>
+        </div> */}
 
-        <div
+        <EditContainer
           style={settingsShown ? { display: 'none' } : {}}
-          id="dmeditor-main"
-          className="layout-main-container"
           onClick={resetStatus}
         >
-          <div
+          <EditArea
             className={
-              'layout-main ' + ' viewmode-' + viewmode + (viewmode === 'edit' ? '' : ' is-preview')
+              ' viewmode-' + viewmode + (viewmode === 'edit' ? '' : ' is-preview')
             }
           >
+            <div style={{height:1,marginTop:'-1px'}}></div> {/* fix first block's margin-top is based on body */}
             {viewmode === 'edit' && (
-              <div className={dmeditorViewCss} onClick={(e)=>{e.stopPropagation()}}>
+              <div
+                className={dmeditorViewCss}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <BlockListRender data={storage} pathArray={[]} selected={selectedBlockIndex} />
-                {/* <div style={{ width: '100%', height: 1 }}></div> */}
-                {/* {Array.isArray(storage) &&
-                  storage.map((widget, index) => {
-                    const currentSelected = selectedBlockIndex === index;
-                    return (
-                      <BlockRender
-                        siblingDirection="vertical"
-                        data={widget}
-                        active={currentSelected}
-                        newBlock={currentSelected && newBlock ? true : false}
-                        onCancel={onDelete}
-                        key={widget.id}
-                        onActivate={() => handleWidgetIndexChange(index)}
-                        onChange={(data) => {
-                          //use updated ref to avoid old data
-                          // let newBlocks = [...blocksRef.current];
-                          // data = sanitizeBlockData(data);
-                          // newBlocks[index] = data;
-                          // updateData(newBlocks);
-                          // setNewBlock(false);
-                        }}
-                        onAddAbove={(type: string, template?: string) =>
-                          addAbove(type, index, template)
-                        }
-                        onAddUnder={(type: string, template?: string) =>
-                          addUnder(type, index, template)
-                        }
-                      />
-                    );
-                  })} */}
               </div>
             )}
-            {viewmode !== 'edit' && (
+            {/* {viewmode !== 'edit' && (
               <DMEditorView
                 key={viewmode}
                 data={storage}
                 getFileUrl={props.getFileUrl}
                 getImageUrl={props.getImageUrl}
               />
-            )}
-          </div>
-        </div>
-        {viewmode == 'edit' && (
-          <div style={settingsShown ? { display: 'none' } : {}} className="layout-properties">
-            <div id="dmeditor-add-menu">
-              {storage?.length === 0 && (
-                <MenuList
-                  onSelect={(type: string, template?: string) => {
-                    addUnder(type, -1, template);
-                  }}
-                />
-              )}
-            </div>
-           <SettingPanel />
-            <div style={{ marginBottom: '100px' }}>
-              <div id="dmeditor-property">
-                <div className="property-tab-container"></div>
-                <div></div>
-              </div>
-              {viewmode === 'edit' && (
-                <div
-                  style={{
-                    position: 'fixed',
-                    bottom: 0,
-                    height: '100px',
-                    width: '262px',
-                    padding: '10px',
-                    backgroundColor: '#ffffff',
-                  }}
-                >
-                  <div style={{ marginBottom: '15px' }}>
-                    <a
-                      href="/"
-                      title="Move up"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onMove('up');
-                      }}
-                    >
-                      <ArrowUpwardOutlined />{' '}
-                    </a>
-                    <a
-                      href="/"
-                      title="Move down"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onMove('down');
-                      }}
-                    >
-                      <ArrowDownwardOutlined />
-                    </a>
-                  </div>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="error"
-                    title="Delete"
-                    onClick={onDelete}
-                  >
-                    <DeleteOutline />
-                    Delete block
-                  </Button>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
+            )} */}
+          </EditArea>
+        </EditContainer>
+        <SettingContainer>
+          <SettingPanel />
+        </SettingContainer>
+      </MainLayout>
     </ThemeProvider>
   );
 });
