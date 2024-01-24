@@ -5,7 +5,7 @@ const Components: {
   [index: string]: React.LazyExoticComponent<React.ComponentType<unknown>>;
 } = {};
 
-const widgetProperySetting = (settingType: string) => {
+const widgetProperySetting = (settingType: string) => { 
   // widgetName = 'margin-top' converted to MarginTop
   let componentName = settingType;
   const convertToCamelCase = (str: string) => {

@@ -7,7 +7,7 @@ import emitter from 'Core/utils/event';
 import type { DMEData } from 'Src/core/components/types/blocktype';
 import { properties } from 'Src/core/components/widgets';
 import { isStrictlyInfinity } from 'Src/core/utils';
-import { iteratePath } from './operations';
+import { iteratePath } from './helper';
 
 export type AddBlockPosition = 'before' | 'after';
 export type AddBlockStatus = 'started' | 'done';

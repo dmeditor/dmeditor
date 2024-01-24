@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import App from './App';
-import { getBlockByID, getChildList } from '../../src/core/main/store/operations';
+import { getBlockByID, getChildList } from '../../src/core/main/store/helper';
 import { DMEData } from '../../src/core/components/types/blocktype';
 
 
