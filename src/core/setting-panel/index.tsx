@@ -79,11 +79,7 @@ const SettingPanel = (props) => {
   };
 
   return (
-    <div
-      className={css`
-        padding: 5px;
-      `}
-    >
+    <div>
       {mode === 'adding' && <AddBlock />}
       {mode !== 'adding' && (
         <>

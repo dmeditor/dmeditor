@@ -1,3 +1,3 @@
-const defaultSettingTabs: { [key: string]: string } = { settings: 'Settings',  style: 'Style' };
+const defaultSettingTabs: { [key: string]: string } = { settings: 'Settings',  block: 'Block' };
 
 export { defaultSettingTabs };

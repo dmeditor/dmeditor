@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const Layout = {
   Main: styled.div`
-    --dme-layout-property-width: 400px;
+    --dme-layout-property-width: 350px;
     --dme-container-width: calc(100vw - var(--dme-layout-property-width));
     --dme-main-width: clamp(900px, var(--dme-container-width) - 150px, 1200px);
 
@@ -27,6 +27,7 @@ export const Layout = {
   SettingPanel: styled.div`
     padding-top: var(--dme-topbar-height);
     background-color: white;
+    position: relative;
   `,
 };
 
@@ -50,5 +51,4 @@ export const EditArea = styled.div`
 `;
 
 export const SettingContainer = styled.div`
-  padding: 5px;
 `;

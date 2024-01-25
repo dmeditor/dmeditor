@@ -218,6 +218,15 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           },
         },
       },
+      MuiTabs:{
+        styleOverrides:{          
+          root:{
+            // '& .MuiMenu-paper':{
+            //   color: 'black'
+            // }
+          }
+        }
+      },
       MuiTab:{
         styleOverrides:{
           root:{

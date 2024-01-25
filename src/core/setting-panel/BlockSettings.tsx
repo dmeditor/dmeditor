@@ -5,11 +5,13 @@ import {
   FormatAlignLeft,
   FormatAlignRight,
 } from '@mui/icons-material';
+import { Divider } from '@mui/material';
 
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
+import { Bottom, RightElement, Space, TabBodyContainer } from './style';
 import { getWidget, properties } from 'Components/widgets';
 import {
   getValueByPath,
@@ -19,7 +21,6 @@ import {
   PropertyItem,
   Ranger,
 } from 'Core/utils';
-import { TabBodyContainer } from './style';
 
 interface CommonSettingsType {
   align: string;
@@ -122,26 +123,21 @@ export const BlockSettings = (props: {
           }
         })}
         {/* </PropertyGroup> */}
-        </TabBodyContainer>
+      </TabBodyContainer>
     );
   };
 
   return (
     <div>
       <PropertyTab tabs={getTabData()}></PropertyTab>
-      {props.onDelete && (
-        <div style={{ float: 'right' }}>
-          <PropertyButton
-            color="warning"
-            title="Delete"
-            onClick={() => {
-              if (props.onDelete) props.onDelete();
-            }}
-          >
+      <Bottom>
+        <Divider />
+        <RightElement>
+          <PropertyButton color="warning" title="Delete">
             <DeleteOutline />
           </PropertyButton>
-        </div>
-      )}
+        </RightElement>
+      </Bottom>
     </div>
   );
 };

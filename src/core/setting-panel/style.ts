@@ -46,5 +46,12 @@ export const RightElement = styled.div`
 
 
 export const TabBodyContainer = styled.div`
-    padding: 10px;
+    padding: 15px 20px;
 `
+
+export const Bottom = styled.div`
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+`
+

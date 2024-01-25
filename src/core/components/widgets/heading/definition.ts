@@ -28,8 +28,11 @@ const HeadingWidget: Widget = {
   settings: [
     { name: 'Level', settingType: 'range', category:'settings', property: 'level', parameters: { min: 1, max: 5 } },
     { name: 'Align', settingType: 'align', category:'settings', property: 'setting.align' },
-    { name: 'Background', settingType: 'color', category:'style', property: 'setting.background-color' },
-    { name: 'Color', settingType: 'color', category:'settings',  property: 'setting.color' },
+    { name: 'Background', settingType: 'color', category:'block', property: 'setting.background-color'},    
+    { name: 'Text color', settingType: 'color', category:'settings',  property: 'setting.color' },
+    { name: 'Padding', settingType: 'range', category:'block', property: 'setting.padding'},    
+    { name: 'Margin', settingType: 'range', category:'block', property: 'setting.padding'},    
+    
     { name: '', settingType: 'heading', category:'settings', custom: true, property: '' },
     // {name: 'Text', component: 'input', property: 'value'}
   ],
