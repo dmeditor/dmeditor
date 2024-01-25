@@ -49,9 +49,14 @@ export const TabBodyContainer = styled.div`
     padding: 15px 20px;
 `
 
-export const Bottom = styled.div`
+
+export const ActionPanel = styled.div`
+    border-top: 1px solid #cccccc;
     position: absolute;
     bottom: 0px;
+    right: 0px;
     width: 100%;
+    text-align: center;
+    padding: 20px 0px;
 `
 

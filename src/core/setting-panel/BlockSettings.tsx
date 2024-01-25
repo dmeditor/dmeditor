@@ -11,7 +11,7 @@ import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
-import { Bottom, RightElement, Space, TabBodyContainer } from './style';
+import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
 import { getWidget, properties } from 'Components/widgets';
 import {
   getValueByPath,
@@ -130,14 +130,11 @@ export const BlockSettings = (props: {
   return (
     <div>
       <PropertyTab tabs={getTabData()}></PropertyTab>
-      <Bottom>
-        <Divider />
-        <RightElement>
-          <PropertyButton color="warning" title="Delete">
-            <DeleteOutline />
+      <ActionPanel>
+          <PropertyButton variant='outlined' color="warning" title="Delete">
+            <DeleteOutline /> Delete
           </PropertyButton>
-        </RightElement>
-      </Bottom>
+      </ActionPanel>
     </div>
   );
 };
