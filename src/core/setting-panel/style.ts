@@ -60,3 +60,8 @@ export const ActionPanel = styled.div`
     padding: 20px 0px;
 `
 
+
+export const PathContainer = styled.div`
+    padding: 0px 10px;
+`
+

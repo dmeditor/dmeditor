@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { KeyboardArrowRight } from '@mui/icons-material';
 
-import { PathItem } from './style';
+import { PathContainer, PathItem } from './style';
 
 export interface PathItem {
   text: string;
@@ -26,7 +26,7 @@ export const Path = (props: PathProps) => {
   }, [props.selectedId]);
 
   return (
-    <div>
+    <PathContainer>
       {props.pathArray.map((item, index) => (
         <>
           <PathItem
@@ -45,6 +45,6 @@ export const Path = (props: PathProps) => {
           {index !== props.pathArray.length - 1 && <KeyboardArrowRight fontSize="small" />}
         </>
       ))}
-    </div>
+    </PathContainer>
   );
 };
