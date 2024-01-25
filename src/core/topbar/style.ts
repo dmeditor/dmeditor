@@ -12,12 +12,11 @@ export const Container = styled.div`
 `;
 export const LogoContainer = styled.div`
   width: 10%;
-  padding-left: 5px;
+  padding: 8px 0px;
 `;
 
 export const Logo = styled.img`
-  width: 30px;
-  margin-top: 5px;
+  max-height: 24px;
   margin-left: 15px;
 `;
 

@@ -36,7 +36,7 @@ import Toolbar from '../../toolbar';
 import { TopBar } from '../../topbar/Topbar';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
-import { EditArea, EditContainer, MainLayout, SettingContainer } from './style';
+import { EditArea, EditContainer, EmtpyBlock, Layout, SettingContainer } from './style';
 import { DMEData } from 'Src/core/components/types/blocktype';
 import { BlockListRender } from 'Src/core/main/renderer';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
@@ -186,78 +186,6 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       return;
     }
   };
-  /*
-   * @param {string} type - type of widget
-   * @param {number} index - index of widget
-   */
-  const addAbove = (type: string, newIndex: number, template?: string) => {
-    if (type) {
-      if (!!storage[newIndex]) {
-      }
-    }
-    // if (type) {
-    //   const defaultData = newBlockData(type, template);
-    //   let allBlocks = [...blocks];
-    //   allBlocks.splice(index, 0, defaultData);
-    //   updateData(allBlocks);
-    //   setNewBlock(true);
-    //   setActiveBlock(index);
-    // }
-  };
-  const updateData = (blocks: any) => {
-    // blocksRef.current = blocks;
-    // setBlocks(blocks);
-    // if (props.onChange) {
-    //   props.onChange(blocks);
-    // }
-  };
-
-  // useEffect(() => {
-  //   if (props.onChangeActive) {
-  //     props.onChangeActive(activeBlock);
-  //   }
-  // }, [activeBlock]);
-
-  const addUnder = (type: string, index: number, template?: string) => {
-    // if (type) {
-    //   const defaultData = newBlockData(type, template);
-    //   let allBlocks = [...blocks];
-    //   allBlocks.splice(index + 1, 0, defaultData);
-    //   updateData(allBlocks);
-    //   setNewBlock(true);
-    //   setActiveBlock(index + 1);
-    // }
-  };
-
-  const onDelete = () => {
-    // let fullBlocks = [...blocks];
-    // fullBlocks.splice(activeBlock, 1);
-    // updateData(fullBlocks);
-    // if (fullBlocks.length === 0) {
-    //   setActiveBlock(-1);
-    // } else {
-    //   if (activeBlock === 0) {
-    //     setActiveBlock(0);
-    //   } else {
-    //     setActiveBlock(activeBlock - 1);
-    //   }
-    // }
-  };
-
-  const onMove = (type: string) => {
-    // let fullBlocks = [...blocks];
-    // if (type == 'up') {
-    //   if (activeBlock == 0) return;
-    //   fullBlocks[activeBlock] = fullBlocks.splice(activeBlock - 1, 1, fullBlocks[activeBlock])[0];
-    //   setActiveBlock(activeBlock - 1);
-    // }
-    // if (type == 'down') {
-    //   if (activeBlock == fullBlocks.length - 1) return;
-    //   fullBlocks[activeBlock] = fullBlocks.splice(activeBlock + 1, 1, fullBlocks[activeBlock])[0];
-    //   setActiveBlock(activeBlock + 1);
-    // }
-    // updateData(fullBlocks);
-  };
 
   // reset to initial status
   const resetStatus = () => {
@@ -308,23 +236,18 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   return (
     <ThemeProvider theme={outerTheme}>
       <TopBar />
-      <MainLayout ref={currentRef}>
+      <Layout.Main ref={currentRef}>
         {/* <Toolbar readonlyMode={false} /> */}
 
         {/* <div className="dme-settings" style={{ display: settingsShown ? 'block' : 'none' }}>
           <div>{Util.renderPageTab()}</div>
         </div> */}
 
-        <EditContainer
-          style={settingsShown ? { display: 'none' } : {}}
-          onClick={resetStatus}
-        >
-          <EditArea
-            className={
-              ' viewmode-' + viewmode + (viewmode === 'edit' ? '' : ' is-preview')
-            }
-          >
-            <div style={{height:1,marginTop:'-1px'}}></div> {/* fix first block's margin-top is based on body */}
+        <Layout.Edit>
+        <EditContainer style={settingsShown ? { display: 'none' } : {}} onClick={resetStatus}>
+          <EditArea>
+            {/* need EmptyBlock otherwise first block's margin-top is based on body */}
+            <EmtpyBlock />
             {viewmode === 'edit' && (
               <div
                 className={dmeditorViewCss}
@@ -345,10 +268,13 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
             )} */}
           </EditArea>
         </EditContainer>
-        <SettingContainer>
-          <SettingPanel />
-        </SettingContainer>
-      </MainLayout>
+        </Layout.Edit>
+        <Layout.SettingPanel>
+          <SettingContainer>
+            <SettingPanel />
+          </SettingContainer>
+        </Layout.SettingPanel>       
+      </Layout.Main>
     </ThemeProvider>
   );
 });
