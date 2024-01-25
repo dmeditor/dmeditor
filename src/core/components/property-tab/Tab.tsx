@@ -1,7 +1,6 @@
 import { ReactElement, useEffect, useState } from 'react';
-import { Box, Tab, Tabs } from '@mui/material';
-
 import { css } from '@emotion/css';
+import { Box, Tab, Tabs } from '@mui/material';
 
 export interface TabData {
   title: string;
@@ -17,25 +16,21 @@ export const PropertyTab = (props: { tabs: Array<TabData>; active?: number }) =>
 
   return (
     <div>
-      <div className={css `
-      padding: 6px;`}>
+      <div
+        className={css`
+          padding: 6px;
+        `}
+      >
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={active} onChange={(e: any, newValue: number) => setActive(newValue)}>
+          <Tabs variant="fullWidth" value={active} onChange={(e: any, newValue: number) => setActive(newValue)}>
             {props.tabs.map((tab: TabData, index: number) => (
-              <Tab
-                key={tab.title}                
-                sx={{ textTransform: 'none' }}               
-                label={tab.title}
-              />
+              <Tab key={tab.title} sx={{ textTransform: 'none' }} label={tab.title} />
             ))}
           </Tabs>
         </Box>
       </div>
       {props.tabs.map((tab: TabData, index: number) => (
-        <div
-          key={tab.title}
-          style={{ display: active == index ? 'block' : 'none' }}
-        >
+        <div key={tab.title} style={{ display: active == index ? 'block' : 'none' }}>
           {tab.element}
         </div>
       ))}

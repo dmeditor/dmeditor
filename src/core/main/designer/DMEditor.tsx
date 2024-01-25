@@ -7,7 +7,7 @@ import '../initialize';
 
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
 import { Button, createTheme, IconButton, ThemeProvider, Tooltip } from '@mui/material';
-import { green, grey } from '@mui/material/colors';
+import { deepOrange, green, grey, orange } from '@mui/material/colors';
 
 import { getDef, newBlockData } from '../../../ToolDefinition';
 import { PropertyTab } from '../../components/property-tab/Tab';
@@ -205,7 +205,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
 
   const outerTheme = createTheme({
     palette: {
-      primary: grey,
+      primary: deepOrange,
     },
     components: {
       MuiTooltip: {
@@ -222,7 +222,6 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
         styleOverrides:{
           root:{
             '& .Mui-selected':{
-              color: 'red',
             }
           }
         }
