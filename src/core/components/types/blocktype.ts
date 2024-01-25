@@ -42,6 +42,7 @@ export interface WidgetSetting {
   name: string;
   custom?: boolean; //if true it will not invoke directly instead of use name->value(left/right) layout.
   settingType: string; //registered setting component, eg. 'color', or 'align',
+  category?:string;
   parameters?: {
     [key: string]: unknown;
   };

@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   DeleteOutline,
   FormatAlignCenter,
   FormatAlignLeft,
   FormatAlignRight,
 } from '@mui/icons-material';
-import { MenuItem, Select } from '@mui/material';
 
+import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
+import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { getWidget, properties } from 'Components/widgets';
 import {
@@ -18,6 +19,7 @@ import {
   PropertyItem,
   Ranger,
 } from 'Core/utils';
+import { TabBodyContainer } from './style';
 
 interface CommonSettingsType {
   align: string;
@@ -41,8 +43,6 @@ export const BlockSettings = (props: {
   selectedBlockIndex: number;
 }) => {
   const { selectedBlockIndex, onChange = () => {}, commonChange = () => {} } = props;
-  const [settings, setSettings] = useState(props.commonSettings ? props.commonSettings : {});
-  const [isChange, setIsChange] = useState(false);
   const [blockOpen, setBlockOpen] = useState(true);
   const { getSelectedBlock } = useEditorStore();
 
@@ -52,58 +52,6 @@ export const BlockSettings = (props: {
   );
 
   const selectedWidget = useMemo(() => getWidget(selectedBlock?.type || ''), [selectedBlock?.type]);
-
-  const [widthType, setWidthType] = useState(() => {
-    if (props.commonSettings) {
-      if (props.commonSettings?.width) {
-        if (props.commonSettings.width !== '100%' && props.commonSettings.width !== 'auto') {
-          return 'custom';
-        } else {
-          return props.commonSettings.width;
-        }
-      } else {
-        return 'auto';
-      }
-    } else {
-      return 'auto';
-    }
-  });
-  // const [align,setAlign] = useState(props.commonSettings?.align||'left');
-
-  // useEffect(() => {
-  //   if (isChange) {
-  //     let s = { ...settings };
-  //     props.onChange(s);
-  //     setIsChange(false);
-  //   }
-  // }, [isChange]);
-
-  const selectChange = (type: 'width', value: string | number | undefined) => {
-    if (value) commonChange(type, value);
-  };
-
-  const rangeChange = (
-    type: keyof Pick<CommonSettingsType, 'marginTop' | 'padding' | 'width'>,
-    value: string | number | undefined,
-  ) => {
-    if (value) commonChange(type, value);
-  };
-
-  const pickChange = (
-    type: keyof Pick<CommonSettingsType, 'backgroundColor' | 'color'>,
-    value: string | number | undefined,
-  ) => {
-    if (value) commonChange(type, value);
-  };
-
-  const buttonChange = (type: keyof Pick<CommonSettingsType, 'align'>, value: string) => {
-    if (value) commonChange(type, value);
-  };
-
-  // const getWidgetByType = (type: string) => {
-  //   const widget = properties.find((item) => item.type === type);
-  //   return widget;
-  // };
 
   const hasProperty = (propName: string, compName: string) => {
     if (!compName) return false;
@@ -133,15 +81,32 @@ export const BlockSettings = (props: {
   //   return WidgetProperties[selectedWidget.type];
   // }, [selectedWidgetIndex]);
 
-  return (
-    <div>
-      <PropertyGroup
-        header="Block settings"
-        expandable={true}
-        open={blockOpen}
-        onOpenClose={(open) => setBlockOpen(open)}
-      >
-        {selectedWidget?.settings.map((setting) => {
+  const getFilteredSettings = (identifier: string) => {
+    return selectedWidget?.settings.filter((item) => item.category === identifier);
+  };
+
+  const getTabData = () => {
+    const tabs: Array<TabData> = [];
+    Object.keys(defaultSettingTabs).map((identifier) => {
+      const filteredSettings = getFilteredSettings(identifier);
+      if (filteredSettings && filteredSettings?.length > 0) {
+        tabs.push({ title: defaultSettingTabs[identifier], element: renderATab(identifier) });
+      }
+    });
+    return tabs;
+  };
+
+  const renderATab = (identifier: string): ReactElement => {
+    const filteredSettings = getFilteredSettings(identifier);
+    return (
+      <TabBodyContainer>
+        {/* <PropertyGroup
+          header="Block settings"
+          expandable={true}
+          open={blockOpen}
+          onOpenClose={(open) => setBlockOpen(open)}
+        > */}
+        {filteredSettings?.map((setting) => {
           if (setting.custom) {
             return <Property key={selectedBlockIndex} {...setting} />;
           } else {
@@ -156,133 +121,14 @@ export const BlockSettings = (props: {
             );
           }
         })}
+        {/* </PropertyGroup> */}
+        </TabBodyContainer>
+    );
+  };
 
-        {/* {Object.entries(commonProperties).map(([propName, componentName]) => {
-          return containSetting(propName, componentName) ? (
-            <PropertyItem label={propName} key={propName}>
-              <Property
-                selected={selectedWidget.type}
-                componentName={componentName}
-                propName={propName}
-                {...selectedWidget.settings}
-              />
-            </PropertyItem>
-          ) : null;
-        })} */}
-
-        {/* <PropertyItem label="To top">
-          <Ranger
-            min={0}
-            max={100}
-            step={5}
-            defaultValue={settings.marginTop ? settings.marginTop : 0}
-            onChange={(value) => {
-              rangeChange('marginTop', value);
-              // setSettings({ ...settings, marginTop: v });
-              // setIsChange(true);
-            }}
-          />
-        </PropertyItem>
-
-        {containSetting('padding') && (
-          <PropertyItem label="Padding">
-            <Ranger
-              min={0}
-              max={30}
-              step={1}
-              defaultValue={settings.padding ? settings.padding : 0}
-              onChange={(value) => {
-                rangeChange('padding', value);
-                // setSettings({ ...settings, padding: v });
-                // setIsChange(true);
-              }}
-            />
-          </PropertyItem>
-        )}
-
-        {containSetting('align') && (
-          <PropertyItem label="Align">
-            {alignList.map((format: any, index: any) => {
-              return (
-                <PropertyButton
-                  title={format}
-                  key={format}
-                  onClick={() => {
-                    // setSettings({ ...settings, textAlign: format });
-                    // setIsChange(true);
-                    buttonChange('align', format);
-                  }}
-                  selected={settings.textAlign == format ? true : false}
-                >
-                  <BlockButton formats={format} />
-                </PropertyButton>
-              );
-            })}
-          </PropertyItem>
-        )}
-
-        {containSetting('backgroundColor') && (
-          <PropertyItem label="Background color:" autoWidth={true}>
-            <PickColor
-              color={settings.backgroundColor ? settings.backgroundColor : ''}
-              onChange={(value) => {
-                pickChange('backgroundColor', value);
-                // setSettings({ ...settings, backgroundColor: v });
-                // setIsChange(true);
-              }}
-            ></PickColor>
-          </PropertyItem>
-        )}
-
-        {containSetting('color') && (
-          <PropertyItem label="Text color:" autoWidth={true}>
-            <PickColor
-              color={settings.color ? settings.color : '#000000'}
-              onChange={(value) => {
-                pickChange('color', value);
-                // setSettings({ ...settings, color: v });
-                // setIsChange(true);
-              }}
-            ></PickColor>
-          </PropertyItem>
-        )}
-
-        {containSetting('width') && (
-          <PropertyItem label="Width">
-            <Select
-              value={widthType}
-              onChange={(e) => {
-                const value = e.target.value;
-                selectChange('width', value === 'custom' ? '150px' : value);
-              }}
-              displayEmpty
-              size="small"
-              inputProps={{ 'aria-label': 'Without label' }}
-            >
-              <MenuItem value="auto">
-                <em>auto</em>
-              </MenuItem>
-              <MenuItem value="100%">100%</MenuItem>
-              <MenuItem value="custom">custom</MenuItem>
-            </Select>
-
-            {widthType === 'custom' && (
-              <Ranger
-                min={50}
-                max={800}
-                step={5}
-                defaultValue={settings.width ? parseFloat(settings.width) : 150}
-                onChange={(value) => {
-                  rangeChange('width', `${value}px`);
-                  // setSettings({ ...settings, width: v + 'px' });
-                  // setIsChange(true);
-                }}
-              />
-            )}
-          </PropertyItem>
-        )} */}
-      </PropertyGroup>
-
+  return (
+    <div>
+      <PropertyTab tabs={getTabData()}></PropertyTab>
       {props.onDelete && (
         <div style={{ float: 'right' }}>
           <PropertyButton

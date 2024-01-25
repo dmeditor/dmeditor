@@ -218,6 +218,15 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           },
         },
       },
+      MuiTab:{
+        styleOverrides:{
+          root:{
+            '& .Mui-selected':{
+              color: 'red',
+            }
+          }
+        }
+      },
       MuiButtonBase: {
         defaultProps: {
           disableRipple: true,

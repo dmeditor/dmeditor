@@ -43,3 +43,8 @@ export const PathItem = styled.span<{ canClick?: boolean, selected?:boolean }>`
 export const RightElement = styled.div`
     float: right;
 `
+
+
+export const TabBodyContainer = styled.div`
+    padding: 10px;
+`

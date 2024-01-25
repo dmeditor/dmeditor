@@ -26,11 +26,11 @@ const HeadingWidget: Widget = {
     },
   },
   settings: [
-    { name: 'Level', settingType: 'range', property: 'level', parameters: { min: 1, max: 5 } },
-    { name: 'Align', settingType: 'align', property: 'setting.align' },
-    { name: 'Background', settingType: 'color', property: 'setting.background-color' },
-    { name: 'Color', settingType: 'color', property: 'setting.color' },
-    { name: '', settingType: 'heading', custom: true, property: '' },
+    { name: 'Level', settingType: 'range', category:'settings', property: 'level', parameters: { min: 1, max: 5 } },
+    { name: 'Align', settingType: 'align', category:'settings', property: 'setting.align' },
+    { name: 'Background', settingType: 'color', category:'style', property: 'setting.background-color' },
+    { name: 'Color', settingType: 'color', category:'settings',  property: 'setting.color' },
+    { name: '', settingType: 'heading', category:'settings', custom: true, property: '' },
     // {name: 'Text', component: 'input', property: 'value'}
   ],
 };
