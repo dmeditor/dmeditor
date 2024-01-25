@@ -30,19 +30,21 @@ export const ListOverview = (props: ListOverviewProps) => {
       <table className={tableStyle}>
         {props.data.map((item, index) => (
           <tr key={item.id} className={props.selectedIndex === index ? activeRow : ''}>
-            <td>
+            <td
+              className={css`
+                width: 40;
+              `}
+            >
               <Button sx={{ cursor: 'move' }}>
                 <DragIndicator />
               </Button>
             </td>
+            <td>{getWidget(item.type)?.name}</td>
             <td
               className={css`
-                width: 60%;
+                width: 40;
               `}
             >
-              {getWidget(item.type)?.name}
-            </td>
-            <td>
               <Button>
                 <KeyboardArrowRight />
               </Button>
