@@ -25,6 +25,7 @@ export const Layout = {
     padding-top: var(--dme-topbar-height);
   `,
   SettingPanel: styled.div`
+    padding-top: var(--dme-topbar-height);
     background-color: white;
   `,
 };
