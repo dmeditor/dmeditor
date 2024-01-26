@@ -36,7 +36,7 @@ import Toolbar from '../../toolbar';
 import { TopBar } from '../../topbar/Topbar';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
-import { EditArea, EditContainer, EmtpyBlock, Layout, SettingContainer } from './style';
+import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } from './style';
 import { DMEData } from 'Src/core/components/types/blocktype';
 import { BlockListRender } from 'Src/core/main/renderer';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
@@ -251,6 +251,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     },
   });
   return (
+    <Root>
     <ThemeProvider theme={outerTheme}>
       <TopBar />
       <Layout.Main ref={currentRef}>
@@ -293,6 +294,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
         </Layout.SettingPanel>       
       </Layout.Main>
     </ThemeProvider>
+    </Root>
   );
 });
 

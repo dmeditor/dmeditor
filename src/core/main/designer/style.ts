@@ -1,5 +1,10 @@
 import styled from '@emotion/styled';
 
+export const Root = styled.div`
+    --dme-bg-color: #1d4b64;
+    --dme-topbar-height: 40px;
+`;
+
 export const Layout = {
   Main: styled.div`
     --dme-layout-property-width: 350px;
@@ -13,7 +18,9 @@ export const Layout = {
     height: 100vh;
     background-color: #f0f0f0;
     display: grid;
-    grid-template-columns:  calc(100vw - var(--dme-layout-property-width)) var(--dme-layout-property-width);
+    grid-template-columns: calc(100vw - var(--dme-layout-property-width)) var(
+        --dme-layout-property-width
+      );
     color: #333333;
     margin: 0px auto;
     background-color: #f3f3f3;
@@ -51,5 +58,4 @@ export const EditArea = styled.div`
   border: 1px dashed #999999;
 `;
 
-export const SettingContainer = styled.div`
-`;
+export const SettingContainer = styled.div``;
