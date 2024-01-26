@@ -43,7 +43,7 @@ export const EmtpyBlock = styled.div`
 `;
 
 export const EditContainer = styled.div`
-  height: 100%;
+  min-height: 100%;
   margin: 0px auto;
   width: 90%;
   max-width: var(--dme-edit-max-width);
