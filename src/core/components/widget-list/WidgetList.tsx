@@ -1,7 +1,8 @@
 import { css } from '@emotion/css';
-import { FormatColorText, Title } from '@mui/icons-material';
+import { ArrowRightOutlined, ChevronRightOutlined, FormatColorText, Title } from '@mui/icons-material';
 
 import widgets from '../widgets';
+import { Button } from '@mui/material';
 
 
   //internal css: emotion
@@ -19,6 +20,13 @@ const itemStyle = css`
   &:hover{
     background: #f0f0f0;
   }
+`;
+
+
+const moreWidget = css`
+   margin-top: 10px;
+   padding: 10px;
+   text-align: center;
 `;
 
 interface WidgetListProps{
@@ -46,6 +54,7 @@ export const WidgetList = (props:WidgetListProps) => {
           </div>
         </div>
       ))}
+      <div className={moreWidget}><Button variant='outlined'>Add more <ChevronRightOutlined /></Button></div>
     </div>
   );
 };

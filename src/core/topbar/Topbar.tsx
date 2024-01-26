@@ -2,11 +2,15 @@ import {
   ArrowDropDown,
   ComputerOutlined,
   EditOutlined,
+  ExpandMore,
+  ExpandMoreOutlined,
   LayersOutlined,
+  MoreHorizOutlined,
   Save,
   Send,
+  ShoppingBagOutlined,
 } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 
 import { ActionsContainer, Container, Logo, LogoContainer, ToolsContainer } from './style';
 
@@ -25,24 +29,30 @@ export const TopBar = () => {
       </LogoContainer>
       <ToolsContainer>
         <ToolButton>
+        <Tooltip title='Edit mode'>
           <EditOutlined {...largeIcon} />
+        </Tooltip>
         </ToolButton>
         <ToolButton>
+        <Tooltip title='Preview'>
           <ComputerOutlined {...largeIcon} />
+          </Tooltip>
         </ToolButton>
         <ToolButton>
           <ArrowDropDown {...largeIcon} />
         </ToolButton>
         <ToolButton>
+          <Tooltip title='Layers'>
           <LayersOutlined {...largeIcon} />
-        </ToolButton>
+          </Tooltip>
+        </ToolButton>        
       </ToolsContainer>
       <ActionsContainer>
         <ToolButton>
-          Save draft <Save {...smallIcon} />
+          Save <Save {...smallIcon} />
         </ToolButton>
-        <ToolButton>
-          Publish <Send {...smallIcon} />
+        <ToolButton>           
+          <ShoppingBagOutlined />
         </ToolButton>
       </ActionsContainer>
     </Container>
