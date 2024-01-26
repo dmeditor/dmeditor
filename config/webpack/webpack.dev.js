@@ -9,7 +9,7 @@ module.exports = merge(baseConfig, {
         type: 'filesystem'
     },
     entry: {
-        main: './samples/demo01/index.tsx',
+        main: './samples/dev/index.tsx',
     },
     module: {
         rules: [
@@ -66,7 +66,7 @@ module.exports = merge(baseConfig, {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, '/samples/demo01', 'index.html'),
+            template: path.resolve(__dirname, '/samples/dev', 'index.html'),
             filename: 'index.html',
             hash: true,
             inject: 'head',
