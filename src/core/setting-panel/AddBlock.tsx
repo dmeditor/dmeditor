@@ -5,13 +5,16 @@ import { nanoid } from 'nanoid';
 import { WidgetList } from '../components/widget-list/WidgetList';
 import { getWidget } from '../components/widgets';
 import { useEditorStore } from '../main/store';
-import { SettingDescription, SettingHeader } from './style';
+import { AddBlockContainer, RightElement, SettingDescription, SettingHeader } from './style';
 import emitter from 'Core/utils/event';
+import { Button } from '@mui/material';
+import { Cancel, CancelOutlined } from '@mui/icons-material';
 
 export const AddBlock = () => {
   const {
     addBlockData: { index, position },
     addBlock,
+    cancelAdding,
   } = useEditorStore((state) => state);
 
   const addBlockDone = (type: string) => {
@@ -26,13 +29,20 @@ export const AddBlock = () => {
     }
   };
 
+  const cancel = ()=>{
+    cancelAdding();
+  }
+
   return (
-    <div>
+    <AddBlockContainer>
+      <RightElement>
+         <Button onClick={()=>cancel()}><CancelOutlined /></Button>
+      </RightElement>
       <SettingHeader>Add block</SettingHeader>
       <SettingDescription>Please choose a widget</SettingDescription>
       <div>
         <WidgetList onSelect={addBlockDone} />
       </div>
-    </div>
+    </AddBlockContainer>
   );
 };

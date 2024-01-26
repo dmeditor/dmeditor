@@ -5,6 +5,7 @@ import { DMEData } from '../../components/types/blocktype';
 import { AddBlockPosition, useEditorStore } from '../store';
 import { BlockRender } from './BlockRender';
 import emitter from 'Core/utils/event';
+import { AddingMessage } from './styled';
 
 interface BlockListProps {
   data: DMEData.BlockList;
@@ -68,9 +69,9 @@ export const BlockListRender = (props: BlockListProps) => {
             </div>
           )}
           {addingStatus === 'started' && (
-            <div style={{color: '#cccccc', padding:10, background:'#f0f0f0'}}>
+            <AddingMessage>
               Please choose widget.
-            </div>
+            </AddingMessage>
           )}
           </>}
         </>

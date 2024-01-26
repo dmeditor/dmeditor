@@ -14,6 +14,7 @@ const itemStyle = css`
   padding: 8px 5px;
   cursor: pointer;
   overflow-x: hidden;
+  border: 1px solid #f0f0f0;
 
   &:hover{
     background: #f0f0f0;

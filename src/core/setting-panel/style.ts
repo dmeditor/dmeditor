@@ -2,11 +2,14 @@ import styled from '@emotion/styled';
 
 export const SettingHeader = styled.div`
   font-weight: bold;
+  margin: 10px 0px;
 `;
 
 export const SettingDescription = styled.div`
    color: #999999;
-   padding-bottom: 10px;
+   padding: 10px 0px 20px 10px;
+   font-size: 90%;
+   font-style: italic;
 `;
 
 
@@ -63,5 +66,9 @@ export const ActionPanel = styled.div`
 
 export const PathContainer = styled.div`
     padding: 0px 10px;
+`
+
+export const AddBlockContainer = styled.div`
+    padding: 10px;
 `
 
