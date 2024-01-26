@@ -123,18 +123,18 @@ export const BlockSettings = (props: {
           }
         })}
         {/* </PropertyGroup> */}
+        {identifier=='settings'&&<ActionPanel>
+          <PropertyButton variant='outlined' color="warning" title="Delete">
+            <DeleteOutline /> Delete
+          </PropertyButton>
+      </ActionPanel>}
       </TabBodyContainer>
     );
   };
 
   return (
     <div>
-      <PropertyTab tabs={getTabData()}></PropertyTab>
-      <ActionPanel>
-          <PropertyButton variant='outlined' color="warning" title="Delete">
-            <DeleteOutline /> Delete
-          </PropertyButton>
-      </ActionPanel>
+      <PropertyTab tabs={getTabData()}></PropertyTab>      
     </div>
   );
 };

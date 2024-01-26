@@ -30,8 +30,10 @@ const HeadingWidget: Widget = {
     { name: 'Align', settingType: 'align', category:'settings', property: 'setting.align' },
     { name: 'Background', settingType: 'color', category:'block', property: 'setting.background-color'},    
     { name: 'Text color', settingType: 'color', category:'settings',  property: 'setting.color' },
+    { name: 'Border', settingType: 'color', category:'block', property: 'setting.padding'},
     { name: 'Padding', settingType: 'range', category:'block', property: 'setting.padding'},    
-    { name: 'Margin', settingType: 'range', category:'block', property: 'setting.padding'},    
+    { name: 'Margin', settingType: 'range', category:'block', property: 'setting.padding'},
+      
     
     { name: '', settingType: 'heading', category:'settings', custom: true, property: '' },
     // {name: 'Text', component: 'input', property: 'value'}

@@ -3,8 +3,7 @@ import styled from '@emotion/styled';
 export const Layout = {
   Main: styled.div`
     --dme-layout-property-width: 350px;
-    --dme-container-width: calc(100vw - var(--dme-layout-property-width));
-    --dme-main-width: clamp(900px, var(--dme-container-width) - 150px, 1200px);
+    --dme-edit-max-width: 1200px;
 
     --dme-selected-border-color: #cccccc;
     --dme-hover-font-color: red;
@@ -14,7 +13,7 @@ export const Layout = {
     height: 100vh;
     background-color: #f0f0f0;
     display: grid;
-    grid-template-columns: var(--dme-container-width) var(--dme-layout-property-width);
+    grid-template-columns:  calc(100vw - var(--dme-layout-property-width)) var(--dme-layout-property-width);
     color: #333333;
     margin: 0px auto;
     background-color: #f3f3f3;
@@ -22,10 +21,10 @@ export const Layout = {
   Edit: styled.div`
     border-right: 1px solid #cccccc;
     overflow-y: auto;
-    padding-top: var(--dme-topbar-height);
+    margin-top: var(--dme-topbar-height);
   `,
   SettingPanel: styled.div`
-    padding-top: var(--dme-topbar-height);
+    margin-top: var(--dme-topbar-height);
     background-color: white;
     position: relative;
   `,
@@ -38,7 +37,9 @@ export const EmtpyBlock = styled.div`
 
 export const EditContainer = styled.div`
   height: 100%;
-  margin: 0px 50px;
+  margin: 0px auto;
+  width: 90%;
+  max-width: var(--dme-edit-max-width);
   background-color: white;
   border: 1px solid #cccccc;
 `;
