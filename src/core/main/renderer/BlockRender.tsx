@@ -65,20 +65,14 @@ export const BlockRender = React.memo((props: BlockProps) => {
 
 
   return (
-    <StyledBlock
-      active={isActive}
-      className="dme-block-container"
-      onClick={() => (props.onActivate ? props.onActivate() : () => {})}
-    >
-      {Widget?<Widget
+      Widget?<Widget
         adding={props.newBlock}
         inBlock={props.inBlock ? true : false}
         blockNode={props.data}
         active={isActive}
         onCancel={props.onCancel}
         onDelete={props.onDelete}
-      />:<></>}
-    </StyledBlock>
+      />:<></>
   );
 
   // return (

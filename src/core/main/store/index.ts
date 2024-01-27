@@ -77,7 +77,7 @@ const useEditorStore = create<Store & Actions>()(
           let newPosition:number = -Infinity;
           if (position === 'before') {
             state.storage.splice(index, 0, data);
-            newPosition = index - 1;
+            newPosition = index;
           } else if (position === 'after') {
             state.storage.splice(index + 1, 0, data);
             newPosition = index + 1;

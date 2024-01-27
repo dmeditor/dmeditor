@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 
 export const StyledBlock = styled.div<{ active?: boolean }>`
-  outline: ${(props) => (props.active ? '1px solid var(--dme-selected-border-color)' : 'none')};
+  border: ${(props) => (props.active ? '2px solid var(--dme-selected-border-color)' : '2px solid rgba(0,0,0,0)')};
+  border-radius: ${(props) => (props.active ? '4px' : 'none')};
+  position: relative;
 `;
 
 export const AddingMessage = styled.div`
@@ -12,3 +14,21 @@ export const AddingMessage = styled.div`
   margin: 0px 30px;
   border-radius: 10px;
 `;
+
+
+
+export const AddingTool = styled.div<{ type?: string }>` //above, under(default), left, right
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    ${(props)=>{
+      if(props.type === 'above'){
+        return 'margin-top: -34px;';
+      } 
+      return ''
+    }}
+`;
+
+
+export const BlockListStyle = styled.div`
+`

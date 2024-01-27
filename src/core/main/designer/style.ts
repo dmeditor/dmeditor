@@ -10,7 +10,7 @@ export const Layout = {
     --dme-layout-property-width: 350px;
     --dme-edit-max-width: 1200px;
 
-    --dme-selected-border-color: #cccccc;
+    --dme-selected-border-color: #fc7e4b;
     --dme-hover-font-color: red;
 
     --dme-bg-color: #333333;

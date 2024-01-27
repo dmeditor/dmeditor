@@ -5,7 +5,8 @@ import { DMEData } from '../../components/types/blocktype';
 import { AddBlockPosition, useEditorStore } from '../store';
 import { BlockRender } from './BlockRender';
 import emitter from 'Core/utils/event';
-import { AddingMessage } from './styled';
+import { AddingMessage, AddingTool, BlockListStyle, StyledBlock } from './styled';
+import { AddOutlined } from '@mui/icons-material';
 
 interface BlockListProps {
   data: DMEData.BlockList;
@@ -26,7 +27,7 @@ interface BlockListProps {
 export const BlockListRender = (props: BlockListProps) => {
   const {
     selected: { blockIndex: selectedBlockIndex },
-    addBlockData: { index: addBlockIndex, status: addingStatus },
+    addBlockData: { index: addBlockIndex, status: addingStatus, position },
     startAddBlock,
     updateSelectedBlockIndex,
   } = useEditorStore();
@@ -37,45 +38,65 @@ export const BlockListRender = (props: BlockListProps) => {
     }
   };
 
+  const addBefore = (index: number) => {
+    emitter.emit('addBlock', index, 'before');
+  };
+
   const addAfter = (index: number) => {
-    emitter.emit('addBlockAfter', index, 'after');
+    emitter.emit('addBlock', index, 'after');
   };
 
   useEffect(() => {
-    emitter.addListener('addBlockAfter', (index: number, position: AddBlockPosition) => {
+    emitter.addListener('addBlock', (index: number, position: AddBlockPosition) => {
       startAddBlock(index, position);
     });
 
     return () => {
-      emitter.removeListener('addBlockAfter');
+      emitter.removeListener('addBlock');
     };
   }, []);
 
+
+  const renderAddingMessage = ()=>{
+    return <AddingMessage>
+      Please choose widget.
+    </AddingMessage>
+  }
+
   return (
-    <div className="dme-blocklist">
+    <BlockListStyle className="dme-blocklist">
       {props.data.map((blockData: DMEData.Block, index: number) => (
-        <>
+      <>     
+        {addingStatus === 'started' && index === selectedBlockIndex && position === 'before' && (
+          renderAddingMessage()
+        )}
+        <StyledBlock active={index === selectedBlockIndex} className='dme-block-container' onClick={()=>select(index)}>        
+        {index === selectedBlockIndex && <>          
+          {addBlockIndex === -Infinity && (
+            <AddingTool type='above'>
+              <Button onClick={() => addBefore(index)}><AddOutlined /> </Button>
+            </AddingTool>
+          )}        
+          </>}
           <BlockRender
             key={blockData.id}
-            onActivate={() => select(index)}
             active={index === selectedBlockIndex}
             data={blockData}
-          />
+          />          
           {/* below is for test */}
-          {index === selectedBlockIndex && <>          
+        {index === selectedBlockIndex && <>          
           {addBlockIndex === -Infinity && (
-            <div style={{ textAlign: 'center' }}>
-              <Button onClick={() => addAfter(index)}>Add</Button>
-            </div>
-          )}
-          {addingStatus === 'started' && (
-            <AddingMessage>
-              Please choose widget.
-            </AddingMessage>
-          )}
+            <AddingTool>
+              <Button onClick={() => addAfter(index)}><AddOutlined /> </Button>
+            </AddingTool>
+          )}        
           </>}
-        </>
+        </StyledBlock>        
+        {addingStatus === 'started' && index === selectedBlockIndex && position === 'after' && (
+          renderAddingMessage()
+        )}
+      </>
       ))}
-    </div>
+    </BlockListStyle>
   );
 };
