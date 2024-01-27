@@ -1,8 +1,21 @@
 import styled from '@emotion/styled';
 
+
+//todo: use outline(but outline doesn't have radius) because border will make it not same as view.
 export const StyledBlock = styled.div<{ active?: boolean }>`
-  border: ${(props) => (props.active ? '2px solid var(--dme-selected-border-color)' : '2px solid rgba(0,0,0,0)')};
-  border-radius: ${(props) => (props.active ? '4px' : 'none')};
+  ${(props)=>{
+    if(props.active){
+      return `
+      border: 2px solid var(--dme-selected-border-color);
+      border-radius: 4px;
+      `
+    }else{
+      return `
+      border: 2px solid rgba(0,0,0,0);
+      `
+    }
+  }}  
+  
   position: relative;
 `;
 
