@@ -32,7 +32,8 @@ const SettingPanel = (props) => {
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
   const currentList = getCurrentList();
-  const selectedBlock = useMemo(() => getSelectedBlock(selectedBlockIndex), [selectedBlockIndex]);
+  // const selectedBlock = useMemo(() => getSelectedBlock(selectedBlockIndex), [selectedBlockIndex]);
+  const selectedBlock = getSelectedBlock(selectedBlockIndex);
 
   const updatePath = () => {
     const pathArray: Array<PathItem> = [{ text: 'Page', id: 'page' }];
@@ -61,7 +62,7 @@ const SettingPanel = (props) => {
       // selecting a block
       if (isSelected()) {
         setMode('block-setting');
-      }else{
+      } else {
         setMode('list-overview');
       }
     }
@@ -102,7 +103,10 @@ const SettingPanel = (props) => {
           )}
 
           {mode === 'block-setting' && (
-            <BlockSettings {...props} selectedBlockIndex={selectedBlockIndex} />
+            <BlockSettings
+              {...props}
+              selectedBlockIndex={selectedBlockIndex}
+            />
           )}
 
           {mode === 'page-setting' && <PageSetting />}

@@ -1,13 +1,14 @@
 import type { ReactNode } from 'react';
+import { isPlainObject } from 'lodash';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
+import { iteratePath } from './helper';
 import emitter from 'Core/utils/event';
 import type { DMEData } from 'Src/core/components/types/blocktype';
 import { properties } from 'Src/core/components/widgets';
-import { isStrictlyInfinity } from 'Src/core/utils';
-import { iteratePath } from './helper';
+import { isKeyInObject, isStrictlyInfinity } from 'Src/core/utils';
 
 export type AddBlockPosition = 'before' | 'after';
 export type AddBlockStatus = 'started' | 'done';
@@ -39,9 +40,9 @@ type Actions = {
   removeBlock: (widget: ReactNode) => void;
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
-  updateSelectedBlockIndex: (pathArray:Array<number>, index: number) => void;
+  updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => void;
   getCurrentList: () => DMEData.BlockList;
-  getParents: ()=>Array<DMEData.Block>; //get parent Block from top to down, based on currentListPath
+  getParents: () => Array<DMEData.Block>; //get parent Block from top to down, based on currentListPath
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
@@ -74,7 +75,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
         if (index <= state.storage.length - 1 && state.addBlockData.position) {
-          let newPosition:number = -Infinity;
+          let newPosition: number = -Infinity;
           if (position === 'before') {
             state.storage.splice(index, 0, data);
             newPosition = index;
@@ -104,23 +105,23 @@ const useEditorStore = create<Store & Actions>()(
         state.storage = [];
       });
     },
-    getCurrentList: ():DMEData.BlockList => {
+    getCurrentList: (): DMEData.BlockList => {
       const state = get();
       const currentPath = state.selected.currentListPath;
-      let list = state.storage;;
-      if(currentPath.length>0){
-        for(const i of currentPath){          
-            list = list[i].children||[];
+      let list = state.storage;
+      if (currentPath.length > 0) {
+        for (const i of currentPath) {
+          list = list[i].children || [];
         }
       }
       return list;
     },
-    getParents:():Array<DMEData.Block>=>{
+    getParents: (): Array<DMEData.Block> => {
       const state = get();
-      const result:Array<DMEData.Block> = [];
-      iteratePath(state.selected.currentListPath, state.storage, (item)=>{
+      const result: Array<DMEData.Block> = [];
+      iteratePath(state.selected.currentListPath, state.storage, (item) => {
         result.push(item);
-      })
+      });
       return result;
     },
     clearSelected: () => {
@@ -148,11 +149,7 @@ const useEditorStore = create<Store & Actions>()(
     getSelectedBlock: (index: number) => {
       const state = get();
       const currentList = state.getCurrentList();
-      if (
-        isStrictlyInfinity(index) ||
-        index < 0 ||
-        currentList.length <= index
-      ) {
+      if (isStrictlyInfinity(index) || index < 0 || currentList.length <= index) {
         state.clearSelected();
         return;
       }
@@ -178,7 +175,9 @@ const useEditorStore = create<Store & Actions>()(
     },
     setStorage: (blocks: DMEData.Block[]) => {
       set((state) => {
-        const propertiesMap = properties.reduce((acc, cur) => {
+        const propertiesMap: {
+          [index: string]: DMEData.Block;
+        } = properties.reduce((acc, cur) => {
           if (!cur || !cur.type) {
             return acc;
           }
@@ -192,11 +191,17 @@ const useEditorStore = create<Store & Actions>()(
           if (!propertiesMap[block.type]) {
             return block;
           } else {
+            const initBlockData = propertiesMap[block.type].events.createBlock();
+
             return {
               ...block,
-              settings: {
-                ...propertiesMap[block.type],
-                ...block.settings,
+              data: {
+                ...initBlockData,
+                ...block.data,
+                settings: {
+                  ...initBlockData.settings,
+                  ...block.data.settings,
+                },
               },
             };
           }
@@ -204,12 +209,12 @@ const useEditorStore = create<Store & Actions>()(
         // state.selected.currentList = state.storage;
       });
     },
-    updateSelectedBlockIndex: (pathArray:Array<number>, index: number) => {
+    updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => {
       set((state) => {
         state.selected.blockIndex = index;
-        if( state.selected.currentListPath.join() !== pathArray.join() ){
+        if (state.selected.currentListPath.join() !== pathArray.join()) {
           // switch list context
-           state.selected.currentListPath = pathArray;
+          state.selected.currentListPath = pathArray;
         }
         console.log(index);
       });
@@ -233,16 +238,17 @@ const useEditorStore = create<Store & Actions>()(
         //   return;
         // }
 
-        //todo: put settings to separate method
+        // todo: put settings to separate method
 
         const propArr = propName.split('.');
         const realPropsName = propArr.length === 1 ? propArr[0] : propArr[1];
 
-        if (propArr.length == 1) {
-          state.storage[state.selected.blockIndex].data = {
-            ...block.data,
-            [realPropsName]: propValue,
-          };
+        if (propArr.length === 1) {
+          if (isPlainObject(state.storage[state.selected.blockIndex].data)) {
+            if (isKeyInObject('settings', state.storage[state.selected.blockIndex].data)) {
+              state.storage[state.selected.blockIndex].data.settings[realPropsName] = propValue;
+            }
+          }
         } else {
           state.storage[state.selected.blockIndex].data['settings'] = {
             ...block.settings,

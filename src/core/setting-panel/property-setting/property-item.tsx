@@ -2,10 +2,12 @@ import * as React from 'react';
 
 const { memo } = React;
 const Components: {
-  [index: string]: React.LazyExoticComponent<React.ComponentType<unknown>>;
+  [index: string]:
+    | React.LazyExoticComponent<React.ComponentType<unknown>>
+    | React.ComponentType<unknown>;
 } = {};
 
-const widgetProperySetting = (settingType: string) => { 
+const widgetPropertySetting = (settingType: string) => {
   // widgetName = 'margin-top' converted to MarginTop
   let componentName = settingType;
   const convertToCamelCase = (str: string) => {
@@ -25,19 +27,28 @@ const widgetProperySetting = (settingType: string) => {
     componentName = componentName[0].toUpperCase() + componentName.slice(1);
   }
   // register component
-  // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));    
-  Components[settingType] = React.lazy(() => import(`./${settingType}/${componentName}`));
+  // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));
+  // Components[settingType] = React.lazy(() => import(`./${settingType}/${componentName}`));
+  registerPropertyComponent(
+    settingType,
+    React.lazy(() => import(`./${settingType}/${componentName}`)),
+  );
   return Components[settingType];
 };
 
-const Property = ({
-  settingType,
-  ...rest
-}: {
-  settingType: string;
-}) => {
-  const Component = widgetProperySetting(settingType);
-  console.log('rest', rest);
+export function registerPropertyComponent(
+  propName: string,
+  componentInstance: React.ComponentType<unknown>,
+) {
+  if (Components[propName]) {
+    console.error(`Property ${propName} is already registered`);
+    return;
+  }
+  Components[propName] = componentInstance;
+}
+
+const Property = ({ settingType, ...rest }: { settingType: string }) => {
+  const Component = widgetPropertySetting(settingType);
   return (
     <React.Suspense fallback="Loading...">
       <Component {...rest} />
@@ -45,4 +56,5 @@ const Property = ({
   );
 };
 
+export { Components };
 export default memo(Property);

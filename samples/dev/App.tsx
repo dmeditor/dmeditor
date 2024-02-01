@@ -2,6 +2,8 @@ import * as React from 'react';
 import { nanoid } from 'nanoid';
 
 import { DMEditor } from '../../src/core/main/designer/DMEditor';
+import loaderWidget from './local-loader/loader';
+loaderWidget();
 
 const { useState, useRef, useEffect } = React;
 
@@ -15,10 +17,11 @@ const App = () => {
         value: 'This is a heading',
         level: 2,
         settings: {
-          value: '',
+          align: 'left'
+          // value: '',
         },
       },
-      type: 'heading'      
+      type: 'heading',
     },
     {
       id: `widget-${nanoid()}`,
@@ -26,7 +29,8 @@ const App = () => {
         value: 'This is a heading 2',
         level: 2,
         settings: {
-          value: '',
+          align: 'right'
+          // value: '',
         },
       },
       type: 'heading',
