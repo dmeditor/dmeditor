@@ -240,14 +240,23 @@ const useEditorStore = create<Store & Actions>()(
 
         // todo: put settings to separate method
 
+        // propName is data.level
         const propArr = propName.split('.');
-        const realPropsName = propArr.length === 1 ? propArr[0] : propArr[1];
-
-        if (propArr.length === 1) {
+        // const realPropsName = propArr.length === 1 ? propArr[0] : propArr[1];
+        const [key1, realPropsName] = propArr;
+        if (key1 === 'data') {
+          if (isPlainObject(state.storage[state.selected.blockIndex].data)) {
+            state.storage[state.selected.blockIndex][key1][realPropsName] = propValue;
+          } else {
+            console.warn('data is not an object');
+          }
+        } else if (key1 === 'setting') {
           if (isPlainObject(state.storage[state.selected.blockIndex].data)) {
             if (isKeyInObject('settings', state.storage[state.selected.blockIndex].data)) {
-              state.storage[state.selected.blockIndex].data.settings[realPropsName] = propValue;
+              state.storage[state.selected.blockIndex].data[`${key1}s`][realPropsName] = propValue;
             }
+          } else {
+            console.warn('settings is not an object');
           }
         } else {
           state.storage[state.selected.blockIndex].data['settings'] = {
@@ -255,11 +264,6 @@ const useEditorStore = create<Store & Actions>()(
             [realPropsName]: propValue,
           };
         }
-
-        // state.storage[state.selected.blockIndex].data.settings = {
-        //   ...block.settings,
-        //   [propName]: propValue,
-        // };
       });
     },
     toggleProperty: (status) => set(() => ({ status })),

@@ -29,19 +29,33 @@ const widgetPropertySetting = (settingType: string) => {
   // register component
   // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));
   // Components[settingType] = React.lazy(() => import(`./${settingType}/${componentName}`));
-  registerPropertyComponent(
-    settingType,
-    React.lazy(() => import(`./${settingType}/${componentName}`)),
-  );
+  if (!isPropertyRegistered(settingType)) {
+    registerPropertyComponent(
+      settingType,
+      React.lazy(() => import(`./${settingType}/${componentName}`)),
+    );
+  }
   return Components[settingType];
 };
+
+// isPropertyComponentRegistered('margin-top');
+
+/**
+ * @method isPropertyComponentRegistered
+ * @param propName: string - property name
+ * @returns boolean - true if property component is registered
+ */
+function isPropertyRegistered(propName: string) {
+  if (!propName) return false;
+  return !!Components[propName];
+}
 
 export function registerPropertyComponent(
   propName: string,
   componentInstance: React.ComponentType<unknown>,
 ) {
   if (Components[propName]) {
-    console.error(`Property ${propName} is already registered`);
+    console.warn(`Property ${propName} is already registered`);
     return;
   }
   Components[propName] = componentInstance;

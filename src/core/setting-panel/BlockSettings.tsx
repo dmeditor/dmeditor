@@ -14,6 +14,7 @@ import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
 import { getWidget, properties } from 'Components/widgets';
 import {
+  getPropertyValue,
   getValueByPath,
   PickColor,
   PropertyButton,
@@ -113,14 +114,13 @@ export const BlockSettings = (props: {
             return <Property key={selectedBlockIndex} {...setting} />;
           } else {
             const settingType = setting.settingType;
-            const value = getValueByPath(setting.property, selectedBlock?.data);
+            // const value = getValueByPath(setting.property, selectedBlock?.data);
+            const value = getPropertyValue(setting.property, selectedBlock?.data);
             return settingType ? (
               <PropertyItem label={setting.name} key={setting.property}>
                 <Property {...{ ...setting, value: value }} />
               </PropertyItem>
-            ) : (
-              <></>
-            );
+            ) : null;
           }
         })}
         {/* </PropertyGroup> */}

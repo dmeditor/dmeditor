@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import * as React from 'react';
 
 import { useEditorStore } from 'Src/core/main/store';
 import { Ranger } from 'Src/core/utils/Ranger';
@@ -8,14 +8,11 @@ const Range = (props: {
   value: number;
   parameters: { min: number; max: number };
 }) => {
-  const { property, parameters } = props;
-  const [value, setValue] = useState(props.value);
-
+  const { property, parameters, value } = props;
   const { updateSelectedBlockProps } = useEditorStore();
 
-  const handleChange = (v: number) => {
-    setValue(v);
-    updateSelectedBlockProps(property, v);
+  const handleChange = (value: number) => {
+    updateSelectedBlockProps(property, value);
   };
 
   return (

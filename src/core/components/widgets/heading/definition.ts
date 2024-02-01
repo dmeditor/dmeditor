@@ -30,7 +30,7 @@ const HeadingWidget: DMEditor.Widget = {
       name: 'Level',
       settingType: 'range',
       category: 'settings',
-      property: 'level',
+      property: 'data.level',
       parameters: { min: 1, max: 5 },
     },
     { name: 'Align', settingType: 'align', category: 'settings', property: 'setting.align' },
@@ -41,9 +41,9 @@ const HeadingWidget: DMEditor.Widget = {
       property: 'setting.background-color',
     },
     { name: 'Text color', settingType: 'color', category: 'settings', property: 'setting.color' },
-    { name: 'Border', settingType: 'color', category: 'block', property: 'setting.padding' },
+    { name: 'Border', settingType: 'color', category: 'block', property: 'setting.border' },
     { name: 'Padding', settingType: 'range', category: 'block', property: 'setting.padding' },
-    { name: 'Margin', settingType: 'range', category: 'block', property: 'setting.padding' },
+    { name: 'Margin', settingType: 'range', category: 'block', property: 'setting.margin' },
 
     { name: '', settingType: 'heading', category: 'settings', custom: true, property: '' },
     // {name: 'Text', component: 'input', property: 'value'}

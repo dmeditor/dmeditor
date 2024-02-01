@@ -70,6 +70,18 @@ function isKeyInObject<T, K extends keyof T>(key: string, obj: T): obj is T & Re
 function getPropertyName(name: string) {
   if (name.startsWith('setting.')) {
     return name.replace('setting.', '');
+  } else if (name.startsWith('data.')) {
+    return name.replace('data.', '');
+  } else {
+    throw new Error(`Invalid property name: ${name}`);
+  }
+}
+
+function getPropertyValue(name: string, obj: Record<string, unknown>): unknown {
+  if (name.startsWith('setting.')) {
+    return obj['settings'][getPropertyName(name)];
+  } else if (name.startsWith('data.')) {
+    return obj[getPropertyName(name)];
   } else {
     throw new Error(`Invalid property name: ${name}`);
   }
@@ -77,6 +89,7 @@ function getPropertyName(name: string) {
 
 export {
   getPropertyName,
+  getPropertyValue,
   simpleCloneDeep,
   jsonParse,
   jsonStringify,

@@ -63,35 +63,36 @@ export const BlockListRender = (props: BlockListProps) => {
     </AddingMessage>
   }
 
+  console.log('wing blocklist', props.data)
   return (
     <BlockListStyle className="dme-blocklist">
       {props.data.map((blockData: DMEData.Block, index: number) => (
-      <>     
+      <>
         {addingStatus === 'started' && index === selectedBlockIndex && position === 'before' && (
           renderAddingMessage()
         )}
-        <StyledBlock active={index === selectedBlockIndex} className='dme-block-container' onClick={()=>select(index)}>        
-        {index === selectedBlockIndex && <>          
+        <StyledBlock active={index === selectedBlockIndex} className='dme-block-container' onClick={()=>select(index)}>
+        {index === selectedBlockIndex && <>
           {addBlockIndex === -Infinity && (
             <AddingTool type='above'>
               <Button onClick={() => addBefore(index)}><AddOutlined /> </Button>
             </AddingTool>
-          )}        
+          )}
           </>}
           <BlockRender
             key={blockData.id}
             active={index === selectedBlockIndex}
             data={blockData}
-          />          
+          />
           {/* below is for test */}
-        {index === selectedBlockIndex && <>          
+        {index === selectedBlockIndex && <>
           {addBlockIndex === -Infinity && (
             <AddingTool>
               <Button onClick={() => addAfter(index)}><AddOutlined /> </Button>
             </AddingTool>
-          )}        
+          )}
           </>}
-        </StyledBlock>        
+        </StyledBlock>
         {addingStatus === 'started' && index === selectedBlockIndex && position === 'after' && (
           renderAddingMessage()
         )}

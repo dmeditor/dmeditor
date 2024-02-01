@@ -40,11 +40,7 @@ const Heading = (props: HeadingProps) => {
     data,
   } = blockNode;
   const defaultValue: any = useRef(value);
-
-  // const changeText = (e?: any) => {
-  //   const texts = e.target.innerText;
-  //   setText(texts);
-  // };
+  console.log('level', level)
 
   const common = {
     style: {

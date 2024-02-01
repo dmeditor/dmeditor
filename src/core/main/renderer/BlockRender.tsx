@@ -61,6 +61,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
   };
 
   const Widget = getWidgetComponent(props.data.type);
+  console.log('wing', props)
 
   return Widget ? (
     <Widget
