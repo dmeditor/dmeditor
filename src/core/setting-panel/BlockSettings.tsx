@@ -47,10 +47,11 @@ export const BlockSettings = (props: {
   const [blockOpen, setBlockOpen] = useState(true);
   const { getSelectedBlock } = useEditorStore();
 
-  const selectedBlock = useMemo(
-    () => getSelectedBlock(props.selectedBlockIndex),
-    [props.selectedBlockIndex],
-  );
+  // const selectedBlock = useMemo(
+  //   () => getSelectedBlock(props.selectedBlockIndex),
+  //   [props.selectedBlockIndex],
+  // );
+  const selectedBlock = getSelectedBlock(props.selectedBlockIndex);
 
   const selectedWidget = useMemo(() => getWidget(selectedBlock?.type || ''), [selectedBlock?.type]);
 
@@ -123,18 +124,20 @@ export const BlockSettings = (props: {
           }
         })}
         {/* </PropertyGroup> */}
-        {identifier=='settings'&&<ActionPanel>
-          <PropertyButton variant='outlined' color="warning" title="Delete">
-            <DeleteOutline /> Delete
-          </PropertyButton>
-      </ActionPanel>}
+        {identifier == 'settings' && (
+          <ActionPanel>
+            <PropertyButton variant="outlined" color="warning" title="Delete">
+              <DeleteOutline /> Delete
+            </PropertyButton>
+          </ActionPanel>
+        )}
       </TabBodyContainer>
     );
   };
 
   return (
     <div>
-      <PropertyTab tabs={getTabData()}></PropertyTab>      
+      <PropertyTab tabs={getTabData()}></PropertyTab>
     </div>
   );
 };

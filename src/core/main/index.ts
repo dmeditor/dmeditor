@@ -1,7 +1,8 @@
-import { getBlockByID } from './dto/operations';
+import { DMEData } from '../components/types/blocktype';
 // import { config } from './config';
 import { simpleCloneDeep } from '../utils';
-import {DMEData} from '../components/types/blocktype';
+
+// import { getBlockByID } from './dto/operations';
 
 function initDefaultOptions() {}
 
@@ -18,17 +19,16 @@ const getDefaultOptions = (): {
   };
 };
 
-
 function createDMEditor() {
   const defaultConfig = simpleCloneDeep(getDefaultOptions());
   return {
-    selected:{      
-      blockId: "",
+    selected: {
+      blockId: '',
       blockIndex: -Infinity,
-      currentListPath:[] as Array<number>,
-  },
-    addBlockData:{
-      index: -Infinity
+      currentListPath: [] as Array<number>,
+    },
+    addBlockData: {
+      index: -Infinity,
     },
     // activeWidget: null,
     editorConfig: {
@@ -57,7 +57,7 @@ function createDMEditor() {
   };
 }
 
-export { createDMEditor }
+export { createDMEditor };
 // const initApp = () =>
 // export * from './core/main/DMEditor';
 // export * from './BlockProperty';

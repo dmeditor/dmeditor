@@ -1,8 +1,7 @@
-import { Widget } from '../types/blocktype';
+import type { ComponentType } from 'react';
 
-/**
- * define all property setting components
- **/
+import { DMEditor, Widget } from '../types/blocktype';
+
 const components: {
   // TODO: make it more type safe
   [key: string]: any;
@@ -14,32 +13,44 @@ try {
     const comp = modules(path).default;
     // reg ./grid/Grid.tsx to /grid(folder name)
     const name = path.replace(/\.\/(.*)\/render.tsx/, '$1');
-    components[name] = comp;
+    // components[name] = comp;
+    registerWidget(name, comp);
   });
 } catch (e) {
   console.error(e);
 }
 
 const properties: string[] = [];
-const widgetMap: { [key: string]: Widget } = {};
+const widgetDefinition: { [key: string]: Widget } = {};
+
+// const widgetDefinition: Widget[] = [];
+const layoutDefinition: { [key: string]: Widget } = {};
+const customDefinition: { [key: string]: Widget } = {};
 try {
   const modules = require.context('./', true, /definition.ts$/);
   modules.keys().forEach((path: string) => {
     // const { data, style, type } = modules(path).default;
     const widget = modules(path).default;
-    const { settings, type } = widget;
+    const { category, settings, type } = widget;
 
-    if(widgetMap[type]){
-      //todo: handle duplicated registration. (eg. give a warning and override)
+    //todo: handle duplicated registration. (eg. give a warning and override)
+    // if (widgetDefinition[type]) {
+    // }
+    // widgetDefinition[type] = widget;
+
+    if (category === 'widget') {
+      addWidgetDefinition(widget);
+    } else if (category === 'layout') {
+      addLayoutDefinition(widget);
+    } else if (category === 'custom') {
+      addCustomDefinition(widget);
+    } else {
+      console.error(`Unknown category: ${category}`);
     }
-    widgetMap[type] = widget;
-    
+
     // for debug
     if (type === 'heading') {
-      properties.push({
-        type,
-        ...settings,
-      });
+      properties.push(widget);
     }
   });
 } catch (e) {
@@ -48,16 +59,60 @@ try {
 
 //get widget component for rendering
 const getWidgetComponent = (type: string): any => {
-  const component =  components[type];
-  return component?component:null;
+  const component = components[type];
+  return component ? component : null;
 };
 
 //get widget information/definiton/meta data
-const getWidget = (type:string):Widget|null=>{
-  const def = widgetMap[type]; 
-  return def?def:null;
+const getWidget = (type: string): Widget | null => {
+  const def = widgetDefinition[type];
+  return def ? def : null;
+};
+
+function addWidgetDefinition(widget: Widget) {
+  if (widgetDefinition[widget.type]) {
+    console.warn(`Widget ${widget.type} is already registered.`);
+    return;
+  }
+  widgetDefinition[widget.type] = widget;
 }
 
-export { getWidgetComponent, properties, getWidget };
+function addLayoutDefinition(widget: Widget) {
+  if (layoutDefinition[widget.type]) {
+    console.warn(`Widget ${widget.type} is already registered.`);
+    return;
+  }
+  layoutDefinition[widget.type] = widget;
+}
 
-export default widgetMap;
+function addCustomDefinition(widget: Widget) {
+  if (customDefinition[widget.type]) {
+    console.warn(`Widget ${widget.type} is already registered.`);
+    return;
+  }
+  customDefinition[widget.type] = widget;
+}
+
+function registerWidget(widgetName: string, widgetInstance: ComponentType<any>) {
+  if (components[widgetName]) {
+    console.warn(`Widget ${widgetName} is already registered.`);
+    return;
+  }
+  components[widgetName] = widgetInstance;
+}
+
+export {
+  addCustomDefinition,
+  addLayoutDefinition,
+  addWidgetDefinition,
+  getWidgetComponent,
+  registerWidget,
+  properties,
+  // widgetDefinition,
+  widgetDefinition,
+  layoutDefinition,
+  customDefinition,
+  getWidget,
+};
+
+export default widgetDefinition;

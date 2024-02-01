@@ -1,6 +1,5 @@
 import type { ReactElement } from 'react';
 
-import { Widget } from './blocktype';
 import type { BlockData } from 'Src/ToolDefinition';
 
 export interface RenderMainProps {
@@ -37,43 +36,41 @@ export interface BlockLayoutData {
   backgroundColor?: string;
 }
 
-export interface WidgetSetting {
-  property: string;
-  name: string;
-  custom?: boolean; //if true it will not invoke directly instead of use name->value(left/right) layout.
-  settingType: string; //registered setting component, eg. 'color', or 'align',
-  category?:string;
-  parameters?: {
-    [key: string]: unknown;
-  };
-  //category:string
-  // [key: string]: string|number
-}
-
-export interface Widget {
-  type: string;
-  name: string;
-  icon: string; //base 64(eg. png/svg) or url
-  category: 'widget' | 'layout';
-  alias?: string;
-  events: {
-    //   onInput: () => void 0,
-    //   onChange: () => void 0,
-    //   onFocus: () => void 0,
-    //   onBlur: () => void 0,
-    updateData: (settings: WidgetSettings, data: DMEData.Block) => void;
-    //when create an emtpy block
-    createBlock: () => DMEData.BlockData;
-
-    //validate data
-    validate?: (data: any) => boolean;
-  };
-  // style: {},
-  settings: Array<WidgetSetting>;
-}
-
 export namespace DMEditor {
-  export interface Widget {}
+  interface Setting {
+    property: string;
+    name: string;
+    custom?: boolean; //if true it will not invoke directly instead of use name->value(left/right) layout.
+    settingType: string; //registered setting component, eg. 'color', or 'align',
+    category?: string;
+    parameters?: {
+      [key: string]: unknown;
+    };
+    //category:string
+    // [key: string]: string|number
+  }
+
+  export interface Widget {
+    type: string;
+    name: string;
+    icon: string; //base 64(eg. png/svg) or url
+    category: 'widget' | 'layout';
+    alias?: string;
+    events: {
+      //   onInput: () => void 0,
+      //   onChange: () => void 0,
+      //   onFocus: () => void 0,
+      //   onBlur: () => void 0,
+      updateData: (settings: Setting, data: DMEData.Block) => void;
+      //when create an emtpy block
+      createBlock: () => unknown;
+
+      //validate data
+      validate?: (data: any) => boolean;
+    };
+    // style: {},
+    settings: Array<Setting>;
+  }
   export interface Block extends Widget {}
 }
 
@@ -85,7 +82,9 @@ export namespace DMEData {
     id?: string;
     type: string; //can use type for internal
     parent?: Block;
-    data: object; //entity data from widget
+    data: {
+      settings: unknown;
+    }; //entity data from widget
     style?: BlockStyle;
     children?: Array<Block>;
   }

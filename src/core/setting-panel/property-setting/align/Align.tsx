@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 
-import { PropertyButton } from 'Core/utils';
+import { getPropertyName, PropertyButton } from 'Core/utils';
 import { useEditorStore } from 'Src/core/main/store';
 
 export type AlignType = 'left' | 'center' | 'right';
 const alignsList: AlignType[] = ['left', 'center', 'right'];
 
-const Align = (props: {property:string, value?:AlignType}) => {
+const Align = (props: { property: string; value?: AlignType }) => {
   const { value, property } = props;
   const { updateSelectedBlockProps } = useEditorStore();
 
@@ -20,8 +20,8 @@ const Align = (props: {property:string, value?:AlignType}) => {
   };
 
   const handleAlignChange = (value: AlignType) => {
-    updateSelectedBlockProps(property, value);
-  }
+    updateSelectedBlockProps(getPropertyName(property), value);
+  };
 
   return alignsList.map((format) => {
     return (

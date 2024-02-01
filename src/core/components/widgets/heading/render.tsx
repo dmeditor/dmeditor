@@ -30,13 +30,12 @@ interface HeadingProps {
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: HeadingProps) => {
   const blockNode = props.blockNode;
-  console.log('wong', blockNode);
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {
     id,
     data: {
       level,
-      value,      
+      value,
     },
     data,
   } = blockNode;
@@ -68,7 +67,7 @@ const Heading = (props: HeadingProps) => {
     <div className={getCommonBlockCss('heading', '')}>
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
-      </HeadingComponent>      
+      </HeadingComponent>
     </div>
   );
 };
