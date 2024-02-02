@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import { DMEditor, Widget } from '../types/blocktype';
+import type { DMEditor } from 'Core/types';
 
 const components: {
   // TODO: make it more type safe
@@ -21,11 +21,11 @@ try {
 }
 
 const properties: string[] = [];
-const widgetDefinition: { [key: string]: Widget } = {};
+const widgetDefinition: { [key: string]: DMEditor.Widget } = {};
 
 // const widgetDefinition: Widget[] = [];
-const layoutDefinition: { [key: string]: Widget } = {};
-const customDefinition: { [key: string]: Widget } = {};
+const layoutDefinition: { [key: string]: DMEditor.Widget } = {};
+const customDefinition: { [key: string]: DMEditor.Widget } = {};
 try {
   const modules = require.context('./', true, /definition.ts$/);
   modules.keys().forEach((path: string) => {
@@ -64,12 +64,12 @@ const getWidgetComponent = (type: string): any => {
 };
 
 //get widget information/definiton/meta data
-const getWidget = (type: string): Widget | null => {
+const getWidget = (type: string): DMEditor.Widget | null => {
   const def = widgetDefinition[type];
   return def ? def : null;
 };
 
-function addWidgetDefinition(widget: Widget) {
+function addWidgetDefinition(widget: DMEditor.Widget) {
   if (widgetDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -77,7 +77,7 @@ function addWidgetDefinition(widget: Widget) {
   widgetDefinition[widget.type] = widget;
 }
 
-function addLayoutDefinition(widget: Widget) {
+function addLayoutDefinition(widget: DMEditor.Widget) {
   if (layoutDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -85,7 +85,7 @@ function addLayoutDefinition(widget: Widget) {
   layoutDefinition[widget.type] = widget;
 }
 
-function addCustomDefinition(widget: Widget) {
+function addCustomDefinition(widget: DMEditor.Widget) {
   if (customDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { BlockHandler } from '../types/blocktype';
+import { BlockHandler } from '../types/block';
 
 var blockHandlers: { [key: string]: BlockHandler } = {};
 

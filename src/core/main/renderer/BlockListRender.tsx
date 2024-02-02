@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Button } from '@mui/material';
 
-import { DMEData } from '../../components/types/blocktype';
+import { DMEData } from '../../components/types/block';
 import { AddBlockPosition, useEditorStore } from '../store';
 import { BlockRender } from './BlockRender';
 import emitter from 'Core/utils/event';
@@ -63,7 +63,6 @@ export const BlockListRender = (props: BlockListProps) => {
     </AddingMessage>
   }
 
-  console.log('wing blocklist', props.data)
   return (
     <BlockListStyle className="dme-blocklist">
       {props.data.map((blockData: DMEData.Block, index: number) => (

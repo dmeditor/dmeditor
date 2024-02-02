@@ -1,5 +1,7 @@
 'use strict';
 
+import { DMEData } from '../types';
+
 function jsonParse<T>(obj: string): T {
   try {
     return JSON.parse(obj);
@@ -68,23 +70,33 @@ function isKeyInObject<T, K extends keyof T>(key: string, obj: T): obj is T & Re
 }
 
 function getPropertyName(name: string) {
-  if (name.startsWith('setting.')) {
-    return name.replace('setting.', '');
-  } else if (name.startsWith('data.')) {
-    return name.replace('data.', '');
+  if (name.startsWith('settings.')) {
+    return name.replace('settings.', '');
+  } else if (name.startsWith('.')) {
+    return name.replace('.', '');
   } else {
     throw new Error(`Invalid property name: ${name}`);
   }
 }
 
-function getPropertyValue(name: string, obj: Record<string, unknown>): unknown {
-  if (name.startsWith('setting.')) {
+function getPropertyValue(name: string, obj: DMEData.Block['data']): unknown {
+  if (name.startsWith('settings.')) {
     return obj['settings'][getPropertyName(name)];
-  } else if (name.startsWith('data.')) {
+  } else if (name.startsWith('.')) {
     return obj[getPropertyName(name)];
   } else {
     throw new Error(`Invalid property name: ${name}`);
   }
+}
+
+/*
+ * @method isEmptyString
+ * @param {string} value
+ * @returns {boolean} true if value is empty string
+ *                    false if value is not empty string
+ */
+function isEmptyString(value: string): boolean {
+  return value === '';
 }
 
 export {
@@ -99,4 +111,5 @@ export {
   isUndefined,
   isUndefinedOrNull,
   isKeyInObject,
+  isEmptyString,
 };

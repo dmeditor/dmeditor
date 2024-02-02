@@ -37,7 +37,7 @@ import { TopBar } from '../../topbar/Topbar';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } from './style';
-import { DMEData } from 'Src/core/components/types/blocktype';
+import { DMEData } from 'Src/core/components/types/block';
 import { BlockListRender } from 'Src/core/main/renderer';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 
@@ -219,7 +219,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
         },
       },
       MuiTabs:{
-        styleOverrides:{          
+        styleOverrides:{
           root:{
             // '& .MuiMenu-paper':{
             //   color: 'black'
@@ -291,7 +291,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           <SettingContainer>
             <SettingPanel />
           </SettingContainer>
-        </Layout.SettingPanel>       
+        </Layout.SettingPanel>
       </Layout.Main>
     </ThemeProvider>
     </Root>

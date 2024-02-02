@@ -1,6 +1,6 @@
 // import { widgetMetaData } from 'Components/types';
 
-import type { DMEData, DMEditor } from '../../types/blocktype';
+import type { DMEData, DMEditor } from '../../types/block';
 import { EntityHeadingBlock } from './entity';
 import { generateCommonBlockData } from 'Src/core/utils/utilx';
 
@@ -30,20 +30,20 @@ const HeadingWidget: DMEditor.Widget = {
       name: 'Level',
       settingType: 'range',
       category: 'settings',
-      property: 'data.level',
+      property: '.level',
       parameters: { min: 1, max: 5 },
     },
-    { name: 'Align', settingType: 'align', category: 'settings', property: 'setting.align' },
+    { name: 'Align', settingType: 'align', category: 'settings', property: 'settings.align' },
     {
       name: 'Background',
       settingType: 'color',
       category: 'block',
-      property: 'setting.background-color',
+      property: 'settings.background-color',
     },
-    { name: 'Text color', settingType: 'color', category: 'settings', property: 'setting.color' },
-    { name: 'Border', settingType: 'color', category: 'block', property: 'setting.border' },
-    { name: 'Padding', settingType: 'range', category: 'block', property: 'setting.padding' },
-    { name: 'Margin', settingType: 'range', category: 'block', property: 'setting.margin' },
+    { name: 'Text color', settingType: 'color', category: 'settings', property: 'settings.color' },
+    { name: 'Border', settingType: 'color', category: 'block', property: 'settings.border' },
+    { name: 'Padding', settingType: 'range', category: 'block', property: 'settings.padding' },
+    { name: 'Margin', settingType: 'range', category: 'block', property: 'settings.margin' },
 
     { name: '', settingType: 'heading', category: 'settings', custom: true, property: '' },
     // {name: 'Text', component: 'input', property: 'value'}

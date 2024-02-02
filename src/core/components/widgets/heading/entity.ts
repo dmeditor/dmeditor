@@ -1,4 +1,4 @@
-import { DMEData } from '../../types/blocktype';
+import { DMEData } from 'Core/types';
 
 export interface EntityHeadingBlock {
   value: string;
@@ -6,9 +6,9 @@ export interface EntityHeadingBlock {
   settings: {
     align: string;
     color?: string;
-    'background-color'?: string,
-    'margin-top'?: number,
-    padding?:number,
-    width?: string|number,
+    'background-color'?: string;
+    'margin-top'?: number;
+    padding?: number;
+    width?: string | number;
   };
 }

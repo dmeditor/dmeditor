@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const { memo } = React;
+const { createElement, memo, isValidElement } = React;
 const Components: {
   [index: string]:
     | React.LazyExoticComponent<React.ComponentType<unknown>>
@@ -50,15 +50,26 @@ function isPropertyRegistered(propName: string) {
   return !!Components[propName];
 }
 
-export function registerPropertyComponent(
+function registerPropertyComponent(
   propName: string,
   componentInstance: React.ComponentType<unknown>,
 ) {
+  if (!isValidElement(createElement(componentInstance))) {
+    console.warn(`Property ${propName} is not a valid component`);
+    return;
+  }
   if (Components[propName]) {
     console.warn(`Property ${propName} is already registered`);
     return;
   }
   Components[propName] = componentInstance;
+}
+
+function getPropertyComponent(propName: string) {
+  return Components[propName];
+}
+function getAllPropertyComponents() {
+  return Components;
 }
 
 const Property = ({ settingType, ...rest }: { settingType: string }) => {
@@ -70,5 +81,5 @@ const Property = ({ settingType, ...rest }: { settingType: string }) => {
   );
 };
 
-export { Components };
+export { getAllPropertyComponents, getPropertyComponent, registerPropertyComponent };
 export default memo(Property);

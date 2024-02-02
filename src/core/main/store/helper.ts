@@ -1,6 +1,6 @@
 import { getWidget } from 'Components/widgets';
 import { jsonParse } from 'Src/core/utils';
-import { DMEData } from 'Src/core/components/types/blocktype';
+import { DMEData } from 'Src/core/components/types/block';
 
 
 //todo: can these operation be object-orented way(for blocklist and block)?
@@ -43,7 +43,7 @@ export const iterateBlockTree = (block: DMEData.Block, callback: (blockItem: DME
   if(callbackResult === false){
      return false
   }
-  if(block.children){    
+  if(block.children){
     for(const item of block.children){
        const itemResult = iterateBlockTree(item, callback );
        if(itemResult === false){
@@ -83,7 +83,7 @@ const deleteBlock = (block:DMEData.Block )=>{
 
 }
 
-export const loadData = (data:string| DMEData.BlockList): DMEData.BlockList =>{  
+export const loadData = (data:string| DMEData.BlockList): DMEData.BlockList =>{
   let list: DMEData.BlockList = [];
   if (typeof data === 'string') {
    //todo: handle error

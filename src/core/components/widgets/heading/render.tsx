@@ -3,8 +3,8 @@ import { TitleOutlined } from '@mui/icons-material';
 
 import { BlockListRender } from '../../../main/renderer';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
-import { DMEData } from '../../types/blocktype';
 import { EntityHeadingBlock } from './entity';
+import type { DMEData } from 'Core/types';
 import useHeadingStore from 'Src/core/setting-panel/store/heading';
 import { isHTMLElement } from 'Src/core/utils';
 
@@ -33,20 +33,17 @@ const Heading = (props: HeadingProps) => {
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {
     id,
-    data: {
-      level,
-      value,
-    },
+    data: { level, value },
     data,
   } = blockNode;
   const defaultValue: any = useRef(value);
-  console.log('level', level)
+  console.log('level', level);
 
   const common = {
     style: {
       textAlign: data.settings.align,
-      color:data.settings.color,
-      backgroundColor: data.settings['background-color']
+      color: data.settings.color,
+      backgroundColor: data.settings['background-color'],
     },
     // ref: (input: any) => input && input.focus(),
     onKeyUp: (e: React.KeyboardEvent<HTMLElement>) => {

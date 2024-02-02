@@ -2,7 +2,7 @@ import { css } from '@emotion/css';
 import { DragIndicator, KeyboardArrowRight } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { DMEData } from '../components/types/blocktype';
+import { DMEData } from '../components/types/block';
 import { getWidget } from '../components/widgets';
 
 interface ListOverviewProps {

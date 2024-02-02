@@ -1,12 +1,14 @@
 import * as React from 'react';
 
 import { isUndefinedOrNull } from '../utils';
-import { Components } from './property-setting/property-item';
+import { registerPropertyComponent } from './property-setting/property-item';
 
 /**
- * properties register
+ * properties register: common, widget, custom, event
  * Map<propName, propertyComponentName>
  */
+
+// the common properties that are invoked by all widgets
 const commonProperties: { [type: string]: string } = {
   align: 'Align',
   'background-color': 'Color',
@@ -16,10 +18,14 @@ const commonProperties: { [type: string]: string } = {
   width: 'Width',
 };
 
+// the widget properties that are defined by different widgets
 const widgetProperties: { [type: string]: string } = {
   anchor: 'Anchor',
   level: 'Level',
 };
+
+// the widget properties that are is defined by user
+const customProperties: { [type: string]: string } = {};
 
 const eventProperties: { [type: string]: string } = {
   createBlock: 'CreateBlock',
@@ -31,7 +37,7 @@ const eventProperties: { [type: string]: string } = {
  * @param uniquePropertyName
  * @param componentName
  */
-function registerCommonProperties(uniquePropertyName: string, componentName: string) {
+function registerCommonProperty(uniquePropertyName: string, componentName: string) {
   if (isUndefinedOrNull(componentName)) {
     console.warn(
       `${uniquePropertyName} will not be registered because componentName is undefined or null`,
@@ -41,12 +47,22 @@ function registerCommonProperties(uniquePropertyName: string, componentName: str
   }
 }
 
+function registerCustomProperty(uniquePropertyName: string, componentName: string) {
+  if (isUndefinedOrNull(componentName)) {
+    console.warn(
+      `${uniquePropertyName} will not be registered because componentName is undefined or null`,
+    );
+  } else {
+    customProperties[uniquePropertyName] = componentName;
+  }
+}
+
 /**
  * register widget properties
  * @param uniquePropertyName
  * @param componentName
  */
-function registerWidgetProperties(uniquePropertyName: string, componentName: string) {
+function registerWidgetProperty(uniquePropertyName: string, componentName: string) {
   if (isUndefinedOrNull(componentName)) {
     console.warn(
       `${uniquePropertyName} will not be registered because componentName is undefined or null`,
@@ -56,7 +72,7 @@ function registerWidgetProperties(uniquePropertyName: string, componentName: str
   }
 }
 
-function registerEventProperties(uniquePropertyName: string, componentName: string) {
+function registerEventProperty(uniquePropertyName: string, componentName: string) {
   if (isUndefinedOrNull(componentName)) {
     console.warn(
       `${uniquePropertyName} will not be registered because componentName is undefined or null`,
@@ -75,38 +91,28 @@ function isRegisteredWidgetProperty(uniquePropertyName: string): boolean {
 function isRegisteredEventProperty(uniquePropertyName: string): boolean {
   return eventProperties[uniquePropertyName] !== undefined;
 }
+function isRegisteredCustomProperty(uniquePropertyName: string): boolean {
+  return customProperties[uniquePropertyName] !== undefined;
+}
 function isRegisteredProperties(uniquePropertyName: string): boolean {
   return (
     isRegisteredCommonProperty(uniquePropertyName) ||
     isRegisteredWidgetProperty(uniquePropertyName) ||
-    isRegisteredEventProperty(uniquePropertyName)
+    isRegisteredEventProperty(uniquePropertyName) ||
+    isRegisteredCustomProperty(uniquePropertyName)
   );
 }
 
-function registerComponent(
-  // uniquePropertyName: string,
-  componentName: string,
-  componentInstance: React.ComponentType<any>,
-) {
-  // Components[uniquePropertyName] = React.lazy(() => import(`./property-setting/${componentName}`));
-  if (!React.isValidElement(componentInstance)) return;
-  Components[componentName] = componentInstance;
-  // registerCommonProperties(uniquePropertyName, componentName);
-}
-
-function regiterDMEditor() {
-  // registerCommonProperties();
-}
-// resigter component
-
 export {
   commonProperties,
-  registerComponent,
-  registerCommonProperties,
-  registerWidgetProperties,
-  registerEventProperties,
+  registerCustomProperty,
+  registerCommonProperty,
+  registerEventProperty,
+  registerWidgetProperty,
+  registerPropertyComponent,
   isRegisteredProperties,
   isRegisteredCommonProperty,
+  isRegisteredCustomProperty,
   isRegisteredEventProperty,
   isRegisteredWidgetProperty,
 };

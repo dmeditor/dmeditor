@@ -6,9 +6,9 @@ import { immer } from 'zustand/middleware/immer';
 import { createDMEditor } from '..';
 import { iteratePath } from './helper';
 import emitter from 'Core/utils/event';
-import type { DMEData } from 'Src/core/components/types/blocktype';
+import type { DMEData } from 'Core/types';
 import { properties } from 'Src/core/components/widgets';
-import { isKeyInObject, isStrictlyInfinity } from 'Src/core/utils';
+import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'Src/core/utils';
 
 export type AddBlockPosition = 'before' | 'after';
 export type AddBlockStatus = 'started' | 'done';
@@ -239,29 +239,29 @@ const useEditorStore = create<Store & Actions>()(
         // }
 
         // todo: put settings to separate method
-
-        // propName is data.level
-        const propArr = propName.split('.');
-        // const realPropsName = propArr.length === 1 ? propArr[0] : propArr[1];
-        const [key1, realPropsName] = propArr;
-        if (key1 === 'data') {
+        const [propKey, realPropsName] = propName.split('.');
+        // the property is in the root of the block
+        if (isEmptyString(propKey)) {
           if (isPlainObject(state.storage[state.selected.blockIndex].data)) {
-            state.storage[state.selected.blockIndex][key1][realPropsName] = propValue;
+            state.storage[state.selected.blockIndex]['data'][realPropsName] = propValue;
           } else {
             console.warn('data is not an object');
           }
-        } else if (key1 === 'setting') {
+        } else if (propKey === 'settings') {
           if (isPlainObject(state.storage[state.selected.blockIndex].data)) {
             if (isKeyInObject('settings', state.storage[state.selected.blockIndex].data)) {
-              state.storage[state.selected.blockIndex].data[`${key1}s`][realPropsName] = propValue;
+              state.storage[state.selected.blockIndex].data[propKey][realPropsName] = propValue;
             }
           } else {
             console.warn('settings is not an object');
           }
         } else {
-          state.storage[state.selected.blockIndex].data['settings'] = {
-            ...block.settings,
-            [realPropsName]: propValue,
+          state.storage[state.selected.blockIndex].data = {
+            ...state.storage[state.selected.blockIndex].data,
+            settings: {
+              ...(state.storage[state.selected.blockIndex].data.settings as any),
+              [realPropsName]: propValue,
+            },
           };
         }
       });

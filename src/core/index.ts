@@ -5,13 +5,12 @@ import {
   registerWidget,
 } from './components/widgets';
 import {
-  registerCommonProperties,
-  registerComponent,
-  registerEventProperties,
-  registerWidgetProperties,
+  registerCommonProperty,
+  registerCustomProperty,
+  registerEventProperty,
+  registerPropertyComponent,
+  registerWidgetProperty,
 } from './setting-panel/register';
-
-// import * as DMRegister from './register';
 
 export { DMEditor } from 'Core/main/designer/DMEditor';
 
@@ -22,10 +21,11 @@ const DMEditorToolKit = {
   addLayoutDefinition,
   addCustomDefinition,
   registerWidget,
-  registerComponent,
-  registerCommonProperties,
-  registerEventProperties,
-  registerWidgetProperties,
+  registerPropertyComponent,
+  registerCommonProperty,
+  registerCustomProperty,
+  registerEventProperty,
+  registerWidgetProperty,
 };
 
 export { DMEditorToolKit };
