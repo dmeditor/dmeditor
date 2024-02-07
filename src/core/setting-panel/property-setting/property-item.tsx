@@ -52,7 +52,7 @@ function isPropertyRegistered(propName: string) {
 
 function registerPropertyComponent(
   propName: string,
-  componentInstance: React.ComponentType<unknown>,
+  componentInstance: React.ComponentType<any>,
 ) {
   if (!isValidElement(createElement(componentInstance))) {
     console.warn(`Property ${propName} is not a valid component`);

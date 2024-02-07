@@ -5,8 +5,8 @@ import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
 import { iteratePath } from './helper';
-import emitter from 'Core/utils/event';
 import type { DMEData } from 'Core/types';
+import emitter from 'Core/utils/event';
 import { properties } from 'Src/core/components/widgets';
 import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'Src/core/utils';
 
@@ -256,13 +256,16 @@ const useEditorStore = create<Store & Actions>()(
             console.warn('settings is not an object');
           }
         } else {
-          state.storage[state.selected.blockIndex].data = {
-            ...state.storage[state.selected.blockIndex].data,
-            settings: {
-              ...(state.storage[state.selected.blockIndex].data.settings as any),
-              [realPropsName]: propValue,
-            },
-          };
+          console.error(
+            `Invalid propName: ${propName}, it should be "settings.${propName}" or ".${propName}"`,
+          );
+          // state.storage[state.selected.blockIndex].data = {
+          //   ...state.storage[state.selected.blockIndex].data,
+          //   settings: {
+          //     ...(state.storage[state.selected.blockIndex].data.settings as any),
+          //     [realPropsName]: propValue,
+          //   },
+          // };
         }
       });
     },

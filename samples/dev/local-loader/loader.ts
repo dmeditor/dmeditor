@@ -1,7 +1,6 @@
-import { DMEditor, DMEditorToolKit } from '../../../src/core/index';
-import SampleWidget from './SampleWidget';
+import { DMEditorToolKit } from '../../../src/core/index';
 import SampleInput from './SampleInput';
-import { addCustomDefinition } from 'Src/core/components/widgets';
+import SampleWidget from './SampleWidget';
 
 const {
   addWidgetDefinition,
@@ -18,16 +17,34 @@ const loaderWidget = function () {
     category: 'widget',
     icon: 'A',
     settings: [
+      // {
+      //   name: 'Level',
+      //   settingType: 'range',
+      //   category: 'settings',
+      //   property: '.level',
+      //   parameters: { min: 2, max: 4 },
+      // },
       {
-        name: 'Level',
-        settingType: 'range',
+        name: 'Background Color',
+        settingType: 'color',
         category: 'settings',
-        property: '.level',
-        parameters: { min: 1, max: 5 },
+        property: 'settings.backgroundColor',
+      },
+      {
+        name: 'Width',
+        settingType: 'sampleInput',
+        category: 'settings',
+        property: 'settings.width',
       },
     ],
     events: {
-      createBlock: () => ({ level: 2 }),
+      createBlock: () => ({
+        level: 2,
+        settings: {
+          width: 100,
+          backgroundColor: '#cccccc',
+        },
+      }),
       updateData: () => void 0,
     },
     // initData: () => {
@@ -35,51 +52,7 @@ const loaderWidget = function () {
     // },
   });
   registerWidget('sample', SampleWidget);
-  registerCommonProperty('width', 'Width');
-  registerCommonProperty('Font color', 'Color');
-
-  // addCustomDefinition({
-  //   type: 'custom sample',
-  //   name: 'Sample widget',
-  //   category: 'widget',
-  //   icon: 'A',
-  //   settings: [
-  //     {
-  //       name: 'Level',
-  //       settingType: 'range',
-  //       category: 'settings',
-  //       property: 'level',
-  //       parameters: { min: 1, max: 5 },
-  //     },
-  //   ],
-  //   events: {
-  //     createBlock: () => void 0,
-  //     updateData: () => void 0,
-  //   },
-  // });
-  // registerCustomProperty('Sample Number', 'SampleInput');
-  // registerPropertyComponent('SampleInput', SampleInput);
-
-  // addCustomDefinition({
-  //   type: 'custom sample',
-  //   name: 'Sample widget',
-  //   category: 'widget',
-  //   icon: 'A',
-  //   settings: [
-  //     {
-  //       name: 'Level',
-  //       settingType: 'range',
-  //       category: 'settings',
-  //       property: 'level',
-  //       parameters: { min: 1, max: 5 },
-  //     },
-  //   ],
-  //   events: {
-  //     createBlock: () => void 0,
-  //     updateData: () => void 0,
-  //   },
-  // });
-  // DMEditor.component('custom sample', SampleWidget);
+  registerPropertyComponent('sampleInput', SampleInput);
 };
 
 export default loaderWidget;
