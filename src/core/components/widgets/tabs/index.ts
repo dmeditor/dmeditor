@@ -1,3 +1,3 @@
-import { toolBlockTab } from './Tabs';
+import { toolBlockTab } from './render';
 
 export { toolBlockTab }

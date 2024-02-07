@@ -1,7 +1,7 @@
 // import { widgetMetaData } from 'Components/types';
 
-import type { DMEData, DMEditor } from '../../types/block';
 import { EntityHeadingBlock } from './entity';
+import type { DMEData, DMEditor } from 'Core/types';
 import { generateCommonBlockData } from 'Src/core/utils/utilx';
 
 //should be HeadingWidget, which is a definition object. This file should be called definitin.ts

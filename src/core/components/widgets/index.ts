@@ -49,7 +49,7 @@ try {
     }
 
     // for debug
-    if (type === 'heading') {
+    if (type === 'heading' || type === 'tabs') {
       properties.push(widget);
     }
   });

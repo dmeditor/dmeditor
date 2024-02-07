@@ -37,7 +37,6 @@ const Heading = (props: HeadingProps) => {
     data,
   } = blockNode;
   const defaultValue: any = useRef(value);
-  console.log('level', level);
 
   const common = {
     style: {

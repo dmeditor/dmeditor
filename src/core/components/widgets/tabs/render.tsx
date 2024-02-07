@@ -7,27 +7,37 @@ import {
   InsertEmoticon,
   TabOutlined,
 } from '@mui/icons-material';
+// const nanoid = require('nanoid');
+import { nanoid } from 'nanoid';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
-import { PropertyButton, Util } from '../../../utils';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
+import { PropertyButton, Util } from '../../../utils';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
-import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 import { blockTabCss } from './BlockTab.css';
+import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 
-const nanoid = require('nanoid');
+interface DMTabsProps {
+  blockNode: any;
+}
 
-const BlockTab = (props: ToolRenderProps) => {
-  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style || {});
+const DMTabs = (props: DMTabsProps) => {
+  console.log('wing DMTabs', props);
+  const {
+    blockNode: {
+      data: { children },
+    },
+  } = props;
+  // const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style || {});
   const [activeTabIndex, setActiveTabIndex] = useState(-1);
   const [key, setKey] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const [tabList, setTabList] = useState<Array<any>>(props.blockdata?.children || []);
+  const [tabList, setTabList] = useState<Array<any>>(children || []);
 
   const [isChange, setIsChange] = useState(false);
   const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
@@ -129,7 +139,7 @@ const BlockTab = (props: ToolRenderProps) => {
   }, []);
 
   useEffect(() => {
-    props.onChange({ ...props.blockdata, style: styleIdentifier, children: tabList });
+    // props.onChange({ ...props.blockdata, style: styleIdentifier, children: tabList });
     setIsChange(false);
   }, [tabList, isChange]);
 
@@ -151,7 +161,7 @@ const BlockTab = (props: ToolRenderProps) => {
   // onDoubleClick
   return (
     <>
-      {props.active && (
+      {/* {props.active && (
         <BlockProperty blocktype="tab" inBlock={true}>
           <div
             className={getCommonBlockCss('tab', styleIdentifier) + ' ' + blockTabCss() + ' tabDiv'}
@@ -243,7 +253,7 @@ const BlockTab = (props: ToolRenderProps) => {
             />
           </div>
         </BlockProperty>
-      )}
+      )} */}
       <div style={commonSettings} className={getStyleCss('heading', styleIdentifier)}>
         <Tabs
           className="blockTab"
@@ -276,47 +286,48 @@ const BlockTab = (props: ToolRenderProps) => {
   );
 };
 
-export const toolBlockTab: ToolDefinition = {
-  type: 'tab',
-  isComposited: true,
-  name: 'Tab',
-  menu: { category: 'blocks', icon: <TabOutlined /> },
-  initData: () => {
-    return {
-      type: 'tab',
-      settings: { childrenHorizontal: false },
-      data: '',
-      children: [
-        {
-          type: 'list',
-          id: '1',
-          data: 'Tab1',
-          children: [
-            { type: 'heading', id: '1', data: 'Tab1 Title', settings: { level: 2 } },
-            {
-              type: 'text',
-              id: '2',
-              data: [{ type: 'paragraph', children: [{ text: 'Default text' }] }],
-            },
-          ],
-          setting: {},
-        },
-        {
-          type: 'list',
-          id: '2',
-          data: 'Tab2',
-          children: [
-            { type: 'heading', id: '1', data: 'Tab2 Title', settings: { level: 2 } },
-            {
-              type: 'text',
-              id: '2',
-              data: [{ type: 'paragraph', children: [{ text: 'Default text' }] }],
-            },
-          ],
-          setting: {},
-        },
-      ],
-    };
-  },
-  render: BlockTab,
-};
+export default DMTabs;
+// export const toolBlockTab: ToolDefinition = {
+//   type: 'tab',
+//   isComposited: true,
+//   name: 'Tab',
+//   menu: { category: 'blocks', icon: <TabOutlined /> },
+//   initData: () => {
+//     return {
+//       type: 'tab',
+//       settings: { childrenHorizontal: false },
+//       data: '',
+//       children: [
+//         {
+//           type: 'list',
+//           id: '1',
+//           data: 'Tab1',
+//           children: [
+//             { type: 'heading', id: '1', data: 'Tab1 Title', settings: { level: 2 } },
+//             {
+//               type: 'text',
+//               id: '2',
+//               data: [{ type: 'paragraph', children: [{ text: 'Default text' }] }],
+//             },
+//           ],
+//           setting: {},
+//         },
+//         {
+//           type: 'list',
+//           id: '2',
+//           data: 'Tab2',
+//           children: [
+//             { type: 'heading', id: '1', data: 'Tab2 Title', settings: { level: 2 } },
+//             {
+//               type: 'text',
+//               id: '2',
+//               data: [{ type: 'paragraph', children: [{ text: 'Default text' }] }],
+//             },
+//           ],
+//           setting: {},
+//         },
+//       ],
+//     };
+//   },
+//   render: TabsWidget,
+// };
