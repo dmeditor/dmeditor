@@ -101,6 +101,11 @@ function registerWidgetRender(widgetName: string, widgetInstance: ComponentType<
   components[widgetName] = widgetInstance;
 }
 
+function registerWidget(definition: DMEditor.Widget, renderComponent: ComponentType<any> ){
+  registerWidgetDefinition(definition);
+  registerWidgetRender(definition.type, renderComponent);
+}
+
 export {
   addCustomDefinition,
   addLayoutDefinition,
@@ -113,6 +118,7 @@ export {
   layoutDefinition,
   customDefinition,
   getWidget,
+  registerWidget
 };
 
 export default widgetDefinition;
