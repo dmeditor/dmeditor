@@ -1,5 +1,5 @@
 import { registerSettingComponent, registerWidget } from '../../../src/core/index';
-import SampleInput from './SampleInput';
+import SettingInput from './SettingInput';
 import SampleWidget from './SampleWidget';
 
 const registerSampleWidget = function () {
@@ -18,7 +18,7 @@ const registerSampleWidget = function () {
         },
         {
           name: 'Width',
-          settingComponent: 'sampleInput',
+          settingComponent: 'setting_input',
           category: 'settings',
           property: 'settings.width',
         },
@@ -36,7 +36,7 @@ const registerSampleWidget = function () {
     },
     SampleWidget,
   );
-  registerSettingComponent('sampleInput', SampleInput);
+  registerSettingComponent('setting_input', SettingInput);
 };
 
 export default registerSampleWidget;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { nanoid } from 'nanoid';
 
 import { DMEditor } from '../../src/core/main/designer/DMEditor';
-import registerSampleWidget from './SampleWidget/register';
+import registerSampleWidget from './SampleWidget';
 registerSampleWidget();
 
 const { useState, useRef, useEffect } = React;
