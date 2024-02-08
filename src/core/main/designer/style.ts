@@ -53,7 +53,7 @@ export const EditContainer = styled.div`
 
 export const EditArea = styled.div`
   margin: auto;
-  height: 100%;
+  min-height: calc( 100vh - var(--dme-topbar-height) );
   max-width: 90%;
   border: 1px dashed #999999;
 `;
