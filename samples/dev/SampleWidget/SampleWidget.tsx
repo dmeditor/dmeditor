@@ -3,9 +3,17 @@ import { css } from '@emotion/css';
 import { Slider } from '@mui/material';
 
 import { useEditorStore } from 'Src/core/main/store';
+import { DMEData } from 'Src/core/types';
+
+interface EnitySampleWidget {
+  settings: {
+    width: number;
+    backgroundColor?: string;
+  };
+}
 
 interface ISampleWidgetProps {
-  blockNode: any;
+  blockNode: DMEData.Block & { data: EnitySampleWidget };
 }
 
 const { useState, useEffect } = React;
@@ -21,7 +29,6 @@ export const SampleWidget = (props: ISampleWidgetProps) => {
     setWidth(settings.width ?? 300);
   }, [settings.width]);
   const { updateSelectedBlockProps } = useEditorStore();
-  // const { updateSelectedBlockProps } = useEditor();
 
   return (
     <div>
@@ -31,7 +38,6 @@ export const SampleWidget = (props: ISampleWidgetProps) => {
         value={width}
         step={5}
         max={800}
-        //onChange={(e, v) => setWidth(v as number)}
         onChange={(e, v) => updateSelectedBlockProps('settings.width', v as number)}
       />
 
@@ -42,7 +48,6 @@ export const SampleWidget = (props: ISampleWidgetProps) => {
           background: ${settings.backgroundColor ?? '#ffe3e3'};
         `}
       >
-        {/* {props.blockdata.data} <br /> */}
         Width: {width}
       </div>
     </div>
