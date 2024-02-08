@@ -2,7 +2,7 @@ import {
   addCustomDefinition,
   addLayoutDefinition,
   addWidgetDefinition,
-  registerWidget,
+  registerWidgetRender,
 } from './components/widgets';
 import {
   registerCommonProperty,
@@ -20,7 +20,7 @@ const DMEditorToolKit = {
   addWidgetDefinition,
   addLayoutDefinition,
   addCustomDefinition,
-  registerWidget,
+  registerWidgetRender,
   registerPropertyComponent,
   registerCommonProperty,
   registerCustomProperty,

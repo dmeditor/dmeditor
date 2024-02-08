@@ -6,8 +6,8 @@ const {
   addWidgetDefinition,
   registerCommonProperty,
   registerCustomProperty,
-  registerWidget,
   registerPropertyComponent,
+  registerWidgetRender,
 } = DMEditorToolKit;
 
 const loaderWidget = function () {
@@ -51,7 +51,7 @@ const loaderWidget = function () {
     //   return { type: 'sample', data: 'This is a sample.', settings: {} };
     // },
   });
-  registerWidget('sample', SampleWidget);
+  registerWidgetRender('sample', SampleWidget);
   registerPropertyComponent('sampleInput', SampleInput);
 };
 

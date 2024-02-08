@@ -14,7 +14,7 @@ try {
     // reg ./grid/Grid.tsx to /grid(folder name)
     const name = path.replace(/\.\/(.*)\/render.tsx/, '$1');
     // components[name] = comp;
-    registerWidget(name, comp);
+    registerWidgetRender(name, comp);
   });
 } catch (e) {
   console.error(e);
@@ -93,7 +93,7 @@ function addCustomDefinition(widget: DMEditor.Widget) {
   customDefinition[widget.type] = widget;
 }
 
-function registerWidget(widgetName: string, widgetInstance: ComponentType<any>) {
+function registerWidgetRender(widgetName: string, widgetInstance: ComponentType<any>) {
   if (components[widgetName]) {
     console.warn(`Widget ${widgetName} is already registered.`);
     return;
@@ -106,7 +106,7 @@ export {
   addLayoutDefinition,
   addWidgetDefinition,
   getWidgetComponent,
-  registerWidget,
+  registerWidgetRender,
   properties,
   // widgetDefinition,
   widgetDefinition,
