@@ -13,7 +13,6 @@ try {
     const comp = modules(path).default;
     // reg ./grid/Grid.tsx to /grid(folder name)
     const name = path.replace(/\.\/(.*)\/render.tsx/, '$1');
-    // components[name] = comp;
     registerWidgetComponent(name, comp);
   });
 } catch (e) {
@@ -33,10 +32,7 @@ try {
     const widget = modules(path).default;
     const { category, settings, type } = widget;
 
-    //todo: handle duplicated registration. (eg. give a warning and override)
-    // if (widgetDefinition[type]) {
-    // }
-    // widgetDefinition[type] = widget;
+    //todo: handle duplicated registration. (eg. give a warning and override)   
 
     if (category === 'widget') {
       registerWidgetDefinition(widget);
