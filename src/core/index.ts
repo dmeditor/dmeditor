@@ -1,9 +1,6 @@
-import {
-  addCustomDefinition,
-  addLayoutDefinition,
-  registerWidget,
-} from './components/widgets';
-import {
+export { DMEditor } from 'Core/main/designer/DMEditor';
+export { addCustomDefinition, addLayoutDefinition, registerWidget } from './components/widgets';
+export {
   registerCommonProperty,
   registerCustomProperty,
   registerEventProperty,
@@ -11,19 +8,4 @@ import {
   registerWidgetProperty,
 } from './setting-panel/register';
 
-export { DMEditor } from 'Core/main/designer/DMEditor';
-
 export { BlockRender as DMRenderer } from 'Core/main/renderer/index';
-
-const DMEditorToolKit = {
-  addLayoutDefinition,
-  addCustomDefinition,
-  registerWidget,
-  registerSettingComponent,
-  registerCommonProperty,
-  registerCustomProperty,
-  registerEventProperty,
-  registerWidgetProperty,
-};
-
-export { DMEditorToolKit };

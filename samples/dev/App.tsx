@@ -2,7 +2,7 @@ import * as React from 'react';
 import { nanoid } from 'nanoid';
 
 import { DMEditor } from '../../src/core/main/designer/DMEditor';
-import loaderWidget from './local-loader/loader';
+import loaderWidget from './SampleWidget/loader';
 loaderWidget();
 
 const { useState, useRef, useEffect } = React;

@@ -1,8 +1,6 @@
-import { DMEditorToolKit } from '../../../src/core/index';
+import { registerSettingComponent, registerWidget } from '../../../src/core/index';
 import SampleInput from './SampleInput';
 import SampleWidget from './SampleWidget';
-
-const { registerSettingComponent, registerWidget } = DMEditorToolKit;
 
 const loaderWidget = function () {
   registerWidget(
