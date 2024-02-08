@@ -3,7 +3,7 @@ import SampleInput from './SampleInput';
 import SampleWidget from './SampleWidget';
 
 const {
-  addWidgetDefinition,
+  registerWidgetDefinition,
   registerCommonProperty,
   registerCustomProperty,
   registerPropertyComponent,
@@ -11,7 +11,7 @@ const {
 } = DMEditorToolKit;
 
 const loaderWidget = function () {
-  addWidgetDefinition({
+  registerWidgetDefinition({
     type: 'sample',
     name: 'Sample widget',
     category: 'widget',

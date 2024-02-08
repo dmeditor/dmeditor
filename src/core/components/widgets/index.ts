@@ -39,7 +39,7 @@ try {
     // widgetDefinition[type] = widget;
 
     if (category === 'widget') {
-      addWidgetDefinition(widget);
+      registerWidgetDefinition(widget);
     } else if (category === 'layout') {
       addLayoutDefinition(widget);
     } else if (category === 'custom') {
@@ -69,7 +69,7 @@ const getWidget = (type: string): DMEditor.Widget | null => {
   return def ? def : null;
 };
 
-function addWidgetDefinition(widget: DMEditor.Widget) {
+function registerWidgetDefinition(widget: DMEditor.Widget) {
   if (widgetDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -104,7 +104,7 @@ function registerWidgetRender(widgetName: string, widgetInstance: ComponentType<
 export {
   addCustomDefinition,
   addLayoutDefinition,
-  addWidgetDefinition,
+  registerWidgetDefinition,
   getWidgetComponent,
   registerWidgetRender,
   properties,

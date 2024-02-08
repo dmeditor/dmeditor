@@ -1,7 +1,7 @@
 import {
   addCustomDefinition,
   addLayoutDefinition,
-  addWidgetDefinition,
+  registerWidgetDefinition,
   registerWidgetRender,
 } from './components/widgets';
 import {
@@ -17,7 +17,7 @@ export { DMEditor } from 'Core/main/designer/DMEditor';
 export { BlockRender as DMRenderer } from 'Core/main/renderer/index';
 
 const DMEditorToolKit = {
-  addWidgetDefinition,
+  registerWidgetDefinition,
   addLayoutDefinition,
   addCustomDefinition,
   registerWidgetRender,
