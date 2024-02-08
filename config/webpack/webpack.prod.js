@@ -15,8 +15,8 @@ module.exports = merge(baseConfig, {
   entry: './src/core/index',
   target: 'web',
   output: {
-    filename: 'dmeditor.min.js',
-    path: resolve('./dist/lib'),
+    filename: 'index.js',
+    path: resolve('./dist'),
     library: {
       type: 'module',
     },

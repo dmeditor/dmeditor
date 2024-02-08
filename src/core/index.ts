@@ -1,3 +1,5 @@
+export { useEditorStore } from './main/store';
+
 export { DMEditor } from 'Core/main/designer/DMEditor';
 export { addCustomDefinition, addLayoutDefinition, registerWidget } from './components/widgets';
 export {
