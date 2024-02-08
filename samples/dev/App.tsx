@@ -2,8 +2,8 @@ import * as React from 'react';
 import { nanoid } from 'nanoid';
 
 import { DMEditor } from '../../src/core/main/designer/DMEditor';
-import loaderWidget from './SampleWidget/loader';
-loaderWidget();
+import registerSampleWidget from './SampleWidget/register';
+registerSampleWidget();
 
 const { useState, useRef, useEffect } = React;
 

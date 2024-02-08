@@ -2,7 +2,7 @@ import { registerSettingComponent, registerWidget } from '../../../src/core/inde
 import SampleInput from './SampleInput';
 import SampleWidget from './SampleWidget';
 
-const loaderWidget = function () {
+const registerSampleWidget = function () {
   registerWidget(
     {
       type: 'sample',
@@ -39,4 +39,4 @@ const loaderWidget = function () {
   registerSettingComponent('sampleInput', SampleInput);
 };
 
-export default loaderWidget;
+export default registerSampleWidget;
