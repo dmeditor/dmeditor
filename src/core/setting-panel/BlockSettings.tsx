@@ -113,10 +113,10 @@ export const BlockSettings = (props: {
           if (setting.custom) {
             return <Property key={selectedBlockIndex} {...setting} />;
           } else {
-            const settingType = setting.settingType;
+            const settingComponent = setting.settingComponent;
             // const value = getValueByPath(setting.property, selectedBlock?.data);
             const value = getPropertyValue(setting.property, selectedBlock?.data);
-            return settingType ? (
+            return settingComponent ? (
               <PropertyItem label={setting.name} key={setting.property}>
                 <Property {...{ ...setting, value: value }} />
               </PropertyItem>

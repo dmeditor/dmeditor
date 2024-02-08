@@ -7,9 +7,9 @@ const Components: {
     | React.ComponentType<unknown>;
 } = {};
 
-const widgetPropertySetting = (settingType: string) => {
+const widgetPropertySetting = (settingComponent: string) => {
   // widgetName = 'margin-top' converted to MarginTop
-  let componentName = settingType;
+  let componentName = settingComponent;
   const convertToCamelCase = (str: string) => {
     return str
       .split('-')
@@ -29,13 +29,13 @@ const widgetPropertySetting = (settingType: string) => {
   // register component
   // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));
   // Components[settingType] = React.lazy(() => import(`./${settingType}/${componentName}`));
-  if (!isPropertyRegistered(settingType)) {
+  if (!isPropertyRegistered(settingComponent)) {
     registerSettingComponent(
-      settingType,
-      React.lazy(() => import(`./${settingType}/${componentName}`)),
+      settingComponent,
+      React.lazy(() => import(`./${settingComponent}/${componentName}`)),
     );
   }
-  return Components[settingType];
+  return Components[settingComponent];
 };
 
 // isPropertyComponentRegistered('margin-top');
@@ -72,8 +72,8 @@ function getAllSettingComponents() {
   return Components;
 }
 
-const Property = ({ settingType, ...rest }: { settingType: string }) => {
-  const Component = widgetPropertySetting(settingType);
+const Property = ({ settingComponent, ...rest }: { settingComponent: string }) => {
+  const Component = widgetPropertySetting(settingComponent);
   return (
     <React.Suspense fallback="Loading...">
       <Component {...rest} />

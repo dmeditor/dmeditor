@@ -12,13 +12,13 @@ const registerSampleWidget = function () {
       settings: [
         {
           name: 'Background Color',
-          settingType: 'color',
+          settingComponent: 'color',
           category: 'settings',
           property: 'settings.backgroundColor',
         },
         {
           name: 'Width',
-          settingType: 'sampleInput',
+          settingComponent: 'sampleInput',
           category: 'settings',
           property: 'settings.width',
         },
