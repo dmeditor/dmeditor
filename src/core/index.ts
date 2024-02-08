@@ -7,7 +7,7 @@ import {
   registerCommonProperty,
   registerCustomProperty,
   registerEventProperty,
-  registerPropertyComponent,
+  registerSettingComponent,
   registerWidgetProperty,
 } from './setting-panel/register';
 
@@ -19,7 +19,7 @@ const DMEditorToolKit = {
   addLayoutDefinition,
   addCustomDefinition,
   registerWidget,
-  registerPropertyComponent,
+  registerSettingComponent,
   registerCommonProperty,
   registerCustomProperty,
   registerEventProperty,

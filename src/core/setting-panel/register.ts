@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { isUndefinedOrNull } from '../utils';
-import { registerPropertyComponent } from './property-setting/property-item';
+import { registerSettingComponent } from './property-setting/property-item';
 
 /**
  * properties register: common, widget, custom, event
@@ -109,7 +109,7 @@ export {
   registerCommonProperty,
   registerEventProperty,
   registerWidgetProperty,
-  registerPropertyComponent,
+  registerSettingComponent,
   isRegisteredProperties,
   isRegisteredCommonProperty,
   isRegisteredCustomProperty,

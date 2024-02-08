@@ -30,7 +30,7 @@ const widgetPropertySetting = (settingType: string) => {
   // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));
   // Components[settingType] = React.lazy(() => import(`./${settingType}/${componentName}`));
   if (!isPropertyRegistered(settingType)) {
-    registerPropertyComponent(
+    registerSettingComponent(
       settingType,
       React.lazy(() => import(`./${settingType}/${componentName}`)),
     );
@@ -50,7 +50,7 @@ function isPropertyRegistered(propName: string) {
   return !!Components[propName];
 }
 
-function registerPropertyComponent(
+function registerSettingComponent(
   propName: string,
   componentInstance: React.ComponentType<any>,
 ) {
@@ -81,5 +81,5 @@ const Property = ({ settingType, ...rest }: { settingType: string }) => {
   );
 };
 
-export { getAllPropertyComponents, getPropertyComponent, registerPropertyComponent };
+export { getAllPropertyComponents, getPropertyComponent, registerSettingComponent };
 export default memo(Property);

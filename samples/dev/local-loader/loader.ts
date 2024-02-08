@@ -2,7 +2,7 @@ import { DMEditorToolKit } from '../../../src/core/index';
 import SampleInput from './SampleInput';
 import SampleWidget from './SampleWidget';
 
-const { registerPropertyComponent, registerWidget } = DMEditorToolKit;
+const { registerSettingComponent, registerWidget } = DMEditorToolKit;
 
 const loaderWidget = function () {
   registerWidget(
@@ -38,7 +38,7 @@ const loaderWidget = function () {
     },
     SampleWidget,
   );
-  registerPropertyComponent('sampleInput', SampleInput);
+  registerSettingComponent('sampleInput', SampleInput);
 };
 
 export default loaderWidget;
