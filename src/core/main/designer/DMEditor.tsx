@@ -40,6 +40,7 @@ import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } f
 import { DMEData } from 'Src/core/components/types/block';
 import { BlockListRender } from 'Src/core/main/renderer';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
+import { registerDefaultWidgets } from 'Src/core/components/widgets';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
@@ -72,6 +73,8 @@ export interface DMEditorViewProps {
   // getFileUrl?: (path: string) => string;
   // getImageUrl?: (path: string) => string;
 }
+
+registerDefaultWidgets();
 
 export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   // const [blocks, setBlocks] = useState(props.data ? [...props.data] : []);

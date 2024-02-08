@@ -14,7 +14,7 @@ import {
 import { nanoid } from 'nanoid';
 
 // import { HeadingMetaData } from 'Components/widgets/Heading';
-import { HeadingWidget } from '../components/widgets/heading';
+import HeadingWidget from '../components/widgets/heading/definition';
 import { simpleCloneDeep } from './util';
 import { BlockData } from 'Src/ToolDefinition';
 

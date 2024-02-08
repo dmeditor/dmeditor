@@ -1,3 +1,7 @@
-import { toolBlockTab } from './render';
+import DMTabs from './render';
+import TabsWidget from './definition';
+import { registerWidget } from '..';
 
-export { toolBlockTab }
+export default ()=>{
+    registerWidget(TabsWidget, DMTabs);
+}
