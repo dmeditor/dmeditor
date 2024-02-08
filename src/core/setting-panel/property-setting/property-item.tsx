@@ -65,10 +65,10 @@ function registerSettingComponent(
   Components[propName] = componentInstance;
 }
 
-function getPropertyComponent(propName: string) {
+function getSettingComponent(propName: string) {
   return Components[propName];
 }
-function getAllPropertyComponents() {
+function getAllSettingComponents() {
   return Components;
 }
 
@@ -81,5 +81,5 @@ const Property = ({ settingType, ...rest }: { settingType: string }) => {
   );
 };
 
-export { getAllPropertyComponents, getPropertyComponent, registerSettingComponent };
+export { getAllSettingComponents, getSettingComponent, registerSettingComponent };
 export default memo(Property);
