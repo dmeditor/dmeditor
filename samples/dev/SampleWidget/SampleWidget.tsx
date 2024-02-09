@@ -1,16 +1,10 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
 import { Slider } from '@mui/material';
-import { useEditorStore } from 'Src/core/main/store';
 import { DME, DMEData } from 'Src/core/types';
 const { useState, useEffect } = React;
-
-export interface EntitySampleWidget{
-  settings: {
-    width: number;
-    backgroundColor?: string;
-  };
-}
+import {EntitySampleWidget} from './entity';
+import { useEditorStore } from 'Src/core';
 
 export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) => {
   const {
@@ -18,14 +12,18 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
       data: { settings },
     },
   } = props;
+
   const [width, setWidth] = useState(settings.width ?? 300);
+
   useEffect(() => {
     setWidth(settings.width ?? 300);
   }, [settings.width]);
-  const { updateSelectBlock } = useEditorStore();
+
+
+  const { updateSelectedBlock } = useEditorStore();
 
   const updateWidth = (e, v)=>{
-    updateSelectBlock<EntitySampleWidget>((data) => {
+    updateSelectedBlock<EntitySampleWidget>((data) => {
       data.settings.width = v as number;
     })
   }

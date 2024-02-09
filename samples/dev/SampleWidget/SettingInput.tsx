@@ -2,8 +2,8 @@ import * as React from 'react';
 import { TextField } from '@mui/material';
 import { DME } from 'Src/core/types';
 
-import { useEditorStore } from 'Src/core/main/store';
-import { EntitySampleWidget } from './SampleWidget';
+import { EntitySampleWidget } from './entity';
+import { useEditorStore } from 'Src/core';
 
 const SettingInput = (props: DME.SettingComponentProps) => {
   const { property, value } = props;

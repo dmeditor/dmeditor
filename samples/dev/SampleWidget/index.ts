@@ -1,6 +1,6 @@
-import { registerSettingComponent, registerWidget } from '../../../src/core/index';
 import SettingInput from './SettingInput';
-import SampleWidget, { EntitySampleWidget } from './SampleWidget';
+import SampleWidget from './SampleWidget';
+import { registerSettingComponent, registerWidget } from 'Src/core';
 
 const registerSampleWidget = function () {
   registerWidget(
