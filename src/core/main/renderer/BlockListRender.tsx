@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@mui/material';
 
 import { AddBlockPosition, useEditorStore } from '../store';
@@ -12,6 +12,7 @@ interface BlockListProps {
   data: DMEData.BlockList;
   selected: number;
   pathArray:Array<number>;
+  withContainer?: boolean;
   columns?: number;
   active?: boolean;
   settings?: {
@@ -63,8 +64,12 @@ export const BlockListRender = (props: BlockListProps) => {
     </AddingMessage>
   }
 
-  return (
-    <BlockListStyle className="dme-blocklist">
+  const renderContainer = (children:React.ReactNode)=>{
+    return <BlockListStyle className="dme-blocklist">{children}</BlockListStyle>
+  }
+
+  const renderList = ()=>{
+    return <>
       {props.data.map((blockData: DMEData.Block, index: number) => (
       <>
         {addingStatus === 'started' && index === selectedBlockIndex && position === 'before' && (
@@ -97,6 +102,8 @@ export const BlockListRender = (props: BlockListProps) => {
         )}
       </>
       ))}
-    </BlockListStyle>
-  );
+    </>
+  }
+
+  return props.withContainer?renderContainer(renderList()):renderList();
 };

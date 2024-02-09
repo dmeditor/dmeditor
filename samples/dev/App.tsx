@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 
 import registerSampleWidget from './SampleWidget';
 import { DMEditor } from 'Src/core';
+
 registerSampleWidget();
 
 const { useRef, useEffect } = React;
@@ -17,7 +18,7 @@ const App = () => {
         value: 'This is a heading',
         level: 2,
         settings: {
-          align: 'left'
+          align: 'left',
           // value: '',
         },
       },
@@ -29,11 +30,47 @@ const App = () => {
         value: 'This is a heading 2',
         level: 2,
         settings: {
-          align: 'right'
+          align: 'right',
           // value: '',
         },
       },
       type: 'heading',
+    },
+    {
+      id: `widget-${nanoid()}`,
+      data: {
+        columns: 3,
+      },
+      type: 'grid',
+      children: [
+        {
+          id: `widget-${nanoid()}`,
+          data: {
+            value: 'This is a heading 1 ',
+            level: 2,
+            settings:{},
+          },
+          type: 'heading',
+        },
+        {
+          id: `widget-${nanoid()}`,
+          data: {
+            value: 'This is a heading 2',
+            level: 2,
+            settings:{},
+          },
+          type: 'heading',
+        },
+        {
+          id: `widget-${nanoid()}`,
+          data: {
+            value: 'This is a heading 3',
+            level: 2,
+            settings:{},
+          },
+          type: 'heading',
+        },
+      ],
     },
   ];
   useEffect(() => {

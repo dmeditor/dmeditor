@@ -1,3 +1,9 @@
-import { ContainerGrid } from "./Grid";
+import { registerWidget } from "..";
+import gridWidget from "./definition";
+import { Grid } from "./Grid";
 
-export { ContainerGrid };
+const register = () =>{
+    registerWidget(gridWidget, Grid )
+}
+
+export default register ;
