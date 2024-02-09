@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
 import { Slider } from '@mui/material';
-
 import { useEditorStore } from 'Src/core/main/store';
 import { DME, DMEData } from 'Src/core/types';
+const { useState, useEffect } = React;
 
 export interface EntitySampleWidget extends DMEData.DefaultDataType{
   settings: {
@@ -12,7 +12,6 @@ export interface EntitySampleWidget extends DMEData.DefaultDataType{
   };
 }
 
-const { useState, useEffect } = React;
 export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) => {
   const {
     blockNode: {
@@ -25,6 +24,12 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
   }, [settings.width]);
   const { updateSelectBlock } = useEditorStore();
 
+  const updateWidth = (e, v)=>{
+    updateSelectBlock<EntitySampleWidget>((data) => {
+      data.settings.width = v as number;
+    })
+  }
+
   return (
     <div>
       <Slider
@@ -33,11 +38,7 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
         value={width}
         step={5}
         max={800}
-        onChange={(e, v) =>
-          updateSelectBlock<EntitySampleWidget>((data) => {
-            data.settings.width = v as number;
-          })
-        }
+        onChange={updateWidth}
       />
 
       <div
