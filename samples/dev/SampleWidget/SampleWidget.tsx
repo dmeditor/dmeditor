@@ -5,7 +5,7 @@ import { useEditorStore } from 'Src/core/main/store';
 import { DME, DMEData } from 'Src/core/types';
 const { useState, useEffect } = React;
 
-export interface EntitySampleWidget extends DMEData.DefaultDataType{
+export interface EntitySampleWidget{
   settings: {
     width: number;
     backgroundColor?: string;
