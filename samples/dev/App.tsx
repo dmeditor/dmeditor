@@ -5,7 +5,7 @@ import registerSampleWidget from './SampleWidget';
 import { DMEditor } from 'Src/core';
 registerSampleWidget();
 
-const { useRef } = React;
+const { useRef, useEffect } = React;
 
 const App = () => {
   const editorRef = useRef(null);
