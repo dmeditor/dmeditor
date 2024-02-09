@@ -1,7 +1,7 @@
 import type { EntityTabsBlock } from './entity';
-import type { DMEditor } from 'Core/types';
+import type { DME } from 'Core/types';
 
-const TabsWidget: DMEditor.Widget = {
+const TabsWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'widget',
   icon: 'TextFormatOutlined',

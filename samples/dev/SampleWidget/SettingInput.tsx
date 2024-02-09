@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { TextField } from '@mui/material';
+import { DME } from 'Src/core/types';
 
 import { useEditorStore } from 'Src/core/main/store';
+import { EntitySampleWidget } from './SampleWidget';
 
-const SettingInput = (props: { property: string; value: number }) => {
+const SettingInput = (props: DME.SettingComponentProps) => {
   const { property, value } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+  const { getSelectedBlock, updateSelectedBlockProps } = useEditorStore();
+
+  const blockData = getSelectedBlock<EntitySampleWidget>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateSelectedBlockProps(property, e.target.value);
@@ -14,6 +18,7 @@ const SettingInput = (props: { property: string; value: number }) => {
   return (
     <div>
       <TextField onChange={handleChange} value={value} />
+      Color: {blockData?.data.settings.backgroundColor}
     </div>
   );
 };

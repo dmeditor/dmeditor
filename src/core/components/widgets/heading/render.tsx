@@ -4,7 +4,7 @@ import { TitleOutlined } from '@mui/icons-material';
 import { BlockListRender } from '../../../main/renderer';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { EntityHeadingBlock } from './entity';
-import type { DMEData } from 'Core/types';
+import type { DMEData, DME } from 'Core/types';
 import useHeadingStore from 'Src/core/setting-panel/store/heading';
 import { isHTMLElement } from 'Src/core/utils';
 
@@ -24,11 +24,9 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
     restProps.children,
   );
 };
-interface HeadingProps {
-  blockNode: DMEData.Block & { data: EntityHeadingBlock };
-}
+
 // const Heading = ({ align, level }: { align: string; level: number }) => {
-const Heading = (props: HeadingProps) => {
+const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
   const blockNode = props.blockNode;
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {
@@ -63,7 +61,5 @@ const Heading = (props: HeadingProps) => {
     </div>
   );
 };
-
-Heading.displayName = 'heading';
 
 export default Heading;

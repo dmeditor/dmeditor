@@ -52,7 +52,7 @@ export const BlockSettings = (props: {
   //   () => getSelectedBlock(props.selectedBlockIndex),
   //   [props.selectedBlockIndex],
   // );
-  const selectedBlock = getSelectedBlock(props.selectedBlockIndex);
+  const selectedBlock = getSelectedBlock();
 
   const selectedWidget = useMemo(() => getWidget(selectedBlock?.type || ''), [selectedBlock?.type]);
 

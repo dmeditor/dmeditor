@@ -1,6 +1,6 @@
 import { registerSettingComponent, registerWidget } from '../../../src/core/index';
 import SettingInput from './SettingInput';
-import SampleWidget from './SampleWidget';
+import SampleWidget, { EntitySampleWidget } from './SampleWidget';
 
 const registerSampleWidget = function () {
   registerWidget(
@@ -24,7 +24,7 @@ const registerSampleWidget = function () {
         },
       ],
       events: {
-        createBlock: () => ({
+        createBlock:() => ({
           level: 2,
           settings: {
             width: 100,

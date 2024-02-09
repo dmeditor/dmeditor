@@ -1,4 +1,4 @@
-export namespace DMEditor {
+export namespace DME {
   interface Setting {
     property: string;
     name: string;
@@ -25,7 +25,7 @@ export namespace DMEditor {
       //   onBlur: () => void 0,
       updateData: (settings: Setting, data: DMEData.Block) => void;
       //when create an emtpy block
-      createBlock: () => unknown;
+      createBlock: () => unknown; //todo: use type instead of unknown
 
       //validate data
       validate?: (data: any) => boolean;
@@ -34,22 +34,35 @@ export namespace DMEditor {
     settings: Array<Setting>;
   }
   export interface Block extends Widget {}
+
+  export interface WidgetRenderProps<Type=DMEData.DefaultDataType>{
+    blockNode: DMEData.Block<Type>,
+    active:boolean,
+    adding:boolean
+  }
+
+  export interface SettingComponentProps<T=unknown> extends Setting{
+    value?:T //if custom is true, value will be not set
+  }
 }
 
 export namespace DMEData {
   export interface BlockStyle {}
 
-  //Block entity, which is a node in the data tree
-  export interface Block {
-    id?: string;
-    type: string; //can use type for internal
-    parent?: Block;
-    data: {
+  export interface DefaultDataType{
       settings: {
         [index: string]: string | number;
       };
       [index: string]: string | number | Record<string, string | number>;
-    }; //entity data from widget
+  }
+  
+
+  //Block entity, which is a node in the data tree
+  export interface Block<TData=DefaultDataType> {
+    id?: string;
+    type: string; //can use type for internal
+    parent?: Block;
+    data: TData; //entity data from widget
     style?: BlockStyle;
     children?: Array<Block>;
   }
@@ -58,5 +71,5 @@ export namespace DMEData {
   export interface BlockList extends Array<Block> {}
 
   //A section is alias of a block
-  type Section = Block;
+  // type Section = Block;
 }

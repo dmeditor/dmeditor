@@ -36,13 +36,15 @@ type Actions = {
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
-  getSelectedBlock: (index: number) => DMEData.Block | undefined;
+  getSelectedBlock: <T=DMEData.Block<DMEData.DefaultDataType>>() => DMEData.Block<T> | undefined;
+  getBlock: <T=DMEData.Block<DMEData.DefaultDataType>>(index:number) => DMEData.Block<T> | undefined;
   removeBlock: (widget: ReactNode) => void;
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => void;
   getCurrentList: () => DMEData.BlockList;
   getParents: () => Array<DMEData.Block>; //get parent Block from top to down, based on currentListPath
+  updateSelectBlock:<Type=DMEData.DefaultDataType>(callback: (blockData: Type)=>void)=>void;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
@@ -146,7 +148,12 @@ const useEditorStore = create<Store & Actions>()(
         return flag;
       });
     },
-    getSelectedBlock: (index: number) => {
+    getSelectedBlock: <T>() => {
+      const state = get();
+      const index = state.selected.blockIndex;
+      return state.getBlock(index);
+    },
+    getBlock: <T>(index:number)=>{
       const state = get();
       const currentList = state.getCurrentList();
       if (isStrictlyInfinity(index) || index < 0 || currentList.length <= index) {
@@ -157,7 +164,7 @@ const useEditorStore = create<Store & Actions>()(
         state.clearSelected();
         return;
       }
-      return state.storage[index];
+      return state.storage[index] as (DMEData.Block<T>);
     },
     removeBlock: (block: ReactNode) =>
       set((state) => {
@@ -219,6 +226,13 @@ const useEditorStore = create<Store & Actions>()(
         console.log(index);
       });
     },
+    updateSelectBlock:<Type=DMEData.DefaultDataType>(callback: (blockData: Type)=>void)=>{
+      set((state) => {       
+        const data = state.storage[state.selected.blockIndex]['data'];
+        callback(data as Type);
+        // state.storage[state.selected.blockIndex]['data'] = data;
+      })
+    },
     updateSelectedBlockProps: (propName: string, propValue: string | number) => {
       set((state) => {
         if (!propName) {
@@ -226,7 +240,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        const block = state.getSelectedBlock(state.selected.blockIndex);
+        const block = state.getSelectedBlock();
         if (!block) {
           console.error('Block not found');
           return;

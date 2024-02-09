@@ -22,8 +22,8 @@ export type BlockInfo = {
   settings?: any;
 };
 
-interface BlockProps {
-  data: DMEData.Block;
+interface BlockProps<Type=DMEData.DefaultDataType> {
+  data: DMEData.Block<Type>;
   active?: boolean;
   onActivate?: () => void;
   onAddAbove?: (type: string, template?: string) => void;

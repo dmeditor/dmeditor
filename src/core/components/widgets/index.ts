@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import type { DMEditor } from 'Core/types';
+import type { DME, DMEData } from 'Core/types';
 
 const components: {
   // TODO: make it more type safe
@@ -33,11 +33,11 @@ const registerDefaultWidgets = ()=>{
 }
 
 const properties: string[] = [];
-const widgetDefinition: { [key: string]: DMEditor.Widget } = {};
+const widgetDefinition: { [key: string]: DME.Widget } = {};
 
 // const widgetDefinition: Widget[] = [];
-const layoutDefinition: { [key: string]: DMEditor.Widget } = {};
-const customDefinition: { [key: string]: DMEditor.Widget } = {};
+const layoutDefinition: { [key: string]: DME.Widget } = {};
+const customDefinition: { [key: string]: DME.Widget } = {};
 // try {
 //   const modules = require.context('./', true, /definition.ts$/);
 //   modules.keys().forEach((path: string) => {
@@ -73,12 +73,12 @@ const getWidgetComponent = (type: string): any => {
 };
 
 //get widget information/definiton/meta data
-const getWidget = (type: string): DMEditor.Widget | null => {
+const getWidget = (type: string): DME.Widget | null => {
   const def = widgetDefinition[type];
   return def ? def : null;
 };
 
-function registerWidgetDefinition(widget: DMEditor.Widget) {
+function registerWidgetDefinition(widget: DME.Widget) {
   if (widgetDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -86,7 +86,7 @@ function registerWidgetDefinition(widget: DMEditor.Widget) {
   widgetDefinition[widget.type] = widget;
 }
 
-function addLayoutDefinition(widget: DMEditor.Widget) {
+function addLayoutDefinition(widget: DME.Widget) {
   if (layoutDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -94,7 +94,7 @@ function addLayoutDefinition(widget: DMEditor.Widget) {
   layoutDefinition[widget.type] = widget;
 }
 
-function addCustomDefinition(widget: DMEditor.Widget) {
+function addCustomDefinition(widget: DME.Widget) {
   if (customDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -110,7 +110,7 @@ function registerWidgetComponent(widgetName: string, widgetInstance: ComponentTy
   components[widgetName] = widgetInstance;
 }
 
-function registerWidget(definition: DMEditor.Widget, renderComponent: ComponentType<any> ){
+function registerWidget(definition: DME.Widget, renderComponent:ComponentType<any> ){
   registerWidgetDefinition(definition);
   registerWidgetComponent(definition.type, renderComponent);
 }

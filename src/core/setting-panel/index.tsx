@@ -32,8 +32,8 @@ const SettingPanel = (props) => {
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
 
   const currentList = getCurrentList();
-  // const selectedBlock = useMemo(() => getSelectedBlock(selectedBlockIndex), [selectedBlockIndex]);
-  const selectedBlock = getSelectedBlock(selectedBlockIndex);
+  // const selectedBlock = useMemo(() => getSelectedBlock(), [selectedBlockIndex]);
+  const selectedBlock = getSelectedBlock();
 
   const updatePath = () => {
     const pathArray: Array<PathItem> = [{ text: 'Page', id: 'page' }];
