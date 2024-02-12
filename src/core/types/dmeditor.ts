@@ -25,7 +25,7 @@ export namespace DME {
       //   onBlur: () => void 0,
       updateData: (settings: Setting, data: DMEData.Block) => void;
       //when create an emtpy block
-      createBlock: () => unknown; //todo: use type instead of unknown
+      createBlock: () => DMEData.Block<any>;
 
       //validate data
       validate?: (data: any) => boolean;
@@ -42,7 +42,7 @@ export namespace DME {
     inlineStyle?: string;
     enabled_settings: Array<string>;
     allowed_widgets?: Array<string|unknown>; //can be sub widget inside
-    defaultData?: unknown
+    getDefaultData?: ()=> DMEData.Block<unknown>
   }
   
   export interface Block extends Widget {}

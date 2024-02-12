@@ -26,6 +26,8 @@ const widgetPropertySetting = (settingComponent: string) => {
   } else {
     componentName = componentName[0].toUpperCase() + componentName.slice(1);
   }
+
+  console.log(componentName);
   // register component
   // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));
   // Components[settingType] = React.lazy(() => import(`./${settingType}/${componentName}`));

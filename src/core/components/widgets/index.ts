@@ -117,7 +117,7 @@ function registerWidget(definition: DME.Widget, renderComponent:ComponentType<an
 }
 
 //variant of a widget, eg. article-overview is a list with heading, image, link
-const widgetVariants: { [key:string]: {[key: string]: DME.WidgetVariant}} = {};
+export const widgetVariants: { [key:string]: {[key: string]: DME.WidgetVariant}} = {};
 
 function registerWidgetVariant(variant: DME.WidgetVariant){
     const widgetIdentifier = variant.widget;

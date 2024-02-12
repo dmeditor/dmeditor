@@ -1,6 +1,10 @@
-import SettingInput from './SettingInput';
+import { nanoid } from 'nanoid';
+
 import SampleWidget from './SampleWidget';
+import SettingInput from './SettingInput';
 import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'Src/core';
+import { getWidget, getWidgetVariant } from 'Src/core/components/widgets';
+import { DMEData } from 'Src/core/types';
 
 const registerSampleWidget = function () {
   registerWidget(
@@ -24,7 +28,7 @@ const registerSampleWidget = function () {
         },
       ],
       events: {
-        createBlock:() => ({
+        createBlock: () => ({
           level: 2,
           settings: {
             width: 100,
@@ -38,19 +42,46 @@ const registerSampleWidget = function () {
   );
   registerSettingComponent('setting_input', SettingInput);
 
-  registerWidgetVariant(
-  {
-      widget: 'heading',
-      identifier: 'gradient',
-      name: 'Gradient heading',
-      style:{align:'center', space: 'big-space'},
-      enabled_settings:['settings.color'],
-      defaultData:{
-          value: 'Good',
-          level: 2
+  registerWidgetVariant({
+    widget: 'heading',
+    identifier: 'gradient',
+    name: 'Gradient heading',
+    style: { align: 'center', space: 'big-space' },
+    enabled_settings: ['settings.color'],
+    getDefaultData: () => {
+      return {
+        id: nanoid(),
+        type: 'heading:gradient',
+        data: { value: 'Gradient heading', level: 3, settings: {color:'red'} },
+      };
+    },
+  });
+
+  registerWidgetVariant({
+    widget: 'list',
+    identifier: 'article-block',
+    name: 'Article block',
+    style: { align: 'center', space: 'big-space' },
+    enabled_settings: [],
+    allowed_widgets: ['heading:gradient'],
+    //todo: use property?
+    getDefaultData: (): DMEData.Block<any> => {
+      const variant = getWidgetVariant('heading', 'gradient');
+      let variantData: any = [];
+      if (variant && variant.getDefaultData) {
+        variantData = [variant.getDefaultData()];
       }
-  }
-  )
+
+      const headingData = [getWidget('heading')?.events.createBlock()]||[];
+      return {
+        id: nanoid(),
+        type: 'list:article-block',
+        data: { settings: {} },
+        children: [...headingData, ...variantData],
+      };
+    },
+  });
+  
 };
 
 export default registerSampleWidget;

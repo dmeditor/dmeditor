@@ -1,5 +1,7 @@
+import { DMEData } from 'Core/types';
 import { DME } from "Src/core/types";
 import { EntityGrid } from "./entity";
+import { nanoid } from 'nanoid';
 
 const gridWidget: DME.Widget = {
     // ?category options: widget, layout, form, chart, advanced
@@ -8,9 +10,13 @@ const gridWidget: DME.Widget = {
     name: 'Grid',
     type: 'grid',
     events: {
-      createBlock: (): EntityGrid => {
+      createBlock: (): DMEData.Block<EntityGrid> => {
         return {
-          columns: 3
+          id: nanoid(),
+          type: 'grid',
+          data: {
+            columns: 3
+          }
         };
       },
       updateData: () => {},

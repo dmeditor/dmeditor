@@ -1,7 +1,9 @@
 // import { widgetMetaData } from 'Components/types';
 
+import { nanoid } from 'nanoid';
+
 import { EntityHeadingBlock } from './entity';
-import type { DMEData, DME } from 'Core/types';
+import type { DME, DMEData } from 'Core/types';
 import { generateCommonBlockData } from 'Src/core/utils/utilx';
 
 //should be HeadingWidget, which is a definition object. This file should be called definitin.ts
@@ -13,13 +15,17 @@ const HeadingWidget: DME.Widget = {
   name: 'Heading',
   type: 'heading',
   events: {
-    createBlock: (): EntityHeadingBlock => {
+    createBlock: (): DMEData.Block<EntityHeadingBlock> => {
       return {
-        value: 'This is a new block',
-        level: 2,
-        settings: {
-          align: 'left',
-          color: '#000000',
+        id: nanoid(),
+        type: 'heading',
+        data: {
+          value: 'This is a new block',
+          level: 2,
+          settings: {
+            align: 'left',
+            color: '#000000',
+          },
         },
       };
     },
@@ -40,7 +46,12 @@ const HeadingWidget: DME.Widget = {
       category: 'block',
       property: 'settings.background-color',
     },
-    { name: 'Text color', settingComponent: 'color', category: 'settings', property: 'settings.color' },
+    {
+      name: 'Text color',
+      settingComponent: 'color',
+      category: 'settings',
+      property: 'settings.color',
+    },
     { name: 'Border', settingComponent: 'color', category: 'block', property: 'settings.border' },
     { name: 'Padding', settingComponent: 'range', category: 'block', property: 'settings.padding' },
     { name: 'Margin', settingComponent: 'range', category: 'block', property: 'settings.margin' },

@@ -58,6 +58,9 @@ export const BlockListRender = (props: BlockListProps) => {
   }
 
   return <>   
+    {props.blockData.length===0&&<div>
+      <Button onClick={()=>addAfter(0)}>Add widget</Button>  
+    </div>}
     {props.blockData.map((blockData: DMEData.Block, index: number) => (
     <>
       {addingStatus === 'started' && index === selectedBlockIndex && position === 'before' && (

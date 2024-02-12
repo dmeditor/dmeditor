@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { customDefinition, layoutDefinition, widgetDefinition } from '../widgets';
+import { customDefinition, layoutDefinition, widgetDefinition, widgetVariants } from '../widgets';
 
 //internal css: emotion
 //extendable css: class - dme-block-text
@@ -34,7 +34,7 @@ const moreWidget = css`
 `;
 
 interface WidgetListProps {
-  onSelect: (type: string) => void;
+  onSelect: (type: string, variant?:string) => void;
 }
 
 export const WidgetList = (props: WidgetListProps) => {
@@ -73,6 +73,26 @@ export const WidgetList = (props: WidgetListProps) => {
             {definitions[widgetType].name}
           </div>
         </div>
+      ))}
+
+      {Object.keys(widgetVariants).map(widget=>Object.keys(widgetVariants[widget]).map((variant)=>
+      <div className={itemStyle} onClick={() => props.onSelect(widget, variant)}>
+      <div
+        className={css`
+          width: 30px;
+        `}
+      >
+        <Title />
+      </div>
+      <div
+        className={css`
+          color: #666666;
+        `}
+      >
+        {widgetVariants[widget][variant].name}
+      </div>
+    </div>
+      
       ))}
 
       <div className={moreWidget}>

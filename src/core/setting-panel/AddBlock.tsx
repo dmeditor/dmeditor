@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { nanoid } from 'nanoid';
 
 import { WidgetList } from '../components/widget-list';
-import { getWidget } from '../components/widgets';
+import { getWidget, getWidgetVariant } from '../components/widgets';
 import { useEditorStore } from '../main/store';
 import { AddBlockContainer, RightElement, SettingDescription, SettingHeader } from './style';
 import emitter from 'Core/utils/event';
@@ -17,15 +17,18 @@ export const AddBlock = () => {
     cancelAdding,
   } = useEditorStore((state) => state);
 
-  const addBlockDone = (type: string) => {
+  const addBlockDone = (type: string, variant?:string) => {
     const widget = getWidget(type);
     if (widget) {
-      const blockData = widget.events.createBlock();
-      addBlock({
-        id: `widget-${nanoid()}`,
-        data: blockData,
-        type: type,
-      });
+      let blockData;
+      if(variant){
+         blockData = getWidgetVariant(type, variant)?.getDefaultData?.();
+      }else{
+         blockData = widget.events.createBlock();
+      }
+      if(blockData){
+        addBlock(blockData);
+      }
     }
   };
 

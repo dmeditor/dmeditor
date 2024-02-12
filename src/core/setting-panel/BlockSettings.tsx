@@ -66,7 +66,6 @@ export const BlockSettings = (props: {
         const filteredSettings = widgetDef.settings.filter((item) =>{
           return variant.enabled_settings.includes(item.property);        
         });
-        console.log(filteredSettings);
         return filteredSettings;
       }
     }
@@ -74,7 +73,7 @@ export const BlockSettings = (props: {
   };
 
   const selectedWidgetSetings = useMemo(() => getWidgetSeting(selectedBlock?.type || ''), [selectedBlock?.type]);
-
+  
   const hasProperty = (propName: string, compName: string) => {
     if (!compName) return false;
     // the same as: return compName.indexOf(propName) !== -1;
