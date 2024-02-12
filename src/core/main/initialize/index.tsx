@@ -7,7 +7,7 @@ import { toolCollapsableText } from '../../components/widgets/collapsable-text/C
 import { toolAccordion } from '../../components/widgets/accordion/Accordion';
 // import { toolBlockTab } from '../../components/widgets/tabs/render';
 import { toolImageText } from '../../components/widgets/image-text/ImageText';
-import { toolContainerList } from '../../components/widgets/list/List';
+// import { toolContainerList } from '../../components/widgets/list/List';
 import Heading from '../../components/widgets/heading/render';
 import { toolIframe } from '../../components/widgets/iframe/IFrame';
 import { toolQuote } from '../../components/widgets/quote/Quote';
@@ -28,7 +28,7 @@ registerTool(toolCode);
 registerTool(toolIframe);
 registerTool(toolCollapsableText);
 
-registerTool(toolContainerList);
+// registerTool(toolContainerList);
 
 initStyles();
 

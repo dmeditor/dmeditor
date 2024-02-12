@@ -1,3 +1,9 @@
-import { ContainerList } from './List';
+import { List } from './List';
+import { registerWidget } from "..";
+import listWidget from "./definition";
 
-export { ContainerList }
+const register = () =>{
+    registerWidget(listWidget, List )
+}
+
+export default register ;

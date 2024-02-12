@@ -81,6 +81,42 @@ const App = () => {
       },
       type: 'heading:gradient',
     },
+    {
+      id: `widget-${nanoid()}`,     
+      type: 'list',
+      data:{
+        direction: 'horizontal'
+      },
+      children: [
+        {
+          id: `widget-${nanoid()}`,
+          data: {
+            value: 'This is a heading 1 in List ',
+            level: 2,
+            settings:{},
+          },
+          type: 'heading',
+        },
+        {
+          id: `widget-${nanoid()}`,
+          data: {
+            value: 'This is a heading 2 in List',
+            level: 2,
+            settings:{},
+          },
+          type: 'heading',
+        },
+        {
+          id: `widget-${nanoid()}`,
+          data: {
+            value: 'This is a heading 3 in List',
+            level: 2,
+            settings:{},
+          },
+          type: 'heading',
+        }
+      ],      
+    },
   ];
   useEffect(() => {
     // editorRef.current.setDesingerJson(jsonString(data))

@@ -9,20 +9,9 @@ import { AddOutlined } from '@mui/icons-material';
 import { DMEData } from 'Src/core/types';
 
 interface BlockListProps {
-  data: DMEData.BlockList;
-  selected: number;
+  blockData: DMEData.BlockList;
   pathArray:Array<number>;
-  withContainer?: boolean;
-  columns?: number;
-  active?: boolean;
-  settings?: {
-    direction?: 'vertical' | 'horizontal'; //if not set, will be vertical
-  };
-  allowedType?: string[];
-  view?: boolean;
-  //adding when children is 0
-  adding?: boolean;
-  onActivate?: () => void;
+  allowedTypes?: string[];
 }
 
 export const BlockListRender = (props: BlockListProps) => {
@@ -68,42 +57,38 @@ export const BlockListRender = (props: BlockListProps) => {
     return <BlockListStyle className="dme-blocklist">{children}</BlockListStyle>
   }
 
-  const renderList = ()=>{
-    return <>
-      {props.data.map((blockData: DMEData.Block, index: number) => (
-      <>
-        {addingStatus === 'started' && index === selectedBlockIndex && position === 'before' && (
-          renderAddingMessage()
+  return <>   
+    {props.blockData.map((blockData: DMEData.Block, index: number) => (
+    <>
+      {addingStatus === 'started' && index === selectedBlockIndex && position === 'before' && (
+        renderAddingMessage()
+      )}
+      <StyledBlock active={index === selectedBlockIndex} className='dme-block-container' onClick={()=>select(index)}>
+      {index === selectedBlockIndex && <>
+        {addBlockIndex === -Infinity && (
+          <AddingTool type='above'>
+            <Button onClick={() => addBefore(index)}><AddOutlined /> </Button>
+          </AddingTool>
         )}
-        <StyledBlock active={index === selectedBlockIndex} className='dme-block-container' onClick={()=>select(index)}>
-        {index === selectedBlockIndex && <>
-          {addBlockIndex === -Infinity && (
-            <AddingTool type='above'>
-              <Button onClick={() => addBefore(index)}><AddOutlined /> </Button>
-            </AddingTool>
-          )}
-          </>}
-          <BlockRender
-            key={blockData.id}
-            active={index === selectedBlockIndex}
-            data={blockData}
-          />
-          {/* below is for test */}
-        {index === selectedBlockIndex && <>
-          {addBlockIndex === -Infinity && (
-            <AddingTool>
-              <Button onClick={() => addAfter(index)}><AddOutlined /> </Button>
-            </AddingTool>
-          )}
-          </>}
-        </StyledBlock>
-        {addingStatus === 'started' && index === selectedBlockIndex && position === 'after' && (
-          renderAddingMessage()
+        </>}
+        <BlockRender
+          key={blockData.id}
+          active={index === selectedBlockIndex}
+          data={blockData}
+        />
+        {/* below is for test */}
+      {index === selectedBlockIndex && <>
+        {addBlockIndex === -Infinity && (
+          <AddingTool>
+            <Button onClick={() => addAfter(index)}><AddOutlined /> </Button>
+          </AddingTool>
         )}
-      </>
-      ))}
+        </>}
+      </StyledBlock>
+      {addingStatus === 'started' && index === selectedBlockIndex && position === 'after' && (
+        renderAddingMessage()
+      )}
     </>
-  }
-
-  return props.withContainer?renderContainer(renderList()):renderList();
+    ))}
+  </>
 };

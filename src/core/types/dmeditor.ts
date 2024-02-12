@@ -16,7 +16,7 @@ export namespace DME {
     type: string;
     name: string;
     icon: string; //base 64(eg. png/svg) or url
-    category: 'widget' | 'layout';
+    category: 'widget' | 'layout' | 'section';
     alias?: string;
     events: {
       //   onInput: () => void 0,

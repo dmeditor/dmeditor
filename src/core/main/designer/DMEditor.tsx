@@ -276,7 +276,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                   e.stopPropagation();
                 }}
               >
-                <BlockListRender data={storage} pathArray={[]} selected={selectedBlockIndex} />
+                <BlockListRender blockData={storage} pathArray={[]} />
               </div>
             )}
             {/* {viewmode !== 'edit' && (
