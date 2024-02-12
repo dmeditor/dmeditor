@@ -1,3 +1,4 @@
+import { WidgetVariant } from './../../types/dmeditor';
 import type { ComponentType } from 'react';
 
 import type { DME, DMEData } from 'Core/types';
@@ -115,6 +116,31 @@ function registerWidget(definition: DME.Widget, renderComponent:ComponentType<an
   registerWidgetComponent(definition.type, renderComponent);
 }
 
+//variant of a widget, eg. article-overview is a list with heading, image, link
+const widgetVariants: { [key:string]: {[key: string]: DME.WidgetVariant}} = {};
+
+function registerWidgetVariant(variant: DME.WidgetVariant){
+    const widgetIdentifier = variant.widget;
+    if( !widgetVariants[widgetIdentifier] ){
+      widgetVariants[widgetIdentifier] = {};
+    }
+    widgetVariants[widgetIdentifier][variant.identifier] = variant;
+}
+
+function getWidgetVariants(widget: string){ //get all variants of a widget
+  return widgetVariants[widget];
+}
+
+function getWidgetVariant(widget: string, variant: string):(DME.WidgetVariant|null){
+  const variants =  widgetVariants[widget];
+  if(variants){    
+    return variants[variant];
+  }else{
+    console.error(`Varient ${variant} is not found on ${widget}.`);
+    return null;
+  }
+}
+
 export {
   addCustomDefinition,
   addLayoutDefinition,
@@ -127,7 +153,10 @@ export {
   customDefinition,
   getWidget,
   registerWidget,
-  registerDefaultWidgets
+  registerDefaultWidgets,
+  registerWidgetVariant,
+  getWidgetVariants,
+  getWidgetVariant
 };
 
 export default widgetDefinition;

@@ -1,6 +1,6 @@
 import SettingInput from './SettingInput';
 import SampleWidget from './SampleWidget';
-import { registerSettingComponent, registerWidget } from 'Src/core';
+import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'Src/core';
 
 const registerSampleWidget = function () {
   registerWidget(
@@ -37,6 +37,20 @@ const registerSampleWidget = function () {
     SampleWidget,
   );
   registerSettingComponent('setting_input', SettingInput);
+
+  registerWidgetVariant(
+  {
+      widget: 'heading',
+      identifier: 'gradient',
+      name: 'Gradient heading',
+      style:{align:'center', space: 'big-space'},
+      enabled_settings:['settings.color'],
+      defaultData:{
+          value: 'Good',
+          level: 2
+      }
+  }
+  )
 };
 
 export default registerSampleWidget;

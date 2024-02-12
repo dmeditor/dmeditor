@@ -33,6 +33,18 @@ export namespace DME {
     // style: {},
     settings: Array<Setting>;
   }
+
+  export interface WidgetVariant{
+    widget:string; //widget which is based on
+    identifier: string;
+    name: string;
+    style?: string|{[props:string]:string};
+    inlineStyle?: string;
+    enabled_settings: Array<string>;
+    allowed_widgets?: Array<string|unknown>; //can be sub widget inside
+    defaultData?: unknown
+  }
+  
   export interface Block extends Widget {}
 
   export interface WidgetRenderProps<Type=DMEData.DefaultDataType>{

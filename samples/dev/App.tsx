@@ -69,8 +69,17 @@ const App = () => {
             settings:{},
           },
           type: 'heading',
-        },
-      ],
+        }
+      ],      
+    },
+    {
+      id: `widget-${nanoid()}`,
+      data: {
+        value: 'This is a heading 3',
+        level: 2,
+        settings:{},
+      },
+      type: 'heading:gradient',
     },
   ];
   useEffect(() => {

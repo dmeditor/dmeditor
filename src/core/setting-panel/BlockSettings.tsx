@@ -12,7 +12,7 @@ import { useEditorStore } from '../main/store';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
-import { getWidget, properties } from 'Components/widgets';
+import { getWidget, getWidgetVariant, properties } from 'Components/widgets';
 import {
   getPropertyValue,
   getValueByPath,
@@ -54,7 +54,26 @@ export const BlockSettings = (props: {
   // );
   const selectedBlock = getSelectedBlock();
 
-  const selectedWidget = useMemo(() => getWidget(selectedBlock?.type || ''), [selectedBlock?.type]);
+  //get Widget setting with variant
+  const getWidgetSeting = (widget: string) => {
+    const widgetArr = widget.split(':');
+
+    const widgetDef = getWidget(widgetArr[0]);
+    if (widgetArr.length >= 2) {
+      const variant = getWidgetVariant(widgetArr[0], widgetArr[1]);
+
+      if (variant && widgetDef) {
+        const filteredSettings = widgetDef.settings.filter((item) =>{
+          return variant.enabled_settings.includes(item.property);        
+        });
+        console.log(filteredSettings);
+        return filteredSettings;
+      }
+    }
+    return widgetDef?.settings;
+  };
+
+  const selectedWidgetSetings = useMemo(() => getWidgetSeting(selectedBlock?.type || ''), [selectedBlock?.type]);
 
   const hasProperty = (propName: string, compName: string) => {
     if (!compName) return false;
@@ -63,29 +82,29 @@ export const BlockSettings = (props: {
     // return hasConfig(compName, propName);
   };
 
-  const containSetting = (propName: string, compName: string) => {
-    let originalWidget = null;
-    if (!compName) return false;
-    if (!selectedWidget) return false;
+  // const containSetting = (propName: string, compName: string) => {
+  //   let originalWidget = null;
+  //   if (!compName) return false;
+  //   if (!selectedWidget) return false;
 
-    const { category, type } = { ...selectedWidget, category: 'widget' }; //todo: remove merge
-    if (category === 'layout') {
-      // originalWidget = getLayoutByType(type);
-    } else if (category === 'widget') {
-      originalWidget = getWidget(type)?.settings;
-    } else {
-      console.error(`Unknown category: ${category}`);
-    }
-    if (!originalWidget) return false;
-    return Object.keys(originalWidget).includes(propName);
-  };
+  //   const { category, type } = { ...selectedWidget, category: 'widget' }; //todo: remove merge
+  //   if (category === 'layout') {
+  //     // originalWidget = getLayoutByType(type);
+  //   } else if (category === 'widget') {
+  //     originalWidget = getWidget(type)?.settings;
+  //   } else {
+  //     console.error(`Unknown category: ${category}`);
+  //   }
+  //   if (!originalWidget) return false;
+  //   return Object.keys(originalWidget).includes(propName);
+  // };
 
   // const Comp = useMemo(() => {
   //   return WidgetProperties[selectedWidget.type];
   // }, [selectedWidgetIndex]);
 
   const getFilteredSettings = (identifier: string) => {
-    return selectedWidget?.settings.filter((item) => item.category === identifier);
+    return selectedWidgetSetings?.filter((item) => item.category === identifier);
   };
 
   const getTabData = () => {

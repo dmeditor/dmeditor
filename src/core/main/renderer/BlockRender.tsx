@@ -8,13 +8,13 @@ import _debounce from 'lodash/debounce';
 import i18n from '../../../locales/i18n';
 import { getDef } from '../../../ToolDefinition';
 import { BlockProperty } from '../../components/block-property';
-import { getWidgetComponent } from '../../components/widgets';
+import { getWidgetComponent, getWidgetVariant, getWidgetVariants } from '../../components/widgets';
 import { Heading } from '../../components/widgets/heading';
 import { MenuList } from '../../components/widgets/menu-list';
 import { PropertyButton } from '../../utils';
 import { Util } from '../../utils/utilx';
 import { StyledBlock } from './styled';
-import type { DMEData } from 'Core/types';
+import type { DMEData, DME } from 'Core/types';
 
 export type BlockInfo = {
   type: string;
@@ -60,7 +60,10 @@ export const BlockRender = React.memo((props: BlockProps) => {
     }
   };
 
-  const Widget = getWidgetComponent(props.data.type);
+  const widgetArr = props.data.type.split(':');
+  const Widget = getWidgetComponent(widgetArr[0]);
+
+  // const Widget = getWidgetComponent(props.data.type);
 
   return Widget ? (
     <Widget
