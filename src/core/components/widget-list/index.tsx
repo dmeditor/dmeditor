@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { customDefinition, layoutDefinition, widgetDefinition, widgetVariants } from '../widgets';
+import { customDefinition, getWidget, layoutDefinition, widgetDefinition, widgetVariants } from '../widgets';
 
 //internal css: emotion
 //extendable css: class - dme-block-text
@@ -89,7 +89,12 @@ export const WidgetList = (props: WidgetListProps) => {
           color: #666666;
         `}
       >
-        {widgetVariants[widget][variant].name}
+        <span>{widgetVariants[widget][variant].name}</span>        
+        <span className={css`
+          color: #999999;
+          margin-left: 5px;
+          font-size: 0.9rem;
+        `}>{getWidget(widget)?.name}</span>
       </div>
     </div>
       
