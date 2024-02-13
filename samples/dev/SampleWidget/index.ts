@@ -29,11 +29,13 @@ const registerSampleWidget = function () {
       ],
       events: {
         createBlock: () => ({
-          level: 2,
+          id: nanoid(),
+          type: 'sample',
+          data:{level: 2,
           settings: {
             width: 100,
             backgroundColor: '#cccccc',
-          },
+          }},
         }),
         updateData: () => void 0,
       },
