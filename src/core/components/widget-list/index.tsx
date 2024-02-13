@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { customDefinition, getWidget, layoutDefinition, widgetDefinition, widgetVariants } from '../widgets';
+import { customDefinition, getWidget, layoutDefinition, widgetDefinition } from '../widgets';
 
 //internal css: emotion
 //extendable css: class - dme-block-text
@@ -75,8 +75,8 @@ export const WidgetList = (props: WidgetListProps) => {
         </div>
       ))}
 
-      {Object.keys(widgetVariants).map(widget=>Object.keys(widgetVariants[widget]).map((variant)=>
-      <div className={itemStyle} onClick={() => props.onSelect(widget, variant)}>
+      {Object.keys(widgetDefinition).map(widget=>widgetDefinition[widget].variants.map((variant)=>
+      <div className={itemStyle} onClick={() => props.onSelect(widget, variant.identifier)}>
       <div
         className={css`
           width: 30px;
@@ -89,12 +89,12 @@ export const WidgetList = (props: WidgetListProps) => {
           color: #666666;
         `}
       >
-        <span>{widgetVariants[widget][variant].name}</span>        
+        <span>{variant.name}</span>        
         <span className={css`
           color: #999999;
           margin-left: 5px;
           font-size: 0.9rem;
-        `}>{getWidget(widget)?.name}</span>
+        `}>{widgetDefinition[widget].name}</span>
       </div>
     </div>
       

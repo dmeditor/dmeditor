@@ -38,11 +38,26 @@ export namespace DME {
     widget:string; //widget which is based on
     identifier: string;
     name: string;
-    style?: string|{[props:string]:string};
-    inlineStyle?: string;
+    style?: string|{[props:string]:string}; //style, eg. 'large-space', or {space: 'large', border: 'top'}
+    cssStyle?: string; //built-in style for the variant
+    availableStyles?:Array<string>;
     enabled_settings: Array<string>;
     allowed_widgets?: Array<string|unknown>; //can be sub widget inside
     getDefaultData?: ()=> DMEData.Block<unknown>
+  }
+
+  export interface WidgetStyle{
+    identifier: string, // '_' if not set
+    display?: 'dropdown'|'button-group'|'radio' | 'inline-block', //dropdown is default if not set.
+    name: string //'Style' if not set
+    options: Array<WidgetStyleOption>
+  }
+
+  export interface WidgetStyleOption{
+    identifier: string,
+    name: string,
+    icon: string,
+    cssStyle: string //css style using css-in-js
   }
   
   export interface Block extends Widget {}
@@ -59,7 +74,6 @@ export namespace DME {
 }
 
 export namespace DMEData {
-  export interface BlockStyle {}
 
   export interface DefaultDataType{
       settings: {
@@ -75,7 +89,7 @@ export namespace DMEData {
     type: string; //can use type for internal
     parent?: Block;
     data: TData; //entity data from widget
-    style?: BlockStyle;
+    style?: {[style:string]:string};
     children?: Array<Block>;
   }
 

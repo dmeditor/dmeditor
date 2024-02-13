@@ -8,7 +8,7 @@ import _debounce from 'lodash/debounce';
 import i18n from '../../../locales/i18n';
 import { getDef } from '../../../ToolDefinition';
 import { BlockProperty } from '../../components/block-property';
-import { getWidgetComponent, getWidgetVariant, getWidgetVariants } from '../../components/widgets';
+import { getWidgetComponent, getWidgetStyle, getWidgetVariant } from '../../components/widgets';
 import { Heading } from '../../components/widgets/heading';
 import { MenuList } from '../../components/widgets/menu-list';
 import { PropertyButton } from '../../utils';
@@ -63,9 +63,23 @@ export const BlockRender = React.memo((props: BlockProps) => {
   const widgetArr = props.data.type.split(':');
   const Widget = getWidgetComponent(widgetArr[0]);
 
+  const style = props.data.style;
+  let styleStr = '';
+  if( style ){
+    const styles = getWidgetStyle(widgetArr[0]);
+    for(const key of Object.keys(style) ){
+      const styleIdentifier = style[key];
+      const styleOption = styles.options.find(item=>item.identifier===styleIdentifier)
+      if( styleOption ){
+        styleStr += css( styleOption.cssStyle );
+      }
+    }
+  }
+
   // const Widget = getWidgetComponent(props.data.type);
 
   return Widget ? (
+    <div className={styleStr}>
     <Widget
       adding={props.newBlock}
       inBlock={props.inBlock ? true : false}
@@ -74,6 +88,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
       onCancel={props.onCancel}
       onDelete={props.onDelete}
     />
+    </div>
   ) : (
     <></>
   );

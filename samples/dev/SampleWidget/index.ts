@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import SampleWidget from './SampleWidget';
 import SettingInput from './SettingInput';
 import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'Src/core';
-import { getWidget, getWidgetVariant } from 'Src/core/components/widgets';
+import { getWidget, getWidgetVariant, registerWidgetStyle, registerWidgetStyleOption } from 'Src/core/components/widgets';
 import { DMEData } from 'Src/core/types';
 
 const registerSampleWidget = function () {
@@ -46,7 +46,7 @@ const registerSampleWidget = function () {
     widget: 'heading',
     identifier: 'gradient',
     name: 'Gradient heading',
-    style: { align: 'center', space: 'big-space' },
+    style: 'big-space',
     enabled_settings: ['settings.color'],
     getDefaultData: () => {
       return {
@@ -81,6 +81,17 @@ const registerSampleWidget = function () {
       };
     },
   });
+  
+  registerWidgetStyleOption('heading', 
+  {
+    identifier:'big-space',
+    name:'Big space',
+    cssStyle: `
+       padding: 50px;
+       background: #efefef
+    `,
+    icon: ''  
+  }, '_')
   
 };
 

@@ -5,14 +5,21 @@ import {
   FormatAlignLeft,
   FormatAlignRight,
 } from '@mui/icons-material';
-import { Divider } from '@mui/material';
+import { Divider, MenuItem, Select } from '@mui/material';
 
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
-import { getWidget, getWidgetVariant, properties } from 'Components/widgets';
+import {
+  getWidget,
+  getWidgetStyle,
+  getWidgetStyleOptions,
+  getWidgetVariant,
+  properties,
+  widgetStyles,
+} from 'Components/widgets';
 import {
   getPropertyValue,
   getValueByPath,
@@ -22,6 +29,7 @@ import {
   PropertyItem,
   Ranger,
 } from 'Core/utils';
+import { StyleSettings } from './StyleSettings';
 
 interface CommonSettingsType {
   align: string;
@@ -46,13 +54,15 @@ export const BlockSettings = (props: {
 }) => {
   const { selectedBlockIndex, onChange = () => {}, commonChange = () => {} } = props;
   const [blockOpen, setBlockOpen] = useState(true);
-  const { getSelectedBlock } = useEditorStore();
+  const { getSelectedBlock, updateSelectedBlockStyle } = useEditorStore();
 
   // const selectedBlock = useMemo(
   //   () => getSelectedBlock(props.selectedBlockIndex),
   //   [props.selectedBlockIndex],
   // );
   const selectedBlock = getSelectedBlock();
+
+  const blockType = selectedBlock?.type || '';
 
   //get Widget setting with variant
   const getWidgetSeting = (widget: string) => {
@@ -63,8 +73,8 @@ export const BlockSettings = (props: {
       const variant = getWidgetVariant(widgetArr[0], widgetArr[1]);
 
       if (variant && widgetDef) {
-        const filteredSettings = widgetDef.settings.filter((item) =>{
-          return variant.enabled_settings.includes(item.property);        
+        const filteredSettings = widgetDef.settings.filter((item) => {
+          return variant.enabled_settings.includes(item.property);
         });
         return filteredSettings;
       }
@@ -72,8 +82,11 @@ export const BlockSettings = (props: {
     return widgetDef?.settings;
   };
 
-  const selectedWidgetSetings = useMemo(() => getWidgetSeting(selectedBlock?.type || ''), [selectedBlock?.type]);
-  
+  const selectedWidgetSetings = useMemo(
+    () => getWidgetSeting(selectedBlock?.type || ''),
+    [selectedBlock?.type],
+  );
+
   const hasProperty = (propName: string, compName: string) => {
     if (!compName) return false;
     // the same as: return compName.indexOf(propName) !== -1;
@@ -143,11 +156,14 @@ export const BlockSettings = (props: {
         })}
         {/* </PropertyGroup> */}
         {identifier == 'settings' && (
-          <ActionPanel>
-            <PropertyButton variant="outlined" color="warning" title="Delete">
-              <DeleteOutline /> Delete
-            </PropertyButton>
-          </ActionPanel>
+          <>
+            <StyleSettings values={selectedBlock?.style||{}} blockType={blockType} onChange={(v, style)=>updateSelectedBlockStyle(v, style)} />
+            <ActionPanel>
+              <PropertyButton variant="outlined" color="warning" title="Delete">
+                <DeleteOutline /> Delete
+              </PropertyButton>
+            </ActionPanel>
+          </>
         )}
       </TabBodyContainer>
     );

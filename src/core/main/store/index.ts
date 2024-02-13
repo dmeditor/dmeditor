@@ -46,6 +46,7 @@ type Actions = {
   getParents: () => Array<DMEData.Block>; //get parent Block from top to down, based on currentListPath
   updateSelectedBlock:<Type=DMEData.DefaultDataType>(callback: (blockData: Type)=>void)=>void;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
+  updateSelectedBlockStyle:(value:string, styleIdentifier:string)=>void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
 };
@@ -231,6 +232,15 @@ const useEditorStore = create<Store & Actions>()(
         const data = state.storage[state.selected.blockIndex]['data'];
         callback(data as Type);
         // state.storage[state.selected.blockIndex]['data'] = data;
+      })
+    },
+    updateSelectedBlockStyle: (value:string, styleIdentifier:string)=>{
+      set((state) => {       
+        const block = state.storage[state.selected.blockIndex];        
+        if( !block.style ){
+          block.style = {};
+        }
+        block.style[styleIdentifier] = value;
       })
     },
     updateSelectedBlockProps: (propName: string, propValue: string | number) => {

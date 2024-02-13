@@ -14,6 +14,7 @@ const App = () => {
   const data = [
     {
       id: `widget-${nanoid()}`,
+      style: {'_':'big-space'},
       data: {
         value: 'This is a heading',
         level: 2,
