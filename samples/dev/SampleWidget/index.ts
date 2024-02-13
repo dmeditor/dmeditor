@@ -96,9 +96,10 @@ const registerSampleWidget = function () {
   registerWidgetStyle('heading', {
     identifier:'margin',
     name:'Margin',
+    display:'button-group',
     options:[{
       identifier:'big-margin',
-      name:'Big margin',
+      name:'Big',
       cssStyle: `
          margin-top: 50px;
          margin-bottom: 50px;
@@ -110,7 +111,7 @@ const registerSampleWidget = function () {
   registerWidgetStyleOption('heading', 
   [{
     identifier:'small-margin',
-    name:'Small margin',
+    name:'Small',
     cssStyle: `
        margin-top: 10px;
        margin-bottom: 10px;

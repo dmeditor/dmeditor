@@ -190,25 +190,28 @@ function registerWidgetStyleOption(
    widgetStyles[widget][style].options = [...widgetStyles[widget][style].options, ...styleOptions]
 }
 
-//get style with options
+//get a style, ignore enabled_settings
 function getWidgetStyle(
   widget: string,
   style?: string,
 ): DME.WidgetStyle{
-  const styles = getWidgetStyles(widget);
+  const styles = getWidgetStyles(widget, true);
   style = style || '_';
   const styleObj = styles[style];
   return styleObj;
 }
 
-function getWidgetStyles(widget:string){
+function getWidgetStyles(widget:string, allStyles?:boolean){
     const arr = widget.split(':');
     const styles = widgetStyles[arr[0]];
     if( arr[1] ){
       const variant = getWidgetVariant(arr[0], arr[1])
-          
-      let result:{[key:string]:DME.WidgetStyle} = {};
       let variantStyles = widgetStyles[widget];
+
+      if( allStyles ){
+        return {...styles, ...variantStyles}
+      }
+      let result:{[key:string]:DME.WidgetStyle} = {};
       variant?.enabled_styles?.forEach(key=>result[key] = styles[key])
       return {...result, ...variantStyles}
     }

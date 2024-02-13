@@ -156,7 +156,7 @@ export const BlockSettings = (props: {
             <StyleSettings
               values={selectedBlock?.style || {}}
               blockType={blockType}
-              onChange={(v, style) => updateSelectedBlockStyle(v, style)}
+              onChange={(v, style) => {updateSelectedBlockStyle(v, style)}}
             />
             <ActionPanel>
               <PropertyButton variant="outlined" color="warning" title="Delete">
