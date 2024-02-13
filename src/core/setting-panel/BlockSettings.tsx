@@ -12,11 +12,12 @@ import { useEditorStore } from '../main/store';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
+import { StyleSettings } from './StyleSettings';
 import {
   getWidget,
   getWidgetStyle,
-  getWidgetStyleOptions,
   getWidgetVariant,
+  getWidgetWithVariant,
   properties,
   widgetStyles,
 } from 'Components/widgets';
@@ -29,7 +30,6 @@ import {
   PropertyItem,
   Ranger,
 } from 'Core/utils';
-import { StyleSettings } from './StyleSettings';
 
 interface CommonSettingsType {
   align: string;
@@ -65,25 +65,21 @@ export const BlockSettings = (props: {
   const blockType = selectedBlock?.type || '';
 
   //get Widget setting with variant
-  const getWidgetSeting = (widget: string) => {
-    const widgetArr = widget.split(':');
-
-    const widgetDef = getWidget(widgetArr[0]);
-    if (widgetArr.length >= 2) {
-      const variant = getWidgetVariant(widgetArr[0], widgetArr[1]);
-
-      if (variant && widgetDef) {
+  const getWidgetSettings = (widget: string) => {
+    const [widgetDef, variant] = getWidgetWithVariant(widget);
+    if (widgetDef) {
+      if (variant) {
         const filteredSettings = widgetDef.settings.filter((item) => {
           return variant.enabled_settings.includes(item.property);
         });
         return filteredSettings;
       }
+      return widgetDef?.settings;
     }
-    return widgetDef?.settings;
   };
 
   const selectedWidgetSetings = useMemo(
-    () => getWidgetSeting(selectedBlock?.type || ''),
+    () => getWidgetSettings(selectedBlock?.type || ''),
     [selectedBlock?.type],
   );
 
@@ -157,7 +153,11 @@ export const BlockSettings = (props: {
         {/* </PropertyGroup> */}
         {identifier == 'settings' && (
           <>
-            <StyleSettings values={selectedBlock?.style||{}} blockType={blockType} onChange={(v, style)=>updateSelectedBlockStyle(v, style)} />
+            <StyleSettings
+              values={selectedBlock?.style || {}}
+              blockType={blockType}
+              onChange={(v, style) => updateSelectedBlockStyle(v, style)}
+            />
             <ActionPanel>
               <PropertyButton variant="outlined" color="warning" title="Delete">
                 <DeleteOutline /> Delete

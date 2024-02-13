@@ -60,14 +60,15 @@ export const BlockRender = React.memo((props: BlockProps) => {
     }
   };
 
-  const widgetArr = props.data.type.split(':');
+  const blockType =  props.data.type;
+  const widgetArr = blockType.split(':');
   const Widget = getWidgetComponent(widgetArr[0]);
 
   const styleData = props.data.style;
   let styleStr = '';
   if( styleData ){
     for(const styleIdentifier of Object.keys(styleData) ){
-      const widgetStyle = getWidgetStyle(widgetArr[0], styleIdentifier);
+      const widgetStyle = getWidgetStyle(blockType, styleIdentifier);
       const styleOption = widgetStyle.options.find(item=>item.identifier===styleData[styleIdentifier])
       if( styleOption ){
         styleStr += css( styleOption.cssStyle )+' ';
@@ -78,7 +79,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
   // const Widget = getWidgetComponent(props.data.type);
 
   return Widget ? (
-    <div className={styleStr}>
+    <div className={`${styleStr} dme-block dme-blocktype-${widgetArr[0]} ${widgetArr[1]?'dme-blockvariant-'+widgetArr[1]:''}`}> {/* todo: put style under */}
     <Widget
       adding={props.newBlock}
       inBlock={props.inBlock ? true : false}

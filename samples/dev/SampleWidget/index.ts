@@ -46,7 +46,7 @@ const registerSampleWidget = function () {
     widget: 'heading',
     identifier: 'gradient',
     name: 'Gradient heading',
-    style: 'big-space',
+    enabled_styles: ['_'],
     enabled_settings: ['settings.color'],
     getDefaultData: () => {
       return {
@@ -55,13 +55,24 @@ const registerSampleWidget = function () {
         data: { value: 'Gradient heading', level: 3, settings: {color:'red'} },
       };
     },
-  });
+  }, [
+    {
+      identifier:'test',
+      name:'Test style',
+      options:[{
+        identifier:'test-item',
+        name:'Test item',
+        cssStyle: `
+           background: #cccccc;
+        `,
+        icon: ''  
+      }
+  ]}]);
 
   registerWidgetVariant({
     widget: 'list',
     identifier: 'article-block',
     name: 'Article block',
-    style: { align: 'center', space: 'big-space' },
     enabled_settings: [],
     allowed_widgets: ['heading:gradient'],
     //todo: use property?
@@ -85,22 +96,19 @@ const registerSampleWidget = function () {
   registerWidgetStyle('heading', {
     identifier:'margin',
     name:'Margin',
-    options:[]
+    options:[{
+      identifier:'big-margin',
+      name:'Big margin',
+      cssStyle: `
+         margin-top: 50px;
+         margin-bottom: 50px;
+      `,
+      icon: ''  
+    }]
   })
 
   registerWidgetStyleOption('heading', 
-  {
-    identifier:'big-margin',
-    name:'Big margin',
-    cssStyle: `
-       margin-top: 50px;
-       margin-bottom: 10px;
-    `,
-    icon: ''  
-  }, 'margin')
-
-  registerWidgetStyleOption('heading', 
-  {
+  [{
     identifier:'small-margin',
     name:'Small margin',
     cssStyle: `
@@ -108,10 +116,10 @@ const registerSampleWidget = function () {
        margin-bottom: 10px;
     `,
     icon: ''  
-  }, 'margin')
+  }], 'margin')
 
   registerWidgetStyleOption('heading', 
-  {
+  [{
     identifier:'big-space',
     name:'Big space',
     cssStyle: `
@@ -119,7 +127,7 @@ const registerSampleWidget = function () {
        background: #efefef
     `,
     icon: ''  
-  }, '_')
+  }], '_')
   
 };
 

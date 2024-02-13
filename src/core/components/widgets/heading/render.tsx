@@ -54,11 +54,9 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
   };
 
   return (
-    <div className={getCommonBlockCss('heading', '')}>
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
       </HeadingComponent>
-    </div>
   );
 };
 

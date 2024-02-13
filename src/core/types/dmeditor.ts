@@ -38,9 +38,8 @@ export namespace DME {
     widget:string; //widget which is based on
     identifier: string;
     name: string;
-    style?: string|{[props:string]:string}; //style, eg. 'large-space', or {space: 'large', border: 'top'}
     cssStyle?: string; //built-in style for the variant
-    availableStyles?:Array<string>;
+    enabled_styles?:Array<string>;
     enabled_settings: Array<string>;
     allowed_widgets?: Array<string|unknown>; //can be sub widget inside
     getDefaultData?: ()=> DMEData.Block<unknown>

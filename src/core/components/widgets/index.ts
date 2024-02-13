@@ -73,9 +73,22 @@ const getWidgetComponent = (type: string): any => {
 };
 
 //get widget information/definiton/meta data
-const getWidget = (type: string): DME.Widget | null => {
-  const def = widgetDefinition[type];
-  return def ? def : null;
+const getWidget = (widget: string )=> {
+  const arr = widget.split(':');
+  const def = widgetDefinition[arr[0]];
+  return def as DME.Widget;
+};
+
+
+const getWidgetWithVariant = (widget: string )=> {
+  const arr = widget.split(':');
+  const def = widgetDefinition[arr[0]];
+
+  let variant = undefined;
+  if( arr[1] ) {
+     variant = def.variants.find(variant=>variant.identifier===arr[1])
+  }
+  return [def as DME.Widget, variant] as const;
 };
 
 const defaultStyle:DME.WidgetStyle = {
@@ -124,12 +137,19 @@ function registerWidget(definition: DME.Widget, renderComponent: ComponentType<a
   registerWidgetComponent(definition.type, renderComponent);  
 }
 
-function registerWidgetVariant(variant: DME.WidgetVariant) {
+function registerWidgetVariant(variant: DME.WidgetVariant, styles?: Array<DME.WidgetStyle>) {
   const widgetIdentifier = variant.widget;
   if (!widgetDefinition[widgetIdentifier]) {
       console.error(`Widget ${widgetIdentifier} not found. Can not register variant. ${variant.identifier}`);
+      return;
   }
   widgetDefinition[widgetIdentifier].variants.push( variant );
+
+  if(styles){
+    styles.forEach(style=>{
+      registerWidgetStyle(variant.widget+':'+variant.identifier, style)
+    })
+  }
 }
 
 function getWidgetVariant(widget: string, variant: string): DME.WidgetVariant|null {
@@ -160,14 +180,14 @@ function registerWidgetStyle(widget: string, style: DME.WidgetStyle) {
 //register style option
 function registerWidgetStyleOption(
   widget: string,
-  styleOption: DME.WidgetStyleOption,
+  styleOptions: Array<DME.WidgetStyleOption>,
   style: string,
 ) {
   if( !widgetStyles[widget] || !widgetStyles[widget][style] ){
     console.error(`Widget style ${style} is not found`);
     return;
   }
-   widgetStyles[widget][style].options.push(styleOption)
+   widgetStyles[widget][style].options = [...widgetStyles[widget][style].options, ...styleOptions]
 }
 
 //get style with options
@@ -175,9 +195,24 @@ function getWidgetStyle(
   widget: string,
   style?: string,
 ): DME.WidgetStyle{
+  const styles = getWidgetStyles(widget);
   style = style || '_';
-  const styleObj = widgetStyles[widget][style];
+  const styleObj = styles[style];
   return styleObj;
+}
+
+function getWidgetStyles(widget:string){
+    const arr = widget.split(':');
+    const styles = widgetStyles[arr[0]];
+    if( arr[1] ){
+      const variant = getWidgetVariant(arr[0], arr[1])
+          
+      let result:{[key:string]:DME.WidgetStyle} = {};
+      let variantStyles = widgetStyles[widget];
+      variant?.enabled_styles?.forEach(key=>result[key] = styles[key])
+      return {...result, ...variantStyles}
+    }
+    return styles;
 }
 
 export {
@@ -191,12 +226,14 @@ export {
   layoutDefinition,
   customDefinition,
   getWidget,
+  getWidgetWithVariant,
   registerWidget,
   registerDefaultWidgets,
   registerWidgetVariant,
   getWidgetVariant,
   registerWidgetStyle,
   getWidgetStyle,
+  getWidgetStyles,
   registerWidgetStyleOption,
 };
 

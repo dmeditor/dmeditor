@@ -27,6 +27,18 @@ const App = () => {
     },
     {
       id: `widget-${nanoid()}`,
+      style: {'_':'big-space'},
+      data: {
+        value: 'This is a heading 2',
+        level: 2,
+        settings: {
+          align: 'left',
+        },
+      },
+      type: 'heading:gradient',
+    },
+    {
+      id: `widget-${nanoid()}`,
       data: {
         value: 'This is a heading 2',
         level: 2,
