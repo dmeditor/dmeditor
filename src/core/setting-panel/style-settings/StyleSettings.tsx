@@ -14,49 +14,15 @@ import widgetDefinition, {
 } from '../../components/widgets';
 import { DME } from '../../types';
 import { PropertyItem } from '../../utils/Property';
+import { DropDown } from './DropDown';
+import { ButtonGroup } from './ButtonGroup';
+import { InlineBlock } from './InlineBlock';
 
 export interface StyleSettingProps {
   blockType: string;
   values: { [styleIdentifier: string]: string };
   onChange: (v: string, style: string) => void;
 }
-
-const DropDown = (props: StyleSettingProps & { style: DME.WidgetStyle }) => {
-  const { values, style } = props;
-
-  return (
-    <Select
-      size="small"
-      value={values[style.identifier] || ''}
-      onChange={(e) => props.onChange(e.target.value, style.identifier)}
-      displayEmpty
-    >
-      <MenuItem value="">None</MenuItem>
-      {style.options.map((option) => (
-        <MenuItem value={option.identifier}>{option.name}</MenuItem>
-      ))}
-    </Select>
-  );
-};
-
-const ButtonGroup = (props: StyleSettingProps & { style: DME.WidgetStyle }) => {
-  const { values, style, onChange } = props;
-
-  return (
-    <ToggleButtonGroup
-      color="primary"
-      value={values[style.identifier]||''}
-      exclusive
-      size='small'
-      onChange={(e) => {props.onChange(e.target.value, style.identifier)}}
-    >
-      <ToggleButton value=''>None</ToggleButton>     
-      {style.options.map((option) => (   
-        <ToggleButton value={option.identifier}>{option.name}</ToggleButton>
-      ))}
-    </ToggleButtonGroup>
-  );
-};
 
 export const StyleSettings = (props: StyleSettingProps) => {
   const { blockType } = props;
@@ -74,6 +40,7 @@ export const StyleSettings = (props: StyleSettingProps) => {
           <DropDown {...props} style={styleObj} />
         )}
         {styleObj.display === 'button-group' && <ButtonGroup {...props} style={styleObj} />}
+        {styleObj.display === 'inline-block' && <InlineBlock {...props} style={styleObj} />}
       </PropertyItem>
     );
   });

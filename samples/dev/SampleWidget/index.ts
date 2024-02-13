@@ -98,7 +98,7 @@ const registerSampleWidget = function () {
   registerWidgetStyle('heading', {
     identifier:'margin',
     name:'Margin',
-    display:'button-group',
+    display:'inline-block',
     options:[{
       identifier:'big-margin',
       name:'Big',
