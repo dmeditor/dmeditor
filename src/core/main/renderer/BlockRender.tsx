@@ -63,15 +63,14 @@ export const BlockRender = React.memo((props: BlockProps) => {
   const widgetArr = props.data.type.split(':');
   const Widget = getWidgetComponent(widgetArr[0]);
 
-  const style = props.data.style;
+  const styleData = props.data.style;
   let styleStr = '';
-  if( style ){
-    const styles = getWidgetStyle(widgetArr[0]);
-    for(const key of Object.keys(style) ){
-      const styleIdentifier = style[key];
-      const styleOption = styles.options.find(item=>item.identifier===styleIdentifier)
+  if( styleData ){
+    for(const styleIdentifier of Object.keys(styleData) ){
+      const widgetStyle = getWidgetStyle(widgetArr[0], styleIdentifier);
+      const styleOption = widgetStyle.options.find(item=>item.identifier===styleData[styleIdentifier])
       if( styleOption ){
-        styleStr += css( styleOption.cssStyle );
+        styleStr += css( styleOption.cssStyle )+' ';
       }
     }
   }

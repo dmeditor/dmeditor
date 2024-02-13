@@ -82,6 +82,34 @@ const registerSampleWidget = function () {
     },
   });
   
+  registerWidgetStyle('heading', {
+    identifier:'margin',
+    name:'Margin',
+    options:[]
+  })
+
+  registerWidgetStyleOption('heading', 
+  {
+    identifier:'big-margin',
+    name:'Big margin',
+    cssStyle: `
+       margin-top: 50px;
+       margin-bottom: 10px;
+    `,
+    icon: ''  
+  }, 'margin')
+
+  registerWidgetStyleOption('heading', 
+  {
+    identifier:'small-margin',
+    name:'Small margin',
+    cssStyle: `
+       margin-top: 10px;
+       margin-bottom: 10px;
+    `,
+    icon: ''  
+  }, 'margin')
+
   registerWidgetStyleOption('heading', 
   {
     identifier:'big-space',
