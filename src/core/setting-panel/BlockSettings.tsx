@@ -12,7 +12,7 @@ import { useEditorStore } from '../main/store';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
-import { StyleSettings } from './StyleSettings';
+import { StyleSettings } from './style-settings/StyleSettings';
 import {
   getWidget,
   getWidgetStyle,

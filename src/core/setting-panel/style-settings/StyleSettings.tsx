@@ -11,9 +11,9 @@ import widgetDefinition, {
   getWidgetStyle,
   getWidgetStyles,
   widgetStyles,
-} from '../components/widgets';
-import { DME } from '../types';
-import { PropertyItem } from '../utils/Property';
+} from '../../components/widgets';
+import { DME } from '../../types';
+import { PropertyItem } from '../../utils/Property';
 
 export interface StyleSettingProps {
   blockType: string;
