@@ -34,7 +34,7 @@ const moreWidget = css`
 `;
 
 interface WidgetListProps {
-  onSelect: (type: string, variant?:string) => void;
+  onSelect: (type: string) => void;
 }
 
 export const WidgetList = (props: WidgetListProps) => {
@@ -76,7 +76,7 @@ export const WidgetList = (props: WidgetListProps) => {
       ))}
 
       {Object.keys(widgetDefinition).map(widget=>widgetDefinition[widget].variants.map((variant)=>
-      <div className={itemStyle} onClick={() => props.onSelect(widget, variant.identifier)}>
+      <div className={itemStyle} onClick={() => props.onSelect(widget+':'+variant.identifier)}>
       <div
         className={css`
           width: 30px;
