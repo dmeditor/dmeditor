@@ -53,10 +53,15 @@ export namespace DME {
     options: Array<WidgetStyleOption>
   }
 
+  //css classes, useful when using class names or class based framework(eg. tailwind).
+  //key is for element - it's value is up to the widget, eg. for image text, {'root' - is for root, 'image' - image}
+  export type WidgetStyleClasses = {[key:string]:string} 
+  
   export interface WidgetStyleOption{
     identifier: string,
     name: string,
     icon: string,
+    cssClasses?: WidgetStyleClasses, 
     cssStyle: string //css style using css-in-js
   }
   
@@ -64,6 +69,9 @@ export namespace DME {
 
   export interface WidgetRenderProps<Type=DMEData.DefaultDataType>{
     blockNode: DMEData.Block<Type>,
+    rootClasses: string,
+    // key is the setting item(eg. 'root', value is styles' class value, eg.['big-space', 'dark'])
+    styleClasses?: {[key:string]:Array<string>}, 
     active:boolean,
     adding:boolean
   }

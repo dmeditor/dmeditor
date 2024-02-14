@@ -27,7 +27,7 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
 
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
-  const blockNode = props.blockNode;
+  const {blockNode,rootClasses, styleClasses } = props;
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {
     id,
@@ -39,8 +39,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
   const common = {
     style: {
       textAlign: data.settings.align,
-      color: data.settings.color,
-      backgroundColor: data.settings['background-color'],
+      color: data.settings.color
     },
     // ref: (input: any) => input && input.focus(),
     onKeyUp: (e: React.KeyboardEvent<HTMLElement>) => {
@@ -54,9 +53,11 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
   };
 
   return (
+    <div className={rootClasses} style={{backgroundColor:data.settings['background-color']}}>
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
       </HeadingComponent>
+    </div>
   );
 };
 

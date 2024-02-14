@@ -65,34 +65,57 @@ export const BlockRender = React.memo((props: BlockProps) => {
   const widgetArr = blockType.split(':');
   const Widget = getWidgetComponent(widgetArr[0]);
 
-  const getStyleCss = ()=>{  
+  const getCssStyles = ()=>{  
     const styleData = props.data.style;
     let styleStr = '';
+    let styleClasses:{[key:string]:Array<string>} = {};
     if( styleData ){
       for(const styleIdentifier of Object.keys(styleData) ){
         const widgetStyle = getWidgetStyle(blockType, styleIdentifier);
         const styleOption = widgetStyle.options.find(item=>item.identifier===styleData[styleIdentifier])
         if( styleOption ){
-          styleStr += css( styleOption.cssStyle )+' ';
+          if( styleOption.cssStyle ){
+              styleStr += css( styleOption.cssStyle )+' ';
+          }
+          const classes = styleOption.cssClasses;
+          if(classes){
+             Object.keys( classes ).map(key=>{
+               styleClasses[key] = [...(styleClasses[key]||[]), classes[key]]
+             });
+          }
         }
       }
     }
-    return styleStr;
+
+    let builtinClasses = ` dme-block dme-blocktype-${widgetArr[0]}`;
+    if(widgetArr[1]){
+      builtinClasses += ' dme-blockvariant-'+widgetArr[1];
+    }
+
+    let rootClasses = styleStr + builtinClasses;
+    if( Object.keys(styleClasses).length>0){
+      if( styleClasses['root'] ){
+        rootClasses += ` ${styleClasses['root'].join(' ')}`;
+      }
+      return {rootClasses:rootClasses, styleClasses:styleClasses};
+    }
+    return { rootClasses:rootClasses} ;
   }  
 
   // const Widget = getWidgetComponent(props.data.type);
 
   return Widget ? (
-    <div className={`${getStyleCss()} dme-block dme-blocktype-${widgetArr[0]} ${widgetArr[1]?'dme-blockvariant-'+widgetArr[1]:''}`}> {/* todo: put style under */}
+    // <div className={`${getCssStyles()} dme-block dme-blocktype-${widgetArr[0]} ${widgetArr[1]?'dme-blockvariant-'+widgetArr[1]:''}`}>
     <Widget
       adding={props.newBlock}
       inBlock={props.inBlock ? true : false}
+      {...getCssStyles()}
       blockNode={props.data}
       active={isActive}
       onCancel={props.onCancel}
       onDelete={props.onDelete}
     />
-    </div>
+    // </div>
   ) : (
     <></>
   );

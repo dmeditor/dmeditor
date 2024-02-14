@@ -130,6 +130,7 @@ const registerSampleWidget = function () {
   [{
     identifier:'big-space',
     name:'Big space',
+    cssClasses:{'root':'pt-6 leading-3 text-3xl'},
     cssStyle: `
        padding: 50px;
        background: #efefef
