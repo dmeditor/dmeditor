@@ -4,7 +4,7 @@ import { css } from '@emotion/css';
 import { Settings } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { getWidget } from '../components/widgets';
+import { getWidget, getWidgetName } from '../components/widgets';
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './BlockSettings';
@@ -41,12 +41,12 @@ const SettingPanel = (props) => {
       const parents = getParents();
       for (const item of parents) {
         pathArray.push({
-          text: getWidget(item.type)?.name || '',
+          text: getWidgetName(item.type),
           id: item.id || '',
         });
       }
       pathArray.push({
-        text: getWidget(selectedBlock?.type || '')?.name || '',
+        text: getWidgetName(selectedBlock?.type || ''),
         id: selectedBlock?.id || '',
       });
     }

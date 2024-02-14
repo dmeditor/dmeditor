@@ -30,7 +30,7 @@ export const ListOverview = (props: ListOverviewProps) => {
       if(variant){
         return variant.name;
       }
-      return widget.name;
+      return widget?.name||'';
   }
 
   return (

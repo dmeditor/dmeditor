@@ -79,6 +79,15 @@ const getWidget = (widget: string) => {
   return def as DME.Widget;
 };
 
+//get widget name, with variant considered.
+const getWidgetName = (widget:string) =>{
+  const [widgetObj, variant] = getWidgetWithVariant(widget);
+  if(variant){
+    return variant.name;
+  }
+  return widgetObj?.name||'';
+}
+
 const getWidgetWithVariant = (widget: string) => {
   const arr = widget.split(':');
   const def = widgetDefinition[arr[0]];
@@ -87,14 +96,16 @@ const getWidgetWithVariant = (widget: string) => {
   if (arr[1]) {
     variant = def.variants.find((variant) => variant.identifier === arr[1]);
   }
-  return [def as DME.Widget, variant] as const;
+  return [def as DME.Widget|undefined, variant] as const;
 };
 
-const defaultStyle: DME.WidgetStyle = {
-  identifier: '_',
-  display: 'dropdown',
-  name: 'Style',
-  options: [],
+const defaultStyle = (): DME.WidgetStyle => {
+  return{
+    identifier: '_',
+    display: 'dropdown',
+    name: 'Style',
+    options: [],
+  }
 };
 
 function registerWidgetDefinition(widget: DME.Widget) {
@@ -104,7 +115,7 @@ function registerWidgetDefinition(widget: DME.Widget) {
   }
   widgetDefinition[widget.type] = { ...widget, variants: [] };
   //register default style to make sure _default style is always there.
-  registerWidgetStyle(widget.type, defaultStyle);
+  registerWidgetStyle(widget.type, defaultStyle());
 }
 
 function addLayoutDefinition(widget: DME.Widget) {
@@ -188,7 +199,7 @@ function registerWidgetStyleOption(
     console.error(`Widget style ${style} is not found`);
     return;
   }
-  widgetStyles[widget][style].options = [...widgetStyles[widget][style].options, ...styleOptions];
+  widgetStyles[widget][style].options = [...(widgetStyles[widget][style].options), ...styleOptions];
 }
 
 //get a style, ignore enabledSettings
@@ -220,7 +231,7 @@ function getWidgetStyles(widget: string, allStyles?: boolean) {
       return styles;
     }
   } else {
-    const enabledStyles = variant ? variant.enabledStyles : widgetObj.enabledStyles;
+    const enabledStyles = variant ? variant.enabledStyles : widgetObj?.enabledStyles;
     const widgetEnabledStyles = enabledStyles ? filterByKeys(styles, enabledStyles) : styles;
     if (variant) {
       //if there is variant, use variant enabled style(on widget) + variant styles.
@@ -244,6 +255,7 @@ export {
   layoutDefinition,
   customDefinition,
   getWidget,
+  getWidgetName,
   getWidgetWithVariant,
   registerWidget,
   registerDefaultWidgets,
