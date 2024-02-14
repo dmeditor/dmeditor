@@ -28,7 +28,7 @@ export const Path = (props: PathProps) => {
   return (
     <PathContainer>
       {props.pathArray.map((item, index) => (
-        <>
+        <span key={item.id}>
           <PathItem
             key={item.id}
             canClick={!item.disableClick&&(selectedId !== item.id)}
@@ -43,7 +43,7 @@ export const Path = (props: PathProps) => {
             {item.text}
           </PathItem>
           {index !== props.pathArray.length - 1 && <KeyboardArrowRight fontSize="small" />}
-        </>
+        </span>
       ))}
     </PathContainer>
   );

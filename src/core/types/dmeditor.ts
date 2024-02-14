@@ -73,7 +73,8 @@ export namespace DME {
     // key is the setting item(eg. 'root', value is styles' class value, eg.['big-space', 'dark'])
     styleClasses?: {[key:string]:Array<string>}, 
     active:boolean,
-    adding:boolean
+    adding:boolean,
+    path:Array<number>
   }
 
   export interface SettingComponentProps<T=unknown> extends Setting{

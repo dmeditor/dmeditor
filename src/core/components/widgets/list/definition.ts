@@ -29,7 +29,7 @@ const listWidget: DME.Widget = {
       name: 'Direction',
       property: '.direction',
       category: 'settings',
-      settingComponent: 'button-group1',
+      settingComponent: 'button-group',
       parameters: {
         options: [
           { text: 'Vertical', value: 'vertical' },

@@ -25,6 +25,7 @@ export type BlockInfo = {
 interface BlockProps<Type=DMEData.DefaultDataType> {
   data: DMEData.Block<Type>;
   active?: boolean;
+  path:Array<number>;
   onActivate?: () => void;
   onAddAbove?: (type: string, template?: string) => void;
   onAddUnder?: (type: string, template?: string) => void;
@@ -111,6 +112,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
       inBlock={props.inBlock ? true : false}
       {...getCssStyles()}
       blockNode={props.data}
+      path = {props.path}
       active={isActive}
       onCancel={props.onCancel}
       onDelete={props.onDelete}

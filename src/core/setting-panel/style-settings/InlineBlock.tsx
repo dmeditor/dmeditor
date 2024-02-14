@@ -23,6 +23,7 @@ export const InlineBlock = (props: StyleSettingProps & { style: DME.WidgetStyle 
         <InlineBlockItemStyle
           selected={values[style.identifier] === option.identifier}
           onClick={() => handleChange(option.identifier)}
+          key={option.identifier}
         >
           {option.name}
         </InlineBlockItemStyle>

@@ -52,12 +52,13 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
     // contentEditable: props.active,
   };
 
-  return (
+  return (<>
     <div className={rootClasses} style={{backgroundColor:data.settings['background-color']}}>
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
       </HeadingComponent>
     </div>
+    </>
   );
 };
 

@@ -36,6 +36,7 @@ export const ListOverview = (props: ListOverviewProps) => {
   return (
     <div>
       <table className={tableStyle}>
+        <tbody>
         {props.data.map((item, index) => (
           <tr key={item.id} className={props.selectedIndex === index ? activeRow : ''}>
             <td
@@ -59,6 +60,7 @@ export const ListOverview = (props: ListOverviewProps) => {
             </td>
           </tr>
         ))}
+        </tbody>
       </table>
     </div>
   );

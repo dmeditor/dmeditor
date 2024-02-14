@@ -41,7 +41,39 @@
     -->
   </body>
   <% if (process.env.NODE_ENV === 'development') { %>
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        prefix: '',
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            }
+          }
+        }
+      }
+    </script>
+
+    <style type="text/tailwindcss">  
+      @layer base{        
+        h1 {
+          @apply text-3xl;
+        }
+        h2 {
+          @apply text-2xl;
+        }
+        h3 {
+          @apply text-lg;
+        }
+      }
+
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+      }
+    </style>
   <!-- <script src="https://cdn.jsdelivr.net/gh/mrdoob/stats.js/build/stats.min.js"></script>
   <script>
     {

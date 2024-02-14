@@ -17,7 +17,7 @@ const List = (props: DME.WidgetRenderProps<EntityList>) => {
       <BlockListRender
         blockData={children || []}
         allowedTypes={allowedTypes}
-        pathArray={[]}
+        path={props.path}
       />
     </StyledList>
   );

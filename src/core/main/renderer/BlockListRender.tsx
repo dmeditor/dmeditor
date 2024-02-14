@@ -10,21 +10,23 @@ import { DMEData } from 'Src/core/types';
 
 interface BlockListProps {
   blockData: DMEData.BlockList;
-  pathArray:Array<number>;
+  path:Array<number>;
   allowedTypes?: string[];
 }
 
 export const BlockListRender = (props: BlockListProps) => {
   const {
-    selected: { blockIndex: selectedBlockIndex },
+    selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData: { index: addBlockIndex, status: addingStatus, position },
     startAddBlock,
     updateSelectedBlockIndex,
   } = useEditorStore();
 
+  const listSelected = props.path.join(',') === currentListPath.join(',');
+
   const select = (index: number) => {
     if (selectedBlockIndex !== index) {
-      updateSelectedBlockIndex(props.pathArray, index);
+      updateSelectedBlockIndex(props.path, index);
     }
   };
 
@@ -61,13 +63,14 @@ export const BlockListRender = (props: BlockListProps) => {
     {props.blockData.length===0&&<div>
       <Button onClick={()=>addAfter(0)}>Add widget</Button>  
     </div>}
-    {props.blockData.map((blockData: DMEData.Block, index: number) => (
-    <>
-      {addingStatus === 'started' && index === selectedBlockIndex && position === 'before' && (
+    {props.blockData.map((blockData: DMEData.Block, index: number) => {
+      const isActive = listSelected && index === selectedBlockIndex;
+      return <React.Fragment key={blockData.id}>
+      { isActive && addingStatus === 'started' && position === 'before' && (
         renderAddingMessage()
       )}
-      <StyledBlock active={index === selectedBlockIndex} className='dme-block-container' onClick={()=>select(index)}>
-      {index === selectedBlockIndex && <>
+      <StyledBlock active={isActive} className='dme-block-container' onClick={()=>select(index)}>
+      {isActive && <>
         {addBlockIndex === -Infinity && (
           <AddingTool type='above'>
             <Button onClick={() => addBefore(index)}><AddOutlined /> </Button>
@@ -76,11 +79,12 @@ export const BlockListRender = (props: BlockListProps) => {
         </>}
         <BlockRender
           key={blockData.id}
-          active={index === selectedBlockIndex}
+          active={isActive}
+          path = {[...props.path, index]}
           data={blockData}
         />
         {/* below is for test */}
-      {index === selectedBlockIndex && <>
+      {isActive && <>
         {addBlockIndex === -Infinity && (
           <AddingTool>
             <Button onClick={() => addAfter(index)}><AddOutlined /> </Button>
@@ -88,10 +92,10 @@ export const BlockListRender = (props: BlockListProps) => {
         )}
         </>}
       </StyledBlock>
-      {addingStatus === 'started' && index === selectedBlockIndex && position === 'after' && (
+      { isActive && addingStatus === 'started' && position === 'after' && (
         renderAddingMessage()
       )}
-    </>
-    ))}
+    </React.Fragment>
+    })}
   </>
 };
