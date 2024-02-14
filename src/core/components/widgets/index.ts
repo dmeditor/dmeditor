@@ -190,7 +190,7 @@ function registerWidgetStyleOption(
    widgetStyles[widget][style].options = [...widgetStyles[widget][style].options, ...styleOptions]
 }
 
-//get a style, ignore enabled_settings
+//get a style, ignore enabledSettings
 function getWidgetStyle(
   widget: string,
   style?: string,
@@ -201,21 +201,35 @@ function getWidgetStyle(
   return styleObj;
 }
 
+//filter by keys
+function filterByKeys<T>(obj:{[prop:string]:T}, keys: Array<string>){  
+  let result: {[prop:string]:T} ={}
+  keys.forEach(key=>result[key]=obj[key])
+  return result;
+}
+
 function getWidgetStyles(widget:string, allStyles?:boolean){
+    const [widgetObj, variant] = getWidgetWithVariant(widget);
     const arr = widget.split(':');
     const styles = widgetStyles[arr[0]];
-    if( arr[1] ){
-      const variant = getWidgetVariant(arr[0], arr[1])
-      let variantStyles = widgetStyles[widget];
-
-      if( allStyles ){
-        return {...styles, ...variantStyles}
+    if( allStyles ){
+      if( variant ){
+        return {...styles, ...widgetStyles[widget]};
+      }else{
+        return styles;
       }
-      let result:{[key:string]:DME.WidgetStyle} = {};
-      variant?.enabled_styles?.forEach(key=>result[key] = styles[key])
-      return {...result, ...variantStyles}
-    }
-    return styles;
+    }else{
+      const enabledStyles = variant?variant.enabledStyles:widgetObj.enabledStyles;
+      const widgetEnabledStyles = enabledStyles?filterByKeys(styles, enabledStyles):styles;
+      if( variant ){    
+         //if there is variant, use variant enabled style(on widget) + variant styles.
+        const variantStyles = widgetStyles[widget];    
+        return {...widgetEnabledStyles, ...variantStyles};
+      }else{        
+        //if no variant, use widget enabled style
+        return widgetEnabledStyles;
+      }
+  }    
 }
 
 export {

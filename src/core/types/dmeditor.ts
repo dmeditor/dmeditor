@@ -15,9 +15,10 @@ export namespace DME {
   export interface Widget {
     type: string;
     name: string;
-    icon: string; //base 64(eg. png/svg) or url
+    icon: string|(()=>unknown); //base 64(eg. png/svg) or url, or component
     category: 'widget' | 'layout' | 'section';
     alias?: string;
+    enabledStyles?:Array<string>;
     events: {
       //   onInput: () => void 0,
       //   onChange: () => void 0,
@@ -39,8 +40,8 @@ export namespace DME {
     identifier: string;
     name: string;
     cssStyle?: string; //built-in style for the variant
-    enabled_styles?:Array<string>;
-    enabled_settings: Array<string>;
+    enabledStyles?:Array<string>;
+    enabledSettings: Array<string>;
     allowed_widgets?: Array<string|unknown>; //can be sub widget inside
     getDefaultData?: ()=> DMEData.Block<unknown>
   }

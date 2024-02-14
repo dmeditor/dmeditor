@@ -48,8 +48,8 @@ const registerSampleWidget = function () {
     widget: 'heading',
     identifier: 'gradient',
     name: 'Gradient heading',
-    enabled_styles: ['_'],
-    enabled_settings: ['settings.color'],
+    enabledStyles: ['_'],
+    enabledSettings: ['settings.color'],
     getDefaultData: () => {
       return {
         id: nanoid(),
@@ -75,7 +75,7 @@ const registerSampleWidget = function () {
     widget: 'list',
     identifier: 'article-block',
     name: 'Article block',
-    enabled_settings: [],
+    enabledSettings: [],
     allowed_widgets: ['heading:gradient'],
     //todo: use property?
     getDefaultData: (): DMEData.Block<any> => {
@@ -117,6 +117,11 @@ const registerSampleWidget = function () {
     cssStyle: `
        margin-top: 10px;
        margin-bottom: 10px;
+
+
+       td{
+
+       }
     `,
     icon: ''  
   }], 'margin')
