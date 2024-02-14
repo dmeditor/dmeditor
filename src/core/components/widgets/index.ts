@@ -208,6 +208,7 @@ function filterByKeys<T>(obj: { [prop: string]: T }, keys: Array<string>) {
   return result;
 }
 
+//get wiget styles(including varianted widget)
 function getWidgetStyles(widget: string, allStyles?: boolean) {
   const [widgetObj, variant] = getWidgetWithVariant(widget);
   const arr = widget.split(':');
