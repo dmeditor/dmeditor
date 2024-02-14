@@ -33,7 +33,7 @@ const registerDefaultWidgets = () => {
 };
 
 const properties: string[] = [];
-const widgetDefinition: { [key: string]: DME.Widget & {variants: Array<DME.WidgetVariant>} } = {};
+const widgetDefinition: { [key: string]: DME.Widget & { variants: Array<DME.WidgetVariant> } } = {};
 
 // const widgetDefinition: Widget[] = [];
 const layoutDefinition: { [key: string]: DME.Widget } = {};
@@ -73,37 +73,36 @@ const getWidgetComponent = (type: string): any => {
 };
 
 //get widget information/definiton/meta data
-const getWidget = (widget: string )=> {
+const getWidget = (widget: string) => {
   const arr = widget.split(':');
   const def = widgetDefinition[arr[0]];
   return def as DME.Widget;
 };
 
-
-const getWidgetWithVariant = (widget: string )=> {
+const getWidgetWithVariant = (widget: string) => {
   const arr = widget.split(':');
   const def = widgetDefinition[arr[0]];
 
   let variant = undefined;
-  if( arr[1] ) {
-     variant = def.variants.find(variant=>variant.identifier===arr[1])
+  if (arr[1]) {
+    variant = def.variants.find((variant) => variant.identifier === arr[1]);
   }
   return [def as DME.Widget, variant] as const;
 };
 
-const defaultStyle:DME.WidgetStyle = {
+const defaultStyle: DME.WidgetStyle = {
   identifier: '_',
   display: 'dropdown',
   name: 'Style',
-  options: []
-}
+  options: [],
+};
 
 function registerWidgetDefinition(widget: DME.Widget) {
   if (widgetDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
   }
-  widgetDefinition[widget.type] = {...widget, variants:[]};
+  widgetDefinition[widget.type] = { ...widget, variants: [] };
   //register default style to make sure _default style is always there.
   registerWidgetStyle(widget.type, defaultStyle);
 }
@@ -134,27 +133,29 @@ function registerWidgetComponent(widgetName: string, widgetInstance: ComponentTy
 
 function registerWidget(definition: DME.Widget, renderComponent: ComponentType<any>) {
   registerWidgetDefinition(definition);
-  registerWidgetComponent(definition.type, renderComponent);  
+  registerWidgetComponent(definition.type, renderComponent);
 }
 
 function registerWidgetVariant(variant: DME.WidgetVariant, styles?: Array<DME.WidgetStyle>) {
   const widgetIdentifier = variant.widget;
   if (!widgetDefinition[widgetIdentifier]) {
-      console.error(`Widget ${widgetIdentifier} not found. Can not register variant. ${variant.identifier}`);
-      return;
+    console.error(
+      `Widget ${widgetIdentifier} not found. Can not register variant. ${variant.identifier}`,
+    );
+    return;
   }
-  widgetDefinition[widgetIdentifier].variants.push( variant );
+  widgetDefinition[widgetIdentifier].variants.push(variant);
 
-  if(styles){
-    styles.forEach(style=>{
-      registerWidgetStyle(variant.widget+':'+variant.identifier, style)
-    })
+  if (styles) {
+    styles.forEach((style) => {
+      registerWidgetStyle(variant.widget + ':' + variant.identifier, style);
+    });
   }
 }
 
-function getWidgetVariant(widget: string, variant: string): DME.WidgetVariant|null {
+function getWidgetVariant(widget: string, variant: string): DME.WidgetVariant | null {
   const variants = widgetDefinition[widget].variants;
-  return variants.find(item=>item.identifier===variant) || null; 
+  return variants.find((item) => item.identifier === variant) || null;
 }
 
 //widget styles. Can be variant also(eg. heading:article-title)
@@ -170,9 +171,9 @@ function registerWidgetStyle(widget: string, style: DME.WidgetStyle) {
   if (!widgetStyles[widget]) {
     widgetStyles[widget] = {};
   }
-  if(widgetStyles[widget][style.identifier]){
+  if (widgetStyles[widget][style.identifier]) {
     console.warn(`Style ${style.identifier} is already registered on ${widget}. Ignore.`);
-    return
+    return;
   }
   widgetStyles[widget][style.identifier] = style;
 }
@@ -183,18 +184,15 @@ function registerWidgetStyleOption(
   styleOptions: Array<DME.WidgetStyleOption>,
   style: string,
 ) {
-  if( !widgetStyles[widget] || !widgetStyles[widget][style] ){
+  if (!widgetStyles[widget] || !widgetStyles[widget][style]) {
     console.error(`Widget style ${style} is not found`);
     return;
   }
-   widgetStyles[widget][style].options = [...widgetStyles[widget][style].options, ...styleOptions]
+  widgetStyles[widget][style].options = [...widgetStyles[widget][style].options, ...styleOptions];
 }
 
 //get a style, ignore enabledSettings
-function getWidgetStyle(
-  widget: string,
-  style?: string,
-): DME.WidgetStyle{
+function getWidgetStyle(widget: string, style?: string): DME.WidgetStyle {
   const styles = getWidgetStyles(widget, true);
   style = style || '_';
   const styleObj = styles[style];
@@ -202,34 +200,36 @@ function getWidgetStyle(
 }
 
 //filter by keys
-function filterByKeys<T>(obj:{[prop:string]:T}, keys: Array<string>){  
-  let result: {[prop:string]:T} ={}
-  keys.forEach(key=>result[key]=obj[key])
+function filterByKeys<T>(obj: { [prop: string]: T }, keys: Array<string>) {
+  let result: { [prop: string]: T } = {};
+  keys.forEach((key) => {
+    if (obj[key]) result[key] = obj[key];
+  });
   return result;
 }
 
-function getWidgetStyles(widget:string, allStyles?:boolean){
-    const [widgetObj, variant] = getWidgetWithVariant(widget);
-    const arr = widget.split(':');
-    const styles = widgetStyles[arr[0]];
-    if( allStyles ){
-      if( variant ){
-        return {...styles, ...widgetStyles[widget]};
-      }else{
-        return styles;
-      }
-    }else{
-      const enabledStyles = variant?variant.enabledStyles:widgetObj.enabledStyles;
-      const widgetEnabledStyles = enabledStyles?filterByKeys(styles, enabledStyles):styles;
-      if( variant ){    
-         //if there is variant, use variant enabled style(on widget) + variant styles.
-        const variantStyles = widgetStyles[widget];    
-        return {...widgetEnabledStyles, ...variantStyles};
-      }else{        
-        //if no variant, use widget enabled style
-        return widgetEnabledStyles;
-      }
-  }    
+function getWidgetStyles(widget: string, allStyles?: boolean) {
+  const [widgetObj, variant] = getWidgetWithVariant(widget);
+  const arr = widget.split(':');
+  const styles = widgetStyles[arr[0]];
+  if (allStyles) {
+    if (variant) {
+      return { ...styles, ...widgetStyles[widget] };
+    } else {
+      return styles;
+    }
+  } else {
+    const enabledStyles = variant ? variant.enabledStyles : widgetObj.enabledStyles;
+    const widgetEnabledStyles = enabledStyles ? filterByKeys(styles, enabledStyles) : styles;
+    if (variant) {
+      //if there is variant, use variant enabled style(on widget) + variant styles.
+      const variantStyles = widgetStyles[widget];
+      return { ...widgetEnabledStyles, ...variantStyles };
+    } else {
+      //if no variant, use widget enabled style
+      return widgetEnabledStyles;
+    }
+  }
 }
 
 export {
