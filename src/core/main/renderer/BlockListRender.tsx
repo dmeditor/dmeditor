@@ -16,23 +16,20 @@ interface BlockListProps {
   isInternal?: boolean;
 }
 
-interface BlockWithMousePostionProps {
+interface BlockWithAddingProps {
   isActive?: boolean;
   onSelect: () => void;
-  onShowAddingTool: (position: 'before' | 'after' | '') => void;
+  onAddClick: (position: 'before' | 'after') => void;
   children: any;
 }
 
 export const BlockListRender = (props: BlockListProps) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
-    addBlockData: { index: addBlockIndex, context:addingContext, status: addingStatus, position },
+    addBlockData: { index: addBlockIndex, status: addingStatus, position },
     startAddBlock,
     updateSelectedBlockIndex,
   } = useEditorStore();
-
-  const [addingToolIndex, setAddingToolIndex] = useState(-1);
-  const [addingToolPosition, setAddingToolPosition] = useState('');
 
   const isInSelectedContext = currentListPath.join(',') === props.path.join(',');
 
@@ -51,16 +48,6 @@ export const BlockListRender = (props: BlockListProps) => {
     updateSelectedBlockIndex(props.path, index);
   };
 
-  const addBefore = (e:any, index: number) => {
-    e.stopPropagation();
-    emitter.emit('addBlock', props.path, index, 'before');
-  };
-
-  const addAfter = (e:any, index: number) => {
-    e.stopPropagation();
-    emitter.emit('addBlock', props.path, index, 'after');
-  };
-
   useEffect(() => {
     emitter.addListener(
       'addBlock',
@@ -74,9 +61,8 @@ export const BlockListRender = (props: BlockListProps) => {
     };
   }, []);
 
-  const showAddingTool = (position: string, index: number) => {
-    setAddingToolIndex(index);
-    setAddingToolPosition(position);
+  const addButtonHandle = (position: 'before' | 'after', index: number) => {
+    emitter.emit('addBlock', props.path, index, position);
   };
 
   const renderAddingMessage = () => {
@@ -87,42 +73,29 @@ export const BlockListRender = (props: BlockListProps) => {
     <>
       {props.blockData.length === 0 && (
         <div>
-          <Button onClick={(e) => addAfter(e, 0)}>Add widget</Button>
+          <Button onClick={(e) => addButtonHandle('after', 0)}>Add widget</Button>
         </div>
       )}
       {props.blockData.map((blockData: DMEData.Block, index: number) => {
         const isActive = isInSelectedContext && index === selectedBlockIndex;
         return (
           <React.Fragment key={blockData.id}>
-            { addingStatus === 'started' &&
+            {/* todo: move this to BlockWithAdding */}
+            {addingStatus === 'started' &&
               isInSelectedContext &&
               addBlockIndex === index &&
               position === 'before' &&
               renderAddingMessage()}
 
-            <BlockWithMousePostion
+            <BlockWithAdding
               isActive={isActive}
               onSelect={() => select(index)}
-              onShowAddingTool={(position) => showAddingTool(position, index)}
+              onAddClick={(position) => addButtonHandle(position, index)}
             >
-              {addingToolIndex === index && addingToolPosition === 'before' && (
-                <AddingTool position="before">
-                  <Button onClick={(e) => addBefore(e, index)}>
-                    <AddOutlined />{' '}
-                  </Button>
-                </AddingTool>
-              )}
               <BlockRender active={isActive} path={[...props.path, index]} data={blockData} />
-              {addingToolIndex === index && addingToolPosition === 'after' && (
-                <AddingTool position="after">
-                  <Button onClick={(e) => addAfter(e, index)}>
-                    <AddOutlined />{' '}
-                  </Button>
-                </AddingTool>
-              )}
-            </BlockWithMousePostion>
+            </BlockWithAdding>
 
-            { addingStatus === 'started' &&
+            {addingStatus === 'started' &&
               addBlockIndex === index &&
               isInSelectedContext &&
               position === 'after' &&
@@ -136,15 +109,18 @@ export const BlockListRender = (props: BlockListProps) => {
 
 const containerClasses = 'dme-block-container';
 
-const BlockWithMousePostion = (props: BlockWithMousePostionProps) => {
-  const { isActive, onSelect } = props;
+const BlockWithAdding = (props: BlockWithAddingProps) => {
+  const { isActive, onSelect, onAddClick } = props;
 
   const blockContainerRef = useRef<HTMLDivElement>(null);
-  const mousePosition = useMousePosition(blockContainerRef.current);
+  const addPosition = useMousePosition(blockContainerRef.current);
 
-  useEffect(() => {
-    props.onShowAddingTool(mousePosition);
-  }, [mousePosition]);
+  const addButtonClicked = (e: any) => {
+    e.stopPropagation();
+    if (addPosition) {
+      onAddClick(addPosition);
+    }
+  };
 
   return (
     <StyledBlock
@@ -153,7 +129,21 @@ const BlockWithMousePostion = (props: BlockWithMousePostionProps) => {
       className={containerClasses}
       onClick={(e) => onSelect()}
     >
+      {addPosition === 'before' && (
+        <AddingTool position="before">
+          <Button onClick={addButtonClicked}>
+            <AddOutlined />{' '}
+          </Button>
+        </AddingTool>
+      )}
       {props.children}
+      {addPosition === 'after' && (
+        <AddingTool position="after">
+          <Button onClick={addButtonClicked}>
+            <AddOutlined />{' '}
+          </Button>
+        </AddingTool>
+      )}
     </StyledBlock>
   );
 };
