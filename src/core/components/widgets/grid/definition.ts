@@ -20,7 +20,7 @@ const gridWidget: DME.Widget = {
         };
       },
       updateData: () => {},
-    },
+    },    
     settings: [
       {
         name: 'Columns',

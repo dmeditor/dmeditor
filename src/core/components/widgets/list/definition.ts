@@ -19,7 +19,8 @@ const listWidget: DME.Widget = {
       return {
         id: nanoid(),
         data:{},
-        type: 'list',        
+        type: 'list',     
+        children:[]   
       };
     },
     updateData: () => {},

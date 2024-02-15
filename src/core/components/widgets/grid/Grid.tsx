@@ -6,7 +6,7 @@ import { BlockListRender } from "Src/core/main/renderer";
 const Grid = (props:DME.WidgetRenderProps<EntityGrid>)=>{    
     const { blockNode, blockNode:{data:{columns}, children}} = props;
 
-    return <StyledGrid columns={columns}>
+    return <StyledGrid className={props.rootClasses} columns={columns}>
             <BlockListRender blockData={children || []} path={props.path} />
         </StyledGrid>
 }

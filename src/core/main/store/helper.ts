@@ -104,3 +104,17 @@ export const iteratePath = (pathArray:Array<number>, rootList: DMEData.BlockList
     temp = block.children||[];
   }
 }
+
+export const GetDataByPath = (data:DMEData.BlockList, path:Array<number>):DMEData.BlockList|null=>{
+  let list = data;
+  if( path.length === 0 ){
+    return data;
+  }
+  for (const i of path) {
+    if( !list || !list[i] ){
+      return null;
+    }
+    list = list[i].children || null;
+  }
+  return list;
+}

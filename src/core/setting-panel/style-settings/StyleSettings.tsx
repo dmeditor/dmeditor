@@ -17,6 +17,7 @@ import { PropertyItem } from '../../utils/Property';
 import { DropDown } from './DropDown';
 import { ButtonGroup } from './ButtonGroup';
 import { InlineBlock } from './InlineBlock';
+import React from 'react';
 
 export interface StyleSettingProps {
   blockType: string;
@@ -32,10 +33,10 @@ export const StyleSettings = (props: StyleSettingProps) => {
   return styles.map((style) => {
     const styleObj = getWidgetStyle(blockType, style);
     if (styleObj.options.length === 0) {
-      return <></>;
+      return <React.Fragment  key={styleObj.identifier}></React.Fragment>;
     }
     return (
-      <PropertyItem label={styleObj.name}>
+      <PropertyItem label={styleObj.name} key={styleObj.identifier}>
         {(!styleObj.display || styleObj.display === 'dropdown') && (
           <DropDown {...props} style={styleObj} />
         )}
