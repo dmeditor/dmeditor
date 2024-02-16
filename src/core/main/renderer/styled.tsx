@@ -55,20 +55,28 @@ export const AddingTool = styled.div<{ position?: string, horizontal?:boolean }>
     ${(props)=>{
       if(props.position === 'before'){
         if(props.horizontal){
-          return `left: -30px;`;          
+          return `left: -36px;`;          
         }
-        return `top: -30px;`;
+        return `top: -36px;`;
       }
       if(props.position === 'after'){
         if(props.horizontal){
-          return `right: -30px;`;          
+          return `right: -36px;`;          
         }
-        return `bottom: -30px;`;
+        return `bottom: -36px;`;
       }
       return ''
     }}
 `;
 
+
+export const StyledButtonContainer = styled.span`
+  background-color: #ffffff;
+  display: inline-block;
+  border: 1px solid #ffd9d9;
+  border-radius: 40px;
+  z-index: 50;
+`;
 
 export const BlockListStyle = styled.div`
 `

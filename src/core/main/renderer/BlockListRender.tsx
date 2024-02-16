@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { useMousePosition } from '../hooks/useMousePosition';
 import { AddBlockParameters, useEditorStore } from '../store';
 import { BlockRender } from './BlockRender';
-import { AddingMessage, AddingTool, BlockListStyle, StyledAddWidgetButton, StyledBlock } from './styled';
+import { AddingMessage, AddingTool, BlockListStyle, StyledAddWidgetButton, StyledBlock, StyledButtonContainer } from './styled';
 import emitter from 'Core/utils/event';
 import { DMEData } from 'Src/core/types';
 
@@ -36,9 +36,6 @@ export const BlockListRender = (props: BlockListProps) => {
 
   const {status:globalAddingStatus} = addBlockData||{};
   const isInSelectedContext = currentListPath.join(',') === props.path.join(',');
-
-  console.log(currentListPath);
-  console.log(isInSelectedContext);
 
   const [addParameters, setAddParameters] = useState<AddBlockParameters>();
 
@@ -165,17 +162,21 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
     >
       {addPosition === 'before' && (
         <AddingTool position="before" horizontal={addingHorizontal}>
-          <Button onClick={addButtonClicked}>
+          <StyledButtonContainer>
+          <Button onClick={addButtonClicked} sx={{'backgroundColor':'#fffff'}}>
             <AddOutlined />{' '}
           </Button>
+          </StyledButtonContainer>
         </AddingTool>
       )}
       {props.children}
       {addPosition === 'after' && (
         <AddingTool position="after" horizontal={addingHorizontal}>
+          <StyledButtonContainer>
           <Button onClick={addButtonClicked}>
             <AddOutlined />{' '}
           </Button>
+          </StyledButtonContainer>
         </AddingTool>
       )}
     </StyledBlock>
