@@ -58,7 +58,7 @@ const SettingPanel = (props) => {
 
   useEffect(() => {
     //is adding mode
-    if (addBlockIndex) {
+    if (addBlockData && addBlockData.status==='started') {
       setMode('adding');
     } else {
       // selecting a block

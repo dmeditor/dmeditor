@@ -65,7 +65,7 @@ const registerSampleWidget = function () {
         identifier:'test-item',
         name:'Test item',
         cssStyle: `
-           background: #cccccc;
+           background: #cccccc;           
         `,
         icon: ''  
       }
@@ -118,10 +118,7 @@ const registerSampleWidget = function () {
        margin-top: 10px;
        margin-bottom: 10px;
 
-
-       td{
-
-       }
+      
     `,
     icon: ''  
   }], 'margin')

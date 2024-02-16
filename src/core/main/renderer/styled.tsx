@@ -24,6 +24,10 @@ export const StyledBlock = styled.div<{ active?: boolean }>`
   position: relative;
 `;
 
+export const StyledAddWidgetButton = styled.div`
+  padding: 40px;
+`
+
 export const AddingMessage = styled.div`
   color: #666666;
   padding: 10px 40px;

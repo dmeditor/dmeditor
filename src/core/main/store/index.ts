@@ -16,7 +16,7 @@ export interface AddBlockParameters {
   index: number,
   position: AddBlockPosition,
   context: Array<number>;
-  status: 'started'|undefined;
+  status: 'started'|'cancelled';
 }
 
 type Store = {
@@ -106,7 +106,9 @@ const useEditorStore = create<Store & Actions>()(
       }),
     cancelAdding: () =>
       set((state) => {
-        state.addBlockData = undefined;
+        if( state.addBlockData ){
+          state.addBlockData.status = 'cancelled';
+        }
       }),
     clearWidgets: () => {
       set((state) => {

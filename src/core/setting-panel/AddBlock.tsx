@@ -8,16 +8,12 @@ import { WidgetList } from '../components/widget-list';
 import { getWidget, getWidgetVariant, getWidgetWithVariant } from '../components/widgets';
 import { useEditorStore } from '../main/store';
 import { AddBlockContainer, RightElement, SettingDescription, SettingHeader } from './style';
-import emitter from 'Core/utils/event';
 
 export const AddBlock = () => {
   const {
-    addBlockData,
     addBlock,
     cancelAdding,
   } = useEditorStore((state) => state);
-
-  const { index, position } = addBlockData||{};
 
   const addBlockDone = (type: string) => {
     const [widget, variant] = getWidgetWithVariant(type);

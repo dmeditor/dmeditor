@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { useMousePosition } from '../hooks/useMousePosition';
 import { AddBlockParameters, AddBlockPosition, useEditorStore } from '../store';
 import { BlockRender } from './BlockRender';
-import { AddingMessage, AddingTool, BlockListStyle, StyledBlock } from './styled';
+import { AddingMessage, AddingTool, BlockListStyle, StyledAddWidgetButton, StyledBlock } from './styled';
 import emitter from 'Core/utils/event';
 import { DMEData } from 'Src/core/types';
 
@@ -54,7 +54,7 @@ export const BlockListRender = (props: BlockListProps) => {
   //register event
   useEffect(() => {
     emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
-      startAddBlock(parameters.context, parameters.index, parameters.position);
+      startAddBlock(parameters.context, parameters.index, parameters.position);   
     });
 
     return () => {
@@ -64,15 +64,20 @@ export const BlockListRender = (props: BlockListProps) => {
 
   //trigger adding event
   useEffect(() => {
-    if (addParameters) {
+    if (addParameters?.status === 'started') {
       emitter.emit('addBlock', addParameters);
     }
-  }, [addParameters?.index, addParameters?.position, addParameters?.context]);
+  }, [addParameters===undefined, addParameters?.index, addParameters?.position]); //todo: better way to check?
 
   //trigger state change when it's done.
   useEffect(()=>{
-    if(addParameters?.status==='started'&&globalAddingStatus===undefined){
-      setAddParameters(undefined);
+    if(addParameters?.status==='started'){
+      if( globalAddingStatus===undefined){
+        setAddParameters(undefined);
+      }
+      if(globalAddingStatus === 'cancelled'){
+          //todo: deleted empty list
+      }
     }
   }, [globalAddingStatus])
 
@@ -92,15 +97,14 @@ export const BlockListRender = (props: BlockListProps) => {
   return (
     <>
       {props.blockData.length === 0 && (
-        <div>
+        <StyledAddWidgetButton>
           <Button onClick={(e) => handleAdding('after', 0)}>Add widget</Button>
-        </div>
+        </StyledAddWidgetButton>
       )}
       {props.blockData.map((blockData: DMEData.Block, index: number) => {
         const isActive = isInSelectedContext && index === selectedBlockIndex;
         return (
           <React.Fragment key={blockData.id}>
-            {/* todo: move this to BlockWithAdding */}
             { addParameters?.status === 'started' &&
               isInSelectedContext &&
               addParameters.index === index &&
