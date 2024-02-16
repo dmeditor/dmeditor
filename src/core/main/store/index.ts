@@ -16,7 +16,7 @@ export interface AddBlockParameters {
   index: number,
   position: AddBlockPosition,
   context: Array<number>;
-  status: 'started'|'cancelled';
+  status: 'started'|'cancelled'|'done';
 }
 
 type Store = {
@@ -34,6 +34,7 @@ type Store = {
 type Actions = {
   startAddBlock: (context:Array<number>, index: number, type: AddBlockPosition) => void;
   cancelAdding: () => void;
+  clearAdding:()=>void;
   addBlock: (data: DMEData.Block) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
@@ -101,13 +102,19 @@ const useEditorStore = create<Store & Actions>()(
           state.selected.blockIndex = newPosition;
           state.selected.currentListPath = context||[];
 
-          state.addBlockData = undefined;
+          state.addBlockData.status = 'done';
         }
       }),
     cancelAdding: () =>
       set((state) => {
         if( state.addBlockData ){
           state.addBlockData.status = 'cancelled';
+        }
+      }),
+    clearAdding: () =>
+      set((state) => {
+        if( state.addBlockData ){
+          state.addBlockData = undefined;
         }
       }),
     clearWidgets: () => {

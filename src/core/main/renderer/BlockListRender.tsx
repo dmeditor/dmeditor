@@ -28,6 +28,7 @@ export const BlockListRender = (props: BlockListProps) => {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData,
     startAddBlock,
+    clearAdding,
     updateSelectedBlockIndex,
   } = useEditorStore();
 
@@ -72,11 +73,15 @@ export const BlockListRender = (props: BlockListProps) => {
   //trigger state change when it's done.
   useEffect(()=>{
     if(addParameters?.status==='started'){
-      if( globalAddingStatus===undefined){
+      //done
+      if( globalAddingStatus==='done'){
         setAddParameters(undefined);
+        clearAdding();
       }
       if(globalAddingStatus === 'cancelled'){
           //todo: deleted empty list
+          setAddParameters(undefined);
+          clearAdding();
       }
     }
   }, [globalAddingStatus])
