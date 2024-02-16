@@ -41,17 +41,28 @@ export const AddingMessage = styled.div`
 
 
 
-export const AddingTool = styled.div<{ position?: string }>` //above, under(default), left, right
-    text-align: center;
+export const AddingTool = styled.div<{ position?: string, horizontal?:boolean }>` //above, under(default), left, right
     position: absolute;
-    left: 40%;
-    width: 20%;
+    ${(props)=>props.horizontal?`
+        top:clamp(0px, 0px, 40%);
+        height: 20%;
+    `:`
+        text-align: center;
+        left: 40%;
+        width: 20%;
+    `}
     
     ${(props)=>{
       if(props.position === 'before'){
+        if(props.horizontal){
+          return `left: -30px;`;          
+        }
         return `top: -30px;`;
       }
       if(props.position === 'after'){
+        if(props.horizontal){
+          return `right: -30px;`;          
+        }
         return `bottom: -30px;`;
       }
       return ''

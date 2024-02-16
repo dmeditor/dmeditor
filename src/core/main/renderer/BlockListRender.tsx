@@ -14,6 +14,7 @@ interface BlockListProps {
   path: Array<number>;
   allowedTypes?: string[];
   isInternal?: boolean;
+  direction?:'vertical'|'horizontal';
 }
 
 interface BlockWithAddingProps {
@@ -21,6 +22,7 @@ interface BlockWithAddingProps {
   onSelect: () => void;
   onAddClick: (position: 'before' | 'after') => void;
   children: any;
+  addingHorizontal?:boolean;
 }
 
 export const BlockListRender = (props: BlockListProps) => {
@@ -32,7 +34,7 @@ export const BlockListRender = (props: BlockListProps) => {
     updateSelectedBlockIndex,
   } = useEditorStore();
 
-  const globalAddingStatus = addBlockData?.status;
+  const {status:globalAddingStatus} = addBlockData||{};
   const isInSelectedContext = currentListPath.join(',') === props.path.join(',');
 
   const [addParameters, setAddParameters] = useState<AddBlockParameters>();
@@ -118,6 +120,7 @@ export const BlockListRender = (props: BlockListProps) => {
 
             <BlockWithAdding
               isActive={isActive}
+              addingHorizontal = {props.direction==='horizontal'}
               onSelect={() => select(index)}
               onAddClick={(position) => handleAdding(position, index)}
             >
@@ -139,10 +142,10 @@ export const BlockListRender = (props: BlockListProps) => {
 const containerAdditionalProps = { className: 'dme-block-container' };
 
 const BlockWithAdding = (props: BlockWithAddingProps) => {
-  const { isActive, onSelect, onAddClick } = props;
+  const { isActive, onSelect, onAddClick, addingHorizontal } = props;
 
   const blockContainerRef = useRef<HTMLDivElement>(null);
-  const addPosition = useMousePosition(blockContainerRef.current);
+  const addPosition = useMousePosition(blockContainerRef.current, addingHorizontal);
 
   const addButtonClicked = (e: any) => {
     e.stopPropagation();
@@ -159,7 +162,7 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
       onClick={(e) => onSelect()}
     >
       {addPosition === 'before' && (
-        <AddingTool position="before">
+        <AddingTool position="before" horizontal={addingHorizontal}>
           <Button onClick={addButtonClicked}>
             <AddOutlined />{' '}
           </Button>
@@ -167,7 +170,7 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
       )}
       {props.children}
       {addPosition === 'after' && (
-        <AddingTool position="after">
+        <AddingTool position="after" horizontal={addingHorizontal}>
           <Button onClick={addButtonClicked}>
             <AddOutlined />{' '}
           </Button>

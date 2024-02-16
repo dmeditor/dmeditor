@@ -18,6 +18,7 @@ const List = (props: DME.WidgetRenderProps<EntityList>) => {
         blockData={children || []}
         allowedTypes={allowedTypes}
         path={props.path}
+        direction={direction}
       />
     </StyledList>
   );

@@ -3,17 +3,47 @@ import { useState, useEffect, ReactNode } from 'react';
 
 type PositionType = ''|'before'|'after';
 
-const useMousePosition = (element: HTMLDivElement|null)=>{
+const useMousePosition = (element: HTMLDivElement|null, leftRight?: boolean)=>{
 
     const [position, setPosition] = useState<PositionType>('');    
 
     const height = element?.offsetHeight||0;
+    const width = element?.offsetWidth||0;
     const elementY = element?.getBoundingClientRect().top||0;
+    const elementX = element?.getBoundingClientRect().left||0;
 
+    const shownPositionRange = 50; //50px
     const mouseMove = (e:any)=>{
-        const halfHeight = height/2;
-        const mouseHeight = e.y-elementY;
-        setPosition(mouseHeight<halfHeight?'before':'after');
+        let onFirstHalf = true;
+        let result: PositionType = '';
+        if(leftRight){
+            const halfWidth = width/2;
+            const mouseX = e.x-elementX;
+            //when the element width is too low, use half
+            if( halfWidth < shownPositionRange){
+                result = mouseX <= halfWidth?'before':'after';
+            }else{ //otherwise use range
+                if(mouseX <= shownPositionRange){
+                    result = 'before';
+                }else if(mouseX >= width-shownPositionRange){
+                    result = 'after';
+                }
+            }
+        }else{
+            const halfHeight = height/2;
+            const mouseY = e.y-elementY;
+            onFirstHalf = mouseY<halfHeight;
+            if( halfHeight < shownPositionRange){
+                result = mouseY <= halfHeight?'before':'after';
+            }else{
+                if(mouseY <= shownPositionRange){
+                    result = 'before';
+                }else if(mouseY >= height-shownPositionRange){
+                    result = 'after';
+                }
+            }
+        }
+        setPosition(result);
     }
 
     const mouseOut = ()=>{

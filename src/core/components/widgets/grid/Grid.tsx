@@ -7,7 +7,7 @@ const Grid = (props:DME.WidgetRenderProps<EntityGrid>)=>{
     const { blockNode, blockNode:{data:{columns}, children}} = props;
 
     return <StyledGrid className={props.rootClasses} columns={columns}>
-            <BlockListRender blockData={children || []} path={props.path} />
+            <BlockListRender blockData={children || []} path={props.path} direction="horizontal" />
         </StyledGrid>
 }
 
