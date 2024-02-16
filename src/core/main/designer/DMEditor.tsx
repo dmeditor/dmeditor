@@ -151,9 +151,9 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   }, []);
 
   useEffect(() => {
-    if (selectedBlockIndex !== blockIndexRef.current) {
-      handleWidgetIndexChange(selectedBlockIndex);
-    }
+    // if (selectedBlockIndex !== blockIndexRef.current) {
+    //   handleWidgetIndexChange(selectedBlockIndex);
+    // }
   }, [selectedBlockIndex]);
 
   const handleWidgetIndexChange = debounce((index: number) => {

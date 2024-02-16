@@ -3,7 +3,7 @@ import { AddOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { useMousePosition } from '../hooks/useMousePosition';
-import { AddBlockParameters, AddBlockPosition, useEditorStore } from '../store';
+import { AddBlockParameters, useEditorStore } from '../store';
 import { BlockRender } from './BlockRender';
 import { AddingMessage, AddingTool, BlockListStyle, StyledAddWidgetButton, StyledBlock } from './styled';
 import emitter from 'Core/utils/event';
@@ -36,6 +36,9 @@ export const BlockListRender = (props: BlockListProps) => {
 
   const {status:globalAddingStatus} = addBlockData||{};
   const isInSelectedContext = currentListPath.join(',') === props.path.join(',');
+
+  console.log(currentListPath);
+  console.log(isInSelectedContext);
 
   const [addParameters, setAddParameters] = useState<AddBlockParameters>();
 
@@ -93,7 +96,7 @@ export const BlockListRender = (props: BlockListProps) => {
       index: index,
       position: position,
       status: 'started',
-      context: [],
+      context: props.path,
     });
   };
 
@@ -117,7 +120,6 @@ export const BlockListRender = (props: BlockListProps) => {
               addParameters.index === index &&
               addParameters.position === 'before' &&
               renderAddingMessage()}
-
             <BlockWithAdding
               isActive={isActive}
               addingHorizontal = {props.direction==='horizontal'}

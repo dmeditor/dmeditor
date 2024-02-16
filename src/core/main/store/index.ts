@@ -100,7 +100,7 @@ const useEditorStore = create<Store & Actions>()(
 
           //update to new block
           state.selected.blockIndex = newPosition;
-          state.selected.currentListPath = context||[];
+          state.selected.currentListPath = context;
 
           state.addBlockData.status = 'done';
         }
@@ -229,6 +229,8 @@ const useEditorStore = create<Store & Actions>()(
     },
     updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => {
       set((state) => {
+        console.log('upading');
+        console.trace();
         state.selected.blockIndex = index;
         if (state.selected.currentListPath.join() !== pathArray.join()) {
           // switch list context
