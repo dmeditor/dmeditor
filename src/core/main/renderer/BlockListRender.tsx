@@ -3,7 +3,7 @@ import { AddOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { useMousePosition } from '../hooks/useMousePosition';
-import { AddBlockPosition, useEditorStore } from '../store';
+import { AddBlockParameters, AddBlockPosition, useEditorStore } from '../store';
 import { BlockRender } from './BlockRender';
 import { AddingMessage, AddingTool, BlockListStyle, StyledBlock } from './styled';
 import emitter from 'Core/utils/event';
@@ -26,12 +26,15 @@ interface BlockWithAddingProps {
 export const BlockListRender = (props: BlockListProps) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
-    addBlockData: { index: addBlockIndex, status: addingStatus, position },
+    addBlockData,
     startAddBlock,
     updateSelectedBlockIndex,
   } = useEditorStore();
 
+  const globalAddingStatus = addBlockData?.status;
   const isInSelectedContext = currentListPath.join(',') === props.path.join(',');
+
+  const [addParameters, setAddParameters] = useState<AddBlockParameters>();
 
   const isUnder = () => {
     //check if props.path in selected context
@@ -48,21 +51,38 @@ export const BlockListRender = (props: BlockListProps) => {
     updateSelectedBlockIndex(props.path, index);
   };
 
+  //register event
   useEffect(() => {
-    emitter.addListener(
-      'addBlock',
-      (context: Array<number>, index: number, position: AddBlockPosition) => {
-        startAddBlock(context, index, position);
-      },
-    );
+    emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
+      startAddBlock(parameters.context, parameters.index, parameters.position);
+    });
 
     return () => {
       emitter.removeListener('addBlock');
     };
   }, []);
 
-  const addButtonHandle = (position: 'before' | 'after', index: number) => {
-    emitter.emit('addBlock', props.path, index, position);
+  //trigger adding event
+  useEffect(() => {
+    if (addParameters) {
+      emitter.emit('addBlock', addParameters);
+    }
+  }, [addParameters?.index, addParameters?.position, addParameters?.context]);
+
+  //trigger state change when it's done.
+  useEffect(()=>{
+    if(addParameters?.status==='started'&&globalAddingStatus===undefined){
+      setAddParameters(undefined);
+    }
+  }, [globalAddingStatus])
+
+  const handleAdding = (position: 'before' | 'after', index: number) => {
+    setAddParameters({
+      index: index,
+      position: position,
+      status: 'started',
+      context: [],
+    });
   };
 
   const renderAddingMessage = () => {
@@ -73,7 +93,7 @@ export const BlockListRender = (props: BlockListProps) => {
     <>
       {props.blockData.length === 0 && (
         <div>
-          <Button onClick={(e) => addButtonHandle('after', 0)}>Add widget</Button>
+          <Button onClick={(e) => handleAdding('after', 0)}>Add widget</Button>
         </div>
       )}
       {props.blockData.map((blockData: DMEData.Block, index: number) => {
@@ -81,24 +101,24 @@ export const BlockListRender = (props: BlockListProps) => {
         return (
           <React.Fragment key={blockData.id}>
             {/* todo: move this to BlockWithAdding */}
-            {addingStatus === 'started' &&
+            { addParameters?.status === 'started' &&
               isInSelectedContext &&
-              addBlockIndex === index &&
-              position === 'before' &&
+              addParameters.index === index &&
+              addParameters.position === 'before' &&
               renderAddingMessage()}
 
             <BlockWithAdding
               isActive={isActive}
               onSelect={() => select(index)}
-              onAddClick={(position) => addButtonHandle(position, index)}
+              onAddClick={(position) => handleAdding(position, index)}
             >
               <BlockRender active={isActive} path={[...props.path, index]} data={blockData} />
             </BlockWithAdding>
 
-            {addingStatus === 'started' &&
-              addBlockIndex === index &&
+            {addParameters?.status === 'started' &&
               isInSelectedContext &&
-              position === 'after' &&
+              addParameters.index === index &&
+              addParameters.position === 'after' &&
               renderAddingMessage()}
           </React.Fragment>
         );
@@ -107,7 +127,7 @@ export const BlockListRender = (props: BlockListProps) => {
   );
 };
 
-const containerClasses = 'dme-block-container';
+const containerAdditionalProps = { className: 'dme-block-container' };
 
 const BlockWithAdding = (props: BlockWithAddingProps) => {
   const { isActive, onSelect, onAddClick } = props;
@@ -126,7 +146,7 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
     <StyledBlock
       ref={blockContainerRef}
       active={isActive}
-      className={containerClasses}
+      {...containerAdditionalProps}
       onClick={(e) => onSelect()}
     >
       {addPosition === 'before' && (

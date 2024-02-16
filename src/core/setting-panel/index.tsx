@@ -21,12 +21,14 @@ type SettingPanelMode = 'block-setting' | 'list-overview' | 'page-setting' | 'ad
 const SettingPanel = (props) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
-    addBlockData: { index: addBlockIndex, position: addBlockPosition },
+    addBlockData,
     getSelectedBlock,
     getCurrentList,
     getParents,
     isSelected,
   } = useEditorStore((state) => state);
+
+  const { index: addBlockIndex, position: addBlockPosition } = addBlockData||{};
 
   const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
@@ -56,7 +58,7 @@ const SettingPanel = (props) => {
 
   useEffect(() => {
     //is adding mode
-    if (addBlockIndex !== -Infinity) {
+    if (addBlockIndex) {
       setMode('adding');
     } else {
       // selecting a block

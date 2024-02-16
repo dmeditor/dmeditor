@@ -11,7 +11,13 @@ import { properties } from 'Src/core/components/widgets';
 import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'Src/core/utils';
 
 export type AddBlockPosition = 'before' | 'after';
-export type AddBlockStatus = 'started' | 'done';
+
+export interface AddBlockParameters {
+  index: number,
+  position: AddBlockPosition,
+  context: Array<number>;
+  status: 'started'|undefined;
+}
 
 type Store = {
   selected: {
@@ -21,12 +27,7 @@ type Store = {
     //eg. [0,1] means first on root level, second on second level
     currentListPath: Array<number>;
   };
-  addBlockData: {
-    index: number;
-    position?: AddBlockPosition;
-    context?: Array<number>;
-    status?: AddBlockStatus;
-  };
+  addBlockData?: AddBlockParameters;
   storage: DMEData.BlockList; //data layer
 };
 
@@ -66,17 +67,14 @@ const useEditorStore = create<Store & Actions>()(
     ...createDMEditor(),
     startAddBlock: (context: Array<number>, index: number, position: AddBlockPosition) =>
       set((state) => {
-        state.addBlockData.context = context;
-        state.addBlockData.index = index;
-        state.addBlockData.position = position;
-        state.addBlockData.status = 'started';        
+        state.addBlockData = {context, index, position, status:'started'} 
       }),
     addBlock: (data: DMEData.Block) =>
       set((state) => {
-        const index = state.addBlockData.index;
-        const position = state.addBlockData.position;
-        const status = state.addBlockData.status;
-        const context = state.addBlockData.context;
+        if(!state.addBlockData){
+          return;
+        }
+        const {index, position, status, context} = state.addBlockData;
         if (index == -Infinity) {
           return;
         }       
@@ -103,17 +101,12 @@ const useEditorStore = create<Store & Actions>()(
           state.selected.blockIndex = newPosition;
           state.selected.currentListPath = context||[];
 
-          state.addBlockData.index = -Infinity;
-          state.addBlockData.position = undefined;
-          state.addBlockData.status = undefined;
-          state.addBlockData.context = undefined;
+          state.addBlockData = undefined;
         }
       }),
     cancelAdding: () =>
       set((state) => {
-        state.addBlockData.index = -Infinity;
-        state.addBlockData.position = undefined;
-        state.addBlockData.status = undefined;
+        state.addBlockData = undefined;
       }),
     clearWidgets: () => {
       set((state) => {

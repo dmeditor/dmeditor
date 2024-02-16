@@ -26,7 +26,7 @@ export const StyledBlock = styled.div<{ active?: boolean }>`
 
 export const AddingMessage = styled.div`
   color: #666666;
-  padding: 20px 40px;
+  padding: 10px 40px;
   text-align: center;
   background: #fff3f3;
   border: 1px solid #fcd1d1;

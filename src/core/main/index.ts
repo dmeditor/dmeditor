@@ -26,10 +26,7 @@ function createDMEditor() {
       blockId: '',
       blockIndex: -Infinity,
       currentListPath: [] as Array<number>,
-    },
-    addBlockData: {
-      index: -Infinity,
-    },
+    },    
     // activeWidget: null,
     editorConfig: {
       cssCode: '',

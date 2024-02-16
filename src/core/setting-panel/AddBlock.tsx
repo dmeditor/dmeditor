@@ -12,10 +12,12 @@ import emitter from 'Core/utils/event';
 
 export const AddBlock = () => {
   const {
-    addBlockData: { index, position },
+    addBlockData,
     addBlock,
     cancelAdding,
   } = useEditorStore((state) => state);
+
+  const { index, position } = addBlockData||{};
 
   const addBlockDone = (type: string) => {
     const [widget, variant] = getWidgetWithVariant(type);
