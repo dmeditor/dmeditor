@@ -3,9 +3,16 @@ import { AddOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { useMousePosition } from '../hooks/useMousePosition';
-import { AddBlockParameters, useEditorStore } from '../store';
+import { AddBlockParameters, AddBlockPosition, useEditorStore } from '../store';
 import { BlockRender } from './BlockRender';
-import { AddingMessage, AddingTool, BlockListStyle, StyledAddWidgetButton, StyledBlock, StyledButtonContainer } from './styled';
+import {
+  AddingMessage,
+  AddingTool,
+  BlockListStyle,
+  StyledAddWidgetButton,
+  StyledBlock,
+  StyledButtonContainer,
+} from './styled';
 import emitter from 'Core/utils/event';
 import { DMEData } from 'Src/core/types';
 
@@ -14,7 +21,7 @@ interface BlockListProps {
   path: Array<number>;
   allowedTypes?: string[];
   isInternal?: boolean;
-  direction?:'vertical'|'horizontal';
+  direction?: 'vertical' | 'horizontal';
 }
 
 interface BlockWithAddingProps {
@@ -22,7 +29,7 @@ interface BlockWithAddingProps {
   onSelect: () => void;
   onAddClick: (position: 'before' | 'after') => void;
   children: any;
-  addingHorizontal?:boolean;
+  addingHorizontal?: boolean;
 }
 
 export const BlockListRender = (props: BlockListProps) => {
@@ -34,10 +41,13 @@ export const BlockListRender = (props: BlockListProps) => {
     updateSelectedBlockIndex,
   } = useEditorStore();
 
-  const {status:globalAddingStatus} = addBlockData||{};
+  const { status: globalAddingStatus } = addBlockData || {};
   const isInSelectedContext = currentListPath.join(',') === props.path.join(',');
 
-  const [addParameters, setAddParameters] = useState<AddBlockParameters>();
+  const [addParameters, setAddParameters] = useState<{
+    position: AddBlockPosition;
+    index: number;
+  }>();
 
   const isUnder = () => {
     //check if props.path in selected context
@@ -57,7 +67,7 @@ export const BlockListRender = (props: BlockListProps) => {
   //register event
   useEffect(() => {
     emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
-      startAddBlock(parameters.context, parameters.index, parameters.position);   
+      startAddBlock(parameters.context, parameters.index, parameters.position);
     });
 
     return () => {
@@ -65,36 +75,29 @@ export const BlockListRender = (props: BlockListProps) => {
     };
   }, []);
 
-  //trigger adding event
+  //trigger state change when it's done/cancelled.
   useEffect(() => {
-    if (addParameters?.status === 'started') {
-      emitter.emit('addBlock', addParameters);
+    //done
+    if (globalAddingStatus === 'done') {
+      setAddParameters(undefined);
+      clearAdding();
     }
-  }, [addParameters===undefined, addParameters?.index, addParameters?.position]); //todo: better way to check?
-
-  //trigger state change when it's done.
-  useEffect(()=>{
-    if(addParameters?.status==='started'){
-      //done
-      if( globalAddingStatus==='done'){
-        setAddParameters(undefined);
-        clearAdding();
-      }
-      if(globalAddingStatus === 'cancelled'){
-          //todo: deleted empty list
-          setAddParameters(undefined);
-          clearAdding();
-      }
+    if (globalAddingStatus === 'cancelled') {
+      //todo: deleted empty list
+      setAddParameters(undefined);
+      clearAdding();
     }
-  }, [globalAddingStatus])
+  }, 
+  //only triggered when there is addParameters( add button is clicked )
+  [addParameters ? globalAddingStatus : '']); 
 
   const handleAdding = (position: 'before' | 'after', index: number) => {
-    setAddParameters({
+    const parameters = {
       index: index,
       position: position,
-      status: 'started',
-      context: props.path,
-    });
+    };
+    setAddParameters(parameters);
+    emitter.emit('addBlock', { ...parameters, context: props.path, status: 'started' });
   };
 
   const renderAddingMessage = () => {
@@ -112,21 +115,21 @@ export const BlockListRender = (props: BlockListProps) => {
         const isActive = isInSelectedContext && index === selectedBlockIndex;
         return (
           <React.Fragment key={blockData.id}>
-            { addParameters?.status === 'started' &&
+            {addParameters &&
               isInSelectedContext &&
               addParameters.index === index &&
               addParameters.position === 'before' &&
               renderAddingMessage()}
             <BlockWithAdding
               isActive={isActive}
-              addingHorizontal = {props.direction==='horizontal'}
+              addingHorizontal={props.direction === 'horizontal'}
               onSelect={() => select(index)}
               onAddClick={(position) => handleAdding(position, index)}
             >
               <BlockRender active={isActive} path={[...props.path, index]} data={blockData} />
             </BlockWithAdding>
 
-            {addParameters?.status === 'started' &&
+            {addParameters &&
               isInSelectedContext &&
               addParameters.index === index &&
               addParameters.position === 'after' &&
@@ -163,9 +166,9 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
       {addPosition === 'before' && (
         <AddingTool position="before" horizontal={addingHorizontal}>
           <StyledButtonContainer>
-          <Button onClick={addButtonClicked} sx={{'backgroundColor':'#fffff'}}>
-            <AddOutlined />{' '}
-          </Button>
+            <Button onClick={addButtonClicked} sx={{ backgroundColor: '#fffff' }}>
+              <AddOutlined />{' '}
+            </Button>
           </StyledButtonContainer>
         </AddingTool>
       )}
@@ -173,9 +176,9 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
       {addPosition === 'after' && (
         <AddingTool position="after" horizontal={addingHorizontal}>
           <StyledButtonContainer>
-          <Button onClick={addButtonClicked}>
-            <AddOutlined />{' '}
-          </Button>
+            <Button onClick={addButtonClicked}>
+              <AddOutlined />{' '}
+            </Button>
           </StyledButtonContainer>
         </AddingTool>
       )}

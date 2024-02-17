@@ -75,7 +75,7 @@ const useEditorStore = create<Store & Actions>()(
         if(!state.addBlockData){
           return;
         }
-        const {index, position, status, context} = state.addBlockData;
+        const {index, position, context} = state.addBlockData;
         if (index == -Infinity) {
           return;
         }       

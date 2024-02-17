@@ -75,6 +75,41 @@ const App = () => {
           type: 'heading',
         },
         {
+          id: `widget-${nanoid()}`,     
+          type: 'list',
+          data:{
+          },
+          children: [
+            {
+              id: `widget-${nanoid()}`,
+              data: {
+                value: 'This is a heading 1 in List ',
+                level: 2,
+                settings:{},
+              },
+              type: 'heading',
+            },
+            {
+              id: `widget-${nanoid()}`,
+              data: {
+                value: 'This is a heading 2 in List',
+                level: 2,
+                settings:{},
+              },
+              type: 'heading',
+            },
+            {
+              id: `widget-${nanoid()}`,
+              data: {
+                value: 'This is a heading 3 in List',
+                level: 2,
+                settings:{},
+              },
+              type: 'heading',
+            }
+          ],      
+        },
+        {
           id: `widget-${nanoid()}`,
           data: {
             value: 'This is a heading 3',
