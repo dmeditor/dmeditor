@@ -115,6 +115,7 @@ const useEditorStore = create<Store & Actions>()(
       set((state) => {
         if( state.addBlockData ){
           state.addBlockData = undefined;
+          //todo: remove data if it's empty.
         }
       }),
     clearWidgets: () => {

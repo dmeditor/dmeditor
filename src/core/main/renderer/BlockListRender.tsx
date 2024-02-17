@@ -75,21 +75,19 @@ export const BlockListRender = (props: BlockListProps) => {
     };
   }, []);
 
+
+  //only changed when there is addParameters( add button is clicked )
+  const depsAddingStatus = addParameters ? globalAddingStatus : '';
+
   //trigger state change when it's done/cancelled.
   useEffect(() => {
-    //done
-    if (globalAddingStatus === 'done') {
+    //done/cancel
+    if (globalAddingStatus === 'done' || globalAddingStatus === 'cancelled' ) {
       setAddParameters(undefined);
       clearAdding();
-    }
-    if (globalAddingStatus === 'cancelled') {
-      //todo: deleted empty list
-      setAddParameters(undefined);
-      clearAdding();
-    }
+    }    
   }, 
-  //only triggered when there is addParameters( add button is clicked )
-  [addParameters ? globalAddingStatus : '']); 
+  [depsAddingStatus]); 
 
   const handleAdding = (position: 'before' | 'after', index: number) => {
     const parameters = {
