@@ -79,11 +79,12 @@ export const BlockListRender = (props: BlockListProps) => {
   //only changed when there is addParameters( add button is clicked )
   const depsAddingStatus = addParameters ? globalAddingStatus : '';
 
-  //trigger state change when it's done/cancelled.
+  //trigger state change when it's done.
   useEffect(() => {
-    //done/cancel
+    //done
     if (globalAddingStatus === 'done' ) {
       setAddParameters(undefined);
+      clearAdding();
     }    
   }, 
   [depsAddingStatus]); 

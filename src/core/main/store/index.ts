@@ -34,6 +34,7 @@ type Store = {
 type Actions = {
   startAddBlock: (context:Array<number>, index: number, type: AddBlockPosition) => void;
   cancelAdding: () => void;
+  clearAdding: ()=>void;
   addBlock: (data: DMEData.Block) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
@@ -119,9 +120,14 @@ const useEditorStore = create<Store & Actions>()(
             const parentIndex = context[context.length-1];
             list.splice(parentIndex, 1);
           }
-          state.addBlockData = undefined;
+          state.addBlockData.status = 'done';
         }
-      }),    
+      }),  
+      clearAdding:()=>{
+        set((state) => {
+          state.addBlockData = undefined;
+        })
+    }, 
     clearWidgets: () => {
       set((state) => {
         // state.designer.selectedBlockIndex = -1;
