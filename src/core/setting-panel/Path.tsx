@@ -8,7 +8,8 @@ export interface PathItem {
   text: string;
   id: string;
   disableClick?: boolean;
-  selected?:boolean
+  selected?:boolean;
+  dataPath: Array<number>
 }
 
 export interface PathProps {

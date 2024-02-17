@@ -159,7 +159,7 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
       ref={blockContainerRef}
       active={isActive}
       {...containerAdditionalProps}
-      onClick={(e) => onSelect()}
+      onClick={(e) => {e.stopPropagation(); onSelect()}}
     >
       {addPosition === 'before' && (
         <AddingTool position="before" horizontal={addingHorizontal}>

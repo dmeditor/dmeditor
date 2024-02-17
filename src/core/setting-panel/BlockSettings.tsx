@@ -31,6 +31,7 @@ import {
   Ranger,
 } from 'Core/utils';
 import { DeleteBlock } from './actions/DeleteBlock';
+import { DMEData } from '../types';
 
 interface CommonSettingsType {
   align: string;
@@ -41,7 +42,7 @@ interface CommonSettingsType {
   padding: number;
   width: number;
 
-  selectedBlockIndex: number;
+  blockIndex: number;
 }
 
 export const BlockSettings = (props: {
@@ -51,19 +52,19 @@ export const BlockSettings = (props: {
   onChange: (data: any) => void;
   commonChange: (type: keyof CommonSettingsType, data: any) => void;
 
-  selectedBlockIndex: number;
+  dataPath: Array<number>;
 }) => {
-  const { selectedBlockIndex, onChange = () => {}, commonChange = () => {} } = props;
-  const [blockOpen, setBlockOpen] = useState(true);
-  const { getSelectedBlock, updateSelectedBlockStyle } = useEditorStore();
+  const { dataPath } = props;
 
-  // const selectedBlock = useMemo(
-  //   () => getSelectedBlock(props.selectedBlockIndex),
-  //   [props.selectedBlockIndex],
-  // );
-  const selectedBlock = getSelectedBlock();
+  // const [blockData, setBlockData] = useState<DMEData.Block>();
 
-  const blockType = selectedBlock?.type || '';
+  const { getBlockByPath, getSelectedBlock, updateSelectedBlockStyle } = useEditorStore();
+
+
+  const blockData = getBlockByPath( dataPath );
+  // const blockData = getSelectedBlock();
+  
+  const blockType = blockData?.type || '';
 
   //get Widget setting with variant
   const getWidgetSettings = (widget: string) => {
@@ -80,8 +81,8 @@ export const BlockSettings = (props: {
   };
 
   const selectedWidgetSetings = useMemo(
-    () => getWidgetSettings(selectedBlock?.type || ''),
-    [selectedBlock?.type],
+    () => getWidgetSettings(blockData?.type || ''),
+    [blockData?.type],
   );
 
   const hasProperty = (propName: string, compName: string) => {
@@ -139,11 +140,11 @@ export const BlockSettings = (props: {
         > */}
         {filteredSettings?.map((setting) => {
           if (setting.custom) {
-            return <Property key={selectedBlockIndex} {...setting} />;
+            return <Property {...setting} />;
           } else {
             const settingComponent = setting.settingComponent;
             // const value = getValueByPath(setting.property, selectedBlock?.data);
-            const value = getPropertyValue(setting.property, selectedBlock?.data);
+            const value = getPropertyValue(setting.property, blockData.data);
             return settingComponent ? (
               <PropertyItem label={setting.name} key={setting.property}>
                 <Property {...{ ...setting, value: value }} />
@@ -155,7 +156,7 @@ export const BlockSettings = (props: {
         {identifier == 'settings' && (
           <>
             <StyleSettings
-              values={selectedBlock?.style || {}}
+              values={blockData?.style || {}}
               blockType={blockType}
               onChange={(v, style) => {updateSelectedBlockStyle(v, style)}}
             />
@@ -170,7 +171,7 @@ export const BlockSettings = (props: {
 
   return (
     <div>
-      <PropertyTab tabs={getTabData()}></PropertyTab>
+      {blockData&&<PropertyTab tabs={getTabData()}></PropertyTab>}
     </div>
   );
 };

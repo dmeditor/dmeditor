@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
-import { GetDataByPath, iteratePath } from './helper';
+import { GetDataByPath, GetListByPath, iteratePath } from './helper';
 import type { DMEData } from 'Core/types';
 import emitter from 'Core/utils/event';
 import { properties } from 'Src/core/components/widgets';
@@ -47,7 +47,8 @@ type Actions = {
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => void;
   getCurrentList: () => DMEData.BlockList|null;
-  getParents: () => Array<DMEData.Block>; //get parent Block from top to down, based on currentListPath
+  getBlockByPath:(path:Array<number>)=>DMEData.Block;
+  getParents: () => Array<DMEData.Block & {path: Array<number>}>; //get parent Block from top to down, based on currentListPath
   updateSelectedBlock:<Type=DMEData.DefaultDataType>(callback: (blockData: Type)=>void)=>void;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
   updateSelectedBlockStyle:(value:string, styleIdentifier:string)=>void;
@@ -80,7 +81,7 @@ const useEditorStore = create<Store & Actions>()(
         if (index == -Infinity) {
           return;
         }       
-        const listData = GetDataByPath(state.storage, context||[]);
+        const listData = GetListByPath(state.storage, context||[]);
         let newPosition: number = -Infinity;
         if( listData.length === 0 ){
           listData.push(data);
@@ -110,13 +111,13 @@ const useEditorStore = create<Store & Actions>()(
       set((state) => {
         if( state.addBlockData ){
           const context = state.addBlockData.context;
-          const parentList = GetDataByPath(state.storage, context);
+          const parentList = GetListByPath(state.storage, context);
           if(context.length>0 && parentList && parentList.length ===0){
             //todo: remove
             //  state.removeByPath(context);
 
             const parentContext = context.slice(0, context.length-1);
-            const list = GetDataByPath(state.storage, parentContext)
+            const list = GetListByPath(state.storage, parentContext)
             const parentIndex = context[context.length-1];
             list.splice(parentIndex, 1);
           }
@@ -138,13 +139,17 @@ const useEditorStore = create<Store & Actions>()(
     getCurrentList: (): DMEData.BlockList|null => {
       const state = get();
       const currentPath = state.selected.currentListPath;
-      return GetDataByPath(state.storage, currentPath)
+      return GetListByPath(state.storage, currentPath)
     },
-    getParents: (): Array<DMEData.Block> => {
+    getBlockByPath:(path:Array<number>):DMEData.Block =>{
       const state = get();
-      const result: Array<DMEData.Block> = [];
-      iteratePath(state.selected.currentListPath, state.storage, (item) => {
-        result.push(item);
+      return GetDataByPath(state.storage, path);
+    },
+    getParents: (): Array<DMEData.Block & {path: Array<number>}> => {
+      const state = get();
+      const result: Array<DMEData.Block & {path: Array<number>}> = [];
+      iteratePath(state.selected.currentListPath, state.storage, (item, path) => {
+        result.push({...item, path:path});
       });
       return result;
     },

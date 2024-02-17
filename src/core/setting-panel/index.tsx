@@ -12,6 +12,7 @@ import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
 import { Path, PathItem } from './Path';
 import { PageTitle, RightElement, SettingHeader, Space } from './style';
+import { GetDataByPath } from '../main/store/helper';
 
 const { useEffect } = React;
 
@@ -26,33 +27,38 @@ const SettingPanel = (props) => {
     getCurrentList,
     getParents,
     isSelected,
+    getBlockByPath
   } = useEditorStore((state) => state);
 
   const { index: addBlockIndex, position: addBlockPosition } = addBlockData||{};
 
   const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
+  const [selectedPathIndex, setSelectedPathIndex] = useState<number>();
 
   const currentList = getCurrentList();
   // const selectedBlock = useMemo(() => getSelectedBlock(), [selectedBlockIndex]);
   const selectedBlock = getSelectedBlock();
 
   const updatePath = () => {
-    const pathArray: Array<PathItem> = [{ text: 'Page', id: 'page' }];
+    const pathArray: Array<PathItem> = [{ text: 'Page', id: 'page', dataPath: [] }];
     if (isSelected()) {
       const parents = getParents();
       for (const item of parents) {
         pathArray.push({
           text: getWidgetName(item.type),
           id: item.id || '',
+          dataPath: item.path
         });
       }
       pathArray.push({
         text: getWidgetName(selectedBlock?.type || ''),
         id: selectedBlock?.id || '',
+        dataPath:[...currentListPath, selectedBlockIndex]
       });
     }
 
+    setSelectedPathIndex(pathArray.length-1);
     setPathArray(pathArray);
   };
 
@@ -74,10 +80,12 @@ const SettingPanel = (props) => {
 
   const selectPathItem = (level: number) => {
     if (level === 0) {
-      const path = pathArray[level];
       setMode('list-overview');
     } else {
       setMode('block-setting');
+      if(!pathArray[level].disableClick){
+        setSelectedPathIndex(level);
+      }
     }
   };
 
@@ -104,10 +112,10 @@ const SettingPanel = (props) => {
             <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
           )}
 
-          {mode === 'block-setting' && (
+          {mode === 'block-setting' && selectedPathIndex && (
             <BlockSettings
               {...props}
-              selectedBlockIndex={selectedBlockIndex}
+              dataPath = {pathArray[selectedPathIndex].dataPath}
             />
           )}
 

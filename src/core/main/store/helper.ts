@@ -96,16 +96,30 @@ export const loadData = (data:string| DMEData.BlockList): DMEData.BlockList =>{
 }
 
 
-export const iteratePath = (pathArray:Array<number>, rootList: DMEData.BlockList, callback:(item:DMEData.Block)=>void ):void=>{
+export const iteratePath = (pathArray:Array<number>, rootList: DMEData.BlockList, callback:(item:DMEData.Block, path:Array<number>)=>void ):void=>{
   let temp = rootList;
-  for(const i of pathArray){
-    const block = temp[i];
-    callback(block);
+  pathArray.forEach((v, index)=>{
+    const block = temp[v];
+    const currentPath = pathArray.slice(0, index+1);
+    callback(block, currentPath);
     temp = block.children||[];
-  }
+  });
 }
 
-export const GetDataByPath = (data:DMEData.BlockList, path:Array<number>):DMEData.BlockList|null=>{
+export const GetDataByPath = (data:DMEData.BlockList, path:Array<number>):DMEData.BlockList=>{
+  let temp = data;
+  let result: DMEData.Block = null;
+  path.forEach((v, index)=>{
+    const block = temp[v];
+    if( index == path.length - 1 ){
+      result = block;
+    }
+    temp = block.children||[];    
+  });
+  return result;
+}
+
+export const GetListByPath = (data:DMEData.BlockList, path:Array<number>):DMEData.BlockList|null=>{
   let list = data;
   if( path.length === 0 ){
     return data;
