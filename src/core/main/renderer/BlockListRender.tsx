@@ -82,9 +82,8 @@ export const BlockListRender = (props: BlockListProps) => {
   //trigger state change when it's done/cancelled.
   useEffect(() => {
     //done/cancel
-    if (globalAddingStatus === 'done' || globalAddingStatus === 'cancelled' ) {
+    if (globalAddingStatus === 'done' ) {
       setAddParameters(undefined);
-      clearAdding();
     }    
   }, 
   [depsAddingStatus]); 

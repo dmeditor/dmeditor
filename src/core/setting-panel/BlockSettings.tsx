@@ -30,6 +30,7 @@ import {
   PropertyItem,
   Ranger,
 } from 'Core/utils';
+import { DeleteBlock } from './actions/DeleteBlock';
 
 interface CommonSettingsType {
   align: string;
@@ -159,9 +160,7 @@ export const BlockSettings = (props: {
               onChange={(v, style) => {updateSelectedBlockStyle(v, style)}}
             />
             <ActionPanel>
-              <PropertyButton variant="outlined" color="warning" title="Delete">
-                <DeleteOutline /> Delete
-              </PropertyButton>
+              <DeleteBlock />
             </ActionPanel>
           </>
         )}

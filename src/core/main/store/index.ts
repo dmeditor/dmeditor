@@ -16,7 +16,7 @@ export interface AddBlockParameters {
   index: number,
   position: AddBlockPosition,
   context: Array<number>;
-  status: 'started'|'cancelled'|'done';
+  status: 'started'|'done';
 }
 
 type Store = {
@@ -34,7 +34,6 @@ type Store = {
 type Actions = {
   startAddBlock: (context:Array<number>, index: number, type: AddBlockPosition) => void;
   cancelAdding: () => void;
-  clearAdding:()=>void;
   addBlock: (data: DMEData.Block) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
@@ -42,6 +41,7 @@ type Actions = {
   getSelectedBlock: <T=DMEData.Block<DMEData.DefaultDataType>>() => DMEData.Block<T> | undefined;
   getBlock: <T=DMEData.Block<DMEData.DefaultDataType>>(index:number) => DMEData.Block<T> | undefined;
   removeBlock: (widget: ReactNode) => void;
+  removeByPath: (path: Array<number>)=>void;
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => void;
@@ -74,7 +74,7 @@ const useEditorStore = create<Store & Actions>()(
       set((state) => {
         if(!state.addBlockData){
           return;
-        }
+        }        
         const {index, position, context} = state.addBlockData;
         if (index == -Infinity) {
           return;
@@ -108,16 +108,20 @@ const useEditorStore = create<Store & Actions>()(
     cancelAdding: () =>
       set((state) => {
         if( state.addBlockData ){
-          state.addBlockData.status = 'cancelled';
-        }
-      }),
-    clearAdding: () =>
-      set((state) => {
-        if( state.addBlockData ){
+          const context = state.addBlockData.context;
+          const parentList = GetDataByPath(state.storage, context);
+          if(context.length>0 && parentList && parentList.length ===0){
+            //todo: remove
+            //  state.removeByPath(context);
+
+            const parentContext = context.slice(0, context.length-1);
+            const list = GetDataByPath(state.storage, parentContext)
+            const parentIndex = context[context.length-1];
+            list.splice(parentIndex, 1);
+          }
           state.addBlockData = undefined;
-          //todo: remove data if it's empty.
         }
-      }),
+      }),    
     clearWidgets: () => {
       set((state) => {
         // state.designer.selectedBlockIndex = -1;
@@ -178,6 +182,20 @@ const useEditorStore = create<Store & Actions>()(
       }
       return state.storage[index] as (DMEData.Block<T>);
     },
+    removeByPath: (path:Array<number>)=>{
+      set((state)=>{
+        if(path.length===0)return
+
+        const parentPath = path.length < 2?[]:path.slice(0, path.length-2);
+        const index = path[path.length-1];
+        const list = GetDataByPath(state.storage,parentPath);
+        if(!list||list.length === 0){
+          console.warn('Parent data not found in path', path);
+          return;
+        }
+        list.splice(index, 1);
+      })
+    },
     removeBlock: (block: ReactNode) =>
       set((state) => {
         state.storage = state.storage.filter((w) => w !== widget);
@@ -230,8 +248,6 @@ const useEditorStore = create<Store & Actions>()(
     },
     updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => {
       set((state) => {
-        console.log('upading');
-        console.trace();
         state.selected.blockIndex = index;
         if (state.selected.currentListPath.join() !== pathArray.join()) {
           // switch list context
