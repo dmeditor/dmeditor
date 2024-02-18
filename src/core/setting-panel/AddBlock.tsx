@@ -13,6 +13,7 @@ export const AddBlock = () => {
   const {
     addBlock,
     cancelAdding,
+    addBlockData,
   } = useEditorStore((state) => state);
 
   const addBlockDone = (type: string) => {
@@ -44,7 +45,7 @@ export const AddBlock = () => {
       <SettingHeader>Add block</SettingHeader>
       <SettingDescription>Please choose a widget</SettingDescription>
       <div>
-        <WidgetList onSelect={addBlockDone} />
+        <WidgetList filter={addBlockData?.types} onSelect={addBlockDone} />
       </div>
     </AddBlockContainer>
   );

@@ -34,10 +34,13 @@ const moreWidget = css`
 `;
 
 interface WidgetListProps {
+  filter?:Array<string>|string;
   onSelect: (type: string) => void;
 }
 
 export const WidgetList = (props: WidgetListProps) => {
+  const {filter} = props;
+
   const definitions = useMemo(() => {
     // widgetDefinition is the default definition and it is not empty
     const customDefinitionLength = Object.keys(customDefinition).length;
@@ -54,9 +57,26 @@ export const WidgetList = (props: WidgetListProps) => {
     }
   }, [customDefinition, layoutDefinition, widgetDefinition]);
 
+  const matchFilter = (widget:string) =>{
+    if(!filter){
+      return true;
+    }
+    if(typeof filter === 'string'){
+      return widget.match(filter);
+    }else{ // arrary
+      return filter.includes(widget);
+    }
+  }
+
+  const filterVariant = (widget:string)=>{
+    const variants = widgetDefinition[widget].variants;
+    const result = variants.filter(item=>matchFilter(widget+':'+item.identifier));
+    return result;
+  }
+
   return (
     <div>
-      {Object.keys(definitions).map((widgetType) => (
+      {Object.keys(definitions).filter(widget=>matchFilter(widget)).map((widgetType) => (
         definitions[widgetType]).isBase?<></>:
         <div className={itemStyle} onClick={() => props.onSelect(widgetType)}>
           <div
@@ -76,7 +96,7 @@ export const WidgetList = (props: WidgetListProps) => {
         </div>
       )}
 
-      {Object.keys(widgetDefinition).map(widget=>widgetDefinition[widget].variants.map((variant)=>
+      {Object.keys(widgetDefinition).map( widget=>filterVariant(widget).map((variant)=>
       <div className={itemStyle} onClick={() => props.onSelect(widget+':'+variant.identifier)}>
       <div
         className={css`

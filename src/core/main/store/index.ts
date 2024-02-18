@@ -13,10 +13,11 @@ import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'Src/core/utils
 export type AddBlockPosition = 'before' | 'after';
 
 export interface AddBlockParameters {
-  index: number,
-  position: AddBlockPosition,
+  index: number;
+  position: AddBlockPosition;
   context: Array<number>;
   status: 'started'|'done';
+  types?:Array<string>|string;
 }
 
 type Store = {
@@ -33,7 +34,7 @@ type Store = {
 };
 
 type Actions = {
-  startAddBlock: (context:Array<number>, index: number, type: AddBlockPosition) => void;
+  startAddBlock: (context:Array<number>, index: number, position: AddBlockPosition, types?:Array<string>|string) => void;
   cancelAdding: () => void;
   clearAdding: ()=>void;
   addBlock: (data: DMEData.Block) => void;
@@ -69,9 +70,9 @@ type Actions = {
 const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
     ...createDMEditor(),
-    startAddBlock: (context: Array<number>, index: number, position: AddBlockPosition) =>
+    startAddBlock: (context: Array<number>, index: number, position: AddBlockPosition, types?: Array<string>|string) =>
       set((state) => {
-        state.addBlockData = {context, index, position, status:'started'} 
+        state.addBlockData = {context, index, position, status:'started', types: types} 
       }),
     addBlock: (data: DMEData.Block) =>
       set((state) => {

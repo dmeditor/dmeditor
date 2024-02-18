@@ -19,7 +19,7 @@ import { DMEData } from 'Src/core/types';
 interface BlockListProps {
   blockData: DMEData.BlockList;
   path: Array<number>;
-  allowedTypes?: string[];
+  allowedTypes?: string[] | string;
   isInternal?: boolean;
   direction?: 'vertical' | 'horizontal';
 }
@@ -67,7 +67,7 @@ export const BlockListRender = (props: BlockListProps) => {
   //register event
   useEffect(() => {
     emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
-      startAddBlock(parameters.context, parameters.index, parameters.position);
+      startAddBlock(parameters.context, parameters.index, parameters.position, props.allowedTypes);
     });
 
     return () => {
@@ -75,19 +75,17 @@ export const BlockListRender = (props: BlockListProps) => {
     };
   }, []);
 
-
   //only changed when there is addParameters( add button is clicked )
   const depsAddingStatus = addParameters ? globalAddingStatus : '';
 
   //trigger state change when it's done.
   useEffect(() => {
     //done
-    if (globalAddingStatus === 'done' ) {
+    if (globalAddingStatus === 'done') {
       setAddParameters(undefined);
       clearAdding();
-    }    
-  }, 
-  [depsAddingStatus]); 
+    }
+  }, [depsAddingStatus]);
 
   const handleAdding = (position: 'before' | 'after', index: number) => {
     const parameters = {
@@ -159,7 +157,10 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
       ref={blockContainerRef}
       active={isActive}
       {...containerAdditionalProps}
-      onClick={(e) => {e.stopPropagation(); onSelect()}}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect();
+      }}
     >
       {addPosition === 'before' && (
         <AddingTool position="before" horizontal={addingHorizontal}>
