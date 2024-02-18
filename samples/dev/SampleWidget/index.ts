@@ -76,7 +76,7 @@ const registerSampleWidget = function () {
     identifier: 'article-block',
     name: 'Article block',
     enabledSettings: [],
-    allowed_widgets: ['heading:gradient'],
+    allowedTypes: ['heading:gradient'],
     //todo: use property?
     getDefaultData: (): DMEData.Block<any> => {
       const variant = getWidgetVariant('heading', 'gradient');

@@ -70,9 +70,9 @@ export const BlockSettings = (props: {
   const getWidgetSettings = (widget: string) => {
     const [widgetDef, variant] = getWidgetWithVariant(widget);
     if (widgetDef) {
-      if (variant) {
+      if (variant && variant.enabledSettings) {
         const filteredSettings = widgetDef.settings.filter((item) => {
-          return variant.enabledSettings.includes(item.property);
+          return variant.enabledSettings?.includes(item.property);
         });
         return filteredSettings;
       }

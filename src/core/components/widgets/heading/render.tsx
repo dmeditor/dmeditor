@@ -38,8 +38,8 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
 
   const common = {
     style: {
-      textAlign: data.settings.align,
-      color: data.settings.color
+      textAlign: data.settings?.align,
+      color: data.settings?.color
     },
     // ref: (input: any) => input && input.focus(),
     onKeyUp: (e: React.KeyboardEvent<HTMLElement>) => {
@@ -53,7 +53,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
   };
 
   return (<>
-    <div className={rootClasses} style={{backgroundColor:data.settings['background-color']}}>
+    <div className={rootClasses} style={{backgroundColor:data.settings?.['background-color']}}>
       <HeadingComponent level={level} id={id} {...common}>
         {defaultValue.current}
       </HeadingComponent>

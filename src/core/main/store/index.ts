@@ -29,6 +29,7 @@ type Store = {
   };
   addBlockData?: AddBlockParameters;
   storage: DMEData.BlockList; //data layer
+  page?:DMEData.Page
 };
 
 type Actions = {

@@ -81,7 +81,7 @@ function getPropertyName(name: string) {
 
 function getPropertyValue(name: string, obj: DMEData.Block['data']): unknown {
   if (name.startsWith('settings.')) {
-    return obj['settings'][getPropertyName(name)];
+    return obj?.['settings']?.[getPropertyName(name)];
   } else if (name.startsWith('.')) {
     return obj[getPropertyName(name)];
   } else {

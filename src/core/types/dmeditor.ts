@@ -19,6 +19,8 @@ export namespace DME {
     category: 'widget' | 'layout' | 'section';
     alias?: string;
     enabledStyles?:Array<string>;
+    isBase?:boolean; //true if it's base widget used for variants
+    allowedTypes?: Array<string>; //allwed types for direct children
     events: {
       //   onInput: () => void 0,
       //   onChange: () => void 0,
@@ -41,8 +43,9 @@ export namespace DME {
     name: string;
     cssStyle?: string; //built-in style for the variant
     enabledStyles?:Array<string>;
-    enabledSettings: Array<string>;
-    allowed_widgets?: Array<string|unknown>; //can be sub widget inside
+    enabledSettings?: Array<string>;
+    allowedTypes?: Array<string>; //can be sub widget inside
+    isInternal?:boolean; // intenal variant will only used inside another widget.
     getDefaultData?: ()=> DMEData.Block<unknown>
   }
 
@@ -60,7 +63,7 @@ export namespace DME {
   export interface WidgetStyleOption{
     identifier: string,
     name: string,
-    icon: string,
+    icon?: string,
     cssClasses?: WidgetStyleClasses, 
     cssStyle: string //css style using css-in-js
   }
@@ -85,12 +88,19 @@ export namespace DME {
 export namespace DMEData {
 
   export interface DefaultDataType{
-      settings: {
+      settings?: {
         [index: string]: string | number;
       };
-      [index: string]: string | number | Record<string, string | number>;
+      [index: string]: string | number | undefined | Record<string, string | number>;
   }
-  
+
+  export interface Page{
+    title: string;
+    metaKey?:string,
+    metaDescription?:string,
+    theme?:string;
+    [index: string]: string|undefined
+  }
 
   //Block entity, which is a node in the data tree
   export interface Block<TData=DefaultDataType> {

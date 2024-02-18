@@ -6,7 +6,7 @@ import { toolCode } from '../../components/widgets/code/Code';
 import { toolCollapsableText } from '../../components/widgets/collapsable-text/CollapsableText';
 import { toolAccordion } from '../../components/widgets/accordion/Accordion';
 // import { toolBlockTab } from '../../components/widgets/tabs/render';
-import { toolImageText } from '../../components/widgets/image-text/ImageText';
+// import { toolImageText } from '../../components/widgets/image-text/ImageText';
 // import { toolContainerList } from '../../components/widgets/list/List';
 import Heading from '../../components/widgets/heading/render';
 import { toolIframe } from '../../components/widgets/iframe/IFrame';
@@ -16,7 +16,7 @@ import { initTemplates } from '../../../templates/InitTemplate';
 import { registerCategory, registerTool } from '../../../ToolDefinition';
 
 registerTool(toolText);
-registerTool(toolImageText);
+// registerTool(toolImageText);
 registerTool(toolImage);
 // registerTool(Heading);
 // registerTool(toolBlockTab);

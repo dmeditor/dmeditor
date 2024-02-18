@@ -57,6 +57,7 @@ export const WidgetList = (props: WidgetListProps) => {
   return (
     <div>
       {Object.keys(definitions).map((widgetType) => (
+        definitions[widgetType]).isBase?<></>:
         <div className={itemStyle} onClick={() => props.onSelect(widgetType)}>
           <div
             className={css`
@@ -73,7 +74,7 @@ export const WidgetList = (props: WidgetListProps) => {
             {definitions[widgetType].name}
           </div>
         </div>
-      ))}
+      )}
 
       {Object.keys(widgetDefinition).map(widget=>widgetDefinition[widget].variants.map((variant)=>
       <div className={itemStyle} onClick={() => props.onSelect(widget+':'+variant.identifier)}>

@@ -27,7 +27,6 @@ const SettingPanel = (props) => {
     getCurrentList,
     getParents,
     isSelected,
-    getBlockByPath
   } = useEditorStore((state) => state);
 
   const { index: addBlockIndex, position: addBlockPosition } = addBlockData||{};

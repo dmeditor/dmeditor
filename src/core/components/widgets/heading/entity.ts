@@ -3,7 +3,7 @@ import { DMEData } from 'Core/types';
 export interface EntityHeadingBlock {
   value: string;
   level: number;
-  settings: {
+  settings?: {
     align: string;
     color?: string;
     'background-color'?: string;

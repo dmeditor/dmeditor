@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 
-import { toolImageText } from '../core/components/widgets/image-text/ImageText';
+// import { toolImageText } from '../core/components/widgets/image-text/ImageText';
 // import { toolHeading } from '../core/components/widgets/heading/Heading';
 import { registerStyle, registerTemplate } from '../ToolDefinition';
 
@@ -33,27 +33,27 @@ export const initStyles = () => {
       }
     `,
   });
-  registerStyle({
-    blocktype: 'imagetext',
-    identifier: 'loose',
-    name: 'Loose',
-    css: css`
-      background-color: #133e48;
-      color: #ffffff;
-      padding: 20px 30px;
-      .dme-imagetext-container > div:first-child .dme-blocklist {
-        padding-right: 10px;
-      }
-      .dme-imagetext-container > div:last-child .dme-blocklist {
-        padding-left: 10px;
-      }
+  // registerStyle({
+  //   blocktype: 'imagetext',
+  //   identifier: 'loose',
+  //   name: 'Loose',
+  //   css: css`
+  //     background-color: #133e48;
+  //     color: #ffffff;
+  //     padding: 20px 30px;
+  //     .dme-imagetext-container > div:first-child .dme-blocklist {
+  //       padding-right: 10px;
+  //     }
+  //     .dme-imagetext-container > div:last-child .dme-blocklist {
+  //       padding-left: 10px;
+  //     }
 
-      .dmeditor-view-mobile & .dme-blocklist {
-        padding: 0px !important;
-      }
-    `,
-    icon: toolImageText.menu.icon,
-  });
+  //     .dmeditor-view-mobile & .dme-blocklist {
+  //       padding: 0px !important;
+  //     }
+  //   `,
+  //   icon: toolImageText.menu.icon,
+  // });
 
   //global
   if (typeof window !== 'undefined' && (window as any).dmeditor) {
