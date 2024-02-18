@@ -244,6 +244,14 @@ function getWidgetStyles(widget: string, allStyles?: boolean) {
   }
 }
 
+const getAllowedTypes = (widgetStr:string)=>{
+  const [widget, variant] = getWidgetWithVariant(widgetStr);
+  if(variant){
+      return variant.allowedTypes;
+  }    
+  return widget?.allowedTypes;
+}
+
 export {
   addCustomDefinition,
   addLayoutDefinition,
@@ -265,6 +273,7 @@ export {
   getWidgetStyle,
   getWidgetStyles,
   registerWidgetStyleOption,
+  getAllowedTypes
 };
 
 export default widgetDefinition;

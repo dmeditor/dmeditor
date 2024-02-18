@@ -20,7 +20,7 @@ export namespace DME {
     alias?: string;
     enabledStyles?:Array<string>;
     isBase?:boolean; //true if it's base widget used for variants
-    allowedTypes?: Array<string>; //allwed types for direct children
+    allowedTypes?: Array<string>|string; //allwed types for direct children
     events: {
       //   onInput: () => void 0,
       //   onChange: () => void 0,

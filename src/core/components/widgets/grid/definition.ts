@@ -9,6 +9,7 @@ const gridWidget: DME.Widget = {
     icon: 'TextFormatOutlined',
     name: 'Grid',
     type: 'grid',
+    allowedTypes:'^(?!.*grid).*$',
     events: {
       createBlock: (): DMEData.Block<EntityGrid> => {
         return {
