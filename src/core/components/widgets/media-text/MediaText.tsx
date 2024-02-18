@@ -20,7 +20,7 @@ const MediaText = (props:DME.WidgetRenderProps<EntityImageText>)=>{
     }
 
     const renderImage = ()=><div className={getClass('media')+' dme-w-media'}><BlockRender data={children[0]} path={path} /></div>;
-    const renderList = ()=> <div className={getClass('list')+' dme-w-list'}><BlockListRender blockData={children[1].children||[]} allowedTypes={getAllowedTypes(blockNode.type)} path={path} /></div>;
+    const renderList = ()=> <div className={getClass('list')+' dme-w-list'}><BlockListRender blockData={children[1].children||[]} allowedTypes={getAllowedTypes(blockNode.type)} path={[...path, 1]} /></div>;
 
     return <MediaTextContainer className={props.rootClasses}>
         {mediaPosition!=='right'&&<>
