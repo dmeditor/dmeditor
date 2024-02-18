@@ -1,4 +1,4 @@
 export interface EntityList{
-    allowedTypes?: Array<string>;
+    align?:'left'|'center'|'right';
     direction?: 'vertical'|'horizontal'
 }

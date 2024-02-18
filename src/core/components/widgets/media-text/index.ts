@@ -31,7 +31,7 @@ const register = () =>{
                 {
                     id:nanoid(),
                     type:'list',
-                    data:{},
+                    data:{align: 'right'},
                     children:[
                         {
                             id: nanoid(),
@@ -43,11 +43,14 @@ const register = () =>{
                         },
                         {
                             id: nanoid(),
-                            type: 'heading',
-                            data: {
-                            value: 'This is a new block 2',
-                            level: 2                        
-                            },
+                            type:'list:button',
+                            data:{direction: 'horizontal'},
+                            children: [{
+                                id: nanoid(),
+                                type: 'button',
+                                data:{value: 'Button'},
+                                style:{style:'primary'},                    
+                            }]
                         }
                     ]
                 }

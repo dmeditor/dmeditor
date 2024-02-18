@@ -17,18 +17,7 @@ export const AddBlock = () => {
   } = useEditorStore((state) => state);
 
   const addBlockDone = (type: string) => {
-    const [widget, variant] = getWidgetWithVariant(type);
-    if (widget) {
-      let blockData;
-      if(variant){
-         blockData = variant.getDefaultData?.();
-      }else{
-         blockData = widget.events.createBlock();
-      }
-      if(blockData){
-        addBlock(blockData);
-      }
-    }
+    addBlock(type);
   };
 
   const cancel = () => {

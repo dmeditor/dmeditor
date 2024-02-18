@@ -153,6 +153,7 @@ export const BlockSettings = (props: {
           }
         })}
         {/* </PropertyGroup> */}
+
         {identifier == 'settings' && (
           <>
             <StyleSettings

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
-export const StyledList = styled.div<{ horizontal: boolean }>`
-    ${(props) =>props.horizontal?'display:flex':''
-    } 
+export const StyledList = styled.div<{ horizontal: boolean, align?: string }>`
+    ${(props) =>props.horizontal?'display:flex;':''} 
+
+    ${(props) =>props.align?'justify-content:'+props.align:''} 
 `;

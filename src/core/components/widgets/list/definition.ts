@@ -38,6 +38,19 @@ const listWidget: DME.Widget = {
         ],
       },
     },
+    {
+      name: 'Align',
+      property: '.align',
+      category: 'settings',
+      settingComponent: 'button-group',
+      parameters: {
+        options: [
+          { text: 'Left', value: 'left' },
+          { text: 'Center', value: 'center' },
+          { text: 'Right', value: 'end' }          
+        ],
+      },
+    },
   ],
 };
 

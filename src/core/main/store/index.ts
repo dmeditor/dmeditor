@@ -7,7 +7,7 @@ import { createDMEditor } from '..';
 import { GetDataByPath, GetListByPath, iteratePath } from './helper';
 import type { DMEData } from 'Core/types';
 import emitter from 'Core/utils/event';
-import { properties } from 'Src/core/components/widgets';
+import { getWidgetWithVariant, properties } from 'Src/core/components/widgets';
 import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'Src/core/utils';
 
 export type AddBlockPosition = 'before' | 'after';
@@ -37,7 +37,7 @@ type Actions = {
   startAddBlock: (context:Array<number>, index: number, position: AddBlockPosition, types?:Array<string>|string) => void;
   cancelAdding: () => void;
   clearAdding: ()=>void;
-  addBlock: (data: DMEData.Block) => void;
+  addBlock: (type:string) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
@@ -72,9 +72,9 @@ const useEditorStore = create<Store & Actions>()(
     ...createDMEditor(),
     startAddBlock: (context: Array<number>, index: number, position: AddBlockPosition, types?: Array<string>|string) =>
       set((state) => {
-        state.addBlockData = {context, index, position, status:'started', types: types} 
+        state.addBlockData = {context, index, position, status:'started', types: types}        
       }),
-    addBlock: (data: DMEData.Block) =>
+    addBlock: (type:string) =>
       set((state) => {
         if(!state.addBlockData){
           return;
@@ -83,18 +83,33 @@ const useEditorStore = create<Store & Actions>()(
         if (index == -Infinity) {
           return;
         }       
+
+        const [widget, variant] = getWidgetWithVariant(type);
+        if (!widget) {
+          return;
+        }
+        let blockData:any;
+        if(variant){
+          blockData = variant.getDefaultData?.();
+        }else{
+          blockData = widget.events.createBlock();
+        }
+        if(!blockData){
+          return;
+        }
+
         const listData = GetListByPath(state.storage, context||[]);
         let newPosition: number = -Infinity;
         if( listData.length === 0 ){
-          listData.push(data);
+          listData.push(blockData);
           newPosition = 0;
         }else{
           if (index <= listData.length -1 && state.addBlockData.position) {
             if (position === 'before' ) {
-              listData.splice(index, 0, data);
+              listData.splice(index, 0, blockData);
               newPosition = index;
             } else if (position === 'after') {
-                listData.splice(index + 1, 0, data);
+                listData.splice(index + 1, 0, blockData);
                 newPosition = index + 1;
             }else{
               console.warn("Invalid paraemter of adding. Ignored", index, position);

@@ -36,6 +36,7 @@ export const BlockListRender = (props: BlockListProps) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData,
+    addBlock,
     startAddBlock,
     clearAdding,
     updateSelectedBlockIndex,
@@ -69,6 +70,10 @@ export const BlockListRender = (props: BlockListProps) => {
   useEffect(() => {
     emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
       startAddBlock(parameters.context, parameters.index, parameters.position, parameters.types);
+      //todo: move this into zustand
+      if(parameters.types?.length===1){
+        addBlock(parameters.types[0]);
+      }
     });
 
     return () => {

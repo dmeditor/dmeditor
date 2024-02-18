@@ -1,3 +1,4 @@
+import { getAllowedTypes } from '..';
 import { EntityList } from './entity';
 import { StyledList } from './styled';
 import { BlockListRender } from 'Src/core/main/renderer';
@@ -6,19 +7,19 @@ import { DME } from 'Src/core/types';
 const List = (props: DME.WidgetRenderProps<EntityList>) => {
   const {
     blockNode: {
-      data: { direction, allowedTypes },
+      data: { direction, align },
       children,
     },
-    adding
+    blockNode,
   } = props;
 
   return (
-    <StyledList horizontal={direction === 'horizontal'} className="dme-blocktype-list">
+    <StyledList horizontal={direction === 'horizontal'} align={align} className="dme-blocktype-list">
       <BlockListRender
         blockData={children || []}
-        allowedTypes={allowedTypes}
         path={props.path}
         direction={direction}
+        allowedTypes={getAllowedTypes(blockNode.type)}
       />
     </StyledList>
   );
