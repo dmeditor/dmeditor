@@ -64,10 +64,11 @@ export const BlockListRender = (props: BlockListProps) => {
     updateSelectedBlockIndex(props.path, index);
   };
 
+  
   //register event
   useEffect(() => {
     emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
-      startAddBlock(parameters.context, parameters.index, parameters.position, props.allowedTypes);
+      startAddBlock(parameters.context, parameters.index, parameters.position, parameters.types);
     });
 
     return () => {
@@ -93,7 +94,7 @@ export const BlockListRender = (props: BlockListProps) => {
       position: position,
     };
     setAddParameters(parameters);
-    emitter.emit('addBlock', { ...parameters, context: props.path, status: 'started' });
+    emitter.emit('addBlock', { ...parameters, context: props.path, status: 'started', types: props.allowedTypes });
   };
 
   const renderAddingMessage = () => {
