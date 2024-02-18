@@ -1,6 +1,6 @@
 import { registerWidget } from "..";
 import HeadingWidget from "./definition";
-import Heading from "./render";
+import Heading from "./Heading";
 
 const registerHeading = ()=>{
     registerWidget(HeadingWidget, Heading)

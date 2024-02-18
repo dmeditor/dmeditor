@@ -8,7 +8,7 @@ import { toolAccordion } from '../../components/widgets/accordion/Accordion';
 // import { toolBlockTab } from '../../components/widgets/tabs/render';
 // import { toolImageText } from '../../components/widgets/image-text/ImageText';
 // import { toolContainerList } from '../../components/widgets/list/List';
-import Heading from '../../components/widgets/heading/render';
+import Heading from '../../components/widgets/heading/Heading';
 import { toolIframe } from '../../components/widgets/iframe/IFrame';
 import { toolQuote } from '../../components/widgets/quote/Quote';
 import { initStyles } from '../../../styles/InitStyles';
