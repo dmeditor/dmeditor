@@ -49,6 +49,7 @@ type Actions = {
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => void;
   getCurrentList: () => DMEData.BlockList|null;
+  getCurrentBlock: ()=>DMEData.Block|null;
   getBlockByPath:(path:Array<number>)=>DMEData.Block;
   getParents: () => Array<DMEData.Block & {path: Array<number>}>; //get parent Block from top to down, based on currentListPath
   updateSelectedBlock:<Type=DMEData.DefaultDataType>(callback: (blockData: Type)=>void)=>void;
@@ -157,6 +158,11 @@ const useEditorStore = create<Store & Actions>()(
       const state = get();
       const currentPath = state.selected.currentListPath;
       return GetListByPath(state.storage, currentPath)
+    },
+    getCurrentBlock:():DMEData.Block|null =>{
+      const state = get();
+      const list = state.getCurrentList()
+      return list?.[state.selected.blockIndex]||null;
     },
     getBlockByPath:(path:Array<number>):DMEData.Block =>{
       const state = get();
@@ -291,11 +297,11 @@ const useEditorStore = create<Store & Actions>()(
       })
     },
     updateSelectedBlockStyle: (value:string, styleIdentifier:string)=>{
-      set((state) => {       
-        const block = state.storage[state.selected.blockIndex];        
+      set((state) => {               
+        const block = GetDataByPath(state.storage, [...state.selected.currentListPath, state.selected.blockIndex]);        
         if( !block.style ){
           block.style = {};
-        }
+        }        
         block.style[styleIdentifier] = value;
       })
     },
@@ -306,7 +312,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        const block = state.getSelectedBlock();
+        const block = GetDataByPath(state.storage, [...state.selected.currentListPath, state.selected.blockIndex]);
         if (!block) {
           console.error('Block not found');
           return;
@@ -323,14 +329,17 @@ const useEditorStore = create<Store & Actions>()(
         // the property is in the root of the block
         if (isEmptyString(propKey)) {
           if (isPlainObject(state.storage[state.selected.blockIndex].data)) {
-            state.storage[state.selected.blockIndex]['data'][realPropsName] = propValue;
+            block['data'][realPropsName] = propValue;
           } else {
             console.warn('data is not an object');
           }
         } else if (propKey === 'settings') {
-          if (isPlainObject(state.storage[state.selected.blockIndex].data)) {
-            if (isKeyInObject('settings', state.storage[state.selected.blockIndex].data)) {
-              state.storage[state.selected.blockIndex].data[propKey][realPropsName] = propValue;
+          if (isPlainObject(block.data)) {
+            if (isKeyInObject('settings', block.data)) {
+              block.data[propKey][realPropsName] = propValue;
+            }else{
+              const settings = {'${realPropsName}': propValue};
+              block.data[propKey]['settings'] = settings;
             }
           } else {
             console.warn('settings is not an object');

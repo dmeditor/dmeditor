@@ -1,3 +1,4 @@
+import { Block } from './../../../../dist/src/core/types/dmeditor';
 import { getWidget } from 'Components/widgets';
 import { jsonParse } from 'Src/core/utils';
 import { DMEData } from 'Src/core/components/types/block';
@@ -106,7 +107,7 @@ export const iteratePath = (pathArray:Array<number>, rootList: DMEData.BlockList
   });
 }
 
-export const GetDataByPath = (data:DMEData.BlockList, path:Array<number>):DMEData.BlockList=>{
+export const GetDataByPath = (data:DMEData.BlockList, path:Array<number>):DMEData.Block|null=>{
   let temp = data;
   let result: DMEData.Block = null;
   path.forEach((v, index)=>{
