@@ -37,11 +37,11 @@ export const StyleSettings = (props: StyleSettingProps) => {
     }
     return (
       <PropertyItem label={styleObj.name} key={styleObj.identifier}>
-        {(!styleObj.display || styleObj.display === 'dropdown') && (
-          <DropDown {...props} style={styleObj} />
+        {(!styleObj.display || styleObj.display === 'inline-block') && (
+          <InlineBlock {...props} style={styleObj} />
         )}
         {styleObj.display === 'button-group' && <ButtonGroup {...props} style={styleObj} />}
-        {styleObj.display === 'inline-block' && <InlineBlock {...props} style={styleObj} />}
+        {styleObj.display === 'dropdown' && <DropDown {...props} style={styleObj} />}
       </PropertyItem>
     );
   });

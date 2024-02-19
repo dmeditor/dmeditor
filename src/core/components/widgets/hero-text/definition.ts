@@ -1,20 +1,20 @@
 import { DMEData } from 'Core/types';
 import { DME } from "Src/core/types";
 import { nanoid } from 'nanoid';
-import { EntityImageText } from './entity';
+import { EntityHeroText } from './entity';
 
-const mediaTextWidget: DME.Widget = {
+const heroTextWidget: DME.Widget = {
     // ?category options: widget, layout, form, chart, advanced
     category: 'layout',
     icon: 'TextFormatOutlined',
-    name: 'Media text',
-    type: 'media-text',  
-    isBase: true,
+    name: 'Hero text',
+    type: 'hero-text',  
+    isBaseWidget: true,
     events: {
-      createBlock: (): DMEData.Block<EntityImageText> => {
+      createBlock: (): DMEData.Block<EntityHeroText> => {
         return {
           id: nanoid(),
-          type: 'media-text',
+          type: 'hero-text',
           data: {
           },
           children:[            
@@ -48,8 +48,8 @@ const mediaTextWidget: DME.Widget = {
     },
     settings: [
       {
-        name: 'Media position',
-        property: '.mediaPosition',
+        name: 'Hero position',
+        property: '.heroPosition',
         category: 'settings',
         settingComponent: 'button-group',
         parameters: {
@@ -62,5 +62,5 @@ const mediaTextWidget: DME.Widget = {
     ],
   };
   
-  export default mediaTextWidget;
+  export default heroTextWidget;
   

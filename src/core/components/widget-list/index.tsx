@@ -77,7 +77,7 @@ export const WidgetList = (props: WidgetListProps) => {
   return (
     <div>
       {Object.keys(definitions).filter(widget=>matchFilter(widget)).map((widgetType) => (
-        definitions[widgetType]).isBase?<></>:
+        definitions[widgetType]).isBaseWidget?<></>:
         <div className={itemStyle} onClick={() => props.onSelect(widgetType)}>
           <div
             className={css`

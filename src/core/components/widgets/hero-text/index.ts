@@ -1,22 +1,22 @@
 import { DMEData } from "Src/core/types";
 import { registerWidget, registerWidgetStyle, registerWidgetVariant } from "..";
-import mediaTextWidget from "./definition";
-import { MediaText } from "./MediaText";
+import heroTextWidget from "./definition";
+import { HeroText } from "./HeroText";
 import { nanoid } from "nanoid";
 
 const register = () =>{
-    registerWidget(mediaTextWidget, MediaText );
+    registerWidget(heroTextWidget, HeroText );
     registerWidgetVariant(
-        {widget: 'media-text', 
+        {widget: 'hero-text', 
         identifier: 'image',
         name: 'Image text',
-        allowedTypes:['heading'],
+        allowedTypes:['heading', 'list:button'],
         getDefaultData:():DMEData.Block=>{
             return {
                 id: nanoid(),
-                type: 'media-text:image',
+                type: 'hero-text:image',
                 data: {
-                    mediaPosition:'left'
+                    heroPosition:'left'
                 },
                 style:{space:'big'},
                 children:[            
@@ -59,7 +59,7 @@ const register = () =>{
         }
     }
     );
-    registerWidgetStyle('media-text:image', {
+    registerWidgetStyle('hero-text:image', {
         name: 'Space', 
         identifier:'space',
         display:'inline-block',
