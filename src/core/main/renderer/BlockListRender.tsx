@@ -62,7 +62,7 @@ export const BlockListRender = (props: BlockListProps) => {
   };
 
   const select = (index: number) => {
-    updateSelectedBlockIndex(props.path, index);
+    updateSelectedBlockIndex(props.path, index, props.blockData[index].id||'');
   };
 
   

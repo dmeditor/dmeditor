@@ -21,7 +21,7 @@ type SettingPanelMode = 'block-setting' | 'list-overview' | 'page-setting' | 'ad
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
 const SettingPanel = (props) => {
   const {
-    selected: { blockIndex: selectedBlockIndex, currentListPath },
+    selected: { blockIndex: selectedBlockIndex, currentListPath, blockId },
     addBlockData,
     getSelectedBlock,
     getCurrentList,
@@ -36,7 +36,7 @@ const SettingPanel = (props) => {
   const [selectedPathIndex, setSelectedPathIndex] = useState<number>();
 
   const currentList = getCurrentList();
-  // const selectedBlock = useMemo(() => getSelectedBlock(), [selectedBlockIndex]);
+  // const selectedBlock = useMemo(() => getSelectedBlock(), [blockId]);
   const selectedBlock = getSelectedBlock();
 
   const updatePath = () => {
@@ -60,6 +60,7 @@ const SettingPanel = (props) => {
     setSelectedPathIndex(pathArray.length-1);
     setPathArray(pathArray);
   };
+  
 
   useEffect(() => {
     //is adding mode
@@ -108,7 +109,7 @@ const SettingPanel = (props) => {
           <Space />
 
           {mode === 'list-overview' && (
-            <ListOverview data={currentList} selectedIndex={selectedBlockIndex} />
+            <ListOverview data={currentList||[]} selectedIndex={selectedBlockIndex} />
           )}
 
           {mode === 'block-setting' && selectedPathIndex && (

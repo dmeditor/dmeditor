@@ -47,7 +47,7 @@ type Actions = {
   removeByPath: (path: Array<number>)=>void;
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
-  updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => void;
+  updateSelectedBlockIndex: (pathArray: Array<number>, index: number, id:string) => void;
   getCurrentList: () => DMEData.BlockList|null;
   getCurrentBlock: ()=>DMEData.Block|null;
   getBlockByPath:(path:Array<number>)=>DMEData.Block;
@@ -83,7 +83,7 @@ const useEditorStore = create<Store & Actions>()(
         const {index, position, context} = state.addBlockData;
         if (index == -Infinity) {
           return;
-        }       
+        }
 
         const [widget, variant] = getWidgetWithVariant(type);
         if (!widget) {
@@ -117,13 +117,12 @@ const useEditorStore = create<Store & Actions>()(
               return;
             }
           }        
-
-          //update to new block
-          state.selected.blockIndex = newPosition;
-          state.selected.currentListPath = context;
-
-          state.addBlockData.status = 'done';
         }
+        //update to new block
+        state.selected.blockIndex = newPosition;
+        state.selected.currentListPath = context;
+
+        state.addBlockData.status = 'done';
       }),
     cancelAdding: () =>
       set((state) => {
@@ -200,8 +199,14 @@ const useEditorStore = create<Store & Actions>()(
     },
     getSelectedBlock: <T>() => {
       const state = get();
-      const index = state.selected.blockIndex;
-      return state.getBlock(index);
+      const selected = state.selected;   
+      if(selected.blockIndex === -Infinity){
+        return;
+      }
+      const result = state.getBlockByPath([...selected.currentListPath, selected.blockIndex]);
+      if(result){
+        return result as (DMEData.Block<T>);
+      }
     },
     getBlock: <T>(index:number)=>{
       const state = get();
@@ -280,13 +285,14 @@ const useEditorStore = create<Store & Actions>()(
         // state.selected.currentList = state.storage;
       });
     },
-    updateSelectedBlockIndex: (pathArray: Array<number>, index: number) => {
+    updateSelectedBlockIndex: (pathArray: Array<number>, index: number, id:string) => {
       set((state) => {
         state.selected.blockIndex = index;
         if (state.selected.currentListPath.join() !== pathArray.join()) {
           // switch list context
           state.selected.currentListPath = pathArray;
         }
+        state.selected.blockId = id;
       });
     },
     updateSelectedBlock:<Type=DMEData.DefaultDataType>(callback: (blockData: Type)=>void)=>{
