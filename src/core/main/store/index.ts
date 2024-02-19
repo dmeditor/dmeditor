@@ -338,7 +338,7 @@ const useEditorStore = create<Store & Actions>()(
             if (isKeyInObject('settings', block.data)) {
               block.data[propKey][realPropsName] = propValue;
             }else{
-              const settings = {'${realPropsName}': propValue};
+              const settings = {[realPropsName]: propValue};
               block.data[propKey] = settings;
             }
           } else {
