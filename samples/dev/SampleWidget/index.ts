@@ -112,7 +112,7 @@ const registerSampleWidget = function () {
 
   registerWidgetStyleOption('button', [{
       identifier:'primary',
-      name:'Project primary',
+      name:'Sample project main',
       cssStyle: `
         padding: 8px 20px;
         background:green;
