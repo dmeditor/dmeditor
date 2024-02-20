@@ -68,7 +68,7 @@ const register = () =>{
              name: 'Small',
              cssStyle:`
                 background: #cccccc;
-                .dme-w-list .dme-block-container{
+                & > .dme-w-list > .dme-block-container{
                     padding: 5px;
                 }
              `
@@ -78,7 +78,7 @@ const register = () =>{
              cssStyle:`
                 background: #333333;
                 color: white;
-                .dme-w-list .dme-block-container{
+                & > .dme-w-list > .dme-block-container{
                     padding: 10px;
                 }
              `
