@@ -19,7 +19,7 @@ const register = () =>{
                 children: [{
                     id: nanoid(),
                     type: 'button',
-                    data:{value: 'Button'},
+                    data:{value: 'Button', link:'#'},
                     style:{style:'primary'},                    
                 }]
             }

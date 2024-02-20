@@ -1,5 +1,4 @@
-import { DMEData } from 'Core/types';
-import { DME } from "Src/core/types";
+import { DME, DMEData } from "Src/core/types/dmeditor";
 import { nanoid } from 'nanoid';
 
 const buttonWidget: DME.Widget = {
@@ -12,8 +11,10 @@ const buttonWidget: DME.Widget = {
         return {
           id: nanoid(),
           type: 'button',
+          style:{type:'primary'},
           data: {
-            value: 'New button'
+            value: 'New button',
+            link:'#'
           }
         }          
       },
@@ -27,11 +28,11 @@ const buttonWidget: DME.Widget = {
         settingComponent: 'input'        
       },
       {
-        name: 'Color',
-        property: 'settings.color',
+        name: 'Link',
+        property: '.link',
         category: 'settings',
-        settingComponent: 'color'        
-      } 
+        settingComponent: 'link'        
+      }
     ],
   };
   

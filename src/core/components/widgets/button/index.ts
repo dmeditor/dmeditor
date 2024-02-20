@@ -6,9 +6,9 @@ const register = () =>{
     registerWidget(buttonWidget, Button )
     registerWidgetStyle('button',
     {
-        identifier:'style',
+        identifier:'type',
         display:'inline-block',
-        name: 'Style',
+        name: 'Type',
         options: [
             {identifier: 'primary',
              name: 'Primary',
