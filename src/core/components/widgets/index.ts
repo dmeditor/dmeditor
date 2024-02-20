@@ -103,7 +103,7 @@ const defaultStyle = (): DME.WidgetStyle => {
   return{
     identifier: '_',
     display:'dropdown',
-    name: 'Custom',
+    name: 'Pre-defined style',
     options: [],
   }
 };

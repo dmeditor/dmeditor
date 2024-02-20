@@ -1,4 +1,4 @@
-export * from './Property';
+export * from '../setting-panel/Property';
 export * from './PickColor';
 export * from './Ranger';
 export * from './utilx'; // Util.tsx

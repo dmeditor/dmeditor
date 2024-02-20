@@ -13,7 +13,7 @@ import widgetDefinition, {
   widgetStyles,
 } from '../../components/widgets';
 import { DME } from '../../types/dmeditor';
-import { PropertyItem } from '../../utils/Property';
+import { PropertyItem } from '../Property';
 import { DropDown } from './DropDown';
 import { ButtonGroup } from './ButtonGroup';
 import { InlineBlock } from './InlineBlock';

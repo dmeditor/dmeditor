@@ -1,5 +1,5 @@
 import { DeleteOutline } from "@mui/icons-material"
-import { PropertyButton } from "../../utils/Property"
+import { PropertyButton } from "../Property"
 import { useEditorStore } from "Src/core/main/store"
 
 export const DeleteBlock = ()=>{
