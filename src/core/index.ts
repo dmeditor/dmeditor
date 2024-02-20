@@ -1,7 +1,12 @@
 export { useEditorStore } from './main/store';
 
 export { DMEditor } from 'Core/main/designer/DMEditor';
-export { addCustomDefinition, addLayoutDefinition, registerWidget, registerWidgetVariant } from './components/widgets';
+export {
+  addCustomDefinition,
+  addLayoutDefinition,
+  registerWidget,
+  registerWidgetVariant,
+} from './components/widgets';
 export {
   registerCommonProperty,
   registerCustomProperty,
@@ -11,3 +16,4 @@ export {
 } from './setting-panel/register';
 
 export { BlockRender as DMRenderer } from 'Core/main/renderer/index';
+export * from './types/dmeditor';
