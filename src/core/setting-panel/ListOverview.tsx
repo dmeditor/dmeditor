@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 
 import { getWidgetWithVariant } from '../components/widgets';
 import { DMEData } from '../types/dmeditor';
+import { useEditorStore } from '../main/store';
 
 interface ListOverviewProps {
   data: DMEData.BlockList;
@@ -25,12 +26,19 @@ const tableStyle = css`
 `;
 
 export const ListOverview = (props: ListOverviewProps) => {
+  const {updateSelectedBlockIndex} = useEditorStore();
+
   const getName = (type:string)=>{
       const [widget, variant] = getWidgetWithVariant(type);
       if(variant){
         return variant.name;
       }
       return widget?.name||'';
+  }
+
+
+  const jumpTo = (index:number)=>{
+    updateSelectedBlockIndex([], index, props.data[index].id||'')
   }
 
   return (
@@ -54,7 +62,7 @@ export const ListOverview = (props: ListOverviewProps) => {
                 width: 40;
               `}
             >
-              <Button>
+              <Button onClick={()=>jumpTo(index)}>
                 <KeyboardArrowRight />
               </Button>
             </td>
