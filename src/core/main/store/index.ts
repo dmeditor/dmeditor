@@ -232,16 +232,11 @@ const useEditorStore = create<Store & Actions>()(
         if(path.length===0)return
         const parentPath = path.length <= 1?[]:path.slice(0, path.length-1);
         const index = path[path.length-1];
-        const data = GetDataByPath(state.storage,parentPath);
-        if( !data ){
+        const list = GetListByPath(state.storage,parentPath);
+        if( !list ){
           console.warn('Parent data not found in path', parentPath);
           return;
-        }
-        const list = data.children;
-        if( !list || list.length === 0 ){
-          console.warn('Parent list data not found in path', parentPath);
-          return;
-        }
+        }        
         
         list.splice(index, 1);
       })
