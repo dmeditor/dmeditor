@@ -21,6 +21,12 @@ const buttonWidget: DME.Widget = {
     },
     settings: [
       {
+        name: 'Text',
+        property: '.value',
+        category: 'settings',
+        settingComponent: 'input'        
+      },
+      {
         name: 'Color',
         property: 'settings.color',
         category: 'settings',

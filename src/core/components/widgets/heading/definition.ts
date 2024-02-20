@@ -33,6 +33,12 @@ const HeadingWidget: DME.Widget = {
   },
   settings: [
     {
+      name: 'Text',
+      property: '.value',
+      category: 'settings',
+      settingComponent: 'input'        
+    },
+    {
       name: 'Level',
       settingComponent: 'range',
       category: 'settings',
