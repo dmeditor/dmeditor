@@ -14,7 +14,7 @@ import {
   StyledButtonContainer,
 } from './styled';
 import emitter from 'Core/utils/event';
-import { DMEData } from 'Src/core/types';
+import { DMEData } from 'Src/core/types/dmeditor';
 
 interface BlockListProps {
   blockData: DMEData.BlockList;

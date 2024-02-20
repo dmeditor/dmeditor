@@ -2,7 +2,7 @@ import { getAllowedTypes } from '..';
 import { EntityList } from './entity';
 import { StyledList } from './styled';
 import { BlockListRender } from 'Src/core/main/renderer';
-import { DME } from 'Src/core/types';
+import { DME } from 'Src/core/types/dmeditor';
 
 const List = (props: DME.WidgetRenderProps<EntityList>) => {
   const {

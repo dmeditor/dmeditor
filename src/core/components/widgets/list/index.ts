@@ -1,7 +1,7 @@
 import { List } from './List';
 import { registerWidget, registerWidgetVariant } from "..";
 import listWidget from "./definition";
-import { DMEData } from 'Src/core/types';
+import { DMEData } from 'Src/core/types/dmeditor';
 import { nanoid } from 'nanoid';
 
 const register = () =>{

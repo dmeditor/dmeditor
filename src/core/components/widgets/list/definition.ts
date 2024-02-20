@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { EntityList } from './entity';
-import { DME, DMEData } from 'Src/core/types';
+import { DME, DMEData } from 'Src/core/types/dmeditor';
 import { getWidgetVariant } from '..';
 
 const listWidget: DME.Widget = {
