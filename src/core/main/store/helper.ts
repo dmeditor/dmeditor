@@ -1,7 +1,6 @@
-import { Block } from './../../../../dist/src/core/types/dmeditor';
 import { getWidget } from 'Components/widgets';
 import { jsonParse } from 'Src/core/utils';
-import { DMEData } from 'Src/core/components/types/block';
+import { DMEData } from 'Src/core/types/dmeditor';
 
 
 //todo: can these operation be object-orented way(for blocklist and block)?
@@ -109,10 +108,10 @@ export const iteratePath = (pathArray:Array<number>, rootList: DMEData.BlockList
 
 export const GetDataByPath = (data:DMEData.BlockList, path:Array<number>):DMEData.Block|null=>{
   let temp = data;
-  let result: DMEData.Block = null;
+  let result = null;
   path.forEach((v, index)=>{
     const block = temp[v];
-    if( index == path.length - 1 ){
+    if( index === path.length - 1 ){
       result = block;
     }
     temp = block.children||[];    
@@ -125,11 +124,7 @@ export const GetListByPath = (data:DMEData.BlockList, path:Array<number>):DMEDat
   if( path.length === 0 ){
     return data;
   }
-  for (const i of path) {
-    if( !list || !list[i] ){
-      return null;
-    }
-    list = list[i].children || null;
-  }
-  return list;
+  let listData = GetDataByPath(data, path);
+  
+  return listData && listData.children?listData.children:null;
 }

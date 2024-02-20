@@ -132,7 +132,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   //   Util.pageTabActiveIndex = props.pageTabActiveIndex || 0;
   // }, []);
   const handleUpdateSelctedWidgetIndex = useCallback((index: number) => {
-    updateSelectedBlockIndex([], index, storage[index].id||'');
+    updateSelectedBlockIndex([index], storage[index].id||'');
     blockIndexRef.current = index;
   }, []);
 

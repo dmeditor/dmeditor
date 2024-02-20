@@ -47,7 +47,7 @@ type Actions = {
   removeByPath: (path: Array<number>)=>void;
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
-  updateSelectedBlockIndex: (pathArray: Array<number>, index: number, id:string) => void;
+  updateSelectedBlockIndex: (pathArray: Array<number>, id:string) => void;
   getCurrentList: () => DMEData.BlockList|null;
   getCurrentBlock: ()=>DMEData.Block|null;
   getBlockByPath:(path:Array<number>)=>DMEData.Block;
@@ -101,6 +101,9 @@ const useEditorStore = create<Store & Actions>()(
 
         const listData = GetListByPath(state.storage, context||[]);
         let newPosition: number = -Infinity;
+        if( !listData ){
+          return;
+        }
         if( listData.length === 0 ){
           listData.push(blockData);
           newPosition = 0;
@@ -135,6 +138,9 @@ const useEditorStore = create<Store & Actions>()(
 
             const parentContext = context.slice(0, context.length-1);
             const list = GetListByPath(state.storage, parentContext)
+            if( !list){
+              return;
+            }
             const parentIndex = context[context.length-1];
             list.splice(parentIndex, 1);
           }
@@ -224,14 +230,19 @@ const useEditorStore = create<Store & Actions>()(
     removeByPath: (path:Array<number>)=>{
       set((state)=>{
         if(path.length===0)return
-
-        const parentPath = path.length < 2?[]:path.slice(0, path.length-2);
+        const parentPath = path.length <= 1?[]:path.slice(0, path.length-1);
         const index = path[path.length-1];
-        const list = GetDataByPath(state.storage,parentPath);
-        if(!list||list.length === 0){
-          console.warn('Parent data not found in path', path);
+        const data = GetDataByPath(state.storage,parentPath);
+        if( !data ){
+          console.warn('Parent data not found in path', parentPath);
           return;
         }
+        const list = data.children;
+        if( !list || list.length === 0 ){
+          console.warn('Parent list data not found in path', parentPath);
+          return;
+        }
+        
         list.splice(index, 1);
       })
     },
@@ -285,12 +296,14 @@ const useEditorStore = create<Store & Actions>()(
         // state.selected.currentList = state.storage;
       });
     },
-    updateSelectedBlockIndex: (pathArray: Array<number>, index: number, id:string) => {
+    updateSelectedBlockIndex: (pathArray: Array<number>, id:string) => {
       set((state) => {
+        const parentPath = pathArray.length <= 1?[]:pathArray.slice(0, pathArray.length-1);
+        const index = pathArray[pathArray.length-1];
         state.selected.blockIndex = index;
-        if (state.selected.currentListPath.join() !== pathArray.join()) {
+        if (state.selected.currentListPath.join() !== parentPath.join()) {
           // switch list context
-          state.selected.currentListPath = pathArray;
+          state.selected.currentListPath = parentPath;
         }
         state.selected.blockId = id;
       });

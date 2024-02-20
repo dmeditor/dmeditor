@@ -38,7 +38,7 @@ export const ListOverview = (props: ListOverviewProps) => {
 
 
   const jumpTo = (index:number)=>{
-    updateSelectedBlockIndex([], index, props.data[index].id||'')
+    updateSelectedBlockIndex([index], props.data[index].id||'')
   }
 
   return (

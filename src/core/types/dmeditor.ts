@@ -109,7 +109,7 @@ export namespace DMEData {
     parent?: Block;
     data: TData; //entity data from widget
     style?: {[style:string]:string};
-    children?: Array<Block>;
+    children?: BlockList;
   }
 
   //Block list
