@@ -1,6 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { StyleSettingProps } from "./StyleSettings";
-import { DME } from "Src/core/types";
+import { DME } from "Src/core/types/dmeditor";
 
 export const ButtonGroup = (props: StyleSettingProps & { style: DME.WidgetStyle }) => {
     const { values, style, onChange } = props;

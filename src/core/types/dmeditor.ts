@@ -50,7 +50,7 @@ export namespace DME {
   }
 
   export interface WidgetStyle{
-    identifier: string, // '_' if not set
+    identifier: string, // '_' for root
     display?: 'dropdown'|'button-group'|'radio' | 'inline-block', //dropdown is default if not set.
     name: string //'Style' if not set
     options: Array<WidgetStyleOption>

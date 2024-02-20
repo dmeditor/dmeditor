@@ -110,6 +110,16 @@ const registerSampleWidget = function () {
     }]
   })
 
+  registerWidgetStyleOption('button', [{
+      identifier:'primary',
+      name:'Project primary',
+      cssStyle: `
+        padding: 10px;
+        background:red;
+      `,
+      icon: ''  
+    }]);
+
   registerWidgetStyleOption('heading', 
   [{
     identifier:'small-margin',

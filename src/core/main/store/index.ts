@@ -313,10 +313,18 @@ const useEditorStore = create<Store & Actions>()(
     updateSelectedBlockStyle: (value:string, styleIdentifier:string)=>{
       set((state) => {               
         const block = GetDataByPath(state.storage, [...state.selected.currentListPath, state.selected.blockIndex]);        
+        if( !block ){
+          return;
+        }
         if( !block.style ){
           block.style = {};
         }        
-        block.style[styleIdentifier] = value;
+        console.log(value, styleIdentifier);
+        if( !value && styleIdentifier === '_' ){
+          block.style = {}
+        }else{
+          block.style[styleIdentifier] = value;
+        }
       })
     },
     updateSelectedBlockProps: (propName: string, propValue: string | number) => {

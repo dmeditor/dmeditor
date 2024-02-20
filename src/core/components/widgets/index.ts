@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import type { DME, DMEData } from 'Core/types';
+import type { DME, DMEData } from 'Core/types/dmeditor';
 
 const components: {
   // TODO: make it more type safe
@@ -102,8 +102,8 @@ const getWidgetWithVariant = (widget: string) => {
 const defaultStyle = (): DME.WidgetStyle => {
   return{
     identifier: '_',
-    display: 'dropdown',
-    name: 'Style',
+    display:'dropdown',
+    name: 'Custom',
     options: [],
   }
 };
@@ -182,19 +182,23 @@ function registerWidgetStyle(widget: string, style: DME.WidgetStyle) {
   if (!widgetStyles[widget]) {
     widgetStyles[widget] = {};
   }
-  if (widgetStyles[widget][style.identifier]) {
+  const identifier = style.identifier||'_';
+  if (widgetStyles[widget][identifier]) {
     console.warn(`Style ${style.identifier} is already registered on ${widget}. Ignore.`);
     return;
   }
-  widgetStyles[widget][style.identifier] = style;
+  widgetStyles[widget][identifier] = style;
 }
 
 //register style option
 function registerWidgetStyleOption(
   widget: string,
   styleOptions: Array<DME.WidgetStyleOption>,
-  style: string,
+  style?: string,
 ) {
+  if(!style){
+    style = '_';
+  }
   if (!widgetStyles[widget] || !widgetStyles[widget][style]) {
     console.error(`Widget style ${style} is not found`);
     return;
