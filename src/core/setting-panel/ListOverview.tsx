@@ -56,7 +56,9 @@ export const ListOverview = (props: ListOverviewProps) => {
                 <DragIndicator />
               </Button>
             </td>
-            <td>{getName(item.type)}</td>
+            <td className={css`
+                cursor: default;
+              `}>{getName(item.type)}</td>
             <td
               className={css`
                 width: 40;

@@ -27,7 +27,7 @@ export const Space = styled.div`
 
 export const PathItem = styled.span<{ canClick?: boolean, selected?:boolean }>`
   font-size: 90%;
-  cursor: default;
+  cursor: pointer;
   display: inline-block;
   vertical-align: bottom;
   font-weight: ${(props) => (props.selected ? 'bold' : 'normal')};
