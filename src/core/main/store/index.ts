@@ -320,8 +320,12 @@ const useEditorStore = create<Store & Actions>()(
           block.style = {};
         }        
         console.log(value, styleIdentifier);
-        if( !value && styleIdentifier === '_' ){
-          block.style = {}
+        if( styleIdentifier === '_' ){
+          if( !value ){
+            block.style = {}
+          }else{
+            block.style = {'_':value}
+          }
         }else{
           block.style[styleIdentifier] = value;
         }

@@ -114,8 +114,10 @@ const registerSampleWidget = function () {
       identifier:'primary',
       name:'Project primary',
       cssStyle: `
-        padding: 10px;
-        background:red;
+        padding: 8px 20px;
+        background:green;
+        color: white;
+        border-radius: 16px;
       `,
       icon: ''  
     }]);
