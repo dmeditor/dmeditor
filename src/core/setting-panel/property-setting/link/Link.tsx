@@ -9,7 +9,7 @@ const Link = ( props: DME.SettingComponentProps) => {
     const {updateSelectedBlockProps} = useEditorStore();
 
     const handleChange = (v: string) => {
-      //todo: validate
+      //todo: add button to select
         updateSelectedBlockProps(property, v);
     };
 
