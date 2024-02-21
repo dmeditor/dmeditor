@@ -49,7 +49,7 @@ const register = () =>{
                                 id: nanoid(),
                                 type: 'button',
                                 data:{value: 'Button'},
-                                style:{style:'primary'},                    
+                                style:{type:'primary'},                    
                             }]
                         }
                     ]
