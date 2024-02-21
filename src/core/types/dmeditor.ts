@@ -16,7 +16,7 @@ export namespace DME {
     type: string;
     name: string;
     icon: string|(()=>unknown); //base 64(eg. png/svg) or url, or component
-    category: 'widget' | 'layout' | 'section';
+    category: 'widget' | 'layout' | 'section' | 'mixed';
     alias?: string;
     enabledStyles?:Array<string>;
     isBaseWidget?:boolean; //true if it's base widget used for variants

@@ -1,11 +1,11 @@
-import { DMEData } from 'Core/types';
-import { DME } from "Src/core/types";
+import { DMEData } from 'Core/types/dmeditor';
+import { DME } from "Src/core/types/dmeditor";
 import { nanoid } from 'nanoid';
 import { EntityHeroText } from './entity';
 
 const heroTextWidget: DME.Widget = {
     // ?category options: widget, layout, form, chart, advanced
-    category: 'layout',
+    category: 'mixed',
     icon: 'TextFormatOutlined',
     name: 'Hero text',
     type: 'hero-text',  

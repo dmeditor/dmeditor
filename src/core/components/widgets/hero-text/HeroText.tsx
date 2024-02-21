@@ -19,7 +19,7 @@ const HeroText = (props:DME.WidgetRenderProps<EntityHeroText>)=>{
         return styleClasses[type].join(' ');
     }
 
-    const renderImage = ()=><div className={getClass('media')+' dme-w-media'}><BlockRender data={children[0]} path={path} /></div>;
+    const renderImage = ()=><div className={getClass('hero')+' dme-w-hero'}><BlockRender data={children[0]} path={path} /></div>;
     const renderList = ()=> <div className={getClass('list')+' dme-w-list'}><BlockListRender blockData={children[1].children||[]} allowedTypes={getAllowedTypes(blockNode.type)} path={[...path, 1]} /></div>;
 
     return <HeroTextContainer className={props.rootClasses}>
