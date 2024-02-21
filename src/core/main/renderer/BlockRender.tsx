@@ -73,6 +73,10 @@ export const BlockRender = React.memo((props: BlockProps) => {
     if( styleData ){
       for(const styleIdentifier of Object.keys(styleData) ){
         const widgetStyle = getWidgetStyle(blockType, styleIdentifier);
+        if(!widgetStyle){
+          console.warn(`Style ${styleIdentifier} not found on ${blockType}. Ignored.`);
+          continue;
+        }
         const styleOption = widgetStyle.options.find(item=>item.identifier===styleData[styleIdentifier])
         if( styleOption ){
           if( styleOption.cssStyle ){

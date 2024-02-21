@@ -8,7 +8,7 @@ const gridWidget: DME.Widget = {
     category: 'layout',
     icon: 'TextFormatOutlined',
     name: 'Grid',
-    type: 'grid',
+    type: 'grid',  
     allowedTypes:'^(?!.*grid).*$',
     events: {
       createBlock: (): DMEData.Block<EntityGrid> => {
