@@ -105,26 +105,7 @@ const defaultStyle = (widget: DME.Widget): DME.WidgetStyle => {
     display: 'dropdown',
     name: 'Pre-defined style',
     options: [] as Array<DME.WidgetStyleOption>,
-  } as DME.WidgetStyle;
-  if (widget.themeStyles) {
-    if( typeof widget.themeStyles === 'string' ){
-      const name = widget.themeStyles;
-      preDefinedStyle.options.push({
-        identifier: 'theme',
-        name: name,
-        cssStyle: '',
-      });
-    }else if( typeof widget.themeStyles === 'object'){
-      const obj = widget.themeStyles;
-      Object.keys(obj).forEach((key) => {
-        preDefinedStyle.options.push({
-          identifier: 'theme-'+key,
-          name: 'Theme - '+obj[key],
-          cssStyle: '',
-        });  
-      });
-    }  
-  }
+  } as DME.WidgetStyle; 
   return preDefinedStyle;
 };
 
@@ -227,33 +208,6 @@ function registerWidgetStyleOption(
   widgetStyles[widget][style].options = [...options, ...styleOptions];
 }
 
-//override style option
-function registerWidgetTheme(
-  widget: string,
-  css: { cssClasses?: DME.WidgetStyleClasses; cssStyle: string },
-  identifer: string,
-) {
-  if (!widgetStyles[widget]) {
-    console.error(`Widget ${widget} is not found`);
-    return;
-  }
-  if (!identifer) {
-    identifer = 'theme';
-  }else{
-    identifer = 'theme-'+identifer;
-  }
-  const themeIndex = widgetStyles[widget]['_'].options.findIndex(
-    (item) => item.identifier === identifer,
-  );
-  if (themeIndex) {
-    console.error(`Theme ${identifer} in widget ${widget} is not defined`);
-    return;
-  }
-
-  let options = widgetStyles[widget]['_'].options;
-  options[themeIndex] = { ...options[themeIndex], ...css };
-}
-
 //get a style, ignore enabledSettings
 function getWidgetStyle(widget: string, style?: string): DME.WidgetStyle {
   const styles = getWidgetStyles(widget, true);
@@ -326,7 +280,6 @@ export {
   getWidgetStyles,
   registerWidgetStyleOption,
   getAllowedTypes,
-  registerWidgetTheme,
 };
 
 export default widgetDefinition;

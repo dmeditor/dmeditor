@@ -21,7 +21,6 @@ export namespace DME {
     enabledStyles?:Array<string>;
     isBaseWidget?:boolean; //true if it's base widget used for variants
     allowedTypes?: Array<string>|string; //allwed types for direct children
-    themeStyles?: string|{[identifier: string]:string}; //widget theme styles. eg. in button: primary, primary-circle, cancel; in article list: 'theme'
     events: {
       //   onInput: () => void 0,
       //   onChange: () => void 0,

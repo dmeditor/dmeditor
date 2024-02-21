@@ -110,14 +110,20 @@ const registerSampleWidget = function () {
     }]
   })
 
-  registerWidgetTheme('button', {
+  registerWidgetStyle('button', {
+  identifier:'margin',
+    name:'Margin',
+    display:'inline-block',
+    options:[{
+      identifier:'theme-primary',
+      name:'Big',
       cssStyle: `
         padding: 8px 20px;
         background:green;
         color: white;
         border-radius: 16px;
-      `,
-    }, 'primary');
+      `}]
+    });
 
   registerWidgetStyleOption('heading', 
   [{
@@ -131,13 +137,15 @@ const registerSampleWidget = function () {
   }], 'margin')
 
 
-  registerWidgetTheme('heading', {
-    cssStyle: `
-       margin-top: 10px;
-       margin-bottom: 10px;
-       color: green;
-    `,
-  })
+  registerWidgetStyleOption('heading', [{
+        identifier:'theme',
+        name:'Theme-heading',
+        cssStyle: `
+        margin-top: 10px;
+        margin-bottom: 10px;
+        color: green;
+     `}]
+    );
 
   registerWidgetStyleOption('heading', 
   [{
