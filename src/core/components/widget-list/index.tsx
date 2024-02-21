@@ -117,6 +117,8 @@ export const WidgetList = (props: WidgetListProps) => {
           font-size: 0.9rem;
         `}>{widgetDefinition[widget].name}</span>
       </div>
+
+      {/* todo: list all pre-defined widget with styles */}
     </div>
       
       ))}

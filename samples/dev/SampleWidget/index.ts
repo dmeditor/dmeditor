@@ -110,20 +110,16 @@ const registerSampleWidget = function () {
     }]
   })
 
-  registerWidgetStyle('button', {
-  identifier:'margin',
-    name:'Margin',
-    display:'inline-block',
-    options:[{
+  registerWidgetStyleOption('button', [{
       identifier:'theme-primary',
-      name:'Big',
+      name:'Primary',
       cssStyle: `
         padding: 8px 20px;
         background:green;
         color: white;
         border-radius: 16px;
       `}]
-    });
+    );
 
   registerWidgetStyleOption('heading', 
   [{
