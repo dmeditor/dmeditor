@@ -110,17 +110,14 @@ const registerSampleWidget = function () {
     }]
   })
 
-  registerWidgetStyleOption('button', [{
-      identifier:'primary',
-      name:'Sample project main',
+  registerWidgetTheme('button', {
       cssStyle: `
         padding: 8px 20px;
         background:green;
         color: white;
         border-radius: 16px;
       `,
-      icon: ''  
-    }]);
+    }, 'primary');
 
   registerWidgetStyleOption('heading', 
   [{

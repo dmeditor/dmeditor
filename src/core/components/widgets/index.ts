@@ -231,7 +231,7 @@ function registerWidgetStyleOption(
 function registerWidgetTheme(
   widget: string,
   css: { cssClasses?: DME.WidgetStyleClasses; cssStyle: string },
-  identifer?: string,
+  identifer: string,
 ) {
   if (!widgetStyles[widget]) {
     console.error(`Widget ${widget} is not found`);
@@ -239,6 +239,8 @@ function registerWidgetTheme(
   }
   if (!identifer) {
     identifer = 'theme';
+  }else{
+    identifer = 'theme-'+identifer;
   }
   const themeIndex = widgetStyles[widget]['_'].options.findIndex(
     (item) => item.identifier === identifer,
