@@ -13,6 +13,7 @@ const HeadingWidget: DME.Widget = {
   icon: 'TextFormatOutlined',
   name: 'Heading',
   type: 'heading',
+  themeStyles: 'Theme heading',
   events: {
     createBlock: (): DMEData.Block<EntityHeadingBlock> => {
       return {

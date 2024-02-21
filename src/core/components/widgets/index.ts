@@ -80,13 +80,13 @@ const getWidget = (widget: string) => {
 };
 
 //get widget name, with variant considered.
-const getWidgetName = (widget:string) =>{
+const getWidgetName = (widget: string) => {
   const [widgetObj, variant] = getWidgetWithVariant(widget);
-  if(variant){
+  if (variant) {
     return variant.name;
   }
-  return widgetObj?.name||'';
-}
+  return widgetObj?.name || '';
+};
 
 const getWidgetWithVariant = (widget: string) => {
   const arr = widget.split(':');
@@ -96,20 +96,36 @@ const getWidgetWithVariant = (widget: string) => {
   if (arr[1]) {
     variant = def.variants.find((variant) => variant.identifier === arr[1]);
   }
-  return [def as DME.Widget|undefined, variant] as const;
+  return [def as DME.Widget | undefined, variant] as const;
 };
 
-const defaultStyle = (): DME.WidgetStyle => {
-  return{
+const defaultStyle = (widget: DME.Widget): DME.WidgetStyle => {
+  const preDefinedStyle = {
     identifier: '_',
-    display:'dropdown',
+    display: 'dropdown',
     name: 'Pre-defined style',
-    options: [{
-      identifier: 'theme', 
-      name: 'Theme',
-      cssStyle:'',
-    }],
+    options: [] as Array<DME.WidgetStyleOption>,
+  } as DME.WidgetStyle;
+  if (widget.themeStyles) {
+    if( typeof widget.themeStyles === 'string' ){
+      const name = widget.themeStyles;
+      preDefinedStyle.options.push({
+        identifier: 'theme',
+        name: name,
+        cssStyle: '',
+      });
+    }else if( typeof widget.themeStyles === 'object'){
+      const obj = widget.themeStyles;
+      Object.keys(obj).forEach((key) => {
+        preDefinedStyle.options.push({
+          identifier: 'theme-'+key,
+          name: 'Theme-'+obj[key],
+          cssStyle: '',
+        });  
+      });
+    }  
   }
+  return preDefinedStyle;
 };
 
 function registerWidgetDefinition(widget: DME.Widget) {
@@ -119,7 +135,7 @@ function registerWidgetDefinition(widget: DME.Widget) {
   }
   widgetDefinition[widget.type] = { ...widget, variants: [] };
   //register default style to make sure _default style is always there.
-  registerWidgetStyle(widget.type, defaultStyle());
+  registerWidgetStyle(widget.type, defaultStyle(widget));
 }
 
 function addLayoutDefinition(widget: DME.Widget) {
@@ -186,7 +202,7 @@ function registerWidgetStyle(widget: string, style: DME.WidgetStyle) {
   if (!widgetStyles[widget]) {
     widgetStyles[widget] = {};
   }
-  const identifier = style.identifier||'_';
+  const identifier = style.identifier || '_';
   if (widgetStyles[widget][identifier]) {
     console.warn(`Style ${style.identifier} is already registered on ${widget}. Ignore.`);
     return;
@@ -200,7 +216,7 @@ function registerWidgetStyleOption(
   styleOptions: Array<DME.WidgetStyleOption>,
   style?: string,
 ) {
-  if(!style){
+  if (!style) {
     style = '_';
   }
   if (!widgetStyles[widget] || !widgetStyles[widget][style]) {
@@ -214,20 +230,26 @@ function registerWidgetStyleOption(
 //override style option
 function registerWidgetTheme(
   widget: string,
-  css: {cssClasses?: DME.WidgetStyleClasses, cssStyle: string }
+  css: { cssClasses?: DME.WidgetStyleClasses; cssStyle: string },
+  identifer?: string,
 ) {
- 
   if (!widgetStyles[widget]) {
     console.error(`Widget ${widget} is not found`);
     return;
   }
-  const themeIndex = widgetStyles[widget]["_"].options.findIndex(item=>item.identifier==='theme');
-  if(themeIndex){
-    console.error(`Theme in widget ${widget} is not found`);
+  if (!identifer) {
+    identifer = 'theme';
+  }
+  const themeIndex = widgetStyles[widget]['_'].options.findIndex(
+    (item) => item.identifier === identifer,
+  );
+  if (themeIndex) {
+    console.error(`Theme ${identifer} in widget ${widget} is not defined`);
     return;
   }
-  let options = widgetStyles[widget]["_"].options;
-  options[themeIndex] = {...options[themeIndex], ...css};
+
+  let options = widgetStyles[widget]['_'].options;
+  options[themeIndex] = { ...options[themeIndex], ...css };
 }
 
 //get a style, ignore enabledSettings
@@ -272,13 +294,13 @@ function getWidgetStyles(widget: string, allStyles?: boolean) {
   }
 }
 
-const getAllowedTypes = (widgetStr:string)=>{
+const getAllowedTypes = (widgetStr: string) => {
   const [widget, variant] = getWidgetWithVariant(widgetStr);
-  if(variant){
-      return variant.allowedTypes;
-  }    
+  if (variant) {
+    return variant.allowedTypes;
+  }
   return widget?.allowedTypes;
-}
+};
 
 export {
   addCustomDefinition,
@@ -302,7 +324,7 @@ export {
   getWidgetStyles,
   registerWidgetStyleOption,
   getAllowedTypes,
-  registerWidgetTheme
+  registerWidgetTheme,
 };
 
 export default widgetDefinition;
