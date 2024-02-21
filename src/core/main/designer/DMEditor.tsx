@@ -37,10 +37,10 @@ import { TopBar } from '../../topbar/Topbar';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } from './style';
-import { DMEData } from 'Src/core/components/types/block';
 import { BlockListRender } from 'Src/core/main/renderer';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 import { registerDefaultWidgets } from 'Src/core/components/widgets';
+import { DMEData } from 'Src/core/types/dmeditor';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
