@@ -72,3 +72,6 @@ export const AddBlockContainer = styled.div`
     padding: 10px;
 `
 
+export const StyledProperty = styled.div`
+    padding: 10px;
+`

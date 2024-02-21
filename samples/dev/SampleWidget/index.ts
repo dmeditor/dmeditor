@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import SampleWidget from './SampleWidget';
 import SettingInput from './SettingInput';
 import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'Src/core';
-import { getWidget, getWidgetVariant, registerWidgetStyle, registerWidgetStyleOption } from 'Src/core/components/widgets';
+import { getWidget, getWidgetVariant, registerWidgetStyle, registerWidgetStyleOption, registerWidgetTheme } from 'Src/core/components/widgets';
 import { DMEData } from 'Src/core/types';
 
 const registerSampleWidget = function () {
@@ -128,12 +128,21 @@ const registerSampleWidget = function () {
     name:'Small',
     cssStyle: `
        margin-top: 10px;
-       margin-bottom: 10px;
-
-      
+       margin-bottom: 10px;      
     `,
     icon: ''  
   }], 'margin')
+
+
+  registerWidgetTheme('heading', {
+    cssStyle: `
+       margin-top: 10px;
+       margin-bottom: 10px;
+       color: green;     
+    `,
+  })
+
+  
 
   registerWidgetStyleOption('heading', 
   [{

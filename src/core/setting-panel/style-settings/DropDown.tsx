@@ -14,7 +14,7 @@ export const DropDown = (props: StyleSettingProps & { style: DME.WidgetStyle }) 
       >
         <MenuItem value="">None</MenuItem>
         {style.options.map((option) => (
-          <MenuItem key={option.identifier} value={option.identifier}>{option.name}</MenuItem>
+           (option.cssClasses!==undefined||option.cssStyle!=='')?<MenuItem key={option.identifier} value={option.identifier}>{option.name}</MenuItem>:<></>
         ))}
       </Select>
     );

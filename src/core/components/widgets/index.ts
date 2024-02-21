@@ -104,7 +104,11 @@ const defaultStyle = (): DME.WidgetStyle => {
     identifier: '_',
     display:'dropdown',
     name: 'Pre-defined style',
-    options: [],
+    options: [{
+      identifier: 'theme', 
+      name: 'Theme',
+      cssStyle:'',
+    }],
   }
 };
 
@@ -203,7 +207,27 @@ function registerWidgetStyleOption(
     console.error(`Widget style ${style} is not found`);
     return;
   }
-  widgetStyles[widget][style].options = [...(widgetStyles[widget][style].options), ...styleOptions];
+  const options = widgetStyles[widget][style].options;
+  widgetStyles[widget][style].options = [...options, ...styleOptions];
+}
+
+//override style option
+function registerWidgetTheme(
+  widget: string,
+  css: {cssClasses?: DME.WidgetStyleClasses, cssStyle: string }
+) {
+ 
+  if (!widgetStyles[widget]) {
+    console.error(`Widget ${widget} is not found`);
+    return;
+  }
+  const themeIndex = widgetStyles[widget]["_"].options.findIndex(item=>item.identifier==='theme');
+  if(themeIndex){
+    console.error(`Theme in widget ${widget} is not found`);
+    return;
+  }
+  let options = widgetStyles[widget]["_"].options;
+  options[themeIndex] = {...options[themeIndex], ...css};
 }
 
 //get a style, ignore enabledSettings
@@ -277,7 +301,8 @@ export {
   getWidgetStyle,
   getWidgetStyles,
   registerWidgetStyleOption,
-  getAllowedTypes
+  getAllowedTypes,
+  registerWidgetTheme
 };
 
 export default widgetDefinition;
