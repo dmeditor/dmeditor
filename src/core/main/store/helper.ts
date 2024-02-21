@@ -125,6 +125,5 @@ export const GetListByPath = (data:DMEData.BlockList, path:Array<number>):DMEDat
     return data;
   }
   let listData = GetDataByPath(data, path);
-  
   return listData && listData.children?listData.children:null;
 }

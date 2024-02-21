@@ -17,7 +17,8 @@ const gridWidget: DME.Widget = {
           type: 'grid',
           data: {
             columns: 3
-          }
+          },
+          children:[]
         };
       },
       updateData: () => {},

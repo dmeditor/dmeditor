@@ -6,7 +6,6 @@ const buttonWidget: DME.Widget = {
     icon: 'TextFormatOutlined',
     name: 'Button',
     type: 'button',  
-    themeStyles: {'primary': 'Primary', 'variant1':'Variant 1','variant2':'Variant 2', 'cancel':'Cancel',},
     events: {
       createBlock: (): DMEData.Block => {
         return {

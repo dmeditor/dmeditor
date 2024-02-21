@@ -63,7 +63,7 @@ export const WidgetList = (props: WidgetListProps) => {
     }
     if(typeof filter === 'string'){
       return widget.match(filter);
-    }else{ // arrary
+    }else{ // array
       return filter.includes(widget);
     }
   }
