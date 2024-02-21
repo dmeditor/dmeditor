@@ -119,7 +119,7 @@ const defaultStyle = (widget: DME.Widget): DME.WidgetStyle => {
       Object.keys(obj).forEach((key) => {
         preDefinedStyle.options.push({
           identifier: 'theme-'+key,
-          name: 'Theme-'+obj[key],
+          name: 'Theme - '+obj[key],
           cssStyle: '',
         });  
       });
