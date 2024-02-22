@@ -26,7 +26,7 @@ function createDMEditor() {
       blockId: '',
       blockIndex: -Infinity,
       currentListPath: [] as Array<number>,
-    },    
+    },
     // activeWidget: null,
     editorConfig: {
       cssCode: '',
@@ -34,7 +34,7 @@ function createDMEditor() {
     },
     steps: [],
     storage: [] as DMEData.BlockList,
-    page: {title:''},
+    page: { title: 'New page' },
 
     // initEditor() {
     //   this.widgets = [];

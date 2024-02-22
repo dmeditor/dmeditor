@@ -18,7 +18,7 @@ const SettingType = (props: {
       return (
         <div>
           <TextField
-            defaultValue={defaultValue}
+            value={defaultValue}
             fullWidth
             size="small"
             onChange={(e) => onChange(e.target.value)}
@@ -29,7 +29,7 @@ const SettingType = (props: {
       return (
         <div>
           <TextField
-            defaultValue={defaultValue}
+            value={defaultValue}
             fullWidth
             multiline
             rows={5}
@@ -47,16 +47,24 @@ const SettingType = (props: {
   }
 };
 
-const SelectTheme = (props:{value:string,  onChange: (value: string) => void;})=>{    
-    return <div>
-    <Select size='small' value={props.value} displayEmpty fullWidth onChange={(v)=>props.onChange(v.target.value)}>
-        <MenuItem value=''>None</MenuItem>
-        {pageThemes.map(theme=>
-            <MenuItem value={theme.identifier}>{theme.name}</MenuItem>
-        )}
-    </Select>
-</div>
-}
+const SelectTheme = (props: { value: string; onChange: (value: string) => void }) => {
+  return (
+    <div>
+      <Select
+        size="small"
+        value={props.value}
+        displayEmpty
+        fullWidth
+        onChange={(v) => props.onChange(v.target.value)}
+      >
+        <MenuItem value="">None</MenuItem>
+        {pageThemes.map((theme) => (
+          <MenuItem value={theme.identifier}>{theme.name}</MenuItem>
+        ))}
+      </Select>
+    </div>
+  );
+};
 
 export const PageSetting = () => {
   const { page, updatePage } = useEditorStore();
@@ -73,7 +81,9 @@ export const PageSetting = () => {
     <div style={{ padding: '0px 10px' }}>
       <SettingHeader>Page setting</SettingHeader>
       <SettingItem>
-        <label>Title: <Required>*</Required></label>
+        <label>
+          Title: <Required>*</Required>
+        </label>
         <SettingType
           type="text"
           defaultValue={page.title}
@@ -81,10 +91,12 @@ export const PageSetting = () => {
         />
       </SettingItem>
 
-      {pageThemes.length>0&&<SettingItem>
-        <label>Theme:</label>
-        <SelectTheme value={page['theme']||''} onChange={(v)=>updatePageValue(v, 'theme')} />
-      </SettingItem>}
+      {pageThemes.length > 0 && (
+        <SettingItem>
+          <label>Theme:</label>
+          <SelectTheme value={page['theme'] || ''} onChange={(v) => updatePageValue(v, 'theme')} />
+        </SettingItem>
+      )}
 
       {settings.map((setting) => (
         <SettingItem>
