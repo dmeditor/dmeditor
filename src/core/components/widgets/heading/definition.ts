@@ -24,7 +24,6 @@ const HeadingWidget: DME.Widget = {
           level: 2,
           settings: {
             align: 'left',
-            color: '#000000',
           },
         },
       };
@@ -36,7 +35,7 @@ const HeadingWidget: DME.Widget = {
       name: 'Text',
       property: '.value',
       category: 'settings',
-      settingComponent: 'input'        
+      settingComponent: 'input',
     },
     {
       name: 'Level',

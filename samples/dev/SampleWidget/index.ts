@@ -124,11 +124,24 @@ const registerSampleWidget = function () {
 
   registerWidgetStyleOption('button', [
     {
+      identifier: 'project-primary',
+      name: 'Project primary',
+      cssStyle: `
+        padding: 8px 20px;
+        background:green;
+        color: white;
+        border-radius: 16px;
+      `,
+    },
+  ]);
+
+  registerWidgetStyleOption('button', [
+    {
       identifier: 'theme-primary',
       name: 'Theme primary',
       cssStyle: `
         padding: 8px 20px;
-        background:green;
+        background:var(--project-main-color);
         color: white;
         border-radius: 16px;
       `,
@@ -154,11 +167,16 @@ const registerSampleWidget = function () {
   registerWidgetStyleOption('heading', [
     {
       identifier: 'theme',
-      name: 'Theme-heading',
+      name: 'Theme - heading',
       cssStyle: `
         margin-top: 10px;
         margin-bottom: 10px;
-        color: green;
+        
+        color: var(--project-main-color);
+        padding: 10px;
+
+        border-bottom: 2px solid var(--project-main-bg-color);
+        border-left: 4px solid var(--project-main-bg-color);
      `,
     },
   ]);

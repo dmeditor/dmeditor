@@ -10,7 +10,11 @@ registerTheme({
   identifier: 'red',
   name: 'Red',
   cssStyle: `
-    background: #ffd4d4;    
+    --project-main-color: red;
+    --project-main-bg-color: #fbadad;
+
+    /*background: var(--project-main-bg-color);  */
+    
     /*todo: use css variable*/
   `,
 });
@@ -18,7 +22,9 @@ registerTheme({
   identifier: 'blue',
   name: 'Blue',
   cssStyle: `
-    background: #d4e2ff;
+    --project-main-color: blue;
+    --project-main-bg-color: #e0e0ff;
+    /*background: var(--project-main-bg-color);  */
   `,
 });
 
@@ -190,7 +196,7 @@ const App = () => {
       { identifier: 'meta_key', name: 'Meta key', type: 'text' },
       { identifier: 'meta_description', name: 'Meta description', type: 'multitext' },
     ]);
-    editorRef.current?.setPageData({ title: 'New page', meta_key: 'test key' });
+    editorRef.current?.setPageData({ title: 'New page', theme: 'red', meta_key: 'test key' });
   }, []);
 
   return <DMEditor ref={editorRef} />;
