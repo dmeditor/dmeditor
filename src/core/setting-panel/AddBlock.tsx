@@ -10,14 +10,10 @@ import { useEditorStore } from '../main/store';
 import { AddBlockContainer, RightElement, SettingDescription, SettingHeader } from './style';
 
 export const AddBlock = () => {
-  const {
-    addBlock,
-    cancelAdding,
-    addBlockData,
-  } = useEditorStore((state) => state);
+  const { addBlock, cancelAdding, addBlockData } = useEditorStore((state) => state);
 
-  const addBlockDone = (type: string) => {
-    addBlock(type);
+  const addBlockDone = (type: string, style?: string) => {
+    addBlock(type, style);
   };
 
   const cancel = () => {

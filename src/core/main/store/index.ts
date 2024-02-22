@@ -16,8 +16,8 @@ export interface AddBlockParameters {
   index: number;
   position: AddBlockPosition;
   context: Array<number>;
-  status: 'started'|'done';
-  types?:Array<string>|string;
+  status: 'started' | 'done';
+  types?: Array<string> | string;
 }
 
 type Store = {
@@ -30,35 +30,44 @@ type Store = {
   };
   addBlockData?: AddBlockParameters;
   storage: DMEData.BlockList; //data layer
-  page:DMEData.Page
+  page: DMEData.Page;
 };
 
 type Actions = {
-  startAddBlock: (context:Array<number>, index: number, position: AddBlockPosition, types?:Array<string>|string) => void;
+  startAddBlock: (
+    context: Array<number>,
+    index: number,
+    position: AddBlockPosition,
+    types?: Array<string> | string,
+  ) => void;
   cancelAdding: () => void;
-  clearAdding: ()=>void;
-  addBlock: (type:string) => void;
+  clearAdding: () => void;
+  addBlock: (type: string, style?: string) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
-  getSelectedBlock: <T=DMEData.Block<DMEData.DefaultDataType>>() => DMEData.Block<T> | undefined;
-  getBlock: <T=DMEData.Block<DMEData.DefaultDataType>>(index:number) => DMEData.Block<T> | undefined;
+  getSelectedBlock: <T = DMEData.Block<DMEData.DefaultDataType>>() => DMEData.Block<T> | undefined;
+  getBlock: <T = DMEData.Block<DMEData.DefaultDataType>>(
+    index: number,
+  ) => DMEData.Block<T> | undefined;
   removeBlock: (widget: ReactNode) => void;
-  removeByPath: (path: Array<number>)=>void;
+  removeByPath: (path: Array<number>) => void;
   setSelected: (widget: ReactNode) => void;
   setStorage: (data: DMEData.Block[]) => void;
-  updateSelectedBlockIndex: (pathArray: Array<number>, id:string) => void;
-  getCurrentList: () => DMEData.BlockList|null;
-  getCurrentBlock: ()=>DMEData.Block|null;
-  getBlockByPath:(path:Array<number>)=>DMEData.Block;
-  getParents: () => Array<DMEData.Block & {path: Array<number>}>; //get parent Block from top to down, based on currentListPath
-  updateSelectedBlock:<Type=DMEData.DefaultDataType>(callback: (blockData: Type)=>void)=>void;
+  updateSelectedBlockIndex: (pathArray: Array<number>, id: string) => void;
+  getCurrentList: () => DMEData.BlockList | null;
+  getCurrentBlock: () => DMEData.Block | null;
+  getBlockByPath: (path: Array<number>) => DMEData.Block;
+  getParents: () => Array<DMEData.Block & { path: Array<number> }>; //get parent Block from top to down, based on currentListPath
+  updateSelectedBlock: <Type = DMEData.DefaultDataType>(
+    callback: (blockData: Type) => void,
+  ) => void;
   updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
-  updateSelectedBlockStyle:(value:string, styleIdentifier:string)=>void;
+  updateSelectedBlockStyle: (value: string, styleIdentifier: string) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
-  updatePage:(value:string, key:string)=>void;
-  setPageData:(data:DMEData.Page)=>void;  
+  updatePage: (value: string, key: string) => void;
+  setPageData: (data: DMEData.Page) => void;
 };
 
 // const useEditorStore = create<Store & Actions>((set) => {
@@ -73,16 +82,21 @@ type Actions = {
 const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
     ...createDMEditor(),
-    startAddBlock: (context: Array<number>, index: number, position: AddBlockPosition, types?: Array<string>|string) =>
+    startAddBlock: (
+      context: Array<number>,
+      index: number,
+      position: AddBlockPosition,
+      types?: Array<string> | string,
+    ) =>
       set((state) => {
-        state.addBlockData = {context, index, position, status:'started', types: types}        
+        state.addBlockData = { context, index, position, status: 'started', types: types };
       }),
-    addBlock: (type:string) =>
+    addBlock: (type: string, style?: string) =>
       set((state) => {
-        if(!state.addBlockData){
+        if (!state.addBlockData) {
           return;
-        }        
-        const {index, position, context} = state.addBlockData;
+        }
+        const { index, position, context } = state.addBlockData;
         if (index == -Infinity) {
           return;
         }
@@ -91,37 +105,40 @@ const useEditorStore = create<Store & Actions>()(
         if (!widget) {
           return;
         }
-        let blockData:any;
-        if(variant){
+        let blockData: any;
+        if (variant) {
           blockData = variant.getDefaultData?.();
-        }else{
+        } else {
           blockData = widget.events.createBlock();
         }
-        if(!blockData){
+        if (style) {
+          blockData.style = { _: style };
+        }
+        if (!blockData) {
           return;
         }
 
-        const listData = GetListByPath(state.storage, context||[]);
+        const listData = GetListByPath(state.storage, context || []);
         let newPosition: number = -Infinity;
-        if( !listData ){
+        if (!listData) {
           return;
         }
-        if( listData.length === 0 ){
+        if (listData.length === 0) {
           listData.push(blockData);
           newPosition = 0;
-        }else{
-          if (index <= listData.length -1 && state.addBlockData.position) {
-            if (position === 'before' ) {
+        } else {
+          if (index <= listData.length - 1 && state.addBlockData.position) {
+            if (position === 'before') {
               listData.splice(index, 0, blockData);
               newPosition = index;
             } else if (position === 'after') {
-                listData.splice(index + 1, 0, blockData);
-                newPosition = index + 1;
-            }else{
-              console.warn("Invalid paraemter of adding. Ignored", index, position);
+              listData.splice(index + 1, 0, blockData);
+              newPosition = index + 1;
+            } else {
+              console.warn('Invalid paraemter of adding. Ignored', index, position);
               return;
             }
-          }        
+          }
         }
         //update to new block
         state.selected.blockIndex = newPosition;
@@ -131,29 +148,29 @@ const useEditorStore = create<Store & Actions>()(
       }),
     cancelAdding: () =>
       set((state) => {
-        if( state.addBlockData ){
+        if (state.addBlockData) {
           const context = state.addBlockData.context;
           const parentList = GetListByPath(state.storage, context);
-          if(context.length>0 && parentList && parentList.length ===0){
+          if (context.length > 0 && parentList && parentList.length === 0) {
             //todo: remove
             //  state.removeByPath(context);
 
-            const parentContext = context.slice(0, context.length-1);
-            const list = GetListByPath(state.storage, parentContext)
-            if( !list){
+            const parentContext = context.slice(0, context.length - 1);
+            const list = GetListByPath(state.storage, parentContext);
+            if (!list) {
               return;
             }
-            const parentIndex = context[context.length-1];
+            const parentIndex = context[context.length - 1];
             list.splice(parentIndex, 1);
           }
           state.addBlockData.status = 'done';
         }
-      }),  
-      clearAdding:()=>{
-        set((state) => {
-          state.addBlockData = undefined;
-        })
-    }, 
+      }),
+    clearAdding: () => {
+      set((state) => {
+        state.addBlockData = undefined;
+      });
+    },
     clearWidgets: () => {
       set((state) => {
         // state.designer.selectedBlockIndex = -1;
@@ -161,25 +178,25 @@ const useEditorStore = create<Store & Actions>()(
         state.storage = [];
       });
     },
-    getCurrentList: (): DMEData.BlockList|null => {
+    getCurrentList: (): DMEData.BlockList | null => {
       const state = get();
       const currentPath = state.selected.currentListPath;
-      return GetListByPath(state.storage, currentPath)
+      return GetListByPath(state.storage, currentPath);
     },
-    getCurrentBlock:():DMEData.Block|null =>{
+    getCurrentBlock: (): DMEData.Block | null => {
       const state = get();
-      const list = state.getCurrentList()
-      return list?.[state.selected.blockIndex]||null;
+      const list = state.getCurrentList();
+      return list?.[state.selected.blockIndex] || null;
     },
-    getBlockByPath:(path:Array<number>):DMEData.Block =>{
+    getBlockByPath: (path: Array<number>): DMEData.Block => {
       const state = get();
       return GetDataByPath(state.storage, path);
     },
-    getParents: (): Array<DMEData.Block & {path: Array<number>}> => {
+    getParents: (): Array<DMEData.Block & { path: Array<number> }> => {
       const state = get();
-      const result: Array<DMEData.Block & {path: Array<number>}> = [];
+      const result: Array<DMEData.Block & { path: Array<number> }> = [];
       iteratePath(state.selected.currentListPath, state.storage, (item, path) => {
-        result.push({...item, path:path});
+        result.push({ ...item, path: path });
       });
       return result;
     },
@@ -207,16 +224,16 @@ const useEditorStore = create<Store & Actions>()(
     },
     getSelectedBlock: <T>() => {
       const state = get();
-      const selected = state.selected;   
-      if(selected.blockIndex === -Infinity){
+      const selected = state.selected;
+      if (selected.blockIndex === -Infinity) {
         return;
       }
       const result = state.getBlockByPath([...selected.currentListPath, selected.blockIndex]);
-      if(result){
-        return result as (DMEData.Block<T>);
+      if (result) {
+        return result as DMEData.Block<T>;
       }
     },
-    getBlock: <T>(index:number)=>{
+    getBlock: <T>(index: number) => {
       const state = get();
       const currentList = state.getCurrentList();
       if (isStrictlyInfinity(index) || index < 0 || currentList.length <= index) {
@@ -227,21 +244,21 @@ const useEditorStore = create<Store & Actions>()(
         state.clearSelected();
         return;
       }
-      return state.storage[index] as (DMEData.Block<T>);
+      return state.storage[index] as DMEData.Block<T>;
     },
-    removeByPath: (path:Array<number>)=>{
-      set((state)=>{
-        if(path.length===0)return
-        const parentPath = path.length <= 1?[]:path.slice(0, path.length-1);
-        const index = path[path.length-1];
-        const list = GetListByPath(state.storage,parentPath);
-        if( !list ){
+    removeByPath: (path: Array<number>) => {
+      set((state) => {
+        if (path.length === 0) return;
+        const parentPath = path.length <= 1 ? [] : path.slice(0, path.length - 1);
+        const index = path[path.length - 1];
+        const list = GetListByPath(state.storage, parentPath);
+        if (!list) {
           console.warn('Parent data not found in path', parentPath);
           return;
-        }        
-        
+        }
+
         list.splice(index, 1);
-      })
+      });
     },
     removeBlock: (block: ReactNode) =>
       set((state) => {
@@ -293,10 +310,10 @@ const useEditorStore = create<Store & Actions>()(
         // state.selected.currentList = state.storage;
       });
     },
-    updateSelectedBlockIndex: (pathArray: Array<number>, id:string) => {
+    updateSelectedBlockIndex: (pathArray: Array<number>, id: string) => {
       set((state) => {
-        const parentPath = pathArray.length <= 1?[]:pathArray.slice(0, pathArray.length-1);
-        const index = pathArray[pathArray.length-1];
+        const parentPath = pathArray.length <= 1 ? [] : pathArray.slice(0, pathArray.length - 1);
+        const index = pathArray[pathArray.length - 1];
         state.selected.blockIndex = index;
         if (state.selected.currentListPath.join() !== parentPath.join()) {
           // switch list context
@@ -305,33 +322,36 @@ const useEditorStore = create<Store & Actions>()(
         state.selected.blockId = id;
       });
     },
-    updateSelectedBlock:<Type=DMEData.DefaultDataType>(callback: (blockData: Type)=>void)=>{
-      set((state) => {       
+    updateSelectedBlock: <Type = DMEData.DefaultDataType>(callback: (blockData: Type) => void) => {
+      set((state) => {
         const data = state.storage[state.selected.blockIndex]['data'];
         callback(data as Type);
         // state.storage[state.selected.blockIndex]['data'] = data;
-      })
+      });
     },
-    updateSelectedBlockStyle: (value:string, styleIdentifier:string)=>{
-      set((state) => {               
-        const block = GetDataByPath(state.storage, [...state.selected.currentListPath, state.selected.blockIndex]);        
-        if( !block ){
+    updateSelectedBlockStyle: (value: string, styleIdentifier: string) => {
+      set((state) => {
+        const block = GetDataByPath(state.storage, [
+          ...state.selected.currentListPath,
+          state.selected.blockIndex,
+        ]);
+        if (!block) {
           return;
         }
-        if( !block.style ){
+        if (!block.style) {
           block.style = {};
-        }        
+        }
         console.log(value, styleIdentifier);
-        if( styleIdentifier === '_' ){
-          if( !value ){
-            block.style = {}
-          }else{
-            block.style = {'_':value}
+        if (styleIdentifier === '_') {
+          if (!value) {
+            block.style = {};
+          } else {
+            block.style = { _: value };
           }
-        }else{
+        } else {
           block.style[styleIdentifier] = value;
         }
-      })
+      });
     },
     updateSelectedBlockProps: (propName: string, propValue: string | number) => {
       set((state) => {
@@ -340,7 +360,10 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        const block = GetDataByPath(state.storage, [...state.selected.currentListPath, state.selected.blockIndex]);
+        const block = GetDataByPath(state.storage, [
+          ...state.selected.currentListPath,
+          state.selected.blockIndex,
+        ]);
         if (!block) {
           console.error('Block not found');
           return;
@@ -365,8 +388,8 @@ const useEditorStore = create<Store & Actions>()(
           if (isPlainObject(block.data)) {
             if (isKeyInObject('settings', block.data)) {
               block.data[propKey][realPropsName] = propValue;
-            }else{
-              const settings = {[realPropsName]: propValue};
+            } else {
+              const settings = { [realPropsName]: propValue };
               block.data[propKey] = settings;
             }
           } else {
@@ -387,16 +410,16 @@ const useEditorStore = create<Store & Actions>()(
       });
     },
     toggleProperty: (status) => set(() => ({ status })),
-    updatePage:(value:string, key:string)=>{
-      set((state) => {        
+    updatePage: (value: string, key: string) => {
+      set((state) => {
         state.page[key] = value;
-      })
+      });
     },
-    setPageData:(data:DMEData.Page)=>{
-      set((state) => {     
+    setPageData: (data: DMEData.Page) => {
+      set((state) => {
         state.page = data;
-      })
-    }
+      });
+    },
   })),
 );
 

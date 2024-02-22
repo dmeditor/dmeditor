@@ -105,7 +105,7 @@ const defaultStyle = (widget: DME.Widget): DME.WidgetStyle => {
     display: 'dropdown',
     name: 'Pre-defined style',
     options: [] as Array<DME.WidgetStyleOption>,
-  } as DME.WidgetStyle; 
+  } as DME.WidgetStyle;
   return preDefinedStyle;
 };
 
