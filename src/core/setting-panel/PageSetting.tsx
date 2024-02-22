@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Alert, MenuItem, Select, TextField } from '@mui/material';
 
 import { getPageSettings, pageThemes } from '../components/page';
@@ -13,6 +13,12 @@ const SettingType = (props: {
 }) => {
   const { type, defaultValue, onChange } = props;
 
+  const [currentValue, setCurrentValue] = useState(defaultValue);
+
+  useEffect(() => {
+    onChange(currentValue);
+  }, [currentValue]);
+
   switch (type) {
     case 'text':
       return (
@@ -21,7 +27,7 @@ const SettingType = (props: {
             value={defaultValue}
             fullWidth
             size="small"
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => setCurrentValue(e.target.value)}
           />
         </div>
       );
@@ -34,7 +40,7 @@ const SettingType = (props: {
             multiline
             rows={5}
             size="small"
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => setCurrentValue(e.target.value)}
           />
         </div>
       );

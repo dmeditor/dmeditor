@@ -12,14 +12,14 @@ registerTheme({
   cssStyle: `
     background: #ffd4d4;    
     /*todo: use css variable*/
-  `
+  `,
 });
 registerTheme({
   identifier: 'blue',
   name: 'Blue',
   cssStyle: `
     background: #d4e2ff;
-  `
+  `,
 });
 
 const { useRef, useEffect } = React;
@@ -30,7 +30,7 @@ const App = () => {
   const data = [
     {
       id: `widget-${nanoid()}`,
-      style: {'_':'big-space'},
+      style: { _: 'big-space' },
       data: {
         value: 'This is a heading',
         level: 2,
@@ -43,7 +43,7 @@ const App = () => {
     },
     {
       id: `widget-${nanoid()}`,
-      style: {'_':'big-space'},
+      style: { _: 'big-space' },
       data: {
         value: 'This is a heading 2',
         level: 2,
@@ -77,7 +77,7 @@ const App = () => {
           data: {
             value: 'This is a heading 1 ',
             level: 2,
-            settings:{},
+            settings: {},
           },
           type: 'heading',
         },
@@ -86,22 +86,21 @@ const App = () => {
           data: {
             value: 'This is a heading 2',
             level: 2,
-            settings:{},
+            settings: {},
           },
           type: 'heading',
         },
         {
-          id: `widget-${nanoid()}`,     
+          id: `widget-${nanoid()}`,
           type: 'list',
-          data:{
-          },
+          data: {},
           children: [
             {
               id: `widget-${nanoid()}`,
               data: {
                 value: 'This is a heading 1 in List ',
                 level: 2,
-                settings:{},
+                settings: {},
               },
               type: 'heading',
             },
@@ -110,7 +109,7 @@ const App = () => {
               data: {
                 value: 'This is a heading 2 in List',
                 level: 2,
-                settings:{},
+                settings: {},
               },
               type: 'heading',
             },
@@ -119,37 +118,37 @@ const App = () => {
               data: {
                 value: 'This is a heading 3 in List',
                 level: 2,
-                settings:{},
+                settings: {},
               },
               type: 'heading',
-            }
-          ],      
+            },
+          ],
         },
         {
           id: `widget-${nanoid()}`,
           data: {
             value: 'This is a heading 3',
             level: 2,
-            settings:{},
+            settings: {},
           },
           type: 'heading',
-        }
-      ],      
+        },
+      ],
     },
     {
       id: `widget-${nanoid()}`,
       data: {
         value: 'This is a heading 3',
         level: 2,
-        settings:{},
+        settings: {},
       },
       type: 'heading:gradient',
     },
     {
-      id: `widget-${nanoid()}`,     
+      id: `widget-${nanoid()}`,
       type: 'list',
-      data:{
-        direction: 'horizontal'
+      data: {
+        direction: 'horizontal',
       },
       children: [
         {
@@ -157,7 +156,7 @@ const App = () => {
           data: {
             value: 'This is a heading 1 in List ',
             level: 2,
-            settings:{},
+            settings: {},
           },
           type: 'heading',
         },
@@ -166,7 +165,7 @@ const App = () => {
           data: {
             value: 'This is a heading 2 in List',
             level: 2,
-            settings:{},
+            settings: {},
           },
           type: 'heading',
         },
@@ -175,23 +174,23 @@ const App = () => {
           data: {
             value: 'This is a heading 3 in List',
             level: 2,
-            settings:{},
+            settings: {},
           },
           type: 'heading',
-        }
-      ],      
+        },
+      ],
     },
   ];
   useEffect(() => {
     // editorRef.current.setDesingerJson(jsonString(data))
     editorRef.current?.setEditorJson(data);
     editorRef.current?.setPageSettings([
-      {identifier: 'cover_image', name:'Cover image', type: 'image'},
-      {identifier: 'summary', name:'Summary', type: 'richtext'},
-      {identifier: 'meta_key', name:'Meta key', type: 'text'},     
-      {identifier: 'meta_description', name:'Meta description', type: 'multitext'},
+      { identifier: 'cover_image', name: 'Cover image', type: 'image' },
+      { identifier: 'summary', name: 'Summary', type: 'richtext' },
+      { identifier: 'meta_key', name: 'Meta key', type: 'text' },
+      { identifier: 'meta_description', name: 'Meta description', type: 'multitext' },
     ]);
-    editorRef.current?.setPageData({title:'Test', meta_key:'test key'});
+    editorRef.current?.setPageData({ title: 'New page', meta_key: 'test key' });
   }, []);
 
   return <DMEditor ref={editorRef} />;

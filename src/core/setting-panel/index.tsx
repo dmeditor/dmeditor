@@ -26,6 +26,10 @@ const ClickToEdit = (props: { value: string; onChange: (value: string) => void }
     props.onChange(value);
   };
 
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
+
   return (
     <div onClick={() => setEditMode(true)}>
       {editMode && (
