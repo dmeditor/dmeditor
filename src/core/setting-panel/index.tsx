@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useMemo, useState } from 'react';
 import { css } from '@emotion/css';
-import { Settings } from '@mui/icons-material';
+import { ArrowBack, Settings } from '@mui/icons-material';
 import { Button, TextField } from '@mui/material';
 
 import { getWidget, getWidgetName } from '../components/widgets';
@@ -122,12 +122,8 @@ const SettingPanel = (props) => {
     }
   };
 
-  const switchPageSetting = () => {
-    if (mode !== 'page-setting') {
-      setMode('page-setting');
-    } else {
-      setSettingMode();
-    }
+  const setPageSettingMode = () => {
+    setMode('page-setting');
   };
 
   return (
@@ -136,11 +132,7 @@ const SettingPanel = (props) => {
       {mode !== 'adding' && (
         <>
           <RightElement>
-            <Button
-              title="Page settings"
-              onClick={switchPageSetting}
-              variant={mode === 'page-setting' ? 'outlined' : 'text'}
-            >
+            <Button title="Page settings" onClick={setPageSettingMode}>
               <Settings />
             </Button>
           </RightElement>
@@ -148,11 +140,15 @@ const SettingPanel = (props) => {
             <ClickToEdit value={page.title} onChange={(v) => updatePage(v, 'title')} />
           </PageTitle>
           <Space />
-          <Path
-            selectedId={selectedBlock?.id || 'page'}
-            pathArray={pathArray}
-            onSelect={selectPathItem}
-          />
+          {mode === 'list-overview' ||
+            (mode === 'block-setting' && (
+              <Path
+                selectedId={selectedBlock?.id || 'page'}
+                pathArray={pathArray}
+                onSelect={selectPathItem}
+              />
+            ))}
+
           <Space />
 
           {mode === 'list-overview' && (
@@ -163,7 +159,16 @@ const SettingPanel = (props) => {
             <BlockSettings {...props} dataPath={pathArray[selectedPathIndex].dataPath} />
           )}
 
-          {mode === 'page-setting' && <PageSetting />}
+          {mode === 'page-setting' && (
+            <>
+              <RightElement>
+                <Button onClick={() => setSettingMode()} title="Back">
+                  <ArrowBack />
+                </Button>
+              </RightElement>
+              <PageSetting />
+            </>
+          )}
         </>
       )}
     </div>
