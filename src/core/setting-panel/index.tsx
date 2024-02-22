@@ -149,7 +149,10 @@ const SettingPanel = (props) => {
           )}
 
           {mode === 'list-overview' && (
-            <ListOverview data={currentList || []} selectedIndex={selectedBlockIndex} />
+            <>
+              <Space />
+              <ListOverview data={currentList || []} selectedIndex={selectedBlockIndex} />
+            </>
           )}
 
           {mode === 'block-setting' && selectedPathIndex && (
