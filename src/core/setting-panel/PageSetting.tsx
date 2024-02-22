@@ -24,7 +24,7 @@ const SettingType = (props: {
       return (
         <div>
           <TextField
-            value={defaultValue}
+            value={currentValue}
             fullWidth
             size="small"
             onChange={(e) => setCurrentValue(e.target.value)}
@@ -35,7 +35,7 @@ const SettingType = (props: {
       return (
         <div>
           <TextField
-            value={defaultValue}
+            value={currentValue}
             fullWidth
             multiline
             rows={5}
