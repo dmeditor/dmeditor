@@ -6,11 +6,13 @@ import { useEditorStore } from '../main/store';
 import { PropertyItem } from './Property';
 import { Required, SettingHeader, SettingItem } from './style';
 
-const SettingType = (props: {
+interface SettingTypeProps {
   type: string;
   defaultValue: string;
   onChange: (value: string) => void;
-}) => {
+}
+
+const SettingType = (props: SettingTypeProps) => {
   const { type, defaultValue, onChange } = props;
 
   const [currentValue, setCurrentValue] = useState(defaultValue);

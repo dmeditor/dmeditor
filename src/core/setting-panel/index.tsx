@@ -36,14 +36,13 @@ const ClickToEdit = (props: { value: string; onChange: (value: string) => void }
 
   return (
     <div onClick={() => setEditMode(true)}>
-      {editMode && (
-        <ClickEditInput
-          value={value}
-          onBlur={applyChange}
-          onChange={(e) => setValue(e.target.value)}
-        />
-      )}
-      {!editMode && <>{value}</>}
+      <ClickEditInput
+        value={value}
+        readOnly={!editMode}
+        placeholder="Input title"
+        onBlur={applyChange}
+        onChange={(e) => setValue(e.target.value)}
+      />
     </div>
   );
 };
