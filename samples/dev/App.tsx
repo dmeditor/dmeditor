@@ -3,8 +3,24 @@ import { nanoid } from 'nanoid';
 
 import registerSampleWidget from './SampleWidget';
 import { DMEditor } from 'Src/core';
+import { registerTheme } from 'Src/core/components/page';
 
 registerSampleWidget();
+registerTheme({
+  identifier: 'red',
+  name: 'Red',
+  cssStyle: `
+    background: #ffd4d4;    
+    /*todo: use css variable*/
+  `
+});
+registerTheme({
+  identifier: 'blue',
+  name: 'Blue',
+  cssStyle: `
+    background: #d4e2ff;
+  `
+});
 
 const { useRef, useEffect } = React;
 
@@ -169,6 +185,13 @@ const App = () => {
   useEffect(() => {
     // editorRef.current.setDesingerJson(jsonString(data))
     editorRef.current?.setEditorJson(data);
+    editorRef.current?.setPageSettings([
+      {identifier: 'cover_image', name:'Cover image', type: 'image'},
+      {identifier: 'summary', name:'Summary', type: 'richtext'},
+      {identifier: 'meta_key', name:'Meta key', type: 'text'},     
+      {identifier: 'meta_description', name:'Meta description', type: 'multitext'},
+    ]);
+    editorRef.current?.setPageData({title:'Test', meta_key:'test key'});
   }, []);
 
   return <DMEditor ref={editorRef} />;

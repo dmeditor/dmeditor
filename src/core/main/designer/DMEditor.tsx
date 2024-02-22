@@ -40,7 +40,10 @@ import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } f
 import { BlockListRender } from 'Src/core/main/renderer';
 import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 import { registerDefaultWidgets } from 'Src/core/components/widgets';
-import { DMEData } from 'Src/core/types/dmeditor';
+import { DME, DMEData } from 'Src/core/types/dmeditor';
+import { getPageTheme, setPageSettings } from 'Src/core/components/page';
+import { useMemo } from 'react';
+import { css } from '@emotion/css';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
@@ -84,7 +87,13 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       setEditorJson: (data: string | Array<DMEData.Block>) => {
         const list = loadData(data);
         emitter.emit('setWidgets', list);
+      },      
+      setPageSettings:(settings:Array<DME.PageSetting>)=>{
+        setPageSettings(settings);
       },
+      setPageData:(data:DMEData.Page)=>{
+        setPageData(data);
+      }
     }),
     [],
   );
@@ -112,6 +121,8 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     updateSelectedBlockIndex,
     setStorage,
     clearSelected,
+    setPageData,
+    page,
   } = useEditorStore();
   const blockIndexRef = useRef(selectedBlockIndex);
   // const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
@@ -139,6 +150,18 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   const handleUpdateWidgets = useCallback((data: DMEData.Block[]) => {
     setStorage(data);
   }, []);
+
+ const getThemeCss = useMemo(()=>{
+  if(page.theme){
+    const theme = getPageTheme(page.theme)
+    if(theme){
+      return css(theme.cssStyle)
+    }
+  }
+  return '';
+ },
+ [page.theme]
+ )
 
   // useEffectLayout
   useEffect(() => {
@@ -266,7 +289,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
 
         <Layout.Edit>
         <EditContainer style={settingsShown ? { display: 'none' } : {}} onClick={resetStatus}>
-          <EditArea>
+          <EditArea className={getThemeCss}>
             {/* need EmptyBlock otherwise first block's margin-top is based on body */}
             <EmtpyBlock />
             {viewmode === 'edit' && (
@@ -276,7 +299,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                   e.stopPropagation();
                 }}
               >
-                <BlockListRender blockData={storage} path={[]} />
+                  <BlockListRender blockData={storage} path={[]} />
               </div>
             )}
             {/* {viewmode !== 'edit' && (

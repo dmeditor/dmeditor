@@ -10,6 +10,9 @@ const heroTextWidget: DME.Widget = {
     name: 'Hero text',
     type: 'hero-text',  
     isBaseWidget: true,
+    //todo: support children: Array or [prop: string]: object
+    //childen :{hero: 'image', list: 'list:button'} 
+    //or {hero: 'image', list: {type: 'list', children:{'list:button', <variant definition>}}
     events: {
       createBlock: (): DMEData.Block<EntityHeroText> => {
         return {

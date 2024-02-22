@@ -12,6 +12,19 @@ export namespace DME {
     // [key: string]: string|number
   }
 
+  export type PageSetting = {
+    identifier: string,
+    name: string,
+    type: 'text'|'multitext'
+  }
+
+  export type PageTheme = {
+    identifier: string,
+    name: string,
+    cssStyle: string,
+    config?:unknown
+  }
+
   export interface Widget {
     type: string;
     name: string;
@@ -96,8 +109,6 @@ export namespace DMEData {
 
   export interface Page{
     title: string;
-    metaKey?:string,
-    metaDescription?:string,
     theme?:string;
     [index: string]: string|undefined
   }

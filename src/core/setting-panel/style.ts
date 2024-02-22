@@ -21,6 +21,10 @@ export const PageTitle = styled.div`
   }
 `;
 
+export const SettingItem = styled.div`
+    margin-top: 10px;
+`;
+
 export const Space = styled.div`
   height: 10px
 `
@@ -74,4 +78,10 @@ export const AddBlockContainer = styled.div`
 
 export const StyledProperty = styled.div`
     padding: 10px;
+`
+
+
+export const Required = styled.span`
+    font-size: 0.9rem;
+    color: red
 `

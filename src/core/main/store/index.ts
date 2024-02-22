@@ -5,7 +5,7 @@ import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
 import { GetDataByPath, GetListByPath, iteratePath } from './helper';
-import type { DMEData } from 'Core/types';
+import type { DMEData } from 'Core/types/dmeditor';
 import emitter from 'Core/utils/event';
 import { getWidgetWithVariant, properties } from 'Src/core/components/widgets';
 import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'Src/core/utils';
@@ -30,7 +30,7 @@ type Store = {
   };
   addBlockData?: AddBlockParameters;
   storage: DMEData.BlockList; //data layer
-  page?:DMEData.Page
+  page:DMEData.Page
 };
 
 type Actions = {
@@ -57,6 +57,8 @@ type Actions = {
   updateSelectedBlockStyle:(value:string, styleIdentifier:string)=>void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
+  updatePage:(value:string, key:string)=>void;
+  setPageData:(data:DMEData.Page)=>void;  
 };
 
 // const useEditorStore = create<Store & Actions>((set) => {
@@ -385,6 +387,16 @@ const useEditorStore = create<Store & Actions>()(
       });
     },
     toggleProperty: (status) => set(() => ({ status })),
+    updatePage:(value:string, key:string)=>{
+      set((state) => {        
+        state.page[key] = value;
+      })
+    },
+    setPageData:(data:DMEData.Page)=>{
+      set((state) => {     
+        state.page = data;
+      })
+    }
   })),
 );
 

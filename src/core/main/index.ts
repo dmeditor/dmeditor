@@ -34,6 +34,7 @@ function createDMEditor() {
     },
     steps: [],
     storage: [] as DMEData.BlockList,
+    page: {title:''},
 
     // initEditor() {
     //   this.widgets = [];
