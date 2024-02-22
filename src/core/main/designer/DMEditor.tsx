@@ -232,8 +232,23 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   const outerTheme = createTheme({
     palette: {
       primary: deepOrange,
-    },
+    },  
     components: {
+      MuiTextField:{
+        styleOverrides:{
+          root:{
+            '& .MuiOutlinedInput-root':{
+              '&:hover fieldset': {
+                borderColor: '#777777',
+            },
+              '&.Mui-focused fieldset': {
+                borderColor: '#888888',
+                borderWidth: 1,
+            }
+            }
+          }
+        }
+      },     
       MuiTooltip: {
         styleOverrides: {
           tooltip: {

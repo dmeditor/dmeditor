@@ -73,7 +73,7 @@ export const PageSetting = () => {
     <div style={{ padding: '0px 10px' }}>
       <SettingHeader>Page setting</SettingHeader>
       <SettingItem>
-        <label>Title <Required>*</Required></label>
+        <label>Title: <Required>*</Required></label>
         <SettingType
           type="text"
           defaultValue={page.title}
@@ -82,7 +82,7 @@ export const PageSetting = () => {
       </SettingItem>
 
       {pageThemes.length>0&&<SettingItem>
-        <label>Theme</label>
+        <label>Theme:</label>
         <SelectTheme value={page['theme']||''} onChange={(v)=>updatePageValue(v, 'theme')} />
       </SettingItem>}
 
