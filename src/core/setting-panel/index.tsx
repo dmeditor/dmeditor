@@ -91,17 +91,21 @@ const SettingPanel = (props) => {
     setPathArray(pathArray);
   };
 
+  const setSettingMode = () => {
+    // selecting a block
+    if (isSelected()) {
+      setMode('block-setting');
+    } else {
+      setMode('list-overview');
+    }
+  };
+
   useEffect(() => {
     //is adding mode
     if (addBlockData && addBlockData.status === 'started') {
       setMode('adding');
     } else {
-      // selecting a block
-      if (isSelected()) {
-        setMode('block-setting');
-      } else {
-        setMode('list-overview');
-      }
+      setSettingMode();
     }
 
     updatePath();
@@ -118,13 +122,25 @@ const SettingPanel = (props) => {
     }
   };
 
+  const switchPageSetting = () => {
+    if (mode !== 'page-setting') {
+      setMode('page-setting');
+    } else {
+      setSettingMode();
+    }
+  };
+
   return (
     <div>
       {mode === 'adding' && <AddBlock />}
       {mode !== 'adding' && (
         <>
           <RightElement>
-            <Button title="Page settings" onClick={() => setMode('page-setting')}>
+            <Button
+              title="Page settings"
+              onClick={switchPageSetting}
+              variant={mode === 'page-setting' ? 'outlined' : 'text'}
+            >
               <Settings />
             </Button>
           </RightElement>
