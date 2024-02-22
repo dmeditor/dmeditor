@@ -71,6 +71,8 @@ export const PathContainer = styled.div`
 `;
 
 export const AddBlockContainer = styled.div`
+  height: calc(100vh - var(--dme-topbar-height));
+  overflow-y: scroll;
   padding: 10px;
 `;
 
@@ -86,4 +88,17 @@ export const Required = styled.span`
 export const ClickEditInput = styled.input`
   width: 100%;
   border: 0px;
+`;
+
+export const WidgetListContainer = styled.div`
+  margin-top: 100px;
+`;
+
+export const AdddBlockHeader = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
 `;

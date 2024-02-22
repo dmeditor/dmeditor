@@ -22,8 +22,9 @@ import { DME } from 'Src/core/types/dmeditor';
 //theme related: css variable
 
 const space = css`
-  height: 10px;
-  background-color: #ffe8e8;
+  height: 5px;
+  border-radius: 4px;
+  background-color: #fff5f5;
 `;
 
 const itemStyle = css`

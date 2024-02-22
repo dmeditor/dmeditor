@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 export const Root = styled.div`
-    --dme-bg-color: #1d4b64;
-    --dme-topbar-height: 40px;
+  --dme-bg-color: #1d4b64;
+  --dme-topbar-height: 40px;
 `;
 
 export const Layout = {
@@ -18,7 +18,7 @@ export const Layout = {
     height: 100vh;
     background-color: #f0f0f0;
     display: grid;
-    grid-template-columns: calc(100vw - var(--dme-layout-property-width)) var(
+    grid-template-columns: calc(100% - var(--dme-layout-property-width)) var(
         --dme-layout-property-width
       );
     color: #333333;
@@ -53,7 +53,7 @@ export const EditContainer = styled.div`
 
 export const EditArea = styled.div`
   margin: auto;
-  min-height: calc( 100vh - var(--dme-topbar-height) );
+  min-height: calc(100vh - var(--dme-topbar-height));
   max-width: 90%;
   border: 1px dashed #999999;
 `;
