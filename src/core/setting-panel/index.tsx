@@ -163,7 +163,7 @@ const SettingPanel = (props) => {
             <>
               <RightElement>
                 <Button onClick={() => setSettingMode()} title="Back">
-                  <ArrowBack />
+                  <ArrowBack /> back
                 </Button>
               </RightElement>
               <PageSetting />
