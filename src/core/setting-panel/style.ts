@@ -27,7 +27,7 @@ export const SettingItem = styled.div`
 `;
 
 export const Space = styled.div`
-  height: 5px;
+  height: 10px;
 `;
 
 export const PathItem = styled.span<{ canClick?: boolean; selected?: boolean }>`

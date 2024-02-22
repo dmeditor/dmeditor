@@ -149,8 +149,6 @@ const SettingPanel = (props) => {
               />
             ))}
 
-          <Space />
-
           {mode === 'list-overview' && (
             <ListOverview data={currentList || []} selectedIndex={selectedBlockIndex} />
           )}
