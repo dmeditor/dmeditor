@@ -140,14 +140,13 @@ const SettingPanel = (props) => {
             <ClickToEdit value={page.title} onChange={(v) => updatePage(v, 'title')} />
           </PageTitle>
           <Space />
-          {mode === 'list-overview' ||
-            (mode === 'block-setting' && (
-              <Path
-                selectedId={selectedBlock?.id || 'page'}
-                pathArray={pathArray}
-                onSelect={selectPathItem}
-              />
-            ))}
+          {['list-overview', 'block-setting'].includes(mode) && (
+            <Path
+              selectedId={selectedBlock?.id || 'page'}
+              pathArray={pathArray}
+              onSelect={selectPathItem}
+            />
+          )}
 
           {mode === 'list-overview' && (
             <ListOverview data={currentList || []} selectedIndex={selectedBlockIndex} />
