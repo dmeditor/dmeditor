@@ -47,7 +47,11 @@ export const ListOverview = (props: ListOverviewProps) => {
   };
 
   const hover = (index: number) => {
-    updateHoverPath([index]);
+    if (index === -1) {
+      updateHoverPath([]);
+    } else {
+      updateHoverPath([index]);
+    }
   };
 
   return (
@@ -59,6 +63,7 @@ export const ListOverview = (props: ListOverviewProps) => {
               key={item.id}
               className={css(trStyle) + ' ' + (props.selectedIndex === index ? css(activeRow) : '')}
               onMouseEnter={() => hover(index)}
+              onMouseOut={() => hover(-1)}
             >
               <td
                 className={css`
