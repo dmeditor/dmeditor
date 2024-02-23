@@ -4,7 +4,7 @@ import { TitleOutlined } from '@mui/icons-material';
 import { BlockListRender } from '../../../main/renderer';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { EntityHeadingBlock } from './entity';
-import type { DMEData, DME } from 'Core/types';
+import type { DME, DMEData } from 'Core/types';
 import useHeadingStore from 'Src/core/setting-panel/store/heading';
 import { isHTMLElement } from 'Src/core/utils';
 
@@ -27,19 +27,18 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
 
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
-  const {blockNode,rootClasses, styleClasses } = props;
+  const { blockNode, rootClasses, styleClasses } = props;
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {
     id,
     data: { level, value },
     data,
   } = blockNode;
-  const defaultValue: any = useRef(value);
 
   const common = {
     style: {
       textAlign: data.settings?.align,
-      color: data.settings?.color
+      color: data.settings?.color,
     },
     // ref: (input: any) => input && input.focus(),
     onKeyUp: (e: React.KeyboardEvent<HTMLElement>) => {
@@ -52,12 +51,13 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
     // contentEditable: props.active,
   };
 
-  return (<>
-    <div className={rootClasses} style={{backgroundColor:data.settings?.['background-color']}}>
-      <HeadingComponent level={level} id={id} {...common}>
-        {defaultValue.current}
-      </HeadingComponent>
-    </div>
+  return (
+    <>
+      <div className={rootClasses} style={{ backgroundColor: data.settings?.['background-color'] }}>
+        <HeadingComponent level={level} id={id} {...common}>
+          {value}
+        </HeadingComponent>
+      </div>
     </>
   );
 };
