@@ -99,7 +99,7 @@ const getWidgetWithVariant = (widget: string) => {
   return [def as DME.Widget | undefined, variant] as const;
 };
 
-const defaultStyle = (widget: DME.Widget): DME.WidgetStyle => {
+const defaultStyle = (): DME.WidgetStyle => {
   const preDefinedStyle = {
     identifier: '_',
     display: 'dropdown',
@@ -116,7 +116,7 @@ function registerWidgetDefinition(widget: DME.Widget) {
   }
   widgetDefinition[widget.type] = { ...widget, variants: [] };
   //register default style to make sure _default style is always there.
-  registerWidgetStyle(widget.type, defaultStyle(widget));
+  registerWidgetStyle(widget.type, defaultStyle());
 }
 
 function addLayoutDefinition(widget: DME.Widget) {
@@ -162,6 +162,8 @@ function registerWidgetVariant(variant: DME.WidgetVariant, styles?: Array<DME.Wi
     styles.forEach((style) => {
       registerWidgetStyle(variant.widget + ':' + variant.identifier, style);
     });
+  } else {
+    registerWidgetStyle(widgetIdentifier + ':' + variant.identifier, defaultStyle());
   }
 }
 

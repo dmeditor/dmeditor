@@ -7,6 +7,14 @@ const Components: {
     | React.ComponentType<unknown>;
 } = {};
 
+const widgetSettingComponent: {
+  [widget: string]: {
+    [setting: string]:
+      | React.LazyExoticComponent<React.ComponentType<unknown>>
+      | React.ComponentType<unknown>;
+  };
+} = {};
+
 const widgetPropertySetting = (settingComponent: string) => {
   // widgetName = 'margin-top' converted to MarginTop
   let componentName = settingComponent;
@@ -51,16 +59,24 @@ function isPropertyRegistered(propName: string) {
   return !!Components[propName];
 }
 
-function registerSettingComponent(propName: string, componentInstance: React.ComponentType<any>) {
-  if (!isValidElement(createElement(componentInstance))) {
-    console.warn(`Property ${propName} is not a valid component`);
-    return;
+function registerSettingComponent(
+  propName: string,
+  componentInstance: React.ComponentType<any>,
+  widget?: string,
+) {
+  if (!widget) {
+    if (!isValidElement(createElement(componentInstance))) {
+      console.warn(`Property ${propName} is not a valid component`);
+      return;
+    }
+    if (Components[propName]) {
+      console.warn(`Property ${propName} is already registered`);
+      return;
+    }
+    Components[propName] = componentInstance;
+  } else {
+    //todo: support widget setting component
   }
-  if (Components[propName]) {
-    console.warn(`Property ${propName} is already registered`);
-    return;
-  }
-  Components[propName] = componentInstance;
 }
 
 function getSettingComponent(propName: string) {

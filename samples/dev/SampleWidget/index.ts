@@ -65,7 +65,7 @@ const registerSampleWidget = function () {
       };
     },
   });
-  registerWidgetStyleOption('heading', [
+  registerWidgetStyleOption('heading:simple', [
     {
       identifier: 'gradient',
       name: 'Gradient',

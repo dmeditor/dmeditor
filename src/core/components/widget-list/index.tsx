@@ -11,9 +11,11 @@ import { Button } from '@mui/material';
 import {
   customDefinition,
   getWidget,
+  getWidgetName,
   getWidgetStyle,
   layoutDefinition,
   widgetDefinition,
+  widgetStyles,
 } from '../widgets';
 import { DME } from 'Src/core/types/dmeditor';
 
@@ -72,12 +74,12 @@ export const WidgetList = (props: WidgetListProps) => {
 
   const preDefinedStyles = useMemo(() => {
     const result: { [widget: string]: Array<DME.WidgetStyleOption> } = {};
-    Object.keys(widgetDefinition).forEach((widget) => {
+    Object.keys(widgetStyles).forEach((widget) => {
       const styleOptions = getWidgetStyle(widget).options;
       result[widget] = styleOptions;
     });
     return result;
-  }, [widgetDefinition]);
+  }, [widgetStyles]);
 
   const matchFilter = (widget: string) => {
     if (!filter) {
@@ -131,7 +133,7 @@ export const WidgetList = (props: WidgetListProps) => {
           <MenuItem
             widget={widget}
             name={option.name}
-            baseName={definitions[widget].name}
+            baseName={getWidgetName(widget)}
             onClick={() => props.onSelect(widget, option.identifier)}
           />
         )),
