@@ -8,7 +8,6 @@ import {
   getWidgetVariant,
   registerWidgetStyle,
   registerWidgetStyleOption,
-  registerWidgetTheme,
 } from 'Src/core/components/widgets';
 import { DMEData } from 'Src/core/types';
 

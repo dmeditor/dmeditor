@@ -3,19 +3,19 @@ import { DragIndicator, KeyboardArrowRight } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { getWidgetWithVariant } from '../components/widgets';
-import { DMEData } from '../types/dmeditor';
 import { useEditorStore } from '../main/store';
+import { DMEData } from '../types/dmeditor';
 
 interface ListOverviewProps {
   data: DMEData.BlockList;
   selectedIndex: number;
 }
 
-const activeRow = css`
+const activeRow = `
   background: #f7f7f7;
 `;
 
-const tableStyle = css`
+const tableStyle = `
   width: 100%;
   border-spacing: 0px;
 
@@ -25,51 +25,68 @@ const tableStyle = css`
   }
 `;
 
+const trStyle = `
+  &:hover{
+    outline: 1px solid #ffb8b8;
+  }
+`;
+
 export const ListOverview = (props: ListOverviewProps) => {
-  const {updateSelectedBlockIndex} = useEditorStore();
+  const { updateSelectedBlockIndex, updateHoverPath } = useEditorStore();
 
-  const getName = (type:string)=>{
-      const [widget, variant] = getWidgetWithVariant(type);
-      if(variant){
-        return variant.name;
-      }
-      return widget?.name||'';
-  }
+  const getName = (type: string) => {
+    const [widget, variant] = getWidgetWithVariant(type);
+    if (variant) {
+      return variant.name;
+    }
+    return widget?.name || '';
+  };
 
+  const jumpTo = (index: number) => {
+    updateSelectedBlockIndex([index], props.data[index].id || '');
+  };
 
-  const jumpTo = (index:number)=>{
-    updateSelectedBlockIndex([index], props.data[index].id||'')
-  }
+  const hover = (index: number) => {
+    updateHoverPath([index]);
+  };
 
   return (
     <div>
-      <table className={tableStyle}>
+      <table className={css(tableStyle)}>
         <tbody>
-        {props.data.map((item, index) => (
-          <tr key={item.id} className={props.selectedIndex === index ? activeRow : ''}>
-            <td
-              className={css`
-                width: 40;
-              `}
+          {props.data.map((item, index) => (
+            <tr
+              key={item.id}
+              className={css(trStyle) + ' ' + (props.selectedIndex === index ? css(activeRow) : '')}
+              onMouseEnter={() => hover(index)}
             >
-              <Button sx={{ cursor: 'move' }}>
-                <DragIndicator />
-              </Button>
-            </td>
-            <td className={css`
-                cursor: default;
-              `}>{getName(item.type)}</td>
-            <td
-              className={css`
-                width: 40;
-              `}
-            >
-              <Button onClick={()=>jumpTo(index)}>
-                <KeyboardArrowRight />
-              </Button>
-            </td>
-          </tr>
-        ))}
+              <td
+                className={css`
+                  width: 40;
+                `}
+              >
+                <Button sx={{ cursor: 'move' }}>
+                  <DragIndicator />
+                </Button>
+              </td>
+              <td
+                className={css`
+                  cursor: default;
+                `}
+              >
+                {getName(item.type)}
+              </td>
+              <td
+                className={css`
+                  width: 40;
+                `}
+              >
+                <Button onClick={() => jumpTo(index)}>
+                  <KeyboardArrowRight />
+                </Button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

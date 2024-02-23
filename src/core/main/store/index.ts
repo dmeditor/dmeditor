@@ -28,6 +28,7 @@ type Store = {
     //eg. [0,1] means first on root level, second on second level
     currentListPath: Array<number>;
   };
+  hoverPath?: Array<number>;
   addBlockData?: AddBlockParameters;
   storage: DMEData.BlockList; //data layer
   page: DMEData.Page;
@@ -41,6 +42,7 @@ type Actions = {
     types?: Array<string> | string,
   ) => void;
   cancelAdding: () => void;
+  updateHoverPath: (path: Array<number>) => void;
   clearAdding: () => void;
   addBlock: (type: string, style?: string) => void;
   clearWidgets: () => void;
@@ -176,6 +178,11 @@ const useEditorStore = create<Store & Actions>()(
         // state.designer.selectedBlockIndex = -1;
         state.selected.blockIndex = -Infinity;
         state.storage = [];
+      });
+    },
+    updateHoverPath: (path: Array<number>) => {
+      set((state) => {
+        state.hoverPath = path;
       });
     },
     getCurrentList: (): DMEData.BlockList | null => {

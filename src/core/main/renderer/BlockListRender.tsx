@@ -26,6 +26,7 @@ interface BlockListProps {
 
 interface BlockWithAddingProps {
   isActive?: boolean;
+  isHovering?: boolean;
   onSelect: () => void;
   onAddClick: (position: 'before' | 'after') => void;
   children: any;
@@ -40,6 +41,7 @@ export const BlockListRender = (props: BlockListProps) => {
     startAddBlock,
     clearAdding,
     updateSelectedBlockIndex,
+    hoverPath,
   } = useEditorStore();
 
   const { status: globalAddingStatus } = addBlockData || {};
@@ -62,16 +64,15 @@ export const BlockListRender = (props: BlockListProps) => {
   };
 
   const select = (index: number) => {
-    updateSelectedBlockIndex([...props.path, index], props.blockData[index].id||'');
+    updateSelectedBlockIndex([...props.path, index], props.blockData[index].id || '');
   };
 
-  
   //register event
   useEffect(() => {
     emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
       startAddBlock(parameters.context, parameters.index, parameters.position, parameters.types);
       //todo: move this into zustand
-      if(parameters.types?.length===1){
+      if (parameters.types?.length === 1) {
         addBlock(parameters.types[0]);
       }
     });
@@ -99,7 +100,12 @@ export const BlockListRender = (props: BlockListProps) => {
       position: position,
     };
     setAddParameters(parameters);
-    emitter.emit('addBlock', { ...parameters, context: props.path, status: 'started', types: props.allowedTypes });
+    emitter.emit('addBlock', {
+      ...parameters,
+      context: props.path,
+      status: 'started',
+      types: props.allowedTypes,
+    });
   };
 
   const renderAddingMessage = () => {
@@ -124,6 +130,7 @@ export const BlockListRender = (props: BlockListProps) => {
               renderAddingMessage()}
             <BlockWithAdding
               isActive={isActive}
+              isHovering={hoverPath?.join(',') === [...props.path, index].join(',')}
               addingHorizontal={props.direction === 'horizontal'}
               onSelect={() => select(index)}
               onAddClick={(position) => handleAdding(position, index)}
@@ -146,7 +153,7 @@ export const BlockListRender = (props: BlockListProps) => {
 const containerAdditionalProps = { className: 'dme-block-container' };
 
 const BlockWithAdding = (props: BlockWithAddingProps) => {
-  const { isActive, onSelect, onAddClick, addingHorizontal } = props;
+  const { isActive, isHovering, onSelect, onAddClick, addingHorizontal } = props;
 
   const blockContainerRef = useRef<HTMLDivElement>(null);
   const addPosition = useMousePosition(blockContainerRef.current, addingHorizontal);
@@ -162,6 +169,7 @@ const BlockWithAdding = (props: BlockWithAddingProps) => {
     <StyledBlock
       ref={blockContainerRef}
       active={isActive}
+      hovering={isHovering}
       {...containerAdditionalProps}
       onClick={(e) => {
         e.stopPropagation();
