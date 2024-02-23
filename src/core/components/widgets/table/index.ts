@@ -1,3 +1,7 @@
-import { toolTable } from './BlockTable';
+import { registerWidget } from '..';
+import TableWidget from './definition';
+import Table from './Table';
 
-export { toolTable }
+export default () => {
+  registerWidget(TableWidget, Table);
+};
