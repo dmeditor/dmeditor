@@ -55,7 +55,7 @@ const registerSampleWidget = function () {
     identifier: 'simple',
     name: 'Simple heading',
     enabledStyles: ['_'],
-    enabledSettings: ['settings.color'],
+    enabledSettings: ['.value', 'settings.color'],
     getDefaultData: () => {
       return {
         id: nanoid(),
