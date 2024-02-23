@@ -1,7 +1,8 @@
 import { nanoid } from 'nanoid';
+
+import { getWidgetVariant } from '..';
 import { EntityList } from './entity';
 import { DME, DMEData } from 'Src/core/types/dmeditor';
-import { getWidgetVariant } from '..';
 
 const listWidget: DME.Widget = {
   category: 'section',
@@ -9,18 +10,18 @@ const listWidget: DME.Widget = {
   name: 'List',
   type: 'list',
   events: {
-    createBlock: (variant?:string) => {
-      if( variant){
+    createBlock: (variant?: string) => {
+      if (variant) {
         const variantDef = getWidgetVariant('list', variant);
-        if(variantDef && variantDef.getDefaultData ){
-            return variantDef.getDefaultData();
+        if (variantDef && variantDef.getDefaultData) {
+          return variantDef.getDefaultData();
         }
       }
       return {
         id: nanoid(),
-        data:{},
-        type: 'list',     
-        children:[]   
+        data: {},
+        type: 'list',
+        children: [],
       };
     },
     updateData: () => {},
@@ -29,7 +30,6 @@ const listWidget: DME.Widget = {
     {
       name: 'Direction',
       property: '.direction',
-      category: 'settings',
       settingComponent: 'button-group',
       parameters: {
         options: [
@@ -41,13 +41,12 @@ const listWidget: DME.Widget = {
     {
       name: 'Align',
       property: '.align',
-      category: 'settings',
       settingComponent: 'button-group',
       parameters: {
         options: [
           { text: 'Left', value: 'left' },
           { text: 'Center', value: 'center' },
-          { text: 'Right', value: 'end' }          
+          { text: 'Right', value: 'end' },
         ],
       },
     },

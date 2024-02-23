@@ -56,7 +56,7 @@ const HeadingWidget: DME.Widget = {
     },
     { name: 'Padding', settingComponent: 'range', category: 'block', property: 'settings.padding' },
     { name: 'Margin', settingComponent: 'range', category: 'block', property: 'settings.margin' },
-    { name: '', settingComponent: 'heading', category: 'settings', custom: true, property: '' },
+    { name: '', settingComponent: 'heading', custom: true, property: '' },
   ],
 };
 

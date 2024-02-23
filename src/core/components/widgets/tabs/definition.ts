@@ -51,19 +51,19 @@ const TabsWidget: DME.Widget = {
     updateData: () => {},
   },
   settings: [
-    { name: 'Align', settingComponent: 'align', category: 'settings', property: 'settings.align' },
+    { name: 'Align', settingComponent: 'align', property: 'settings.align' },
     {
       name: 'Background',
       settingComponent: 'color',
       category: 'block',
       property: 'settings.background-color',
     },
-    { name: 'Text color', settingComponent: 'color', category: 'settings', property: 'settings.color' },
+    { name: 'Text color', settingComponent: 'color', property: 'settings.color' },
     { name: 'Border', settingComponent: 'color', category: 'block', property: 'settings.border' },
     { name: 'Padding', settingComponent: 'range', category: 'block', property: 'settings.padding' },
     { name: 'Margin', settingComponent: 'range', category: 'block', property: 'settings.margin' },
 
-    { name: '', settingComponent: 'heading', category: 'settings', custom: true, property: '' },
+    { name: '', settingComponent: 'heading', custom: true, property: '' },
   ],
 };
 

@@ -23,13 +23,11 @@ const registerSampleWidget = function () {
         {
           name: 'Background Color',
           settingComponent: 'color',
-          category: 'settings',
           property: 'settings.backgroundColor',
         },
         {
           name: 'Width',
           settingComponent: 'setting_input',
-          category: 'settings',
           property: 'settings.width',
         },
       ],
