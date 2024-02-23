@@ -9,12 +9,15 @@ import { Divider, MenuItem, Select } from '@mui/material';
 
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
+import { DMEData } from '../types';
+import { DeleteBlock } from './actions/DeleteBlock';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
 import { StyleSettings } from './style-settings/StyleSettings';
 import {
   getWidget,
+  getWidgetName,
   getWidgetStyle,
   getWidgetVariant,
   getWidgetWithVariant,
@@ -30,8 +33,6 @@ import {
   PropertyItem,
   Ranger,
 } from 'Core/utils';
-import { DeleteBlock } from './actions/DeleteBlock';
-import { DMEData } from '../types';
 
 interface CommonSettingsType {
   align: string;
@@ -60,10 +61,9 @@ export const BlockSettings = (props: {
 
   const { getBlockByPath, getSelectedBlock, updateSelectedBlockStyle } = useEditorStore();
 
-
-  const blockData = getBlockByPath( dataPath );
+  const blockData = getBlockByPath(dataPath);
   // const blockData = getSelectedBlock();
-  
+
   const blockType = blockData?.type || '';
 
   //get Widget setting with variant
@@ -113,23 +113,31 @@ export const BlockSettings = (props: {
   //   return WidgetProperties[selectedWidget.type];
   // }, [selectedWidgetIndex]);
 
-  const getFilteredSettings = (identifier: string) => {
-    return selectedWidgetSetings?.filter((item) => item.category === identifier);
+  const getFilteredSettings = (category: string) => {
+    return selectedWidgetSetings?.filter((item) =>
+      item.category ? item.category === category : category === 'widget',
+    );
   };
+
+  const settingCategory = useMemo(() => {
+    const result = defaultSettingTabs;
+    result['widget'] = getWidgetName(blockType);
+    return result;
+  }, [blockType]);
 
   const getTabData = () => {
     const tabs: Array<TabData> = [];
-    Object.keys(defaultSettingTabs).map((identifier) => {
+    Object.keys(settingCategory).map((identifier) => {
       const filteredSettings = getFilteredSettings(identifier);
       if (filteredSettings && filteredSettings?.length > 0) {
-        tabs.push({ title: defaultSettingTabs[identifier], element: renderATab(identifier) });
+        tabs.push({ title: settingCategory[identifier], element: renderATab(identifier) });
       }
     });
     return tabs;
   };
 
-  const renderATab = (identifier: string): ReactElement => {
-    const filteredSettings = getFilteredSettings(identifier);
+  const renderATab = (category: string): ReactElement => {
+    const filteredSettings = getFilteredSettings(category);
     return (
       <TabBodyContainer>
         {/* <PropertyGroup
@@ -154,12 +162,14 @@ export const BlockSettings = (props: {
         })}
         {/* </PropertyGroup> */}
 
-        {identifier == 'settings' && (
+        {category == 'widget' && (
           <>
             <StyleSettings
               values={blockData?.style || {}}
               blockType={blockType}
-              onChange={(v, style) => {updateSelectedBlockStyle(v, style)}}
+              onChange={(v, style) => {
+                updateSelectedBlockStyle(v, style);
+              }}
             />
             <ActionPanel>
               <DeleteBlock />
@@ -170,9 +180,5 @@ export const BlockSettings = (props: {
     );
   };
 
-  return (
-    <div>
-      {blockData&&<PropertyTab tabs={getTabData()}></PropertyTab>}
-    </div>
-  );
+  return <div>{blockData && <PropertyTab tabs={getTabData()}></PropertyTab>}</div>;
 };

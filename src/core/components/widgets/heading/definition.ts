@@ -34,35 +34,29 @@ const HeadingWidget: DME.Widget = {
     {
       name: 'Text',
       property: '.value',
-      category: 'settings',
       settingComponent: 'input',
     },
     {
       name: 'Level',
       settingComponent: 'range',
-      category: 'settings',
       property: '.level',
       parameters: { min: 1, max: 5 },
     },
-    { name: 'Align', settingComponent: 'align', category: 'settings', property: 'settings.align' },
+    { name: 'Align', settingComponent: 'align', property: 'settings.align' },
+    {
+      name: 'Text color',
+      settingComponent: 'color',
+      property: 'settings.color',
+    },
     {
       name: 'Background',
       settingComponent: 'color',
       category: 'block',
       property: 'settings.background-color',
     },
-    {
-      name: 'Text color',
-      settingComponent: 'color',
-      category: 'settings',
-      property: 'settings.color',
-    },
-    { name: 'Border', settingComponent: 'color', category: 'block', property: 'settings.border' },
     { name: 'Padding', settingComponent: 'range', category: 'block', property: 'settings.padding' },
     { name: 'Margin', settingComponent: 'range', category: 'block', property: 'settings.margin' },
-
     { name: '', settingComponent: 'heading', category: 'settings', custom: true, property: '' },
-    // {name: 'Text', component: 'input', property: 'value'}
   ],
 };
 
