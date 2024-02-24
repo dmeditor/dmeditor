@@ -13,27 +13,27 @@ export namespace DME {
   }
 
   export type PageSetting = {
-    identifier: string,
-    name: string,
-    type: 'text'|'multitext'
-  }
+    identifier: string;
+    name: string;
+    type: 'text' | 'multitext';
+  };
 
   export type PageTheme = {
-    identifier: string,
-    name: string,
-    cssStyle: string,
-    config?:unknown
-  }
+    identifier: string;
+    name: string;
+    cssStyle: string;
+    config?: unknown;
+  };
 
   export interface Widget {
     type: string;
     name: string;
-    icon: string|(()=>unknown); //base 64(eg. png/svg) or url, or component
-    category: 'widget' | 'layout' | 'section' | 'mixed';
+    icon: string | (() => unknown); //base 64(eg. png/svg) or url, or component
+    category: 'widget' | 'container' | 'mixed' | 'layout' | 'section';
     alias?: string;
-    enabledStyles?:Array<string>;
-    isBaseWidget?:boolean; //true if it's base widget used for variants
-    allowedTypes?: Array<string>|string; //allwed types for direct children
+    enabledStyles?: Array<string>;
+    isBaseWidget?: boolean; //true if it's base widget used for variants
+    allowedTypes?: Array<string> | string; //allwed types for direct children
     events: {
       //   onInput: () => void 0,
       //   onChange: () => void 0,
@@ -50,76 +50,75 @@ export namespace DME {
     settings: Array<Setting>;
   }
 
-  export interface WidgetVariant{
-    widget:string; //widget which is based on
+  export interface WidgetVariant {
+    widget: string; //widget which is based on
     identifier: string;
     name: string;
     cssStyle?: string; //built-in style for the variant
-    enabledStyles?:Array<string>;
+    enabledStyles?: Array<string>;
     enabledSettings?: Array<string>;
     allowedTypes?: Array<string>; //can be sub widget inside
-    isInternal?:boolean; // intenal variant will only used inside another widget.
-    getDefaultData?: ()=> DMEData.Block<unknown>
+    isInternal?: boolean; // intenal variant will only used inside another widget.
+    getDefaultData?: () => DMEData.Block<unknown>;
   }
 
-  export interface WidgetStyle{
-    identifier: string, // '_' for root
-    display?: 'dropdown'|'button-group'|'radio' | 'inline-block', //dropdown is default if not set.
-    name: string //'Style' if not set
-    options: Array<WidgetStyleOption>
+  export interface WidgetStyle {
+    identifier: string; // '_' for root
+    display?: 'dropdown' | 'button-group' | 'radio' | 'inline-block'; //dropdown is default if not set.
+    name: string; //'Style' if not set
+    options: Array<WidgetStyleOption>;
   }
 
   //css classes, useful when using class names or class based framework(eg. tailwind).
   //key is for element - it's value is up to the widget, eg. for image text, {'root' - is for root, 'image' - image}
-  export type WidgetStyleClasses = {[key:string]:string} 
-  
-  export interface WidgetStyleOption{
-    identifier: string,
-    name: string,
-    icon?: string,
-    cssClasses?: WidgetStyleClasses, 
-    cssStyle: string //css style using css-in-js
+  export type WidgetStyleClasses = { [key: string]: string };
+
+  export interface WidgetStyleOption {
+    identifier: string;
+    name: string;
+    icon?: string;
+    cssClasses?: WidgetStyleClasses;
+    cssStyle: string; //css style using css-in-js
   }
-  
+
   export interface Block extends Widget {}
 
-  export interface WidgetRenderProps<Type=DMEData.DefaultDataType>{
-    blockNode: DMEData.Block<Type>,
-    rootClasses: string,
+  export interface WidgetRenderProps<Type = DMEData.DefaultDataType> {
+    blockNode: DMEData.Block<Type>;
+    rootClasses: string;
     // key is the setting item(eg. 'root', value is styles' class value, eg.['big-space', 'dark'])
-    styleClasses?: {[key:string]:Array<string>}, 
-    active:boolean,
-    adding:boolean,
-    path:Array<number>
+    styleClasses?: { [key: string]: Array<string> };
+    active: boolean;
+    adding: boolean;
+    path: Array<number>;
   }
 
-  export interface SettingComponentProps<T=unknown> extends Setting{
-    value?:T //if custom is true, value will be not set
+  export interface SettingComponentProps<T = unknown> extends Setting {
+    value?: T; //if custom is true, value will be not set
   }
 }
 
 export namespace DMEData {
-
-  export interface DefaultDataType{
-      settings?: {
-        [index: string]: string | number;
-      };
-      [index: string]: string | number | undefined | Record<string, string | number>;
+  export interface DefaultDataType {
+    settings?: {
+      [index: string]: string | number;
+    };
+    [index: string]: string | number | undefined | Record<string, string | number>;
   }
 
-  export interface Page{
+  export interface Page {
     title: string;
-    theme?:string;
-    [index: string]: string|undefined
+    theme?: string;
+    [index: string]: string | undefined;
   }
 
   //Block entity, which is a node in the data tree
-  export interface Block<TData=DefaultDataType> {
+  export interface Block<TData = DefaultDataType> {
     id?: string;
     type: string; //can use type for internal
     parent?: Block;
     data: TData; //entity data from widget
-    style?: {[style:string]:string};
+    style?: { [style: string]: string };
     children?: BlockList;
   }
 
