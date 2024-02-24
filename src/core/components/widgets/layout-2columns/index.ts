@@ -10,14 +10,14 @@ const register = () => {
   registerWidgetStyleOption('layout-2columns', [
     {
       identifier: 'half-half',
-      name: '1/2 1/2',
+      name: '1/2-1/2',
       cssStyle: `
       grid-template-columns: 50% 50%;
     `,
     },
     {
       identifier: 'one-third-left',
-      name: '1/3 2/3',
+      name: '1/3-2/3',
       cssStyle: `
         grid-template-columns: 33.3% 67.7%;
       `,

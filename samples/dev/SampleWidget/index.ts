@@ -194,6 +194,25 @@ const registerSampleWidget = function () {
     ],
     '_',
   );
+
+  registerWidgetStyleOption('layout-2columns', [
+    {
+      identifier: 'project-layout',
+      name: 'Project layout',
+      cssStyle: `
+        grid-template-columns: 33.3% 66.7%;
+        & > .dme-w-column1{
+          padding: 10px;
+          background: #d9d9ff;
+        }
+        & > .dme-w-column2{
+          padding: 10px;
+          background: #eaeaff;
+        }
+    `,
+      icon: '',
+    },
+  ]);
 };
 
 export default registerSampleWidget;

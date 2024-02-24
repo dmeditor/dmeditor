@@ -49,10 +49,10 @@ const Layout2Columns = (props: DME.WidgetRenderProps) => {
 
   return (
     <SyledLayout className={rootClasses}>
-      <div className={styleClasses?.['column1'] + ' dme-w-column1'}>
+      <div className={(styleClasses?.['column1'] || '') + ' dme-w-column1'}>
         <BlockListRender blockData={children?.[0].children || []} path={[...props.path, 0]} />
       </div>
-      <div className={styleClasses?.['column2'] + ' dme-w-column2'}>
+      <div className={(styleClasses?.['column2'] || '') + ' dme-w-column2'}>
         <BlockListRender blockData={children?.[1].children || []} path={[...props.path, 1]} />
       </div>
     </SyledLayout>
