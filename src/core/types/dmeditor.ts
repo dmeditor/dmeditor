@@ -92,7 +92,7 @@ export namespace DME {
     // key is the setting item(eg. 'root', value is styles' class value, eg.['big-space', 'dark'])
     styleClasses?: { [key: string]: Array<string> };
     active: boolean;
-    adding: boolean;
+    mode: 'edit' | 'view';
     path: Array<number>;
   }
 

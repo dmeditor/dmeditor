@@ -8,17 +8,11 @@ import { getDef } from '../../../ToolDefinition';
 import { getWidgetComponent, getWidgetStyle, getWidgetVariant } from '../../components/widgets';
 import type { DME, DMEData } from 'Core/types';
 
-export type BlockInfo = {
-  type: string;
-  content?: any;
-  settings?: any;
-};
-
 interface BlockProps<Type = DMEData.DefaultDataType> {
   data: DMEData.Block<Type>;
   active?: boolean;
   path: Array<number>;
-  view?: boolean;
+  mode: 'edit' | 'view';
   inBlock?: boolean;
 }
 
@@ -80,6 +74,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
       {...getCssStyles()}
       blockNode={props.data}
       path={props.path}
+      mode={props.mode}
       active={active ? true : false}
     />
   ) : (

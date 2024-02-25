@@ -135,7 +135,12 @@ export const BlockListRender = (props: BlockListProps) => {
               onSelect={() => select(index)}
               onAddClick={(position) => handleAdding(position, index)}
             >
-              <BlockRender active={isActive} path={[...props.path, index]} data={blockData} />
+              <BlockRender
+                mode="edit"
+                active={isActive}
+                path={[...props.path, index]}
+                data={blockData}
+              />
             </BlockWithAdding>
 
             {addParameters &&
