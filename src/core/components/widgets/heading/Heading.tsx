@@ -5,6 +5,7 @@ import { BlockListRender } from '../../../main/renderer';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { EntityHeadingBlock } from './entity';
 import type { DME, DMEData } from 'Core/types';
+import { useEditorStore } from 'Src/core/main/store';
 import useHeadingStore from 'Src/core/setting-panel/store/heading';
 import { isHTMLElement } from 'Src/core/utils';
 
@@ -28,6 +29,7 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
   const { blockNode, rootClasses, styleClasses } = props;
+  const { updateSelectedBlock } = useEditorStore();
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {
     id,
@@ -51,10 +53,22 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
     // contentEditable: props.active,
   };
 
+  const handleChange = (value: string) => {
+    updateSelectedBlock<EntityHeadingBlock>((entity) => {
+      entity.value = value;
+    });
+  };
+
   return (
     <>
       <div className={rootClasses} style={{ backgroundColor: data.settings?.['background-color'] }}>
-        <HeadingComponent level={level} id={id} {...common}>
+        <HeadingComponent
+          level={level}
+          id={id}
+          {...common}
+          contentEditable
+          onBlur={(e) => handleChange((e.currentTarget as HTMLElement).innerText)}
+        >
           {value}
         </HeadingComponent>
       </div>
