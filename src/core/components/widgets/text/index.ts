@@ -1,3 +1,9 @@
-import { BlockText as Text } from './Text';
+import { registerWidget } from '..';
+import TextDefinition from './definition';
+import Text from './Text';
 
-export { Text }
+const registerdText = () => {
+  registerWidget(TextDefinition, Text);
+};
+export default registerdText;
+export { Text };

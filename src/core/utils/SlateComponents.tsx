@@ -1,6 +1,14 @@
 import React, { PropsWithChildren, Ref } from 'react';
 import ReactDOM from 'react-dom';
 import { css, cx } from '@emotion/css';
+import {
+  FormatAlignCenter,
+  FormatAlignJustify,
+  FormatAlignLeft,
+  FormatAlignRight,
+  FormatListBulleted,
+  FormatListNumbered,
+} from '@mui/icons-material';
 
 interface BaseProps {
   className: string;
@@ -212,3 +220,26 @@ export const MenuR = React.forwardRef(
     />
   ),
 );
+
+export const BlockButton = ({ formats }: any) => {
+  let ele: any;
+  if (formats === 'left') {
+    ele = <FormatAlignLeft />;
+  }
+  if (formats === 'center') {
+    ele = <FormatAlignCenter />;
+  }
+  if (formats === 'right') {
+    ele = <FormatAlignRight />;
+  }
+  if (formats === 'justify') {
+    ele = <FormatAlignJustify />;
+  }
+  if (formats === 'numbered-list') {
+    ele = <FormatListNumbered />;
+  }
+  if (formats === 'bulleted-list') {
+    ele = <FormatListBulleted />;
+  }
+  return ele;
+};

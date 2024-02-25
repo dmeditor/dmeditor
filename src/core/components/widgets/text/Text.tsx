@@ -20,6 +20,7 @@ import { Editable, ReactEditor, Slate, withReact } from 'slate-react';
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { ReactResizableCss } from '../../../main/designer/DMEditor.css';
+import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import {
   PickColor,
   PropertyButton,
@@ -30,15 +31,19 @@ import {
 } from '../../../utils';
 import FontFamilyList from '../../../utils/FontFamilyList';
 import { SlateFun } from '../../../utils/Slate';
-import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
 import { BlockProperty } from 'Src/core/components/block-property';
 import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 
-export const BlockText = (props: ToolRenderProps) => {
-  const [value, setValue] = useState(props.blockdata.data);
-  const [config, setConfig] = useState(props.blockdata.settings?.config || null);
+const Text = (props: any) => {
+  const { blockNode, rootClasses, styleClasses } = props;
+  const {
+    data: { value },
+  } = blockNode;
+
+  // const [value, setValue] = useState(props.blockdata.data);
+  // const [config, setConfig] = useState(props.blockdata.settings?.config || null);
   const [adding, setAdding] = useState(false);
-  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style || {});
+  // const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style || {});
 
   const [size, setSize] = useState(1.1);
   const [familytype, setFamilytype] = useState('');
@@ -69,7 +74,7 @@ export const BlockText = (props: ToolRenderProps) => {
   const firstRender = useRef(true);
   const [hovering, setHovering] = useState(true);
   const [view, setView] = useState(props.view);
-  const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
+  // const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
   const BlockButton = ({ formats }: any) => {
     let ele: any;
     if (formats === 'left') {
@@ -108,29 +113,24 @@ export const BlockText = (props: ToolRenderProps) => {
   );
   const renderLeaf = useCallback((props: any) => <SlateFun.Leaf {...props} />, []);
 
-  const change = (val: any) => {
-    setValue(val);
-  };
+  // const change = (val: any) => {
+  //   setValue(val);
+  // };
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
     } else {
-      props.onChange(
-        {
-          ...props.blockdata,
-          data: value,
-          style: styleIdentifier,
-          settings: { style: commonSettings },
-        },
-        true,
-      );
+      // props.onChange(
+      //   {
+      //     ...props.blockdata,
+      //     data: value,
+      //     style: styleIdentifier,
+      //     settings: { style: commonSettings },
+      //   },
+      //   true,
+      // );
     }
-  }, [value, commonSettings, styleIdentifier]);
-
-  const commonChangeFunc = (type: string, value: number | string | undefined) => {
-    // toggleProperty?.(true);
-    // handleCommonChange?.(selectedType, type, value);
-  };
+  }, [value]);
 
   const changeFontFormat = (value: any, format: any, e?: any) => {
     if (e) {
@@ -152,7 +152,7 @@ export const BlockText = (props: ToolRenderProps) => {
   };
 
   const IsShowToolBar = (type: any, format: string) => {
-    return config ? (config[type].includes(format) ? true : false) : true;
+    // return config ? (config[type].includes(format) ? true : false) : true;
   };
   const changeLinkFormat = (v: any) => {
     setLinkstyle(v);
@@ -260,336 +260,15 @@ export const BlockText = (props: ToolRenderProps) => {
     ReactEditor.focus(editor);
   }, [isFocus]);
 
-  const handleChangeCommonSettings = (settings: any) => {};
+  const change = () => {};
 
   return (
-    <div
-      style={commonSettings}
-      className={getCommonBlockCss('text', styleIdentifier) + ' ' + ReactResizableCss}
-    >
+    <div className={rootClasses}>
       <Slate editor={editor} value={value} onChange={(v) => change(v)}>
-        {props.active && (
-          <BlockProperty blocktype="text" inBlock={props.inBlock}>
-            <PropertyGroup header="Basic">
-              {IsShowToolBar('font', 'font_family') ? (
-                <PropertyItem label="Font">
-                  <Select
-                    size="small"
-                    fullWidth
-                    value={familytype ? familytype : ''}
-                    onChange={(e) => {
-                      changeFontFormat(e.target.value, 'fontFamily');
-                    }}
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                    <MenuItem
-                      value=""
-                      onMouseUp={(e) => {
-                        e.preventDefault();
-                      }}
-                    >
-                      <em>Default</em>
-                    </MenuItem>
-                    {FontFamilyList.map((font, index) => (
-                      <MenuItem
-                        key={index}
-                        value={font.name}
-                        onMouseUp={(e) => {
-                          e.preventDefault();
-                        }}
-                      >
-                        <span style={{ fontFamily: font.name }}>{font.name}</span>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </PropertyItem>
-              ) : null}
-
-              {(!isCollapsed || isLinkActive) && IsShowToolBar('font', 'font size') && (
-                <PropertyItem label="Size">
-                  <Ranger
-                    min={8}
-                    max={36}
-                    step={2}
-                    onChange={(v: number, e: any) => changeFontFormat(v, 'fontSize', e)}
-                    defaultValue={size ? size : 14}
-                  />
-                </PropertyItem>
-              )}
-              {!isCollapsed && IsShowToolBar('font', 'color') && (
-                <PropertyItem label="Color">
-                  <PickColor
-                    color={color ? color : '#000'}
-                    onChange={(v: any) => changeFontFormat(v, 'color')}
-                  />
-                </PropertyItem>
-              )}
-              {!isButtonActive && (
-                <>
-                  <PropertyItem label="Align">
-                    {IsShowToolBar('tools', 'align')
-                      ? SlateFun.TEXT_ALIGN_TYPES.map((format: any, index: any) => {
-                          return (
-                            <PropertyButton
-                              title={SlateFun.getToolText(format)}
-                              key={index}
-                              onClick={() => {
-                                SlateFun.toggleBlock(editor, format);
-                              }}
-                              selected={SlateFun.isBlockActive(
-                                editor,
-                                format,
-                                SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type',
-                              )}
-                            >
-                              <BlockButton formats={format} />
-                            </PropertyButton>
-                          );
-                        })
-                      : null}
-                  </PropertyItem>
-
-                  {IsShowToolBar('tools', 'align') ||
-                  IsShowToolBar('tools', 'order_list') ||
-                  IsShowToolBar('tools', 'list') ? (
-                    <PropertyItem label="List">
-                      {IsShowToolBar('tools', 'list') || IsShowToolBar('tools', 'order_list')
-                        ? SlateFun.LIST_TYPES.filter(
-                            (item: any) =>
-                              (item === 'numbered-list' && IsShowToolBar('tools', 'order_list')) ||
-                              (item === 'bulleted-list' && IsShowToolBar('tools', 'list')),
-                          ).map((format: any, index: any) => {
-                            return (
-                              <PropertyButton
-                                title={SlateFun.getToolText(format)}
-                                key={index}
-                                onClick={() => {
-                                  SlateFun.toggleBlock(editor, format);
-                                }}
-                                selected={SlateFun.isBlockActive(
-                                  editor,
-                                  format,
-                                  SlateFun.TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type',
-                                )}
-                              >
-                                <BlockButton formats={format} />
-                              </PropertyButton>
-                            );
-                          })
-                        : null}
-                    </PropertyItem>
-                  ) : null}
-                </>
-              )}
-            </PropertyGroup>
-            <PropertyGroup header="Insert">
-              {IsShowToolBar('tools', 'image') ? (
-                <PropertyItem label="Insert">
-                  <PropertyButton
-                    title="Image"
-                    onClick={(e) => {
-                      handleClickOpen(e, 'image');
-                    }}
-                  >
-                    <ImageOutlined />
-                  </PropertyButton>
-                  <PropertyButton
-                    title="link"
-                    onClick={(e) => {
-                      handleClickOpen(e, 'link');
-                    }}
-                  >
-                    <LinkOutlined />
-                  </PropertyButton>
-                </PropertyItem>
-              ) : null}
-            </PropertyGroup>
-            {(isLinkActive || isButtonActive) && (
-              <PropertyGroup header="Link">
-                <PropertyItem label="Style">
-                  <Select
-                    fullWidth
-                    value={linkstyle ? linkstyle : 'none'}
-                    onChange={(e) => {
-                      changeLinkFormat(e.target.value);
-                    }}
-                    displayEmpty
-                    size="small"
-                    inputProps={{ 'aria-label': 'Without label' }}
-                  >
-                    <MenuItem value="none">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="button">Button</MenuItem>
-                  </Select>
-                </PropertyItem>
-                <PropertyItem label="content">
-                  <div
-                    style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                    title={
-                      linkVal.source.sourceType === 'select'
-                        ? '{link:' +
-                          linkVal.source.sourceData.location.content_type +
-                          ',' +
-                          linkVal.url +
-                          '}'
-                        : linkVal.source.sourceType === 'file'
-                          ? Util.getFileUrl(linkVal.url)
-                          : linkVal.url
-                    }
-                  >
-                    {linkVal.source.sourceType === 'select'
-                      ? '{link:' +
-                        linkVal.source.sourceData.location.content_type +
-                        ',' +
-                        linkVal.url +
-                        '}'
-                      : linkVal.source.sourceType === 'file'
-                        ? Util.getFileUrl(linkVal.url)
-                        : linkVal.url}
-                  </div>
-                  <PropertyButton
-                    title={'Edit Link'}
-                    onClick={() => {
-                      changeDialogLinkfun(linkVal);
-                    }}
-                  >
-                    <BorderColorOutlined />
-                  </PropertyButton>
-                  <PropertyButton
-                    title={'Delete Link'}
-                    onClick={() => {
-                      SlateFun.unwrapLink(editor);
-                      SlateEvents();
-                    }}
-                  >
-                    <LinkOffOutlined />
-                  </PropertyButton>
-                </PropertyItem>
-              </PropertyGroup>
-            )}
-            {((isLinkActive && linkstyle === 'button') || isButtonActive) && (
-              <>
-                <PropertyGroup header="Link Button">
-                  <PropertyItem label="color">
-                    <Select
-                      fullWidth
-                      value={buttonColor ? buttonColor : 'primary'}
-                      onChange={(e) => {
-                        changeButtonFormat(e.target.value, 'color');
-                      }}
-                      displayEmpty
-                      size="small"
-                      inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                      <MenuItem value="primary">primary</MenuItem>
-                      <MenuItem value="success">success</MenuItem>
-                      <MenuItem value="warning">warning</MenuItem>
-                      <MenuItem value="danger">danger</MenuItem>
-                      <MenuItem value="secondary">secondary</MenuItem>
-                      <MenuItem value="info">info</MenuItem>
-                      <MenuItem value="light">light</MenuItem>
-                      <MenuItem value="dark">dark</MenuItem>
-                    </Select>
-                  </PropertyItem>
-                  <PropertyItem label="style">
-                    <Button
-                      size="small"
-                      onClick={() => {
-                        changeButtonFormat('contained', 'variant');
-                      }}
-                      variant={buttonVariant === 'contained' ? 'outlined' : undefined}
-                    >
-                      Fill
-                    </Button>
-                    <Button
-                      size="small"
-                      onClick={() => {
-                        changeButtonFormat('outlined', 'variant');
-                      }}
-                      variant={buttonVariant === 'outlined' ? 'outlined' : undefined}
-                    >
-                      Ourlined
-                    </Button>
-                  </PropertyItem>
-                  <PropertyItem label="size">
-                    <Button
-                      size="small"
-                      onClick={() => {
-                        changeButtonFormat('small', 'size');
-                      }}
-                      variant={buttonSize === 'small' ? 'outlined' : undefined}
-                    >
-                      small{' '}
-                    </Button>
-                    <Button
-                      size="small"
-                      onClick={() => {
-                        changeButtonFormat('medium', 'size');
-                      }}
-                      variant={buttonSize === 'medium' ? 'outlined' : undefined}
-                    >
-                      medium
-                    </Button>
-                    <Button
-                      size="small"
-                      onClick={() => {
-                        changeButtonFormat('large', 'size');
-                      }}
-                      variant={buttonSize === 'large' ? 'outlined' : undefined}
-                    >
-                      large
-                    </Button>
-                  </PropertyItem>
-                </PropertyGroup>
-              </>
-            )}
-            {isImageActive && (
-              <PropertyGroup header="ImageBorder">
-                <PropertyItem label="Width">
-                  <Ranger
-                    min={0}
-                    max={10}
-                    step={1}
-                    onChange={(v: number) => {
-                      setImageBorderWidth(v);
-                      SlateFun.setImageFormat(editor, 'borderWidth', v);
-                    }}
-                    defaultValue={imageBorderWidth ? imageBorderWidth : 0}
-                  />
-                </PropertyItem>
-                <PropertyItem label="Color">
-                  <PickColor
-                    color={imageBorderColor ? imageBorderColor : 'transparent'}
-                    onChange={(v: any) => {
-                      setImageBorderColor(v);
-                      SlateFun.setImageFormat(editor, 'borderColor', v);
-                    }}
-                  />
-                </PropertyItem>
-              </PropertyGroup>
-            )}
-            {Util.renderCustomProperty(props.blockdata)}
-            <StyleSettings
-              styleIdentifier={props.blockdata.style || ''}
-              blocktype="text"
-              onChange={(identifier: string) => setStyleIdentifier(identifier)}
-            />
-            {/* <div>
-              <CommonSettings
-                commonSettings={commonSettings}
-                onChange={(settings) => {
-                  // setCommonSettings(settings);
-                }}
-                onDelete={props.onDelete}
-              />
-            </div> */}
-          </BlockProperty>
-        )}
         <div>
           <SlateFun.HoveringToolbar
-            config={config ? config.hover_toolbar : null}
+            //config={config ? config.hover_toolbar : null}
+            config={true}
             changeDialogLink={changeDialogLinkfun}
           />
           <Editable
@@ -641,25 +320,4 @@ export const BlockText = (props: ToolRenderProps) => {
   );
 };
 
-export const toolText: ToolDefinition = {
-  type: 'text',
-  name: 'Text',
-  isComposited: false,
-  menu: { category: 'basic', icon: <TextFormatOutlined /> },
-  initData: () => {
-    return {
-      type: 'text',
-      data: [
-        {
-          type: 'paragraph',
-          children: [
-            {
-              text: '',
-            },
-          ],
-        },
-      ],
-    };
-  },
-  render: BlockText,
-};
+export default Text;
