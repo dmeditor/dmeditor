@@ -12,7 +12,7 @@ const register = () => {
       identifier: 'half-half',
       name: '1/2 - 1/2',
       cssStyle: `
-      grid-template-columns: repeat(2 1fr);
+      grid-template-columns: 1fr 1fr;
     `,
     },
     {
