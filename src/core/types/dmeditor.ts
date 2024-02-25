@@ -44,7 +44,7 @@ export namespace DME {
       createBlock: () => DMEData.Block<any>;
 
       //when used for default, eg. image inside another widget
-      defaultBlock: () => DMEData.Block<any>;
+      defaultBlock?: () => DMEData.Block<any>;
 
       //validate data
       validate?: (data: any) => boolean;
