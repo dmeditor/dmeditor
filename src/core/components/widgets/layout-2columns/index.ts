@@ -12,14 +12,14 @@ const register = () => {
       identifier: 'half-half',
       name: '1/2 - 1/2',
       cssStyle: `
-      grid-template-columns: 50% 50%;
+      grid-template-columns: repeat(2 1fr);
     `,
     },
     {
       identifier: 'one-third-left',
       name: '1/3 - 2/3',
       cssStyle: `
-        grid-template-columns: 33.3% 67.7%;
+        grid-template-columns: 1fr 2fr;
       `,
     },
   ]);

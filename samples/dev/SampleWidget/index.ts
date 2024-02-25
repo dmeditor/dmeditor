@@ -201,13 +201,30 @@ const registerSampleWidget = function () {
     '_',
   );
 
+  //Grid style
+  registerWidgetStyleOption('grid', [
+    {
+      identifier: 'dark-space',
+      name: 'Dark space',
+      cssStyle: `
+      grid-gap: 10px;
+      & > div{
+        padding: 10px;
+        background: #666666;
+        border: 1px solid #000000;
+      }     
+  `,
+      icon: '',
+    },
+  ]);
+
   //Layout style
   registerWidgetStyleOption('layout-2columns', [
     {
       identifier: 'project-layout',
       name: 'Project layout',
       cssStyle: `
-        grid-template-columns: 33.3% 66.7%;
+        grid-template-columns: 1fr 2fr;
         & > .dme-w-column1{
           padding: 10px;
           background: #d9d9ff;
