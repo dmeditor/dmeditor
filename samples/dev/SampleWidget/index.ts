@@ -78,6 +78,7 @@ const registerSampleWidget = function () {
     },
   ]);
 
+  //list variant
   registerWidgetVariant({
     widget: 'list',
     identifier: 'article-block',
@@ -102,6 +103,7 @@ const registerSampleWidget = function () {
     },
   });
 
+  //heading style
   registerWidgetStyle('heading', {
     identifier: 'margin',
     name: 'Margin',
@@ -119,6 +121,7 @@ const registerSampleWidget = function () {
     ],
   });
 
+  //button style
   registerWidgetStyleOption('button', [
     {
       identifier: 'project-primary',
@@ -132,6 +135,7 @@ const registerSampleWidget = function () {
     },
   ]);
 
+  //theme related style for button
   registerWidgetStyleOption('button', [
     {
       identifier: 'theme-primary',
@@ -145,6 +149,7 @@ const registerSampleWidget = function () {
     },
   ]);
 
+  //heading style
   registerWidgetStyleOption(
     'heading',
     [
@@ -161,6 +166,7 @@ const registerSampleWidget = function () {
     'margin',
   );
 
+  //theme related style for heading
   registerWidgetStyleOption('heading', [
     {
       identifier: 'theme',
@@ -195,6 +201,7 @@ const registerSampleWidget = function () {
     '_',
   );
 
+  //Layout style
   registerWidgetStyleOption('layout-2columns', [
     {
       identifier: 'project-layout',

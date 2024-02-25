@@ -40,8 +40,11 @@ export namespace DME {
       //   onFocus: () => void 0,
       //   onBlur: () => void 0,
       updateData: (settings: Setting, data: DMEData.Block) => void;
-      //when create an emtpy block
+      //when create an empty block
       createBlock: () => DMEData.Block<any>;
+
+      //when used for default, eg. image inside another widget
+      defaultBlock: () => DMEData.Block<any>;
 
       //validate data
       validate?: (data: any) => boolean;
