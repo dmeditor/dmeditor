@@ -66,7 +66,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
           level={level}
           id={id}
           {...common}
-          contentEditable
+          contentEditable={props.mode === 'edit'}
           onBlur={(e) => handleChange((e.currentTarget as HTMLElement).innerText)}
         >
           {value}
