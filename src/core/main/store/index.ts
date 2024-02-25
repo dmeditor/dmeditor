@@ -331,8 +331,9 @@ const useEditorStore = create<Store & Actions>()(
     },
     updateSelectedBlock: <Type = DMEData.DefaultDataType>(callback: (blockData: Type) => void) => {
       set((state) => {
-        const data = state.storage[state.selected.blockIndex]['data'];
-        callback(data as Type);
+        const path = [...state.selected.currentListPath, state.selected.blockIndex];
+        const block = GetDataByPath(state.storage, path);
+        callback(block?.data as Type);
         // state.storage[state.selected.blockIndex]['data'] = data;
       });
     },
