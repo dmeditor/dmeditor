@@ -20,16 +20,16 @@ export default () => {
   return (
     <>
       <PropertyItem label="Has header">
-        <Checkbox checked={!!data.settings['has-header']} onChange={toggleHeader} />
+        <Checkbox checked={!!data.settings['hasHeader']} onChange={toggleHeader} />
       </PropertyItem>
       <PropertyItem label="Align">
         <Align property="settings.header-align" value={data.settings['header-align']} />
       </PropertyItem>
       <PropertyItem label="Is Bold">
-        <Checkbox checked={!!data.settings['is-bold']} onChange={toggleIsBold} />
+        <Checkbox checked={!!data.settings['headerIsBold']} onChange={toggleIsBold} />
       </PropertyItem>
       <PropertyItem label="Background">
-        <Color property="settings.header-background" value={data.settings['header-background']} />
+        <Color property="settings.headerBackground" value={data.settings['headerBackground']} />
       </PropertyItem>
     </>
   );
