@@ -3,9 +3,12 @@ import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react';
 
-import { BlockButton } from 'Core/utils/SlateComponents';
+import definition from 'Components/widgets/text/definition';
+import { SlateFun } from 'Core/utils/Slate';
+import { BlockButton, Toolbar } from 'Core/utils/SlateComponents';
 
 const { useCallback, useMemo } = React;
+const { Element, Leaf, HoveringToolbar, toggleMark, HOTKEYS } = SlateFun;
 
 const RichText = () => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
@@ -13,7 +16,7 @@ const RichText = () => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   return (
-    <Slate editor={editor} initialValue={initialValue}>
+    <Slate editor={editor} value={definition.events.createBlock().data.value}>
       <Toolbar>
         {/* <MarkButton format="bold" icon="format_bold" /> */}
         {/* <MarkButton format="italic" icon="format_italic" /> */}
@@ -37,11 +40,11 @@ const RichText = () => {
         autoFocus
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
-            if (isHotkey(hotkey, event as any)) {
-              event.preventDefault();
-              const mark = HOTKEYS[hotkey];
-              toggleMark(editor, mark);
-            }
+            // if (isHotkey(hotkey, event as any)) {
+            event.preventDefault();
+            const mark = HOTKEYS[hotkey];
+            toggleMark(editor, mark);
+            // }
           }
         }}
       />
