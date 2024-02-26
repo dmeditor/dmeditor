@@ -7,12 +7,12 @@ export interface EntityTableBlock {
   value: TableValue; //array of rows, each row is an array of cells
   activeCellIndex: [number, number];
   settings: {
-    'border-type'?: BorderType;
-    'border-color'?: string;
-    'odd-row-background'?: string;
-    'has-header'?: boolean;
-    'is-bold'?: boolean;
-    'header-align'?: 'left' | 'center' | 'right';
-    'header-background'?: string;
+    borderType?: BorderType;
+    borderColor?: string;
+    oddRowBackground?: string;
+    hasHeader?: boolean;
+    headerIsBold?: boolean;
+    headerAlign?: 'left' | 'center' | 'right';
+    headerBackground?: string;
   };
 }

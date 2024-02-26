@@ -4,13 +4,12 @@ import { EntityTableBlock } from './entity';
 
 export const StyledTable = styled.table<EntityTableBlock['settings']>((props) => {
   const {
-    'border-type': borderType,
-    'border-color': borderColor = 'unset',
-    'odd-row-background': oddRowBackground,
-    'has-header': hasHeader,
-    'is-bold': isBold,
-    'header-align': headerAlign,
-    'header-background': headerBackground,
+    borderType,
+    borderColor = 'unset',
+    oddRowBackground,
+    headerIsBold,
+    headerAlign,
+    headerBackground,
   } = props;
 
   return {
@@ -26,7 +25,7 @@ export const StyledTable = styled.table<EntityTableBlock['settings']>((props) =>
         : undefined),
     },
     th: {
-      fontWeight: isBold ? 'bold' : 'normal',
+      fontWeight: headerIsBold ? 'bold' : 'normal',
       textAlign: headerAlign,
       backgroundColor: headerBackground,
     },

@@ -1,6 +1,6 @@
 export namespace DME {
   interface Setting {
-    property: string;
+    property?: string;
     name: string;
     custom?: boolean; //if true it will not invoke directly instead of use name->value(left/right) layout.
     settingComponent: string; //registered setting component, eg. 'color', or 'align',

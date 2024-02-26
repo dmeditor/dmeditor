@@ -1,39 +1,43 @@
 import { BorderLeft, BorderRight, Delete } from '@mui/icons-material';
 
+import { useTableStore } from '../../store';
 import { useEditorStore } from 'Core/index';
-import { PropertyButton } from 'Core/utils';
+import { PropertyButton, PropertyItem } from 'Core/utils';
 
 export default () => {
+  const { activeCellIndex, setActiveCellIndex } = useTableStore();
+  console.log('🚀 ~ activeCellIndex:', activeCellIndex);
   const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
   const { data: blockData } = getSelectedBlock();
 
   const handleInsertCol = (position: 'left' | 'right') => {
-    const activeColumnIndex = blockData.activeCellIndex[1];
+    const activeColumnIndex = activeCellIndex[1];
 
     if (position === 'left') {
+      setActiveCellIndex([activeCellIndex[0], activeColumnIndex + 1]);
+
       updateSelectedBlock((data) => {
-        data.activeCellIndex = [data.activeCellIndex[0], activeColumnIndex + 1];
         data.value.forEach((row: any[]) => row.splice(activeColumnIndex, 0, ''));
       });
     } else {
+      setActiveCellIndex([activeCellIndex[0], activeColumnIndex]);
       updateSelectedBlock((data) => {
-        data.activeCellIndex = [data.activeCellIndex[0], activeColumnIndex];
         data.value.forEach((row: any[]) => row.splice(activeColumnIndex + 1, 0, ''));
       });
     }
   };
 
   const handleDeleteCol = () => {
-    const activeColumnIndex = blockData.activeCellIndex[1];
+    const activeColumnIndex = activeCellIndex[1];
 
+    setActiveCellIndex([activeCellIndex[0], activeColumnIndex - 1]);
     updateSelectedBlock((data) => {
-      data.activeCellIndex = [data.activeCellIndex[0], activeColumnIndex - 1];
       data.value.forEach((row: any[]) => row.splice(activeColumnIndex, 1));
     });
   };
 
   return (
-    <>
+    <PropertyItem label="Column">
       <PropertyButton title="insert on left" onClick={() => handleInsertCol('left')}>
         <BorderLeft />
       </PropertyButton>
@@ -48,6 +52,6 @@ export default () => {
       >
         <Delete />
       </PropertyButton>
-    </>
+    </PropertyItem>
   );
 };

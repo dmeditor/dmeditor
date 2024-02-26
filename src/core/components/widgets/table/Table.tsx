@@ -1,6 +1,7 @@
 import { TextField } from '@mui/material';
 
 import type { EntityTableBlock } from './entity';
+import { useTableStore } from './store';
 import { StyledTable } from './styled';
 import { DME, useEditorStore } from 'Core/index';
 
@@ -12,23 +13,24 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   } = blockNode;
 
   const { updateSelectedBlock } = useEditorStore();
+  const { setActiveCellIndex: setActiveIndex } = useTableStore();
 
-  const handleTextChange = (col: number, row: number, value: string) => {
+  const handleTextChange = (col: number, row: number, value: any) => {
     updateSelectedBlock((data) => (data.value[col][row] = value));
   };
 
   const handleActiveCellChange = (col: number, row: number) => {
-    updateSelectedBlock((data) => (data.activeCellIndex = [col, row]));
+    setActiveIndex([col, row]);
   };
-  const tableValue = settings['has-header'] ? value.slice(1) : value;
+  const tableValue = settings['hasHeader'] ? value.slice(1) : value;
 
   return (
     <StyledTable className={rootClasses} id={id} {...settings}>
-      {settings['has-header'] && (
+      {settings['hasHeader'] && (
         <thead>
-          <tr>
+          <tr className="dme-w-tr">
             {value[0].map((cell, i) => (
-              <th key={i}>
+              <th className="dme-w-th" key={i}>
                 <TextField
                   variant="standard"
                   value={cell}
@@ -42,9 +44,9 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
       )}
       <tbody>
         {tableValue.map((row, i) => (
-          <tr>
+          <tr className="dme-w-tr">
             {row.map((cell, j) => (
-              <td key={j}>
+              <td className="dm-w-td" key={j}>
                 <TextField
                   variant="standard"
                   value={cell}
