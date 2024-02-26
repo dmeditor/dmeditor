@@ -224,7 +224,6 @@ const registerSampleWidget = function () {
       identifier: 'project-layout',
       name: 'Project layout',
       cssStyle: `
-        grid-template-columns: 1fr 2fr;
         & > .dme-w-column1{
           padding: 10px;
           background: #d9d9ff;
