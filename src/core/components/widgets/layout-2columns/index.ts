@@ -9,18 +9,13 @@ const register = () => {
   registerWidget(layout2ColumnsWidget, Layout2Columns);
   registerWidgetStyleOption('layout-2columns', [
     {
-      identifier: 'half-half',
-      name: '1/2 - 1/2',
+      identifier: 'border',
+      name: 'Border',
       cssStyle: `
-      grid-template-columns: 1fr 1fr;
+      & > .dme-w-column1{
+        border-right: 1px solid #cccccc;
+      }
     `,
-    },
-    {
-      identifier: 'one-third-left',
-      name: '1/3 - 2/3',
-      cssStyle: `
-        grid-template-columns: 1fr 2fr;
-      `,
     },
   ]);
 };

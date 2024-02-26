@@ -13,9 +13,9 @@ const layout2ColumnsWidget: DME.Widget = {
     createBlock: () => {
       return {
         id: nanoid(),
-        data: {},
+        data: { columnWidth: 6 },
         type: 'layout-2columns',
-        style: { _: 'half-half' },
+        style: { _: 'border' },
         children: [
           {
             id: nanoid(),
@@ -34,21 +34,32 @@ const layout2ColumnsWidget: DME.Widget = {
     },
     updateData: () => {},
   },
-  settings: [],
+  settings: [
+    {
+      property: '.columnWidth',
+      name: 'Column width',
+      settingComponent: 'range',
+      parameters: { min: 1, max: 11 },
+    },
+  ],
 };
 
-const Layout2Columns = (props: DME.WidgetRenderProps) => {
+interface EntityLayout2Columns {
+  columnWidth: number;
+}
+
+const Layout2Columns = (props: DME.WidgetRenderProps<EntityLayout2Columns>) => {
   const {
     rootClasses,
     styleClasses,
     blockNode: {
-      data: {},
+      data: { columnWidth },
       children,
     },
   } = props;
 
   return (
-    <SyledLayout className={rootClasses}>
+    <SyledLayout className={rootClasses} columnWidth={columnWidth}>
       <div className={(styleClasses?.['column1'] || '') + ' dme-w-column1'}>
         <BlockListRender blockData={children?.[0].children || []} path={[...props.path, 0]} />
       </div>

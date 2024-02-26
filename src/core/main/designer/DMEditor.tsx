@@ -26,6 +26,8 @@ import {
 
 import '../../../locales/i18n';
 
+import { useMemo } from 'react';
+import { css } from '@emotion/css';
 import i18next from 'i18next';
 import { produce } from 'immer';
 import { debounce } from 'lodash';
@@ -37,13 +39,11 @@ import { TopBar } from '../../topbar/Topbar';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } from './style';
-import { BlockListRender } from 'Src/core/main/renderer';
-import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
-import { registerDefaultWidgets } from 'Src/core/components/widgets';
-import { DME, DMEData } from 'Src/core/types/dmeditor';
 import { getPageTheme, setPageSettings } from 'Src/core/components/page';
-import { useMemo } from 'react';
-import { css } from '@emotion/css';
+import { registerDefaultWidgets } from 'Src/core/components/widgets';
+import { BlockListRender } from 'Src/core/main/renderer';
+import { DME, DMEData } from 'Src/core/types/dmeditor';
+import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
@@ -87,13 +87,13 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       setEditorJson: (data: string | Array<DMEData.Block>) => {
         const list = loadData(data);
         emitter.emit('setWidgets', list);
-      },      
-      setPageSettings:(settings:Array<DME.PageSetting>)=>{
+      },
+      setPageSettings: (settings: Array<DME.PageSetting>) => {
         setPageSettings(settings);
       },
-      setPageData:(data:DMEData.Page)=>{
+      setPageData: (data: DMEData.Page) => {
         setPageData(data);
-      }
+      },
     }),
     [],
   );
@@ -113,6 +113,8 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
 
   const [newBlock, setNewBlock] = useState(false);
   const [viewmode, setViewmode] = useState('edit');
+
+  const [settingPanelWidth, setSettingPanelWidth] = useState<number>(-1);
   const [settingsShown, setSettingsShown] = useState(false);
   const {
     selected: { blockIndex: selectedBlockIndex },
@@ -143,7 +145,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   //   Util.pageTabActiveIndex = props.pageTabActiveIndex || 0;
   // }, []);
   const handleUpdateSelctedWidgetIndex = useCallback((index: number) => {
-    updateSelectedBlockIndex([index], storage[index].id||'');
+    updateSelectedBlockIndex([index], storage[index].id || '');
     blockIndexRef.current = index;
   }, []);
 
@@ -151,17 +153,15 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     setStorage(data);
   }, []);
 
- const getThemeCss = useMemo(()=>{
-  if(page.theme){
-    const theme = getPageTheme(page.theme)
-    if(theme){
-      return css(theme.cssStyle)
+  const getThemeCss = useMemo(() => {
+    if (page.theme) {
+      const theme = getPageTheme(page.theme);
+      if (theme) {
+        return css(theme.cssStyle);
+      }
     }
-  }
-  return '';
- },
- [page.theme]
- )
+    return '';
+  }, [page.theme]);
 
   // useEffectLayout
   useEffect(() => {
@@ -232,23 +232,23 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   const outerTheme = createTheme({
     palette: {
       primary: deepOrange,
-    },  
+    },
     components: {
-      MuiTextField:{
-        styleOverrides:{
-          root:{
-            '& .MuiOutlinedInput-root':{
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            '& .MuiOutlinedInput-root': {
               '&:hover fieldset': {
                 borderColor: '#777777',
-            },
+              },
               '&.Mui-focused fieldset': {
                 borderColor: '#888888',
                 borderWidth: 1,
-            }
-            }
-          }
-        }
-      },     
+              },
+            },
+          },
+        },
+      },
       MuiTooltip: {
         styleOverrides: {
           tooltip: {
@@ -259,22 +259,21 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           },
         },
       },
-      MuiTabs:{
-        styleOverrides:{
-          root:{
+      MuiTabs: {
+        styleOverrides: {
+          root: {
             // '& .MuiMenu-paper':{
             //   color: 'black'
             // }
-          }
-        }
+          },
+        },
       },
-      MuiTab:{
-        styleOverrides:{
-          root:{
-            '& .Mui-selected':{
-            }
-          }
-        }
+      MuiTab: {
+        styleOverrides: {
+          root: {
+            '& .Mui-selected': {},
+          },
+        },
       },
       MuiButtonBase: {
         defaultProps: {
@@ -293,31 +292,31 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   });
   return (
     <Root>
-    <ThemeProvider theme={outerTheme}>
-      <TopBar />
-      <Layout.Main ref={currentRef}>
-        {/* <Toolbar readonlyMode={false} /> */}
+      <ThemeProvider theme={outerTheme}>
+        <TopBar />
+        <Layout.Main ref={currentRef}>
+          {/* <Toolbar readonlyMode={false} /> */}
 
-        {/* <div className="dme-settings" style={{ display: settingsShown ? 'block' : 'none' }}>
+          {/* <div className="dme-settings" style={{ display: settingsShown ? 'block' : 'none' }}>
           <div>{Util.renderPageTab()}</div>
         </div> */}
 
-        <Layout.Edit>
-        <EditContainer style={settingsShown ? { display: 'none' } : {}} onClick={resetStatus}>
-          <EditArea className={getThemeCss}>
-            {/* need EmptyBlock otherwise first block's margin-top is based on body */}
-            <EmtpyBlock />
-            {viewmode === 'edit' && (
-              <div
-                className={dmeditorViewCss}
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                  <BlockListRender blockData={storage} path={[]} />
-              </div>
-            )}
-            {/* {viewmode !== 'edit' && (
+          <Layout.Edit>
+            <EditContainer style={settingsShown ? { display: 'none' } : {}} onClick={resetStatus}>
+              <EditArea className={getThemeCss}>
+                {/* need EmptyBlock otherwise first block's margin-top is based on body */}
+                <EmtpyBlock />
+                {viewmode === 'edit' && (
+                  <div
+                    className={dmeditorViewCss}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <BlockListRender blockData={storage} path={[]} />
+                  </div>
+                )}
+                {/* {viewmode !== 'edit' && (
               <DMEditorView
                 key={viewmode}
                 data={storage}
@@ -325,16 +324,16 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                 getImageUrl={props.getImageUrl}
               />
             )} */}
-          </EditArea>
-        </EditContainer>
-        </Layout.Edit>
-        <Layout.SettingPanel>
-          <SettingContainer>
-            <SettingPanel />
-          </SettingContainer>
-        </Layout.SettingPanel>
-      </Layout.Main>
-    </ThemeProvider>
+              </EditArea>
+            </EditContainer>
+          </Layout.Edit>
+          <Layout.SettingPanel>
+            <SettingContainer>
+              <SettingPanel />
+            </SettingContainer>
+          </Layout.SettingPanel>
+        </Layout.Main>
+      </ThemeProvider>
     </Root>
   );
 });
