@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { BorderAll, BorderClearOutlined, BorderHorizontalOutlined } from '@mui/icons-material';
 
-import { EntityLayout3Columns } from './Layout3Columns';
+import { EntityLayout3Columns } from '../Layout3Columns';
 import { PropertyButton, PropertyItem, Ranger } from 'Core/utils';
 import { useEditorStore } from 'Src/core/main/store';
 import { DME } from 'Src/core/types';
 
-export default (props: DME.SettingComponentProps) => {
+export const Layout3ColumnsSetting = (props: DME.SettingComponentProps) => {
   const { updateSelectedBlock, getSelectedBlock } = useEditorStore();
 
   const blockData = getSelectedBlock<EntityLayout3Columns>();

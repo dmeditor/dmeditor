@@ -1,6 +1,5 @@
 import { Layout3Columns, layout3ColumnsWidget } from './Layout3Columns';
-import Layout3ColumnsSetting from './Layout3ColumnsSetting';
-import ColumnsSetting from './Layout3ColumnsSetting';
+import { Layout3ColumnsSetting } from './settings/Layout3ColumnsSetting';
 import {
   registerWidget,
   registerWidgetStyle,
