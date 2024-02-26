@@ -1,6 +1,6 @@
 import { BorderAll, BorderClearOutlined, BorderHorizontalOutlined } from '@mui/icons-material';
 
-import { PropertyButton } from 'Core/utils';
+import { PropertyButton, PropertyItem } from 'Core/utils';
 import { useEditorStore } from 'Src/core/main/store';
 
 type BorderType = 'none' | 'border' | 'rowBorder';
@@ -20,16 +20,20 @@ export default (props: { property: string; value?: BorderType }) => {
     updateSelectedBlockProps(property, value);
   };
 
-  return alignsList.map((format) => {
-    return (
-      <PropertyButton
-        title={format}
-        key={format}
-        onClick={() => handleBorderTypeChange(format)}
-        selected={value === format}
-      >
-        {borderIconMap.get(format)}
-      </PropertyButton>
-    );
-  });
+  return (
+    <PropertyItem label="BorderType">
+      {alignsList.map((format) => {
+        return (
+          <PropertyButton
+            title={format}
+            key={format}
+            onClick={() => handleBorderTypeChange(format)}
+            selected={value === format}
+          >
+            {borderIconMap.get(format)}
+          </PropertyButton>
+        );
+      })}
+    </PropertyItem>
+  );
 };

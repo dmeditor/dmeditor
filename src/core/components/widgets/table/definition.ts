@@ -20,8 +20,8 @@ const HeadingWidget: DME.Widget = {
           ],
           activeCellIndex: [0, 0],
           settings: {
-            'border-type': 'border',
-            'border-color': '#ccc',
+            borderType: 'border',
+            borderColor: '#ccc',
           },
         },
       };
@@ -32,39 +32,33 @@ const HeadingWidget: DME.Widget = {
     {
       name: 'BorderType',
       settingComponent: 'table-border-type',
-      category: 'settings',
-      property: 'settings.border-type',
+      custom: true,
+      property: 'settings.borderType',
     },
     {
       name: 'Border Color',
       settingComponent: 'color',
-      category: 'settings',
-      property: 'settings.border-color',
+      property: 'settings.borderColor',
     },
     {
       name: 'Odd row background',
       settingComponent: 'color',
-      category: 'settings',
-      property: 'settings.odd-row-background',
+      property: 'settings.oddRowBackground',
     },
     {
       name: 'Row',
       settingComponent: 'table-row',
-      category: 'settings',
-      property: 'settings.row',
+      custom: true,
     },
     {
       name: 'Column',
       settingComponent: 'table-column',
-      category: 'settings',
-      property: 'settings.column',
+      custom: true,
     },
     {
       name: 'Table Header',
       settingComponent: 'table-header',
-      category: 'settings',
       custom: true,
-      property: 'setting.has-header',
     },
   ],
 };
