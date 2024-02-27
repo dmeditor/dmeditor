@@ -106,7 +106,7 @@ export namespace DMEData {
     settings?: {
       [index: string]: string | number;
     };
-    [index: string]: string | number | undefined | Record<string, string | number>;
+    [index: string]: string | number | undefined | Record<string, string | number> | Array<any>;
   }
 
   export interface Page {

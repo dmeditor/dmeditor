@@ -36,6 +36,12 @@ const HeadingWidget: DME.Widget = {
       property: 'settings.borderType',
     },
     {
+      name: 'Padding',
+      settingComponent: 'range',
+      property: 'settings.padding',
+      parameters: { min: 0, max: 40 },
+    },
+    {
       name: 'Border Color',
       settingComponent: 'color',
       property: 'settings.borderColor',

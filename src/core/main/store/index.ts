@@ -48,7 +48,7 @@ type Actions = {
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
-  getSelectedBlock: <T = DMEData.Block<DMEData.DefaultDataType>>() => DMEData.Block<T> | undefined;
+  getSelectedBlock: <T = DMEData.DefaultDataType>() => DMEData.Block<T> | undefined;
   getBlock: <T = DMEData.Block<DMEData.DefaultDataType>>(
     index: number,
   ) => DMEData.Block<T> | undefined;

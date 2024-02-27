@@ -12,7 +12,7 @@ const borderIconMap = new Map<BorderType, React.ReactNode>([
   ['border', <BorderAll />],
 ]);
 
-export default (props: { property: string; value?: BorderType }) => {
+export const TableBorderType = (props: { property: string; value?: BorderType }) => {
   const { value, property } = props;
   const { updateSelectedBlockProps } = useEditorStore();
 

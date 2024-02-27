@@ -16,7 +16,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   const { setActiveCellIndex: setActiveIndex } = useTableStore();
 
   const handleTextChange = (col: number, row: number, value: any) => {
-    updateSelectedBlock((data) => (data.value[col][row] = value));
+    updateSelectedBlock((data) => ((data.value as any[])[col][row] = value));
   };
 
   const handleActiveCellChange = (col: number, row: number) => {

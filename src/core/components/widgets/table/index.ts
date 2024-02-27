@@ -1,6 +1,6 @@
 import { registerWidget } from '..';
 import TableWidget from './definition';
-import { TableBorderType, TableColumn, TableHeader, TableRow } from './property-setting';
+import { TableBorderType, TableColumn, TableHeader, TableRow } from './settings';
 import Table from './Table';
 import { registerSettingComponent } from 'Core/setting-panel/property-setting';
 

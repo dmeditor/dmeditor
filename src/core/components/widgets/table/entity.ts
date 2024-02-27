@@ -1,5 +1,3 @@
-import { DMEData } from 'Core/index';
-
 type TableValue = any[][];
 export type BorderType = 'none' | 'rowBorder' | 'border';
 
@@ -8,6 +6,7 @@ export interface EntityTableBlock {
   activeCellIndex: [number, number];
   settings: {
     borderType?: BorderType;
+    padding?: number;
     borderColor?: string;
     oddRowBackground?: string;
     hasHeader?: boolean;

@@ -1,14 +1,17 @@
 import { BorderLeft, BorderRight, Delete } from '@mui/icons-material';
 
-import { useTableStore } from '../../store';
+import { useTableStore } from '../store';
 import { useEditorStore } from 'Core/index';
 import { PropertyButton, PropertyItem } from 'Core/utils';
 
-export default () => {
+export const TableColumn = () => {
   const { activeCellIndex, setActiveCellIndex } = useTableStore();
-  console.log('🚀 ~ activeCellIndex:', activeCellIndex);
   const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
-  const { data: blockData } = getSelectedBlock();
+  const { data: blockData } = getSelectedBlock() || {};
+
+  if (!blockData || !Array.isArray(blockData.value)) {
+    return null;
+  }
 
   const handleInsertCol = (position: 'left' | 'right') => {
     const activeColumnIndex = activeCellIndex[1];
@@ -17,12 +20,16 @@ export default () => {
       setActiveCellIndex([activeCellIndex[0], activeColumnIndex + 1]);
 
       updateSelectedBlock((data) => {
-        data.value.forEach((row: any[]) => row.splice(activeColumnIndex, 0, ''));
+        if (Array.isArray(data.value)) {
+          data.value?.forEach?.((row: any[]) => row.splice(activeColumnIndex, 0, ''));
+        }
       });
     } else {
       setActiveCellIndex([activeCellIndex[0], activeColumnIndex]);
       updateSelectedBlock((data) => {
-        data.value.forEach((row: any[]) => row.splice(activeColumnIndex + 1, 0, ''));
+        if (Array.isArray(data.value)) {
+          data.value.forEach((row: any[]) => row.splice(activeColumnIndex + 1, 0, ''));
+        }
       });
     }
   };
@@ -32,7 +39,9 @@ export default () => {
 
     setActiveCellIndex([activeCellIndex[0], activeColumnIndex - 1]);
     updateSelectedBlock((data) => {
-      data.value.forEach((row: any[]) => row.splice(activeColumnIndex, 1));
+      if (Array.isArray(data.value)) {
+        data.value.forEach((row: any[]) => row.splice(activeColumnIndex, 1));
+      }
     });
   };
 
@@ -47,7 +56,7 @@ export default () => {
       <PropertyButton
         title="Delete row"
         color="warning"
-        disabled={blockData.value[0].length === 1}
+        disabled={blockData.value?.[0].length === 1}
         onClick={handleDeleteCol}
       >
         <Delete />

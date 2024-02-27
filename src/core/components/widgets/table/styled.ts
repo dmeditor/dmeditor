@@ -10,12 +10,14 @@ export const StyledTable = styled.table<EntityTableBlock['settings']>((props) =>
     headerIsBold,
     headerAlign,
     headerBackground,
+    padding,
   } = props;
 
   return {
     borderCollapse: 'collapse',
     width: '100%',
     'th, td': {
+      padding: padding + 'px',
       border: borderType === 'none' ? 'none' : '1px solid ' + borderColor,
       ...(borderType === 'rowBorder'
         ? {
