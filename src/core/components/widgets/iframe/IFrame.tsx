@@ -116,6 +116,11 @@ export const iFrameDefinition: DME.Widget = {
   },
   settings: [
     {
+      name: 'Url',
+      property: '.value',
+      settingComponent: 'link',
+    },
+    {
       name: 'Width',
       property: 'settings.width',
       settingComponent: 'range',
