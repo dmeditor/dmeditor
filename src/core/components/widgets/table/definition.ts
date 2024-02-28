@@ -18,7 +18,6 @@ const HeadingWidget: DME.Widget = {
             ['11', '22'],
             ['33', '44'],
           ],
-          activeCellIndex: [0, 0],
           settings: {
             borderType: 'border',
             borderColor: '#ccc',

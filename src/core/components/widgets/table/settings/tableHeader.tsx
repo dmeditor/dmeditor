@@ -42,29 +42,33 @@ export const TableHeader = () => {
       <PropertyItem label="Has header">
         <Checkbox checked={!!data.settings?.['hasHeader']} onChange={toggleHeader} />
       </PropertyItem>
-      <PropertyItem label="Align">
-        {alignList.map((alignItem) => {
-          return (
-            <PropertyButton
-              title={alignItem.value}
-              key={alignItem.value}
-              onClick={() => handleAlignChange(alignItem.value)}
-              selected={data.settings?.['headerAlign'] === alignItem.value}
-            >
-              {alignItem.icon}
-            </PropertyButton>
-          );
-        })}
-      </PropertyItem>
-      <PropertyItem label="Is Bold">
-        <Checkbox checked={!!data.settings?.['headerIsBold']} onChange={toggleIsBold} />
-      </PropertyItem>
-      <PropertyItem label="Background">
-        <PickColor
-          color={data.settings?.['headerBackground'] as string}
-          onChange={handleBackgroundChange}
-        />
-      </PropertyItem>
+      {!!data.settings?.['hasHeader'] && (
+        <>
+          <PropertyItem label="Align">
+            {alignList.map((alignItem) => {
+              return (
+                <PropertyButton
+                  title={alignItem.value}
+                  key={alignItem.value}
+                  onClick={() => handleAlignChange(alignItem.value)}
+                  selected={data.settings?.['headerAlign'] === alignItem.value}
+                >
+                  {alignItem.icon}
+                </PropertyButton>
+              );
+            })}
+          </PropertyItem>
+          <PropertyItem label="Is Bold">
+            <Checkbox checked={!!data.settings?.['headerIsBold']} onChange={toggleIsBold} />
+          </PropertyItem>
+          <PropertyItem label="Background">
+            <PickColor
+              color={data.settings?.['headerBackground'] as string}
+              onChange={handleBackgroundChange}
+            />
+          </PropertyItem>
+        </>
+      )}
     </>
   );
 };

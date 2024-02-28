@@ -1,117 +1,135 @@
-import React, { useEffect, useState } from 'react';
-import {
-  FormatAlignCenter,
-  FormatAlignLeft,
-  FormatAlignRight,
-  PagesOutlined,
-} from '@mui/icons-material';
+import { useState } from 'react';
+import styled from '@emotion/styled';
+import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 
-import { StyleSettings } from '../../../../styles/StyleSettings';
-import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
-import { PropertyButton, PropertyItem, Ranger, useGetDevice, Util } from '../../../utils';
-import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
-import { BlockProperty } from 'Src/core/components/block-property';
-import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
+import type { DME, DMEData } from 'Core/index';
+import { useEditorStore } from 'Core/index';
 
-export const BlockIframe = (props: ToolRenderProps) => {
-  const [adding, setAdding] = useState(props.adding ? true : false);
-  const [url, setUrl] = useState(props.blockdata.data);
-  const [width, setWidth] = useState(props.blockdata.settings?.width || 400);
-  const [height, setHeight] = useState(props.blockdata.settings?.height || 500);
-  const [align, setAlign] = useState(props.blockdata.settings?.align || 'left');
-  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style || {});
-  const [styleIdentifier, setStyleIdentifier] = useState(props.blockdata.style);
+export type IFrameEntity = {
+  value: string;
+  settings: {
+    width: number;
+    height: number;
+    align: 'left' | 'center' | 'right';
+  };
+};
 
-  const isMobile = useGetDevice() === 'mobile';
+const IFrameContainer = styled.div<IFrameEntity['settings']>((props) => {
+  return {
+    display: 'flex',
+    justifyContent:
+      props.align === 'center' ? 'center' : props.align === 'right' ? 'flex-end' : 'flex-start',
+    width: '100%',
 
-  const submit = (val: any, type: string) => {
-    setUrl(val);
-    setAdding(false);
+    '& iframe': {
+      width: props.width,
+      height: props.height,
+    },
+  };
+});
+
+const ConfirmDialog = (props: { onConfirm: (value: string) => void; onCancel?: () => void }) => {
+  const [visible, setVisible] = useState(true);
+  const [url, setUrl] = useState('');
+
+  const handleConfirm = () => {
+    setVisible(false);
+    props.onConfirm(url);
   };
 
-  useEffect(() => {
-    props.onChange({
-      ...props.blockdata,
-      data: url,
-      settings: { width: width, height: height, align: align, style: commonSettings },
-      style: styleIdentifier,
-    });
-  }, [url, width, align, height, commonSettings, styleIdentifier]);
+  const handleClose = () => {
+    setVisible(false);
+    props.onCancel?.();
+  };
 
   return (
-    <div className={getCommonBlockCss('iframe', styleIdentifier)}>
-      {adding && (
-        <div>
-          <Util.renderBroseURL type={'IFrame'} onConfirm={submit} adding={adding} />
-        </div>
-      )}
-      {props.active && (
-        <BlockProperty blocktype="iframe" inBlock={props.inBlock}>
-          <PropertyItem label="Width">
-            <Ranger
-              min={300}
-              max={1000}
-              step={10}
-              defaultValue={width}
-              onChange={(v: number) => setWidth(v)}
-            />
-          </PropertyItem>
-          <PropertyItem label="Height">
-            <Ranger
-              min={300}
-              max={800}
-              step={10}
-              defaultValue={height}
-              onChange={(v: number) => setHeight(v)}
-            />
-          </PropertyItem>
-          <PropertyItem label="Align">
-            <PropertyButton selected={align === 'left'} onClick={() => setAlign('left')}>
-              <FormatAlignLeft />
-            </PropertyButton>
-            <PropertyButton selected={align === 'center'} onClick={() => setAlign('center')}>
-              <FormatAlignCenter />
-            </PropertyButton>
-            <PropertyButton selected={align === 'right'} onClick={() => setAlign('right')}>
-              <FormatAlignRight />
-            </PropertyButton>
-          </PropertyItem>
-          {Util.renderCustomProperty(props.blockdata)}
-          <StyleSettings
-            styleIdentifier={props.blockdata.style || ''}
-            blocktype="iframe"
-            onChange={(identifier: string) => setStyleIdentifier(identifier)}
-          />
-          <div>
-            <BlockSettings
-              commonSettings={commonSettings}
-              settingList={[]}
-              onChange={(settings) => setCommonSettings(settings)}
-              onDelete={props.onDelete}
-            />
-          </div>
-        </BlockProperty>
-      )}
-      {url && (
-        <div style={{ ...commonSettings, textAlign: align }}>
-          <iframe
-            src={url}
-            width={isMobile ? '100%' : width}
-            height={height}
-            frameBorder="0"
-          ></iframe>
-        </div>
-      )}
-    </div>
+    <Dialog open={visible} fullWidth>
+      <DialogContent>
+        <TextField
+          autoFocus
+          required
+          margin="dense"
+          name="url"
+          label="iframe url"
+          fullWidth
+          variant="standard"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleConfirm}>Confirm</Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
-export const toolIframe: ToolDefinition = {
-  type: 'iframe',
+export const IFrame = () => {
+  const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
+  const { data } = getSelectedBlock<IFrameEntity>() || {};
+
+  const handleConfirm = (value: string) => {
+    updateSelectedBlock((blockData) => {
+      blockData.value = value;
+    });
+  };
+
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <>
+      <ConfirmDialog onConfirm={handleConfirm} />
+      {!!data.value && (
+        <IFrameContainer {...data.settings}>
+          <iframe src={data.value} />
+        </IFrameContainer>
+      )}
+    </>
+  );
+};
+
+export const iFrameDefinition: DME.Widget = {
+  category: 'widget',
+  icon: 'PagesOutlinedIcon',
   name: 'IFrame',
-  menu: { category: 'basic', icon: <PagesOutlined /> },
-  initData: () => {
-    return { type: 'iframe', data: '', settings: { width: 400, height: 500, align: 'center' } };
+  type: 'iframe',
+  events: {
+    createBlock: (): DMEData.Block<IFrameEntity> => {
+      return {
+        id: 'iframe',
+        type: 'iframe',
+        data: {
+          value: '',
+          settings: {
+            width: 300,
+            height: 300,
+            align: 'center',
+          },
+        },
+      };
+    },
+    updateData: (settings, data) => {},
   },
-  render: (props: ToolRenderProps) => <BlockIframe {...props} />,
+  settings: [
+    {
+      name: 'Width',
+      property: 'settings.width',
+      settingComponent: 'range',
+      parameters: { min: 300, max: 1000 },
+    },
+    {
+      name: 'Height',
+      property: 'settings.height',
+      settingComponent: 'range',
+      parameters: { min: 300, max: 1000 },
+    },
+    {
+      name: 'Align',
+      property: 'settings.align',
+      settingComponent: 'align',
+    },
+  ],
 };

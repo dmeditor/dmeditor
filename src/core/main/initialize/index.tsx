@@ -8,7 +8,6 @@ import { toolCollapsableText } from '../../components/widgets/collapsable-text/C
 // import { toolImageText } from '../../components/widgets/image-text/ImageText';
 // import { toolContainerList } from '../../components/widgets/list/List';
 import Heading from '../../components/widgets/heading/Heading';
-import { toolIframe } from '../../components/widgets/iframe/IFrame';
 import { toolImage } from '../../components/widgets/image/Image';
 import { toolQuote } from '../../components/widgets/quote/Quote';
 import { toolText } from '../../components/widgets/text/Text';
@@ -23,7 +22,6 @@ registerTool(toolAccordion);
 registerTool(toolQuote);
 registerTool(toolVideo);
 registerTool(toolCode);
-registerTool(toolIframe);
 registerTool(toolCollapsableText);
 
 // registerTool(toolContainerList);

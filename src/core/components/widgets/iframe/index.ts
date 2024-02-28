@@ -1,3 +1,6 @@
-import { toolIframe } from './IFrame';
+import { registerWidget } from '../';
+import { IFrame, iFrameDefinition } from './IFrame';
 
-export { toolIframe }
+export default () => {
+  registerWidget(iFrameDefinition, IFrame);
+};
