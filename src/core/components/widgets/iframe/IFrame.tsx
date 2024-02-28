@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
+import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from 'Core/index';
 import { useEditorStore } from 'Core/index';
@@ -65,9 +66,9 @@ const ConfirmDialog = (props: { onConfirm: (value: string) => void; onCancel?: (
   );
 };
 
-export const IFrame = () => {
-  const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
-  const { data } = getSelectedBlock<IFrameEntity>() || {};
+export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
+  const { updateSelectedBlock } = useEditorStore();
+  const { data } = props.blockNode || {};
 
   const handleConfirm = (value: string) => {
     updateSelectedBlock((blockData) => {
@@ -99,7 +100,7 @@ export const iFrameDefinition: DME.Widget = {
   events: {
     createBlock: (): DMEData.Block<IFrameEntity> => {
       return {
-        id: 'iframe',
+        id: nanoid(),
         type: 'iframe',
         data: {
           value: '',
