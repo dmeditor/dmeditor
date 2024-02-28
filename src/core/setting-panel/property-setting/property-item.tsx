@@ -22,9 +22,9 @@ const widgetPropertySetting = (settingComponent: string) => {
     return str
       .split('-')
       .map((word, index) => {
-        if (index === 0) {
-          return word;
-        }
+        // if (index === 0) {
+        //   return word;
+        // }
         return word[0].toUpperCase() + word.slice(1);
       })
       .join('');
@@ -36,8 +36,6 @@ const widgetPropertySetting = (settingComponent: string) => {
   }
 
   // register component
-  // const MarginTop = React.lazy(() => import(`./margin-top/MarginTop`));
-  // Components[settingType] = React.lazy(() => import(`./${settingType}/${componentName}`));
   if (!isPropertyRegistered(settingComponent)) {
     registerSettingComponent(
       settingComponent,
