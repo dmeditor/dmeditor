@@ -10,7 +10,7 @@ import type { DME, DMEData } from 'Core/types/dmeditor';
 const HeadingWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'widget',
-  icon: 'TextFormatOutlined',
+  icon: 'ic-heading',
   name: 'Heading',
   type: 'heading',
   themeStyles: 'Theme heading',

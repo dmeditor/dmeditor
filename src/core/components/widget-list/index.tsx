@@ -8,6 +8,7 @@ import {
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
+import { SvgIcon } from '../icon';
 import {
   customDefinition,
   getWidget,
@@ -104,10 +105,9 @@ export const WidgetList = (props: WidgetListProps) => {
       {Object.keys(definitions)
         .filter((widget) => matchFilter(widget))
         .map((widgetType) =>
-          definitions[widgetType].isBaseWidget ? (
-            <></>
-          ) : (
+          definitions[widgetType].isBaseWidget ? null : (
             <MenuItem
+              icon={definitions[widgetType].icon}
               widget={widgetType}
               name={definitions[widgetType].name}
               baseName=""
@@ -149,12 +149,13 @@ export const WidgetList = (props: WidgetListProps) => {
 };
 
 const MenuItem = (props: {
+  icon?: string;
   widget: string;
   name: string;
   baseName: string;
   onClick: () => void;
 }) => {
-  const { widget, name, baseName, onClick } = props;
+  const { icon, widget, name, baseName, onClick } = props;
 
   return (
     <div className={itemStyle} onClick={onClick}>
@@ -163,7 +164,7 @@ const MenuItem = (props: {
           width: 30px;
         `}
       >
-        <Title />
+        {icon && SvgIcon({ name: icon, size: 20 })}
       </div>
       <div
         className={css`

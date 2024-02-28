@@ -14,7 +14,7 @@ import {
 import { nanoid } from 'nanoid';
 
 // import { HeadingMetaData } from 'Components/widgets/Heading';
-import HeadingWidget from '../components/widgets/heading/definition';
+import HeadingWidget from '../components/widgets/heading/src/definition';
 import { simpleCloneDeep } from './util';
 import { BlockData } from 'Src/ToolDefinition';
 
@@ -332,7 +332,7 @@ export const generateCommonBlockData = (type:string) =>{
 }
 
 export const getValueByPath = (path: string, blockData)=>{
-   const arr = path.split('.'); 
+   const arr = path.split('.');
   if(arr.length===1){
     return blockData[arr[0]];
   }else if(arr.length === 2){
