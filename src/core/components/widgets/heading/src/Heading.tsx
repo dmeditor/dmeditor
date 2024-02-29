@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { TitleOutlined } from '@mui/icons-material';
 
-import { BlockListRender } from '../../../main/renderer';
-import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
+import { BlockListRender } from '../../../../main/renderer';
+import { getCommonBlockCss, getStyleCss } from '../../../../main/renderer/BlockRender';
 import { EntityHeadingBlock } from './entity';
 import type { DME, DMEData } from 'Core/types';
 import { useEditorStore } from 'Src/core/main/store';
