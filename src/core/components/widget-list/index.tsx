@@ -120,6 +120,7 @@ export const WidgetList = (props: WidgetListProps) => {
         filterVariant(widget).map((variant) => (
           <MenuItem
             widget={widget + ':' + variant.identifier}
+            icon={widgetDefinition[widget].icon}
             name={variant.name}
             baseName={widgetDefinition[widget].name}
             onClick={() => props.onSelect(widget + ':' + variant.identifier)}
@@ -132,6 +133,7 @@ export const WidgetList = (props: WidgetListProps) => {
         preDefinedStyles[widget].map((option) => (
           <MenuItem
             widget={widget}
+            icon={widgetDefinition[widget.split(':')[0]].icon}
             name={option.name}
             baseName={getWidgetName(widget)}
             onClick={() => props.onSelect(widget, option.identifier)}
@@ -149,7 +151,7 @@ export const WidgetList = (props: WidgetListProps) => {
 };
 
 const MenuItem = (props: {
-  icon?: string;
+  icon?: any;
   widget: string;
   name: string;
   baseName: string;

@@ -5,7 +5,7 @@ import type { DME, DMEData } from 'Core/index';
 
 const HeadingWidget: DME.Widget = {
   category: 'widget',
-  icon: 'GridOn',
+  icon: 'table',
   name: 'Table',
   type: 'table',
   events: {

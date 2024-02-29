@@ -1,3 +1,6 @@
+import { ViewWeekOutlined } from '@mui/icons-material';
+
+import { registerIcon } from '../../icon/icon-data';
 import { Layout3Columns, layout3ColumnsWidget } from './Layout3Columns';
 import { Layout3ColumnsSetting } from './settings/Layout3ColumnsSetting';
 import {
@@ -9,6 +12,7 @@ import { registerSettingComponent } from 'Src/core/setting-panel/register';
 
 const register = () => {
   registerWidget(layout3ColumnsWidget, Layout3Columns);
+  registerIcon({ name: 'layout-3columns', component: ViewWeekOutlined });
   registerSettingComponent('layout-3columns/setting', Layout3ColumnsSetting);
   registerWidgetStyleOption('layout-3columns', [
     {

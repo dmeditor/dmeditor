@@ -6,7 +6,7 @@ import { DME, DMEData } from 'Src/core/types/dmeditor';
 
 const listWidget: DME.Widget = {
   category: 'section',
-  icon: 'TextFormatOutlined',
+  icon: 'list',
   name: 'List',
   type: 'list',
   events: {

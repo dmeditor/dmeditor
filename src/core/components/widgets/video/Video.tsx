@@ -114,7 +114,7 @@ export const VideoSource = () => {
 
 export const VideoDefinition: DME.Widget = {
   category: 'widget',
-  icon: 'PagesOutlinedIcon',
+  icon: 'video',
   name: 'Video',
   type: 'video',
   events: {

@@ -7,7 +7,7 @@ import { DME } from 'Src/core/types';
 const gridWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'layout',
-  icon: 'TextFormatOutlined',
+  icon: 'grid',
   name: 'Grid',
   type: 'grid',
   allowedTypes: '^(?!.*grid).*$',

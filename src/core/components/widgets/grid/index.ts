@@ -1,9 +1,13 @@
-import { registerWidget } from "..";
-import gridWidget from "./definition";
-import { Grid } from "./Grid";
+import { GridViewOutlined } from '@mui/icons-material';
 
-const register = () =>{
-    registerWidget(gridWidget, Grid )
-}
+import { registerWidget } from '..';
+import { registerIcon } from '../../icon/icon-data';
+import gridWidget from './definition';
+import { Grid } from './Grid';
 
-export default register ;
+const register = () => {
+  registerWidget(gridWidget, Grid);
+  registerIcon({ name: 'grid', component: GridViewOutlined });
+};
+
+export default register;

@@ -6,7 +6,7 @@ import { DME } from 'Src/core/types/dmeditor';
 
 const layout3ColumnsWidget: DME.Widget = {
   category: 'layout',
-  icon: 'TextFormatOutlined',
+  icon: 'layout-3columns',
   name: '3 Columns layout',
   type: 'layout-3columns',
   events: {
