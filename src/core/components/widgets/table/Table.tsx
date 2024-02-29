@@ -23,9 +23,10 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
     setActiveIndex([col, row]);
   };
   const tableValue = settings['hasHeader'] ? value.slice(1) : value;
+  const { width } = useTableStore();
 
   return (
-    <StyledTable className={rootClasses} id={id} {...settings}>
+    <StyledTable className={rootClasses} id={id} {...settings} style={{ width: width }}>
       {settings['hasHeader'] && (
         <thead>
           <tr className="dme-w-tr">

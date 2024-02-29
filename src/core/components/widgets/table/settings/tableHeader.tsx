@@ -1,10 +1,13 @@
+import { useEffect, useState } from 'react';
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 import { Checkbox } from '@mui/material';
+import { debounce } from 'lodash';
 
 import Align from '../../../../setting-panel/property-setting/align/Align';
 import Color from '../../../../setting-panel/property-setting/color/Color';
+import { useTableStore } from '../store';
 import { useEditorStore } from 'Core/index';
-import { PickColor, PropertyButton, PropertyItem } from 'Core/utils';
+import { PickColor, PropertyButton, PropertyItem, Ranger } from 'Core/utils';
 
 type AlignType = 'left' | 'center' | 'right';
 const alignList: { value: AlignType; icon: React.ReactNode }[] = [
@@ -16,6 +19,12 @@ const alignList: { value: AlignType; icon: React.ReactNode }[] = [
 export const TableHeader = () => {
   const { getSelectedBlock, updateSelectedBlockProps } = useEditorStore();
   const { data } = getSelectedBlock() || {};
+  const { setWidth } = useTableStore();
+  const [test, setTest] = useState(20);
+
+  useEffect(() => {
+    setWidth(test);
+  }, [test]);
 
   if (!data) {
     return null;
@@ -67,6 +76,7 @@ export const TableHeader = () => {
               onChange={handleBackgroundChange}
             />
           </PropertyItem>
+          <Ranger defaultValue={test} min={10} max={1000} onChange={setTest} />
         </>
       )}
     </>

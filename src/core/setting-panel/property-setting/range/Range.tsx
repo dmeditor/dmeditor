@@ -26,7 +26,7 @@ const Range = (props: {
       defaultValue={currentValue}
       min={parameters?.min || 1}
       max={parameters?.max || 5}
-      step={10}
+      step={1}
       onChange={handleChange}
     ></Ranger>
   );
