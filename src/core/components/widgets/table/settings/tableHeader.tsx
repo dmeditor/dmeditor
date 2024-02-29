@@ -19,8 +19,13 @@ const alignList: { value: AlignType; icon: React.ReactNode }[] = [
 export const TableHeader = () => {
   const { getSelectedBlock, updateSelectedBlockProps } = useEditorStore();
   const { data } = getSelectedBlock() || {};
-  const { width2, setWidth2, setWidth } = useTableStore();
+  const { width2, setWidth2, setWidth, setColor: setStateColor } = useTableStore();
   const [test, setTest] = useState(20);
+  const [color, setColor] = useState('#cccccc');
+
+  useEffect(() => {
+    setStateColor(color);
+  }, [color]);
 
   useEffect(() => {
     setWidth(test);
@@ -76,8 +81,9 @@ export const TableHeader = () => {
               onChange={handleBackgroundChange}
             />
           </PropertyItem>
-          <Ranger defaultValue={test} min={10} max={50} step={1} onChange={setTest} />
+          <Ranger defaultValue={test} min={10} max={500} step={1} onChange={setTest} />
           <Ranger defaultValue={width2} min={10} max={50} step={1} onChange={setWidth2} />
+          <PickColor color={color} onChange={setColor} />
         </>
       )}
     </>
