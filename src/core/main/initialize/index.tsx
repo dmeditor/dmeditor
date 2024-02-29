@@ -13,7 +13,6 @@ import Heading from '../../components/widgets/heading/src/Heading';
 import { toolImage } from '../../components/widgets/image/Image';
 import { toolQuote } from '../../components/widgets/quote/Quote';
 import { toolText } from '../../components/widgets/text/Text';
-import { toolVideo } from '../../components/widgets/video/Video';
 
 registerTool(toolText);
 // registerTool(toolImageText);
@@ -22,7 +21,6 @@ registerTool(toolImage);
 // registerTool(toolBlockTab);
 registerTool(toolAccordion);
 registerTool(toolQuote);
-registerTool(toolVideo);
 registerTool(toolCode);
 registerTool(toolCollapsableText);
 

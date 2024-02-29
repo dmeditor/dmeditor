@@ -1,113 +1,161 @@
-import { useEffect, useState } from 'react';
-import { VideocamOutlined } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { useState } from 'react';
+import styled from '@emotion/styled';
+import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
+import { nanoid } from 'nanoid';
 
-import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
-import { BlockProperty } from 'Src/core/components/block-property';
-import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
-import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
-import { PropertyItem, Ranger, Util } from '../../../utils';
+import { useBooleanStore } from './store';
+import type { DME, DMEData } from 'Core/index';
+import { useEditorStore } from 'Core/index';
+import { PropertyItem } from 'Core/utils';
 
-export const BlockVideo = (props: ToolRenderProps) => {
-  const [width, setWidth] = useState(props.blockdata.settings?.width || 300);
-  const [height, setHeight] = useState(props.blockdata.settings?.height || 240);
-  const [adding, setAdding] = useState(props.adding ? true : false);
-  const [videoUrl, setVideoUrl] = useState(props.blockdata.data);
-  const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style || {});
-  const handleClickOpen = () => {
-    setAdding(false);
-    setTimeout(() => {
-      setAdding(true);
-    }, 10);
+export type VideoEntity = {
+  value: string;
+  settings: {
+    width: number;
+    height: number;
+    align: 'left' | 'center' | 'right';
+  };
+};
+
+const Container = styled.div<VideoEntity['settings']>((props) => {
+  return {
+    display: 'flex',
+    justifyContent:
+      props.align === 'center' ? 'center' : props.align === 'right' ? 'flex-end' : 'flex-start',
+    width: '100%',
+
+    '& video': {
+      width: props.width,
+      height: props.height,
+    },
+  };
+});
+
+const ConfirmDialog = (props: {
+  value?: string;
+  onConfirm: (value: string) => void;
+  onCancel?: () => void;
+}) => {
+  const { value: visible, toggle: setVisible } = useBooleanStore();
+  const [url, setUrl] = useState(props.value ?? '');
+
+  const handleConfirm = () => {
+    setVisible(false);
+    props.onConfirm(url);
   };
 
-  const submitVideo = (val: any, type: string) => {
-    setVideoUrl(val);
-    setAdding(false);
+  const handleClose = () => {
+    setVisible(false);
+    props.onCancel?.();
   };
-
-  useEffect(() => {
-    props.onChange({
-      ...props.blockdata,
-      data: videoUrl,
-      settings: { width: width, height: height, style: commonSettings },
-    });
-  }, [videoUrl, width, height, commonSettings]);
 
   return (
-    <div
-      style={{ width: width, height: height, ...commonSettings }}
-      className={getCommonBlockCss('video')}
-    >
-      {adding && (
-        <div>
-          <Util.renderBroseURL
-            defalutValue={videoUrl}
-            type={'Video'}
-            onConfirm={submitVideo}
-            adding={adding}
-          />
-        </div>
-      )}
-      {props.active && (
-        <BlockProperty blocktype="video" inBlock={props.inBlock}>
-          <PropertyItem label="Width">
-            <Ranger
-              min={50}
-              max={800}
-              step={1}
-              defaultValue={width}
-              onChange={(v) => {
-                setWidth(v);
-              }}
-            />
-          </PropertyItem>
-          <PropertyItem label="Height">
-            <Ranger
-              min={50}
-              max={800}
-              step={1}
-              defaultValue={height}
-              onChange={(v) => {
-                setHeight(v);
-              }}
-            />
-          </PropertyItem>
-          <PropertyItem label="Source">
-            <Button onClick={handleClickOpen}>Choose</Button>
-          </PropertyItem>
-
-          {Util.renderCustomProperty(props.blockdata)}
-          <div>
-            <BlockSettings
-              commonSettings={commonSettings}
-              settingList={['marginTop']}
-              onChange={(settings) => {
-                setCommonSettings(settings);
-              }}
-              onDelete={props.onDelete}
-            />
-          </div>
-        </BlockProperty>
-      )}
-      <video width={'100%'} height={'100%'} controls src={videoUrl}>
-        <object data={videoUrl} width={'100%'} height={'100%'}>
-          <embed src={videoUrl} width={'100%'} height={'100%'} />
-        </object>
-      </video>
-    </div>
+    <Dialog open={visible} fullWidth>
+      <DialogContent>
+        <TextField
+          autoFocus
+          required
+          margin="dense"
+          name="url"
+          label="video url"
+          fullWidth
+          variant="standard"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleConfirm}>Confirm</Button>
+      </DialogActions>
+    </Dialog>
   );
 };
-export const toolVideo: ToolDefinition = {
-  type: 'video',
+
+export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
+  const { updateSelectedBlock } = useEditorStore();
+  const { data } = props.blockNode || {};
+
+  const handleConfirm = (value: string) => {
+    updateSelectedBlock((blockData) => {
+      blockData.value = value;
+    });
+  };
+
+  if (!data) {
+    return null;
+  }
+
+  const videoUrl = data.value;
+
+  return (
+    <>
+      <ConfirmDialog onConfirm={handleConfirm} value={videoUrl} />
+      <Container {...data.settings}>
+        <video controls src={videoUrl}>
+          <object width="100%" data={videoUrl}>
+            <embed width="100%" src={videoUrl} />
+          </object>
+        </video>
+      </Container>
+    </>
+  );
+};
+
+export const VideoSource = () => {
+  const { toggle: setVisible } = useBooleanStore();
+
+  return (
+    <PropertyItem label="Source">
+      <Button onClick={() => setVisible(true)}>Select Video</Button>
+    </PropertyItem>
+  );
+};
+
+export const VideoDefinition: DME.Widget = {
+  category: 'widget',
+  icon: 'PagesOutlinedIcon',
   name: 'Video',
-  menu: { category: 'basic', icon: <VideocamOutlined /> },
-  initData: () => {
-    return {
-      type: 'video',
-      data: 'https://www.runoob.com/try/demo_source/movie.ogg',
-      settings: {},
-    };
+  type: 'video',
+  events: {
+    createBlock: (): DMEData.Block<VideoEntity> => {
+      return {
+        id: nanoid(),
+        type: 'video',
+        data: {
+          value: 'https://www.runoob.com/try/demo_source/movie.ogg',
+          settings: {
+            width: 300,
+            height: 240,
+            align: 'center',
+          },
+        },
+      };
+    },
+    updateData: (settings, data) => {},
   },
-  render: (props: ToolRenderProps) => <BlockVideo {...props} />,
+  settings: [
+    {
+      name: 'Width',
+      property: 'settings.width',
+      settingComponent: 'range',
+      parameters: { min: 50, max: 800 },
+    },
+    {
+      name: 'Height',
+      property: 'settings.height',
+      settingComponent: 'range',
+      parameters: { min: 50, max: 800 },
+    },
+    {
+      name: 'Align',
+      property: 'settings.align',
+      settingComponent: 'align',
+    },
+    {
+      name: 'Source',
+      settingComponent: 'video-source',
+      custom: true,
+    },
+  ],
 };
