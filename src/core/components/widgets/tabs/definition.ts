@@ -4,7 +4,7 @@ import type { DME } from 'Core/types';
 const TabsWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'widget',
-  icon: 'TextFormatOutlined',
+  icon: 'tabs',
   name: 'Tabs',
   type: 'tabs',
   events: {

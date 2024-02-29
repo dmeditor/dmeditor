@@ -1,7 +1,11 @@
-import DMTabs from './render';
-import TabsWidget from './definition';
-import { registerWidget } from '..';
+import { TabOutlined } from '@mui/icons-material';
 
-export default ()=>{
-    registerWidget(TabsWidget, DMTabs);
-}
+import { registerWidget } from '..';
+import { registerIcon } from '../../icon/icon-data';
+import TabsWidget from './definition';
+import DMTabs from './render';
+
+export default () => {
+  registerWidget(TabsWidget, DMTabs);
+  registerIcon({ name: 'tabs', component: TabOutlined });
+};
