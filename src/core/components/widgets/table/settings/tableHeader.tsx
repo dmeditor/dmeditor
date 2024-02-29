@@ -19,7 +19,7 @@ const alignList: { value: AlignType; icon: React.ReactNode }[] = [
 export const TableHeader = () => {
   const { getSelectedBlock, updateSelectedBlockProps } = useEditorStore();
   const { data } = getSelectedBlock() || {};
-  const { setWidth } = useTableStore();
+  const { width2, setWidth2, setWidth } = useTableStore();
   const [test, setTest] = useState(20);
 
   useEffect(() => {
@@ -76,7 +76,8 @@ export const TableHeader = () => {
               onChange={handleBackgroundChange}
             />
           </PropertyItem>
-          <Ranger defaultValue={test} min={10} max={1000} onChange={setTest} />
+          <Ranger defaultValue={test} min={10} max={50} step={1} onChange={setTest} />
+          <Ranger defaultValue={width2} min={10} max={50} step={1} onChange={setWidth2} />
         </>
       )}
     </>

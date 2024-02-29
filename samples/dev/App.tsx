@@ -14,7 +14,7 @@ registerTheme({
     --project-main-bg-color: #fbadad;
 
     /*background: var(--project-main-bg-color);  */
-    
+
     /*todo: use css variable*/
   `,
 });
@@ -47,145 +47,145 @@ const App = () => {
       },
       type: 'heading',
     },
-    {
-      id: `widget-${nanoid()}`,
-      style: { _: 'big-space' },
-      data: {
-        value: 'This is a heading 2',
-        level: 2,
-        settings: {
-          align: 'left',
-        },
-      },
-      type: 'heading:gradient',
-    },
-    {
-      id: `widget-${nanoid()}`,
-      data: {
-        value: 'This is a heading 2',
-        level: 2,
-        settings: {
-          align: 'right',
-          // value: '',
-        },
-      },
-      type: 'heading',
-    },
-    {
-      id: `widget-${nanoid()}`,
-      data: {
-        columns: 3,
-      },
-      type: 'grid',
-      children: [
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 1 ',
-            level: 2,
-            settings: {},
-          },
-          type: 'heading',
-        },
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 2',
-            level: 2,
-            settings: {},
-          },
-          type: 'heading',
-        },
-        {
-          id: `widget-${nanoid()}`,
-          type: 'list',
-          data: {},
-          children: [
-            {
-              id: `widget-${nanoid()}`,
-              data: {
-                value: 'This is a heading 1 in List ',
-                level: 2,
-                settings: {},
-              },
-              type: 'heading',
-            },
-            {
-              id: `widget-${nanoid()}`,
-              data: {
-                value: 'This is a heading 2 in List',
-                level: 2,
-                settings: {},
-              },
-              type: 'heading',
-            },
-            {
-              id: `widget-${nanoid()}`,
-              data: {
-                value: 'This is a heading 3 in List',
-                level: 2,
-                settings: {},
-              },
-              type: 'heading',
-            },
-          ],
-        },
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 3',
-            level: 2,
-            settings: {},
-          },
-          type: 'heading',
-        },
-      ],
-    },
-    {
-      id: `widget-${nanoid()}`,
-      data: {
-        value: 'This is a heading 3',
-        level: 2,
-        settings: {},
-      },
-      type: 'heading:gradient',
-    },
-    {
-      id: `widget-${nanoid()}`,
-      type: 'list',
-      data: {
-        direction: 'horizontal',
-      },
-      children: [
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 1 in List ',
-            level: 2,
-            settings: {},
-          },
-          type: 'heading',
-        },
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 2 in List',
-            level: 2,
-            settings: {},
-          },
-          type: 'heading',
-        },
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 3 in List',
-            level: 2,
-            settings: {},
-          },
-          type: 'heading',
-        },
-      ],
-    },
+    // {
+    //   id: `widget-${nanoid()}`,
+    //   style: { _: 'big-space' },
+    //   data: {
+    //     value: 'This is a heading 2',
+    //     level: 2,
+    //     settings: {
+    //       align: 'left',
+    //     },
+    //   },
+    //   type: 'heading:gradient',
+    // },
+    // {
+    //   id: `widget-${nanoid()}`,
+    //   data: {
+    //     value: 'This is a heading 2',
+    //     level: 2,
+    //     settings: {
+    //       align: 'right',
+    //       // value: '',
+    //     },
+    //   },
+    //   type: 'heading',
+    // },
+    // {
+    //   id: `widget-${nanoid()}`,
+    //   data: {
+    //     columns: 3,
+    //   },
+    //   type: 'grid',
+    //   children: [
+    //     {
+    //       id: `widget-${nanoid()}`,
+    //       data: {
+    //         value: 'This is a heading 1 ',
+    //         level: 2,
+    //         settings: {},
+    //       },
+    //       type: 'heading',
+    //     },
+    //     {
+    //       id: `widget-${nanoid()}`,
+    //       data: {
+    //         value: 'This is a heading 2',
+    //         level: 2,
+    //         settings: {},
+    //       },
+    //       type: 'heading',
+    //     },
+    //     {
+    //       id: `widget-${nanoid()}`,
+    //       type: 'list',
+    //       data: {},
+    //       children: [
+    //         {
+    //           id: `widget-${nanoid()}`,
+    //           data: {
+    //             value: 'This is a heading 1 in List ',
+    //             level: 2,
+    //             settings: {},
+    //           },
+    //           type: 'heading',
+    //         },
+    //         {
+    //           id: `widget-${nanoid()}`,
+    //           data: {
+    //             value: 'This is a heading 2 in List',
+    //             level: 2,
+    //             settings: {},
+    //           },
+    //           type: 'heading',
+    //         },
+    //         {
+    //           id: `widget-${nanoid()}`,
+    //           data: {
+    //             value: 'This is a heading 3 in List',
+    //             level: 2,
+    //             settings: {},
+    //           },
+    //           type: 'heading',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       id: `widget-${nanoid()}`,
+    //       data: {
+    //         value: 'This is a heading 3',
+    //         level: 2,
+    //         settings: {},
+    //       },
+    //       type: 'heading',
+    //     },
+    //   ],
+    // },
+    // {
+    //   id: `widget-${nanoid()}`,
+    //   data: {
+    //     value: 'This is a heading 3',
+    //     level: 2,
+    //     settings: {},
+    //   },
+    //   type: 'heading:gradient',
+    // },
+    // {
+    //   id: `widget-${nanoid()}`,
+    //   type: 'list',
+    //   data: {
+    //     direction: 'horizontal',
+    //   },
+    //   children: [
+    //     {
+    //       id: `widget-${nanoid()}`,
+    //       data: {
+    //         value: 'This is a heading 1 in List ',
+    //         level: 2,
+    //         settings: {},
+    //       },
+    //       type: 'heading',
+    //     },
+    //     {
+    //       id: `widget-${nanoid()}`,
+    //       data: {
+    //         value: 'This is a heading 2 in List',
+    //         level: 2,
+    //         settings: {},
+    //       },
+    //       type: 'heading',
+    //     },
+    //     {
+    //       id: `widget-${nanoid()}`,
+    //       data: {
+    //         value: 'This is a heading 3 in List',
+    //         level: 2,
+    //         settings: {},
+    //       },
+    //       type: 'heading',
+    //     },
+    //   ],
+    // },
   ];
   useEffect(() => {
     // editorRef.current.setDesingerJson(jsonString(data))
