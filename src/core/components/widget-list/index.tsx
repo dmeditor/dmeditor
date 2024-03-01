@@ -37,6 +37,7 @@ const itemStyle = css`
   cursor: pointer;
   overflow-x: hidden;
   border: 1px solid #f0f0f0;
+  align-items: center;
 
   &:hover {
     background: #f0f0f0;

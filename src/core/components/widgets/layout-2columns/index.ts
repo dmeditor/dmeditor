@@ -1,5 +1,5 @@
 import { registerIcon } from '../../icon/icon-data';
-import Icon from './icon.svg';
+import Icon from './icon/icon.svg';
 import { Layout2Columns, layout2ColumnsWidget } from './Layout2Columns';
 import {
   registerWidget,

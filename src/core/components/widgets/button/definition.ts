@@ -4,7 +4,7 @@ import { DME, DMEData } from 'Src/core/types/dmeditor';
 
 const buttonWidget: DME.Widget = {
   category: 'widget',
-  icon: 'TextFormatOutlined',
+  icon: 'button',
   name: 'Button',
   type: 'button',
   events: {

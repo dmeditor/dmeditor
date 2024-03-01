@@ -4,9 +4,11 @@ import { registerWidget, registerWidgetStyle } from '..';
 import { registerIcon } from '../../icon/icon-data';
 import { Button } from './Button';
 import buttonWidget from './definition';
+import Icon from './icon/icon.svg';
 
 const register = () => {
   registerWidget(buttonWidget, Button);
+  registerIcon({ name: 'button', component: Icon });
   registerWidgetStyle('button', {
     identifier: 'type',
     display: 'inline-block',
