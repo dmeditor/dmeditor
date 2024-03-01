@@ -3,10 +3,8 @@ import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-import { useBooleanStore } from './store';
 import type { DME, DMEData } from 'Core/index';
 import { useEditorStore } from 'Core/index';
-import { PropertyItem } from 'Core/utils';
 
 export type VideoEntity = {
   value: string;
@@ -36,7 +34,7 @@ const ConfirmDialog = (props: {
   onConfirm: (value: string) => void;
   onCancel?: () => void;
 }) => {
-  const { value: visible, toggle: setVisible } = useBooleanStore();
+  const [visible, setVisible] = useState(true);
   const [url, setUrl] = useState(props.value ?? '');
 
   const handleConfirm = () => {
@@ -74,7 +72,8 @@ const ConfirmDialog = (props: {
 
 export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
   const { updateSelectedBlock } = useEditorStore();
-  const { data } = props.blockNode || {};
+  const { rootClasses } = props;
+  const { data } = props.blockNode;
 
   const handleConfirm = (value: string) => {
     updateSelectedBlock((blockData) => {
@@ -91,7 +90,7 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
   return (
     <>
       <ConfirmDialog onConfirm={handleConfirm} value={videoUrl} />
-      <Container {...data.settings}>
+      <Container {...data.settings} className={rootClasses}>
         <video controls src={videoUrl}>
           <object width="100%" data={videoUrl}>
             <embed width="100%" src={videoUrl} />
@@ -99,16 +98,6 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
         </video>
       </Container>
     </>
-  );
-};
-
-export const VideoSource = () => {
-  const { toggle: setVisible } = useBooleanStore();
-
-  return (
-    <PropertyItem label="Source">
-      <Button onClick={() => setVisible(true)}>Select Video</Button>
-    </PropertyItem>
   );
 };
 
@@ -123,7 +112,7 @@ export const VideoDefinition: DME.Widget = {
         id: nanoid(),
         type: 'video',
         data: {
-          value: 'https://www.runoob.com/try/demo_source/movie.ogg',
+          value: '',
           settings: {
             width: 300,
             height: 240,
@@ -153,9 +142,9 @@ export const VideoDefinition: DME.Widget = {
       settingComponent: 'align',
     },
     {
-      name: 'Source',
-      settingComponent: 'video-source',
-      custom: true,
+      name: 'Url',
+      settingComponent: 'link',
+      property: '.value',
     },
   ],
 };
