@@ -6,7 +6,7 @@ import { DME } from 'Src/core/types/dmeditor';
 
 const layout2ColumnsWidget: DME.Widget = {
   category: 'layout',
-  icon: 'TextFormatOutlined',
+  icon: 'layout-2columns',
   name: '2 Columns layout',
   type: 'layout-2columns',
   events: {

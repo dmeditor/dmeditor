@@ -1,3 +1,5 @@
+import { registerIcon } from '../../icon/icon-data';
+import Icon from './icon.svg';
 import { Layout2Columns, layout2ColumnsWidget } from './Layout2Columns';
 import {
   registerWidget,
@@ -7,6 +9,7 @@ import {
 
 const register = () => {
   registerWidget(layout2ColumnsWidget, Layout2Columns);
+  registerIcon({ name: 'layout-2columns', component: Icon });
   registerWidgetStyleOption('layout-2columns', [
     {
       identifier: 'border',
