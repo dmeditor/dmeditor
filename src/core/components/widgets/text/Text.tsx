@@ -39,6 +39,7 @@ const Text = (props: any) => {
   const {
     data: { value },
   } = blockNode;
+  console.log('wing', value);
 
   // const [value, setValue] = useState(props.blockdata.data);
   // const [config, setConfig] = useState(props.blockdata.settings?.config || null);
@@ -261,16 +262,23 @@ const Text = (props: any) => {
   }, [isFocus]);
 
   const change = () => {};
+  useEffect(() => {
+    // set the value of editor
+    // SlateFun.setValue(editor, value);
+  }, [value]);
 
   return (
     <div className={rootClasses}>
-      <Slate editor={editor} value={value} onChange={(v) => change(v)}>
+      <Slate
+        editor={editor}
+        value={value}
+        // onChange={(v) => change(v)}
+      >
         <div>
-          <SlateFun.HoveringToolbar
+          {/* <SlateFun.HoveringToolbar
             //config={config ? config.hover_toolbar : null}
-            config={true}
             changeDialogLink={changeDialogLinkfun}
-          />
+          /> */}
           <Editable
             readOnly={props.active ? false : true}
             renderLeaf={renderLeaf}

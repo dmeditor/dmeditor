@@ -3,22 +3,29 @@ import { KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
 import { Button, ButtonProps, Collapse, Grid, InputLabel, Tooltip } from '@mui/material';
 
 export const PropertyItem = (props: {
-  label: string;
+  label?: string;
   autoWidth?: boolean;
   vertical?: boolean;
   children: any;
 }) => {
+  const { label } = props;
   const autoWidth = props.autoWidth ? true : false;
   const vertical = props.vertical ? true : false;
 
-  return (
+  return label ? (
     <Grid container spacing={2} columns={12}>
       <Grid item xs={autoWidth ? false : vertical ? 12 : 3}>
-        <InputLabel title={props.label} style={{ fontSize: '14px', lineHeight: 2 }}>{props.label}</InputLabel>
+        <InputLabel title={props.label} style={{ fontSize: '14px', lineHeight: 2 }}>
+          {props.label}
+        </InputLabel>
       </Grid>
       <Grid item sx={{ padding: 1 }} xs={autoWidth ? false : vertical ? 12 : 9}>
         {props.children}
       </Grid>
+    </Grid>
+  ) : (
+    <Grid item sx={{ padding: 1 }} xs={autoWidth ? false : vertical ? 12 : 12}>
+      {props.children}
     </Grid>
   );
 };
