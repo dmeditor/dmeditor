@@ -27,9 +27,6 @@ const RichText = (props: { property: string; value: string }) => {
     <div
       className={css`
         border: 1px solid #dddddd;
-        min-height: 300px;
-        resize: vertical;
-        overflow: auto;
       `}
     >
       <Slate
@@ -55,7 +52,7 @@ const RichText = (props: { property: string; value: string }) => {
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          style={{ padding: 10 }}
+          style={{ padding: 10, minHeight: 160, resize: 'vertical', overflow: 'auto' }}
           placeholder="Enter some rich text…"
           // spellCheck
           // autoFocus
