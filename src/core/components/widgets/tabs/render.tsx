@@ -26,7 +26,6 @@ interface DMTabsProps {
 }
 
 const DMTabs = (props: DMTabsProps) => {
-  console.log('wing DMTabs', props);
   const {
     blockNode: {
       data: { children },

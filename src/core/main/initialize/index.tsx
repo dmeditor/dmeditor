@@ -14,7 +14,7 @@ import { toolImage } from '../../components/widgets/image/Image';
 import { toolQuote } from '../../components/widgets/quote/Quote';
 import { toolText } from '../../components/widgets/text/Text';
 
-registerTool(toolText);
+// registerTool(toolText);
 // registerTool(toolImageText);
 registerTool(toolImage);
 // registerTool(Heading);

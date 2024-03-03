@@ -1,7 +1,10 @@
-export {}
+export {};
 
 declare global {
   interface Window {
-    DMEditor: any
+    DMEditor: any;
   }
 }
+
+// svg
+declare module '*.svg';

@@ -64,7 +64,7 @@ type Actions = {
   updateSelectedBlock: <Type = DMEData.DefaultDataType>(
     callback: (blockData: Type) => void,
   ) => void;
-  updateSelectedBlockProps: (propName: string, propValue: string | number) => void;
+  updateSelectedBlockProps: (propName: string, propValue: string | number | Array<Object>) => void;
   updateSelectedBlockStyle: (value: string, styleIdentifier: string) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
@@ -361,7 +361,7 @@ const useEditorStore = create<Store & Actions>()(
         }
       });
     },
-    updateSelectedBlockProps: (propName: string, propValue: string | number) => {
+    updateSelectedBlockProps: (propName, propValue) => {
       set((state) => {
         if (!propName) {
           console.error('Invalid propName', propName);

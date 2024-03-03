@@ -1,6 +1,16 @@
 import React, { PropsWithChildren, Ref } from 'react';
 import ReactDOM from 'react-dom';
 import { css, cx } from '@emotion/css';
+import {
+  FormatAlignCenter,
+  FormatAlignJustify,
+  FormatAlignLeft,
+  FormatAlignRight,
+  FormatListBulleted,
+  FormatListNumbered,
+} from '@mui/icons-material';
+import { Editor, Element as SlateElement } from 'slate';
+import { useSlate } from 'slate-react';
 
 interface BaseProps {
   className: string;
@@ -9,7 +19,7 @@ interface BaseProps {
 // type OrNull<T> = T | null
 type OrNull<T> = T;
 
-export const Buttons = React.forwardRef(
+const Button = React.forwardRef(
   (
     {
       className,
@@ -212,3 +222,57 @@ export const MenuR = React.forwardRef(
     />
   ),
 );
+
+export const getBlockButtonIcon = ({ formats }: any) => {
+  let ele: any;
+  if (formats === 'left') {
+    ele = <FormatAlignLeft />;
+  }
+  if (formats === 'center') {
+    ele = <FormatAlignCenter />;
+  }
+  if (formats === 'right') {
+    ele = <FormatAlignRight />;
+  }
+  if (formats === 'justify') {
+    ele = <FormatAlignJustify />;
+  }
+  if (formats === 'numbered-list') {
+    ele = <FormatListNumbered />;
+  }
+  if (formats === 'bulleted-list') {
+    ele = <FormatListBulleted />;
+  }
+  return ele;
+};
+
+const isBlockActive = (editor: any, format: any, blockType = 'type') => {
+  const { selection } = editor;
+  if (!selection) return false;
+
+  const [match] = Array.from(
+    Editor.nodes(editor, {
+      at: Editor.unhangRange(editor, selection),
+      match: (n) => !Editor.isEditor(n) && SlateElement.isElement(n) && n[blockType] === format,
+    }),
+  );
+
+  return !!match;
+};
+
+const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'];
+export const BlockButton = ({ format }) => {
+  const editor = useSlate();
+  return (
+    <Button
+      active={isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}
+      onMouseDown={(event) => {
+        event.preventDefault();
+        // toggleBlock(editor, format);
+      }}
+    >
+      {/* <Icon>{icon}</Icon> */}
+      {getBlockButtonIcon({ formats: format })}
+    </Button>
+  );
+};
