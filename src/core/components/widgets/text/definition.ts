@@ -6,7 +6,7 @@ import { DME, DMEData } from 'Core/types';
 const TextWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'widget',
-  icon: 'TextFormatOutlined',
+  icon: 'text',
   name: 'Text',
   type: 'text',
   events: {
