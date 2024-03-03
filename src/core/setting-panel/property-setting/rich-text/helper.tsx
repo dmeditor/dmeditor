@@ -12,8 +12,17 @@ import {
   FormatListNumbered,
   FormatUnderlined,
 } from '@mui/icons-material';
-import { Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
-import { useFocused, useSlate } from 'slate-react';
+import {
+  createEditor,
+  Editor,
+  Node,
+  Point,
+  Range,
+  Element as SlateElement,
+  Transforms,
+} from 'slate';
+import { withHistory } from 'slate-history';
+import { useFocused, useSlate, withReact } from 'slate-react';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'];
@@ -238,6 +247,7 @@ export const resetNodes = (
 const Portal = ({ children }: { children?: ReactNode }) => {
   return typeof document === 'object' ? ReactDOM.createPortal(children, document.body) : null;
 };
+
 const HoveringToolbar = () => {
   const ref = useRef<HTMLDivElement | null>();
   const editor = useSlate();

@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
-import { BlockButton, MarkButton, resetNodes, toggleMark, Toolbar } from './helper';
+import { BlockButton, MarkButton, toggleMark, Toolbar } from './helper';
 import definition from 'Components/widgets/text/definition';
 import { SlateFun } from 'Core/utils/Slate';
 import { useEditorStore } from 'Src/core';
-import { jsonStringify } from 'Src/core/utils';
 
 const { useCallback, useMemo } = React;
 const { Element, Leaf, HOTKEYS } = SlateFun;
@@ -24,16 +22,11 @@ const RichText = (props: { property: string; value: string }) => {
     updateSelectedBlockProps(property, newValue);
   };
 
-  useEffect(() => {
-    console.log('wing value', value);
-    resetNodes(editor, { nodes: value });
-  }, [value]);
-
   return (
     <Slate
       editor={editor}
       onChange={handleChange}
-      value={definition.events.createBlock().data.value}
+      value={value || definition.events.createBlock().data.value}
     >
       <Toolbar>
         <MarkButton format="bold" />
@@ -54,8 +47,8 @@ const RichText = (props: { property: string; value: string }) => {
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         placeholder="Enter some rich text…"
-        spellCheck
-        autoFocus
+        // spellCheck
+        // autoFocus
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
             // if (isHotkey(hotkey, event as any)) {
