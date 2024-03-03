@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { css } from '@emotion/css';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
@@ -23,43 +24,53 @@ const RichText = (props: { property: string; value: string }) => {
   };
 
   return (
-    <Slate
-      editor={editor}
-      onChange={handleChange}
-      value={value || definition.events.createBlock().data.value}
+    <div
+      className={css`
+        border: 1px solid #dddddd;
+        min-height: 300px;
+        resize: vertical;
+        overflow: auto;
+      `}
     >
-      <Toolbar>
-        <MarkButton format="bold" />
-        <MarkButton format="italic" />
-        <MarkButton format="underline" />
-        {/* <MarkButton format="code" /> */}
-        {/* <BlockButton format="heading-one" /> */}
-        {/* <BlockButton format="heading-two" /> */}
-        {/* <BlockButton format="block-quote" /> */}
-        <BlockButton format="numbered-list" />
-        <BlockButton format="bulleted-list" />
-        <BlockButton format="align-left" />
-        <BlockButton format="align-center" />
-        <BlockButton format="align-right" />
-        <BlockButton format="align-justify" />
-      </Toolbar>
-      <Editable
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
-        // spellCheck
-        // autoFocus
-        onKeyDown={(event) => {
-          for (const hotkey in HOTKEYS) {
-            // if (isHotkey(hotkey, event as any)) {
-            event.preventDefault();
-            const mark = HOTKEYS[hotkey];
-            toggleMark(editor, mark);
-            // }
-          }
-        }}
-      />
-    </Slate>
+      <Slate
+        editor={editor}
+        onChange={handleChange}
+        value={value || definition.events.createBlock().data.value}
+      >
+        <Toolbar>
+          <MarkButton format="bold" />
+          <MarkButton format="italic" />
+          <MarkButton format="underline" />
+          {/* <MarkButton format="code" /> */}
+          {/* <BlockButton format="heading-one" /> */}
+          {/* <BlockButton format="heading-two" /> */}
+          {/* <BlockButton format="block-quote" /> */}
+          <BlockButton format="numbered-list" />
+          <BlockButton format="bulleted-list" />
+          <BlockButton format="align-left" />
+          <BlockButton format="align-center" />
+          <BlockButton format="align-right" />
+          <BlockButton format="align-justify" />
+        </Toolbar>
+        <Editable
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          style={{ padding: 10 }}
+          placeholder="Enter some rich text…"
+          // spellCheck
+          // autoFocus
+          onKeyDown={(event) => {
+            for (const hotkey in HOTKEYS) {
+              // if (isHotkey(hotkey, event as any)) {
+              event.preventDefault();
+              const mark = HOTKEYS[hotkey];
+              toggleMark(editor, mark);
+              // }
+            }
+          }}
+        />
+      </Slate>
+    </div>
   );
 };
 
