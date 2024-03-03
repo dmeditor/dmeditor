@@ -15,5 +15,7 @@ export {
   registerWidgetProperty,
 } from './setting-panel/register';
 
+export { registerTheme } from './components/page';
+
 export { BlockRender as DMRenderer } from 'Core/main/renderer/index';
 export * from './types/dmeditor';

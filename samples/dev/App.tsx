@@ -197,6 +197,9 @@ const App = () => {
       { identifier: 'meta_description', name: 'Meta description', type: 'multitext' },
     ]);
     editorRef.current?.setPageData({ title: 'New page', theme: 'red', meta_key: 'test key' });
+    editorRef.current?.onSave((data) => {
+      window.alert('Saved');
+    });
   }, []);
 
   return <DMEditor ref={editorRef} />;

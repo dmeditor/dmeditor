@@ -94,6 +94,11 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       setPageData: (data: DMEData.Page) => {
         setPageData(data);
       },
+      onSave: (
+        callback: (savedData: { data: Array<DMEData.Block>; page: DMEData.Page }) => void,
+      ) => {
+        save = callback;
+      },
     }),
     [],
   );
@@ -130,6 +135,8 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   // const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
   const { t, i18n } = useTranslation();
 
+  let save = (savedData) => {};
+
   Util.fileUrl = props.getFileUrl;
   Util.imageUrl = props.getImageUrl;
   // useEffect(() => {
@@ -154,11 +161,10 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   }, []);
 
   const getThemeCss = useMemo(() => {
-    if (page.theme) {
-      const theme = getPageTheme(page.theme);
-      if (theme) {
-        return css(theme.cssStyle);
-      }
+    const themeIdentifier = page.theme || 'default';
+    const theme = getPageTheme(themeIdentifier);
+    if (theme) {
+      return css(theme.cssStyle);
     }
     return '';
   }, [page.theme]);
@@ -167,9 +173,11 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   useEffect(() => {
     emitter.addListener('updateSelectedWidgetIndex', handleUpdateSelctedWidgetIndex);
     emitter.addListener('setWidgets', handleUpdateWidgets);
+    emitter.addListener('save', save);
     return () => {
       emitter.removeListener('updateSelectedWidgetIndex');
       emitter.removeListener('setWidgets');
+      emitter.removeListener('save');
     };
   }, []);
 
