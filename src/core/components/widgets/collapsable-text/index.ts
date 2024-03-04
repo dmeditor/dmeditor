@@ -12,9 +12,18 @@ export default () => {
       name: 'Default',
       identifier: 'default',
       cssStyle: `
-        .dme-w-button{
+        .dme-w-button-container{
            text-align: center;
-           padding: 10px;
+        }
+
+        .dme-w-button{
+          border: 1px solid #cccccc;
+          padding: 10px;
+          border-radius: 5px;
+        }
+
+        .dme-w-button:hover{
+          background: #f0f0f0;
         }
   `,
     },
