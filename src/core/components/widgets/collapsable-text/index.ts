@@ -1,3 +1,10 @@
-import { CollapsableText } from './CollapsableText';
+import TitleOutlined from '@mui/icons-material/TitleOutLined';
 
-export { CollapsableText }
+import { registerWidget } from '..';
+import { registerIcon } from '../../icon/icon-data';
+import { CollapsableText, CollapsableTextDefiniation } from './CollapsableText';
+
+export default () => {
+  registerWidget(CollapsableTextDefiniation, CollapsableText);
+  registerIcon({ name: 'collapsable-text', component: TitleOutlined });
+};
