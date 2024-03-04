@@ -1,4 +1,4 @@
-import TitleOutlined from '@mui/icons-material/TitleOutLined';
+import { TitleOutlined } from '@mui/icons-material';
 
 import { registerWidget } from '..';
 import { registerIcon } from '../../icon/icon-data';

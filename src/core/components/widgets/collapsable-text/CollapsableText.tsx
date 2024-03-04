@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
+// import ArrowDropUpIcon from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import { nanoid } from 'nanoid';
 
@@ -47,7 +47,7 @@ export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEnti
     <div className={rootClasses}>
       <div style={{ cursor: 'pointer' }} onClick={() => setExpanded(!expanded)}>
         <span>Show more</span>
-        {expanded ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+        {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
       </div>
       <Collapse in={expanded}>
         <BlockListRender blockData={children} path={path} />
