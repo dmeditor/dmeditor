@@ -21,6 +21,7 @@ export const CollapsableTextDefiniation: DME.Widget = {
         id: nanoid(),
         data: {},
         type: 'collapsable-text',
+        style: { _: 'default' },
         children: [
           {
             id: '0',
@@ -45,8 +46,8 @@ export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEnti
 
   return (
     <div className={rootClasses}>
-      <div style={{ cursor: 'pointer' }} onClick={() => setExpanded(!expanded)}>
-        <span>Show more</span>
+      <div className="dme-w-button" onClick={() => setExpanded(!expanded)}>
+        <button>Show more</button>
         {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
       </div>
       <Collapse in={expanded}>
