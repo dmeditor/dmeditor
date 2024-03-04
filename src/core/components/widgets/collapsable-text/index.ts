@@ -11,15 +11,10 @@ export default () => {
     {
       name: 'Default',
       identifier: 'default',
+      cssClasses: { button: 'bg-blue-500 hover:bg-blue-700 text-white py-2 px-4' },
       cssStyle: `
         .dme-w-button-container{
            text-align: center;
-        }
-
-        .dme-w-button{
-          border: 1px solid #cccccc;
-          padding: 10px;
-          border-radius: 5px;
         }
 
         .dme-w-button:hover{
