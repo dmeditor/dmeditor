@@ -27,7 +27,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
   const getCssStyles = () => {
     const styleData = props.data.style;
     let styleStr = '';
-    let styleClasses: { [key: string]: Array<string> } = {};
+    let styleClasses: { [key: string]: string } = {};
     if (styleData) {
       for (const styleIdentifier of Object.keys(styleData)) {
         const widgetStyle = getWidgetStyle(blockType, styleIdentifier);
@@ -45,7 +45,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
           const classes = styleOption.cssClasses;
           if (classes) {
             Object.keys(classes).map((key) => {
-              styleClasses[key] = [...(styleClasses[key] || []), classes[key]];
+              styleClasses[key] += ` ${classes[key]}`;
             });
           }
         }
@@ -60,11 +60,10 @@ export const BlockRender = React.memo((props: BlockProps) => {
     let rootClasses = styleStr + builtinClasses;
     if (Object.keys(styleClasses).length > 0) {
       if (styleClasses['root']) {
-        rootClasses += ` ${styleClasses['root'].join(' ')}`;
+        rootClasses += ` ${styleClasses['root']}`;
       }
-      return { rootClasses: rootClasses, styleClasses: styleClasses };
     }
-    return { rootClasses: rootClasses };
+    return { rootClasses: rootClasses, styleClasses: styleClasses };
   };
 
   return Widget ? (

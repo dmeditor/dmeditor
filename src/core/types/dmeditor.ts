@@ -90,7 +90,7 @@ export namespace DME {
     blockNode: DMEData.Block<Type>;
     rootClasses: string;
     // key is the setting item(eg. 'root', value is styles' class value, eg.['big-space', 'dark'])
-    styleClasses?: { [key: string]: Array<string> };
+    styleClasses: { [key: string]: string };
     active: boolean;
     mode: 'edit' | 'view';
     path: Array<number>;
