@@ -28,9 +28,11 @@ const Text = (props: any) => {
   // }, [value]);
 
   const handleChange = (v) => {
-    updateSelectedBlock<EntityText>((entity) => {
-      entity.value = v;
-    });
+    if (props.active) {
+      updateSelectedBlock<EntityText>((entity) => {
+        entity.value = v;
+      });
+    }
   };
 
   editor.children = value;
@@ -41,7 +43,7 @@ const Text = (props: any) => {
         <div>
           <HoveringToolbar />
           <Editable
-            // readOnly={props.active ? false : true}
+            readOnly={props.active ? false : true}
             renderLeaf={renderLeaf}
             renderElement={renderElement}
             placeholder="Input your content here"
