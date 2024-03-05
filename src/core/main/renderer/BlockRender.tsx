@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
 import _debounce from 'lodash/debounce';
@@ -17,15 +17,17 @@ interface BlockProps<Type = DMEData.DefaultDataType> {
 }
 
 export const BlockRender = React.memo((props: BlockProps) => {
-  const { active } = props;
+  const {
+    active,
+    data: { id, style: styleData },
+  } = props;
 
   const blockType = props.data.type;
 
   const widgetArr = blockType.split(':');
   const Widget = getWidgetComponent(widgetArr[0]);
 
-  const getCssStyles = () => {
-    const styleData = props.data.style;
+  const cssStyles = useMemo(() => {
     let styleStr = '';
     let styleClasses: { [key: string]: string } = {};
     if (styleData) {
@@ -50,27 +52,27 @@ export const BlockRender = React.memo((props: BlockProps) => {
           }
         }
       }
-    }
 
-    let builtinClasses = ` dme-block dme-blocktype-${widgetArr[0]}`;
-    if (widgetArr[1]) {
-      builtinClasses += ' dme-blockvariant-' + widgetArr[1];
-    }
-
-    let rootClasses = styleStr + builtinClasses;
-    if (Object.keys(styleClasses).length > 0) {
-      if (styleClasses['root']) {
-        rootClasses += ` ${styleClasses['root']}`;
+      let builtinClasses = ` dme-block dme-blocktype-${widgetArr[0]}`;
+      if (widgetArr[1]) {
+        builtinClasses += ' dme-blockvariant-' + widgetArr[1];
       }
+
+      let rootClasses = styleStr + builtinClasses;
+      if (Object.keys(styleClasses).length > 0) {
+        if (styleClasses['root']) {
+          rootClasses += ` ${styleClasses['root']}`;
+        }
+      }
+      return { rootClasses: rootClasses, styleClasses: styleClasses };
     }
-    return { rootClasses: rootClasses, styleClasses: styleClasses };
-  };
+  }, [id, styleData]);
 
   return Widget ? (
     // <div className={`${getCssStyles()} dme-block dme-blocktype-${widgetArr[0]} ${widgetArr[1]?'dme-blockvariant-'+widgetArr[1]:''}`}>
     <Widget
       inBlock={props.inBlock ? true : false}
-      {...getCssStyles()}
+      {...cssStyles}
       blockNode={props.data}
       path={props.path}
       mode={props.mode}
