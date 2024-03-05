@@ -13,7 +13,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   } = blockNode;
 
   const { updateSelectedBlock } = useEditorStore();
-  const { setActiveCellIndex: setActiveIndex } = useTableStore();
+  const { setActiveCellIndex: setActiveIndex, color, width } = useTableStore();
 
   const handleTextChange = (col: number, row: number, value: any) => {
     updateSelectedBlock((data) => ((data.value as any[])[col][row] = value));
@@ -25,40 +25,43 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   const tableValue = settings['hasHeader'] ? value.slice(1) : value;
 
   return (
-    <StyledTable className={rootClasses} id={id} {...settings}>
-      {settings['hasHeader'] && (
-        <thead>
-          <tr className="dme-w-tr">
-            {value[0].map((cell, i) => (
-              <th className="dme-w-th" key={i}>
-                <TextField
-                  variant="standard"
-                  value={cell}
-                  onFocus={() => handleActiveCellChange(0, i)}
-                  onChange={(evt) => handleTextChange(0, i, evt.target.value)}
-                />
-              </th>
-            ))}
-          </tr>
-        </thead>
-      )}
-      <tbody>
-        {tableValue.map((row, i) => (
-          <tr className="dme-w-tr">
-            {row.map((cell, j) => (
-              <td className="dm-w-td" key={j}>
-                <TextField
-                  variant="standard"
-                  value={cell}
-                  onFocus={() => handleActiveCellChange(i, j)}
-                  onChange={(evt) => handleTextChange(i, j, evt.target.value)}
-                />
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </StyledTable>
+    <div>
+      <StyledTable className={rootClasses} id={id} {...settings} style={{ background: color }}>
+        {settings['hasHeader'] && (
+          <thead>
+            <tr className="dme-w-tr">
+              {value[0].map((cell, i) => (
+                <th className="dme-w-th" key={i}>
+                  <TextField
+                    variant="standard"
+                    value={cell}
+                    onFocus={() => handleActiveCellChange(0, i)}
+                    onChange={(evt) => handleTextChange(0, i, evt.target.value)}
+                  />
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
+        <tbody>
+          {tableValue.map((row, i) => (
+            <tr className="dme-w-tr">
+              {row.map((cell, j) => (
+                <td className="dm-w-td" key={j}>
+                  <TextField
+                    variant="standard"
+                    value={cell}
+                    onFocus={() => handleActiveCellChange(i, j)}
+                    onChange={(evt) => handleTextChange(i, j, evt.target.value)}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </StyledTable>
+      <iframe src="https://stumproyken.no" width={width} height={400} style={{ margin: 'auto' }} />
+    </div>
   );
 };
 

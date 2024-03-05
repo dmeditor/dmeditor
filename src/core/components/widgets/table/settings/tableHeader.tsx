@@ -3,8 +3,9 @@ import { Checkbox } from '@mui/material';
 
 import Align from '../../../../setting-panel/property-setting/align/Align';
 import Color from '../../../../setting-panel/property-setting/color/Color';
+import { useTableStore } from '../store';
 import { useEditorStore } from 'Core/index';
-import { PickColor, PropertyButton, PropertyItem } from 'Core/utils';
+import { PickColor, PropertyButton, PropertyItem, Ranger } from 'Core/utils';
 
 type AlignType = 'left' | 'center' | 'right';
 const alignList: { value: AlignType; icon: React.ReactNode }[] = [
@@ -16,6 +17,7 @@ const alignList: { value: AlignType; icon: React.ReactNode }[] = [
 export const TableHeader = () => {
   const { getSelectedBlock, updateSelectedBlockProps } = useEditorStore();
   const { data } = getSelectedBlock() || {};
+  const { color, setColor, width, setWidth } = useTableStore();
 
   if (!data) {
     return null;
@@ -69,6 +71,13 @@ export const TableHeader = () => {
           </PropertyItem>
         </>
       )}
+      <PickColor
+        color={color}
+        onChange={(value) => {
+          setColor(value);
+        }}
+      ></PickColor>
+      <Ranger value={width} step={10} onChange={setWidth} min={300} max={1000} />
     </>
   );
 };
