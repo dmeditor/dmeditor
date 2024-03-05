@@ -47,7 +47,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
           const classes = styleOption.cssClasses;
           if (classes) {
             Object.keys(classes).map((key) => {
-              styleClasses[key] = styleClasses[key] ? styleClasses[key] + ' ' : '' + classes[key];
+              styleClasses[key] = (styleClasses[key] ? styleClasses[key] + ' ' : '') + classes[key];
             });
           }
         }
