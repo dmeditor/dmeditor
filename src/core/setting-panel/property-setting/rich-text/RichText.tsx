@@ -12,7 +12,7 @@ import { useEditorStore } from 'Src/core';
 const { useCallback, useMemo } = React;
 const { Element, Leaf, HOTKEYS } = SlateFun;
 
-const RichText = (props: { property: string; value: string }) => {
+const RichText = (props: { property: string; value: any }) => {
   const { property, value } = props;
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
@@ -22,6 +22,8 @@ const RichText = (props: { property: string; value: string }) => {
   const handleChange = (newValue: Array<any>) => {
     updateSelectedBlockProps(property, newValue);
   };
+
+  editor.children = value;
 
   return (
     <div
