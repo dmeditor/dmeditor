@@ -321,7 +321,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                       e.stopPropagation();
                     }}
                   >
-                    <BlockListRender blockData={storage} path={[]} />
+                    <BlockListRender blockData={storage} path={[]} mode="edit" />
                   </div>
                 )}
                 {/* {viewmode !== 'edit' && (

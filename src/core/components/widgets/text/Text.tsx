@@ -10,11 +10,12 @@ import {
   HoveringToolbar,
   resetNodes,
 } from 'Src/core/setting-panel/property-setting/rich-text/helper';
+import { DME } from 'Src/core/types/dmeditor';
 
 const { Element, Leaf } = SlateFun;
 const { useCallback, useMemo, useEffect } = React;
 
-const Text = (props: any) => {
+const Text = (props: DME.WidgetRenderProps<EntityText>) => {
   const { blockNode, rootClasses, styleClasses } = props;
   const {
     data: { value },
@@ -23,9 +24,6 @@ const Text = (props: any) => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-  // useEffect(() => {
-  //   resetNodes(editor, { nodes: value });
-  // }, [value]);
 
   const handleChange = (v) => {
     if (props.active) {

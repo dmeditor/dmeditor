@@ -22,6 +22,7 @@ interface BlockListProps {
   allowedTypes?: string[] | string;
   isInternal?: boolean;
   direction?: 'vertical' | 'horizontal';
+  mode: 'edit' | 'view';
 }
 
 interface BlockWithAddingProps {
@@ -136,7 +137,7 @@ export const BlockListRender = (props: BlockListProps) => {
               onAddClick={(position) => handleAdding(position, index)}
             >
               <BlockRender
-                mode="edit"
+                mode={props.mode}
                 active={isActive}
                 path={[...props.path, index]}
                 data={blockData}
