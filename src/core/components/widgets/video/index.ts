@@ -5,6 +5,6 @@ import { Video, VideoDefinition } from './Video';
 import { registerWidget } from 'Core/components/widgets';
 
 export default () => {
-  registerWidget(VideoDefinition, Video);
+  registerWidget(VideoDefinition, { render: Video });
   registerIcon({ name: 'video', component: OndemandVideoOutlined });
 };

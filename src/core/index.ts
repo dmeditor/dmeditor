@@ -15,6 +15,8 @@ export {
   registerWidgetProperty,
 } from './setting-panel/register';
 
+export { serverLoad } from './ssr';
+
 export { registerTheme } from './components/page';
 
 export { DMEditorView, BlockRender, BlockListRender } from 'Core/main/renderer/index';

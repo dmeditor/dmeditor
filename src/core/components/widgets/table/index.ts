@@ -8,7 +8,7 @@ import Table from './Table';
 import { registerSettingComponent } from 'Core/setting-panel/property-setting';
 
 export default () => {
-  registerWidget(TableWidget, Table);
+  registerWidget(TableWidget, { render: Table });
   registerIcon({ name: 'table', component: GridOnOutlined });
   registerSettingComponent('table-border-type', TableBorderType);
   registerSettingComponent('table-column', TableColumn);

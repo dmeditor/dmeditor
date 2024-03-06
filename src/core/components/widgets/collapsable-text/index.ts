@@ -5,7 +5,7 @@ import { registerIcon } from '../../icon/icon-data';
 import { CollapsableText, CollapsableTextDefiniation } from './CollapsableText';
 
 export default () => {
-  registerWidget(CollapsableTextDefiniation, CollapsableText);
+  registerWidget(CollapsableTextDefiniation, { render: CollapsableText });
   registerIcon({ name: 'collapsable-text', component: TitleOutlined });
   registerWidgetStyleOption('collapsable-text', [
     {

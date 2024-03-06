@@ -6,7 +6,7 @@ import gridWidget from './definition';
 import { Grid } from './Grid';
 
 const register = () => {
-  registerWidget(gridWidget, Grid);
+  registerWidget(gridWidget, { render: Grid });
   registerIcon({ name: 'grid', component: GridViewOutlined });
 };
 

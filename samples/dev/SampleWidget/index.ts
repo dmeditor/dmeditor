@@ -45,7 +45,9 @@ const registerSampleWidget = function () {
         updateData: () => void 0,
       },
     },
-    SampleWidget,
+    {
+      render: SampleWidget,
+    },
   );
   registerSettingComponent('setting_input', SettingInput);
 

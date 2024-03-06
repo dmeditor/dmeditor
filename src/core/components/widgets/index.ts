@@ -143,9 +143,32 @@ function registerWidgetComponent(widgetName: string, widgetInstance: ComponentTy
   components[widgetName] = widgetInstance;
 }
 
-function registerWidget(definition: DME.Widget, renderComponent: ComponentType<any>) {
+type ServerLoadFunction = (data: DMEData.Block, serverParameters: any) => Promise<void>;
+
+//widget serverLoad map
+const serverLoadMap: { [widget: string]: ServerLoadFunction } = {};
+
+function registerServerLoad(widgetName: string, serverLoad: ServerLoadFunction) {
+  if (serverLoadMap[widgetName]) {
+    console.warn(`Server load ${widgetName} is already registered.`);
+    return;
+  }
+  serverLoadMap[widgetName] = serverLoad;
+}
+
+function getWidgetServerLoad(widgetName: string) {
+  return serverLoadMap[widgetName];
+}
+
+function registerWidget(
+  definition: DME.Widget,
+  implementation: { render: ComponentType<any>; onServerLoad?: any },
+) {
   registerWidgetDefinition(definition);
-  registerWidgetComponent(definition.type, renderComponent);
+  registerWidgetComponent(definition.type, implementation.render);
+  if (implementation.onServerLoad) {
+    registerServerLoad(definition.type, implementation.onServerLoad);
+  }
 }
 
 function registerWidgetVariant(variant: DME.WidgetVariant, styles?: Array<DME.WidgetStyle>) {
@@ -282,6 +305,7 @@ export {
   getWidgetStyles,
   registerWidgetStyleOption,
   getAllowedTypes,
+  getWidgetServerLoad,
 };
 
 export default widgetDefinition;

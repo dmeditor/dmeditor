@@ -8,7 +8,7 @@ import {
 } from 'Src/core/components/widgets';
 
 const register = () => {
-  registerWidget(layout2ColumnsWidget, Layout2Columns);
+  registerWidget(layout2ColumnsWidget, { render: Layout2Columns });
   registerIcon({ name: 'layout-2columns', component: Icon });
   registerWidgetStyleOption('layout-2columns', [
     {

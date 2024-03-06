@@ -6,6 +6,6 @@ import TabsWidget from './definition';
 import DMTabs from './render';
 
 export default () => {
-  registerWidget(TabsWidget, DMTabs);
+  registerWidget(TabsWidget, { render: DMTabs });
   registerIcon({ name: 'tabs', component: TabOutlined });
 };

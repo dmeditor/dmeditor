@@ -5,6 +5,6 @@ import { IFrame, iFrameDefinition } from './IFrame';
 import { registerWidget } from 'Core/components/widgets';
 
 export default () => {
-  registerWidget(iFrameDefinition, IFrame);
+  registerWidget(iFrameDefinition, { render: IFrame });
   registerIcon({ name: 'iframe', component: RestorePageOutlined });
 };

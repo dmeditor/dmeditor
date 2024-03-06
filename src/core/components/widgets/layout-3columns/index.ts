@@ -11,7 +11,7 @@ import {
 import { registerSettingComponent } from 'Src/core/setting-panel/register';
 
 const register = () => {
-  registerWidget(layout3ColumnsWidget, Layout3Columns);
+  registerWidget(layout3ColumnsWidget, { render: Layout3Columns });
   registerIcon({ name: 'layout-3columns', component: ViewWeekOutlined });
   registerSettingComponent('layout-3columns/setting', Layout3ColumnsSetting);
   registerWidgetStyleOption('layout-3columns', [

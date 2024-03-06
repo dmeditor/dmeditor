@@ -7,7 +7,7 @@ import buttonWidget from './definition';
 import Icon from './icon/icon.svg';
 
 const register = () => {
-  registerWidget(buttonWidget, Button);
+  registerWidget(buttonWidget, { render: Button });
   registerIcon({ name: 'button', component: Icon });
   registerWidgetStyle('button', {
     identifier: 'type',

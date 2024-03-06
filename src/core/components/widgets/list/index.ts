@@ -8,7 +8,7 @@ import { List } from './List';
 import { DMEData } from 'Src/core/types/dmeditor';
 
 const register = () => {
-  registerWidget(listWidget, List);
+  registerWidget(listWidget, { render: List });
   registerIcon({ name: 'list', component: ReorderOutlined });
   registerWidgetVariant({
     widget: 'list',
