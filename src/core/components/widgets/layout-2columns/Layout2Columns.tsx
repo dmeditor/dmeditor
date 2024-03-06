@@ -61,10 +61,18 @@ const Layout2Columns = (props: DME.WidgetRenderProps<EntityLayout2Columns>) => {
   return (
     <SyledLayout className={rootClasses} columnWidth={columnWidth}>
       <div className={(styleClasses?.['column1'] || '') + ' dme-w-column1'}>
-        <BlockListRender blockData={children?.[0].children || []} path={[...props.path, 0]} />
+        <BlockListRender
+          mode={props.mode}
+          blockData={children?.[0].children || []}
+          path={[...props.path, 0]}
+        />
       </div>
       <div className={(styleClasses?.['column2'] || '') + ' dme-w-column2'}>
-        <BlockListRender blockData={children?.[1].children || []} path={[...props.path, 1]} />
+        <BlockListRender
+          mode={props.mode}
+          blockData={children?.[1].children || []}
+          path={[...props.path, 1]}
+        />
       </div>
     </SyledLayout>
   );

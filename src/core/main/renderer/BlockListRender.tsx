@@ -25,9 +25,10 @@ interface BlockListProps {
   mode: 'edit' | 'view';
 }
 
-interface BlockWithAddingProps {
+interface BlockWithContainerProps {
   isActive?: boolean;
   isHovering?: boolean;
+  mode: 'edit' | 'view';
   onSelect: () => void;
   onAddClick: (position: 'before' | 'after') => void;
   children: any;
@@ -129,7 +130,8 @@ export const BlockListRender = (props: BlockListProps) => {
               addParameters.index === index &&
               addParameters.position === 'before' &&
               renderAddingMessage()}
-            <BlockWithAdding
+            <BlockWithContainer
+              mode={props.mode}
               isActive={isActive}
               isHovering={hoverPath?.join(',') === [...props.path, index].join(',')}
               addingHorizontal={props.direction === 'horizontal'}
@@ -142,7 +144,7 @@ export const BlockListRender = (props: BlockListProps) => {
                 path={[...props.path, index]}
                 data={blockData}
               />
-            </BlockWithAdding>
+            </BlockWithContainer>
 
             {addParameters &&
               isInSelectedContext &&
@@ -158,8 +160,12 @@ export const BlockListRender = (props: BlockListProps) => {
 
 const containerAdditionalProps = { className: 'dme-block-container' };
 
-const BlockWithAdding = (props: BlockWithAddingProps) => {
-  const { isActive, isHovering, onSelect, onAddClick, addingHorizontal } = props;
+const BlockWithContainer = (props: BlockWithContainerProps) => {
+  const { isActive, mode, isHovering, onSelect, onAddClick, addingHorizontal } = props;
+
+  if (mode === 'view') {
+    return <StyledBlock {...containerAdditionalProps}>{props.children}</StyledBlock>;
+  }
 
   const blockContainerRef = useRef<HTMLDivElement>(null);
   const addPosition = useMousePosition(blockContainerRef.current, addingHorizontal);
