@@ -17,5 +17,5 @@ export {
 
 export { registerTheme } from './components/page';
 
-export { BlockRender as DMRenderer } from 'Core/main/renderer/index';
+export { DMEditorView, BlockRender, BlockListRender } from 'Core/main/renderer/index';
 export * from './types/dmeditor';

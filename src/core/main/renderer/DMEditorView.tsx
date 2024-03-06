@@ -1,4 +1,4 @@
-import { BlockListRender } from '../renderer/BlockListRender';
+import { BlockListRender } from './BlockListRender';
 import { DME, DMEData } from 'Src/core/types/dmeditor';
 
 export interface DMEditorViewProps {
