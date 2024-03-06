@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-// import { HeadingMetaData } from 'Components/widgets/Heading';
+// import { HeadingMetaData } from 'dmeditor/components/widgets/Heading';
 import HeadingWidget from '../components/widgets/heading/src/definition';
 import { simpleCloneDeep } from './util';
 import { BlockData } from 'Src/ToolDefinition';
@@ -327,20 +327,20 @@ export const sanitizeBlockData = (data: any) => {
   return data;
 };
 
-export const generateCommonBlockData = (type:string) =>{
-  return {id: `a_${nanoid()}`, type: type}
-}
+export const generateCommonBlockData = (type: string) => {
+  return { id: `a_${nanoid()}`, type: type };
+};
 
-export const getValueByPath = (path: string, blockData)=>{
-   const arr = path.split('.');
-  if(arr.length===1){
+export const getValueByPath = (path: string, blockData) => {
+  const arr = path.split('.');
+  if (arr.length === 1) {
     return blockData[arr[0]];
-  }else if(arr.length === 2){
+  } else if (arr.length === 2) {
     //only support settings for now
     return blockData['settings'][arr[1]];
   }
   return null;
-}
+};
 
 export const generatedWidgetAttrs = (type: 'heading' | 'text') => {
   let element: unknown = {

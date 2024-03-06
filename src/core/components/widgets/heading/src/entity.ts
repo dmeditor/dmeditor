@@ -1,4 +1,4 @@
-import { DMEData } from 'Core/types';
+import { DMEData } from 'dmeditor/types';
 
 export interface EntityHeadingBlock {
   value: string;

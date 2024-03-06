@@ -18,9 +18,7 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "Src/*": ["src/*"],
-      "Core/*": ["src/core/*"],
-      "Components/*": ["src/core/components/*"],
+      "dmeditor/*": ["src/core/*"],
     }
   },
   "include": ["src/**/*", "samples/dev/App.tsx", "samples/dev/index.tsx"]

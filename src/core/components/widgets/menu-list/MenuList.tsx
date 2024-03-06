@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { css } from '@emotion/css';
 import { Input } from '@mui/material';
+import { PropertyTab } from 'dmeditor/components/property-tab';
 import { useTranslation } from 'react-i18next';
 
 import { menulistCss } from './MenuList.css';
-import { PropertyTab } from 'Src/core/components/property-tab';
 import {
   getAllTemplates,
   getCategories,

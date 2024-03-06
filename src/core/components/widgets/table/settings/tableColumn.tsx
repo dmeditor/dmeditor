@@ -1,8 +1,8 @@
 import { BorderLeft, BorderRight, Delete } from '@mui/icons-material';
+import { useEditorStore } from 'dmeditor/index';
+import { PropertyButton, PropertyItem } from 'dmeditor/utils';
 
 import { useTableStore } from '../store';
-import { useEditorStore } from 'Core/index';
-import { PropertyButton, PropertyItem } from 'Core/utils';
 
 export const TableColumn = () => {
   const { activeCellIndex, setActiveCellIndex } = useTableStore();

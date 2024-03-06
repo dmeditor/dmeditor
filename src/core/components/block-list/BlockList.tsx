@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { sanitizeBlockData } from 'Core/utils/utilx';
 import { AddOutlined } from '@mui/icons-material';
 import { Alert, Button } from '@mui/material';
-import { newBlockData } from 'Src/ToolDefinition';
+import { sanitizeBlockData } from 'dmeditor/utils/utilx';
 
 import { BlockRender, RenderMenu } from '../../main/renderer';
+import { newBlockData } from 'Src/ToolDefinition';
 
 interface BlockListProps {
   list: Array<any>;

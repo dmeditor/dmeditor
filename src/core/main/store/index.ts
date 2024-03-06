@@ -1,14 +1,14 @@
 import type { ReactNode } from 'react';
+import { getWidgetWithVariant, properties } from 'dmeditor/components/widgets';
+import type { DMEData } from 'dmeditor/types/dmeditor';
+import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'dmeditor/utils';
+import emitter from 'dmeditor/utils/event';
 import { isPlainObject } from 'lodash';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
 import { GetDataByPath, GetListByPath, iteratePath } from './helper';
-import type { DMEData } from 'Core/types/dmeditor';
-import emitter from 'Core/utils/event';
-import { getWidgetWithVariant, properties } from 'Src/core/components/widgets';
-import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'Src/core/utils';
 
 export type AddBlockPosition = 'before' | 'after';
 

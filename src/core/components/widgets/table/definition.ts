@@ -1,7 +1,7 @@
+import type { DME, DMEData } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
 
 import { EntityTableBlock } from './entity';
-import type { DME, DMEData } from 'Core/index';
 
 const HeadingWidget: DME.Widget = {
   category: 'widget',

@@ -1,16 +1,16 @@
 import * as React from 'react';
+import { useEditorStore } from 'dmeditor/main/store';
+import {
+  HoveringToolbar,
+  resetNodes,
+} from 'dmeditor/setting-panel/property-setting/rich-text/helper';
+import { DME } from 'dmeditor/types/dmeditor';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
 import { SlateFun } from '../../../utils/Slate';
 import { EntityText } from './entity';
-import { useEditorStore } from 'Src/core/main/store';
-import {
-  HoveringToolbar,
-  resetNodes,
-} from 'Src/core/setting-panel/property-setting/rich-text/helper';
-import { DME } from 'Src/core/types/dmeditor';
 
 const { Element, Leaf } = SlateFun;
 const { useCallback, useMemo, useEffect } = React;

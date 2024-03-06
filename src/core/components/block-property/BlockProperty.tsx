@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
+import { PropertyTab } from 'dmeditor/components/property-tab';
+import { isServer, PropertyGroup, Util } from 'dmeditor/utils';
 
-import { PropertyTab } from 'Src/core/components/property-tab';
-import { isServer, PropertyGroup, Util } from 'Core/utils';
 import i18n from 'Src/locales/i18n';
 import { getDef } from 'Src/ToolDefinition';
 

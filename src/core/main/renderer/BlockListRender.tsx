@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AddOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import { DMEData } from 'dmeditor/types/dmeditor';
+import emitter from 'dmeditor/utils/event';
 
 import { useMousePosition } from '../hooks/useMousePosition';
 import { AddBlockParameters, AddBlockPosition, useEditorStore } from '../store';
@@ -13,8 +15,6 @@ import {
   StyledBlock,
   StyledButtonContainer,
 } from './styled';
-import emitter from 'Core/utils/event';
-import { DMEData } from 'Src/core/types/dmeditor';
 
 interface BlockListProps {
   blockData: DMEData.BlockList;

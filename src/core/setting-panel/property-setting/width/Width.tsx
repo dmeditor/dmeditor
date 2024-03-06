@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { MenuItem, Select } from '@mui/material';
-
-import { Ranger } from 'Core/utils';
+import { Ranger } from 'dmeditor/utils';
 
 const Width = ({ value }: { value: string }) => {
   const [widthType, setWidthType] = React.useState('auto');

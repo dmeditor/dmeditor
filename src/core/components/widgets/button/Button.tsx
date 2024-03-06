@@ -1,14 +1,22 @@
-import { DME } from "Src/core/types/dmeditor";
-import { BlockListRender } from "Src/core/main/renderer";
-import { EntityButton } from "./entity";
-import { StyledButton } from "./styled";
+import { BlockListRender } from 'dmeditor/main/renderer';
+import { DME } from 'dmeditor/types/dmeditor';
 
-const Button = (props:DME.WidgetRenderProps<EntityButton>)=>{    
-    const { blockNode, blockNode:{data:{value, link}}} = props;
+import { EntityButton } from './entity';
+import { StyledButton } from './styled';
 
-    return <StyledButton href={link} className={props.rootClasses}>
-            {value}
-        </StyledButton>
-}
+const Button = (props: DME.WidgetRenderProps<EntityButton>) => {
+  const {
+    blockNode,
+    blockNode: {
+      data: { value, link },
+    },
+  } = props;
 
-export {Button};
+  return (
+    <StyledButton href={link} className={props.rootClasses}>
+      {value}
+    </StyledButton>
+  );
+};
+
+export { Button };

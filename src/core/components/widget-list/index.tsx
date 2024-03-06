@@ -7,6 +7,7 @@ import {
   Title,
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import { DME } from 'dmeditor/types/dmeditor';
 
 import { SvgIcon } from '../icon';
 import {
@@ -18,7 +19,6 @@ import {
   widgetDefinition,
   widgetStyles,
 } from '../widgets';
-import { DME } from 'Src/core/types/dmeditor';
 
 //internal css: emotion
 //extendable css: class - dme-block-text

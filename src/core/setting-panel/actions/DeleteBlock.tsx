@@ -1,15 +1,21 @@
-import { DeleteOutline } from "@mui/icons-material"
-import { PropertyButton } from "../Property"
-import { useEditorStore } from "Src/core/main/store"
+import { DeleteOutline } from '@mui/icons-material';
+import { useEditorStore } from 'dmeditor/main/store';
 
-export const DeleteBlock = ()=>{
-    const {selected:{currentListPath, blockIndex}, removeByPath} = useEditorStore();
+import { PropertyButton } from '../Property';
 
-    const handleDelete = ()=>{
-      removeByPath([...currentListPath, blockIndex]);
-    }
+export const DeleteBlock = () => {
+  const {
+    selected: { currentListPath, blockIndex },
+    removeByPath,
+  } = useEditorStore();
 
-    return <PropertyButton onClick={handleDelete} variant="outlined" color="warning" title="Delete">
-    <DeleteOutline /> Delete
-  </PropertyButton>   
-}
+  const handleDelete = () => {
+    removeByPath([...currentListPath, blockIndex]);
+  };
+
+  return (
+    <PropertyButton onClick={handleDelete} variant="outlined" color="warning" title="Delete">
+      <DeleteOutline /> Delete
+    </PropertyButton>
+  );
+};

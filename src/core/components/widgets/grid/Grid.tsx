@@ -1,8 +1,9 @@
+import { BlockListRender } from 'dmeditor/main/renderer';
+import { DME } from 'dmeditor/types';
+
 import { getAllowedTypes } from '..';
 import { EntityGrid } from './entity';
 import { StyledGrid } from './styled';
-import { BlockListRender } from 'Src/core/main/renderer';
-import { DME } from 'Src/core/types';
 
 const Grid = (props: DME.WidgetRenderProps<EntityGrid>) => {
   const {

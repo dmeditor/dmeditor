@@ -1,5 +1,3 @@
-import { addWidgetDefinition } from "Src/core/components/widgets"
+import { addWidgetDefinition } from 'dmeditor/components/widgets';
 
-const loaderWidgets = function () {
-
-}
+const loaderWidgets = function () {};

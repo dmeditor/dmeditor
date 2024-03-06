@@ -1,15 +1,15 @@
-import { nanoid } from 'nanoid';
-
-import SampleWidget from './SampleWidget';
-import SettingInput from './SettingInput';
-import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'Src/core';
+import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'dmeditor';
 import {
   getWidget,
   getWidgetVariant,
   registerWidgetStyle,
   registerWidgetStyleOption,
-} from 'Src/core/components/widgets';
-import { DMEData } from 'Src/core/types';
+} from 'dmeditor/components/widgets';
+import { DMEData } from 'dmeditor/types';
+import { nanoid } from 'nanoid';
+
+import SampleWidget from './SampleWidget';
+import SettingInput from './SettingInput';
 
 const registerSampleWidget = function () {
   registerWidget(

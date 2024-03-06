@@ -1,5 +1,6 @@
+import type { DME } from 'dmeditor/types';
+
 import type { EntityTabsBlock } from './entity';
-import type { DME } from 'Core/types';
 
 const TabsWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced

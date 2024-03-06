@@ -1,16 +1,16 @@
 import { MenuItem, Select } from '@mui/material';
+import { DME } from 'dmeditor/types/dmeditor';
 
 import { InlineBlockItemStyle, InlineBlockStyle } from './style';
 import { StyleSettingProps } from './StyleSettings';
-import { DME } from 'Src/core/types/dmeditor';
 
 export const InlineBlock = (props: StyleSettingProps & { style: DME.WidgetStyle }) => {
   const { values, style } = props;
 
   const value = values[style.identifier] || '';
-  const handleChange = (v:string) => {
-    if(v!=value){
-        props.onChange(v, style.identifier);
+  const handleChange = (v: string) => {
+    if (v != value) {
+      props.onChange(v, style.identifier);
     }
   };
 

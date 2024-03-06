@@ -1,4 +1,4 @@
-import emitter from 'Core/utils/event';
+import emitter from 'dmeditor/utils/event';
 
 const createAlignProperty = (align: string) => {
   return {
@@ -7,4 +7,4 @@ const createAlignProperty = (align: string) => {
       default: align,
     },
   };
-}
+};

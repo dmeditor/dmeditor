@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 
-import type { DME, DMEData } from 'Core/types/dmeditor';
+import type { DME, DMEData } from 'dmeditor/types/dmeditor';
 
 const components: {
   // TODO: make it more type safe

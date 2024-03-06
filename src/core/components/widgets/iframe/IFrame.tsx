@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
+import type { DME, DMEData } from 'dmeditor/index';
+import { useEditorStore } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
-
-import type { DME, DMEData } from 'Core/index';
-import { useEditorStore } from 'Core/index';
 
 export type IFrameEntity = {
   value: string;
