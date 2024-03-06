@@ -4,6 +4,8 @@ import { nanoid } from 'nanoid';
 import registerSampleWidget from './SampleWidget';
 import { DMEditor } from 'Src/core';
 import { registerTheme } from 'Src/core/components/page';
+import { DMEditorView } from 'Src/core/main/renderer/DMEditorView';
+import { serverLoad } from 'Src/core/ssr';
 
 registerSampleWidget();
 registerTheme({
@@ -83,7 +85,6 @@ const App = () => {
           data: {
             value: 'This is a heading 1 ',
             level: 2,
-            settings: {},
           },
           type: 'heading',
         },
@@ -92,7 +93,6 @@ const App = () => {
           data: {
             value: 'This is a heading 2',
             level: 2,
-            settings: {},
           },
           type: 'heading',
         },
@@ -106,7 +106,6 @@ const App = () => {
               data: {
                 value: 'This is a heading 1 in List ',
                 level: 2,
-                settings: {},
               },
               type: 'heading',
             },
@@ -115,7 +114,6 @@ const App = () => {
               data: {
                 value: 'This is a heading 2 in List',
                 level: 2,
-                settings: {},
               },
               type: 'heading',
             },
@@ -124,7 +122,6 @@ const App = () => {
               data: {
                 value: 'This is a heading 3 in List',
                 level: 2,
-                settings: {},
               },
               type: 'heading',
             },
@@ -135,7 +132,6 @@ const App = () => {
           data: {
             value: 'This is a heading 3',
             level: 2,
-            settings: {},
           },
           type: 'heading',
         },
@@ -146,7 +142,6 @@ const App = () => {
       data: {
         value: 'This is a heading 3',
         level: 2,
-        settings: {},
       },
       type: 'heading:gradient',
     },
@@ -162,7 +157,6 @@ const App = () => {
           data: {
             value: 'This is a heading 1 in List ',
             level: 2,
-            settings: {},
           },
           type: 'heading',
         },
@@ -171,7 +165,6 @@ const App = () => {
           data: {
             value: 'This is a heading 2 in List',
             level: 2,
-            settings: {},
           },
           type: 'heading',
         },
@@ -180,7 +173,6 @@ const App = () => {
           data: {
             value: 'This is a heading 3 in List',
             level: 2,
-            settings: {},
           },
           type: 'heading',
         },
@@ -202,7 +194,12 @@ const App = () => {
     });
   }, []);
 
+  serverLoad(data, null).then((d) => {
+    console.log(d);
+  });
+
   return <DMEditor ref={editorRef} />;
+  // return <DMEditorView data={data} theme="blue" />;
 };
 
 export default App;
