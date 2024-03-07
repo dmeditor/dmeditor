@@ -61,7 +61,7 @@ module.exports = merge(baseConfig, {
             },
           },
         ],
-      }
+      },
     ],
   },
   optimization: {
@@ -88,7 +88,6 @@ module.exports = merge(baseConfig, {
         { from: 'package.json', to: resolve('./dist') },
         { from: 'LICENSE', to: resolve('./dist') },
         { from: 'changelog.txt', to: resolve('./dist') },
-        { from: 'src/**/*', to: resolve('./dist/') },
       ],
     }),
   ],

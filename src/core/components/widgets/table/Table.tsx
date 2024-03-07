@@ -1,9 +1,9 @@
 import { TextField } from '@mui/material';
+import { DME, useEditorStore } from 'dmeditor/index';
 
 import type { EntityTableBlock } from './entity';
 import { useTableStore } from './store';
 import { StyledTable } from './styled';
-import { DME, useEditorStore } from 'Core/index';
 
 const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   const { blockNode, rootClasses } = props;

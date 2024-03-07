@@ -1,9 +1,7 @@
-// import { widgetMetaData } from 'Components/types';
-
+import type { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
 import { EntityHeadingBlock } from './entity';
-import type { DME, DMEData } from 'Core/types/dmeditor';
 
 //should be HeadingWidget, which is a definition object. This file should be called definitin.ts
 //todo: define a type for this.

@@ -1,13 +1,12 @@
-import { Button, ButtonGroup as MUIButtonGroup } from '@mui/material';
 import * as React from 'react';
-
-import { useEditorStore } from 'Src/core/main/store';
-import { Ranger } from 'Src/core/utils/Ranger';
+import { Button, ButtonGroup as MUIButtonGroup } from '@mui/material';
+import { useEditorStore } from 'dmeditor/main/store';
+import { Ranger } from 'dmeditor/utils/Ranger';
 
 const ButtonGroup = (props: {
   property: string;
   value: string;
-  parameters: {options: Array<{text:string, value:string}> };
+  parameters: { options: Array<{ text: string; value: string }> };
 }) => {
   const { property, parameters, value } = props;
   const { updateSelectedBlockProps } = useEditorStore();
@@ -17,8 +16,15 @@ const ButtonGroup = (props: {
   };
 
   return (
-    <MUIButtonGroup variant="outlined" size='small'>
-        {parameters.options.map((item)=><Button variant={props.value===item.value?'contained':'outlined'} onClick={()=>handleChange(item.value)}>{item.text}</Button>)}        
+    <MUIButtonGroup variant="outlined" size="small">
+      {parameters.options.map((item) => (
+        <Button
+          variant={props.value === item.value ? 'contained' : 'outlined'}
+          onClick={() => handleChange(item.value)}
+        >
+          {item.text}
+        </Button>
+      ))}
     </MUIButtonGroup>
   );
 };

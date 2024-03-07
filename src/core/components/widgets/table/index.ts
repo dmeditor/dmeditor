@@ -1,11 +1,11 @@
 import { GridOnOutlined } from '@mui/icons-material';
+import { registerSettingComponent } from 'dmeditor/setting-panel/property-setting';
 
 import { registerWidget } from '..';
 import { registerIcon } from '../../icon/icon-data';
 import TableWidget from './definition';
 import { TableBorderType, TableColumn, TableHeader, TableRow } from './settings';
 import Table from './Table';
-import { registerSettingComponent } from 'Core/setting-panel/property-setting';
 
 export default () => {
   registerWidget(TableWidget, Table);

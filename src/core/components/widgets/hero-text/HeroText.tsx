@@ -1,8 +1,9 @@
+import { BlockListRender, BlockRender } from 'dmeditor/main/renderer';
+import { DME } from 'dmeditor/types';
+
 import { getAllowedTypes, getWidget, getWidgetWithVariant } from '..';
 import { EntityHeroText } from './entity';
 import { HeroTextContainer } from './styled';
-import { BlockListRender, BlockRender } from 'Src/core/main/renderer';
-import { DME } from 'Src/core/types';
 
 const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
   const {

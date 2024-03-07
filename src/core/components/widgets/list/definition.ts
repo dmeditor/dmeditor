@@ -1,8 +1,8 @@
+import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
 import { getWidgetVariant } from '..';
 import { EntityList } from './entity';
-import { DME, DMEData } from 'Src/core/types/dmeditor';
 
 const listWidget: DME.Widget = {
   category: 'section',

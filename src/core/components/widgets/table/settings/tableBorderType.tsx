@@ -1,7 +1,6 @@
 import { BorderAll, BorderClearOutlined, BorderHorizontalOutlined } from '@mui/icons-material';
-
-import { PropertyButton, PropertyItem } from 'Core/utils';
-import { useEditorStore } from 'Src/core/main/store';
+import { useEditorStore } from 'dmeditor/main/store';
+import { PropertyButton, PropertyItem } from 'dmeditor/utils';
 
 type BorderType = 'none' | 'border' | 'rowBorder';
 

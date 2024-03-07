@@ -17,11 +17,14 @@
     "noEmit": false,
     "jsx": "react-jsx",
     "baseUrl": "./",
+    "rootDir": "./src/core/",
+    "emitDeclarationOnly": true,
+    "declaration": true,
     "paths": {
-      "Src/*": ["src/*"],
-      "Core/*": ["src/core/*"],
-      "Components/*": ["src/core/components/*"],
-    }
+      "dmeditor/*": ["src/core/*"]
+    },
+    "listEmittedFiles": true
   },
-  "include": ["src/**/*", "samples/dev/App.tsx", "samples/dev/index.tsx"]
+  "include": ["src/core/**/*.ts", "src/core/**/*.tsx"],
+  "exclude": ["src/core/config/**/*", "node_modules", "src/locales/**/*"]
 }

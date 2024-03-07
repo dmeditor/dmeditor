@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { TitleOutlined } from '@mui/icons-material';
+import { useEditorStore } from 'dmeditor/main/store';
+import useHeadingStore from 'dmeditor/setting-panel/store/heading';
+import type { DME, DMEData } from 'dmeditor/types';
+import { isHTMLElement } from 'dmeditor/utils';
 
 import { BlockListRender } from '../../../../main/renderer';
 import { getCommonBlockCss, getStyleCss } from '../../../../main/renderer/BlockRender';
 import { EntityHeadingBlock } from './entity';
-import type { DME, DMEData } from 'Core/types';
-import { useEditorStore } from 'Src/core/main/store';
-import useHeadingStore from 'Src/core/setting-panel/store/heading';
-import { isHTMLElement } from 'Src/core/utils';
 
 const { useState, useRef, useEffect } = React;
 interface HeadingComponentProps extends React.HTMLAttributes<HTMLOrSVGElement> {

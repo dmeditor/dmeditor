@@ -1,4 +1,5 @@
-import { DMEData } from '../components/types/block';
+import { DMEData } from 'dmeditor/types';
+
 // import { config } from './config';
 import { simpleCloneDeep } from '../utils';
 

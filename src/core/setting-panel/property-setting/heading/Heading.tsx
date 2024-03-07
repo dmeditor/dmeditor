@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { LoopOutlined } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
+import { BlockProperty } from 'dmeditor/components/block-property';
+import { useEditorStore } from 'dmeditor/main/store';
 
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { PropertyButton, PropertyItem, Ranger, Util } from '../../../utils';
 import useHeadingStore from '../../store/heading';
-import { BlockProperty } from 'Src/core/components/block-property';
-import { useEditorStore } from 'Src/core/main/store';
 
 const { useState, useRef, useEffect } = React;
 
@@ -44,7 +44,7 @@ const HeadingSetting = (props: unknown) => {
 
   return (
     <>
-        {/* <PropertyItem label="Level">
+      {/* <PropertyItem label="Level">
           <Ranger
             defaultValue={level}
             min={1}
@@ -57,22 +57,22 @@ const HeadingSetting = (props: unknown) => {
             }}
           />
         </PropertyItem> */}
-        <PropertyItem label="Anchor">
-          <TextField
-            sx={{ width: 'calc(100% - 37px)' }}
-            placeholder="Please enter ID"
-            value={id}
-            size="small"
-            hiddenLabel
-            variant="outlined"
-            onChange={(e) => {
-              handleAnchorChange(e.target.value);
-            }}
-          />
-          <PropertyButton title="Auto generate Id" onClick={generateId}>
-            <LoopOutlined />
-          </PropertyButton>
-        </PropertyItem>
+      <PropertyItem label="Anchor">
+        <TextField
+          sx={{ width: 'calc(100% - 37px)' }}
+          placeholder="Please enter ID"
+          value={id}
+          size="small"
+          hiddenLabel
+          variant="outlined"
+          onChange={(e) => {
+            handleAnchorChange(e.target.value);
+          }}
+        />
+        <PropertyButton title="Auto generate Id" onClick={generateId}>
+          <LoopOutlined />
+        </PropertyButton>
+      </PropertyItem>
     </>
   );
 };

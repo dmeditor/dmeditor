@@ -1,14 +1,14 @@
 import { ViewWeekOutlined } from '@mui/icons-material';
-
-import { registerIcon } from '../../icon/icon-data';
-import { Layout3Columns, layout3ColumnsWidget } from './Layout3Columns';
-import { Layout3ColumnsSetting } from './settings/Layout3ColumnsSetting';
 import {
   registerWidget,
   registerWidgetStyle,
   registerWidgetStyleOption,
-} from 'Src/core/components/widgets';
-import { registerSettingComponent } from 'Src/core/setting-panel/register';
+} from 'dmeditor/components/widgets';
+import { registerSettingComponent } from 'dmeditor/setting-panel/register';
+
+import { registerIcon } from '../../icon/icon-data';
+import { Layout3Columns, layout3ColumnsWidget } from './Layout3Columns';
+import { Layout3ColumnsSetting } from './settings/Layout3ColumnsSetting';
 
 const register = () => {
   registerWidget(layout3ColumnsWidget, Layout3Columns);

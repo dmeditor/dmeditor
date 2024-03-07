@@ -1,8 +1,7 @@
+import { DME, DMEData } from 'dmeditor/types';
 import { nanoid } from 'nanoid';
 
 import { EntityGrid } from './entity';
-import { DMEData } from 'Core/types';
-import { DME } from 'Src/core/types';
 
 const gridWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced

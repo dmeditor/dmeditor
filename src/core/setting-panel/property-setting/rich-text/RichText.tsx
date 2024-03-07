@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
+import definition from 'dmeditor/components/widgets/text/definition';
+import { useEditorStore } from 'dmeditor/index';
+import { SlateFun } from 'dmeditor/utils/Slate';
 import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
 import { BlockButton, MarkButton, toggleMark, Toolbar } from './helper';
-import definition from 'Components/widgets/text/definition';
-import { SlateFun } from 'Core/utils/Slate';
-import { useEditorStore } from 'Src/core';
 
 const { useCallback, useMemo } = React;
 const { Element, Leaf, HOTKEYS } = SlateFun;

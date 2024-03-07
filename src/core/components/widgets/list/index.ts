@@ -1,11 +1,11 @@
 import { ReorderOutlined } from '@mui/icons-material';
+import { DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
 import { registerWidget, registerWidgetVariant } from '..';
 import { registerIcon } from '../../icon/icon-data';
 import listWidget from './definition';
 import { List } from './List';
-import { DMEData } from 'Src/core/types/dmeditor';
 
 const register = () => {
   registerWidget(listWidget, List);

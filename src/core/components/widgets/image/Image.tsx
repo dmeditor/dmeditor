@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ImageOutlined } from '@mui/icons-material';
 import { Button, Checkbox } from '@mui/material';
+import { BlockProperty } from 'dmeditor/components/block-property';
+import { BlockSettings } from 'dmeditor/setting-panel/BlockSettings';
 
 import { StyleSettings } from '../../../../styles/StyleSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
-import { PickColor, PropertyGroup, PropertyItem, Ranger, Util } from '../../../utils';
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
-import { BlockProperty } from 'Src/core/components/block-property';
-import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
+import { PickColor, PropertyGroup, PropertyItem, Ranger, Util } from '../../../utils';
 
 export const BlockImage = (props: ToolRenderProps) => {
   const [fullScreen, setFullScreen] = useState(props.blockdata.settings?.fullScreen ? true : false);

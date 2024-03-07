@@ -1,6 +1,5 @@
+import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
-
-import { DME, DMEData } from 'Src/core/types/dmeditor';
 
 const buttonWidget: DME.Widget = {
   category: 'widget',

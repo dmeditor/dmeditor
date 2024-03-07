@@ -1,10 +1,10 @@
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 import { Checkbox } from '@mui/material';
+import { useEditorStore } from 'dmeditor/index';
+import { PickColor, PropertyButton, PropertyItem } from 'dmeditor/utils';
 
 import Align from '../../../../setting-panel/property-setting/align/Align';
 import Color from '../../../../setting-panel/property-setting/color/Color';
-import { useEditorStore } from 'Core/index';
-import { PickColor, PropertyButton, PropertyItem } from 'Core/utils';
 
 type AlignType = 'left' | 'center' | 'right';
 const alignList: { value: AlignType; icon: React.ReactNode }[] = [
