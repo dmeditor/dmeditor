@@ -66,6 +66,7 @@ export const BlockRender = React.memo((props: BlockProps) => {
       }
       return { rootClasses: rootClasses, styleClasses: styleClasses };
     }
+    return { rootClasses: '', styleClasses: {} };
   }, [id, styleData]);
 
   return Widget ? (
