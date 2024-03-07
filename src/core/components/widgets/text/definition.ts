@@ -1,7 +1,7 @@
+import { DME, DMEData } from 'dmeditor/types';
 import { nanoid } from 'nanoid';
 
 import { EntityText } from './entity';
-import { DME, DMEData } from 'Core/types';
 
 const TextWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced

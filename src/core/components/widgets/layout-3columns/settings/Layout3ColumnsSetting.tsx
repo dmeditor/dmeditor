@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { BorderAll, BorderClearOutlined, BorderHorizontalOutlined } from '@mui/icons-material';
+import { useEditorStore } from 'dmeditor/main/store';
+import { DME } from 'dmeditor/types';
+import { PropertyButton, PropertyItem, Ranger } from 'dmeditor/utils';
 
 import { EntityLayout3Columns } from '../Layout3Columns';
-import { PropertyButton, PropertyItem, Ranger } from 'Core/utils';
-import { useEditorStore } from 'Src/core/main/store';
-import { DME } from 'Src/core/types';
 
 export const Layout3ColumnsSetting = (props: DME.SettingComponentProps) => {
   const { updateSelectedBlock, getSelectedBlock } = useEditorStore();

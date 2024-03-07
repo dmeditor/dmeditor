@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
+import { getPageTheme } from 'dmeditor/components/page';
+import { DME, DMEData } from 'dmeditor/types/dmeditor';
 
 import { BlockListRender } from './BlockListRender';
-import { getPageTheme } from 'Src/core/components/page';
-import { DME, DMEData } from 'Src/core/types/dmeditor';
 
 export interface DMEditorViewProps {
   data: DMEData.BlockList;

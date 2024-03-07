@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
+import type { DME, DMEData } from 'dmeditor/types';
 import _debounce from 'lodash/debounce';
 
 import i18n from '../../../locales/i18n';
 import { getDef } from '../../../ToolDefinition';
 import { getWidgetComponent, getWidgetStyle, getWidgetVariant } from '../../components/widgets';
-import type { DME, DMEData } from 'Core/types';
 
 interface BlockProps<Type = DMEData.DefaultDataType> {
   data: DMEData.Block<Type>;

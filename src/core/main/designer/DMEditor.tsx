@@ -8,11 +8,7 @@ import '../initialize';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
 import { Button, createTheme, IconButton, ThemeProvider, Tooltip } from '@mui/material';
 import { deepOrange, green, grey, orange } from '@mui/material/colors';
-
-import { getDef, newBlockData } from '../../../ToolDefinition';
-import { PropertyTab } from '../../components/property-tab/Tab';
-import { MenuList } from '../../components/widgets/menu-list/MenuList';
-import emitter from 'Core/utils/event';
+import emitter from 'dmeditor/utils/event';
 import {
   BrowseProps,
   DeviceType,
@@ -22,12 +18,21 @@ import {
   setDevice,
   useGetDevice,
   Util,
-} from 'Core/utils/utilx';
+} from 'dmeditor/utils/utilx';
+
+import { getDef, newBlockData } from '../../../ToolDefinition';
+import { PropertyTab } from '../../components/property-tab/Tab';
+import { MenuList } from '../../components/widgets/menu-list/MenuList';
 
 import '../../../locales/i18n';
 
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
+import { getPageTheme, setPageSettings } from 'dmeditor/components/page';
+import { registerDefaultWidgets } from 'dmeditor/components/widgets';
+import { BlockListRender } from 'dmeditor/main/renderer';
+import { DME, DMEData } from 'dmeditor/types/dmeditor';
+import { isStrictlyInfinity, jsonParse } from 'dmeditor/utils';
 import i18next from 'i18next';
 import { produce } from 'immer';
 import { debounce } from 'lodash';
@@ -39,11 +44,6 @@ import { TopBar } from '../../topbar/Topbar';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } from './style';
-import { getPageTheme, setPageSettings } from 'Src/core/components/page';
-import { registerDefaultWidgets } from 'Src/core/components/widgets';
-import { BlockListRender } from 'Src/core/main/renderer';
-import { DME, DMEData } from 'Src/core/types/dmeditor';
-import { isStrictlyInfinity, jsonParse } from 'Src/core/utils';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 

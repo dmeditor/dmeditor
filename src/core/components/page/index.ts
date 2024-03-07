@@ -1,4 +1,4 @@
-import { DME } from 'Src/core/types/dmeditor';
+import { DME } from 'dmeditor/types/dmeditor';
 
 let pageSettings: Array<DME.PageSetting> = [];
 

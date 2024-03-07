@@ -1,9 +1,9 @@
+import { DMEData } from 'dmeditor/types';
 import { nanoid } from 'nanoid';
 
 import { registerWidget, registerWidgetStyle, registerWidgetVariant } from '..';
 import heroTextWidget from './definition';
 import { HeroText } from './HeroText';
-import { DMEData } from 'Src/core/types';
 
 const register = () => {
   registerWidget(heroTextWidget, { render: HeroText });

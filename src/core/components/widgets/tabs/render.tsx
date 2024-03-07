@@ -7,6 +7,7 @@ import {
   InsertEmoticon,
   TabOutlined,
 } from '@mui/icons-material';
+import { BlockSettings } from 'dmeditor/setting-panel/BlockSettings';
 // const nanoid = require('nanoid');
 import { nanoid } from 'nanoid';
 import Tab from 'react-bootstrap/Tab';
@@ -19,7 +20,6 @@ import { PropertyButton, Util } from '../../../utils';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
 import { blockTabCss } from './BlockTab.css';
-import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 
 interface DMTabsProps {
   blockNode: any;

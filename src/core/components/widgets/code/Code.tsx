@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { CodeOutlined } from '@mui/icons-material';
+import { BlockProperty } from 'dmeditor/components/block-property';
+import { BlockSettings } from 'dmeditor/setting-panel/BlockSettings';
 
-import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
-import { BlockProperty } from 'Src/core/components/block-property';
-import { BlockSettings } from 'Src/core/setting-panel/BlockSettings';
 import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
+import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
 import { Util } from '../../../utils';
 
 export const Code = (props: ToolRenderProps) => {

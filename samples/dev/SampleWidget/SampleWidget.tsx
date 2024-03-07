@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
 import { Slider } from '@mui/material';
+import { useEditorStore } from 'dmeditor/index';
+import { DME } from 'dmeditor/types';
 
 import { EntitySampleWidget } from './entity';
-import { useEditorStore } from 'Src/core';
-import { DME } from 'Src/core/types';
 
 const { useState, useEffect } = React;
 

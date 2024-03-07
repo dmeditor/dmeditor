@@ -1,6 +1,6 @@
 export { useEditorStore } from './main/store';
 
-export { DMEditor } from 'Core/main/designer/DMEditor';
+export { DMEditor } from 'dmeditor/main/designer/DMEditor';
 export {
   addCustomDefinition,
   addLayoutDefinition,
@@ -19,5 +19,5 @@ export { serverLoad } from './ssr';
 
 export { registerTheme } from './components/page';
 
-export { DMEditorView, BlockRender, BlockListRender } from 'Core/main/renderer/index';
+export { DMEditorView, BlockRender, BlockListRender } from 'dmeditor/main/renderer/index';
 export * from './types/dmeditor';

@@ -6,6 +6,24 @@ import {
   FormatAlignRight,
 } from '@mui/icons-material';
 import { Divider, MenuItem, Select } from '@mui/material';
+import {
+  getWidget,
+  getWidgetName,
+  getWidgetStyle,
+  getWidgetVariant,
+  getWidgetWithVariant,
+  properties,
+  widgetStyles,
+} from 'dmeditor/components/widgets';
+import {
+  getPropertyValue,
+  getValueByPath,
+  PickColor,
+  PropertyButton,
+  PropertyGroup,
+  PropertyItem,
+  Ranger,
+} from 'dmeditor/utils';
 
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
@@ -15,24 +33,6 @@ import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
 import { StyleSettings } from './style-settings/StyleSettings';
-import {
-  getWidget,
-  getWidgetName,
-  getWidgetStyle,
-  getWidgetVariant,
-  getWidgetWithVariant,
-  properties,
-  widgetStyles,
-} from 'Components/widgets';
-import {
-  getPropertyValue,
-  getValueByPath,
-  PickColor,
-  PropertyButton,
-  PropertyGroup,
-  PropertyItem,
-  Ranger,
-} from 'Core/utils';
 
 interface CommonSettingsType {
   align: string;

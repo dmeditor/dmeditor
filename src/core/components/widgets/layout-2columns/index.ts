@@ -1,11 +1,12 @@
-import { registerIcon } from '../../icon/icon-data';
-import Icon from './icon/icon.svg';
-import { Layout2Columns, layout2ColumnsWidget } from './Layout2Columns';
 import {
   registerWidget,
   registerWidgetStyle,
   registerWidgetStyleOption,
-} from 'Src/core/components/widgets';
+} from 'dmeditor/components/widgets';
+
+import { registerIcon } from '../../icon/icon-data';
+import Icon from './icon/icon.svg';
+import { Layout2Columns, layout2ColumnsWidget } from './Layout2Columns';
 
 const register = () => {
   registerWidget(layout2ColumnsWidget, { render: Layout2Columns });

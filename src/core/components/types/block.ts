@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import type { BlockData } from 'Src/ToolDefinition';
+import type { BlockData } from '../../../ToolDefinition';
 
 export interface RenderMainProps {
   data: BlockData;
@@ -35,4 +35,3 @@ export interface BlockLayoutData {
   marginTop?: number;
   backgroundColor?: string;
 }
-

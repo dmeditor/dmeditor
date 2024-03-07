@@ -1,11 +1,10 @@
 import * as React from 'react';
+import { registerTheme } from 'dmeditor/components/page';
+import { DMEditor } from 'dmeditor/index';
+import { serverLoad } from 'dmeditor/ssr';
 import { nanoid } from 'nanoid';
 
 import registerSampleWidget from './SampleWidget';
-import { DMEditor } from 'Src/core';
-import { registerTheme } from 'Src/core/components/page';
-import { DMEditorView } from 'Src/core/main/renderer/DMEditorView';
-import { serverLoad } from 'Src/core/ssr';
 
 registerSampleWidget();
 registerTheme({
@@ -16,7 +15,7 @@ registerTheme({
     --project-main-bg-color: #fbadad;
 
     /*background: var(--project-main-bg-color);  */
-    
+
     /*todo: use css variable*/
   `,
 });

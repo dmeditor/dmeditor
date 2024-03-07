@@ -1,15 +1,15 @@
-import { nanoid } from 'nanoid';
-
-import SampleWidget from './SampleWidget';
-import SettingInput from './SettingInput';
-import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'Src/core';
 import {
   getWidget,
   getWidgetVariant,
   registerWidgetStyle,
   registerWidgetStyleOption,
-} from 'Src/core/components/widgets';
-import { DMEData } from 'Src/core/types';
+} from 'dmeditor/components/widgets';
+import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'dmeditor/index';
+import { DMEData } from 'dmeditor/types';
+import { nanoid } from 'nanoid';
+
+import SampleWidget from './SampleWidget';
+import SettingInput from './SettingInput';
 
 const registerSampleWidget = function () {
   registerWidget(
@@ -74,7 +74,7 @@ const registerSampleWidget = function () {
         text-align:center;
         padding: 10px;
         color: white;
-        background: linear-gradient(172deg, rgba(232,23,23,1) 0%, rgba(231,159,255,1) 66%, rgba(255,216,246,1) 100%);        
+        background: linear-gradient(172deg, rgba(232,23,23,1) 0%, rgba(231,159,255,1) 66%, rgba(255,216,246,1) 100%);
     `,
       icon: '',
     },
@@ -160,7 +160,7 @@ const registerSampleWidget = function () {
         name: 'Small',
         cssStyle: `
        margin-top: 10px;
-       margin-bottom: 10px;      
+       margin-bottom: 10px;
     `,
         icon: '',
       },
@@ -176,7 +176,7 @@ const registerSampleWidget = function () {
       cssStyle: `
         margin-top: 10px;
         margin-bottom: 10px;
-        
+
         color: var(--project-main-color);
         padding: 10px;
 
@@ -214,7 +214,7 @@ const registerSampleWidget = function () {
         padding: 10px;
         background: #666666;
         border: 1px solid #000000;
-      }     
+      }
   `,
       icon: '',
     },

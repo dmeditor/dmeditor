@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 // import ArrowDropUpIcon from '@mui/icons-material';
 import { Collapse } from '@mui/material';
+import { DME } from 'dmeditor/index';
+import { BlockListRender } from 'dmeditor/main/renderer';
 import { nanoid } from 'nanoid';
-
-import { DME } from 'Core/index';
-import { BlockListRender } from 'Src/core/main/renderer';
 
 interface CollapsableTextEntity {}
 

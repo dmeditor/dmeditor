@@ -1,8 +1,8 @@
+import { BlockListRender } from 'dmeditor/main/renderer';
+import { DME } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
 import { SyledLayout } from './styled';
-import { BlockListRender } from 'Src/core/main/renderer';
-import { DME } from 'Src/core/types/dmeditor';
 
 const layout3ColumnsWidget: DME.Widget = {
   category: 'layout',
