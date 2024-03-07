@@ -8,7 +8,7 @@ import { EntityList } from './entity';
 const listWidget: DME.Widget = {
   category: 'section',
   icon: 'list',
-  name: 'List',
+  name: 'List container',
   type: 'list',
   events: {
     createBlock: (variant?: string) => {
