@@ -18,6 +18,10 @@ export interface DMEConfigType {
 
 const defaultConfig = () => {
   return {
+    general: {},
+    editor: {
+      defaultTheme: 'default',
+    },
     widgets: {
       text: { fonts: ['Arial', 'Times new man'] },
     },
@@ -27,6 +31,10 @@ const defaultConfig = () => {
 };
 
 const dmeConfig: {
+  general: { [prop: string]: string | number | boolean };
+  editor: {
+    defaultTheme?: string;
+  };
   widgets: { [widget: string]: widgetConfig };
   plugins: { [plugin: string]: any };
   callbacks: CallbackConfig;

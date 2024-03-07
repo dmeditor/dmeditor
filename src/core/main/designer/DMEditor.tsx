@@ -38,6 +38,7 @@ import { produce } from 'immer';
 import { debounce } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
+import { dmeConfig } from '../../config';
 import SettingPanel from '../../setting-panel';
 import Toolbar from '../../toolbar';
 import { TopBar } from '../../topbar/Topbar';
@@ -161,7 +162,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   }, []);
 
   const getThemeCss = useMemo(() => {
-    const themeIdentifier = page.theme || 'default';
+    const themeIdentifier = page.theme || dmeConfig.editor.defaultTheme;
     const theme = getPageTheme(themeIdentifier);
     if (theme) {
       return css(theme.cssStyle);
