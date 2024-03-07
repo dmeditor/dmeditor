@@ -6,6 +6,8 @@ export {
   addLayoutDefinition,
   registerWidget,
   registerWidgetVariant,
+  registerWidgetStyle,
+  registerWidgetStyleOption,
 } from './components/widgets';
 export {
   registerCommonProperty,

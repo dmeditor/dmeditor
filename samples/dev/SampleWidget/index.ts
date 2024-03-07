@@ -1,7 +1,5 @@
 import {
   DMEData,
-  getWidget,
-  getWidgetVariant,
   registerSettingComponent,
   registerWidget,
   registerWidgetStyle,
@@ -92,17 +90,17 @@ const registerSampleWidget = function () {
     //todo: use property?
     getDefaultData: (): DMEData.Block<any> => {
       const variant = getWidgetVariant('heading', 'gradient');
-      let variantData: any = [];
-      if (variant && variant.getDefaultData) {
-        variantData = [variant.getDefaultData()];
-      }
+      // let variantData: any = [];
+      // if (variant && variant.getDefaultData) {
+      //   variantData = [variant.getDefaultData()];
+      // }
 
       const headingData = [getWidget('heading')?.events.createBlock()] || [];
       return {
         id: nanoid(),
         type: 'list:article-block',
         data: { settings: {} },
-        children: [...headingData, ...variantData],
+        children: [...headingData],
       };
     },
   });
