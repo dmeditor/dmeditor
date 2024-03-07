@@ -1,6 +1,7 @@
 import type { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
+import { dmeConfig } from '../../../../config';
 import { EntityHeadingBlock } from './entity';
 
 //should be HeadingWidget, which is a definition object. This file should be called definitin.ts
@@ -14,9 +15,13 @@ const HeadingWidget: DME.Widget = {
   themeStyles: 'Theme heading',
   events: {
     createBlock: (): DMEData.Block<EntityHeadingBlock> => {
+      const defaultStyle = dmeConfig.widgets['heading'].defaultStyle;
+      const styleObj = defaultStyle ? { style: defaultStyle } : {};
+
       return {
         id: nanoid(),
         type: 'heading',
+        ...styleObj,
         data: {
           value: 'This is a new block',
           level: 2,
