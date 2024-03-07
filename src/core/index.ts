@@ -19,6 +19,8 @@ export {
 
 export { dmeditorServerSideLoad } from './ssr';
 
+export { dmeConfig, setDMEditorConfig, setDMEditorCallback } from './config';
+
 export { registerTheme } from './components/page';
 
 export { DMEditorView, BlockRender, BlockListRender } from 'dmeditor/main/renderer/index';

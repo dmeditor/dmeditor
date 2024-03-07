@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { DMEditor, dmeditorServerSideLoad, registerTheme } from 'dmeditor';
+import { DMEditor, dmeditorServerSideLoad, registerTheme, setDMEditorConfig } from 'dmeditor';
 import { nanoid } from 'nanoid';
 
-import { setDMEditorConfig } from '../../src/core/config';
 import registerSampleWidget from './SampleWidget';
 
 registerSampleWidget();
