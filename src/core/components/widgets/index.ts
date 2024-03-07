@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
-import type { DME, DMEData } from 'dmeditor/types/dmeditor';
+import { registerServerSideLoad, ServerSideLoadFunction } from 'dmeditor/ssr';
+import type { DME } from 'dmeditor/types/dmeditor';
 
 const components: {
   // TODO: make it more type safe
@@ -142,31 +143,14 @@ function registerWidgetComponent(widgetName: string, widgetInstance: ComponentTy
   components[widgetName] = widgetInstance;
 }
 
-type ServerLoadFunction = (data: DMEData.Block, serverParameters: any) => Promise<void>;
-
-//widget serverLoad map
-const serverLoadMap: { [widget: string]: ServerLoadFunction } = {};
-
-function registerServerLoad(widgetName: string, serverLoad: ServerLoadFunction) {
-  if (serverLoadMap[widgetName]) {
-    console.warn(`Server load ${widgetName} is already registered.`);
-    return;
-  }
-  serverLoadMap[widgetName] = serverLoad;
-}
-
-function getWidgetServerLoad(widgetName: string) {
-  return serverLoadMap[widgetName];
-}
-
 function registerWidget(
   definition: DME.Widget,
-  implementation: { render: ComponentType<any>; onServerLoad?: any },
+  implementation: { render: ComponentType<any>; onServerSideLoad?: ServerSideLoadFunction },
 ) {
   registerWidgetDefinition(definition);
   registerWidgetComponent(definition.type, implementation.render);
-  if (implementation.onServerLoad) {
-    registerServerLoad(definition.type, implementation.onServerLoad);
+  if (implementation.onServerSideLoad) {
+    registerServerSideLoad(definition.type, implementation.onServerSideLoad);
   }
 }
 
@@ -304,7 +288,6 @@ export {
   getWidgetStyles,
   registerWidgetStyleOption,
   getAllowedTypes,
-  getWidgetServerLoad,
 };
 
 export default widgetDefinition;

@@ -15,7 +15,7 @@ export {
   registerWidgetProperty,
 } from './setting-panel/register';
 
-export { serverLoad } from './ssr';
+export { dmeditorServerSideLoad } from './ssr';
 
 export { registerTheme } from './components/page';
 
