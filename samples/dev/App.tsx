@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DMEditor, dmeditorServerSideLoad, registerTheme, setDMEditorConfig } from 'dmeditor';
+import { DMEditor, dmeServerSideLoad, registerTheme, setDMEditorConfig } from 'dmeditor';
 import { nanoid } from 'nanoid';
 
 import registerSampleWidget from './SampleWidget';
@@ -197,7 +197,7 @@ const App = () => {
     });
   }, []);
 
-  dmeditorServerSideLoad(data, null).then((d) => {
+  dmeServerSideLoad(data, null).then((d) => {
     console.log(d);
   });
 

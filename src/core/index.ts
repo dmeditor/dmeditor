@@ -17,7 +17,7 @@ export {
   registerWidgetProperty,
 } from './setting-panel/register';
 
-export { dmeditorServerSideLoad } from './ssr';
+export { dmeServerSideLoad } from './ssr';
 
 export { dmeConfig, setDMEditorConfig, setDMEditorCallback } from './config';
 

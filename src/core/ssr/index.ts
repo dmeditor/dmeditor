@@ -18,7 +18,7 @@ function getWidgetServerSideLoad(widgetName: string) {
   return serverSideLoadMap[widgetName];
 }
 
-const dmeditorServerSideLoad = async (data: DMEData.BlockList, serverParameters: any) => {
+const dmeServerSideLoad = async (data: DMEData.BlockList, serverParameters: any) => {
   let proms: Array<Promise<any>> = [];
   iterateBlockList(data, (blockItem: DMEData.Block) => {
     const blockType = blockItem.type;
@@ -37,4 +37,4 @@ const dmeditorServerSideLoad = async (data: DMEData.BlockList, serverParameters:
   }
 };
 
-export { registerServerSideLoad, dmeditorServerSideLoad };
+export { registerServerSideLoad, dmeServerSideLoad };
