@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { registerTheme } from 'dmeditor/components/page';
-import { DMEditor } from 'dmeditor/index';
+import { DMEditor, dmeditorServerSideLoad, registerTheme } from 'dmeditor';
 import { nanoid } from 'nanoid';
 
-import { dmeditorServerSideLoad } from '../../src/core/ssr';
 import registerSampleWidget from './SampleWidget';
 
 registerSampleWidget();

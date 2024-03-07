@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { TextField } from '@mui/material';
-import { useEditorStore } from 'dmeditor/index';
-import { DME } from 'dmeditor/types';
+import { DME, useEditorStore } from 'dmeditor';
 
 import { EntitySampleWidget } from './entity';
 

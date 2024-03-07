@@ -1,11 +1,13 @@
 import {
+  DMEData,
   getWidget,
   getWidgetVariant,
+  registerSettingComponent,
+  registerWidget,
   registerWidgetStyle,
   registerWidgetStyleOption,
-} from 'dmeditor/components/widgets';
-import { registerSettingComponent, registerWidget, registerWidgetVariant } from 'dmeditor/index';
-import { DMEData } from 'dmeditor/types';
+  registerWidgetVariant,
+} from 'dmeditor';
 import { nanoid } from 'nanoid';
 
 import SampleWidget from './SampleWidget';
