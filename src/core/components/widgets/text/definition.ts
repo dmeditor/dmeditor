@@ -1,3 +1,4 @@
+import { dmeConfig } from 'dmeditor';
 import { DME, DMEData } from 'dmeditor/types';
 import { nanoid } from 'nanoid';
 
@@ -11,9 +12,13 @@ const TextWidget: DME.Widget = {
   type: 'text',
   events: {
     createBlock: (): DMEData.Block<EntityText> => {
+      const defaultStyle = dmeConfig.widgets['text']?.defaultStyle;
+      const styleObj = defaultStyle ? { style: defaultStyle } : {};
+
       return {
         id: nanoid(),
         type: 'text',
+        ...styleObj,
         data: {
           value: [
             {

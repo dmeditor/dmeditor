@@ -1,3 +1,4 @@
+import { dmeConfig } from 'dmeditor';
 import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
@@ -8,10 +9,12 @@ const buttonWidget: DME.Widget = {
   type: 'button',
   events: {
     createBlock: (): DMEData.Block => {
+      const defaultStyle = dmeConfig.widgets['button']?.defaultStyle;
+      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
         type: 'button',
-        style: { type: 'primary' },
+        ...styleObj,
         data: {
           value: 'New button',
           link: '#',

@@ -1,3 +1,4 @@
+import { dmeConfig } from 'dmeditor';
 import { BlockListRender } from 'dmeditor/main/renderer';
 import { DME } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
@@ -11,11 +12,14 @@ const layout3ColumnsWidget: DME.Widget = {
   type: 'layout-3columns',
   events: {
     createBlock: () => {
+      const defaultStyle = dmeConfig.widgets['layout-3columns']?.defaultStyle;
+      const styleObj = defaultStyle ? { style: defaultStyle } : {};
+
       return {
         id: nanoid(),
         data: { column1Width: 4, column2Width: 4 },
         type: 'layout-3columns',
-        style: { _: 'border' },
+        ...styleObj,
         children: [
           {
             id: nanoid(),

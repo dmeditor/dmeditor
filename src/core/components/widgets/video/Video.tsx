@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
+import { dmeConfig } from 'dmeditor';
 import type { DME, DMEData } from 'dmeditor/index';
 import { useEditorStore } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
@@ -107,9 +108,13 @@ export const VideoDefinition: DME.Widget = {
   type: 'video',
   events: {
     createBlock: (): DMEData.Block<VideoEntity> => {
+      const defaultStyle = dmeConfig.widgets['video']?.defaultStyle;
+      const styleObj = defaultStyle ? { style: defaultStyle } : {};
+
       return {
         id: nanoid(),
         type: 'video',
+        ...styleObj,
         data: {
           value: '',
           settings: {

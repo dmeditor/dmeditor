@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 // import ArrowDropUpIcon from '@mui/icons-material';
 import { Collapse } from '@mui/material';
-import { DME } from 'dmeditor/index';
-import { BlockListRender } from 'dmeditor/main/renderer';
+import { BlockListRender, DME, dmeConfig } from 'dmeditor';
 import { nanoid } from 'nanoid';
 
 interface CollapsableTextEntity {}
@@ -16,11 +15,13 @@ export const CollapsableTextDefiniation: DME.Widget = {
   settings: [],
   events: {
     createBlock: () => {
+      const defaultStyle = dmeConfig.widgets['collapsable-text']?.defaultStyle;
+      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
         data: {},
         type: 'collapsable-text',
-        style: { _: 'default' },
+        ...styleObj,
         children: [
           {
             id: '0',

@@ -1,3 +1,4 @@
+import { dmeConfig } from 'dmeditor';
 import type { DME, DMEData } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
 
@@ -10,9 +11,13 @@ const HeadingWidget: DME.Widget = {
   type: 'table',
   events: {
     createBlock: (): DMEData.Block<EntityTableBlock> => {
+      const defaultStyle = dmeConfig.widgets['table']?.defaultStyle;
+      const styleObj = defaultStyle ? { style: defaultStyle } : {};
+
       return {
         id: nanoid(),
         type: 'table',
+        ...styleObj,
         data: {
           value: [
             ['11', '22'],

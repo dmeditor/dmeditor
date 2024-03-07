@@ -1,3 +1,4 @@
+import { dmeConfig } from 'dmeditor';
 import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
@@ -15,10 +16,14 @@ const heroTextWidget: DME.Widget = {
   //or {hero: 'image', list: {type: 'list', children:{'list:button', <variant definition>}}
   events: {
     createBlock: (): DMEData.Block<EntityHeroText> => {
+      const defaultStyle = dmeConfig.widgets['hero-text']?.defaultStyle;
+      const styleObj = defaultStyle ? { style: defaultStyle } : {};
+
       return {
         id: nanoid(),
         type: 'hero-text',
         data: {},
+        ...styleObj,
         children: [
           {
             id: nanoid(),
