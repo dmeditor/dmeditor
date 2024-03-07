@@ -3,7 +3,7 @@ import { DMEData } from '../types/dmeditor';
 
 export type ServerSideLoadFunction = (data: DMEData.Block, serverParameters: any) => Promise<void>;
 
-//widget serverLoad map
+//widget serverSideLoad map
 const serverSideLoadMap: { [widget: string]: ServerSideLoadFunction } = {};
 
 function registerServerSideLoad(widgetName: string, serverLoad: ServerSideLoadFunction) {
