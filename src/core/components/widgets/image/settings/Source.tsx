@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { css } from '@emotion/css';
 import {
   Button,
   Dialog,
@@ -143,6 +144,20 @@ export const Source = () => {
   return (
     <>
       <PropertyItem label="Source">
+        {value && (
+          <img
+            onClick={() => toggleVisible(true)}
+            className={css`
+              width: 80%;
+              cursor: pointer;
+              border-radius: 5px;
+              &:hover {
+                opacity: 0.8;
+              }
+            `}
+            src={value}
+          />
+        )}
         <Button color="info" onClick={() => toggleVisible(true)}>
           Choose
         </Button>
