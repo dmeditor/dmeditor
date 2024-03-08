@@ -2,7 +2,7 @@ import { ComponentType } from 'react';
 import { DME } from 'dmeditor';
 
 export interface CallbackConfig {
-  browseImage?: ComponentType;
+  browseImage?: ComponentType<{ value: string; onChange: (value: string) => void }>;
   browseLink?: ComponentType;
 }
 

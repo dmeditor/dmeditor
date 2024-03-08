@@ -9,12 +9,10 @@ import { toolCode } from '../../components/widgets/code/Code';
 
 import Heading from '../../components/widgets/heading/src/Heading';
 // import { toolIframe } from '../../components/widgets/iframe/IFrame';
-import { toolImage } from '../../components/widgets/image/Image';
 import { toolQuote } from '../../components/widgets/quote/Quote';
 
 // registerTool(toolText);
 // registerTool(toolImageText);
-registerTool(toolImage);
 // registerTool(Heading);
 // registerTool(toolBlockTab);
 registerTool(toolAccordion);
