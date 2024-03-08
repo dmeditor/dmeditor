@@ -19,9 +19,20 @@ export const ImageDefinition: DME.Widget = {
   category: 'widget',
   settings: [
     {
+      name: 'Source',
+      settingComponent: 'image-source',
+      custom: true,
+      property: '.src',
+    },
+    {
       name: 'Description',
       settingComponent: 'link',
       property: 'settings.description',
+    },
+    {
+      name: 'Align',
+      settingComponent: 'align',
+      property: 'settings.align',
     },
     {
       name: 'Border Width',
@@ -30,20 +41,9 @@ export const ImageDefinition: DME.Widget = {
       parameters: { min: 0, max: 40 },
     },
     {
-      name: 'Align',
-      settingComponent: 'align',
-      property: 'settings.align',
-    },
-    {
       name: 'Border Color',
       settingComponent: 'color',
       property: 'settings.borderColor',
-    },
-    {
-      name: 'Source',
-      settingComponent: 'image-source',
-      custom: true,
-      property: '.src',
     },
   ],
   events: {
@@ -61,9 +61,6 @@ export const ImageDefinition: DME.Widget = {
   },
 };
 
-const PlaceholderImage =
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/2312px-Picture_icon_BLACK.svg.png';
-
 export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const { blockNode, rootClasses, styleClasses } = props;
   const {
@@ -73,17 +70,30 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
 
   return (
     <div className={rootClasses}>
-      <div className={css({ textAlign: align })}>
-        <img
-          src={src || PlaceholderImage}
-          className={css({
-            width: '100%',
-            display: 'inline-block',
-            ...(borderWidth ? { borderWidth: borderWidth } : {}),
-            ...(borderColor ? { borderColor: borderColor } : {}),
-          })}
-        />
-      </div>
+      {!src && (
+        <div
+          className={css`
+            padding: 20px 5px;
+          `}
+        >
+          Please choose an image.
+        </div>
+      )}
+      {src && (
+        <div
+          className={(styleClasses['image'] || '') + ' dme-w-image ' + css({ textAlign: align })}
+        >
+          <img
+            src={src}
+            className={css({
+              width: '100%',
+              display: 'inline-block',
+              ...(borderWidth ? { borderWidth: borderWidth } : {}),
+              ...(borderColor ? { borderColor: borderColor } : {}),
+            })}
+          />
+        </div>
+      )}
       {description && (
         <div className={(styleClasses['description'] || '') + ' dme-w-description'}>
           {description}
