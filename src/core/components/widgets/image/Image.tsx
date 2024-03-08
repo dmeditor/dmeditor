@@ -4,9 +4,9 @@ import { nanoid } from 'nanoid';
 
 export interface ImageEntity {
   src: string;
+  description?: string;
   settings: {
     align?: 'left' | 'center' | 'right';
-    description?: string;
     borderWidth?: number;
     borderColor?: string;
   };
@@ -26,8 +26,8 @@ export const ImageDefinition: DME.Widget = {
     },
     {
       name: 'Description',
-      settingComponent: 'link',
-      property: 'settings.description',
+      settingComponent: 'input',
+      property: '.description',
     },
     {
       name: 'Align',
@@ -54,7 +54,8 @@ export const ImageDefinition: DME.Widget = {
         type: 'image',
         data: {
           src: '',
-          settings: { description: '', align: 'center', borderWidth: 0, borderColor: '' },
+          description: '',
+          settings: { align: 'center', borderWidth: 0, borderColor: '' },
         },
       };
     },
@@ -64,9 +65,9 @@ export const ImageDefinition: DME.Widget = {
 export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const { blockNode, rootClasses, styleClasses } = props;
   const {
-    data: { src, settings },
+    data: { src, settings, description },
   } = blockNode;
-  const { description, borderWidth, borderColor, align } = settings;
+  const { borderWidth, borderColor, align } = settings;
 
   return (
     <div className={rootClasses}>
