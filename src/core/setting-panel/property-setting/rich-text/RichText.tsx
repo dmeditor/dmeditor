@@ -54,7 +54,7 @@ const RichText = (props: { property: string; value: any }) => {
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          style={{ padding: 10, minHeight: 160, resize: 'vertical', overflow: 'auto' }}
+          style={{ padding: 10, minHeight: 100, height: 160, resize: 'vertical', overflow: 'auto' }}
           placeholder="Enter some rich text…"
           // spellCheck
           // autoFocus
