@@ -4,9 +4,9 @@ import { DME, useEditorStore } from 'dmeditor/index';
 import { PropertyButton } from 'dmeditor/utils';
 
 const Tabs = (props: DME.SettingComponentProps) => {
-  const { block } = props;
-
-  const value = block.children;
+  const {
+    block: { children: value },
+  } = props;
 
   const { updateSelectedBlock } = useEditorStore();
   const handleMoveUp = (e, index) => {
