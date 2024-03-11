@@ -1,4 +1,4 @@
-import { DMEData } from 'dmeditor/types/dmeditor';
+import type { DMEData } from 'dmeditor/types/dmeditor';
 import { jsonParse } from 'dmeditor/utils';
 
 //todo: can these operation be object-orented way(for blocklist and block)?
@@ -104,7 +104,7 @@ export const iteratePath = (
   });
 };
 
-export const GetDataByPath = (
+export const getDataByPath = (
   data: DMEData.BlockList,
   path: Array<number>,
 ): DMEData.Block | null => {
@@ -112,6 +112,13 @@ export const GetDataByPath = (
   let result = null;
   path.forEach((v, index) => {
     const block = temp[v];
+    // find the deepest children ?
+    // let targetIndex = index;
+    // let targetList = listData;
+    // while (targetList[targetIndex]?.children) {
+    //   targetList = targetList[targetIndex].children ?? [];
+    //   targetIndex = targetList.length - 1;
+    // }
     if (index === path.length - 1) {
       result = block;
     }
@@ -120,14 +127,13 @@ export const GetDataByPath = (
   return result;
 };
 
-export const GetListByPath = (
+export const getListByPath = (
   data: DMEData.BlockList,
   path: Array<number>,
 ): DMEData.BlockList | null => {
-  let list = data;
   if (path.length === 0) {
     return data;
   }
-  let listData = GetDataByPath(data, path);
+  let listData = getDataByPath(data, path);
   return listData && listData.children ? listData.children : null;
 };

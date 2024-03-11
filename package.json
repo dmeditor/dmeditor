@@ -36,6 +36,7 @@
     "react-error-boundary": "^4.0.11",
     "react-i18next": "^13.3.1",
     "react-resizable": "^3.0.5",
+    "react-transition-group": "^4.4.5",
     "slate": "^0.82.1",
     "slate-history": "^0.66.0",
     "slate-react": "^0.83.2",

@@ -41,7 +41,7 @@ export namespace DME {
       //   onBlur: () => void 0,
       updateData: (settings: Setting, data: DMEData.Block) => void;
       //when create an empty block
-      createBlock: () => DMEData.Block<any>;
+      createBlock: () => DMEData.Block<any, any>;
 
       //when used for default, eg. image inside another widget
       defaultBlock?: () => DMEData.Block<any>;
@@ -115,14 +115,26 @@ export namespace DMEData {
     [index: string]: string | undefined;
   }
 
-  //Block entity, which is a node in the data tree
-  export interface Block<TData = DefaultDataType> {
+  interface widgetBlockProperties {
     id?: string;
     type: string; //can use type for internal
-    parent?: Block;
-    data: TData; //entity data from widget
     style?: { [style: string]: string };
-    children?: BlockList;
+  }
+
+  export interface DefaultBlockType extends widgetBlockProperties {
+    data: DefaultDataType | null; //entity data from widget
+    children?: Array<DefaultBlockType>;
+  }
+
+  export interface BlockNode {
+    children?: Array<Block>;
+  }
+
+  //Block entity, which is a node in the data tree
+  export interface Block<TData = DefaultDataType, TChild = DefaultBlockType>
+    extends widgetBlockProperties {
+    data: TData | null; //entity data from widget
+    children?: Array<TChild & BlockNode>;
   }
 
   //Block list

@@ -37,17 +37,6 @@ const TextWidget: DME.Widget = {
       property: '.value',
       settingComponent: 'rich-text',
     },
-    // {
-    //   name: 'Hero position',
-    //   property: '.heroPosition',
-    //   settingComponent: 'button-group',
-    //   parameters: {
-    //     options: [
-    //       { text: 'Left', value: 'left' },
-    //       { text: 'Right', value: 'right' },
-    //     ],
-    //   },
-    // },
   ],
 };
 

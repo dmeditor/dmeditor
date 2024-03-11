@@ -1,22 +1,44 @@
-import { BlockListRender } from 'dmeditor/main/renderer';
-import { DME } from 'dmeditor/types/dmeditor';
+import type { DME } from 'dmeditor/index';
 
 import { EntityButton } from './entity';
-import { StyledButton } from './styled';
+import { getStyledButton } from './styled';
 
-const Button = (props: DME.WidgetRenderProps<EntityButton>) => {
+interface ButtonProps extends DME.WidgetRenderProps<EntityButton> {
+  buttonType: 'link' | 'button';
+  onClick?: () => void;
+}
+const Button = (props: ButtonProps) => {
   const {
-    blockNode,
     blockNode: {
       data: { value, link },
     },
+    ...restProps
   } = props;
+  const { buttonType = 'link', rootClasses, styleClasses, onClick } = restProps;
+  const Component = getStyledButton(buttonType);
 
+  const buttonProps: {
+    href?: string;
+  } = {};
+  if (buttonType === 'link') {
+    buttonProps['href'] = link;
+  }
+  let cls = '';
+  if (rootClasses) {
+    cls += rootClasses;
+  }
+  if (styleClasses) {
+    cls += ` ${styleClasses}`;
+  }
+  const handleClick = () => {
+    onClick?.();
+  };
   return (
-    <StyledButton href={link} className={props.rootClasses}>
+    <Component {...restProps} {...buttonProps} className={cls} onClick={handleClick}>
       {value}
-    </StyledButton>
+    </Component>
   );
 };
 
 export { Button };
+export default Button;
