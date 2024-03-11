@@ -34,6 +34,11 @@ function isStrictlyInfinity(value: number): value is typeof Infinity {
   return value === Infinity || value === -Infinity;
 }
 
+/**
+ * @method isNull
+ * @param value
+ * @returns {boolean} true if value is null
+ */
 function isNull(value: unknown): value is null {
   return value === null;
 }
@@ -89,6 +94,19 @@ function getPropertyValue(name: string, obj: DMEData.Block['data']): unknown {
   }
 }
 
+function getPropertyChildren(name: string, obj: DMEData.Block['children']): unknown {
+  if (name.startsWith('.')) {
+    if (Array.isArray(obj)) {
+      return obj;
+    } else {
+      console.warn('Invalid property children');
+      return [];
+    }
+  } else {
+    throw new Error(`Invalid property name: ${name}`);
+  }
+}
+
 /*
  * @method isEmptyString
  * @param {string} value
@@ -102,6 +120,7 @@ function isEmptyString(value: string): boolean {
 export {
   getPropertyName,
   getPropertyValue,
+  getPropertyChildren,
   simpleCloneDeep,
   jsonParse,
   jsonStringify,

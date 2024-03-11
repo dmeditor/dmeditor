@@ -25,8 +25,10 @@ import {
   widgetStyles,
 } from 'Components/widgets';
 import {
+  getPropertyChildren,
   getPropertyValue,
   getValueByPath,
+  isNull,
   PickColor,
   PropertyButton,
   PropertyGroup,
@@ -152,7 +154,9 @@ export const BlockSettings = (props: {
           } else {
             const settingComponent = setting.settingComponent;
             // const value = getValueByPath(setting.property, selectedBlock?.data);
-            const value = getPropertyValue(setting.property, blockData.data);
+            const value = isNull(blockData.data)
+              ? getPropertyChildren(setting.property, blockData.children)
+              : getPropertyValue(setting.property, blockData.data);
             return settingComponent ? (
               <PropertyItem label={setting.name} key={setting.property}>
                 <Property {...{ ...setting, value: value }} />

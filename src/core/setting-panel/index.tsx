@@ -6,7 +6,6 @@ import { Button, TextField } from '@mui/material';
 
 import { getWidget, getWidgetName } from '../components/widgets';
 import { useEditorStore } from '../main/store';
-import { GetDataByPath } from '../main/store/helper';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './BlockSettings';
 import { ListOverview } from './ListOverview';

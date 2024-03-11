@@ -1,49 +1,63 @@
-import type { EntityTabsBlock } from './entity';
-import type { DME } from 'Core/types';
+import { nanoid } from 'nanoid';
+
+import type { EntityTabsBlock, EntityTabsData } from './entity';
+import type { DME, DMEData } from 'Core/types';
 
 const TabsWidget: DME.Widget = {
-  // ?category options: widget, layout, form, chart, advanced
-  category: 'widget',
+  allowedTypes: ['heading', 'text', 'image'],
+  category: 'layout',
   icon: 'tabs',
   name: 'Tabs',
   type: 'tabs',
   events: {
-    createBlock: (): EntityTabsBlock => {
+    createBlock: (): DMEData.Block<EntityTabsData, EntityTabsBlock> => {
       return {
-        value: 'This is a new block',
-        level: 2,
-        settings: {
-          align: 'left',
-          color: '#000000',
-        },
+        data: null,
+        id: nanoid(),
+        style: { _: 'default' },
+        type: 'tabs',
         children: [
           {
-            type: 'list',
-            id: '1',
-            data: 'Tab1',
+            meta: {
+              tabKey: '1',
+              title: 'Tab1',
+            },
             children: [
-              { type: 'heading', id: '1', data: 'Tab1 Title', level: 2 },
+              { type: 'heading', id: nanoid(), data: { value: 'Tab1 Title', level: 2 } },
               {
                 type: 'text',
                 id: '2',
-                data: [{ type: 'paragraph', children: [{ text: 'Default text' }] }],
+                data: {
+                  value: [
+                    {
+                      type: 'paragraph',
+                      children: [{ text: 'Sample text' }],
+                    },
+                  ],
+                },
               },
             ],
-            setting: {},
           },
           {
-            type: 'list',
-            id: '2',
-            data: 'Tab2',
+            meta: {
+              tabKey: '2',
+              title: 'Tab2',
+            },
             children: [
-              { type: 'heading', id: '1', data: 'Tab2 Title', level: 2 },
+              { type: 'heading', id: nanoid(), data: { value: 'Tab2 Title', level: 2 } },
               {
                 type: 'text',
                 id: '2',
-                data: [{ type: 'paragraph', children: [{ text: 'Default text' }] }],
+                data: {
+                  value: [
+                    {
+                      type: 'paragraph',
+                      children: [{ text: 'Sample text' }],
+                    },
+                  ],
+                },
               },
             ],
-            setting: {},
           },
         ],
       };
@@ -51,19 +65,11 @@ const TabsWidget: DME.Widget = {
     updateData: () => {},
   },
   settings: [
-    { name: 'Align', settingComponent: 'align', property: 'settings.align' },
     {
-      name: 'Background',
-      settingComponent: 'color',
-      category: 'block',
-      property: 'settings.background-color',
+      name: '',
+      property: '.children',
+      settingComponent: 'tabs',
     },
-    { name: 'Text color', settingComponent: 'color', property: 'settings.color' },
-    { name: 'Border', settingComponent: 'color', category: 'block', property: 'settings.border' },
-    { name: 'Padding', settingComponent: 'range', category: 'block', property: 'settings.padding' },
-    { name: 'Margin', settingComponent: 'range', category: 'block', property: 'settings.margin' },
-
-    { name: '', settingComponent: 'heading', custom: true, property: '' },
   ],
 };
 

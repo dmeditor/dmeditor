@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
-import { GetDataByPath, GetListByPath, iteratePath } from './helper';
+import { getDataByPath, getListByPath, iteratePath } from './helper';
 import type { DMEData } from 'Core/types/dmeditor';
 import emitter from 'Core/utils/event';
 import { getWidgetWithVariant, properties } from 'Src/core/components/widgets';
@@ -62,7 +62,7 @@ type Actions = {
   getBlockByPath: (path: Array<number>) => DMEData.Block;
   getParents: () => Array<DMEData.Block & { path: Array<number> }>; //get parent Block from top to down, based on currentListPath
   updateSelectedBlock: <Type = DMEData.DefaultDataType>(
-    callback: (blockData: Type) => void,
+    callback: (blockData: Type, block?: any) => void,
   ) => void;
   updateSelectedBlockProps: (propName: string, propValue: string | number | Array<Object>) => void;
   updateSelectedBlockStyle: (value: string, styleIdentifier: string) => void;
@@ -120,7 +120,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        const listData = GetListByPath(state.storage, context || []);
+        const listData = getListByPath(state.storage, context || []);
         let newPosition: number = -Infinity;
         if (!listData) {
           return;
@@ -130,10 +130,32 @@ const useEditorStore = create<Store & Actions>()(
           newPosition = 0;
         } else {
           if (index <= listData.length - 1 && state.addBlockData.position) {
+            // find the deepest children
+            // let targetIndex = index;
+            // let targetList = listData;
+            // while (targetList[targetIndex]?.children) {
+            //   targetList = targetList[targetIndex].children ?? [];
+            //   targetIndex = targetList.length - 1;
+            // }
+
             if (position === 'before') {
+              // if (targetList) {
+              //   targetList.splice(targetIndex, 0, blockData);
+              //   newPosition = targetIndex;
+              // } else {
+              //   listData.splice(index, 0, blockData);
+              //   newPosition = index;
+              // }
               listData.splice(index, 0, blockData);
               newPosition = index;
             } else if (position === 'after') {
+              // if (targetList) {
+              //   targetList.splice(targetIndex + 1, 0, blockData);
+              //   newPosition = targetIndex + 1;
+              // } else {
+              //   listData.splice(index + 1, 0, blockData);
+              //   newPosition = index + 1;
+              // }
               listData.splice(index + 1, 0, blockData);
               newPosition = index + 1;
             } else {
@@ -152,13 +174,13 @@ const useEditorStore = create<Store & Actions>()(
       set((state) => {
         if (state.addBlockData) {
           const context = state.addBlockData.context;
-          const parentList = GetListByPath(state.storage, context);
+          const parentList = getListByPath(state.storage, context);
           if (context.length > 0 && parentList && parentList.length === 0) {
             //todo: remove
             //  state.removeByPath(context);
 
             const parentContext = context.slice(0, context.length - 1);
-            const list = GetListByPath(state.storage, parentContext);
+            const list = getListByPath(state.storage, parentContext);
             if (!list) {
               return;
             }
@@ -188,7 +210,7 @@ const useEditorStore = create<Store & Actions>()(
     getCurrentList: (): DMEData.BlockList | null => {
       const state = get();
       const currentPath = state.selected.currentListPath;
-      return GetListByPath(state.storage, currentPath);
+      return getListByPath(state.storage, currentPath);
     },
     getCurrentBlock: (): DMEData.Block | null => {
       const state = get();
@@ -197,7 +219,7 @@ const useEditorStore = create<Store & Actions>()(
     },
     getBlockByPath: (path: Array<number>): DMEData.Block => {
       const state = get();
-      return GetDataByPath(state.storage, path);
+      return getDataByPath(state.storage, path) ?? { type: 'unknown', data: {} };
     },
     getParents: (): Array<DMEData.Block & { path: Array<number> }> => {
       const state = get();
@@ -258,7 +280,7 @@ const useEditorStore = create<Store & Actions>()(
         if (path.length === 0) return;
         const parentPath = path.length <= 1 ? [] : path.slice(0, path.length - 1);
         const index = path[path.length - 1];
-        const list = GetListByPath(state.storage, parentPath);
+        const list = getListByPath(state.storage, parentPath);
         if (!list) {
           console.warn('Parent data not found in path', parentPath);
           return;
@@ -329,17 +351,19 @@ const useEditorStore = create<Store & Actions>()(
         state.selected.blockId = id;
       });
     },
-    updateSelectedBlock: <Type = DMEData.DefaultDataType>(callback: (blockData: Type) => void) => {
+    updateSelectedBlock: <Type = DMEData.DefaultDataType>(
+      callback: (blockData: Type, block: unknown) => void,
+    ) => {
       set((state) => {
         const path = [...state.selected.currentListPath, state.selected.blockIndex];
-        const block = GetDataByPath(state.storage, path);
-        callback(block?.data as Type);
+        const block = getDataByPath(state.storage, path);
+        callback(block?.data as Type, block);
         // state.storage[state.selected.blockIndex]['data'] = data;
       });
     },
     updateSelectedBlockStyle: (value: string, styleIdentifier: string) => {
       set((state) => {
-        const block = GetDataByPath(state.storage, [
+        const block = getDataByPath(state.storage, [
           ...state.selected.currentListPath,
           state.selected.blockIndex,
         ]);
@@ -368,7 +392,7 @@ const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        const block = GetDataByPath(state.storage, [
+        const block = getDataByPath(state.storage, [
           ...state.selected.currentListPath,
           state.selected.blockIndex,
         ]);

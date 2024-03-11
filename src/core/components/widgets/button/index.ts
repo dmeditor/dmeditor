@@ -56,3 +56,4 @@ const register = () => {
 };
 
 export default register;
+export { Button };
