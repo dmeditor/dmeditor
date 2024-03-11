@@ -123,7 +123,7 @@ export namespace DMEData {
   }
 
   export interface DefaultBlockType extends widgetBlockProperties {
-    data: DefaultDataType | null; //entity data from widget
+    data: DefaultDataType; //entity data from widget
     children?: Array<DefaultBlockType>;
   }
 
@@ -134,7 +134,7 @@ export namespace DMEData {
   //Block entity, which is a node in the data tree
   export interface Block<TData = DefaultDataType, TChild = DefaultBlockType>
     extends widgetBlockProperties {
-    data: TData | null; //entity data from widget
+    data: TData; //entity data from widget
     children?: Array<TChild & BlockNode>;
   }
 
