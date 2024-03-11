@@ -76,11 +76,13 @@ const SettingPanel = (props) => {
     if (isSelected()) {
       const parents = getParents();
       for (const item of parents) {
-        pathArray.push({
-          text: getWidgetName(item.type),
-          id: item.id || '',
-          dataPath: item.path,
-        });
+        if (item.type) {
+          pathArray.push({
+            text: getWidgetName(item.type),
+            id: item.id || '',
+            dataPath: item.path,
+          });
+        }
       }
       pathArray.push({
         text: getWidgetName(selectedBlock?.type || ''),
