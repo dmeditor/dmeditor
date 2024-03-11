@@ -97,7 +97,8 @@ export namespace DME {
   }
 
   export interface SettingComponentProps<T = unknown> extends Setting {
-    value?: T; //if custom is true, value will be not set
+    value?: T; //if custom is true, value will be not set,
+    block: DMEData.Block;
   }
 }
 

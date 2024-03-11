@@ -150,7 +150,7 @@ export const BlockSettings = (props: {
         > */}
         {filteredSettings?.map((setting) => {
           if (setting.custom) {
-            return <Property {...setting} />;
+            return <Property {...{ ...setting, block: blockData }} />;
           } else {
             const settingComponent = setting.settingComponent;
             // const value = getValueByPath(setting.property, selectedBlock?.data);
@@ -159,7 +159,7 @@ export const BlockSettings = (props: {
               : getPropertyValue(setting.property, blockData.data);
             return settingComponent ? (
               <PropertyItem label={setting.name} key={setting.property}>
-                <Property {...{ ...setting, value: value }} />
+                <Property {...{ ...setting, block: blockData, value: value }} />
               </PropertyItem>
             ) : null;
           }

@@ -1,7 +1,11 @@
 import { TabOutlined } from '@mui/icons-material';
-import { registerSettingComponent } from 'dmeditor/index';
+import {
+  registerWidget,
+  registerWidgetStyle,
+  registerWidgetStyleOption,
+} from 'dmeditor/components/widgets';
+import { registerSettingComponent } from 'dmeditor/setting-panel/property-setting';
 
-import { registerWidget, registerWidgetStyle, registerWidgetStyleOption } from '..';
 import { registerIcon } from '../../icon/icon-data';
 import TabsWidget from './definition';
 import SettingTabs from './settings/SettingTabs';

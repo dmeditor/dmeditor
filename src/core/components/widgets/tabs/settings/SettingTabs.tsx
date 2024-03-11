@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
-import { useEditorStore } from 'dmeditor/index';
+import { DME, useEditorStore } from 'dmeditor/index';
 import { PropertyButton } from 'dmeditor/utils';
 
-const Tabs = (props: { property: string; value: Array<any>; name: string }) => {
-  const { property, value, name } = props;
+const Tabs = (props: DME.SettingComponentProps) => {
+  const { block } = props;
+
+  const value = block.children;
 
   const { updateSelectedBlock } = useEditorStore();
   const handleMoveUp = (e, index) => {
