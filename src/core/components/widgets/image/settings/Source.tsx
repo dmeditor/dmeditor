@@ -5,7 +5,7 @@ import { BrowseImageCallbackParams } from 'dmeditor/config';
 import { ImageInfo, setDMEditorCallback } from 'dmeditor/config/index';
 import { useEditorStore } from 'dmeditor/index';
 import { PropertyItem } from 'dmeditor/setting-panel/Property';
-import { ImageChoose } from 'dmeditor/utils/ImageChoose';
+import { ImageChooser } from 'dmeditor/utils/ImageChooser';
 
 import { ImageEntity } from '../Image';
 
@@ -141,8 +141,8 @@ export const Source = () => {
           Choose
         </Button>
       </PropertyItem>
-      <ImageChoose
-        defaultValue={[value as ImageInfo]}
+      <ImageChooser
+        value={[value as ImageInfo]}
         visible={visible}
         onCancel={handleClose}
         onConfirm={handleConfirm}
