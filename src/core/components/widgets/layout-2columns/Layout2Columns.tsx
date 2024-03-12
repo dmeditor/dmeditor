@@ -1,6 +1,6 @@
 import { dmeConfig } from 'dmeditor';
 import { BlockListRender } from 'dmeditor/main/renderer';
-import { DME } from 'dmeditor/types/dmeditor';
+import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
 import { SyledLayout } from './styled';
@@ -11,7 +11,7 @@ const layout2ColumnsWidget: DME.Widget = {
   name: '2 Columns layout',
   type: 'layout-2columns',
   events: {
-    createBlock: () => {
+    createBlock: (): DMEData.Block<EntityLayout2Columns, {}> => {
       const defaultStyle = dmeConfig.widgets['layout-2columns']?.defaultStyle;
       const styleObj = defaultStyle ? { style: defaultStyle } : {};
 
@@ -22,15 +22,9 @@ const layout2ColumnsWidget: DME.Widget = {
         ...styleObj,
         children: [
           {
-            id: nanoid(),
-            data: {},
-            type: 'list',
             children: [],
           },
           {
-            id: nanoid(),
-            data: {},
-            type: 'list',
             children: [],
           },
         ],
