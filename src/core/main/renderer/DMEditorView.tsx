@@ -15,7 +15,7 @@ export interface DMEditorViewProps {
 const DMEditorView = (props: DMEditorViewProps) => {
   const { data, theme, projectStyle } = props;
 
-  const getPageCss = () => {
+  const getProjectCss = () => {
     return css(dmeConfig.projectStyles?.[projectStyle || 'default']);
   };
 
@@ -29,7 +29,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
   };
 
   return (
-    <div className={getPageCss() + ' ' + getThemeCss()}>
+    <div className={getProjectCss() + ' ' + getThemeCss()}>
       <BlockListRender blockData={data} path={[]} mode="view" />
     </div>
   );
