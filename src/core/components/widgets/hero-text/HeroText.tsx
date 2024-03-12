@@ -13,6 +13,7 @@ const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
     },
     path,
     blockNode,
+    mode,
     styleClasses,
   } = props;
 
@@ -38,6 +39,7 @@ const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
       <BlockListRender
         blockData={children[1].children || []}
         allowedTypes={getAllowedTypes(blockNode.type)}
+        mode={mode}
         path={[...path, 1]}
       />
     </div>

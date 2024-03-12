@@ -20,6 +20,7 @@ export interface CallbackConfig {
 
 export interface widgetConfig {
   defaultStyle?: { [identifier: string]: string };
+  allowedTypes?: Array<string>;
   [prop: string]: any;
 }
 
@@ -31,6 +32,9 @@ export interface DMEConfigType {
 const defaultConfig = () => {
   return {
     general: {},
+    projectStyles: {
+      default: '',
+    },
     editor: {
       defaultTheme: 'default',
     },
@@ -43,7 +47,13 @@ const defaultConfig = () => {
 };
 
 const dmeConfig: {
-  general: { [prop: string]: string | number | boolean };
+  general: {
+    [prop: string]: string | number | boolean;
+  };
+  projectStyles?: {
+    default: string;
+    [prop: string]: string;
+  };
   editor: {
     defaultTheme?: string;
   };

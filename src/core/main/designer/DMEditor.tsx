@@ -50,6 +50,7 @@ const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
 export interface DMEditorProps {
   data: Array<any>;
+  projectStyle?: string;
   menu?: React.ReactElement;
   lang?: string; //default 'eng-GB'
   onChangeActive?: (activeBlock: Number) => void;
@@ -98,7 +99,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       onSave: (
         callback: (savedData: { data: Array<DMEData.Block>; page: DMEData.Page }) => void,
       ) => {
-        save = callback;
+        emitter.addListener('save', callback);
       },
     }),
     [],
@@ -136,8 +137,6 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   // const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
   const { t, i18n } = useTranslation();
 
-  let save = (savedData) => {};
-
   Util.fileUrl = props.getFileUrl;
   Util.imageUrl = props.getImageUrl;
   // useEffect(() => {
@@ -174,7 +173,6 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   useEffect(() => {
     emitter.addListener('updateSelectedWidgetIndex', handleUpdateSelctedWidgetIndex);
     emitter.addListener('setWidgets', handleUpdateWidgets);
-    emitter.addListener('save', save);
     return () => {
       emitter.removeListener('updateSelectedWidgetIndex');
       emitter.removeListener('setWidgets');
@@ -317,7 +315,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                 <EmtpyBlock />
                 {viewmode === 'edit' && (
                   <div
-                    className={dmeditorViewCss}
+                    className={css(dmeConfig.projectStyles?.[props.projectStyle || 'default'])}
                     onClick={(e) => {
                       e.stopPropagation();
                     }}

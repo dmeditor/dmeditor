@@ -118,7 +118,7 @@ export namespace DMEData {
 
   interface widgetBlockProperties {
     id?: string;
-    type: string; //can use type for internal
+    type: string;
     style?: { [style: string]: string };
   }
 
