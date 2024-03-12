@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { Button, ImageList, ImageListItem } from '@mui/material';
+import { ImageChoose } from 'dmeditor/components/utility/ImageChoose';
 import { BrowseImageCallbackParams } from 'dmeditor/config';
 import { ImageInfo, setDMEditorCallback } from 'dmeditor/config/index';
 import { useEditorStore } from 'dmeditor/index';
 import { PropertyItem } from 'dmeditor/setting-panel/Property';
-import { ImageChoose } from 'dmeditor/utils/ImageChoose';
 
 import { ImageEntity } from '../Image';
 

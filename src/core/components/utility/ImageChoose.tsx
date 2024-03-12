@@ -43,7 +43,7 @@ export const ImageChoose = (props: {
   ];
 
   if (BrowseImage) {
-    ImageChooseElements.push({
+    ImageChooseElements.splice(0, 0, {
       label: 'Browse',
       element: <BrowseImage value={value} onChange={setValue} />,
     });
