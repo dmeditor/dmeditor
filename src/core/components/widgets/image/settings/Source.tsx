@@ -1,23 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  ImageList,
-  ImageListItem,
-  Tab,
-  Tabs,
-  TextField,
-} from '@mui/material';
-import { setDMEditorCallback } from 'dmeditor/config/index';
-import { dmeConfig, useEditorStore } from 'dmeditor/index';
+import { Button, ImageList, ImageListItem } from '@mui/material';
+import { BrowseImageCallbackParams } from 'dmeditor/config';
+import { ImageInfo, setDMEditorCallback } from 'dmeditor/config/index';
+import { useEditorStore } from 'dmeditor/index';
 import { PropertyItem } from 'dmeditor/setting-panel/Property';
+import { ImageChoose } from 'dmeditor/utils/ImageChoose';
 
 import { ImageEntity } from '../Image';
-import { useBooleanStore } from '../store';
 
 const itemData = [
   {
@@ -70,16 +60,30 @@ const itemData = [
   },
 ];
 
-const BrowseImage: React.FC<{ value: string; onChange: (value: string) => void }> = (props) => {
-  const { value, onChange } = props;
+const BrowseImage: React.FC<{
+  value: BrowseImageCallbackParams;
+  onChange: (value: BrowseImageCallbackParams) => void;
+}> = (props) => {
+  const { onChange, value } = props;
 
   return (
     <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-      {itemData.map((item) => (
+      {itemData.map((item, index) => (
         <ImageListItem key={item.img}>
           <img
-            style={{ cursor: 'pointer', border: value === item.img ? '3px solid #ff5722' : 'none' }}
-            onClick={() => onChange(item.img)}
+            style={{
+              cursor: 'pointer',
+              border: value?.some((item) => item.id === index) ? '3px solid #ff5722' : 'none',
+            }}
+            onClick={() =>
+              onChange([
+                {
+                  src: item.img,
+                  thumbnail: `${item.img}?w=164&h=164&fit=crop&auto=format`,
+                  id: index,
+                },
+              ])
+            }
             srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
             src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
             alt={item.title}
@@ -91,62 +95,37 @@ const BrowseImage: React.FC<{ value: string; onChange: (value: string) => void }
   );
 };
 
-setDMEditorCallback({
-  browseImage: BrowseImage,
-});
-
-function CheckImageBrowserValid() {
-  const { callbacks } = dmeConfig;
-  const { browseImage } = callbacks;
-
-  if (browseImage) {
-    return browseImage;
-  }
-
-  return null;
-}
+setDMEditorCallback({ browseImage: BrowseImage });
 
 export const Source = () => {
-  const { booleanValue: visible, toggleBooleanValue: toggleVisible } = useBooleanStore();
+  const [visible, setVisible] = useState(false);
   const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
   const { data } = getSelectedBlock<ImageEntity>() || {};
-  const BrowseImage = CheckImageBrowserValid();
-
-  const [value, setValue] = useState(data?.src || '');
-  const [activeTab, setActiveTab] = useState<'url' | 'browse'>('browse');
+  const { value } = data || {};
 
   const handleClose = () => {
-    toggleVisible(false);
+    setVisible(false);
   };
 
-  const handleConfirm = () => {
-    toggleVisible(false);
-    updateSelectedBlock((blockData) => {
-      blockData.src = value;
+  const handleConfirm = (value: BrowseImageCallbackParams) => {
+    setVisible(false);
+    updateSelectedBlock<ImageEntity>((blockData) => {
+      blockData.value = { ...value[0] };
     });
   };
 
-  if (!BrowseImage) {
-    const handleSourceChange = (value: string) => {
-      setValue(value);
-      updateSelectedBlock((blockData) => {
-        blockData.src = value;
-      });
-    };
-
-    return (
-      <PropertyItem label="Source">
-        <TextField value={value} fullWidth onChange={(e) => handleSourceChange(e.target.value)} />
-      </PropertyItem>
-    );
-  }
+  useEffect(() => {
+    if (!value?.src) {
+      setVisible(true);
+    }
+  }, []);
 
   return (
     <>
       <PropertyItem label="Source">
-        {value && (
+        {value?.src && (
           <img
-            onClick={() => toggleVisible(true)}
+            onClick={() => setVisible(true)}
             className={css`
               width: 80%;
               cursor: pointer;
@@ -155,38 +134,19 @@ export const Source = () => {
                 opacity: 0.8;
               }
             `}
-            src={value}
+            src={value?.thumbnail ?? value.src}
           />
         )}
-        <Button color="info" onClick={() => toggleVisible(true)}>
+        <Button color="info" onClick={() => setVisible(true)}>
           Choose
         </Button>
       </PropertyItem>
-      <Dialog title="Image" open={visible} fullWidth>
-        <DialogTitle>Image</DialogTitle>
-        <DialogContent>
-          <Tabs value={activeTab} onChange={(_evt, value) => setActiveTab(value)}>
-            <Tab label="Browse" value="browse" />
-            <Tab label="URL" value="url" />
-          </Tabs>
-          <div style={{ padding: 8 }}>
-            {activeTab === 'url' ? (
-              <TextField
-                label="Image Source"
-                value={value}
-                fullWidth
-                onChange={(e) => setValue(e.target.value)}
-              />
-            ) : (
-              <BrowseImage value={value} onChange={(value) => setValue(value)} />
-            )}
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleConfirm}>Confirm</Button>
-        </DialogActions>
-      </Dialog>
+      <ImageChoose
+        defaultValue={[value as ImageInfo]}
+        visible={visible}
+        onCancel={handleClose}
+        onConfirm={handleConfirm}
+      />
     </>
   );
 };

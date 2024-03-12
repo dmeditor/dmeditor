@@ -1,8 +1,20 @@
 import { ComponentType } from 'react';
-import { DME } from 'dmeditor';
+
+export interface ImageInfo {
+  src: string;
+  description?: string;
+  title?: string;
+  thumbnail?: string;
+  id?: string | number;
+}
+
+export type BrowseImageCallbackParams = ImageInfo[];
 
 export interface CallbackConfig {
-  browseImage?: ComponentType<{ value: string; onChange: (value: string) => void }>;
+  browseImage?: ComponentType<{
+    value: BrowseImageCallbackParams;
+    onChange: (value: BrowseImageCallbackParams) => void;
+  }>;
   browseLink?: ComponentType;
 }
 

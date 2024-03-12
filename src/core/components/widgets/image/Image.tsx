@@ -1,9 +1,10 @@
 import { css } from '@emotion/css';
+import { ImageInfo } from 'dmeditor/config';
 import { DME } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
 
 export interface ImageEntity {
-  src: string;
+  value: ImageInfo;
   description?: string;
   settings: {
     align?: 'left' | 'center' | 'right';
@@ -22,7 +23,6 @@ export const ImageDefinition: DME.Widget = {
       name: 'Source',
       settingComponent: 'image-source',
       custom: true,
-      property: '.src',
     },
     {
       name: 'Description',
@@ -53,7 +53,7 @@ export const ImageDefinition: DME.Widget = {
         id: nanoid(),
         type: 'image',
         data: {
-          src: '',
+          value: { src: '' },
           description: '',
           settings: { align: 'center', borderWidth: 0, borderColor: '' },
         },
@@ -65,9 +65,10 @@ export const ImageDefinition: DME.Widget = {
 export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const { blockNode, rootClasses, styleClasses } = props;
   const {
-    data: { src, settings, description },
+    data: { value, settings, description },
   } = blockNode;
   const { borderWidth, borderColor, align } = settings;
+  const { src } = value;
 
   return (
     <div className={rootClasses}>
