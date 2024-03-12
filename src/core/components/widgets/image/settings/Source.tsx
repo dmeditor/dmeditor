@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { Button, ImageList, ImageListItem } from '@mui/material';
-import { ImageChoose } from 'dmeditor/components/utility/ImageChoose';
+import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
 import { BrowseImageCallbackParams } from 'dmeditor/config';
 import { ImageInfo, setDMEditorCallback } from 'dmeditor/config/index';
 import { useEditorStore } from 'dmeditor/index';
@@ -141,8 +141,8 @@ export const Source = () => {
           Choose
         </Button>
       </PropertyItem>
-      <ImageChoose
-        defaultValue={[value as ImageInfo]}
+      <ImageChooser
+        value={[value as ImageInfo]}
         visible={visible}
         onCancel={handleClose}
         onConfirm={handleConfirm}

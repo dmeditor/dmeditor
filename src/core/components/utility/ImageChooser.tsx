@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { Button, Dialog, DialogActions, DialogContent, Tab, Tabs, TextField } from '@mui/material';
 import { BrowseImageCallbackParams, dmeConfig, ImageInfo } from 'dmeditor/config';
@@ -14,16 +14,16 @@ function CheckImageBrowserValid() {
   return null;
 }
 
-export const ImageChoose = (props: {
+export const ImageChooser = (props: {
   visible: boolean;
-  defaultValue?: BrowseImageCallbackParams;
+  value?: BrowseImageCallbackParams;
   onCancel?: () => void;
   onConfirm?: (value: BrowseImageCallbackParams) => void;
 }) => {
-  const { visible, defaultValue } = props;
+  const { visible, value } = props;
   const BrowseImage = CheckImageBrowserValid();
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [value, setValue] = useState<BrowseImageCallbackParams>([]);
+  const [localValue, setLocalValue] = useState<BrowseImageCallbackParams>(value ?? []);
 
   const ImageChooseElements: {
     label: string;
@@ -34,8 +34,8 @@ export const ImageChoose = (props: {
       element: (
         <TextField
           label="Image Source"
-          value={value.map((item) => item.src).join(';') || ''}
-          onChange={(e) => setValue([{ src: e.target.value }])}
+          value={localValue.map((item) => item.src).join(';') || ''}
+          onChange={(e) => setLocalValue([{ src: e.target.value }])}
           fullWidth
         />
       ),
@@ -45,7 +45,7 @@ export const ImageChoose = (props: {
   if (BrowseImage) {
     ImageChooseElements.splice(0, 0, {
       label: 'Browse',
-      element: <BrowseImage value={value} onChange={setValue} />,
+      element: <BrowseImage value={localValue} onChange={setLocalValue} />,
     });
   }
 
@@ -55,8 +55,12 @@ export const ImageChoose = (props: {
 
   const handleConfirm = () => {
     handleClose();
-    props.onConfirm?.(value);
+    props.onConfirm?.(localValue);
   };
+
+  useEffect(() => {
+    setLocalValue(value ?? []);
+  }, [value]);
 
   return (
     <Dialog open={visible} onClose={handleClose} fullWidth>
