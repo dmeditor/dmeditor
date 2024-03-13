@@ -4,7 +4,10 @@ import { DME } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
 
 export interface ImageEntity {
-  value: ImageInfo;
+  src: string;
+  // chosen image's id if exists
+  externalId?: string | number;
+  thumbnail?: string;
   description?: string;
   settings: {
     align?: 'left' | 'center' | 'right';
@@ -53,7 +56,7 @@ export const ImageDefinition: DME.Widget = {
         id: nanoid(),
         type: 'image',
         data: {
-          value: { src: '' },
+          src: '',
           description: '',
           settings: { align: 'center', borderWidth: 0, borderColor: '' },
         },
@@ -65,10 +68,9 @@ export const ImageDefinition: DME.Widget = {
 export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const { blockNode, rootClasses, styleClasses } = props;
   const {
-    data: { value, settings, description },
+    data: { src, settings, description },
   } = blockNode;
   const { borderWidth, borderColor, align } = settings;
-  const { src } = value;
 
   return (
     <div className={rootClasses}>

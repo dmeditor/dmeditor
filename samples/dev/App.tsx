@@ -1,7 +1,14 @@
 import * as React from 'react';
-import { DMEditor, dmeServerSideLoad, registerTheme, setDMEditorConfig } from 'dmeditor';
+import {
+  DMEditor,
+  dmeServerSideLoad,
+  registerTheme,
+  setDMEditorCallback,
+  setDMEditorConfig,
+} from 'dmeditor';
 import { nanoid } from 'nanoid';
 
+import { BrowseImage } from './callbacks';
 import registerSampleWidget from './SampleWidget';
 
 registerSampleWidget();
@@ -35,6 +42,8 @@ setDMEditorConfig({
     heading: { defaultStyle: { _: 'big-space' } },
   },
 });
+
+setDMEditorCallback({ browseImage: BrowseImage });
 
 const { useRef, useEffect } = React;
 
