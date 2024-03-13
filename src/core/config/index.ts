@@ -26,6 +26,12 @@ export interface widgetConfig {
 }
 
 export interface DMEConfigType {
+  general?: {
+    projectStyles?: {
+      default: string;
+      [prop: string]: string;
+    };
+  };
   widgets?: { [widget: string]: widgetConfig };
   plugins?: { [plugin: string]: any };
 }

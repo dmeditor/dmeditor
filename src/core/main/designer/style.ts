@@ -42,10 +42,11 @@ export const EmtpyBlock = styled.div`
   margin-top: -1px;
 `;
 
-export const EditContainer = styled.div`
+export const EditContainer = styled.div<{ containerWidth: number }>`
   min-height: 100%;
   margin: 0px auto;
   width: 90%;
+  --dme-container-width: ${(props) => props.containerWidth}px;
   max-width: var(--dme-edit-max-width);
   background-color: white;
   border: 1px solid #cccccc;
@@ -53,6 +54,7 @@ export const EditContainer = styled.div`
 
 export const EditArea = styled.div`
   margin: auto;
+  --dme-main-width: calc(var(--dme-container-width) * 0.9);
   min-height: calc(100vh - var(--dme-topbar-height));
   max-width: 90%;
   border: 1px dashed #999999;

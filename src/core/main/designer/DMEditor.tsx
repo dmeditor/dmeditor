@@ -209,6 +209,8 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     setSettingsShown(!settingsShown);
   };
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const createNewWidget = (type: string, template?: string) => {
     let widget;
     try {
@@ -309,15 +311,23 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
         </div> */}
 
           <Layout.Edit>
-            <EditContainer style={settingsShown ? { display: 'none' } : {}} onClick={resetStatus}>
-              <EditArea className={getThemeCss}>
+            <EditContainer
+              ref={containerRef}
+              containerWidth={containerRef?.current?.offsetWidth || 0}
+              style={settingsShown ? { display: 'none' } : {}}
+              onClick={resetStatus}
+            >
+              <EditArea
+                className={
+                  css(dmeConfig.general.projectStyles[props.projectStyle || 'default']) +
+                  ' ' +
+                  getThemeCss
+                }
+              >
                 {/* need EmptyBlock otherwise first block's margin-top is based on body */}
                 <EmtpyBlock />
                 {viewmode === 'edit' && (
                   <div
-                    className={css(
-                      dmeConfig.general.projectStyles[props.projectStyle || 'default'],
-                    )}
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
