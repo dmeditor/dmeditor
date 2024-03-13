@@ -1,4 +1,5 @@
 import { ComponentType } from 'react';
+import { DME } from 'dmeditor';
 
 export interface ImageInfo {
   src: string;
@@ -35,6 +36,7 @@ const defaultConfig = () => {
       projectStyles: {
         default: '',
       },
+      themes: [],
     },
     editor: {
       defaultTheme: 'default',
@@ -53,10 +55,11 @@ const dmeConfig: {
       default: string;
       [prop: string]: string;
     };
-    [prop: string]: string | number | boolean | Record<string, string | number | boolean>;
+    themes: Array<DME.PageTheme>;
+    [prop: string]: string | number | boolean | Record<string, any>;
   };
   editor: {
-    defaultTheme?: string;
+    defaultTheme: string;
   };
   widgets: { [widget: string]: widgetConfig };
   plugins: { [plugin: string]: any };

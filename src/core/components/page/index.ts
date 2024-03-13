@@ -1,19 +1,10 @@
+import { dmeConfig } from 'dmeditor/config';
 import { DME } from 'dmeditor/types/dmeditor';
 
 let pageSettings: Array<DME.PageSetting> = [];
 
-const pageThemes: Array<DME.PageTheme> = [];
-
 const setPageSettings = (settings: Array<DME.PageSetting>) => {
   pageSettings = settings;
-};
-
-const registerTheme = (theme: DME.PageTheme) => {
-  if (getPageTheme(theme.identifier)) {
-    console.warn(`Theme ${theme.identifier} has been registered. Ignore.`);
-    return;
-  }
-  pageThemes.push(theme);
 };
 
 const getPageSettings = (): Array<DME.PageSetting> => {
@@ -21,7 +12,7 @@ const getPageSettings = (): Array<DME.PageSetting> => {
 };
 
 const getPageTheme = (identifier: string) => {
-  return pageThemes.find((theme) => theme.identifier === identifier);
+  return dmeConfig.general.themes.find((theme) => theme.identifier === identifier);
 };
 
-export { setPageSettings, getPageSettings, pageThemes, registerTheme, getPageTheme };
+export { setPageSettings, getPageSettings, getPageTheme };

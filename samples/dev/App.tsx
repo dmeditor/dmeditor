@@ -12,33 +12,35 @@ import { BrowseImage } from './callbacks';
 import registerSampleWidget from './SampleWidget';
 
 registerSampleWidget();
-registerTheme({
-  identifier: 'red',
-  name: 'Red',
-  cssStyle: `
-    --project-main-color: red;
-    --project-main-bg-color: #fbadad;
-
-    /*background: var(--project-main-bg-color);  */
-
-    /*todo: use css variable*/
-  `,
-});
-registerTheme({
-  identifier: 'blue',
-  name: 'Blue',
-  cssStyle: `
-    --project-main-color: blue;
-    --project-main-bg-color: #e0e0ff;
-    /*background: var(--project-main-bg-color);  */
-  `,
-});
 
 setDMEditorConfig({
   general: {
     projectStyles: {
       default: `background: white`,
     },
+    themes: [
+      {
+        identifier: 'red',
+        name: 'Red',
+        cssStyle: `
+        --project-main-color: red;
+        --project-main-bg-color: #fbadad;
+    
+        /*background: var(--project-main-bg-color);  */
+    
+        /*todo: use css variable*/
+      `,
+      },
+      {
+        identifier: 'blue',
+        name: 'Blue',
+        cssStyle: `
+        --project-main-color: blue;
+        --project-main-bg-color: #e0e0ff;
+        /*background: var(--project-main-bg-color);  */
+      `,
+      },
+    ],
   },
   widgets: {
     heading: { defaultStyle: { _: 'big-space' } },

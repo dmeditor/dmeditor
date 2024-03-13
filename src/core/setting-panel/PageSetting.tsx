@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Alert, MenuItem, Select, TextField } from '@mui/material';
 
-import { getPageSettings, pageThemes } from '../components/page';
+import { dmeConfig } from '..';
+import { getPageSettings } from '../components/page';
 import { useEditorStore } from '../main/store';
 import { PropertyItem } from './Property';
 import { Required, SettingHeader, SettingItem } from './style';
@@ -66,7 +67,7 @@ const SelectTheme = (props: { value: string; onChange: (value: string) => void }
         onChange={(v) => props.onChange(v.target.value)}
       >
         <MenuItem value="">None</MenuItem>
-        {pageThemes.map((theme) => (
+        {dmeConfig.general.themes.map((theme) => (
           <MenuItem value={theme.identifier}>{theme.name}</MenuItem>
         ))}
       </Select>
@@ -99,7 +100,7 @@ export const PageSetting = () => {
         />
       </SettingItem>
 
-      {pageThemes.length > 0 && (
+      {dmeConfig.general.themes.length > 0 && (
         <SettingItem>
           <label>Theme:</label>
           <SelectTheme value={page['theme'] || ''} onChange={(v) => updatePageValue(v, 'theme')} />
