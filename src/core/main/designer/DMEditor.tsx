@@ -210,6 +210,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const editRef = useRef<HTMLDivElement>(null);
 
   const createNewWidget = (type: string, template?: string) => {
     let widget;
@@ -236,6 +237,15 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       setDevice(type as DeviceType);
     }
     setSettingsShown(false);
+  };
+
+  const getEditCssVariables = () => {
+    return containerRef?.current && editRef?.current
+      ? ({
+          '--dme-container-width': containerRef?.current?.offsetWidth + 'px',
+          '--dme-main-width': editRef?.current?.offsetWidth + 'px',
+        } as React.CSSProperties)
+      : {};
   };
 
   const outerTheme = createTheme({
@@ -313,11 +323,11 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
           <Layout.Edit>
             <EditContainer
               ref={containerRef}
-              containerWidth={containerRef?.current?.offsetWidth || 0}
               style={settingsShown ? { display: 'none' } : {}}
               onClick={resetStatus}
             >
               <EditArea
+                ref={editRef}
                 className={
                   css(dmeConfig.general.projectStyles[props.projectStyle || 'default']) +
                   ' ' +
@@ -328,6 +338,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                 <EmtpyBlock />
                 {viewmode === 'edit' && (
                   <div
+                    style={getEditCssVariables()}
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
