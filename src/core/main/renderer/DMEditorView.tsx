@@ -16,7 +16,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
   const { data, theme, projectStyle } = props;
 
   const getProjectCss = () => {
-    return css(dmeConfig.projectStyles?.[projectStyle || 'default']);
+    return css(dmeConfig.general.projectStyles[props.projectStyle || 'default']);
   };
 
   const getThemeCss = () => {

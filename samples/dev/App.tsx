@@ -35,8 +35,10 @@ registerTheme({
 });
 
 setDMEditorConfig({
-  projectStyles: {
-    default: `background: white`,
+  general: {
+    projectStyles: {
+      default: `background: white`,
+    },
   },
   widgets: {
     heading: { defaultStyle: { _: 'big-space' } },

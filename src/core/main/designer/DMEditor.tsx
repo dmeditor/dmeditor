@@ -315,7 +315,9 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
                 <EmtpyBlock />
                 {viewmode === 'edit' && (
                   <div
-                    className={css(dmeConfig.projectStyles?.[props.projectStyle || 'default'])}
+                    className={css(
+                      dmeConfig.general.projectStyles[props.projectStyle || 'default'],
+                    )}
                     onClick={(e) => {
                       e.stopPropagation();
                     }}

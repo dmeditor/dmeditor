@@ -31,9 +31,10 @@ export interface DMEConfigType {
 
 const defaultConfig = () => {
   return {
-    general: {},
-    projectStyles: {
-      default: '',
+    general: {
+      projectStyles: {
+        default: '',
+      },
     },
     editor: {
       defaultTheme: 'default',
@@ -48,11 +49,11 @@ const defaultConfig = () => {
 
 const dmeConfig: {
   general: {
-    [prop: string]: string | number | boolean;
-  };
-  projectStyles?: {
-    default: string;
-    [prop: string]: string;
+    projectStyles: {
+      default: string;
+      [prop: string]: string;
+    };
+    [prop: string]: string | number | boolean | Record<string, string | number | boolean>;
   };
   editor: {
     defaultTheme?: string;
