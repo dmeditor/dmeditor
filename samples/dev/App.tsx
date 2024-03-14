@@ -8,7 +8,7 @@ import {
 } from 'dmeditor';
 import { nanoid } from 'nanoid';
 
-import { BrowseImage } from './callbacks';
+import { BrowseImage, BrowseLink } from './callbacks';
 import registerSampleWidget from './SampleWidget';
 
 registerSampleWidget();
@@ -47,7 +47,7 @@ setDMEditorConfig({
   },
 });
 
-setDMEditorCallback({ browseImage: BrowseImage });
+setDMEditorCallback({ browseImage: BrowseImage, browseLink: BrowseLink });
 
 const { useRef, useEffect } = React;
 

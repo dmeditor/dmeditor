@@ -1,6 +1,14 @@
 import { ComponentType } from 'react';
 import { DME } from 'dmeditor';
 
+export interface LinkInfo {
+  href: string; // url
+  text?: string;
+  id?: string | number;
+}
+
+export type BrowseLinkCallbackParams = LinkInfo[];
+
 export interface ImageInfo {
   src: string;
   description?: string;
@@ -16,7 +24,10 @@ export interface CallbackConfig {
     value: BrowseImageCallbackParams;
     onChange: (value: BrowseImageCallbackParams) => void;
   }>;
-  browseLink?: ComponentType;
+  browseLink?: ComponentType<{
+    value: BrowseLinkCallbackParams;
+    onChange: (value: BrowseLinkCallbackParams) => void;
+  }>;
 }
 
 export interface widgetConfig {
