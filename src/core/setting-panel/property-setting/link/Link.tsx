@@ -1,18 +1,65 @@
 import { useEffect, useState } from 'react';
-import { TextField } from '@mui/material';
+import { css } from '@emotion/css';
+import { ChangeCircle, CloudOutlined } from '@mui/icons-material';
+import { Button, TextField } from '@mui/material';
+import { LinkChooser } from 'dmeditor/components/utility/LinkChooser';
+import { BrowseLinkCallbackParams } from 'dmeditor/config';
+import { DME } from 'dmeditor/index';
 import { useEditorStore } from 'dmeditor/main/store';
-import { DME } from 'dmeditor/types/dmeditor';
 
-const Link = (props: DME.SettingComponentProps) => {
+export const Link = (props: DME.SettingComponentProps) => {
   const { property, value } = props;
   const { updateSelectedBlockProps } = useEditorStore();
 
-  const handleChange = (v: string) => {
-    //todo: add button to select
-    updateSelectedBlockProps(property, v);
+  const [visible, setVisible] = useState(false);
+
+  const handleChange = (value: string) => {
+    updateSelectedBlockProps(property || '', value);
   };
 
-  return <TextField size="small" value={value} onChange={(e) => handleChange(e.target.value)} />;
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
+  const handleConfirm = (value: BrowseLinkCallbackParams) => {
+    if (value.length > 0) {
+      const newValue = value[0];
+      updateSelectedBlockProps(property || '', newValue.href);
+    }
+    setVisible(false);
+  };
+
+  useEffect(() => {
+    if (!value) {
+      setVisible(true);
+    }
+  }, []);
+
+  return (
+    <>
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+        })}
+      >
+        <TextField size="small" value={value} onChange={(evt) => handleChange(evt.target.value)} />
+        <Button
+          title="Browse library"
+          className={css({ cursor: 'pointer' })}
+          onClick={() => setVisible(true)}
+        >
+          <CloudOutlined />
+        </Button>
+      </div>
+      <LinkChooser
+        visible={visible}
+        value={[{ href: value as string }]}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+      />
+    </>
+  );
 };
 
 export default Link;
