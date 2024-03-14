@@ -7,13 +7,13 @@ import { createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
-import { BlockButton, MarkButton, toggleMark, Toolbar } from './helper';
+import { BlockButton, Element, Leaf, MarkButton, toggleMark, Toolbar } from './helper';
 
 const { useCallback, useMemo } = React;
-const { Element, Leaf, HOTKEYS } = SlateFun;
+const { HOTKEYS } = SlateFun;
 
 const RichText = (props: { property: string; value: any }) => {
-  const { property, value } = props;
+  const { property, value = [] } = props;
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
@@ -25,6 +25,7 @@ const RichText = (props: { property: string; value: any }) => {
 
   editor.children = value;
 
+  const initialValue = definition.events.createBlock().data.value;
   return (
     <div
       className={css`
@@ -34,7 +35,10 @@ const RichText = (props: { property: string; value: any }) => {
       <Slate
         editor={editor}
         onChange={handleChange}
-        value={value || definition.events.createBlock().data.value}
+        initialValue={initialValue}
+        onValueChange={(value) => {
+          console.log(value);
+        }}
       >
         <Toolbar>
           <MarkButton format="bold" />
@@ -46,10 +50,10 @@ const RichText = (props: { property: string; value: any }) => {
           {/* <BlockButton format="block-quote" /> */}
           <BlockButton format="numbered-list" />
           <BlockButton format="bulleted-list" />
-          <BlockButton format="align-left" />
-          <BlockButton format="align-center" />
-          <BlockButton format="align-right" />
-          <BlockButton format="align-justify" />
+          <BlockButton format="left" />
+          <BlockButton format="center" />
+          <BlockButton format="right" />
+          <BlockButton format="justify" />
         </Toolbar>
         <Editable
           renderElement={renderElement}

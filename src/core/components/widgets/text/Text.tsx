@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { useEditorStore } from 'dmeditor/main/store';
 import {
+  Element,
   HoveringToolbar,
+  Leaf,
   resetNodes,
 } from 'dmeditor/setting-panel/property-setting/rich-text/helper';
 import { DME } from 'dmeditor/types/dmeditor';
@@ -12,7 +14,7 @@ import { Editable, Slate, withReact } from 'slate-react';
 import { SlateFun } from '../../../utils/Slate';
 import { EntityText } from './entity';
 
-const { Element, Leaf } = SlateFun;
+// const { Element, Leaf } = SlateFun;
 const { useCallback, useMemo, useEffect } = React;
 
 const Text = (props: DME.WidgetRenderProps<EntityText>) => {
@@ -37,7 +39,7 @@ const Text = (props: DME.WidgetRenderProps<EntityText>) => {
 
   return (
     <div className={rootClasses}>
-      <Slate editor={editor} onChange={handleChange} value={value}>
+      <Slate editor={editor} onChange={handleChange} initialValue={value}>
         <div>
           <HoveringToolbar />
           <Editable

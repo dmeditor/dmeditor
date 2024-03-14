@@ -12,17 +12,8 @@ import {
   FormatListNumbered,
   FormatUnderlined,
 } from '@mui/icons-material';
-import {
-  createEditor,
-  Editor,
-  Node,
-  Point,
-  Range,
-  Element as SlateElement,
-  Transforms,
-} from 'slate';
-import { withHistory } from 'slate-history';
-import { useFocused, useSlate, withReact } from 'slate-react';
+import { Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
+import { useFocused, useSlate } from 'slate-react';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'];
@@ -54,7 +45,7 @@ const Button = React.forwardRef(
         className,
         css`
           cursor: pointer;
-          color: ${reversed ? (active ? 'white' : '#aaa') : active ? 'black' : '#666'};
+          color: ${reversed ? (active ? 'white' : '#aaa') : active ? 'black' : '#ccc'};
         `,
       )}
     />
@@ -63,13 +54,13 @@ const Button = React.forwardRef(
 
 const getIcon = (format: string): ReactNode => {
   switch (format) {
-    case 'align-left':
+    case 'left':
       return <FormatAlignLeft />;
-    case 'align-center':
+    case 'center':
       return <FormatAlignCenter />;
-    case 'align-right':
+    case 'right':
       return <FormatAlignRight />;
-    case 'align-justify':
+    case 'justify':
       return <FormatAlignJustify />;
     case 'bulleted-list':
       return <FormatListBulleted />;
@@ -103,6 +94,7 @@ const MarkButton = ({ format }) => {
 
 const BlockButton = ({ format }) => {
   const editor = useSlate();
+  console.log('editor', format);
   return (
     <Button
       active={isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}
@@ -120,6 +112,7 @@ const isMarkActive = (editor, format) => {
   const marks = Editor.marks(editor);
   return marks ? marks[format] === true : false;
 };
+
 const isBlockActive = (editor, format, blockType = 'type') => {
   const { selection } = editor;
   if (!selection) return false;
@@ -133,6 +126,7 @@ const isBlockActive = (editor, format, blockType = 'type') => {
 
   return !!match;
 };
+
 const toggleMark = (editor, format) => {
   const isActive = isMarkActive(editor, format);
 
@@ -142,39 +136,40 @@ const toggleMark = (editor, format) => {
     Editor.addMark(editor, format, true);
   }
 };
+
 const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(
     editor,
     format,
-    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type',
-  );
-  const isList = LIST_TYPES.includes(format);
+    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
+  )
+  const isList = LIST_TYPES.includes(format)
 
   Transforms.unwrapNodes(editor, {
-    match: (n) =>
+    match: n =>
       !Editor.isEditor(n) &&
       SlateElement.isElement(n) &&
       LIST_TYPES.includes(n.type) &&
       !TEXT_ALIGN_TYPES.includes(format),
     split: true,
-  });
-  let newProperties: Partial<SlateElement>;
+  })
+  let newProperties: Partial<SlateElement>
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
       align: isActive ? undefined : format,
-    };
+    }
   } else {
     newProperties = {
       type: isActive ? 'paragraph' : isList ? 'list-item' : format,
-    };
+    }
   }
-  Transforms.setNodes<SlateElement>(editor, newProperties);
+  Transforms.setNodes<SlateElement>(editor, newProperties)
 
   if (!isActive && isList) {
-    const block = { type: format, children: [] };
-    Transforms.wrapNodes(editor, block);
+    const block = { type: format, children: [] }
+    Transforms.wrapNodes(editor, block)
   }
-};
+}
 
 const Menu = React.forwardRef(
   ({ className, ...props }: PropsWithChildren<BaseProps>, ref: Ref<HTMLDivElement>) => (
@@ -313,4 +308,88 @@ const HoveringToolbar = () => {
   );
 };
 
-export { toggleMark, MarkButton, BlockButton, HoveringToolbar, Toolbar };
+const Element = ({
+  attributes,
+  children,
+  element,
+}: {
+  attributes: Record<string, unknown>;
+  children: ReactNode;
+  element: SlateElement;
+}) => {
+  const style = { textAlign: element.align };
+  switch (element.type) {
+    case 'block-quote':
+      return (
+        <blockquote style={style} {...attributes}>
+          {children}
+        </blockquote>
+      );
+    case 'bulleted-list':
+      return (
+        <ul style={style} {...attributes}>
+          {children}
+        </ul>
+      );
+    case 'heading-one':
+      return (
+        <h1 style={style} {...attributes}>
+          {children}
+        </h1>
+      );
+    case 'heading-two':
+      return (
+        <h2 style={style} {...attributes}>
+          {children}
+        </h2>
+      );
+    case 'list-item':
+      return (
+        <li style={style} {...attributes}>
+          {children}
+        </li>
+      );
+    case 'numbered-list':
+      return (
+        <ol style={style} {...attributes}>
+          {children}
+        </ol>
+      );
+    default:
+      return (
+        <p style={style} {...attributes}>
+          {children}
+        </p>
+      );
+  }
+};
+
+const Leaf = ({
+  attributes,
+  children,
+  leaf,
+}: {
+  attributes: Record<string, unknown>;
+  children: ReactNode;
+  leaf: { bold: boolean; code: boolean; italic: boolean; underline: boolean };
+}) => {
+  if (leaf.bold) {
+    children = <strong>{children}</strong>;
+  }
+
+  if (leaf.code) {
+    children = <code>{children}</code>;
+  }
+
+  if (leaf.italic) {
+    children = <em>{children}</em>;
+  }
+
+  if (leaf.underline) {
+    children = <u>{children}</u>;
+  }
+
+  return <span {...attributes}>{children}</span>;
+};
+
+export { toggleMark, MarkButton, BlockButton, HoveringToolbar, Toolbar, Element, Leaf };

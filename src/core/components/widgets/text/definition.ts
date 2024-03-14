@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 import { EntityText } from './entity';
 
 const TextWidget: DME.Widget = {
-  // ?category options: widget, layout, form, chart, advanced
   category: 'widget',
   icon: 'text',
   name: 'Text',
