@@ -51,7 +51,7 @@ const defaultConfig = () => {
   return {
     general: {
       projectStyles: {
-        default: '',
+        default: ``,
       },
       themes: [],
     },
@@ -95,4 +95,5 @@ const setDMEditorCallback = (config: CallbackConfig) => {
   dmeConfig.callbacks = { ...dmeConfig.callbacks, ...config };
 };
 
+export * from './style';
 export { dmeConfig, setDMEditorConfig, setDMEditorCallback };

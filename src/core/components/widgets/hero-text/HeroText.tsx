@@ -1,15 +1,19 @@
+import { useMemo } from 'react';
+import { css } from '@emotion/css';
+import { dmeFullWidthLeft, dmeFullWidthRight } from 'dmeditor/config';
 import { BlockListRender, BlockRender } from 'dmeditor/main/renderer';
 import { DME } from 'dmeditor/types';
 
 import { getAllowedTypes, getWidget, getWidgetWithVariant } from '..';
 import { EntityHeroText } from './entity';
+import { ImageContainer } from './style';
 import { HeroTextContainer } from './styled';
 
 const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
   const {
     blockNode: {
       children,
-      data: { heroPosition },
+      data: { heroPosition, heroFullWidth },
     },
     path,
     blockNode,
@@ -29,8 +33,20 @@ const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
     return styleClasses[type].join(' ');
   };
 
+  const fullWidthClass = useMemo(() => {
+    let result = '';
+    if (heroFullWidth) {
+      if (heroPosition === 'right') {
+        result = css(dmeFullWidthRight);
+      } else {
+        result = css(dmeFullWidthLeft);
+      }
+    }
+    return result;
+  }, [heroPosition, heroFullWidth]);
+
   const renderImage = () => (
-    <div className={getClass('hero') + ' dme-w-hero'}>
+    <div className={getClass('hero') + ' dme-w-hero ' + fullWidthClass}>
       <BlockRender mode={props.mode} data={children[0]} path={path} />
     </div>
   );

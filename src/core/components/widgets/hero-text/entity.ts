@@ -1,3 +1,4 @@
-export interface EntityHeroText{
-    heroPosition?: 'left'|'right';
+export interface EntityHeroText {
+  heroPosition?: 'left' | 'right';
+  heroFullWidth?: boolean;
 }
