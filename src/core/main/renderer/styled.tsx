@@ -3,13 +3,13 @@ import styled from '@emotion/styled';
 //todo: use outline(but outline doesn't have radius) because border will make it not same as view.
 export const StyledBlock = styled.div<{ active?: boolean; hovering?: boolean }>`
   &:hover {
-    outline: 2px dotted var(--dme-selected-border-color);
+    outline: 2px dotted var(--dmee-selected-border-color);
     border-radius: 4px;
     z-index: 50;
   }
   ${(props) => {
     if (props.hovering) {
-      return `outline: 2px dotted var(--dme-selected-border-color);
+      return `outline: 2px dotted var(--dmee-selected-border-color);
         border-radius: 4px;
         z-index: 50;`;
     }
@@ -17,7 +17,7 @@ export const StyledBlock = styled.div<{ active?: boolean; hovering?: boolean }>`
   ${(props) => {
     if (props.active) {
       return `
-      outline: 2px solid var(--dme-selected-border-color) !important;
+      outline: 2px solid var(--dmee-selected-border-color) !important;
       border-radius: 4px;
       z-index: 50;
       `;

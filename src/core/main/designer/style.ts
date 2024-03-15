@@ -1,37 +1,38 @@
 import styled from '@emotion/styled';
+import { dmeConfig } from 'dmeditor/config';
+
+const editVariables = dmeConfig.editor.ui;
 
 export const Root = styled.div`
-  --dme-bg-color: #1d4b64;
-  --dme-topbar-height: 40px;
+  --dmee-bg-color: ${editVariables['bg-color'] || '#1d4b64'};
+  --dmee-topbar-height: 40px;
+  --dmee-bg-editarea: ${editVariables['bg-editarea'] || '#f3f3f3'};
 `;
 
 export const Layout = {
   Main: styled.div`
-    --dme-layout-property-width: 350px;
-    --dme-edit-max-width: 1200px;
+    --dmee-layout-property-width: 350px;
+    --dmee-edit-max-width: 1200px;
 
-    --dme-selected-border-color: #fc7e4b;
-    --dme-hover-font-color: red;
-
-    --dme-bg-color: #333333;
+    --dmee-selected-border-color: #fc7e4b;
+    --dmee-hover-font-color: red;
 
     height: 100vh;
-    background-color: #f0f0f0;
     display: grid;
-    grid-template-columns: calc(100% - var(--dme-layout-property-width)) var(
-        --dme-layout-property-width
+    grid-template-columns: calc(100% - var(--dmee-layout-property-width)) var(
+        --dmee-layout-property-width
       );
     color: #333333;
     margin: 0px auto;
-    background-color: #f3f3f3;
+    background-color: var(--dmee-bg-editarea);
   `,
   Edit: styled.div`
     border-right: 1px solid #cccccc;
     overflow-y: auto;
-    margin-top: var(--dme-topbar-height);
+    margin-top: var(--dmee-topbar-height);
   `,
   SettingPanel: styled.div`
-    margin-top: var(--dme-topbar-height);
+    margin-top: var(--dmee-topbar-height);
     background-color: white;
     position: relative;
   `,
@@ -53,7 +54,7 @@ export const EditContainer = styled.div`
 
 export const EditArea = styled.div`
   margin: auto;
-  min-height: calc(100vh - var(--dme-topbar-height));
+  min-height: calc(100vh - var(--dmee-topbar-height));
   max-width: 90%;
   border: 1px dashed #999999;
 `;

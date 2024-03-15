@@ -57,6 +57,7 @@ const defaultConfig = () => {
     },
     editor: {
       defaultTheme: 'default',
+      ui: {},
     },
     widgets: {
       text: { fonts: ['Arial', 'Times new man'] },
@@ -77,6 +78,7 @@ const dmeConfig: {
   };
   editor: {
     defaultTheme: string;
+    ui: { [variable: string]: string };
   };
   widgets: { [widget: string]: widgetConfig };
   plugins: { [plugin: string]: any };

@@ -42,7 +42,7 @@ export const PathItem = styled.span<{ canClick?: boolean; selected?: boolean }>`
     props.canClick
       ? `
     &:hover{
-        color: var(--dme-hover-font-color);
+        color: var(--dmee-hover-font-color);
     }
     `
       : ''};
@@ -71,7 +71,7 @@ export const PathContainer = styled.div`
 `;
 
 export const AddBlockContainer = styled.div`
-  height: calc(100vh - var(--dme-topbar-height));
+  height: calc(100vh - var(--dmee-topbar-height));
   overflow-y: scroll;
   padding: 10px;
 `;

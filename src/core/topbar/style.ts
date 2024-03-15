@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  height: var(--dme-topbar-height);
-  background-color: var(--dme-bg-color);
+  height: var(--dmee-topbar-height);
+  background-color: var(--dmee-bg-color);
   color: white;
   display: flex;
   position: fixed;
-  top:0px;
+  top: 0px;
   width: 100%;
   z-index: 100;
 `;
