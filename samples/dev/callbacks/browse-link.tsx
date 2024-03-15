@@ -28,7 +28,7 @@ export function BrowseLink(props: {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     item: { href: string; text: string; id: number },
   ) => {
-    onChange([item]);
+    onChange(item.href);
   };
 
   return (
@@ -37,7 +37,7 @@ export function BrowseLink(props: {
         {LinkList.map((item) => (
           <ListItemButton
             key={item.id}
-            selected={value.some((val) => val.id === item.id)}
+            selected={value === item.href}
             onClick={(event) => handleListItemClick(event, item)}
           >
             <ListItemText primary={item.text} />

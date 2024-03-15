@@ -82,7 +82,6 @@ export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
 
   return (
     <>
-      <ConfirmDialog onConfirm={handleConfirm} />
       {!!data.value && (
         <IFrameContainer {...data.settings}>
           <iframe src={data.value} />

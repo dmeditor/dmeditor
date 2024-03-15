@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { css } from '@emotion/css';
 import { Button } from '@mui/material';
-import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
+import { ImageChooser, ImageRef } from 'dmeditor/components/utility/ImageChooser';
 import { BrowseImageCallbackParams } from 'dmeditor/config';
-import { ImageInfo } from 'dmeditor/config/index';
 import { useEditorStore } from 'dmeditor/index';
 import { PropertyItem } from 'dmeditor/setting-panel/Property';
 
 import { ImageEntity } from '../Image';
 
 export const Source = () => {
-  const [visible, setVisible] = useState(false);
   const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
   const { data } = getSelectedBlock<ImageEntity>() || {};
   const { src, thumbnail } = data || {};
 
-  const handleClose = () => {
-    setVisible(false);
-  };
+  const imageRef = useRef<ImageRef>(null);
 
   const handleConfirm = (value: BrowseImageCallbackParams) => {
-    setVisible(false);
     updateSelectedBlock<ImageEntity>((blockData) => {
       blockData.src = value[0]?.src;
       blockData.externalId = value[0]?.id;
@@ -28,18 +23,16 @@ export const Source = () => {
     });
   };
 
-  useEffect(() => {
-    if (!src) {
-      setVisible(true);
-    }
-  }, []);
+  const handleOpen = () => {
+    imageRef.current?.open();
+  };
 
   return (
     <>
       <PropertyItem label="Source">
         {src && (
           <img
-            onClick={() => setVisible(true)}
+            onClick={handleOpen}
             className={css`
               width: 80%;
               cursor: pointer;
@@ -51,14 +44,14 @@ export const Source = () => {
             src={thumbnail ?? src}
           />
         )}
-        <Button color="info" onClick={() => setVisible(true)}>
+        <Button color="info" onClick={handleOpen}>
           Choose
         </Button>
       </PropertyItem>
       <ImageChooser
+        ref={imageRef}
         value={[{ src: src || '', id: data?.externalId }]}
-        visible={visible}
-        onCancel={handleClose}
+        defaultVisible={!src}
         onConfirm={handleConfirm}
       />
     </>

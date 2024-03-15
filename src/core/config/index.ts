@@ -1,13 +1,7 @@
 import { ComponentType } from 'react';
 import { DME } from 'dmeditor';
 
-export interface LinkInfo {
-  href: string; // url
-  text?: string;
-  id?: string | number;
-}
-
-export type BrowseLinkCallbackParams = LinkInfo[];
+export type BrowseLinkCallbackParams = string;
 
 export interface ImageInfo {
   src: string;

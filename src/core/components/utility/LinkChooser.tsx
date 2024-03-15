@@ -1,16 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { css } from '@emotion/css';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Tab,
-  Tabs,
-  TextField,
-} from '@mui/material';
-import { BrowseLinkCallbackParams, dmeConfig, LinkInfo } from 'dmeditor/config';
+import { Button, Dialog, DialogActions, DialogContent, Tab, Tabs, TextField } from '@mui/material';
+import { BrowseLinkCallbackParams, dmeConfig } from 'dmeditor/config';
 
 function CheckBrowserValid() {
   const { callbacks } = dmeConfig;
@@ -23,20 +14,25 @@ function CheckBrowserValid() {
   return null;
 }
 
-export const LinkChooser = (props: {
-  visible: boolean;
+export type LinkRef = {
+  open: () => void;
+};
+interface LinkChooserProps {
+  defaultVisible: boolean;
   value?: BrowseLinkCallbackParams;
-  onCancel?: () => void;
   onConfirm?: (value: BrowseLinkCallbackParams) => void;
-}) => {
-  const { visible, value } = props;
+}
+
+export const LinkChooser = forwardRef<LinkRef, LinkChooserProps>((props, ref) => {
+  const { defaultVisible, value } = props;
   const BrowseLink = CheckBrowserValid();
+  const [visible, setVisible] = useState(defaultVisible);
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [localValue, setLocalValue] = useState<BrowseLinkCallbackParams>(value ?? []);
+  const [localValue, setLocalValue] = useState<BrowseLinkCallbackParams>(value ?? '');
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
-    setLocalValue((val) => [{ ...val[0], href: newValue }]);
+    setLocalValue(newValue);
   };
 
   const ChooseElements: {
@@ -47,22 +43,7 @@ export const LinkChooser = (props: {
       label: 'Link',
       element: (
         <div>
-          <TextField
-            label="Link"
-            value={localValue?.[0].href || ''}
-            onChange={handleTextChange}
-            fullWidth
-          />
-          <div className={css({ marginTop: 10 })}>
-            <TextField
-              label="Text"
-              value={localValue?.[0].text || ''}
-              onChange={(e) => {
-                setLocalValue((val) => [{ ...val[0], text: e.target.value }]);
-              }}
-              fullWidth
-            />
-          </div>
+          <TextField label="Link" value={localValue || ''} onChange={handleTextChange} fullWidth />
         </div>
       ),
     },
@@ -76,7 +57,7 @@ export const LinkChooser = (props: {
   }
 
   const handleClose = () => {
-    props.onCancel?.();
+    setVisible(false);
   };
 
   const handleConfirm = () => {
@@ -84,8 +65,14 @@ export const LinkChooser = (props: {
     props.onConfirm?.(localValue);
   };
 
+  useImperativeHandle(ref, () => ({
+    open: () => {
+      setVisible(true);
+    },
+  }));
+
   useEffect(() => {
-    setLocalValue(value ?? []);
+    setLocalValue(value ?? '');
   }, [value]);
 
   return (
@@ -118,4 +105,4 @@ export const LinkChooser = (props: {
       </DialogActions>
     </Dialog>
   );
-};
+});
