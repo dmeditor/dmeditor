@@ -11,9 +11,12 @@ import {
   FormatListBulleted,
   FormatListNumbered,
   FormatUnderlined,
+  ImageOutlined,
+  LooksOneOutlined,
+  LooksTwoOutlined,
 } from '@mui/icons-material';
 import { Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
-import { useFocused, useSlate } from 'slate-react';
+import { useFocused, useSlate, useSlateStatic } from 'slate-react';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'];
@@ -72,6 +75,10 @@ const getIcon = (format: string): ReactNode => {
       return <FormatItalic />;
     case 'underline':
       return <FormatUnderlined />;
+    case 'heading-one':
+      return <LooksOneOutlined />;
+    case 'heading-two':
+      return <LooksTwoOutlined />;
     default:
       return null;
   }
@@ -141,35 +148,35 @@ const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(
     editor,
     format,
-    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
-  )
-  const isList = LIST_TYPES.includes(format)
+    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type',
+  );
+  const isList = LIST_TYPES.includes(format);
 
   Transforms.unwrapNodes(editor, {
-    match: n =>
+    match: (n) =>
       !Editor.isEditor(n) &&
       SlateElement.isElement(n) &&
       LIST_TYPES.includes(n.type) &&
       !TEXT_ALIGN_TYPES.includes(format),
     split: true,
-  })
-  let newProperties: Partial<SlateElement>
+  });
+  let newProperties: Partial<SlateElement>;
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
       align: isActive ? undefined : format,
-    }
+    };
   } else {
     newProperties = {
       type: isActive ? 'paragraph' : isList ? 'list-item' : format,
-    }
+    };
   }
-  Transforms.setNodes<SlateElement>(editor, newProperties)
+  Transforms.setNodes<SlateElement>(editor, newProperties);
 
   if (!isActive && isList) {
-    const block = { type: format, children: [] }
-    Transforms.wrapNodes(editor, block)
+    const block = { type: format, children: [] };
+    Transforms.wrapNodes(editor, block);
   }
-}
+};
 
 const Menu = React.forwardRef(
   ({ className, ...props }: PropsWithChildren<BaseProps>, ref: Ref<HTMLDivElement>) => (
@@ -392,4 +399,37 @@ const Leaf = ({
   return <span {...attributes}>{children}</span>;
 };
 
-export { toggleMark, MarkButton, BlockButton, HoveringToolbar, Toolbar, Element, Leaf };
+const InsertImageButton = () => {
+  const editor = useSlateStatic();
+  return (
+    <Button
+      onMouseDown={(event) => {
+        event.preventDefault();
+        const url = window.prompt('Enter the URL of the image:');
+        if (url && !isImageUrl(url)) {
+          alert('URL is not an image');
+          return;
+        }
+        url && insertImage(editor, url);
+      }}
+    >
+      <ImageOutlined />
+    </Button>
+  );
+};
+
+const isImageUrl = (url: string) => {
+  return true;
+};
+const insertImage = (editor, url) => {};
+
+export {
+  toggleMark,
+  MarkButton,
+  BlockButton,
+  HoveringToolbar,
+  Toolbar,
+  Element,
+  Leaf,
+  InsertImageButton,
+};

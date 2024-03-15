@@ -3,19 +3,43 @@ import { css } from '@emotion/css';
 import definition from 'dmeditor/components/widgets/text/definition';
 import { useEditorStore } from 'dmeditor/index';
 import { SlateFun } from 'dmeditor/utils/Slate';
-import { createEditor } from 'slate';
+import { createEditor, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
-import { BlockButton, Element, Leaf, MarkButton, toggleMark, Toolbar } from './helper';
+import {
+  BlockButton,
+  Element,
+  InsertImageButton,
+  Leaf,
+  MarkButton,
+  toggleMark,
+  Toolbar,
+} from './helper';
 
 const { useCallback, useMemo } = React;
 const { HOTKEYS } = SlateFun;
 
 const RichText = (props: { property: string; value: any }) => {
   const { property, value = [] } = props;
-  const renderElement = useCallback((props) => <Element {...props} />, []);
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
+
+  const renderElement = useCallback(
+    (props: {
+      attributes: Record<string, unknown>;
+      children: React.ReactNode;
+      element: SlateElement;
+    }) => <Element {...props} />,
+    [],
+  );
+
+  const renderLeaf = useCallback(
+    (props: {
+      attributes: Record<string, unknown>;
+      children: React.ReactNode;
+      leaf: { bold: boolean; code: boolean; italic: boolean; underline: boolean };
+    }) => <Leaf {...props} />,
+    [],
+  );
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const { updateSelectedBlockProps } = useEditorStore();
 
@@ -45,8 +69,8 @@ const RichText = (props: { property: string; value: any }) => {
           <MarkButton format="italic" />
           <MarkButton format="underline" />
           {/* <MarkButton format="code" /> */}
-          {/* <BlockButton format="heading-one" /> */}
-          {/* <BlockButton format="heading-two" /> */}
+          <BlockButton format="heading-one" />
+          <BlockButton format="heading-two" />
           {/* <BlockButton format="block-quote" /> */}
           <BlockButton format="numbered-list" />
           <BlockButton format="bulleted-list" />
@@ -54,6 +78,7 @@ const RichText = (props: { property: string; value: any }) => {
           <BlockButton format="center" />
           <BlockButton format="right" />
           <BlockButton format="justify" />
+          <InsertImageButton />
         </Toolbar>
         <Editable
           renderElement={renderElement}

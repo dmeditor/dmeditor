@@ -46,7 +46,8 @@
       tailwind.config = {
         prefix: '',
         corePlugins: {
-          // preflight: false,
+          // disabled preflight for rich-text
+          preflight: false,
         },
         theme: {
           extend: {
@@ -62,8 +63,8 @@
         outline: none
       }
     </style>
-    <style type="text/tailwindcss">  
-      @layer base{        
+    <style type="text/tailwindcss">
+      @layer base{
         h1 {
           @apply text-3xl;
         }

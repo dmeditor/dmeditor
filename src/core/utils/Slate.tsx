@@ -9,6 +9,8 @@ import {
   FormatUnderlined,
   LinkOffOutlined,
   LinkOutlined,
+  LooksOneOutlined,
+  LooksTwoOutlined,
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import imageExtensions from 'image-extensions';
