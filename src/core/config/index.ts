@@ -43,6 +43,10 @@ export interface DMEConfigType {
       [prop: string]: string;
     };
   };
+  editor: {
+    defaultTheme: string;
+    ui: { [variable: string]: string };
+  };
   widgets?: { [widget: string]: widgetConfig };
   plugins?: { [plugin: string]: any };
 }

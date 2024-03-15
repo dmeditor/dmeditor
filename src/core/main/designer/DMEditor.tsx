@@ -310,7 +310,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     },
   });
   return (
-    <Root>
+    <Root uiConfig={dmeConfig.editor.ui}>
       <ThemeProvider theme={outerTheme}>
         <TopBar />
         <Layout.Main ref={currentRef}>

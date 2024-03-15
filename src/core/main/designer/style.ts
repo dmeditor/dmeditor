@@ -1,12 +1,10 @@
 import styled from '@emotion/styled';
 import { dmeConfig } from 'dmeditor/config';
 
-const editVariables = dmeConfig.editor.ui;
-
-export const Root = styled.div`
-  --dmee-bg-color: ${editVariables['bg-color'] || '#1d4b64'};
+export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
+  --dmee-bg-color: ${(props) => props.uiConfig['bg-color'] || '#1d4b64'};
   --dmee-topbar-height: 40px;
-  --dmee-bg-editarea: ${editVariables['bg-editarea'] || '#f3f3f3'};
+  --dmee-bg-editarea: ${(props) => props.uiConfig['bg-editarea'] || '#f3f3f3'};
 `;
 
 export const Layout = {
