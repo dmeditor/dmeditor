@@ -49,7 +49,7 @@ const RichText = (props: { property: string; value: any }) => {
 
   editor.children = value;
 
-  const initialValue = definition.events.createBlock().data.value;
+  const initialValue = useMemo(() => value || definition.events.createBlock().data.value, [value]);
   return (
     <div
       className={css`

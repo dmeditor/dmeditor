@@ -2,6 +2,7 @@ import React, { PropsWithChildren, ReactNode, Ref, useEffect, useRef } from 'rea
 import ReactDOM from 'react-dom';
 import { css, cx } from '@emotion/css';
 import {
+  DeleteOutlined,
   FormatAlignCenter,
   FormatAlignJustify,
   FormatAlignLeft,
@@ -15,8 +16,9 @@ import {
   LooksOneOutlined,
   LooksTwoOutlined,
 } from '@mui/icons-material';
+import { imageExtensionIsValid, isUrl } from 'dmeditor/utils';
 import { Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
-import { useFocused, useSlate, useSlateStatic } from 'slate-react';
+import { ReactEditor, useFocused, useSelected, useSlate, useSlateStatic } from 'slate-react';
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'];
@@ -315,15 +317,72 @@ const HoveringToolbar = () => {
   );
 };
 
-const Element = ({
-  attributes,
-  children,
-  element,
-}: {
+interface ImageProps {
+  attributes: Record<string, unknown>;
+  children: ReactNode;
+  element: {
+    url: string;
+  };
+}
+const Image = (props: ImageProps) => {
+  const { attributes, children, element } = props;
+  const editor = useSlateStatic();
+  const path = ReactEditor.findPath(editor, element);
+
+  const selected = useSelected();
+  const focused = useFocused();
+  return (
+    <div {...attributes}>
+      {children}
+      <div
+        contentEditable={false}
+        className={css`
+          position: relative;
+        `}
+      >
+        <img
+          src={element.url}
+          className={css`
+            display: block;
+            max-width: 100%;
+            max-height: 20em;
+            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
+          `}
+        />
+        <Button
+          active
+          onClick={() => Transforms.removeNodes(editor, { at: path })}
+          className={css`
+            display: ${selected && focused ? 'inline' : 'none'};
+            position: absolute;
+            top: 0.5em;
+            left: 0.5em;
+            background-color: white;
+          `}
+        >
+          <DeleteOutlined />
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+// const Element = ({
+//   attributes,
+//   children,
+//   element,
+// }: {
+//   attributes: Record<string, unknown>;
+//   children: ReactNode;
+//   element: SlateElement;
+// }) => {
+interface ElementProps {
   attributes: Record<string, unknown>;
   children: ReactNode;
   element: SlateElement;
-}) => {
+}
+const Element = (props: ElementProps) => {
+  const { children, attributes, element } = props;
   const style = { textAlign: element.align };
   switch (element.type) {
     case 'block-quote':
@@ -362,6 +421,8 @@ const Element = ({
           {children}
         </ol>
       );
+    case 'image':
+      return <Image {...props} />;
     default:
       return (
         <p style={style} {...attributes}>
@@ -419,9 +480,28 @@ const InsertImageButton = () => {
 };
 
 const isImageUrl = (url: string) => {
-  return true;
+  if (!url) return false;
+  if (!isUrl(url)) return false;
+  const ext = new URL(url).pathname.split('.').pop();
+  // return imageExtensions.includes(ext);
+  return imageExtensionIsValid(ext);
 };
-const insertImage = (editor, url) => {};
+
+type ImageElement = {
+  type: 'image';
+  url: string;
+  children: EmptyText[];
+};
+
+const insertImage = (editor, url: string) => {
+  const text = { text: '' };
+  const image: ImageElement = { type: 'image', url, children: [text] };
+  Transforms.insertNodes(editor, image);
+  Transforms.insertNodes(editor, {
+    type: 'paragraph',
+    children: [{ text: '' }],
+  });
+};
 
 export {
   toggleMark,

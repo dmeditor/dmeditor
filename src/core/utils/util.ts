@@ -117,6 +117,30 @@ function isEmptyString(value: string): boolean {
   return value === '';
 }
 
+/**
+ * @method imageExtensionIsValid
+ * @param extension string image extension
+ * @returns boolean true if extension is valid
+ */
+function imageExtensionIsValid(extension: string | undefined): boolean {
+  if (!extension) return false;
+  return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'].includes(extension);
+}
+
+/**
+ * @method isUrl
+ * @param url string url to check
+ * @returns boolean true if url is valid
+ */
+function isUrl(url: string) {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 export {
   getPropertyName,
   getPropertyValue,
@@ -131,4 +155,6 @@ export {
   isUndefinedOrNull,
   isKeyInObject,
   isEmptyString,
+  imageExtensionIsValid,
+  isUrl,
 };
