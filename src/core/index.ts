@@ -17,6 +17,8 @@ export {
   registerWidgetProperty,
 } from './setting-panel/register';
 
+export { registerIcon } from './components/icon/icon-data';
+
 export { dmeServerSideLoad } from './ssr';
 
 export { dmeConfig, setDMEditorConfig, setDMEditorCallback } from './config';

@@ -45,7 +45,7 @@ export const EditContainer = styled.div`
   min-height: 100%;
   margin: 0px auto;
   width: 90%;
-  max-width: var(--dme-edit-max-width);
+  max-width: var(--dmee-edit-max-width);
   background-color: white;
   border: 1px solid #cccccc;
 `;
