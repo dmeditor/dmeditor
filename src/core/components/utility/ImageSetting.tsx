@@ -1,10 +1,8 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { css } from '@emotion/css';
 import { Button } from '@mui/material';
-import { ImageChooser, ImageRef } from 'dmeditor/components/utility/ImageChooser';
+import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
 import { BrowseImageCallbackParams, ImageInfo } from 'dmeditor/config';
-import { useEditorStore } from 'dmeditor/index';
-import { PropertyItem } from 'dmeditor/setting-panel/Property';
 
 export const ImageSetting = (props: {
   defaultVisible?: boolean;
@@ -13,15 +11,15 @@ export const ImageSetting = (props: {
 }) => {
   const { value, onConfirm, defaultVisible = false } = props;
   const { src, thumbnail } = value;
-
-  const imageRef = useRef<ImageRef>(null);
+  const [visible, setVisible] = useState(defaultVisible ?? false);
 
   const handleConfirm = (value: BrowseImageCallbackParams) => {
     onConfirm(value[0]);
+    setVisible(false);
   };
 
   const handleOpen = () => {
-    imageRef.current?.open();
+    setVisible(true);
   };
 
   return (
@@ -46,11 +44,11 @@ export const ImageSetting = (props: {
         </Button>
       </div>
       <ImageChooser
-        ref={imageRef}
         value={[{ src: src || '', id: value?.id }]}
-        defaultVisible={defaultVisible}
+        visible={visible}
         multiple={false}
         onConfirm={handleConfirm}
+        onCancel={() => setVisible(false)}
       />
     </>
   );

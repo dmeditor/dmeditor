@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import { Button, Dialog, DialogActions, DialogContent, Tab, Tabs, TextField } from '@mui/material';
 import { BrowseImageCallbackParams, dmeConfig, ImageInfo } from 'dmeditor/config';
@@ -14,20 +14,16 @@ function CheckImageBrowserValid() {
   return null;
 }
 
-export type ImageRef = {
-  open: () => void;
-};
-
 type ImageChooserProps = {
-  defaultVisible: boolean;
+  visible: boolean;
   value?: BrowseImageCallbackParams;
   multiple?: boolean;
   onConfirm?: (value: BrowseImageCallbackParams) => void;
+  onCancel?: () => void;
 };
 
-export const ImageChooser = forwardRef<ImageRef, ImageChooserProps>((props, ref) => {
-  const { defaultVisible, value, multiple = false } = props;
-  const [visible, setVisible] = useState<boolean>(defaultVisible);
+export const ImageChooser = (props: ImageChooserProps) => {
+  const { visible, value, multiple = false } = props;
   const BrowseImage = CheckImageBrowserValid();
   const [activeTab, setActiveTab] = useState<number>(0);
   const [localValue, setLocalValue] = useState<BrowseImageCallbackParams>(value ?? []);
@@ -57,23 +53,13 @@ export const ImageChooser = forwardRef<ImageRef, ImageChooserProps>((props, ref)
   }
 
   const handleClose = () => {
-    setVisible(false);
+    props.onCancel?.();
   };
 
   const handleConfirm = () => {
     handleClose();
     props.onConfirm?.(localValue);
   };
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      open: () => {
-        setVisible(true);
-      },
-    }),
-    [],
-  );
 
   useEffect(() => {
     setLocalValue(value ?? []);
@@ -109,4 +95,4 @@ export const ImageChooser = forwardRef<ImageRef, ImageChooserProps>((props, ref)
       </DialogActions>
     </Dialog>
   );
-});
+};
