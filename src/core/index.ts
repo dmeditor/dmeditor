@@ -20,6 +20,7 @@ export {
 export { registerIcon } from './components/icon/icon-data';
 
 export { dmeServerSideLoad } from './ssr';
+export * from './components/utility';
 
 export { dmeConfig, setDMEditorConfig, setDMEditorCallback } from './config';
 

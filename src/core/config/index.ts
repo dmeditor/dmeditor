@@ -17,6 +17,7 @@ export interface CallbackConfig {
   browseImage?: ComponentType<{
     value: BrowseImageCallbackParams;
     onChange: (value: BrowseImageCallbackParams) => void;
+    multiple?: boolean;
   }>;
   browseLink?: ComponentType<{
     value: BrowseLinkCallbackParams;

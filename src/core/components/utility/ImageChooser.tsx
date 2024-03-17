@@ -21,11 +21,12 @@ export type ImageRef = {
 type ImageChooserProps = {
   defaultVisible: boolean;
   value?: BrowseImageCallbackParams;
+  multiple?: boolean;
   onConfirm?: (value: BrowseImageCallbackParams) => void;
 };
 
 export const ImageChooser = forwardRef<ImageRef, ImageChooserProps>((props, ref) => {
-  const { defaultVisible, value } = props;
+  const { defaultVisible, value, multiple = false } = props;
   const [visible, setVisible] = useState<boolean>(defaultVisible);
   const BrowseImage = CheckImageBrowserValid();
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -51,7 +52,7 @@ export const ImageChooser = forwardRef<ImageRef, ImageChooserProps>((props, ref)
   if (BrowseImage) {
     ImageChooseElements.splice(0, 0, {
       label: 'Browse',
-      element: <BrowseImage value={localValue} onChange={setLocalValue} />,
+      element: <BrowseImage value={localValue} onChange={setLocalValue} multiple={multiple} />,
     });
   }
 
