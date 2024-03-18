@@ -7,14 +7,14 @@ import { BrowseImageCallbackParams, ImageInfo } from 'dmeditor/config';
 export const ImageSetting = (props: {
   defaultVisible?: boolean;
   value: ImageInfo;
-  onConfirm: (value: ImageInfo) => void;
+  onChange: (value: ImageInfo) => void;
 }) => {
-  const { value, onConfirm, defaultVisible = false } = props;
+  const { value, onChange, defaultVisible = false } = props;
   const { src, thumbnail } = value;
   const [visible, setVisible] = useState(defaultVisible ?? false);
 
   const handleConfirm = (value: BrowseImageCallbackParams) => {
-    onConfirm(value[0]);
+    onChange(value[0]);
     setVisible(false);
   };
 

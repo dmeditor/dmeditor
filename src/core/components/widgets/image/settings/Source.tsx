@@ -10,7 +10,7 @@ export const Source = () => {
   const { data } = getSelectedBlock<ImageEntity>() || {};
   const { src } = data || {};
 
-  const handleConfirm = (value: ImageInfo) => {
+  const handleChange = (value: ImageInfo) => {
     updateSelectedBlock<ImageEntity>((blockData) => {
       blockData.src = value?.src;
       blockData.externalId = value?.id;
@@ -23,7 +23,7 @@ export const Source = () => {
       <ImageSetting
         value={{ src: src || '', id: data?.externalId }}
         defaultVisible={!src}
-        onConfirm={handleConfirm}
+        onChange={handleChange}
       />
     </PropertyItem>
   );
