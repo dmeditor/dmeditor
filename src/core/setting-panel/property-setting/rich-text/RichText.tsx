@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
+import { ImageOutlined } from '@mui/icons-material';
 import definition from 'dmeditor/components/widgets/text/definition';
+import { BrowseImageCallbackParams } from 'dmeditor/config';
 import { useEditorStore } from 'dmeditor/index';
 import { SlateFun } from 'dmeditor/utils/Slate';
 import { createEditor, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
-import { Editable, Slate, withReact } from 'slate-react';
+import { Editable, Slate, useSlateStatic, withReact } from 'slate-react';
 
 import {
   BlockButton,
+  Button,
   Element,
   InsertImageButton,
   Leaf,
@@ -17,7 +20,7 @@ import {
   Toolbar,
 } from './helper';
 
-const { useCallback, useMemo } = React;
+const { useCallback, useMemo, useState } = React;
 const { HOTKEYS } = SlateFun;
 
 const RichText = (props: { property: string; value: any }) => {
@@ -50,6 +53,7 @@ const RichText = (props: { property: string; value: any }) => {
   editor.children = value;
 
   const initialValue = useMemo(() => value || definition.events.createBlock().data.value, [value]);
+
   return (
     <div
       className={css`
@@ -78,7 +82,7 @@ const RichText = (props: { property: string; value: any }) => {
           <BlockButton format="center" />
           <BlockButton format="right" />
           <BlockButton format="justify" />
-          <InsertImageButton />
+          <InsertImageButton value={value} />
         </Toolbar>
         <Editable
           renderElement={renderElement}

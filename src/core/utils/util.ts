@@ -141,6 +141,10 @@ function isUrl(url: string) {
   }
 }
 
+function isNumber(value: unknown): value is number {
+  return typeof value === 'number';
+}
+
 export {
   getPropertyName,
   getPropertyValue,
@@ -151,6 +155,7 @@ export {
   isHTMLElement,
   isStrictlyInfinity,
   isNull,
+  isNumber,
   isUndefined,
   isUndefinedOrNull,
   isKeyInObject,

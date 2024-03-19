@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactNode, Ref, useEffect, useRef } from 'react';
+import React, { PropsWithChildren, ReactNode, Ref, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { css, cx } from '@emotion/css';
 import {
@@ -16,7 +16,9 @@ import {
   LooksOneOutlined,
   LooksTwoOutlined,
 } from '@mui/icons-material';
-import { imageExtensionIsValid, isUrl } from 'dmeditor/utils';
+import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
+import { BrowseImageCallbackParams } from 'dmeditor/config';
+import { imageExtensionIsValid, isNumber, isUrl } from 'dmeditor/utils';
 import { Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
 import { ReactEditor, useFocused, useSelected, useSlate, useSlateStatic } from 'slate-react';
 
@@ -460,22 +462,53 @@ const Leaf = ({
   return <span {...attributes}>{children}</span>;
 };
 
-const InsertImageButton = () => {
+const InsertImageButton = (props: { value: { id: string; src: string } | undefined }) => {
   const editor = useSlateStatic();
-  return (
-    <Button
-      onMouseDown={(event) => {
-        event.preventDefault();
-        const url = window.prompt('Enter the URL of the image:');
+  const [visible, setVisible] = useState(false);
+  const [src, setSrc] = useState('');
+  const { value } = props;
+
+  const handleConfirm = (images: BrowseImageCallbackParams) => {
+    if (images.length > 0) {
+      const id = images[0].id;
+      // choosed from gallery
+      if (isNumber(id)) {
+        const url = images[0].src;
+        insertImage(editor, url);
+        return;
+      } else {
+        const url = images[0].src;
         if (url && !isImageUrl(url)) {
           alert('URL is not an image');
           return;
         }
         url && insertImage(editor, url);
-      }}
-    >
-      <ImageOutlined />
-    </Button>
+      }
+    } else {
+      console.error('No image data');
+    }
+  };
+
+  return (
+    <>
+      <Button
+        onMouseDown={(event: MouseEvent) => {
+          event.preventDefault();
+          setVisible(true);
+        }}
+      >
+        <ImageOutlined />
+      </Button>
+      {visible ? (
+        <ImageChooser
+          value={[{ src: src || '', id: value?.id }]}
+          visible={visible}
+          multiple={false}
+          onConfirm={handleConfirm}
+          onCancel={() => setVisible(false)}
+        />
+      ) : null}
+    </>
   );
 };
 
@@ -512,4 +545,7 @@ export {
   Element,
   Leaf,
   InsertImageButton,
+  Button,
+  insertImage,
+  isImageUrl,
 };
