@@ -19,6 +19,7 @@ import {
   toggleMark,
   Toolbar,
 } from './helper';
+import MarkSelector from './MarkSelector';
 
 const { useCallback, useMemo, useState } = React;
 const { HOTKEYS } = SlateFun;
@@ -69,6 +70,8 @@ const RichText = (props: { property: string; value: any }) => {
         }}
       >
         <Toolbar>
+          <MarkSelector format="font-family" />
+          <MarkSelector format="font-size" />
           <MarkButton format="bold" />
           <MarkButton format="italic" />
           <MarkButton format="underline" />
