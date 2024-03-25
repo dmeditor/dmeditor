@@ -22,8 +22,7 @@ import { imageExtensionIsValid, isNumber, isUrl } from 'dmeditor/utils';
 import { Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
 import { ReactEditor, useFocused, useSelected, useSlate, useSlateStatic } from 'slate-react';
 
-const LIST_TYPES = ['numbered-list', 'bulleted-list'];
-const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'];
+import { FONT_FAMILY_TYPES, LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
 
 interface BaseProps {
   className: string;
@@ -121,6 +120,7 @@ const BlockButton = ({ format }) => {
 
 const isMarkActive = (editor, format) => {
   const marks = Editor.marks(editor);
+  // console.log('wing', marks);
   return marks ? marks[format] === true : false;
 };
 
@@ -441,7 +441,15 @@ const Leaf = ({
 }: {
   attributes: Record<string, unknown>;
   children: ReactNode;
-  leaf: { bold: boolean; code: boolean; italic: boolean; underline: boolean };
+  leaf: {
+    bold: boolean;
+    code: boolean;
+    italic: boolean;
+    underline: boolean;
+    'font-family': string;
+    'font-size': string;
+    color: string;
+  };
 }) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
@@ -459,6 +467,17 @@ const Leaf = ({
     children = <u>{children}</u>;
   }
 
+  if (leaf['font-family']) {
+    children = <span style={{ fontFamily: leaf['font-family'] }}>{children}</span>;
+  }
+
+  if (leaf['font-size']) {
+    children = <span style={{ fontSize: leaf['font-size'] }}>{children}</span>;
+  }
+
+  if (leaf['color']) {
+    children = <span style={{ color: leaf['color'] }}>{children}</span>;
+  }
   return <span {...attributes}>{children}</span>;
 };
 
