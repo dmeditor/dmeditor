@@ -51,7 +51,7 @@ const isSelected = (editor: Editor, format: SelectorType, selectedIndex: number)
   toggleMark(editor, format, value);
 };
 
-const MarkSelector = (props: { format: 'font-size' | 'font-family' }) => {
+const MarkSelector = (props: { format: SelectorType }) => {
   const { format } = props;
   const editor = useSlate();
   const [_, setIndex] = useState(0);
@@ -96,6 +96,13 @@ const MarkSelector = (props: { format: 'font-size' | 'font-family' }) => {
       }}
       value={currentValue()}
       onChange={handleChange}
+      MenuProps={{
+        PaperProps: {
+          style: {
+            maxHeight: 48 * 4.5,
+          },
+        },
+      }}
     >
       {types.map((font, index) => (
         <MenuItem key={font.value} value={index}>

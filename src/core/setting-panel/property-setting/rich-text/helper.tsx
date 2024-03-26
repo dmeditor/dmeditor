@@ -475,8 +475,8 @@ const Leaf = ({
     children = <span style={{ fontSize: leaf['font-size'] }}>{children}</span>;
   }
 
-  if (leaf['color']) {
-    children = <span style={{ color: leaf['color'] }}>{children}</span>;
+  if (leaf.color) {
+    children = <span style={{ color: leaf.color }}>{children}</span>;
   }
   return <span {...attributes}>{children}</span>;
 };

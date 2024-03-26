@@ -19,6 +19,7 @@ import {
   toggleMark,
   Toolbar,
 } from './helper';
+import MarkColor from './MarkColor';
 import MarkSelector from './MarkSelector';
 
 const { useCallback, useMemo, useState } = React;
@@ -72,6 +73,7 @@ const RichText = (props: { property: string; value: any }) => {
         <Toolbar>
           <MarkSelector format="font-family" />
           <MarkSelector format="font-size" />
+          <MarkColor format="color" />
           <MarkButton format="bold" />
           <MarkButton format="italic" />
           <MarkButton format="underline" />
