@@ -57,8 +57,17 @@ const defaultConfig = () => {
     editor: {
       defaultTheme: 'default',
       richText: {
-        fontFamily: ['Arial', 'Times New Roman', 'Courier New', 'Tahoma', 'Georgia', 'Verdana'],
+        fontFamily: [
+          'Font',
+          'Arial',
+          'Times New Roman',
+          'Courier New',
+          'Tahoma',
+          'Georgia',
+          'Verdana',
+        ],
         fontSize: [
+          'Size',
           '12px',
           '14px',
           '16px',

@@ -28,7 +28,9 @@ const isMarkActive = (editor: Editor, format: SelectorType) => {
 const toggleMark = (editor: Editor, format: SelectorType, value: string) => {
   // const { active } = isMarkActive(editor, format);
   Editor.removeMark(editor, format);
-  Editor.addMark(editor, format, value);
+  if (value) {
+    Editor.addMark(editor, format, value);
+  }
 };
 
 export const getValue = (index: number, type: SelectorType) => {
@@ -37,7 +39,12 @@ export const getValue = (index: number, type: SelectorType) => {
       ? dmeConfig.editor.richText.fontSize
       : dmeConfig.editor.richText.fontFamily;
   if (index < 0 || index >= list.length) {
-    return list[0];
+    index = 0;
+  }
+
+  //first one(index 0) is always to have empty format(also for clear up)
+  if (index === 0) {
+    return '';
   }
   return list[index];
 };
@@ -105,7 +112,9 @@ const MarkSelector = (props: { format: SelectorType }) => {
     >
       {types.map((font, index) => (
         <MenuItem key={font} value={index}>
-          {format === 'font-family' && <span style={{ fontFamily: `${font}` }}>{font}</span>}
+          {format === 'font-family' && (
+            <span style={index > 0 ? { fontFamily: `${font}` } : {}}>{font}</span>
+          )}
           {format === 'font-size' && <span>{font}</span>}
         </MenuItem>
       ))}
