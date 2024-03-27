@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { MenuItem, Select } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select/SelectInput';
+import { dmeConfig } from 'dmeditor/config';
 import { isNumber } from 'dmeditor/utils';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
@@ -33,11 +34,14 @@ const toggleMark = (editor: Editor, format: SelectorType, value: string) => {
 };
 
 export const getValue = (index: number, type: SelectorType) => {
-  const list = type === 'font-size' ? FONT_SIZE_TYPES : FONT_FAMILY_TYPES;
+  const list =
+    type === 'font-size'
+      ? dmeConfig.general.richText.fontSize
+      : dmeConfig.general.richText.fontFamily;
   if (index < 0 || index >= list.length) {
-    return list[0].value;
+    return list[0];
   }
-  return list[index].value;
+  return list[index];
 };
 
 const isSelected = (editor: Editor, format: SelectorType, selectedIndex: number) => {
@@ -55,9 +59,9 @@ const MarkSelector = (props: { format: SelectorType }) => {
 
   const types = useMemo(() => {
     if (format === 'font-size') {
-      return FONT_SIZE_TYPES;
+      return dmeConfig.general.richText.fontSize;
     } else {
-      return FONT_FAMILY_TYPES;
+      return dmeConfig.general.richText.fontFamily;
     }
   }, [format]);
 
@@ -72,7 +76,7 @@ const MarkSelector = (props: { format: SelectorType }) => {
   const currentValue = () => {
     const { active, [format]: value } = isMarkActive(editor, format);
     if (active) {
-      const index = types.findIndex((item) => item.value === value);
+      const index = types.findIndex((item) => item === value);
       if (index === -1) {
         return 0;
       }
@@ -102,8 +106,9 @@ const MarkSelector = (props: { format: SelectorType }) => {
       }}
     >
       {types.map((font, index) => (
-        <MenuItem key={font.value} value={index}>
-          {font.value}
+        <MenuItem key={font} value={index}>
+          {format === 'font-family' && <span style={{ fontFamily: `${font}` }}>{font}</span>}
+          {format === 'font-size' && <span>{font}</span>}
         </MenuItem>
       ))}
     </Select>

@@ -17,12 +17,12 @@ import {
   LooksTwoOutlined,
 } from '@mui/icons-material';
 import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
-import { BrowseImageCallbackParams } from 'dmeditor/config';
+import { BrowseImageCallbackParams, dmeConfig } from 'dmeditor/config';
 import { imageExtensionIsValid, isNumber, isUrl } from 'dmeditor/utils';
 import { Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
 import { ReactEditor, useFocused, useSelected, useSlate, useSlateStatic } from 'slate-react';
 
-import { FONT_FAMILY_TYPES, LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
+import { LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
 
 interface BaseProps {
   className: string;
@@ -453,7 +453,7 @@ const Leaf = ({
 }) => {
   console.log('wing leaf', leaf);
   const fontStyles = {
-    fontFamily: FONT_FAMILY_TYPES.map((i) => i.value).includes(leaf['font-family'])
+    fontFamily: dmeConfig.general.richText.fontFamily.includes(leaf['font-family'])
       ? leaf['font-family']
       : undefined,
     fontSize: leaf['font-size'],
@@ -486,7 +486,11 @@ const Leaf = ({
   // if (leaf.color) {
   //   children = <span style={{ color: leaf.color }}>{children}</span>;
   // }
-  return <span style={fontStyles} {...attributes}>{children}</span>;
+  return (
+    <span style={fontStyles} {...attributes}>
+      {children}
+    </span>
+  );
 };
 
 const InsertImageButton = (props: { value: { id: string; src: string } | undefined }) => {
