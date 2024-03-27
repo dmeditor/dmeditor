@@ -6,8 +6,6 @@ import { isNumber } from 'dmeditor/utils';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
-import { FONT_FAMILY_TYPES, FONT_SIZE_TYPES } from './options';
-
 type SelectorType = 'font-size' | 'font-family';
 
 type MarksWithFontFamily = Omit<BaseText, 'text'> & { [key: string]: any };
@@ -91,9 +89,9 @@ const MarkSelector = (props: { format: SelectorType }) => {
       sx={{
         width: '100px',
         height: '30px',
-        fontSize: '12px',
+        fontSize: '14px',
         padding: '0px',
-        margin: '0px',
+        marginLeft: '4px',
       }}
       value={currentValue()}
       onChange={handleChange}
