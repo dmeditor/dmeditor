@@ -2,7 +2,7 @@ import React from 'react';
 import { MenuItem, Select } from '@mui/material';
 
 import { getDef } from '../ToolDefinition';
-import { PropertyItem } from '../core/utils';
+import { PropertyItem } from '../utils';
 
 export const StyleSettings = (props: {
   blocktype: string;
@@ -39,7 +39,9 @@ export const StyleSettings = (props: {
         >
           <MenuItem value="">None</MenuItem>
           {keys.map((identifier, index) => (
-            <MenuItem key={index} value={identifier}>{styles[identifier].name}</MenuItem>
+            <MenuItem key={index} value={identifier}>
+              {styles[identifier].name}
+            </MenuItem>
           ))}
         </Select>
       </PropertyItem>

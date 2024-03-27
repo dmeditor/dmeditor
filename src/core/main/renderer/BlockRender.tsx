@@ -4,9 +4,9 @@ import { css } from '@emotion/css';
 import type { DME, DMEData } from 'dmeditor/types';
 import _debounce from 'lodash/debounce';
 
-import i18n from '../../../locales/i18n';
-import { getDef } from '../../../ToolDefinition';
 import { getWidgetComponent, getWidgetStyle, getWidgetVariant } from '../../components/widgets';
+import i18n from '../../locales/i18n';
+import { getDef } from '../../ToolDefinition';
 
 interface BlockProps<Type = DMEData.DefaultDataType> {
   data: DMEData.Block<Type>;

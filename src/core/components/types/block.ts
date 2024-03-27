@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import type { BlockData } from '../../../ToolDefinition';
+import type { BlockData } from '../../ToolDefinition';
 
 export interface RenderMainProps {
   data: BlockData;

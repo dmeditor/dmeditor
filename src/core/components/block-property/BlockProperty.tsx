@@ -3,8 +3,8 @@ import ReactDOM, { createPortal } from 'react-dom';
 import { PropertyTab } from 'dmeditor/components/property-tab';
 import { isServer, PropertyGroup, Util } from 'dmeditor/utils';
 
-import i18n from '../../../locales/i18n';
-import { getDef } from '../../../ToolDefinition';
+import i18n from '../../locales/i18n';
+import { getDef } from '../../ToolDefinition';
 
 declare global {
   interface Window {

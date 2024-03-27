@@ -6,16 +6,17 @@ import {
   DeleteOutline,
   ViewListOutlined,
 } from '@mui/icons-material';
+import { nanoid } from 'nanoid';
 import { Accordion } from 'react-bootstrap';
+
 import { getCommonBlockCss, getStyleCss } from '../../../main/renderer/BlockRender';
+import { BlockSettings } from '../../../setting-panel/BlockSettings';
+import { StyleSettings } from '../../../styles/StyleSettings';
+import { ToolDefinition, ToolRenderProps } from '../../../ToolDefinition';
+import { PropertyButton, Util } from '../../../utils';
 import { BlockList } from '../../block-list';
 import { BlockProperty } from '../../block-property';
-import { BlockSettings } from '../../../setting-panel/BlockSettings';
-import { StyleSettings } from '../../../../styles/StyleSettings';
-import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
-import { PropertyButton, Util } from '../../../utils';
 import { blockTabCss } from '../tabs/BlockTab.css';
-import { nanoid  } from 'nanoid'
 
 const BlockAccordion = (props: ToolRenderProps) => {
   const [commonSettings, setCommonSettings] = useState(props.blockdata.settings?.style || {});

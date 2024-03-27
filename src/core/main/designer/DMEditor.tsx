@@ -20,11 +20,11 @@ import {
   Util,
 } from 'dmeditor/utils/utilx';
 
-import { getDef, newBlockData } from '../../../ToolDefinition';
 import { PropertyTab } from '../../components/property-tab/Tab';
 import { MenuList } from '../../components/widgets/menu-list/MenuList';
+import { getDef, newBlockData } from '../../ToolDefinition';
 
-import '../../../locales/i18n';
+import '../../locales/i18n';
 
 import { useMemo } from 'react';
 import { css } from '@emotion/css';

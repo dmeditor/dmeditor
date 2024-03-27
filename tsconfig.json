@@ -9,7 +9,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "outDir": "./dist/",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -17,8 +17,8 @@
     "noEmit": false,
     "jsx": "react-jsx",
     "baseUrl": "./",
-    "rootDir": "./src/core/",
-    "emitDeclarationOnly": true,
+    "rootDir": "./src/core",
+    "emitDeclarationOnly": false,
     "declaration": true,
     "paths": {
       "dmeditor/*": ["src/core/*"]
@@ -26,5 +26,5 @@
     "listEmittedFiles": true
   },
   "include": ["src/core/**/*.ts", "src/core/**/*.tsx"],
-  "exclude": ["src/core/config/**/*", "node_modules", "src/locales/**/*"]
+  "exclude": ["src/core/config/**/*", "node_modules", "src/core/locales/**/*"]
 }

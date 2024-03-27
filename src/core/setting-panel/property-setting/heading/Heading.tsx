@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { BlockProperty } from 'dmeditor/components/block-property';
 import { useEditorStore } from 'dmeditor/main/store';
 
-import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
+import { ToolDefinition, ToolRenderProps } from '../../../ToolDefinition';
 import { PropertyButton, PropertyItem, Ranger, Util } from '../../../utils';
 import useHeadingStore from '../../store/heading';
 

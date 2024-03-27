@@ -10,7 +10,7 @@ import {
   getDef,
   getPopularBlocktypes,
   getToolDefinitions,
-} from '../../../../ToolDefinition';
+} from '../../../ToolDefinition';
 import { menulistCss } from './MenuList.css';
 
 export const MenuList = (props: { onSelect: any; allowedType?: string[] }) => {

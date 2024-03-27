@@ -1,5 +1,6 @@
-import i18n from './locales/i18n';
 import { nanoid } from 'nanoid';
+
+import i18n from './locales/i18n';
 
 export interface BlockData {
   data?: any; //direct data

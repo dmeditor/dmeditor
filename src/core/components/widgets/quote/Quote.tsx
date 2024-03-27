@@ -3,8 +3,8 @@ import { TitleOutlined } from '@mui/icons-material';
 import { BlockProperty } from 'dmeditor/components/block-property';
 import { BlockSettings } from 'dmeditor/setting-panel/BlockSettings';
 
-import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
 import { getCommonBlockCss } from '../../../main/renderer/BlockRender';
+import { ToolDefinition, ToolRenderProps } from '../../../ToolDefinition';
 import { Util } from '../../../utils';
 
 export const Quote = (props: ToolRenderProps) => {

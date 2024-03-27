@@ -3,8 +3,8 @@ import { AddOutlined } from '@mui/icons-material';
 import { Alert, Button } from '@mui/material';
 import { sanitizeBlockData } from 'dmeditor/utils/utilx';
 
-import { newBlockData } from '../../../ToolDefinition';
 import { BlockRender, RenderMenu } from '../../main/renderer';
+import { newBlockData } from '../../ToolDefinition';
 
 interface BlockListProps {
   list: Array<any>;
