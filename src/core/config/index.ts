@@ -53,6 +53,9 @@ const defaultConfig = () => {
         default: ``,
       },
       themes: [],
+    },
+    editor: {
+      defaultTheme: 'default',
       richText: {
         fontFamily: ['Arial', 'Times New Roman', 'Courier New', 'Tahoma', 'Georgia', 'Verdana'],
         fontSize: [
@@ -71,9 +74,6 @@ const defaultConfig = () => {
           '48px',
         ],
       },
-    },
-    editor: {
-      defaultTheme: 'default',
       ui: {},
     },
     widgets: {
@@ -91,14 +91,14 @@ const dmeConfig: {
       [prop: string]: string;
     };
     themes: Array<DME.PageTheme>;
-    richText: {
-      fontFamily: Array<string>;
-      fontSize: Array<string>;
-    };
     [prop: string]: string | number | boolean | Record<string, any>;
   };
   editor: {
     defaultTheme: string;
+    richText: {
+      fontFamily: Array<string>;
+      fontSize: Array<string>;
+    };
     ui: { [variable: string]: string };
   };
   widgets: { [widget: string]: widgetConfig };

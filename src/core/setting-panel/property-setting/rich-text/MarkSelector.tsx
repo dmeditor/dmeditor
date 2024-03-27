@@ -36,8 +36,8 @@ const toggleMark = (editor: Editor, format: SelectorType, value: string) => {
 export const getValue = (index: number, type: SelectorType) => {
   const list =
     type === 'font-size'
-      ? dmeConfig.general.richText.fontSize
-      : dmeConfig.general.richText.fontFamily;
+      ? dmeConfig.editor.richText.fontSize
+      : dmeConfig.editor.richText.fontFamily;
   if (index < 0 || index >= list.length) {
     return list[0];
   }
@@ -59,9 +59,9 @@ const MarkSelector = (props: { format: SelectorType }) => {
 
   const types = useMemo(() => {
     if (format === 'font-size') {
-      return dmeConfig.general.richText.fontSize;
+      return dmeConfig.editor.richText.fontSize;
     } else {
-      return dmeConfig.general.richText.fontFamily;
+      return dmeConfig.editor.richText.fontFamily;
     }
   }, [format]);
 

@@ -453,7 +453,7 @@ const Leaf = ({
 }) => {
   console.log('wing leaf', leaf);
   const fontStyles = {
-    fontFamily: dmeConfig.general.richText.fontFamily.includes(leaf['font-family'])
+    fontFamily: dmeConfig.editor.richText.fontFamily.includes(leaf['font-family'])
       ? leaf['font-family']
       : undefined,
     fontSize: leaf['font-size'],
