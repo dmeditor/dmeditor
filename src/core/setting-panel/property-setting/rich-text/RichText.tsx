@@ -25,7 +25,7 @@ import MarkSelector from './MarkSelector';
 const { useCallback, useMemo, useState } = React;
 const { HOTKEYS } = SlateFun;
 
-const RichText = (props: { property: string; value: any }) => {
+const RichText = (props: { property: string; value: any; onChange?: () => void }) => {
   const { property, value = [] } = props;
 
   const renderElement = useCallback(
@@ -49,7 +49,11 @@ const RichText = (props: { property: string; value: any }) => {
   const { updateSelectedBlockProps } = useEditorStore();
 
   const handleChange = (newValue: Array<any>) => {
-    updateSelectedBlockProps(property, newValue);
+    if (props.onChange) {
+      props.onChange();
+    } else {
+      updateSelectedBlockProps(property, newValue);
+    }
   };
 
   editor.children = value;

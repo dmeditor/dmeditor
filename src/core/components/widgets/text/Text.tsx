@@ -4,18 +4,15 @@ import {
   Element,
   HoveringToolbar,
   Leaf,
-  resetNodes,
 } from 'dmeditor/setting-panel/property-setting/rich-text/helper';
 import { DME } from 'dmeditor/types/dmeditor';
-import { createEditor } from 'slate';
+import { createEditor, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
-import { SlateFun } from '../../../utils/Slate';
 import { EntityText } from './entity';
 
-// const { Element, Leaf } = SlateFun;
-const { useCallback, useMemo, useEffect } = React;
+const { useCallback, useMemo } = React;
 
 const Text = (props: DME.WidgetRenderProps<EntityText>) => {
   const { blockNode, rootClasses, styleClasses } = props;
@@ -23,8 +20,30 @@ const Text = (props: DME.WidgetRenderProps<EntityText>) => {
     data: { value },
   } = blockNode;
   const { updateSelectedBlock } = useEditorStore();
-  const renderElement = useCallback((props) => <Element {...props} />, []);
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
+  const renderElement = useCallback(
+    (props: {
+      attributes: Record<string, unknown>;
+      children: React.ReactNode;
+      element: SlateElement;
+    }) => <Element {...props} />,
+    [],
+  );
+  const renderLeaf = useCallback(
+    (props: {
+      attributes: Record<string, unknown>;
+      children: React.ReactNode;
+      leaf: {
+        bold: boolean;
+        code: boolean;
+        italic: boolean;
+        underline: boolean;
+        'font-family': string;
+        'font-size': string;
+        color: string;
+      };
+    }) => <Leaf {...props} />,
+    [],
+  );
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   const handleChange = (v) => {
@@ -43,7 +62,7 @@ const Text = (props: DME.WidgetRenderProps<EntityText>) => {
         <div>
           <HoveringToolbar />
           <Editable
-            readOnly={props.active ? false : true}
+            // readOnly={props.active ? false : true}
             renderLeaf={renderLeaf}
             renderElement={renderElement}
             placeholder="Input your content here"

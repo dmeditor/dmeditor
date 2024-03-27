@@ -145,6 +145,20 @@ function isNumber(value: unknown): value is number {
   return typeof value === 'number';
 }
 
+/**
+ * @method isString
+ * @param value
+ * @returns {boolean} true if value is string
+ *                   false if value is not string
+ * */
+function isString(value: unknown): Boolean {
+  return (
+    typeof value === 'string' ||
+    value instanceof String ||
+    Object.prototype.toString.call(value) === '[object String]'
+  );
+}
+
 export {
   getPropertyName,
   getPropertyValue,
@@ -162,4 +176,5 @@ export {
   isEmptyString,
   imageExtensionIsValid,
   isUrl,
+  isString,
 };

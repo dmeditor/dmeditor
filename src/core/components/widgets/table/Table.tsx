@@ -1,5 +1,7 @@
 import { TextField } from '@mui/material';
+import MiniText from 'dmeditor/components/utility/MiniText';
 import { DME, useEditorStore } from 'dmeditor/index';
+import { isString } from 'dmeditor/utils';
 
 import type { EntityTableBlock } from './entity';
 import { useTableStore } from './store';
@@ -45,16 +47,37 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
       <tbody>
         {tableValue.map((row, i) => (
           <tr className="dme-w-tr">
-            {row.map((cell, j) => (
-              <td className="dm-w-td" key={j}>
-                <TextField
-                  variant="standard"
-                  value={cell}
-                  onFocus={() => handleActiveCellChange(i, j)}
-                  onChange={(evt) => handleTextChange(i, j, evt.target.value)}
-                />
-              </td>
-            ))}
+            {row.map((cell, j) => {
+              if (isString(cell)) {
+                return (
+                  <td className="dm-w-td" key={j}>
+                    <TextField
+                      variant="standard"
+                      value={cell}
+                      onFocus={() => handleActiveCellChange(i, j)}
+                      onChange={(evt) => handleTextChange(i, j, evt.target.value)}
+                    />
+                  </td>
+                );
+              } else {
+                return (
+                  <td className="dm-w-td" key={j}>
+                    <MiniText
+                      blockNode={{
+                        data: {
+                          value: [
+                            {
+                              type: 'paragraph',
+                              children: [{ text: 'Sample text' }],
+                            },
+                          ],
+                        },
+                      }}
+                    />
+                  </td>
+                );
+              }
+            })}
           </tr>
         ))}
       </tbody>

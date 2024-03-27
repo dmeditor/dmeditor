@@ -1,4 +1,5 @@
 import { dmeConfig } from 'dmeditor';
+import MiniText from 'dmeditor/components/utility/MiniText';
 import type { DME, DMEData } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
 
@@ -20,7 +21,7 @@ const HeadingWidget: DME.Widget = {
         ...styleObj,
         data: {
           value: [
-            ['11', '22'],
+            [MiniText, '22'],
             ['33', '44'],
           ],
           settings: {

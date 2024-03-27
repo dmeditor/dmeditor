@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Text } from '../widgets/text';
 
-const MiniText = (props: { property: string; value: any }) => {
+const MiniText = (props) => {
   return <Text {...props} />;
 };
 
