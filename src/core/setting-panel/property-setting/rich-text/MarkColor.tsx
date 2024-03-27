@@ -23,12 +23,9 @@ const isMarkActive = (editor: Editor, format: ColorType) => {
 };
 
 const toggleMark = (editor: Editor, format: ColorType, value: string) => {
-  const { active } = isMarkActive(editor, format);
-  if (active) {
-    Editor.removeMark(editor, value);
-  } else {
-    Editor.addMark(editor, format, value);
-  }
+  // const { active } = isMarkActive(editor, format);
+  Editor.removeMark(editor, value);
+  Editor.addMark(editor, format, value);
 };
 
 const isSelected = (editor: Editor, format: ColorType, color: string) => {

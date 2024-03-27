@@ -451,6 +451,14 @@ const Leaf = ({
     color: string;
   };
 }) => {
+  console.log('wing leaf', leaf);
+  const fontStyles = {
+    fontFamily: FONT_FAMILY_TYPES.map((i) => i.value).includes(leaf['font-family'])
+      ? leaf['font-family']
+      : undefined,
+    fontSize: leaf['font-size'],
+    color: leaf.color,
+  };
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
@@ -467,18 +475,18 @@ const Leaf = ({
     children = <u>{children}</u>;
   }
 
-  if (leaf['font-family']) {
-    children = <span style={{ fontFamily: leaf['font-family'] }}>{children}</span>;
-  }
+  // if (leaf['font-family']) {
+  //   children = <span style={{ fontFamily: leaf['font-family'] }}>{children}</span>;
+  // }
 
-  if (leaf['font-size']) {
-    children = <span style={{ fontSize: leaf['font-size'] }}>{children}</span>;
-  }
+  // if (leaf['font-size']) {
+  //   children = <span style={{ fontSize: leaf['font-size'] }}>{children}</span>;
+  // }
 
-  if (leaf.color) {
-    children = <span style={{ color: leaf.color }}>{children}</span>;
-  }
-  return <span {...attributes}>{children}</span>;
+  // if (leaf.color) {
+  //   children = <span style={{ color: leaf.color }}>{children}</span>;
+  // }
+  return <span style={fontStyles} {...attributes}>{children}</span>;
 };
 
 const InsertImageButton = (props: { value: { id: string; src: string } | undefined }) => {

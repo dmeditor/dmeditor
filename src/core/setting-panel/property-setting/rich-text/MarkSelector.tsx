@@ -27,12 +27,9 @@ const isMarkActive = (editor: Editor, format: SelectorType) => {
 };
 
 const toggleMark = (editor: Editor, format: SelectorType, value: string) => {
-  const { active } = isMarkActive(editor, format);
-  if (active) {
-    Editor.removeMark(editor, value);
-  } else {
-    Editor.addMark(editor, format, value);
-  }
+  // const { active } = isMarkActive(editor, format);
+  Editor.removeMark(editor, format);
+  Editor.addMark(editor, format, value);
 };
 
 export const getValue = (index: number, type: SelectorType) => {
