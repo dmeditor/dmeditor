@@ -58,29 +58,29 @@ const defaultConfig = () => {
       defaultTheme: 'default',
       richText: {
         fontFamily: [
-          'Font',
-          'Arial',
-          'Times New Roman',
-          'Courier New',
-          'Tahoma',
-          'Georgia',
-          'Verdana',
+          { value: '', label: 'Font' },
+          { value: 'Arial', label: 'Arial' },
+          { value: 'Times New Roman', label: 'Times New Roman' },
+          { value: 'Courier New', label: 'Courier New' },
+          { value: 'Tahoma', label: 'Tahoma' },
+          { value: 'Georgia', label: 'Georgia' },
+          { value: 'Verdana', label: 'Verdana' },
         ],
         fontSize: [
-          'Size',
-          '12px',
-          '14px',
-          '16px',
-          '18px',
-          '20px',
-          '22px',
-          '24px',
-          '28px',
-          '30px',
-          '32px',
-          '36px',
-          '40px',
-          '48px',
+          { value: '', label: 'Size' },
+          { value: '12px', label: '12px' },
+          { value: '14px', label: '14px' },
+          { value: '16px', label: '16px' },
+          { value: '18px', label: '18px' },
+          { value: '20px', label: '20px' },
+          { value: '22px', label: '22px' },
+          { value: '24px', label: '24px' },
+          { value: '28px', label: '28px' },
+          { value: '30px', label: '30px' },
+          { value: '32px', label: '32px' },
+          { value: '36px', label: '36px' },
+          { value: '40px', label: '40px' },
+          { value: '48px', label: '48px' },
         ],
       },
       ui: {},
@@ -105,8 +105,8 @@ const dmeConfig: {
   editor: {
     defaultTheme: string;
     richText: {
-      fontFamily: Array<string>;
-      fontSize: Array<string>;
+      fontFamily: Array<{ value: string; label: string }>;
+      fontSize: Array<{ value: string; label: string }>;
     };
     ui: { [variable: string]: string };
   };

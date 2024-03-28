@@ -39,14 +39,10 @@ export const getValue = (index: number, type: SelectorType) => {
       ? dmeConfig.editor.richText.fontSize
       : dmeConfig.editor.richText.fontFamily;
   if (index < 0 || index >= list.length) {
-    index = 0;
+    list[0].value;
   }
 
-  //first one(index 0) is always to have empty format(also for clear up)
-  if (index === 0) {
-    return '';
-  }
-  return list[index];
+  return list[index].value;
 };
 
 const isSelected = (editor: Editor, format: SelectorType, selectedIndex: number) => {
@@ -78,10 +74,10 @@ const MarkSelector = (props: { format: SelectorType }) => {
     isSelected(editor, format, index);
   };
 
-  const currentValue = () => {
+  const currentIndex = () => {
     const { active, [format]: value } = isMarkActive(editor, format);
     if (active) {
-      const index = types.findIndex((item) => item === value);
+      const index = types.findIndex((item) => item.value === value);
       if (index === -1) {
         return 0;
       }
@@ -100,7 +96,7 @@ const MarkSelector = (props: { format: SelectorType }) => {
         padding: '0px',
         marginLeft: '4px',
       }}
-      value={currentValue()}
+      value={currentIndex()}
       onChange={handleChange}
       MenuProps={{
         PaperProps: {
@@ -111,11 +107,11 @@ const MarkSelector = (props: { format: SelectorType }) => {
       }}
     >
       {types.map((font, index) => (
-        <MenuItem key={font} value={index}>
+        <MenuItem key={font.value} value={index}>
           {format === 'font-family' && (
-            <span style={index > 0 ? { fontFamily: `${font}` } : {}}>{font}</span>
+            <span style={index > 0 ? { fontFamily: `${font.value}` } : {}}>{font.label}</span>
           )}
-          {format === 'font-size' && <span>{font}</span>}
+          {format === 'font-size' && <span>{font.label}</span>}
         </MenuItem>
       ))}
     </Select>
