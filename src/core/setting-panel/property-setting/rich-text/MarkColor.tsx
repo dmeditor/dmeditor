@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { css } from '@emotion/css';
 import { PickColor } from 'dmeditor/utils';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
@@ -54,7 +55,16 @@ const MarkColor = (props: { format: ColorType }) => {
     }
   };
 
-  return <PickColor color={currentValue()} onChange={handleChange} />;
+  return (
+    <div
+      className={css`
+        display: inline-block;
+        vertical-align: middle;
+      `}
+    >
+      <PickColor color={currentValue()} onChange={handleChange} />
+    </div>
+  );
 };
 
 export default MarkColor;
