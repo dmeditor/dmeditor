@@ -1,4 +1,6 @@
 import { TabOutlined } from '@mui/icons-material';
+// import SettingTabs from './settings/SettingTabs';
+import SettingTabs from 'dmeditor/components/reusable-setting/First';
 import {
   registerWidget,
   registerWidgetStyle,
@@ -8,7 +10,6 @@ import { registerSettingComponent } from 'dmeditor/setting-panel/property-settin
 
 import { registerIcon } from '../../icon/icon-data';
 import TabsWidget from './definition';
-import SettingTabs from './settings/SettingTabs';
 import Tabs from './Tabs';
 
 export default () => {
