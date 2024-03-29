@@ -51,11 +51,11 @@ const Button = React.forwardRef(
         className,
         css`
           cursor: pointer;
-          color: ${reversed ? (active ? 'black' : '#aaa') : active ? 'white' : '#666666'};
-          background-color: ${active ? '#888888' : 'none'};
+          color: ${reversed ? '#aaa' : '#666666'};
+          background-color: ${active ? '#eeeeee' : 'none'};
           padding: 3px;
           border-radius: 4px;
-          border: 1px solid rgba(0, 0, 0, 0);
+          border: 1px solid ${active ? 'rgba(0, 0, 0, 0.08)' : 'rgba(0, 0, 0, 0)'};
           &:hover {
             border-color: #cccccc;
           }
@@ -100,6 +100,7 @@ const ToolsGroup = (props) => {
       className={css`
         & > * {
           display: inline-block;
+          margin-left: 2px;
         }
       `}
     >
