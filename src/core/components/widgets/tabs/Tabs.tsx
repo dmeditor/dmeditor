@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AddCircleOutlineOutlined, DeleteOutline } from '@mui/icons-material';
 import { orange } from '@mui/material/colors';
+import { BlockListRender, useEditorStore } from 'dmeditor/index';
+import type { DME } from 'dmeditor/types';
 import { nanoid } from 'nanoid';
 
 import { getAllowedTypes } from '..';
@@ -9,8 +11,6 @@ import { Nav, NavItem } from '../../nav';
 import { BaseTabs, TabPane } from './BaseTabs';
 import type { EntityTabsBlock } from './entity';
 import { useTabsStore } from './store';
-import { BlockListRender, useEditorStore } from 'dmeditor/index';
-import type { DME } from 'dmeditor/types';
 
 const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
   const {
@@ -18,9 +18,9 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
     rootClasses,
     styleClasses,
   } = props;
-  // const [activeTabIndex, setActiveTabIndex] = useState(-1);
-  // const [key, setKey] = useState('1');
+
   const { updateSelectedBlock } = useEditorStore();
+
   const addTab = () => {
     updateSelectedBlock((_, block) => {
       if (!block.children) {
@@ -53,14 +53,6 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
     });
   };
 
-  // useEffect(() => {
-  //   const query = new URLSearchParams(location.search);
-  //   const tabKey = query.get('_dme_tab'); //todo: use id
-  //   if (tabKey) {
-  //     setKey(parseInt(tabKey));
-  //   }
-  // }, []);
-
   useEffect(() => {
     function handler(event: Event) {
       var elem = event.target as any;
@@ -70,7 +62,6 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
         }
         elem = elem.parentNode;
       }
-      // setActiveTabIndex(-1);
     }
     window.addEventListener('click', handler);
     return () => window.removeEventListener('click', handler);
@@ -90,7 +81,10 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
         >
           <Nav className={styleClasses['nav']}>
             {tabList.map((item, index) => (
-              <NavItem tabKey={item.meta.tabKey} className={styleClasses['nav-item'] || 'dme-w-nav-item'}>
+              <NavItem
+                tabKey={item.meta.tabKey}
+                className={styleClasses['nav-item'] || 'dme-w-nav-item'}
+              >
                 {`${item?.meta?.title}` ?? ''}
               </NavItem>
             ))}

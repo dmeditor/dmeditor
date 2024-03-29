@@ -1,8 +1,7 @@
+import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
 import type { EntityAccordion } from './entity';
-import type { DMEData } from 'Core/types/dmeditor';
-import type { DME } from 'Src/core/types/dmeditor';
 
 const AccordionWidget: DME.Widget = {
   category: 'layout',
@@ -13,28 +12,47 @@ const AccordionWidget: DME.Widget = {
     createBlock: (): DMEData.Block<EntityAccordion> => {
       return {
         id: nanoid(),
-        type: 'hero-text',
-        data: {},
+        type: 'accordion',
+        data: null,
         children: [
           {
-            id: nanoid(),
-            type: 'heading',
-            data: {
-              value: 'Heading1',
-              level: 2,
+            meta: {
+              tabKey: '1',
+              title: 'Accordion1',
             },
+            children: [
+              { type: 'heading', id: nanoid(), data: { value: 'Tab1 Title', level: 2 } },
+              {
+                type: 'text',
+                id: '2',
+                data: {
+                  value: [
+                    {
+                      type: 'paragraph',
+                      children: [{ text: 'Sample text' }],
+                    },
+                  ],
+                },
+              },
+            ],
           },
           {
-            id: nanoid(),
-            type: 'list',
-            data: {},
+            meta: {
+              tabKey: '2',
+              title: 'Accordion2',
+            },
             children: [
+              { type: 'heading', id: nanoid(), data: { value: 'Tab2 Title', level: 2 } },
               {
-                id: nanoid(),
-                type: 'heading',
+                type: 'text',
+                id: '2',
                 data: {
-                  value: 'Heading 2',
-                  level: 2,
+                  value: [
+                    {
+                      type: 'paragraph',
+                      children: [{ text: 'Sample text' }],
+                    },
+                  ],
                 },
               },
             ],
@@ -42,20 +60,14 @@ const AccordionWidget: DME.Widget = {
         ],
       };
     },
-    updateData: () => {},
   },
   settings: [
-    // {
-    //   name: 'Hero position',
-    //   property: '.heroPosition',
-    //   settingComponent: 'button-group',
-    //   parameters: {
-    //     options: [
-    //       { text: 'Left', value: 'left' },
-    //       { text: 'Right', value: 'right' },
-    //     ],
-    //   },
-    // },
+    {
+      name: '',
+      property: '.children.meta',
+      custom: true,
+      settingComponent: 'accordion',
+    },
   ],
 };
 
