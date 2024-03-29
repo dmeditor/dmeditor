@@ -51,7 +51,14 @@ const Button = React.forwardRef(
         className,
         css`
           cursor: pointer;
-          color: ${reversed ? (active ? 'white' : '#aaa') : active ? 'black' : '#ccc'};
+          color: ${reversed ? (active ? 'black' : '#aaa') : active ? 'white' : '#666666'};
+          background-color: ${active ? '#888888' : 'none'};
+          padding: 3px;
+          border-radius: 4px;
+          border: 1px solid rgba(0, 0, 0, 0);
+          &:hover {
+            border-color: #cccccc;
+          }
         `,
       )}
     />
@@ -85,6 +92,29 @@ const getIcon = (format: string): ReactNode => {
     default:
       return null;
   }
+};
+
+const ToolsGroup = (props) => {
+  return (
+    <div
+      className={css`
+        & > * {
+          display: inline-block;
+        }
+      `}
+    >
+      {props.children}
+      <span
+        className={css`
+          width: 1px;
+          background: #cccccc;
+          height: 22px;
+          margin-left: 2px;
+          margin-right: 2px;
+        `}
+      ></span>
+    </div>
+  );
 };
 
 const MarkButton = ({ format }) => {
@@ -193,10 +223,9 @@ const Menu = React.forwardRef(
         css`
           & > * {
             display: inline-block;
-          }
-
-          & > * + * {
-            margin-left: 15px;
+            vertical-align: middle;
+            margin-left: 2px;
+            margin-top: 4px;
           }
         `,
       )}
@@ -212,9 +241,7 @@ const Toolbar = React.forwardRef(
         className,
         css`
           position: relative;
-          padding: 10px;
           border-bottom: 1px solid #eee;
-          margin-bottom: 10px;
         `,
       )}
     />
@@ -581,4 +608,5 @@ export {
   Button,
   insertImage,
   isImageUrl,
+  ToolsGroup,
 };

@@ -18,6 +18,7 @@ import {
   MarkButton,
   toggleMark,
   Toolbar,
+  ToolsGroup,
 } from './helper';
 import MarkColor from './MarkColor';
 import MarkSelector from './MarkSelector';
@@ -78,19 +79,27 @@ const RichText = (props: { property: string; value: any; onChange?: () => void }
           <MarkSelector format="font-family" />
           <MarkSelector format="font-size" />
           <MarkColor format="color" />
-          <MarkButton format="bold" />
-          <MarkButton format="italic" />
-          <MarkButton format="underline" />
+          <ToolsGroup>
+            <MarkButton format="bold" />
+            <MarkButton format="italic" />
+            <MarkButton format="underline" />
+          </ToolsGroup>
           {/* <MarkButton format="code" /> */}
-          <BlockButton format="heading-one" />
-          <BlockButton format="heading-two" />
+          <ToolsGroup>
+            <BlockButton format="heading-one" />
+            <BlockButton format="heading-two" />
+          </ToolsGroup>
           {/* <BlockButton format="block-quote" /> */}
-          <BlockButton format="numbered-list" />
-          <BlockButton format="bulleted-list" />
-          <BlockButton format="left" />
-          <BlockButton format="center" />
-          <BlockButton format="right" />
-          <BlockButton format="justify" />
+          <ToolsGroup>
+            <BlockButton format="numbered-list" />
+            <BlockButton format="bulleted-list" />
+          </ToolsGroup>
+          <ToolsGroup>
+            <BlockButton format="left" />
+            <BlockButton format="center" />
+            <BlockButton format="right" />
+            <BlockButton format="justify" />
+          </ToolsGroup>
           <InsertImageButton value={value} />
         </Toolbar>
         <Editable
