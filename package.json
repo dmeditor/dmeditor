@@ -44,7 +44,7 @@
   },
   "scripts": {
     "dev": "webpack serve -c ./config/webpack/webpack.dev.js",
-    "build": "rm -rf dist/* &&cp package.json README.md LICENSE changelog.txt dist/ && tsc",
+    "build": "rm -rf dist/* && webpack -c ./config/webpack/webpack.prod.js && tsc",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
     "docz:serve": "docz build && docz serve"
