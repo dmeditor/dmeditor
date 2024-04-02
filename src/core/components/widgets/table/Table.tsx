@@ -21,6 +21,10 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
     updateSelectedBlock((data) => ((data.value as any[])[col][row] = value));
   };
 
+  const handleValueChange = (value: any) => {
+    // TODO: update value
+  };
+
   const handleActiveCellChange = (col: number, row: number) => {
     setActiveIndex([col, row]);
   };
@@ -73,6 +77,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
                           ],
                         },
                       }}
+                      onChange={handleValueChange}
                     />
                   </td>
                 );

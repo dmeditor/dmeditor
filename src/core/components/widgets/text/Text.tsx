@@ -1,76 +1,23 @@
-import * as React from 'react';
-import { useEditorStore } from 'dmeditor/main/store';
-import {
-  Element,
-  HoveringToolbar,
-  Leaf,
-} from 'dmeditor/setting-panel/property-setting/rich-text/helper';
-import { DME } from 'dmeditor/types/dmeditor';
-import { createEditor, Element as SlateElement } from 'slate';
-import { withHistory } from 'slate-history';
-import { Editable, Slate, withReact } from 'slate-react';
+import { MiniText } from 'dmeditor/components/utility';
+import { EntityText } from 'dmeditor/components/widgets/text/entity';
+import { useEditorStore } from 'dmeditor/index';
+import type { DME } from 'dmeditor/index';
 
-import { EntityText } from './entity';
+// import type { Descendant } from 'slate';
 
-const { useCallback, useMemo } = React;
+interface RichTextProps extends DME.WidgetRenderProps<EntityText> {}
 
-const Text = (props: DME.WidgetRenderProps<EntityText>) => {
-  const { blockNode, rootClasses, styleClasses } = props;
-  const {
-    data: { value },
-  } = blockNode;
+const Text = (props: RichTextProps) => {
+  const { active } = props;
   const { updateSelectedBlock } = useEditorStore();
-  const renderElement = useCallback(
-    (props: {
-      attributes: Record<string, unknown>;
-      children: React.ReactNode;
-      element: SlateElement;
-    }) => <Element {...props} />,
-    [],
-  );
-  const renderLeaf = useCallback(
-    (props: {
-      attributes: Record<string, unknown>;
-      children: React.ReactNode;
-      leaf: {
-        bold: boolean;
-        code: boolean;
-        italic: boolean;
-        underline: boolean;
-        'font-family': string;
-        'font-size': string;
-        color: string;
-      };
-    }) => <Leaf {...props} />,
-    [],
-  );
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-
-  const handleChange = (v) => {
-    if (props.active) {
+  const handleValueChange = (newValue: Array<any>) => {
+    if (active) {
       updateSelectedBlock<EntityText>((entity) => {
-        entity.value = v;
+        entity.value = newValue;
       });
     }
   };
-
-  editor.children = value;
-
-  return (
-    <div className={rootClasses}>
-      <Slate editor={editor} onChange={handleChange} initialValue={value}>
-        <div>
-          <HoveringToolbar />
-          <Editable
-            // readOnly={props.active ? false : true}
-            renderLeaf={renderLeaf}
-            renderElement={renderElement}
-            placeholder="Input your content here"
-          />
-        </div>
-      </Slate>
-    </div>
-  );
+  return <MiniText {...props} onValueChange={handleValueChange} />;
 };
 
 export default Text;

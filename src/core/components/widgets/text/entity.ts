@@ -1,3 +1,19 @@
 export interface EntityText {
-  value: Array<any>;
+  value: Array<{
+    type: string;
+    children: Array<{ text: string }>;
+  }>;
 }
+
+const initialTextEntity = (): EntityText => {
+  return {
+    value: [
+      {
+        type: 'paragraph',
+        children: [{ text: 'Sample text' }],
+      },
+    ],
+  };
+};
+
+export { initialTextEntity };

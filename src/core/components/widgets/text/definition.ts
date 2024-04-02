@@ -2,7 +2,8 @@ import { dmeConfig } from 'dmeditor';
 import { DME, DMEData } from 'dmeditor/types';
 import { nanoid } from 'nanoid';
 
-import { EntityText } from './entity';
+import { initialTextEntity } from './entity';
+import type { EntityText } from './entity';
 
 const TextWidget: DME.Widget = {
   category: 'widget',
@@ -19,12 +20,7 @@ const TextWidget: DME.Widget = {
         type: 'text',
         ...styleObj,
         data: {
-          value: [
-            {
-              type: 'paragraph',
-              children: [{ text: 'Sample text' }],
-            },
-          ],
+          ...initialTextEntity(),
         },
       };
     },

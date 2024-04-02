@@ -19,8 +19,15 @@ import {
 import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
 import { BrowseImageCallbackParams, dmeConfig } from 'dmeditor/config';
 import { imageExtensionIsValid, isNumber, isUrl } from 'dmeditor/utils';
-import { Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
-import { ReactEditor, useFocused, useSelected, useSlate, useSlateStatic } from 'slate-react';
+import { BaseText, Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
+import {
+  ReactEditor,
+  RenderLeafProps,
+  useFocused,
+  useSelected,
+  useSlate,
+  useSlateStatic,
+} from 'slate-react';
 
 import { LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
 
@@ -151,7 +158,6 @@ const BlockButton = ({ format }) => {
 
 const isMarkActive = (editor, format) => {
   const marks = Editor.marks(editor);
-  // console.log('wing', marks);
   return marks ? marks[format] === true : false;
 };
 
@@ -462,24 +468,20 @@ const Element = (props: ElementProps) => {
   }
 };
 
-const Leaf = ({
-  attributes,
-  children,
-  leaf,
-}: {
-  attributes: Record<string, unknown>;
-  children: ReactNode;
+interface MiniTextLeafProps extends RenderLeafProps {
+  attributes: RenderLeafProps['attributes'];
+  children: React.ReactNode;
   leaf: {
     bold: boolean;
     code: boolean;
     italic: boolean;
-    underline: boolean;
+    underline?: boolean;
     'font-family': string;
     'font-size': string;
     color: string;
-  };
-}) => {
-  console.log('wing leaf', leaf);
+  } & Pick<BaseText, 'text'>;
+}
+const Leaf = ({ attributes, children, leaf }: MiniTextLeafProps) => {
   const fontStyles = {
     fontFamily: dmeConfig.editor.richText.fontFamily
       .map((i) => i.value)
@@ -505,17 +507,6 @@ const Leaf = ({
     children = <u>{children}</u>;
   }
 
-  // if (leaf['font-family']) {
-  //   children = <span style={{ fontFamily: leaf['font-family'] }}>{children}</span>;
-  // }
-
-  // if (leaf['font-size']) {
-  //   children = <span style={{ fontSize: leaf['font-size'] }}>{children}</span>;
-  // }
-
-  // if (leaf.color) {
-  //   children = <span style={{ color: leaf.color }}>{children}</span>;
-  // }
   return (
     <span style={fontStyles} {...attributes}>
       {children}
@@ -611,3 +602,5 @@ export {
   isImageUrl,
   ToolsGroup,
 };
+
+export type { MiniTextLeafProps };

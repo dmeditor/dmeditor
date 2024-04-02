@@ -1,17 +1,9 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
-import { ImageOutlined } from '@mui/icons-material';
 import definition from 'dmeditor/components/widgets/text/definition';
-import { BrowseImageCallbackParams } from 'dmeditor/config';
 import { useEditorStore } from 'dmeditor/index';
-import { SlateFun } from 'dmeditor/utils/Slate';
-import { createEditor, Element as SlateElement } from 'slate';
-import { withHistory } from 'slate-history';
-import { Editable, Slate, useSlateStatic, withReact } from 'slate-react';
-
 import {
   BlockButton,
-  Button,
   Element,
   InsertImageButton,
   Leaf,
@@ -19,14 +11,19 @@ import {
   toggleMark,
   Toolbar,
   ToolsGroup,
-} from './helper';
-import MarkColor from './MarkColor';
-import MarkSelector from './MarkSelector';
+} from 'dmeditor/setting-panel/property-setting/rich-text/helper';
+import MarkColor from 'dmeditor/setting-panel/property-setting/rich-text/MarkColor';
+import MarkSelector from 'dmeditor/setting-panel/property-setting/rich-text/MarkSelector';
+import { SlateFun } from 'dmeditor/utils/Slate';
+import { createEditor } from 'slate';
+import type { Descendant, Element as SlateElement } from 'slate';
+import { withHistory } from 'slate-history';
+import { Editable, Slate, withReact } from 'slate-react';
 
-const { useCallback, useMemo, useState } = React;
+const { useCallback, useMemo } = React;
 const { HOTKEYS } = SlateFun;
 
-const RichText = (props: { property: string; value: any; onChange?: () => void }) => {
+const RichText = (props: { property: string; value: any }) => {
   const { property, value = [] } = props;
 
   const renderElement = useCallback(
@@ -42,19 +39,24 @@ const RichText = (props: { property: string; value: any; onChange?: () => void }
     (props: {
       attributes: Record<string, unknown>;
       children: React.ReactNode;
-      leaf: { bold: boolean; code: boolean; italic: boolean; underline: boolean };
+      leaf: {
+        bold: boolean;
+        code: boolean;
+        italic: boolean;
+        underline: boolean;
+        'font-family': string;
+        'font-size': string;
+        color: string;
+      };
     }) => <Leaf {...props} />,
     [],
   );
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-  const { updateSelectedBlockProps } = useEditorStore();
 
-  const handleChange = (newValue: Array<any>) => {
-    if (props.onChange) {
-      props.onChange();
-    } else {
-      updateSelectedBlockProps(property, newValue);
-    }
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+
+  const { updateSelectedBlockProps } = useEditorStore();
+  const handleValueChange = (newValue: Descendant[]) => {
+    updateSelectedBlockProps(property, newValue);
   };
 
   editor.children = value;
@@ -67,14 +69,7 @@ const RichText = (props: { property: string; value: any; onChange?: () => void }
         border: 1px solid #dddddd;
       `}
     >
-      <Slate
-        editor={editor}
-        onChange={handleChange}
-        initialValue={initialValue}
-        onValueChange={(value) => {
-          console.log(value);
-        }}
-      >
+      <Slate editor={editor} initialValue={initialValue} onValueChange={handleValueChange}>
         <Toolbar>
           <MarkSelector format="font-family" />
           <MarkSelector format="font-size" />
