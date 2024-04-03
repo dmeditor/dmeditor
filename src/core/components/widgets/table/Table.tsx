@@ -1,7 +1,5 @@
-import { TextField } from '@mui/material';
-import MiniText from 'dmeditor/components/utility/mini-rich-text/MiniRichText';
+import MiniRichText from 'dmeditor/components/utility/mini-rich-text';
 import { DME, useEditorStore } from 'dmeditor/index';
-import { isString } from 'dmeditor/utils';
 
 import type { EntityTableBlock } from './entity';
 import { useTableStore } from './store';
@@ -17,12 +15,10 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   const { updateSelectedBlock } = useEditorStore();
   const { setActiveCellIndex: setActiveIndex } = useTableStore();
 
-  const handleTextChange = (col: number, row: number, value: any) => {
-    updateSelectedBlock((data) => ((data.value as any[])[col][row] = value));
-  };
-
-  const handleValueChange = (value: any) => {
-    // TODO: update value
+  const handleValueChange = (col: number, row: number, value: any) => {
+    updateSelectedBlock((data) => {
+      (data.value as any[])[col][row].value = value;
+    });
   };
 
   const handleActiveCellChange = (col: number, row: number) => {
@@ -37,11 +33,10 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
           <tr className="dme-w-tr">
             {value[0].map((cell, i) => (
               <th className="dme-w-th" key={i}>
-                <TextField
-                  variant="standard"
-                  value={cell}
-                  onFocus={() => handleActiveCellChange(0, i)}
-                  onChange={(evt) => handleTextChange(0, i, evt.target.value)}
+                <MiniRichText
+                  value={cell.value}
+                  // onFocus={() => handleActiveCellChange(0, i)}
+                  onValueChange={(newValue) => handleValueChange(0, i, newValue)}
                 />
               </th>
             ))}
@@ -49,39 +44,17 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
         </thead>
       )}
       <tbody>
-        {tableValue.map((row, i) => (
+        {tableValue.map((row, idx) => (
           <tr className="dme-w-tr">
-            {row.map((cell, j) => {
-              if (isString(cell)) {
-                return (
-                  <td className="dm-w-td" key={j}>
-                    <TextField
-                      variant="standard"
-                      value={cell}
-                      onFocus={() => handleActiveCellChange(i, j)}
-                      onChange={(evt) => handleTextChange(i, j, evt.target.value)}
-                    />
-                  </td>
-                );
-              } else {
-                return (
-                  <td className="dm-w-td" key={j}>
-                    <MiniText
-                      blockNode={{
-                        data: {
-                          value: [
-                            {
-                              type: 'paragraph',
-                              children: [{ text: 'Sample text' }],
-                            },
-                          ],
-                        },
-                      }}
-                      onChange={handleValueChange}
-                    />
-                  </td>
-                );
-              }
+            {row.map((cell, jdx) => {
+              return (
+                <td className="dm-w-td" key={jdx}>
+                  <MiniRichText
+                    value={cell.value}
+                    onValueChange={(newValue) => handleValueChange(idx, jdx, newValue)}
+                  />
+                </td>
+              );
             })}
           </tr>
         ))}

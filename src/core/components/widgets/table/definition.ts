@@ -3,7 +3,7 @@ import MiniText from 'dmeditor/components/utility/mini-rich-text/MiniRichText';
 import type { DME, DMEData } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
 
-import { EntityTableBlock } from './entity';
+import { EntityTableBlock, initialTableEntity } from './entity';
 
 const HeadingWidget: DME.Widget = {
   category: 'widget',
@@ -14,16 +14,14 @@ const HeadingWidget: DME.Widget = {
     createBlock: (): DMEData.Block<EntityTableBlock> => {
       const defaultStyle = dmeConfig.widgets['table']?.defaultStyle;
       const styleObj = defaultStyle ? { style: defaultStyle } : {};
+      const { value } = initialTableEntity();
 
       return {
         id: nanoid(),
         type: 'table',
         ...styleObj,
         data: {
-          value: [
-            [MiniText, '22'],
-            ['33', '44'],
-          ],
+          value,
           settings: {
             borderType: 'border',
             borderColor: '#ccc',
