@@ -1,12 +1,10 @@
 import * as React from 'react';
-import type { EntityText } from 'dmeditor/components/widgets/text/entity';
 import {
   Element,
   HoveringToolbar,
   Leaf,
 } from 'dmeditor/setting-panel/property-setting/rich-text/helper';
 import type { MiniTextLeafProps } from 'dmeditor/setting-panel/property-setting/rich-text/helper';
-import { DME } from 'dmeditor/types/dmeditor';
 import { createEditor } from 'slate';
 import type { Descendant, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
@@ -14,15 +12,13 @@ import { Editable, Slate, withReact } from 'slate-react';
 
 const { useCallback, useMemo } = React;
 
-interface MiniTextProps extends DME.WidgetRenderProps<EntityText> {
+export interface MiniRichTextProps {
+  value: Array<Descendant>;
   onValueChange: (value: Descendant[]) => void;
 }
 
-const MiniText = (props: MiniTextProps) => {
-  const { blockNode, rootClasses, onValueChange } = props;
-  const {
-    data: { value },
-  } = blockNode;
+const MiniRichText = (props: MiniRichTextProps) => {
+  const { value, onValueChange } = props;
 
   const renderElement = useCallback(
     (props: {
@@ -46,7 +42,7 @@ const MiniText = (props: MiniTextProps) => {
   editor.children = value;
 
   return (
-    <div className={rootClasses}>
+    <div>
       <Slate editor={editor} initialValue={value} onValueChange={handleValueChange}>
         <div>
           <HoveringToolbar />
@@ -61,4 +57,4 @@ const MiniText = (props: MiniTextProps) => {
   );
 };
 
-export default MiniText;
+export default MiniRichText;

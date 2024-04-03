@@ -1,4 +1,4 @@
-import MiniText from './MiniText';
+import MiniText from './mini-rich-text/MiniRichText';
 
 export { ImageChooser } from './ImageChooser';
 export { ImageSetting } from './ImageSetting';

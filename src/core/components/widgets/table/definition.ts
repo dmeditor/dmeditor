@@ -1,5 +1,5 @@
 import { dmeConfig } from 'dmeditor';
-import MiniText from 'dmeditor/components/utility/MiniText';
+import MiniText from 'dmeditor/components/utility/mini-rich-text/MiniRichText';
 import type { DME, DMEData } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
 

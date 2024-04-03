@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import MiniText from 'dmeditor/components/utility/MiniText';
+import MiniText from 'dmeditor/components/utility/mini-rich-text/MiniRichText';
 import { DME, useEditorStore } from 'dmeditor/index';
 import { isString } from 'dmeditor/utils';
 

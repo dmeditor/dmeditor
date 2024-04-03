@@ -8,7 +8,12 @@ import type { DME } from 'dmeditor/index';
 interface RichTextProps extends DME.WidgetRenderProps<EntityText> {}
 
 const Text = (props: RichTextProps) => {
-  const { active } = props;
+  const {
+    active,
+    blockNode: {
+      data: { value },
+    },
+  } = props;
   const { updateSelectedBlock } = useEditorStore();
   const handleValueChange = (newValue: Array<any>) => {
     if (active) {
@@ -17,7 +22,7 @@ const Text = (props: RichTextProps) => {
       });
     }
   };
-  return <MiniText {...props} onValueChange={handleValueChange} />;
+  return <MiniText value={value} onValueChange={handleValueChange} />;
 };
 
 export default Text;
