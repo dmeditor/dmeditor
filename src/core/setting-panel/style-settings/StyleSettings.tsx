@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   InputLabel,
   MenuItem,
@@ -14,10 +15,9 @@ import widgetDefinition, {
 } from '../../components/widgets';
 import { DME } from '../../types/dmeditor';
 import { PropertyItem } from '../Property';
-import { DropDown } from './DropDown';
 import { ButtonGroup } from './ButtonGroup';
+import { DropDown } from './DropDown';
 import { InlineBlock } from './InlineBlock';
-import React, { useState } from 'react';
 
 export interface StyleSettingProps {
   blockType: string;
@@ -28,19 +28,19 @@ export interface StyleSettingProps {
 export const StyleSettings = (props: StyleSettingProps) => {
   const { blockType } = props;
 
-  const styles = Object.keys(getWidgetStyles(blockType));
+  const styles = Object.keys(getWidgetStyles(blockType) || {});
   const isCustomStyle = Object.keys(props.values).includes('_');
 
-  const showItem = (styleIdentifier:string)=>{
-    return !isCustomStyle || (isCustomStyle&&styleIdentifier==='_' );
-  }
+  const showItem = (styleIdentifier: string) => {
+    return !isCustomStyle || (isCustomStyle && styleIdentifier === '_');
+  };
 
   return styles.map((style) => {
     const styleObj = getWidgetStyle(blockType, style);
     if (styleObj.options.length === 0 || !showItem(style)) {
-      return <React.Fragment  key={styleObj.identifier}></React.Fragment>;
+      return <React.Fragment key={styleObj.identifier}></React.Fragment>;
     }
-    
+
     return (
       <PropertyItem label={styleObj.name} key={styleObj.identifier}>
         {(!styleObj.display || styleObj.display === 'inline-block') && (
