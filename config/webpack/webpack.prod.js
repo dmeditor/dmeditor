@@ -10,20 +10,12 @@ function resolve(dir) {
   return path.join(__dirname, '../../', dir);
 }
 
-module.exports = merge(baseConfig, {
+const commonConfig = {
   mode: 'production',
   entry: './src/core/index',
-  target: 'web',
-  output: {
-    filename: 'index.js',
-    path: resolve('./dist'),
-    library: {
-      type: 'module',
-    },
-  },
   externals: {
     react: 'commonjs-module react',
-    'react-dom': 'react-dom',
+    'react-dom': 'commonjs-module react-dom',
   },
   module: {
     rules: [
@@ -91,7 +83,34 @@ module.exports = merge(baseConfig, {
       ],
     }),
   ],
-  experiments: {
-    outputModule: true,
-  },
-});
+};
+
+module.exports = [
+  merge(baseConfig, {
+    ...commonConfig,
+    target: 'node',
+    output: {
+      filename: 'index.cjs',
+      path: resolve('./dist'),
+      libraryTarget: 'commonjs2',
+    },
+  }),
+  merge(baseConfig, {
+    ...commonConfig,
+    target: 'web',
+    externals: {
+      react: 'react',
+      'react-dom': 'react-dom',
+    },
+    output: {
+      filename: 'index.mjs',
+      path: resolve('./dist'),
+      library: {
+        type: 'module',
+      },
+    },
+    experiments: {
+      outputModule: true,
+    },
+  }),
+];
