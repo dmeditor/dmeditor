@@ -30,7 +30,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
 
   return (
     <div className={getProjectCss() + ' ' + getThemeCss()}>
-      <BlockListRender blockData={data} path={[]} mode="view" />
+      <BlockListRender blockData={data || []} path={[]} mode="view" />
     </div>
   );
 };
