@@ -32,8 +32,7 @@ const dmeServerSideLoad = async (data: DMEData.BlockList, serverParameters: any)
     await Promise.all(proms);
     return data;
   } catch (error) {
-    console.error(error);
-    throw 'Error in DM Editor server load';
+    throw 'Error in DM Editor server load ' + error;
   }
 };
 

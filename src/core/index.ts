@@ -9,6 +9,9 @@ export {
   registerWidgetStyle,
   registerWidgetStyleOption,
 } from './components/widgets';
+
+export { useGetDevice } from './utils/utilx';
+
 export {
   registerCommonProperty,
   registerCustomProperty,

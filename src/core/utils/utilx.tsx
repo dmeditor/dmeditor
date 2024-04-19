@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { nanoid } from 'nanoid';
 
+import { dmeConfig } from '..';
 import HeadingWidget from '../components/widgets/heading/src/definition';
 import { simpleCloneDeep } from './util';
 
@@ -285,20 +286,18 @@ export const setDevice = (d: DeviceType) => {
   _device = d;
 };
 
-let _mobileWidthMax = 560;
-let _tabletWidthMax = 960;
-//use for custom rendering
-
 export type DeviceType = '' | 'mobile' | 'tablet';
 
 export const useGetDevice = (): DeviceType => {
+  let deviceWidth = dmeConfig.general.deviceWidth;
+
   const [device, setDevice] = useState('');
   const setCurrentDevice = () => {
     const width = window.innerWidth;
     let currentDevice = '';
-    if (width <= _mobileWidthMax) {
+    if (width <= deviceWidth.mobile) {
       currentDevice = 'mobile';
-    } else if (width <= _tabletWidthMax) {
+    } else if (width <= deviceWidth.tablet) {
       currentDevice = 'tablet';
     }
     setDevice(currentDevice);

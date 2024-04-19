@@ -119,6 +119,9 @@ export const getDataByPath = (
     //   targetList = targetList[targetIndex].children ?? [];
     //   targetIndex = targetList.length - 1;
     // }
+    if (!block) {
+      return null;
+    }
     if (index === path.length - 1) {
       result = block;
     }

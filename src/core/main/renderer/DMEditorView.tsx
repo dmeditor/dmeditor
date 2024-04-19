@@ -3,6 +3,7 @@ import { css } from '@emotion/css';
 import { getPageTheme } from 'dmeditor/components/page';
 import { dmeConfig } from 'dmeditor/config';
 import { DME, DMEData } from 'dmeditor/types/dmeditor';
+import { useGetDevice } from 'dmeditor/utils';
 
 import { BlockListRender } from './BlockListRender';
 
@@ -19,6 +20,8 @@ const DMEditorView = (props: DMEditorViewProps) => {
     return css(dmeConfig.general.projectStyles[props.projectStyle || 'default']);
   };
 
+  const device = useGetDevice();
+
   const getThemeCss = () => {
     const pageTheme = getPageTheme(theme || 'default');
     if (pageTheme) {
@@ -29,7 +32,15 @@ const DMEditorView = (props: DMEditorViewProps) => {
   };
 
   return (
-    <div className={getProjectCss() + ' ' + getThemeCss()}>
+    <div
+      className={
+        'dmeditor-view ' +
+        (device != '' ? 'dme-viewmode-' + device + ' ' : '') +
+        getProjectCss() +
+        ' ' +
+        getThemeCss()
+      }
+    >
       <BlockListRender blockData={data || []} path={[]} mode="view" />
     </div>
   );

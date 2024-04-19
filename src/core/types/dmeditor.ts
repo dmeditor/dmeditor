@@ -93,12 +93,13 @@ export namespace DME {
     styleClasses: { [key: string]: string };
     active: boolean;
     mode: 'edit' | 'view';
+    serverData?: boolean;
     path: Array<number>;
   }
 
   export interface SettingComponentProps<T = unknown> extends Setting {
-    value?: T; //if custom is true, value will be not set,
-    block: DMEData.Block;
+    value?: unknown; //if custom is true, value will be not set,
+    block: DMEData.Block<T>;
   }
 }
 

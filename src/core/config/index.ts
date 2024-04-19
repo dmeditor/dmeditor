@@ -37,6 +37,11 @@ export interface DMEConfigType {
       default: string;
       [prop: string]: string;
     };
+    deviceWidth?: {
+      mobile: number;
+      tablet: number;
+      pc: number;
+    };
   };
   editor: {
     defaultTheme: string;
@@ -51,6 +56,11 @@ const defaultConfig = () => {
     general: {
       projectStyles: {
         default: ``,
+      },
+      deviceWidth: {
+        mobile: 560, //max
+        tablet: 960,
+        pc: 8000,
       },
       themes: [],
     },
@@ -98,6 +108,11 @@ const dmeConfig: {
     projectStyles: {
       default: string;
       [prop: string]: string;
+    };
+    deviceWidth: {
+      mobile: number;
+      tablet: number;
+      pc: number;
     };
     themes: Array<DME.PageTheme>;
     [prop: string]: string | number | boolean | Record<string, any>;
