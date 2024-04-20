@@ -22,7 +22,9 @@ const Text = (props: RichTextProps) => {
       });
     }
   };
-  return <MiniText value={value} onValueChange={handleValueChange} />;
+  return (
+    <MiniText viewmode={props.mode === 'view'} value={value} onValueChange={handleValueChange} />
+  );
 };
 
 export default Text;

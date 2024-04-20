@@ -13,6 +13,7 @@ import { Editable, Slate, withReact } from 'slate-react';
 const { useCallback, useMemo } = React;
 
 export interface MiniRichTextProps {
+  viewmode?: boolean;
   value: Array<Descendant>;
   onValueChange: (value: Descendant[]) => void;
 }
@@ -47,6 +48,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
         <div>
           <HoveringToolbar />
           <Editable
+            readOnly={props.viewmode}
             renderLeaf={renderLeaf}
             renderElement={renderElement}
             placeholder="Input your content here"
