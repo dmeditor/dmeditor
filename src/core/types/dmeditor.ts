@@ -93,7 +93,6 @@ export namespace DME {
     styleClasses: { [key: string]: string };
     active: boolean;
     mode: 'edit' | 'view';
-    serverData?: boolean;
     path: Array<number>;
   }
 
@@ -136,6 +135,7 @@ export namespace DMEData {
   export interface Block<TData = DefaultDataType, TChild = DefaultBlockType>
     extends widgetBlockProperties {
     data: TData; //entity data from widget
+    serverData?: boolean;
     children?: Array<TChild & BlockNode>;
   }
 
