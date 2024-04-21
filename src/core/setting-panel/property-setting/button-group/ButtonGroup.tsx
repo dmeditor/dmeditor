@@ -1,7 +1,5 @@
-import * as React from 'react';
 import { Button, ButtonGroup as MUIButtonGroup } from '@mui/material';
 import { useEditorStore } from 'dmeditor/main/store';
-import { Ranger } from 'dmeditor/utils/Ranger';
 
 const ButtonGroup = (props: {
   property: string;

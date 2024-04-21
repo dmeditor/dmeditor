@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { TitleOutlined } from '@mui/icons-material';
+// import { TitleOutlined } from '@mui/icons-material';
 import { useEditorStore } from 'dmeditor/main/store';
 import useHeadingStore from 'dmeditor/setting-panel/store/heading';
 import type { DME, DMEData } from 'dmeditor/types';
 import { isHTMLElement } from 'dmeditor/utils';
 
-import { BlockListRender } from '../../../../main/renderer';
-import { getCommonBlockCss, getStyleCss } from '../../../../main/renderer/BlockRender';
+// import { BlockListRender } from '../../../../main/renderer';
+// import { getCommonBlockCss, getStyleCss } from '../../../../main/renderer/BlockRender';
 import { EntityHeadingBlock } from './entity';
 
 const { useState, useRef, useEffect } = React;

@@ -39,7 +39,7 @@ export namespace DME {
       //   onChange: () => void 0,
       //   onFocus: () => void 0,
       //   onBlur: () => void 0,
-      updateData: (settings: Setting, data: DMEData.Block) => void;
+      updateData?: (settings: Setting, data: DMEData.Block) => void;
       //when create an empty block
       createBlock: () => DMEData.Block<any, any>;
 
