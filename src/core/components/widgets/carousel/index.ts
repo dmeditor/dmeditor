@@ -2,7 +2,7 @@
 import { registerWidget, registerWidgetStyleOption } from 'dmeditor/components/widgets';
 import { registerSettingComponent } from 'dmeditor/setting-panel/property-setting';
 
-import Carousel from './carousel';
+import Carousel from './Carousel';
 import definition from './definition';
 import SettingCarousel from './settings/SettingCarousel';
 

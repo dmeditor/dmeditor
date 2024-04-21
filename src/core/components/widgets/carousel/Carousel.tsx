@@ -127,11 +127,13 @@ const Carousel = (props) => {
   );
 
   const Content = (slide: Slide, index: number) => {
-    return (
+    return slide.title ? (
       <StyledCarouselCaption>
         <h5>{index}slide</h5>
         <p>{slide.title}</p>
       </StyledCarouselCaption>
+    ) : (
+      <></>
     );
   };
 
