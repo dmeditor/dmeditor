@@ -12,6 +12,7 @@ const Button = (props: ButtonProps) => {
     blockNode: {
       data: { value, link },
     },
+    mode,
     ...restProps
   } = props;
   const { buttonType = 'link', rootClasses, styleClasses, onClick } = restProps;
@@ -34,7 +35,13 @@ const Button = (props: ButtonProps) => {
     onClick?.();
   };
   return (
-    <Component {...restProps} {...buttonProps} className={cls} onClick={handleClick}>
+    <Component
+      {...restProps}
+      {...buttonProps}
+      disabled={mode === 'edit'}
+      className={cls}
+      onClick={handleClick}
+    >
       {value}
     </Component>
   );

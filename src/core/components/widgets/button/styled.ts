@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 
-const StyledAnchor = styled.a`
+const StyledAnchor = styled.a<{ disabled?: boolean }>`
   display: inline-block;
   text-decoration: none;
-  pointer-events: none;
+  ${(props) => (props.disabled ? 'pointer-events: none;' : '')}
 
   &:disabled {
     pointer-events: none;
@@ -11,7 +11,7 @@ const StyledAnchor = styled.a`
   }
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ disabled?: boolean }>`
   display: inline-block;
   text-decoration: none;
   pointer: cursor;
