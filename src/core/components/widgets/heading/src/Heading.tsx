@@ -64,6 +64,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
       <div className={rootClasses} style={{ backgroundColor: data.settings?.['background-color'] }}>
         <HeadingComponent
           level={level}
+          className={styleClasses['h'] || '' + ' dme-w-heading-h'}
           id={id}
           {...common}
           contentEditable={props.mode === 'edit'}
