@@ -6,6 +6,11 @@ module.exports = {
   mode: 'development',
   optimization: {
     removeAvailableModules: true,
+    // removeEmptyChunks: true,
+    // minimize: true,
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
