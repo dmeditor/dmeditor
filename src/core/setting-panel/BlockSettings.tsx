@@ -87,34 +87,6 @@ export const BlockSettings = (props: {
     [blockData?.type],
   );
 
-  const hasProperty = (propName: string, compName: string) => {
-    if (!compName) return false;
-    // the same as: return compName.indexOf(propName) !== -1;
-    // or return the last index of comp
-    // return hasConfig(compName, propName);
-  };
-
-  // const containSetting = (propName: string, compName: string) => {
-  //   let originalWidget = null;
-  //   if (!compName) return false;
-  //   if (!selectedWidget) return false;
-
-  //   const { category, type } = { ...selectedWidget, category: 'widget' }; //todo: remove merge
-  //   if (category === 'layout') {
-  //     // originalWidget = getLayoutByType(type);
-  //   } else if (category === 'widget') {
-  //     originalWidget = getWidget(type)?.settings;
-  //   } else {
-  //     console.error(`Unknown category: ${category}`);
-  //   }
-  //   if (!originalWidget) return false;
-  //   return Object.keys(originalWidget).includes(propName);
-  // };
-
-  // const Comp = useMemo(() => {
-  //   return WidgetProperties[selectedWidget.type];
-  // }, [selectedWidgetIndex]);
-
   const getFilteredSettings = (category: string) => {
     return selectedWidgetSetings?.filter((item) =>
       item.category ? item.category === category : category === 'widget',

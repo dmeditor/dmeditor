@@ -57,9 +57,3 @@ function createDMEditor() {
 }
 
 export { createDMEditor };
-// const initApp = () =>
-// export * from './core/main/DMEditor';
-// export * from './BlockProperty';
-// export * from './ToolDefinition';
-// export * from './core/components/Block/Block';
-// export * from './styles/StyleSettings';
