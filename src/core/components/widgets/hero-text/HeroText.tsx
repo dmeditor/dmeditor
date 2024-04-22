@@ -3,6 +3,7 @@ import { css } from '@emotion/css';
 import { dmeFullWidthLeft, dmeFullWidthRight } from 'dmeditor/config';
 import { BlockListRender, BlockRender } from 'dmeditor/main/renderer';
 import { DME } from 'dmeditor/types';
+import { useGetDevice } from 'dmeditor/utils';
 
 import { getAllowedTypes, getWidget, getWidgetWithVariant } from '..';
 import { EntityHeroText } from './entity';
@@ -33,6 +34,8 @@ const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
     return styleClasses[type].join(' ');
   };
 
+  const device = useGetDevice();
+
   const fullWidthClass = useMemo(() => {
     let result = '';
     if (heroFullWidth) {
@@ -47,7 +50,7 @@ const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
 
   const renderImage = () => (
     <div className={getClass('hero') + ' dme-w-hero ' + fullWidthClass}>
-      <BlockRender mode={props.mode} data={children[0]} path={path} />
+      <BlockRender mode={mode} data={children[0]} path={[...path, 0]} />
     </div>
   );
   const renderList = () => (
@@ -61,15 +64,19 @@ const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
     </div>
   );
 
+  const imageLeft = () => {
+    return heroPosition !== 'right' || device === 'mobile';
+  };
+
   return (
-    <HeroTextContainer className={props.rootClasses}>
-      {heroPosition !== 'right' && (
+    <HeroTextContainer updown={device === 'mobile'} className={props.rootClasses}>
+      {imageLeft() && (
         <>
           {renderImage()}
           {renderList()}
         </>
       )}
-      {heroPosition === 'right' && (
+      {!imageLeft() && (
         <>
           {renderList()}
           {renderImage()}
