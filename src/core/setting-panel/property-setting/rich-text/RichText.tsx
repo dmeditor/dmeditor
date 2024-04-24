@@ -11,14 +11,19 @@ import {
   toggleMark,
   Toolbar,
   ToolsGroup,
+  withInlines,
 } from 'dmeditor/setting-panel/property-setting/rich-text/helper';
 import MarkColor from 'dmeditor/setting-panel/property-setting/rich-text/MarkColor';
 import MarkSelector from 'dmeditor/setting-panel/property-setting/rich-text/MarkSelector';
+import { isUrl } from 'dmeditor/utils';
 import { SlateFun } from 'dmeditor/utils/Slate';
 import { createEditor } from 'slate';
 import type { Descendant, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
+
+import AddLinkButton from './AddLinkButton';
+import RemoveLinkButton from './RemoveLinkButton';
 
 const { useCallback, useMemo } = React;
 const { HOTKEYS } = SlateFun;
@@ -35,6 +40,28 @@ const RichText = (props: { property: string; value: any }) => {
     [],
   );
 
+  const Text = (props) => {
+    const { attributes, children, leaf } = props;
+    return (
+      <span
+        // The following is a workaround for a Chromium bug where,
+        // if you have an inline at the end of a block,
+        // clicking the end of a block puts the cursor inside the inline
+        // instead of inside the final {text: ''} node
+        // https://github.com/ianstormtaylor/slate/issues/4704#issuecomment-1006696364
+        className={
+          leaf.text === ''
+            ? css`
+                padding-left: 0.1px;
+              `
+            : null
+        }
+        {...attributes}
+      >
+        {children}
+      </span>
+    );
+  };
   const renderLeaf = useCallback(
     (props: {
       attributes: Record<string, unknown>;
@@ -48,11 +75,15 @@ const RichText = (props: { property: string; value: any }) => {
         'font-size': string;
         color: string;
       };
-    }) => <Leaf {...props} />,
+    }) => {
+      console.log(isUrl(props.leaf?.text));
+      // return isUrl(props.leaf?.text) ? <Text {...props} /> : <Leaf {...props} />;
+      return <Text {...props} />;
+    },
     [],
   );
 
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const editor = useMemo(() => withInlines(withHistory(withReact(createEditor()))), []);
 
   const { updateSelectedBlockProps } = useEditorStore();
   const handleValueChange = (newValue: Descendant[]) => {
@@ -94,6 +125,10 @@ const RichText = (props: { property: string; value: any }) => {
             <BlockButton format="center" />
             <BlockButton format="right" />
             <BlockButton format="justify" />
+          </ToolsGroup>
+          <ToolsGroup>
+            <AddLinkButton />
+            <RemoveLinkButton />
           </ToolsGroup>
           <InsertImageButton value={value} />
         </Toolbar>
