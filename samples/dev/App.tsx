@@ -9,6 +9,7 @@ import {
 import { nanoid } from 'nanoid';
 
 import { BrowseImage, BrowseLink } from './callbacks';
+import { EditImage } from './EditImage';
 import registerSampleWidget from './SampleWidget';
 
 registerSampleWidget();
@@ -47,6 +48,9 @@ setDMEditorConfig({
   },
   widgets: {
     heading: { defaultStyle: { _: 'big-space' } },
+  },
+  plugins: {
+    imageHandlers: [EditImage],
   },
 });
 

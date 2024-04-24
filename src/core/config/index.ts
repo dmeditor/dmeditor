@@ -104,7 +104,9 @@ const defaultConfig = () => {
     widgets: {
       text: { fonts: ['Arial', 'Times new man'] },
     },
-    plugins: {},
+    plugins: {
+      imageHandlers: [],
+    },
     callbacks: {},
   };
 };
@@ -134,7 +136,12 @@ const dmeConfig: {
     ui: { [variable: string]: string };
   };
   widgets: { [widget: string]: widgetConfig };
-  plugins: { [plugin: string]: any };
+  plugins: {
+    imageHandlers: Array<
+      React.ComponentType<{ image: ImageInfo; onChange: (imageInfo: ImageInfo) => void }>
+    >;
+    [plugin: string]: any;
+  };
   callbacks: CallbackConfig;
 } = defaultConfig();
 

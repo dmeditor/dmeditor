@@ -42,6 +42,9 @@ export const ImageSetting = (props: {
         <Button color="info" onClick={handleOpen}>
           Choose
         </Button>
+        {dmeConfig.plugins.imageHandlers.map((Item) => (
+          <Item image={value} onChange={onChange} />
+        ))}
       </div>
       <ImageChooser
         value={[{ src: src || '', id: value?.id }]}
