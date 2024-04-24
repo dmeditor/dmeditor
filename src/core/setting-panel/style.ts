@@ -62,8 +62,12 @@ export const ActionPanel = styled.div`
   bottom: 0px;
   right: 0px;
   width: 100%;
-  text-align: center;
   padding: 20px 0px;
+  background-color: white;
+`;
+
+export const ActionPanelButtonGroup = styled.span`
+  padding: 0px 5px;
 `;
 
 export const PathContainer = styled.div`

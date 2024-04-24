@@ -1,4 +1,4 @@
-import { DeleteOutline } from '@mui/icons-material';
+import { ArrowDownward, ArrowUpward, DeleteOutline } from '@mui/icons-material';
 import { useEditorStore } from 'dmeditor/main/store';
 
 import { PropertyButton } from '../Property';
@@ -43,10 +43,10 @@ export const Move = () => {
   return (
     <>
       <PropertyButton color="warning" variant="outlined" title="Move up" onClick={handleMoveUp}>
-        Move Up
+        <ArrowUpward />
       </PropertyButton>
       <PropertyButton color="warning" variant="outlined" title="Move down" onClick={handleMoveDown}>
-        Move Down
+        <ArrowDownward />
       </PropertyButton>
     </>
   );

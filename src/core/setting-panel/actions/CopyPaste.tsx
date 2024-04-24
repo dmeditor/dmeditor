@@ -1,4 +1,4 @@
-import { DeleteOutline } from '@mui/icons-material';
+import { ContentCopy, ContentPaste, DeleteOutline } from '@mui/icons-material';
 import { useEditorStore } from 'dmeditor/main/store';
 
 import { PropertyButton } from '../Property';
@@ -8,6 +8,7 @@ export const CopyPaste = () => {
     setCopyBlock,
     getCurrentBlock,
     getCopyBlock,
+    copyBlock: copiedBlock,
     selected: { currentListPath, blockIndex },
     moveTo,
   } = useEditorStore();
@@ -19,6 +20,7 @@ export const CopyPaste = () => {
     }
     setCopyBlock(currentBlock);
   };
+
   const handlePaste = () => {
     const copyBlock = getCopyBlock();
     console.log('🚀 ~ handlePaste ~ copyBlock:', copyBlock);
@@ -33,11 +35,18 @@ export const CopyPaste = () => {
   return (
     <>
       <PropertyButton color="warning" variant="outlined" title="Copy" onClick={handleCopy}>
-        Copy
+        <ContentCopy />
       </PropertyButton>
-      <PropertyButton color="warning" variant="outlined" title="Paste" onClick={handlePaste}>
-        Paste
-      </PropertyButton>
+      {copiedBlock && (
+        <PropertyButton
+          color="warning"
+          variant="outlined"
+          title="Paste under"
+          onClick={handlePaste}
+        >
+          <ContentPaste />
+        </PropertyButton>
+      )}
     </>
   );
 };
