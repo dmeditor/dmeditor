@@ -37,6 +37,7 @@ export interface DMEConfigType {
       default: string;
       [prop: string]: string;
     };
+    imagePath?: (path: string, size?: 'thumbnail' | string) => string;
     deviceWidth?: {
       mobile: number;
       tablet: number;
@@ -56,6 +57,9 @@ const defaultConfig = () => {
     general: {
       projectStyles: {
         default: ``,
+      },
+      imagePath: (path: string, size?: 'thumbnail' | string) => {
+        return path;
       },
       deviceWidth: {
         mobile: 560, //max
@@ -109,6 +113,7 @@ const dmeConfig: {
       default: string;
       [prop: string]: string;
     };
+    imagePath: (path: string, size?: 'thumbnail' | string) => string;
     deviceWidth: {
       mobile: number;
       tablet: number;

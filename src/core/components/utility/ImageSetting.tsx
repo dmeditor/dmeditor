@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { css } from '@emotion/css';
 import { Button } from '@mui/material';
 import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
-import { BrowseImageCallbackParams, ImageInfo } from 'dmeditor/config';
+import { BrowseImageCallbackParams, dmeConfig, ImageInfo } from 'dmeditor/config';
 
 export const ImageSetting = (props: {
   defaultVisible?: boolean;
@@ -10,7 +10,7 @@ export const ImageSetting = (props: {
   onChange: (value: ImageInfo) => void;
 }) => {
   const { value, onChange, defaultVisible = false } = props;
-  const { src, thumbnail } = value;
+  const { src } = value;
   const [visible, setVisible] = useState(defaultVisible ?? false);
 
   const handleConfirm = (value: BrowseImageCallbackParams) => {
@@ -36,7 +36,7 @@ export const ImageSetting = (props: {
                 opacity: 0.8;
               }
             `}
-            src={thumbnail ?? src}
+            src={dmeConfig.general.imagePath(src, 'thumbnail')}
           />
         )}
         <Button color="info" onClick={handleOpen}>
