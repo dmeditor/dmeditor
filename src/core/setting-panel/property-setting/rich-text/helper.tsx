@@ -20,6 +20,7 @@ import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
 import { BrowseImageCallbackParams, dmeConfig } from 'dmeditor/config';
 import { imageExtensionIsValid, isNumber, isUrl } from 'dmeditor/utils';
 import { BaseText, Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
+import type { Descendant } from 'slate';
 import {
   ReactEditor,
   RenderLeafProps,
@@ -403,6 +404,37 @@ const Image = (props: ImageProps) => {
   );
 };
 
+const InlineChromiumBugfix = () => (
+  <span
+    contentEditable={false}
+    className={css`
+      font-size: 0;
+    `}
+  >
+    {String.fromCodePoint(160) /* Non-breaking space */}
+  </span>
+);
+const LinkComponent = ({ attributes, children, element }) => {
+  const selected = useSelected();
+  return (
+    <a
+      {...attributes}
+      href={element.url}
+      className={
+        selected
+          ? css`
+              box-shadow: 0 0 0 3px #ddd;
+            `
+          : ''
+      }
+    >
+      <InlineChromiumBugfix />
+      {children}
+      <InlineChromiumBugfix />
+    </a>
+  );
+};
+
 // const Element = ({
 //   attributes,
 //   children,
@@ -459,6 +491,8 @@ const Element = (props: ElementProps) => {
       );
     case 'image':
       return <Image {...props} />;
+    case 'link':
+      return <LinkComponent {...props} />;
     default:
       return (
         <p style={style} {...attributes}>
@@ -588,6 +622,76 @@ const insertImage = (editor, url: string) => {
   });
 };
 
+type LinkElement = { type: 'link'; url: string; children: Descendant[] };
+type LinkNode = Node & LinkElement;
+const isLinkActive = (editor: Editor) => {
+  const [link] = Editor.nodes(editor, {
+    match: (node: Node) =>
+      !Editor.isEditor(node) && SlateElement?.isElement(node) && (node as LinkNode).type === 'link',
+  });
+  return !!link;
+};
+
+const unwrapLink = (editor: Editor) => {
+  Transforms.unwrapNodes(editor, {
+    match: (node) =>
+      !Editor.isEditor(node) && SlateElement.isElement(node) && (node as LinkNode).type === 'link',
+  });
+};
+const wrapLink = (editor: Editor, url: string) => {
+  if (isLinkActive(editor)) {
+    unwrapLink(editor);
+  }
+
+  const { selection } = editor;
+  const isCollapsed = selection && Range.isCollapsed(selection);
+  const link: LinkElement = {
+    type: 'link',
+    url,
+    children: isCollapsed ? [{ text: url }] : [],
+  };
+
+  if (isCollapsed) {
+    Transforms.insertNodes(editor, link);
+  } else {
+    Transforms.wrapNodes(editor, link, { split: true });
+    Transforms.collapse(editor, { edge: 'end' });
+  }
+};
+
+interface withInsertDataEdtior extends Editor {
+  insertData: (data: any) => void;
+}
+const withInlines = (editor: withInsertDataEdtior) => {
+  const { insertData, insertText, isInline, isElementReadOnly, isSelectable } = editor;
+
+  editor.isInline = (element) =>
+    ['link', 'button', 'badge'].includes(element.type) || isInline(element);
+
+  editor.isElementReadOnly = (element) => element.type === 'badge' || isElementReadOnly(element);
+
+  editor.isSelectable = (element) => element.type !== 'badge' && isSelectable(element);
+
+  editor.insertText = (text) => {
+    if (text && isUrl(text)) {
+      wrapLink(editor, text);
+    } else {
+      insertText(text);
+    }
+  };
+
+  editor.insertData = (data) => {
+    const text = data.getData('text/plain');
+
+    if (text && isUrl(text)) {
+      wrapLink(editor, text);
+    } else {
+      insertData(data);
+    }
+  };
+
+  return editor;
+};
 export {
   toggleMark,
   MarkButton,
@@ -601,6 +705,10 @@ export {
   insertImage,
   isImageUrl,
   ToolsGroup,
+  isLinkActive,
+  wrapLink,
+  unwrapLink,
+  withInlines,
 };
 
-export type { MiniTextLeafProps };
+export type { LinkElement, MiniTextLeafProps };
