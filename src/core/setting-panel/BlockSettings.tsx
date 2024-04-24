@@ -30,7 +30,7 @@ import {
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
 import { DMEData } from '../types';
-import { DeleteBlock } from './actions/DeleteBlock';
+import { CopyPaste, DeleteBlock, Move } from './actions';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
@@ -176,6 +176,8 @@ export const BlockSettings = (props: {
               }}
             />
             <ActionPanel>
+              <Move />
+              <CopyPaste />
               <DeleteBlock />
             </ActionPanel>
           </>
