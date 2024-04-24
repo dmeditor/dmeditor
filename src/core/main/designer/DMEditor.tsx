@@ -101,6 +101,9 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       ) => {
         emitter.addListener('save', callback);
       },
+      onCancel: (callback: () => void) => {
+        emitter.addListener('cancel', callback);
+      },
     }),
     [],
   );
@@ -177,6 +180,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       emitter.removeListener('updateSelectedWidgetIndex');
       emitter.removeListener('setWidgets');
       emitter.removeListener('save');
+      emitter.removeListener('cancel');
     };
   }, []);
 

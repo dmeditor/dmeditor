@@ -7,7 +7,7 @@ export const SettingHeader = styled.div`
 
 export const SettingDescription = styled.div`
   color: #999999;
-  padding: 10px 0px 20px 10px;
+  padding: 10px 0px 0px 10px;
   font-size: 90%;
   font-style: italic;
 `;
@@ -90,15 +90,13 @@ export const ClickEditInput = styled.input`
   border: 0px;
 `;
 
-export const WidgetListContainer = styled.div`
-  margin-top: 100px;
-`;
+export const WidgetListContainer = styled.div``;
 
 export const AdddBlockHeader = styled.div`
-  position: absolute;
+  /* position: absolute;
   right: 0px;
   top: 0px;
-  width: 100%;
+  width: 100%; */
   background-color: white;
   z-index: 10;
 `;

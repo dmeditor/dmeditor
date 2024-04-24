@@ -46,6 +46,7 @@ export interface DMEConfigType {
   };
   editor: {
     defaultTheme: string;
+    favouriteWidgets?: Array<string>;
     ui: { [variable: string]: string };
   };
   widgets?: { [widget: string]: widgetConfig };
@@ -70,6 +71,7 @@ const defaultConfig = () => {
     },
     editor: {
       defaultTheme: 'default',
+      favouriteWidgets: [],
       richText: {
         fontFamily: [
           { value: '', label: 'Font' },
@@ -124,6 +126,7 @@ const dmeConfig: {
   };
   editor: {
     defaultTheme: string;
+    favouriteWidgets: Array<string>;
     richText: {
       fontFamily: Array<{ value: string; label: string }>;
       fontSize: Array<{ value: string; label: string }>;

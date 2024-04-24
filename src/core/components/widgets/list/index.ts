@@ -25,7 +25,6 @@ const register = () => {
             id: nanoid(),
             type: 'button',
             data: { value: 'Button', link: '#' },
-            style: { type: 'primary' },
           },
         ],
       };

@@ -7,9 +7,11 @@ import {
   Title,
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import { dmeConfig } from 'dmeditor/config';
 import { DME } from 'dmeditor/types/dmeditor';
 
 import { SvgIcon } from '../icon';
+import { PropertyTab } from '../property-tab';
 import {
   customDefinition,
   getWidget,
@@ -19,6 +21,7 @@ import {
   widgetDefinition,
   widgetStyles,
 } from '../widgets';
+import { StyleTabBody } from './styled';
 
 //internal css: emotion
 //extendable css: class - dme-block-text
@@ -102,52 +105,80 @@ export const WidgetList = (props: WidgetListProps) => {
   };
 
   return (
-    <div>
-      {Object.keys(definitions)
-        .filter((widget) => matchFilter(widget))
-        .map((widgetType) =>
-          definitions[widgetType].isBaseWidget ? null : (
-            <MenuItem
-              icon={definitions[widgetType].icon}
-              widget={widgetType}
-              name={definitions[widgetType].name}
-              baseName=""
-              onClick={() => props.onSelect(widgetType)}
-            />
+    <PropertyTab
+      tabs={[
+        {
+          title: 'Common',
+          element: (
+            <StyleTabBody>
+              {dmeConfig.editor.favouriteWidgets.map((widgetType) => {
+                const arr = widgetType.split(':');
+                if (arr.length === 1) {
+                  return (
+                    <MenuItem
+                      icon={definitions[widgetType].icon}
+                      widget={widgetType}
+                      name={definitions[widgetType].name}
+                      baseName=""
+                      onClick={() => props.onSelect(widgetType)}
+                    />
+                  );
+                } else {
+                  return (
+                    <MenuItem
+                      icon={definitions[arr[0]].icon}
+                      widget={widgetType}
+                      name={
+                        widgetDefinition[arr[0]].variants.find((item) => item.identifier === arr[1])
+                          ?.name || ''
+                      }
+                      baseName=""
+                      onClick={() => props.onSelect(widgetType)}
+                    />
+                  );
+                }
+              })}
+            </StyleTabBody>
           ),
-        )}
-      <div className={space} />
-      {Object.keys(widgetDefinition).map((widget) =>
-        filterVariant(widget).map((variant) => (
-          <MenuItem
-            widget={widget + ':' + variant.identifier}
-            icon={widgetDefinition[widget].icon}
-            name={variant.name}
-            baseName={widgetDefinition[widget].name}
-            onClick={() => props.onSelect(widget + ':' + variant.identifier)}
-          />
-        )),
-      )}
-      <div className={space} />
+        },
+        {
+          title: 'Widgets',
+          element: (
+            <StyleTabBody>
+              {Object.keys(definitions)
+                .filter((widget) => matchFilter(widget))
+                .map((widgetType) => (
+                  <MenuItem
+                    icon={definitions[widgetType].icon}
+                    widget={widgetType}
+                    name={definitions[widgetType].name}
+                    baseName=""
+                    onClick={() => props.onSelect(widgetType)}
+                  />
+                ))}
+              <div className={space} />
+              {Object.keys(widgetDefinition).map((widget) =>
+                filterVariant(widget).map((variant) => (
+                  <MenuItem
+                    widget={widget + ':' + variant.identifier}
+                    icon={widgetDefinition[widget].icon}
+                    name={variant.name}
+                    baseName={widgetDefinition[widget].name}
+                    onClick={() => props.onSelect(widget + ':' + variant.identifier)}
+                  />
+                )),
+              )}
 
-      {Object.keys(preDefinedStyles).map((widget) =>
-        preDefinedStyles[widget].map((option) => (
-          <MenuItem
-            widget={widget}
-            icon={widgetDefinition[widget.split(':')[0]].icon}
-            name={option.name}
-            baseName={getWidgetName(widget)}
-            onClick={() => props.onSelect(widget, option.identifier)}
-          />
-        )),
-      )}
-
-      <div className={moreWidget}>
-        <Button variant="outlined">
-          Add more <ChevronRightOutlined />
-        </Button>
-      </div>
-    </div>
+              <div className={moreWidget}>
+                <Button variant="outlined">
+                  Add more <ChevronRightOutlined />
+                </Button>
+              </div>
+            </StyleTabBody>
+          ),
+        },
+      ]}
+    />
   );
 };
 

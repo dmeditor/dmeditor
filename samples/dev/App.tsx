@@ -42,6 +42,9 @@ setDMEditorConfig({
       },
     ],
   },
+  editor: {
+    favouriteWidgets: ['text', 'button', 'hero-text:image'],
+  },
   widgets: {
     heading: { defaultStyle: { _: 'big-space' } },
   },
@@ -210,6 +213,9 @@ const App = () => {
     editorRef.current?.setPageData({ title: 'New page', theme: 'red', meta_key: 'test key' });
     editorRef.current?.onSave((data) => {
       window.alert('Saved');
+    });
+    editorRef.current?.onCancel((data) => {
+      window.alert('Cancel');
     });
   }, []);
 
