@@ -4,6 +4,7 @@ import type { DMEData } from 'dmeditor/types/dmeditor';
 import { isEmptyString, isKeyInObject, isStrictlyInfinity } from 'dmeditor/utils';
 import emitter from 'dmeditor/utils/event';
 import { isPlainObject } from 'lodash';
+import { nanoid } from 'nanoid';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -28,6 +29,7 @@ type Store = {
     //eg. [0,1] means first on root level, second on second level
     currentListPath: Array<number>;
   };
+  copyBlock?: DMEData.Block;
   hoverPath?: Array<number>;
   addBlockData?: AddBlockParameters;
   storage: DMEData.BlockList; //data layer
@@ -54,7 +56,7 @@ type Actions = {
   ) => DMEData.Block<T> | undefined;
   removeBlock: (widget: ReactNode) => void;
   removeByPath: (path: Array<number>) => void;
-  setSelected: (widget: ReactNode) => void;
+  setSelected: (blockIndex?: number) => void;
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray: Array<number>, id: string) => void;
   getCurrentList: () => DMEData.BlockList | null;
@@ -70,6 +72,9 @@ type Actions = {
   isSelected: () => boolean;
   updatePage: (value: string, key: string) => void;
   setPageData: (data: DMEData.Page) => void;
+  moveTo: (block: DMEData.Block, targetPath: Array<number>) => void;
+  setCopyBlock: (block: DMEData.Block) => void;
+  getCopyBlock: () => DMEData.Block | undefined;
 };
 
 // const useEditorStore = create<Store & Actions>((set) => {
@@ -293,12 +298,14 @@ const useEditorStore = create<Store & Actions>()(
       set((state) => {
         state.storage = state.storage.filter((w) => w !== widget);
       }),
-    setSelected: (block: ReactNode) => {
+    setSelected: (blockIndex?: number) => {
       set((state) => {
-        if (!block) {
+        if (blockIndex === undefined) {
           state.clearSelected();
           return;
         }
+
+        state.selected.blockIndex = blockIndex;
         // state.designer.selectedBlockIndex = selected;
         //state.designer.selectedBlock = block;
       });
@@ -451,6 +458,38 @@ const useEditorStore = create<Store & Actions>()(
       set((state) => {
         state.page = data;
       });
+    },
+    moveTo: (block: DMEData.Block, targetPath: Array<number>) => {
+      set((state) => {
+        // get latest parent
+        const parentBlock = getListByPath(
+          state.storage,
+          targetPath.slice(0, targetPath.length - 1),
+        );
+        if (!parentBlock) {
+          console.error('Parent block not found');
+          return;
+        }
+
+        const targetIndex = targetPath[targetPath.length - 1];
+
+        if (targetIndex < 0 || targetIndex > parentBlock.length) {
+          console.warn('Invalid target index', targetIndex);
+          return;
+        }
+
+        // insert block to target path
+        parentBlock.splice(targetPath[targetPath.length - 1], 0, block);
+      });
+    },
+    setCopyBlock: (block: DMEData.Block) => {
+      set((state) => {
+        state.copyBlock = block;
+      });
+    },
+    getCopyBlock: () => {
+      const state = get();
+      return { ...state.copyBlock, id: `widget-${nanoid()}` } as any;
     },
   })),
 );

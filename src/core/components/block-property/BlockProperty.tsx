@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM, { createPortal } from 'react-dom';
-import { PropertyTab } from 'dmeditor/components/property-tab';
-import { isServer, PropertyGroup, Util } from 'dmeditor/utils';
+import React from 'react';
+import { createPortal } from 'react-dom';
 
 import i18n from '../../../locales/i18n';
 import { getDef } from '../../../ToolDefinition';
@@ -11,36 +9,6 @@ declare global {
     dmeditorPropertyTab: (params: any) => void;
   }
 }
-
-// if (!isServer()) {
-//   window.dmeditorPropertyTab = (e: any) => {
-//     var i = 0;
-//     var elem = e.currentTarget;
-//     while ((elem = elem.previousSibling) != null) ++i;
-
-//     var tabContainer = document.getElementById('dmeditor-property')?.children[0] as any;
-//     for (var index = 0; index < tabContainer.children.length; index++) {
-//       var ele = tabContainer.children.item(index);
-//       if (index == i) {
-//         ele.classList.remove('normal');
-//         ele.classList.add('current');
-//       } else {
-//         ele.classList.remove('current');
-//         ele.classList.add('normal');
-//       }
-//     }
-
-//     var body = document.getElementById('dmeditor-property')?.children[1] as any;
-//     for (var index = 0; index < body.children.length; index++) {
-//       var ele = body.children.item(index);
-//       if (index == i) {
-//         ele.style.display = 'block';
-//       } else {
-//         ele.style.display = 'none';
-//       }
-//     }
-//   };
-// }
 
 //todo: use one instance so it can put multi to multi tabs.
 export const BlockProperty = (props: {

@@ -338,25 +338,3 @@ export const getValueByPath = (path: string, blockData) => {
   }
   return null;
 };
-
-export const generatedWidgetAttrs = (type: 'heading' | 'text') => {
-  let element: unknown = {
-    data: {},
-    id: '',
-    style: {},
-    type: '',
-  };
-  switch (type) {
-    case 'heading':
-      element = simpleCloneDeep(HeadingWidget);
-      break;
-    case 'text':
-      // element = simpleCloneDeep(TextMetaData);
-      break;
-    // more widgets here
-    default:
-      return;
-  }
-  element['id'] = `widget_${nanoid()}`;
-  return element;
-};

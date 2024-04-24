@@ -1,28 +1,8 @@
 import * as React from 'react';
-
-import { BlockRender } from '../renderer/BlockRender';
-import { dmeditorEditCss, dmeditorViewCss, setMainWidthCssVariable } from './DMEditor.css';
-
-import '../initialize';
-
-import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
-import { Button, createTheme, IconButton, ThemeProvider, Tooltip } from '@mui/material';
-import { deepOrange, green, grey, orange } from '@mui/material/colors';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { deepOrange } from '@mui/material/colors';
 import emitter from 'dmeditor/utils/event';
-import {
-  BrowseProps,
-  DeviceType,
-  generatedWidgetAttrs,
-  isServer,
-  sanitizeBlockData,
-  setDevice,
-  useGetDevice,
-  Util,
-} from 'dmeditor/utils/utilx';
-
-import { getDef, newBlockData } from '../../../ToolDefinition';
-import { PropertyTab } from '../../components/property-tab/Tab';
-import { MenuList } from '../../components/widgets/menu-list/MenuList';
+import { BrowseProps, DeviceType, setDevice, useGetDevice, Util } from 'dmeditor/utils/utilx';
 
 import '../../../locales/i18n';
 
@@ -32,15 +12,11 @@ import { getPageTheme, setPageSettings } from 'dmeditor/components/page';
 import { registerDefaultWidgets } from 'dmeditor/components/widgets';
 import { BlockListRender } from 'dmeditor/main/renderer';
 import { DME, DMEData } from 'dmeditor/types/dmeditor';
-import { isStrictlyInfinity, jsonParse } from 'dmeditor/utils';
-import i18next from 'i18next';
-import { produce } from 'immer';
 import { debounce } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { dmeConfig } from '../../config';
 import SettingPanel from '../../setting-panel';
-import Toolbar from '../../toolbar';
 import { TopBar } from '../../topbar/Topbar';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
@@ -67,16 +43,6 @@ export interface DMEditorProps {
   pageTabActiveIndex?: number;
   getFileUrl?: (path: string) => string;
   getImageUrl?: (path: string) => string;
-}
-
-export interface DMEditorViewProps {
-  // data: Array<any>;
-  // toast?: {
-  //   error: (message: string, options: any) => void;
-  //   message: (message: string, options: any) => void;
-  // };
-  // getFileUrl?: (path: string) => string;
-  // getImageUrl?: (path: string) => string;
 }
 
 registerDefaultWidgets();
@@ -107,29 +73,13 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     }),
     [],
   );
-  // element includes all layouts and widgets
-  // const [widgets, setWidgets] = useState(() => {
-  //   if (Array.isArray(props.data) && props.data.length > 0) {
-  //     return props.data;
-  //   } else {
-  //     return [];
-  //   }
-  // });
 
-  // const [selectedWidgetIndex, setSelectedWidgetIndex] = useState(
-  //   widgets.length > 0 ? 0 : -Infinity,
-  // );
-  // const [widgetIndex, setWidgetIndex] = useState(0);
-
-  const [newBlock, setNewBlock] = useState(false);
   const [viewmode, setViewmode] = useState('edit');
 
-  const [settingPanelWidth, setSettingPanelWidth] = useState<number>(-1);
   const [settingsShown, setSettingsShown] = useState(false);
   const {
     selected: { blockIndex: selectedBlockIndex },
     storage,
-    getSelectedBlock,
     updateSelectedBlockIndex,
     setStorage,
     clearSelected,
@@ -137,23 +87,10 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     page,
   } = useEditorStore();
   const blockIndexRef = useRef(selectedBlockIndex);
-  // const blocksRef = useRef(blocks); //use ref to avoid data issue when it's debounce change.
-  const { t, i18n } = useTranslation();
 
   Util.fileUrl = props.getFileUrl;
   Util.imageUrl = props.getImageUrl;
-  // useEffect(() => {
-  //   if (props.lang) {
-  //     i18n.changeLanguage(props.lang);
-  //   }
-  //   Util.BrowseImage = props.browseImage;
-  //   Util.BrowseLink = props.browseLink;
-  //   Util.CustomProperty = props.customProperty;
-  //   Util.PreBlock = props.preBlock;
-  //   Util.pageTab = props.pageTab;
-  //   Util.toast = props.toast;
-  //   Util.pageTabActiveIndex = props.pageTabActiveIndex || 0;
-  // }, []);
+
   const handleUpdateSelctedWidgetIndex = useCallback((index: number) => {
     updateSelectedBlockIndex([index], storage[index].id || '');
     blockIndexRef.current = index;
@@ -215,17 +152,6 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const editRef = useRef<HTMLDivElement>(null);
-
-  const createNewWidget = (type: string, template?: string) => {
-    let widget;
-    try {
-      widget = generatedWidgetAttrs(type);
-      return widget;
-    } catch (err) {
-      console.warn(err);
-      return;
-    }
-  };
 
   // reset to initial status
   const resetStatus = () => {
@@ -313,6 +239,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
       },
     },
   });
+
   return (
     <Root uiConfig={dmeConfig.editor.ui}>
       <ThemeProvider theme={outerTheme}>
@@ -371,76 +298,3 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
     </Root>
   );
 });
-
-export const DMEditorView = (props: DMEditorViewProps) => {
-  const elRef = useRef(null);
-  const [width, setWidth] = useState(0);
-
-  Util.toast = props.toast;
-  Util.fileUrl = props.getFileUrl;
-  Util.imageUrl = props.getImageUrl;
-  const device = useGetDevice();
-
-  useEffect(() => {
-    if (!elRef?.current) {
-      return;
-    }
-    const width = (elRef.current as any).clientWidth;
-    setWidth(width);
-  }, []);
-
-  return (
-    <div
-      ref={elRef}
-      className={
-        'dmeditor-view ' +
-        setMainWidthCssVariable(width + 'px') +
-        ' ' +
-        dmeditorViewCss +
-        (device != '' ? ' dmeditor-view-' + device + ' ' : '')
-      }
-    >
-      {props.data.map((block, index) => {
-        const blockElement = () => {
-          return (
-            <BlockRender
-              data={block}
-              active={false}
-              onCancel={() => {}}
-              key={block.id}
-              onActivate={() => {}}
-              onChange={() => {}}
-              onAddAbove={() => {}}
-              onAddUnder={() => {}}
-              view={true}
-            />
-          );
-        };
-        return blockElement();
-      })}
-    </div>
-  );
-};
-
-/** server side load */
-export const serverLoad = async (data: Array<any>, context?: any) => {
-  let proms: Array<Promise<any>> = [];
-  for (let i in data) {
-    let blockData = data[i];
-    let type = blockData.type;
-    let def = getDef(type);
-    if (def.onServerLoad) {
-      proms = [...proms, def.onServerLoad(blockData, context)];
-    } else {
-      proms = [...proms, blockData];
-    }
-  }
-
-  try {
-    let newData = await Promise.all(proms);
-    return newData;
-  } catch (error) {
-    console.error(error);
-    throw 'Failed to fetch data';
-  }
-};

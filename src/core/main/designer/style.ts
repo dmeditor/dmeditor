@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { dmeConfig } from 'dmeditor/config';
 
 export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
   --dmee-bg-color: ${(props) => props.uiConfig['bg-color'] || '#1d4b64'};

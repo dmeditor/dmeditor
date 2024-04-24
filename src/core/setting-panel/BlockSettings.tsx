@@ -30,7 +30,7 @@ import {
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
 import { DMEData } from '../types';
-import { DeleteBlock } from './actions/DeleteBlock';
+import { CopyPaste, DeleteBlock, Move } from './actions';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
@@ -86,34 +86,6 @@ export const BlockSettings = (props: {
     () => getWidgetSettings(blockData?.type || ''),
     [blockData?.type],
   );
-
-  const hasProperty = (propName: string, compName: string) => {
-    if (!compName) return false;
-    // the same as: return compName.indexOf(propName) !== -1;
-    // or return the last index of comp
-    // return hasConfig(compName, propName);
-  };
-
-  // const containSetting = (propName: string, compName: string) => {
-  //   let originalWidget = null;
-  //   if (!compName) return false;
-  //   if (!selectedWidget) return false;
-
-  //   const { category, type } = { ...selectedWidget, category: 'widget' }; //todo: remove merge
-  //   if (category === 'layout') {
-  //     // originalWidget = getLayoutByType(type);
-  //   } else if (category === 'widget') {
-  //     originalWidget = getWidget(type)?.settings;
-  //   } else {
-  //     console.error(`Unknown category: ${category}`);
-  //   }
-  //   if (!originalWidget) return false;
-  //   return Object.keys(originalWidget).includes(propName);
-  // };
-
-  // const Comp = useMemo(() => {
-  //   return WidgetProperties[selectedWidget.type];
-  // }, [selectedWidgetIndex]);
 
   const getFilteredSettings = (category: string) => {
     return selectedWidgetSetings?.filter((item) =>
@@ -176,6 +148,8 @@ export const BlockSettings = (props: {
               }}
             />
             <ActionPanel>
+              <Move />
+              <CopyPaste />
               <DeleteBlock />
             </ActionPanel>
           </>
