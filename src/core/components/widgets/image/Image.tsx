@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { ImageInfo } from 'dmeditor/config';
+import { dmeConfig, ImageInfo } from 'dmeditor/config';
 import { DME } from 'dmeditor/index';
 import { nanoid } from 'nanoid';
 
@@ -88,7 +88,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
           className={(styleClasses['image'] || '') + ' dme-w-image ' + css({ textAlign: align })}
         >
           <img
-            src={src}
+            src={dmeConfig.general.imagePath(src)}
             className={css({
               width: '100%',
               display: 'inline-block',

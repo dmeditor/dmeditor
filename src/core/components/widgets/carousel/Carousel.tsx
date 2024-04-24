@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import Transition from 'dmeditor/components/transition';
+import { dmeConfig } from 'dmeditor/config';
 import { TransitionStatus } from 'react-transition-group';
 
 import { CarouselEntity } from './entity';
@@ -120,8 +121,7 @@ const Carousel = (props) => {
   const Image = (slide: Slide, index: number) => (
     <StyledCarouselImage
       className={styleClasses['carousel-image'] || 'dme-carousel-image'}
-      src={slide.image}
-      // src="https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c"
+      src={dmeConfig.general.imagePath(slide.image)}
       alt={`slide${index}`}
     />
   );

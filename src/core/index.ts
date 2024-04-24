@@ -1,6 +1,6 @@
 export { useEditorStore } from './main/store';
 
-export { DMEditor } from 'dmeditor/main/designer/DMEditor';
+export { DMEditor } from './main/designer/DMEditor';
 export {
   addCustomDefinition,
   addLayoutDefinition,
