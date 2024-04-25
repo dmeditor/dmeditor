@@ -1,17 +1,25 @@
 export { useEditorStore } from './main/store';
 
 export { DMEditor } from './main/designer/DMEditor';
+
+/**
+ * register widget
+ */
 export {
   addCustomDefinition,
   addLayoutDefinition,
+  registerIcon,
   registerWidget,
-  registerWidgetVariant,
   registerWidgetStyle,
   registerWidgetStyleOption,
-} from './components/widgets';
+  registerWidgetVariant,
+} from './utils/register';
 
-export { useGetDevice } from './utils/utilx';
+export { getWidget, getWidgetVariant } from './utils/register';
 
+/**
+ * register setting panel property
+ */
 export {
   registerCommonProperty,
   registerCustomProperty,
@@ -20,12 +28,12 @@ export {
   registerWidgetProperty,
 } from './setting-panel/register';
 
-export { registerIcon } from './components/icon/icon-data';
+export { useDevice } from './utils/utilx';
 
 export { dmeServerSideLoad } from './ssr';
-export * from './components/utility';
+export * from './utility';
 
 export { dmeConfig, setDMEditorConfig, setDMEditorCallback } from './config';
 
-export { DMEditorView, BlockRender, BlockListRender } from 'dmeditor/main/renderer/index';
+export { DMEditorView, BlockRender, BlockListRender } from './main/renderer/index';
 export * from './types/dmeditor';

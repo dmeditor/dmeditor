@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
-import { useEditorStore } from 'dmeditor/main/store';
-import { PropertyButton } from 'dmeditor/utils';
+
+import { useEditorStore } from '../../../../core';
+import { PropertyButton } from '../../../utils';
 
 export type AlignType = 'left' | 'center' | 'right';
 const alignsList: AlignType[] = ['left', 'center', 'right'];

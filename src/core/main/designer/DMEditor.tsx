@@ -1,23 +1,25 @@
 import * as React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { deepOrange } from '@mui/material/colors';
-import emitter from 'dmeditor/utils/event';
-import { BrowseProps, DeviceType, setDevice, useGetDevice, Util } from 'dmeditor/utils/utilx';
+
+import emitter from '../../utils/event';
+import { BrowseProps, DeviceType, setDevice, Util } from '../../utils/utilx';
 
 import '../../../locales/i18n';
 
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
-import { getPageTheme, setPageSettings } from 'dmeditor/components/page';
-import { registerDefaultWidgets } from 'dmeditor/components/widgets';
-import { BlockListRender } from 'dmeditor/main/renderer';
-import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { debounce } from 'lodash';
-import { useTranslation } from 'react-i18next';
+
+import { getPageTheme, setPageSettings } from '../../components/page';
+// import { useTranslation } from 'react-i18next';
 
 import { dmeConfig } from '../../config';
+import { BlockListRender } from '../../main/renderer';
 import SettingPanel from '../../setting-panel';
 import { TopBar } from '../../topbar/Topbar';
+import { DME, DMEData } from '../../types/dmeditor';
+import { registerDefaultWidgets } from '../../utils/register';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } from './style';
@@ -47,7 +49,7 @@ export interface DMEditorProps {
 
 registerDefaultWidgets();
 
-export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef) => {
+export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: React.Ref<any>) => {
   // const [blocks, setBlocks] = useState(props.data ? [...props.data] : []);
   useImperativeHandle(
     currentRef,

@@ -8,14 +8,11 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Input,
   TextField,
 } from '@mui/material';
 import { nanoid } from 'nanoid';
 
 import { dmeConfig } from '..';
-import HeadingWidget from '../components/widgets/heading/src/definition';
-import { simpleCloneDeep } from './util';
 
 export interface BrowseProps {
   type?: any;
@@ -288,7 +285,7 @@ export const setDevice = (d: DeviceType) => {
 
 export type DeviceType = '' | 'mobile' | 'tablet';
 
-export const useGetDevice = (): DeviceType => {
+export const useDevice = (): DeviceType => {
   let deviceWidth = dmeConfig.general.deviceWidth;
 
   const [device, setDevice] = useState('');

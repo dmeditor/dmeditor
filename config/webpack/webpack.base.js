@@ -22,7 +22,7 @@ module.exports = {
   plugins: [],
   resolve: {
     alias: {
-      dmeditor: path.resolve(__dirname, '../../src/core'),
+      dmeditor: path.resolve(__dirname, '../../src'),
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },

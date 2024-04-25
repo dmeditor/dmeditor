@@ -5,7 +5,7 @@ import { dmeConfig } from 'dmeditor/config';
 import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { useGetDevice } from 'dmeditor/utils';
 
-import { BlockListRender } from './BlockListRender';
+import { BlockListRender } from '../../components/block-list-render/BlockListRender';
 
 export interface DMEditorViewProps {
   data: DMEData.BlockList;

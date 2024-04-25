@@ -16,20 +16,14 @@ import {
   LooksOneOutlined,
   LooksTwoOutlined,
 } from '@mui/icons-material';
-import { ImageChooser } from 'dmeditor/components/utility/ImageChooser';
-import { BrowseImageCallbackParams, dmeConfig } from 'dmeditor/config';
-import { imageExtensionIsValid, isNumber, isUrl } from 'dmeditor/utils';
 import { BaseText, Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
 import type { Descendant } from 'slate';
-import {
-  ReactEditor,
-  RenderLeafProps,
-  useFocused,
-  useSelected,
-  useSlate,
-  useSlateStatic,
-} from 'slate-react';
+import { RenderLeafProps, useFocused, useSelected, useSlate, useSlateStatic } from 'slate-react';
+import type { ReactEditor } from 'slate-react';
 
+import { BrowseImageCallbackParams, dmeConfig } from '../../../config';
+import { ImageChooser } from '../../../utility/ImageChooser';
+import { imageExtensionIsValid, isNumber, isUrl } from '../../../utils';
 import { LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
 
 interface BaseProps {
@@ -659,7 +653,7 @@ const wrapLink = (editor: Editor, url: string) => {
   }
 };
 
-interface withInsertDataEdtior extends Editor {
+interface withInsertDataEdtior extends ReactEditor {
   insertData: (data: any) => void;
 }
 const withInlines = (editor: withInsertDataEdtior) => {

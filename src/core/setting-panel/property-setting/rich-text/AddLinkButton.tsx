@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { AddLinkOutlined } from '@mui/icons-material';
-import ConfirmDialog from 'dmeditor/components/utility/ConfirmDialog';
 import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
+import ConfirmDialog from '../../../utility/ConfirmDialog';
 import { Button, isLinkActive, wrapLink } from './helper';
 
 const insertLink = (editor: Editor, url: string) => {

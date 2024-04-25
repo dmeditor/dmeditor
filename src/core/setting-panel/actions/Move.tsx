@@ -1,6 +1,6 @@
-import { ArrowDownward, ArrowUpward, DeleteOutline } from '@mui/icons-material';
-import { useEditorStore } from 'dmeditor/main/store';
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 
+import { useEditorStore } from '../../../core';
 import { PropertyButton } from '../Property';
 
 export const Move = () => {

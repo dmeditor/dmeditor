@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
-import { PickColor } from 'dmeditor/utils';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
+
+import { PickColor } from '../../../utils';
 
 type ColorType = 'color';
 

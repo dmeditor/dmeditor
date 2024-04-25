@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
-import { DME, useEditorStore } from 'dmeditor/index';
-import { PropertyButton } from 'dmeditor/utils';
+
+import { useEditorStore } from '../../../core';
+import type { DME } from '../../types';
+import { PropertyButton } from '../../utils';
 
 const ReusableSettingFirst = (props: DME.SettingComponentProps) => {
   const {

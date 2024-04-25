@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Title } from '@mui/icons-material';
 
-import { IconDefinition } from './icon-data';
+import { IconDefinition } from '../../utils/register';
 
 // interface SvgIconProps extends React.SVGProps<SVGSVGElement> {
 interface SvgIconProps {

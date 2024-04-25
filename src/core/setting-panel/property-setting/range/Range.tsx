@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useEditorStore } from 'dmeditor/main/store';
-import { Ranger } from 'dmeditor/utils/Ranger';
+
+import { useEditorStore } from '../../../../core';
+import { Ranger } from '../../../utils';
 
 const Range = (props: {
   property: string;

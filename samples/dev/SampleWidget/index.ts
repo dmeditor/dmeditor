@@ -1,13 +1,15 @@
+import { nanoid } from 'nanoid';
+
 import {
   DMEData,
+  getWidget,
+  getWidgetVariant,
   registerSettingComponent,
   registerWidget,
   registerWidgetStyle,
   registerWidgetStyleOption,
   registerWidgetVariant,
-} from 'dmeditor';
-import { nanoid } from 'nanoid';
-
+} from '../../../src/core';
 import SampleWidget from './SampleWidget';
 import SettingInput from './SettingInput';
 

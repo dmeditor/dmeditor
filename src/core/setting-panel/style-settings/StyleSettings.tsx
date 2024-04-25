@@ -8,12 +8,12 @@ import {
   ToggleButtonGroup,
 } from '@mui/material';
 
+import type { DME } from '../../types/dmeditor';
 import widgetDefinition, {
   getWidgetStyle,
   getWidgetStyles,
   widgetStyles,
-} from '../../components/widgets';
-import { DME } from '../../types/dmeditor';
+} from '../../utils/register';
 import { PropertyItem } from '../Property';
 import { ButtonGroup } from './ButtonGroup';
 import { DropDown } from './DropDown';

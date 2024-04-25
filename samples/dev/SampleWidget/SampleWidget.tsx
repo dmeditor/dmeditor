@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
 import { Slider } from '@mui/material';
-import { DME, useEditorStore } from 'dmeditor';
 
+import { DME, useEditorStore } from '../../../src/core';
 import { EntitySampleWidget } from './entity';
 
 const { useState, useEffect } = React;

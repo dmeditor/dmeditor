@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useEditorStore } from 'dmeditor/main/store';
-import { PickColor } from 'dmeditor/utils';
+
+import { useEditorStore } from '../../../../core';
+import { PickColor } from '../../../utils';
 
 const Color = (props: { value?: string; property: string }) => {
   const { property, value } = props;

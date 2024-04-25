@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { LoopOutlined } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
-import { BlockProperty } from 'dmeditor/components/block-property';
-import { useEditorStore } from 'dmeditor/main/store';
 
-import { ToolDefinition, ToolRenderProps } from '../../../../ToolDefinition';
+import { useEditorStore } from '../../../../core';
 import { PropertyButton, PropertyItem, Ranger, Util } from '../../../utils';
 import useHeadingStore from '../../store/heading';
 

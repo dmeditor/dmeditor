@@ -2,7 +2,6 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import i18n from '../../../locales/i18n';
-import { getDef } from '../../../ToolDefinition';
 
 declare global {
   interface Window {
@@ -33,7 +32,7 @@ export const BlockProperty = (props: {
         createPortal(
           <div className="tab-header" onClick={tabClick}>
             <button className="btn">
-              {i18n.t(getDef(props.blocktype).name, { ns: 'blocktype' })}
+              {/* {i18n.t(getDef(props.blocktype).name, { ns: 'blocktype' })} */}
             </button>
           </div>,
           propertyRoot.children[0] as HTMLElement,

@@ -5,7 +5,7 @@ import { Button, TextField } from '@mui/material';
 import { nanoid } from 'nanoid';
 
 import { WidgetList } from '../components/widget-list';
-import { getWidget, getWidgetVariant, getWidgetWithVariant } from '../components/widgets';
+import { getWidget, getWidgetVariant, getWidgetWithVariant } from '../../widgets';
 import { useEditorStore } from '../main/store';
 import {
   AddBlockContainer,

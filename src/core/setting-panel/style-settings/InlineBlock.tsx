@@ -1,6 +1,6 @@
 import { MenuItem, Select } from '@mui/material';
-import { DME } from 'dmeditor/types/dmeditor';
 
+import type { DME } from '../../types';
 import { InlineBlockItemStyle, InlineBlockStyle } from './style';
 import { StyleSettingProps } from './StyleSettings';
 

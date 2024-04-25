@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { MenuItem, Select } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select/SelectInput';
-import { dmeConfig } from 'dmeditor/config';
-import { isNumber } from 'dmeditor/utils';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
+
+import { dmeConfig } from '../../../config';
+import { isNumber } from '../../../utils';
 
 type SelectorType = 'font-size' | 'font-family';
 

@@ -2,10 +2,11 @@ import { useEffect, useRef } from 'react';
 import { css } from '@emotion/css';
 import { CloudOutlined } from '@mui/icons-material';
 import { Button, TextField } from '@mui/material';
-import { LinkChooser, LinkRef } from 'dmeditor/components/utility/LinkChooser';
-import { BrowseLinkCallbackParams } from 'dmeditor/config';
-import { DME } from 'dmeditor/index';
-import { useEditorStore } from 'dmeditor/main/store';
+
+import { useEditorStore } from '../../../../core';
+import { BrowseLinkCallbackParams } from '../../../config';
+import type { DME } from '../../../types';
+import { LinkChooser, LinkRef } from '../../../utility';
 
 export const Link = (props: DME.SettingComponentProps) => {
   const { property, value } = props;

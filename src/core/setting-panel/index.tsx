@@ -4,7 +4,7 @@ import { css } from '@emotion/css';
 import { ArrowBack, Settings } from '@mui/icons-material';
 import { Button, TextField } from '@mui/material';
 
-import { getWidget, getWidgetName } from '../components/widgets';
+import { getWidget, getWidgetName } from '../../widgets';
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './BlockSettings';
