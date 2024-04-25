@@ -55,10 +55,15 @@ const HeadingWidget: DME.Widget = {
       name: 'Background',
       settingComponent: 'color',
       category: 'block',
-      property: 'settings.background-color',
+      property: 'settings.backgroundColor',
     },
-    { name: 'Padding', settingComponent: 'range', category: 'block', property: 'settings.padding' },
-    { name: 'Margin', settingComponent: 'range', category: 'block', property: 'settings.margin' },
+    {
+      name: 'Margin',
+      settingComponent: 'range',
+      parameters: { min: 0, max: 200 },
+      category: 'block',
+      property: 'settings.marginTop',
+    },
     { name: '', settingComponent: 'heading', custom: true, property: '' },
   ],
 };

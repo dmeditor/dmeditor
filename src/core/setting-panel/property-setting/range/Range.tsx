@@ -5,7 +5,7 @@ import { Ranger } from 'dmeditor/utils/Ranger';
 const Range = (props: {
   property: string;
   value: number;
-  parameters: { min: number; max: number };
+  parameters: { min: number; max: number; step?: number };
 }) => {
   const { property, parameters, value } = props;
   const { updateSelectedBlockProps } = useEditorStore();
@@ -19,7 +19,7 @@ const Range = (props: {
       defaultValue={value}
       min={parameters?.min || 1}
       max={parameters?.max || 5}
-      step={1}
+      step={parameters?.step || 1}
       onChange={handleChange}
     ></Ranger>
   );

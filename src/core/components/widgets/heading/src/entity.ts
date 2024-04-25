@@ -6,8 +6,8 @@ export interface EntityHeadingBlock {
   settings?: {
     align: string;
     color?: string;
-    'background-color'?: string;
-    'margin-top'?: number;
+    backgroundColor: string;
+    marginTop?: number;
     padding?: number;
     width?: string | number;
   };

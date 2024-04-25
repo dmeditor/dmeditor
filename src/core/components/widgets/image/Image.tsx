@@ -13,6 +13,8 @@ export interface ImageEntity {
     align?: 'left' | 'center' | 'right';
     borderWidth?: number;
     borderColor?: string;
+    width?: number;
+    marginTop?: number;
   };
 }
 
@@ -48,6 +50,19 @@ export const ImageDefinition: DME.Widget = {
       settingComponent: 'color',
       property: 'settings.borderColor',
     },
+    {
+      name: 'Width',
+      settingComponent: 'range',
+      parameters: { min: 50, max: 800, step: 5 },
+      property: 'settings.width',
+    },
+    {
+      name: 'Margin',
+      settingComponent: 'range',
+      category: 'block',
+      parameters: { min: 0, max: 200 },
+      property: 'settings.marginTop',
+    },
   ],
   events: {
     updateData: () => {},
@@ -73,7 +88,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const { borderWidth, borderColor, align } = settings;
 
   return (
-    <div className={rootClasses}>
+    <div className={rootClasses} style={{ marginTop: settings.marginTop || 'auto' }}>
       {!src && (
         <div
           className={css`
@@ -90,7 +105,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
           <img
             src={dmeConfig.general.imagePath(src)}
             className={css({
-              width: '100%',
+              width: settings.width || '100%',
               display: 'inline-block',
               ...(borderWidth ? { borderWidth: borderWidth } : {}),
               ...(borderColor ? { borderColor: borderColor } : {}),
