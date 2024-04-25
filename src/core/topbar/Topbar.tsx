@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import {
   ArrowDropDown,
+  Cancel,
   ComputerOutlined,
   EditOutlined,
   ExpandMore,
@@ -33,6 +34,10 @@ export const TopBar = () => {
     emitter.emit('save', { data: storage, page: page });
   };
 
+  const cancel = () => {
+    emitter.emit('cancel', { data: storage, page: page });
+  };
+
   return (
     <Container>
       <LogoContainer>
@@ -47,7 +52,7 @@ export const TopBar = () => {
             <EditOutlined {...largeIcon} />
           </Tooltip>
         </ToolButton>
-        <ToolButton>
+        {/* <ToolButton>
           <Tooltip title="Preview">
             <ComputerOutlined {...largeIcon} />
           </Tooltip>
@@ -59,15 +64,18 @@ export const TopBar = () => {
           <Tooltip title="Layers">
             <LayersOutlined {...largeIcon} />
           </Tooltip>
-        </ToolButton>
+        </ToolButton> */}
       </ToolsContainer>
       <ActionsContainer>
         <ToolButton onClick={save}>
           Save <Save {...smallIcon} />
         </ToolButton>
-        <ToolButton>
-          <ShoppingBagOutlined />
+        <ToolButton onClick={cancel}>
+          Cancel <Cancel {...smallIcon} />
         </ToolButton>
+        {/* <ToolButton>
+          <ShoppingBagOutlined />
+        </ToolButton> */}
       </ActionsContainer>
     </Container>
   );
