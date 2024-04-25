@@ -9,7 +9,7 @@ const RemoveLinkButton = () => {
   return (
     <Button
       active={isLinkActive(editor)}
-      onMouseDown={(event: MouseEvent) => {
+      onMouseDown={(_: MouseEvent) => {
         if (isLinkActive(editor)) {
           unwrapLink(editor);
         }
