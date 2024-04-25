@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 
 import {
-  DMEData,
   getWidget,
   getWidgetVariant,
   registerSettingComponent,
@@ -10,6 +9,7 @@ import {
   registerWidgetStyleOption,
   registerWidgetVariant,
 } from '../../../src/core';
+import type { DMEData } from '../../../src/core';
 import SampleWidget from './SampleWidget';
 import SettingInput from './SettingInput';
 
@@ -91,18 +91,18 @@ const registerSampleWidget = function () {
     allowedTypes: ['heading:simple'],
     //todo: use property?
     getDefaultData: (): DMEData.Block<any> => {
-      const variant = getWidgetVariant('heading', 'gradient');
+      // const variant = getWidgetVariant('heading', 'gradient');
       // let variantData: any = [];
       // if (variant && variant.getDefaultData) {
       //   variantData = [variant.getDefaultData()];
       // }
 
-      const headingData = [getWidget('heading')?.events.createBlock()] || [];
+      // const headingData = [getWidget('heading')?.events.createBlock()] || [];
       return {
         id: nanoid(),
         type: 'list:article-block',
         data: { settings: {} },
-        children: [...headingData],
+        // children: [...headingData],
       };
     },
   });

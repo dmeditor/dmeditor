@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { useMemo, useState } from 'react';
-import { css } from '@emotion/css';
 import { ArrowBack, Settings } from '@mui/icons-material';
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 
-import { getWidget, getWidgetName } from '../../widgets';
+import { getWidgetName } from '../../core/utils/register';
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './BlockSettings';
@@ -13,7 +11,7 @@ import { PageSetting } from './PageSetting';
 import { Path, PathItem } from './Path';
 import { ClickEditInput, PageTitle, RightElement, SettingHeader, Space } from './style';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 const ClickToEdit = (props: { value: string; onChange: (value: string) => void }) => {
   const [editMode, setEditMode] = useState(false);

@@ -47,6 +47,7 @@ export interface DMEditorProps {
   getImageUrl?: (path: string) => string;
 }
 
+// registerDefaultWidgets();
 registerDefaultWidgets();
 
 export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: React.Ref<any>) => {

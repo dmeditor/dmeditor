@@ -1,39 +1,13 @@
-import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  DeleteOutline,
-  FormatAlignCenter,
-  FormatAlignLeft,
-  FormatAlignRight,
-} from '@mui/icons-material';
-import { Divider, MenuItem, Select } from '@mui/material';
-import {
-  getWidget,
-  getWidgetName,
-  getWidgetStyle,
-  getWidgetVariant,
-  getWidgetWithVariant,
-  properties,
-  widgetStyles,
-} from 'dmeditor/components/widgets';
-import {
-  getPropertyChildren,
-  getPropertyValue,
-  getValueByPath,
-  isNull,
-  PickColor,
-  PropertyButton,
-  PropertyGroup,
-  PropertyItem,
-  Ranger,
-} from 'dmeditor/utils';
+import { ReactElement, useMemo } from 'react';
 
+import { getWidgetName, getWidgetWithVariant } from '../../core/utils';
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { useEditorStore } from '../main/store';
-import { DMEData } from '../types';
+import { getPropertyChildren, getPropertyValue, isNull, PropertyItem } from '../utils';
 import { CopyPaste, DeleteBlock, Move } from './actions';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
-import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
+import { ActionPanel, TabBodyContainer } from './style';
 import { StyleSettings } from './style-settings/StyleSettings';
 
 interface CommonSettingsType {

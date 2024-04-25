@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { css } from '@emotion/css';
 import { Button } from '@mui/material';
-import { ImageChooser } from 'dmeditor/utility/ImageChooser';
-import { BrowseImageCallbackParams, dmeConfig, ImageInfo } from 'dmeditor/config';
+
+import { dmeConfig } from '../config';
+import type { BrowseImageCallbackParams, ImageInfo } from '../config';
+import { ImageChooser } from './ImageChooser';
 
 export const ImageSetting = (props: {
   defaultVisible?: boolean;

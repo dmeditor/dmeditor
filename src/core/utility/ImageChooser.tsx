@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { Button, Dialog, DialogActions, DialogContent, Tab, Tabs, TextField } from '@mui/material';
-import { BrowseImageCallbackParams, dmeConfig, ImageInfo } from 'dmeditor/config';
+
+import { BrowseImageCallbackParams, dmeConfig } from '../config';
 
 function CheckImageBrowserValid() {
   const { callbacks } = dmeConfig;

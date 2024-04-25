@@ -1,7 +1,8 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { css } from '@emotion/css';
 import { Button, Dialog, DialogActions, DialogContent, Tab, Tabs, TextField } from '@mui/material';
-import { BrowseLinkCallbackParams, dmeConfig } from 'dmeditor/config';
+
+import type { BrowseLinkCallbackParams, dmeConfig } from '../config';
 
 function CheckBrowserValid() {
   const { callbacks } = dmeConfig;

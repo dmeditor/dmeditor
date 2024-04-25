@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { ExpandMoreOutlined } from '@mui/icons-material';
 import { AccordionDetails, AccordionSummary, Accordion as MUIAccordion } from '@mui/material';
-import { BlockListRender } from 'dmeditor/main/renderer';
-import { isNull } from 'dmeditor/utils';
 
-import { getAllowedTypes } from '..';
+import { BlockListRender } from '../../core';
+import { getAllowedTypes, isNull } from '../../core/utils';
 import { useAccordionStore } from './store';
 
 const Accordion = (props: any) => {

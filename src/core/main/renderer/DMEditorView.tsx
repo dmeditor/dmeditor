@@ -1,11 +1,10 @@
-import { useMemo } from 'react';
 import { css } from '@emotion/css';
-import { getPageTheme } from 'dmeditor/components/page';
-import { dmeConfig } from 'dmeditor/config';
-import { DME, DMEData } from 'dmeditor/types/dmeditor';
-import { useGetDevice } from 'dmeditor/utils';
 
+import type { DMEData } from '../../../core';
+import { useDevice } from '../../../core';
 import { BlockListRender } from '../../components/block-list-render/BlockListRender';
+import { getPageTheme } from '../../components/page';
+import { dmeConfig } from '../../config';
 
 export interface DMEditorViewProps {
   data: DMEData.BlockList;
@@ -20,7 +19,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
     return css(dmeConfig.general.projectStyles[props.projectStyle || 'default']);
   };
 
-  const device = useGetDevice();
+  const device = useDevice();
 
   const getThemeCss = () => {
     const pageTheme = getPageTheme(theme || 'default');

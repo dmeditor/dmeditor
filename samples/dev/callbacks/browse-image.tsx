@@ -1,6 +1,7 @@
 import React from 'react';
 import { ImageList, ImageListItem } from '@mui/material';
-import { BrowseImageCallbackParams } from 'dmeditor/config';
+
+import { BrowseImageCallbackParams } from '../../../src/core/config';
 
 const itemData = [
   {

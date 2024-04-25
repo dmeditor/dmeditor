@@ -11,9 +11,11 @@ const components: {
 
 const registerDefaultWidgets = () => {
   try {
-    const modules = require.context('./', true, /\/$/);
+    const modules = require.context('../../../src', true, /\$/);
+    console.log(modules.keys());
     modules.keys().forEach((path: string) => {
       const register = modules(path).default;
+      console.log(register);
       if (typeof register === 'function') {
         register();
       }
@@ -65,6 +67,7 @@ const getWidgetComponent = (type: string): any => {
 
 //get widget information/definiton/meta data
 const getWidget = (widget: string) => {
+  debugger;
   const arr = widget.split(':');
   const def = widgetDefinition[arr[0]];
   return def as DME.Widget;
@@ -85,7 +88,9 @@ const getWidgetWithVariant = (widget: string) => {
 
   let variant = undefined;
   if (arr[1]) {
-    variant = def.variants.find((variant) => variant.identifier === arr[1]);
+    if (def) {
+      variant = def.variants.find((variant) => variant.identifier === arr[1]);
+    }
   }
   return [def as DME.Widget | undefined, variant] as const;
 };

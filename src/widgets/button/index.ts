@@ -1,7 +1,4 @@
-import { IconButton } from '@mui/material';
-
-import { registerWidget, registerWidgetStyle } from '..';
-import { registerIcon } from '../../icon/icon-data';
+import { registerIcon, registerWidget, registerWidgetStyle } from '../../core';
 import { Button } from './Button';
 import buttonWidget from './definition';
 import Icon from './icon/icon.svg';

@@ -1,12 +1,11 @@
 import { ViewWeekOutlined } from '@mui/icons-material';
-import {
-  registerWidget,
-  registerWidgetStyle,
-  registerWidgetStyleOption,
-} from 'dmeditor/components/widgets';
-import { registerSettingComponent } from 'dmeditor/setting-panel/register';
 
-import { registerIcon } from '../../icon/icon-data';
+import {
+  registerIcon,
+  registerSettingComponent,
+  registerWidget,
+  registerWidgetStyleOption,
+} from '../../core';
 import { Layout3Columns, layout3ColumnsWidget } from './Layout3Columns';
 import { Layout3ColumnsSetting } from './settings/Layout3ColumnsSetting';
 

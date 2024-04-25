@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { AddCircleOutlineOutlined, DeleteOutline } from '@mui/icons-material';
+import * as React from 'react';
+import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import { orange } from '@mui/material/colors';
-import { BlockListRender, useEditorStore } from 'dmeditor/index';
-import type { DME } from 'dmeditor/types';
 import { nanoid } from 'nanoid';
 
-import { getAllowedTypes } from '..';
-import { isNull } from '../../../utils';
-import { Nav, NavItem } from '../../nav';
+import { BlockListRender, useEditorStore } from '../../core';
+import type { DME } from '../../core';
+import { Nav, NavItem } from '../../core/components/nav';
+import { getAllowedTypes, isNull } from '../../core/utils';
 import { BaseTabs, TabPane } from './BaseTabs';
 import type { EntityTabsBlock } from './entity';
 import { useTabsStore } from './store';
+
+const { useEffect } = React;
 
 const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
   const {
