@@ -112,15 +112,15 @@ const RichText = (props: { property: string; value: any }) => {
           placeholder="Enter some rich text…"
           // spellCheck
           // autoFocus
-          onKeyDown={(event) => {
-            for (const hotkey in HOTKEYS) {
-              // if (isHotkey(hotkey, event as any)) {
-              event.preventDefault();
-              const mark = HOTKEYS[hotkey];
-              toggleMark(editor, mark);
-              // }
-            }
-          }}
+          // onKeyDown={(event) => {
+          //   for (const hotkey in HOTKEYS) {
+          //     // if (isHotkey(hotkey, event as any)) {
+          //     event.preventDefault();
+          //     const mark = HOTKEYS[hotkey];
+          //     toggleMark(editor, mark);
+          //     // }
+          //   }
+          // }}
         />
       </Slate>
     </div>

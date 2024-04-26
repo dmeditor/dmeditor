@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { dmeConfig } from 'dmeditor/core/config';
 
 export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
   --dmee-bg-color: ${(props) => props.uiConfig['bg-color'] || '#1d4b64'};
@@ -14,6 +15,7 @@ export const Layout = {
     --dmee-selected-border-color: #fc7e4b;
     --dmee-hover-font-color: red;
 
+    --dmee-zindex: ${dmeConfig.editor.zIndex};
     height: 100vh;
     display: grid;
     grid-template-columns: calc(100% - var(--dmee-layout-property-width)) var(
@@ -25,7 +27,6 @@ export const Layout = {
   `,
   Edit: styled.div`
     border-right: 1px solid #cccccc;
-    overflow-y: auto;
     margin-top: var(--dmee-topbar-height);
   `,
   SettingPanel: styled.div`

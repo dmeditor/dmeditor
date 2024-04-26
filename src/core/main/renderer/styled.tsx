@@ -5,14 +5,13 @@ export const StyledBlock = styled.div<{ active?: boolean; hovering?: boolean }>`
   &:hover {
     outline: 2px dotted var(--dmee-selected-border-color);
     border-radius: 4px;
-    // z-index: 50;
+    z-index: calc(var(--dmee-zindex) + 50);
   }
   ${(props) => {
     if (props.hovering) {
-      // return `outline: 2px dotted var(--dmee-selected-border-color);
-      //   border-radius: 4px;
-      //   z-index: 50;`;
-      return `outline: 2px dotted var(--dmee-selected-border-color);
+      return `
+        z-index: calc( var(--dmee-zindex) + 50 );
+        outline: 2px dotted var(--dmee-selected-border-color);
         border-radius: 4px;`;
     }
   }}
@@ -21,7 +20,7 @@ export const StyledBlock = styled.div<{ active?: boolean; hovering?: boolean }>`
       return `
       outline: 2px solid var(--dmee-selected-border-color) !important;
       border-radius: 4px;
-      // z-index: 50;
+      z-index: var(--dmee-zindex);
       `;
     } else {
       return `
