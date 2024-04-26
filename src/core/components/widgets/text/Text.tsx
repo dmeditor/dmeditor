@@ -23,7 +23,9 @@ const Text = (props: RichTextProps) => {
     }
   };
   return (
-    <MiniText viewmode={props.mode === 'view'} value={value} onValueChange={handleValueChange} />
+    <div className={props.rootClasses}>
+      <MiniText viewmode={props.mode === 'view'} value={value} onValueChange={handleValueChange} />
+    </div>
   );
 };
 
