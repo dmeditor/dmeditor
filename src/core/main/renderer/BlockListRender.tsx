@@ -116,7 +116,7 @@ export const BlockListRender = (props: BlockListProps) => {
 
   return (
     <>
-      {props.blockData.length === 0 && (
+      {props.mode === 'edit' && props.blockData.length === 0 && (
         <StyledAddWidgetButton>
           <Button onClick={(e) => handleAdding('after', 0)}>Add widget</Button>
         </StyledAddWidgetButton>
