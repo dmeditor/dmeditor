@@ -9,16 +9,13 @@ const ConfirmDialog = (props: {
   onConfirm: (value: string) => void;
   onCancel?: () => void;
 }) => {
-  // const [visible, setVisible] = useState(false);
   const [url, setUrl] = useState(props.value ?? '');
 
   const handleConfirm = () => {
-    // setVisible(false);
     props.onConfirm(url);
   };
 
   const handleClose = () => {
-    // setVisible(false);
     props.onCancel?.();
   };
 

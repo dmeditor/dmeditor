@@ -1,5 +1,4 @@
-// import { registerIcon, registerWidget, registerWidgetStyle } from '../../core';
-import { registerIcon, registerWidget, registerWidgetStyle } from '../../core/utils';
+import { registerIcon, registerWidget, registerWidgetStyle } from '../../core';
 import { Button } from './Button';
 import buttonWidget from './definition';
 import Icon from './icon/icon.svg';

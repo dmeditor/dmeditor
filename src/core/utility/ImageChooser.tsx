@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { Button, Dialog, DialogActions, DialogContent, Tab, Tabs, TextField } from '@mui/material';
 
-import { BrowseImageCallbackParams, dmeConfig } from '../config';
+import { dmeConfig, type BrowseImageCallbackParams } from '../config';
 
 function CheckImageBrowserValid() {
   const { callbacks } = dmeConfig;

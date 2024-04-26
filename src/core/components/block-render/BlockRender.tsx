@@ -95,7 +95,8 @@ export const RenderMenu = (props: {
 };
 
 export const getStyleCss = (blocktype: string, styleIdentifier?: string) => {
-  let def = getDef(blocktype);
+  // let def = getDef(blocktype);
+  let def = {};
   let styleCss = '';
   if (styleIdentifier && def.styles) {
     const styleDef = def.styles[styleIdentifier];

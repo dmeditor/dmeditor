@@ -12,7 +12,6 @@ import { useMemo } from 'react';
 import { css } from '@emotion/css';
 import { debounce } from 'lodash';
 
-import { registerDefaultWidgets } from '../../utils';
 import { getPageTheme, setPageSettings } from '../../components/page';
 // import { useTranslation } from 'react-i18next';
 
@@ -47,8 +46,6 @@ export interface DMEditorProps {
   getFileUrl?: (path: string) => string;
   getImageUrl?: (path: string) => string;
 }
-
-registerDefaultWidgets();
 
 export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: React.Ref<any>) => {
   // const [blocks, setBlocks] = useState(props.data ? [...props.data] : []);

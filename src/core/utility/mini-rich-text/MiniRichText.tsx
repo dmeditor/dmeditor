@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { createEditor } from 'slate';
-import type { Descendant, Element as SlateElement } from 'slate';
+import { createEditor, type Descendant, type Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
@@ -8,8 +7,8 @@ import {
   Element,
   HoveringToolbar,
   Leaf,
+  type MiniTextLeafProps,
 } from '../../setting-panel/property-setting/rich-text/helper';
-import type { MiniTextLeafProps } from '../../setting-panel/property-setting/rich-text/helper';
 
 const { useCallback, useMemo } = React;
 

@@ -9,7 +9,7 @@ export {
   registerWidgetStyle,
   registerWidgetStyleOption,
   registerWidgetVariant,
-  // registerDefaultWidgets,
+  registerDefaultWidgets,
 } from './utils';
 export { getWidget, getWidgetVariant } from './utils';
 // register setting component

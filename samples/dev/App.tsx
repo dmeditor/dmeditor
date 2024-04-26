@@ -13,7 +13,7 @@ import { BrowseImage, BrowseLink } from './callbacks';
 import { EditImage } from './EditImage';
 import registerSampleWidget from './SampleWidget';
 
-// registerDefaultWidgets();
+registerDefaultWidgets();
 registerSampleWidget();
 
 setDMEditorConfig({

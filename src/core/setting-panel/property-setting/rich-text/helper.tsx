@@ -137,7 +137,6 @@ const MarkButton = ({ format }) => {
 
 const BlockButton = ({ format }) => {
   const editor = useSlate();
-  console.log('editor', format);
   return (
     <Button
       active={isBlockActive(editor, format, TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type')}

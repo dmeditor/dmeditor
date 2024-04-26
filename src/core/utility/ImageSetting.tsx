@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { css } from '@emotion/css';
 import { Button } from '@mui/material';
 
-import { dmeConfig } from '../config';
-import type { BrowseImageCallbackParams, ImageInfo } from '../config';
+import { dmeConfig, type BrowseImageCallbackParams, type ImageInfo } from '../config';
 import { ImageChooser } from './ImageChooser';
 
 export const ImageSetting = (props: {
