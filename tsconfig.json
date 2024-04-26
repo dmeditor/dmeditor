@@ -10,7 +10,6 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "commonjs",
-    "outDir": "./dist/",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -18,13 +17,15 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "rootDir": "./src/",
+    "outDir": "./dist/",
     "emitDeclarationOnly": true,
     "declaration": true,
     "paths": {
+      "dmeditor": ["src"],
       "dmeditor/*": ["src/*"]
     },
     "listEmittedFiles": true
   },
-  "include": ["src/**/**/*.ts", "src/**/**/*.tsx", "./index.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "./index.d.ts"],
   "exclude": ["src/config/**/*", "node_modules", "src/locales/**/*"]
 }

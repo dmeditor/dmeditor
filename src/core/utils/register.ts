@@ -1,80 +1,35 @@
 import type { ComponentType } from 'react';
 import { AccessAlarm } from '@mui/icons-material';
 
-import { registerServerSideLoad, ServerSideLoadFunction } from '../../core/ssr';
-import type { DME } from '../../core/types/dmeditor';
+import { registerServerSideLoad, ServerSideLoadFunction } from '../ssr';
+import type { DME } from '../types';
 
-const components: {
+export const components: {
   // TODO: make it more type safe
   [key: string]: any;
 } = {};
-
-const registerDefaultWidgets = () => {
-  try {
-    const modules = require.context('../../../src', true, /\$/);
-    console.log(modules.keys());
-    modules.keys().forEach((path: string) => {
-      const register = modules(path).default;
-      console.log(register);
-      if (typeof register === 'function') {
-        register();
-      }
-    });
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-const properties: string[] = [];
-const widgetDefinition: { [key: string]: DME.Widget & { variants: Array<DME.WidgetVariant> } } = {};
-
-// const widgetDefinition: Widget[] = [];
-const layoutDefinition: { [key: string]: DME.Widget } = {};
-const customDefinition: { [key: string]: DME.Widget } = {};
-// try {
-//   const modules = require.context('./', true, /definition.ts$/);
-//   modules.keys().forEach((path: string) => {
-//     // const { data, style, type } = modules(path).default;
-//     const widget = modules(path).default;
-//     const { category, settings, type } = widget;
-
-//     //todo: handle duplicated registration. (eg. give a warning and override)
-
-//     if (category === 'widget') {
-//       registerWidgetDefinition(widget);
-//     } else if (category === 'layout') {
-//       addLayoutDefinition(widget);
-//     } else if (category === 'custom') {
-//       addCustomDefinition(widget);
-//     } else {
-//       console.error(`Unknown category: ${category}`);
-//     }
-
-//     // for debug
-//     if (type === 'heading' || type === 'tabs') {
-//       properties.push(widget);
-//     }
-//   });
-// } catch (e) {
-//   console.error(e);
-// }
+export const properties: string[] = [];
+export const widgetDefinition: {
+  [key: string]: DME.Widget & { variants: Array<DME.WidgetVariant> };
+} = {};
+export const layoutDefinition: { [key: string]: DME.Widget } = {};
+export const customDefinition: { [key: string]: DME.Widget } = {};
 
 //get widget component for rendering
-const getWidgetComponent = (type: string): any => {
+export const getWidgetComponent = (type: string): any => {
   const component = components[type];
   return component ? component : null;
 };
 
 //get widget information/definiton/meta data
-const getWidget = (widget: string) => {
-  debugger;
+export const getWidget = (widget: string) => {
   const arr = widget.split(':');
   const def = widgetDefinition[arr[0]];
   return def as DME.Widget;
 };
 
 //get widget name, with variant considered.
-const getWidgetName = (widget: string) => {
+export const getWidgetName = (widget: string) => {
   const [widgetObj, variant] = getWidgetWithVariant(widget);
   if (variant) {
     return variant.name;
@@ -82,7 +37,7 @@ const getWidgetName = (widget: string) => {
   return widgetObj?.name || '';
 };
 
-const getWidgetWithVariant = (widget: string) => {
+export const getWidgetWithVariant = (widget: string) => {
   const arr = widget.split(':');
   const def = widgetDefinition[arr[0]];
 
@@ -95,7 +50,7 @@ const getWidgetWithVariant = (widget: string) => {
   return [def as DME.Widget | undefined, variant] as const;
 };
 
-const defaultStyle = (): DME.WidgetStyle => {
+export const defaultStyle = (): DME.WidgetStyle => {
   const preDefinedStyle = {
     identifier: '_',
     display: 'dropdown',
@@ -105,7 +60,7 @@ const defaultStyle = (): DME.WidgetStyle => {
   return preDefinedStyle;
 };
 
-function registerWidgetDefinition(widget: DME.Widget) {
+export function registerWidgetDefinition(widget: DME.Widget) {
   if (widgetDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -115,7 +70,7 @@ function registerWidgetDefinition(widget: DME.Widget) {
   registerWidgetStyle(widget.type, defaultStyle());
 }
 
-function addLayoutDefinition(widget: DME.Widget) {
+export function addLayoutDefinition(widget: DME.Widget) {
   if (layoutDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -123,7 +78,7 @@ function addLayoutDefinition(widget: DME.Widget) {
   layoutDefinition[widget.type] = widget;
 }
 
-function addCustomDefinition(widget: DME.Widget) {
+export function addCustomDefinition(widget: DME.Widget) {
   if (customDefinition[widget.type]) {
     console.warn(`Widget ${widget.type} is already registered.`);
     return;
@@ -131,7 +86,7 @@ function addCustomDefinition(widget: DME.Widget) {
   customDefinition[widget.type] = widget;
 }
 
-function registerWidgetComponent(widgetName: string, widgetInstance: ComponentType<any>) {
+export function registerWidgetComponent(widgetName: string, widgetInstance: ComponentType<any>) {
   if (components[widgetName]) {
     console.warn(`Widget ${widgetName} is already registered.`);
     return;
@@ -139,7 +94,7 @@ function registerWidgetComponent(widgetName: string, widgetInstance: ComponentTy
   components[widgetName] = widgetInstance;
 }
 
-function registerWidget(
+export function registerWidget(
   definition: DME.Widget,
   implementation: { render: ComponentType<any>; onServerSideLoad?: ServerSideLoadFunction },
 ) {
@@ -150,7 +105,7 @@ function registerWidget(
   }
 }
 
-function registerWidgetVariant(variant: DME.WidgetVariant, styles?: Array<DME.WidgetStyle>) {
+export function registerWidgetVariant(variant: DME.WidgetVariant, styles?: Array<DME.WidgetStyle>) {
   const widgetIdentifier = variant.widget;
   if (!widgetDefinition[widgetIdentifier]) {
     console.error(
@@ -169,7 +124,7 @@ function registerWidgetVariant(variant: DME.WidgetVariant, styles?: Array<DME.Wi
   }
 }
 
-function getWidgetVariant(widget: string, variant: string): DME.WidgetVariant | null {
+export function getWidgetVariant(widget: string, variant: string): DME.WidgetVariant | null {
   const variants = widgetDefinition[widget].variants;
   return variants.find((item) => item.identifier === variant) || null;
 }
@@ -183,7 +138,7 @@ export const widgetStyles: {
 } = {};
 
 //register style without verifying widget
-function registerWidgetStyle(widget: string, style: DME.WidgetStyle) {
+export function registerWidgetStyle(widget: string, style: DME.WidgetStyle) {
   if (!widgetStyles[widget]) {
     widgetStyles[widget] = {};
   }
@@ -196,7 +151,7 @@ function registerWidgetStyle(widget: string, style: DME.WidgetStyle) {
 }
 
 //register style option
-function registerWidgetStyleOption(
+export function registerWidgetStyleOption(
   widget: string,
   styleOptions: Array<DME.WidgetStyleOption>,
   style?: string,
@@ -213,7 +168,7 @@ function registerWidgetStyleOption(
 }
 
 //get a style, ignore enabledSettings
-function getWidgetStyle(widget: string, style?: string): DME.WidgetStyle {
+export function getWidgetStyle(widget: string, style?: string): DME.WidgetStyle {
   const styles = getWidgetStyles(widget, true);
   style = style || '_';
   const styleObj = styles[style];
@@ -230,7 +185,7 @@ function filterByKeys<T>(obj: { [prop: string]: T }, keys: Array<string>) {
 }
 
 //get wiget styles(including varianted widget)
-function getWidgetStyles(widget: string, allStyles?: boolean) {
+export function getWidgetStyles(widget: string, allStyles?: boolean) {
   const [widgetObj, variant] = getWidgetWithVariant(widget);
   const arr = widget.split(':');
   const styles = widgetStyles[arr[0]];
@@ -254,7 +209,7 @@ function getWidgetStyles(widget: string, allStyles?: boolean) {
   }
 }
 
-const getAllowedTypes = (widgetStr: string) => {
+export const getAllowedTypes = (widgetStr: string) => {
   const [widget, variant] = getWidgetWithVariant(widgetStr);
   if (variant) {
     return variant.allowedTypes;
@@ -267,7 +222,7 @@ interface Icon {
   component: any;
 }
 
-const IconDefinition: {
+export const IconDefinition: {
   prefix: string;
   icons: Icon[];
 } = {
@@ -278,7 +233,7 @@ const IconDefinition: {
   ],
 };
 
-const registerIcon = (icon: Icon) => {
+export const registerIcon = (icon: Icon) => {
   if (IconDefinition.icons.find((i) => i.name === icon.name)) {
     throw new Error(`Icon with name ${icon.name} already exists!`);
   } else {
@@ -286,30 +241,16 @@ const registerIcon = (icon: Icon) => {
   }
 };
 
-export { addCustomDefinition, addLayoutDefinition };
-
-export {
-  registerIcon,
-  registerDefaultWidgets,
-  registerWidget,
-  registerWidgetComponent,
-  registerWidgetDefinition,
-  registerWidgetVariant,
-  registerWidgetStyle,
-  registerWidgetStyleOption,
+export const registerDefaultWidgets = () => {
+  try {
+    const modules = require.context('../../widgets/', true, /index.ts$/);
+    modules.keys().forEach((path: string) => {
+      const register = modules(path).default;
+      if (typeof register === 'function') {
+        register();
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
-
-export {
-  getAllowedTypes,
-  getWidget,
-  getWidgetComponent,
-  getWidgetName,
-  getWidgetStyle,
-  getWidgetVariant,
-  getWidgetStyles,
-  getWidgetWithVariant,
-};
-
-export { IconDefinition, properties, widgetDefinition, layoutDefinition, customDefinition };
-
-export default widgetDefinition;

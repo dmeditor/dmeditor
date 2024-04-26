@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { useEditorStore } from '../../../core';
-import type { DME } from '../../../core';
-import { isHTMLElement } from '../../../core/utils';
+import { useEditorStore } from '../../core';
+import type { DME } from '../../core';
+import { isHTMLElement } from '../../core/utils';
 import { EntityHeadingBlock } from './entity';
 
 interface HeadingComponentProps extends React.HTMLAttributes<HTMLOrSVGElement> {

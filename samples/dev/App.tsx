@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import {
   DMEditor,
   dmeServerSideLoad,
+  registerDefaultWidgets,
   // registerTheme,
   setDMEditorCallback,
   setDMEditorConfig,
@@ -12,6 +13,7 @@ import { BrowseImage, BrowseLink } from './callbacks';
 import { EditImage } from './EditImage';
 import registerSampleWidget from './SampleWidget';
 
+// registerDefaultWidgets();
 registerSampleWidget();
 
 setDMEditorConfig({

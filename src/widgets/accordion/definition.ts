@@ -1,6 +1,6 @@
-import { DME, DMEData } from 'dmeditor/types/dmeditor';
 import { nanoid } from 'nanoid';
 
+import type { DME, DMEData } from '../../core';
 import type { EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {

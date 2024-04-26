@@ -9,9 +9,10 @@ import {
 } from '@mui/material';
 
 import type { DME } from '../../types/dmeditor';
-import widgetDefinition, {
+import {
   getWidgetStyle,
   getWidgetStyles,
+  widgetDefinition,
   widgetStyles,
 } from '../../utils/register';
 import { PropertyItem } from '../Property';

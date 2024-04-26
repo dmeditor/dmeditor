@@ -1,5 +1,7 @@
 // import SettingCarousel from 'dmeditor/components/reusable-setting/First';
-import { registerSettingComponent, registerWidget, registerWidgetStyleOption } from '../../core';
+// import { registerSettingComponent, registerWidget, registerWidgetStyleOption } from '../../core';
+import { registerSettingComponent } from '../../core/setting-panel/register';
+import { registerWidget, registerWidgetStyleOption } from '../../core/utils';
 import Carousel from './Carousel';
 import definition from './definition';
 import SettingCarousel from './settings/SettingCarousel';

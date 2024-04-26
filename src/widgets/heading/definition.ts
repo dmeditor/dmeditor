@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
-import type { DME, DMEData } from '../../../core';
-import { dmeConfig } from '../../../core';
+import type { DME, DMEData } from '../../core';
+import { dmeConfig } from '../../core';
 import { EntityHeadingBlock } from './entity';
 
 //should be HeadingWidget, which is a definition object. This file should be called definitin.ts
