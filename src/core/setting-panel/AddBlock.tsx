@@ -1,11 +1,7 @@
-import { useEffect } from 'react';
-import { css } from '@emotion/css';
-import { Cancel, CancelOutlined } from '@mui/icons-material';
-import { Button, TextField } from '@mui/material';
-import { nanoid } from 'nanoid';
+import { CancelOutlined } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
 import { WidgetList } from '../components/widget-list';
-import { getWidget, getWidgetVariant, getWidgetWithVariant } from '../components/widgets';
 import { useEditorStore } from '../main/store';
 import {
   AddBlockContainer,

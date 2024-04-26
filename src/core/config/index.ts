@@ -1,5 +1,6 @@
 import { ComponentType } from 'react';
-import { DME } from 'dmeditor';
+
+import type { DME } from '../types';
 
 export type BrowseLinkCallbackParams = string;
 

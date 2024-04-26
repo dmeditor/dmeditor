@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { BrowseLinkCallbackParams } from 'dmeditor/config';
+
+import { BrowseLinkCallbackParams } from '../../../src/core/config';
 
 const LinkList = [
   {

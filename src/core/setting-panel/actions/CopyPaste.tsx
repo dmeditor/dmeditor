@@ -1,6 +1,6 @@
-import { ContentCopy, ContentPaste, DeleteOutline } from '@mui/icons-material';
-import { useEditorStore } from 'dmeditor/main/store';
+import { ContentCopy, ContentPaste } from '@mui/icons-material';
 
+import { useEditorStore } from '../../../core';
 import { PropertyButton } from '../Property';
 
 export const CopyPaste = () => {

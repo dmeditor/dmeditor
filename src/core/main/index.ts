@@ -1,15 +1,5 @@
-import { DMEData } from 'dmeditor/types';
-
-// import { config } from './config';
+import type { DMEData } from '../types';
 import { simpleCloneDeep } from '../utils';
-
-// import { getBlockByID } from './dto/operations';
-
-function initDefaultOptions() {}
-
-function main() {
-  // options = initDefaultOptions(options ?? {})
-}
 
 export type LayoutMode = 'pc' | 'mobile' | 'tablet';
 const getDefaultOptions = (): {

@@ -1,17 +1,19 @@
 import * as React from 'react';
+import { nanoid } from 'nanoid';
+
 import {
   DMEditor,
   dmeServerSideLoad,
-  registerTheme,
+  registerDefaultWidgets,
+  // registerTheme,
   setDMEditorCallback,
   setDMEditorConfig,
-} from 'dmeditor';
-import { nanoid } from 'nanoid';
-
+} from '../../src/core';
 import { BrowseImage, BrowseLink } from './callbacks';
 import { EditImage } from './EditImage';
 import registerSampleWidget from './SampleWidget';
 
+registerDefaultWidgets();
 registerSampleWidget();
 
 setDMEditorConfig({

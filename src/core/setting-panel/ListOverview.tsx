@@ -2,7 +2,7 @@ import { css } from '@emotion/css';
 import { DragIndicator, KeyboardArrowRight } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { getWidgetWithVariant } from '../components/widgets';
+import { getWidgetWithVariant } from '../../core/utils';
 import { useEditorStore } from '../main/store';
 import { DMEData } from '../types/dmeditor';
 

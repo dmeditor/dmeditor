@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { isUndefinedOrNull } from '../utils';
 import { registerSettingComponent } from './property-setting/property-item';
 

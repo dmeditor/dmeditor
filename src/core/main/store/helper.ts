@@ -1,5 +1,5 @@
-import type { DMEData } from 'dmeditor/types/dmeditor';
-import { jsonParse } from 'dmeditor/utils';
+import type { DMEData } from '../../types/dmeditor';
+import { jsonParse } from '../../utils';
 
 //todo: can these operation be object-orented way(for blocklist and block)?
 

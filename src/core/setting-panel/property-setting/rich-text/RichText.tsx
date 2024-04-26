@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
-import definition from 'dmeditor/components/widgets/text/definition';
-import { useEditorStore } from 'dmeditor/index';
+import { createEditor } from 'slate';
+import type { Descendant, Element as SlateElement } from 'slate';
+import { withHistory } from 'slate-history';
+import { Editable, Slate, withReact } from 'slate-react';
+
+import { useEditorStore } from '../../../../core';
+import definition from '../../../../widgets/text/definition';
+import AddLinkButton from './AddLinkButton';
 import {
   BlockButton,
   Element,
@@ -12,20 +18,12 @@ import {
   Toolbar,
   ToolsGroup,
   withInlines,
-} from 'dmeditor/setting-panel/property-setting/rich-text/helper';
-import MarkColor from 'dmeditor/setting-panel/property-setting/rich-text/MarkColor';
-import MarkSelector from 'dmeditor/setting-panel/property-setting/rich-text/MarkSelector';
-import { SlateFun } from 'dmeditor/utils/Slate';
-import { createEditor } from 'slate';
-import type { Descendant, Element as SlateElement } from 'slate';
-import { withHistory } from 'slate-history';
-import { Editable, Slate, withReact } from 'slate-react';
-
-import AddLinkButton from './AddLinkButton';
+} from './helper';
+import MarkColor from './MarkColor';
+import MarkSelector from './MarkSelector';
 import RemoveLinkButton from './RemoveLinkButton';
 
 const { useCallback, useMemo } = React;
-const { HOTKEYS } = SlateFun;
 
 const RichText = (props: { property: string; value: any }) => {
   const { property, value = [] } = props;

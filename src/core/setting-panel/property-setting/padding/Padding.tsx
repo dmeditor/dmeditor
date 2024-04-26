@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Ranger } from 'dmeditor/utils';
+
+import { Ranger } from '../../../utils';
 
 const Padding = ({ value }: { value: number }) => {
   return (

@@ -1,6 +1,6 @@
 import { MenuItem, Select } from '@mui/material';
-import { DME } from 'dmeditor/types/dmeditor';
 
+import type { DME } from '../../types';
 import { StyleSettingProps } from './StyleSettings';
 
 export const DropDown = (props: StyleSettingProps & { style: DME.WidgetStyle }) => {

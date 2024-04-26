@@ -13,8 +13,8 @@ import {
   ShoppingBagOutlined,
 } from '@mui/icons-material';
 import { Button, Tooltip } from '@mui/material';
-import emitter from 'dmeditor/utils/event';
 
+import emitter from '../../core/utils/event';
 import { useEditorStore } from '../main/store';
 import { ActionsContainer, Container, Logo, LogoContainer, ToolsContainer } from './style';
 

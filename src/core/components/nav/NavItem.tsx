@@ -1,9 +1,9 @@
 import * as React from 'react';
-import type { DME } from 'dmeditor/types';
 
-import { Button } from '../widgets/button';
-import { EntityTabsBlock } from '../widgets/tabs/entity';
-import { useTabsStore } from '../widgets/tabs/store';
+import { Button } from '../../../widgets/button';
+import { EntityTabsBlock } from '../../../widgets/tabs/entity';
+import { useTabsStore } from '../../../widgets/tabs/store';
+import type { DME } from '../../types';
 
 interface NavItemProps
   extends React.HTMLAttributes<HTMLElement>,

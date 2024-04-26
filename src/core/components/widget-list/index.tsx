@@ -1,26 +1,19 @@
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
-import {
-  ArrowRightOutlined,
-  ChevronRightOutlined,
-  FormatColorText,
-  Title,
-} from '@mui/icons-material';
+import { ChevronRightOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import { dmeConfig } from 'dmeditor/config';
-import { DME } from 'dmeditor/types/dmeditor';
 
-import { SvgIcon } from '../icon';
-import { PropertyTab } from '../property-tab';
+import { dmeConfig } from '../../config';
+import type { DME } from '../../types/dmeditor';
 import {
   customDefinition,
-  getWidget,
-  getWidgetName,
   getWidgetStyle,
   layoutDefinition,
   widgetDefinition,
   widgetStyles,
-} from '../widgets';
+} from '../../utils/register';
+import { SvgIcon } from '../icon';
+import { PropertyTab } from '../property-tab';
 import { StyleTabBody } from './styled';
 
 //internal css: emotion

@@ -1,5 +1,5 @@
-import { dmeConfig } from 'dmeditor/config';
-import { DME } from 'dmeditor/types/dmeditor';
+import { dmeConfig } from '../../config';
+import type { DME } from '../../types/dmeditor';
 
 let pageSettings: Array<DME.PageSetting> = [];
 

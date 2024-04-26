@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
-import { useEditorStore } from 'dmeditor/main/store';
-import { DME } from 'dmeditor/types/dmeditor';
+
+import { useEditorStore } from '../../../../core';
+import type { DME } from '../../../../core';
 
 const Input = (props: DME.SettingComponentProps) => {
   const { property, value } = props;
