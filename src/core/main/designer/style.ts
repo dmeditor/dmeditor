@@ -27,6 +27,7 @@ export const Layout = {
   `,
   Edit: styled.div`
     border-right: 1px solid #cccccc;
+    overflow-y: auto;
     margin-top: var(--dmee-topbar-height);
   `,
   SettingPanel: styled.div`
