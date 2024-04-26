@@ -33,7 +33,14 @@ import { DMEData } from '../types';
 import { CopyPaste, DeleteBlock, Move } from './actions';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
-import { ActionPanel, Bottom, RightElement, Space, TabBodyContainer } from './style';
+import {
+  ActionPanel,
+  ActionPanelButtonGroup,
+  Bottom,
+  RightElement,
+  Space,
+  TabBodyContainer,
+} from './style';
 import { StyleSettings } from './style-settings/StyleSettings';
 
 interface CommonSettingsType {
@@ -148,9 +155,15 @@ export const BlockSettings = (props: {
               }}
             />
             <ActionPanel>
-              <Move />
-              <CopyPaste />
-              <DeleteBlock />
+              <ActionPanelButtonGroup>
+                <Move />
+                <CopyPaste />
+              </ActionPanelButtonGroup>
+              <ActionPanelButtonGroup>
+                <RightElement>
+                  <DeleteBlock />
+                </RightElement>
+              </ActionPanelButtonGroup>
             </ActionPanel>
           </>
         )}
