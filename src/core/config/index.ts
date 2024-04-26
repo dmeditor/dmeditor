@@ -50,7 +50,12 @@ export interface DMEConfigType {
     ui: { [variable: string]: string };
   };
   widgets?: { [widget: string]: widgetConfig };
-  plugins?: { [plugin: string]: any };
+  plugins?: {
+    imageHandlers?: Array<
+      React.ComponentType<{ image: ImageInfo; onChange: (imageInfo: ImageInfo) => void }>
+    >;
+    [plugin: string]: any;
+  };
 }
 
 const defaultConfig = () => {
