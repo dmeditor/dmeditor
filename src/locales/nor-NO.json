@@ -15,7 +15,7 @@
     "Add above ": "Legg til blokk over ",
     "Add under ": "Legg til blokk under "
   },
-  "blocktype": {
+  "widget": {
     "Image": "Bilder",
     "Text": "Tekst",
     "Heading": "Overskrift",

@@ -1,8 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-import i18n from '../../../locales/i18n';
-
 declare global {
   interface Window {
     dmeditorPropertyTab: (params: any) => void;

@@ -24,6 +24,8 @@ export { dmeServerSideLoad } from './ssr';
 export * from './utility';
 export { dmeConfig, setDMEditorConfig, setDMEditorCallback } from './config';
 
+export * from './i18n';
+
 export { DMEditorView, BlockRender, BlockListRender } from './main/renderer/index';
 export * from './types/dmeditor';
 

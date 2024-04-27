@@ -2,13 +2,14 @@ import { nanoid } from 'nanoid';
 
 import { dmeConfig } from '../../core';
 import type { DME, DMEData } from '../../core';
+import { i18n } from '../../core/i18n';
 import { initialTextEntity } from './entity';
 import type { EntityText } from './entity';
 
 const TextWidget: DME.Widget = {
   category: 'widget',
   icon: 'text',
-  name: 'Text',
+  name: i18n('Text', 'widget'),
   type: 'text',
   events: {
     createBlock: (): DMEData.Block<EntityText> => {

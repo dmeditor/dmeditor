@@ -4,6 +4,7 @@ import { ChevronRightOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { dmeConfig } from '../../config';
+import { i18n } from '../../i18n';
 import type { DME } from '../../types/dmeditor';
 import {
   customDefinition,
@@ -101,7 +102,7 @@ export const WidgetList = (props: WidgetListProps) => {
     <PropertyTab
       tabs={[
         {
-          title: 'Common',
+          title: i18n('Common'),
           element: (
             <StyleTabBody>
               {dmeConfig.editor.favouriteWidgets.map((widgetType) => {

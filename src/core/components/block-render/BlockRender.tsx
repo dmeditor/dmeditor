@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
 import _debounce from 'lodash/debounce';
 
-import i18n from '../../../locales/i18n';
+import i18n from '../../i18n';
 import type { DMEData } from '../../types';
 import { getWidgetComponent, getWidgetStyle } from '../../utils/register';
 
