@@ -1,5 +1,5 @@
-import { BlockListRender } from '../../core';
-import type { DME } from '../../core';
+import { BlockListRender } from '../..';
+import type { DME } from '../..';
 import { getAllowedTypes } from '../../core/utils/register';
 import { EntityList } from './entity';
 import { StyledList } from './styled';

@@ -1,6 +1,6 @@
 import { GridOnOutlined } from '@mui/icons-material';
 
-import { registerIcon, registerSettingComponent, registerWidget } from '../../core';
+import { registerIcon, registerSettingComponent, registerWidget } from '../..';
 import TableWidget from './definition';
 import { TableBorderType, TableColumn, TableHeader, TableRow } from './settings';
 import Table from './Table';

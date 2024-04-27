@@ -2,7 +2,7 @@ import * as React from 'react';
 import { LoopOutlined } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
 
-import { useEditorStore } from '../../../../core';
+import { useEditorStore } from '../../../..';
 import { PropertyButton, PropertyItem, Ranger, Util } from '../../../utils';
 import useHeadingStore from '../../store/heading';
 

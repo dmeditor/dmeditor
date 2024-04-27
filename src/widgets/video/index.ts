@@ -1,6 +1,6 @@
 import { OndemandVideoOutlined } from '@mui/icons-material';
 
-import { registerIcon, registerWidget } from '../../core';
+import { registerIcon, registerWidget } from '../..';
 import { Video, VideoDefinition } from './Video';
 
 export default () => {

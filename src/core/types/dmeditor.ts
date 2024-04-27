@@ -100,6 +100,14 @@ export namespace DME {
     value?: unknown; //if custom is true, value will be not set,
     block: DMEData.Block<T>;
   }
+
+  export interface ImageInfo {
+    src: string;
+    description?: string;
+    title?: string;
+    thumbnail?: string;
+    id?: string | number;
+  }
 }
 
 export namespace DMEData {

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
 
-import { BlockListRender, BlockRender, useDevice } from '../../core';
-import type { DME } from '../../core';
+import { BlockListRender, BlockRender, useDevice } from '../..';
+import type { DME } from '../..';
 import { dmeFullWidthLeft, dmeFullWidthRight } from '../../core/config';
 import { getAllowedTypes } from '../../core/utils/register';
 import { EntityHeroText } from './entity';

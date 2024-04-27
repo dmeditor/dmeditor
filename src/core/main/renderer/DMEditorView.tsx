@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 
-import type { DMEData } from '../../../core';
-import { useDevice } from '../../../core';
+import type { DMEData } from '../../..';
+import { useDevice } from '../../..';
 import { BlockListRender } from '../../components/block-list-render/BlockListRender';
 import { getPageTheme } from '../../components/page';
 import { dmeConfig } from '../../config';

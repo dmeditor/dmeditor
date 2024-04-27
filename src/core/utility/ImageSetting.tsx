@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { css } from '@emotion/css';
 import { Button } from '@mui/material';
 
-import { dmeConfig, type BrowseImageCallbackParams, type ImageInfo } from '../config';
+import { dmeConfig, type BrowseImageCallbackParams } from '../config';
+import { DME } from '../types';
 import { ImageChooser } from './ImageChooser';
 
 export const ImageSetting = (props: {
   defaultVisible?: boolean;
-  value: ImageInfo;
-  onChange: (value: ImageInfo) => void;
+  value: DME.ImageInfo;
+  onChange: (value: DMEImageInfo) => void;
 }) => {
   const { value, onChange, defaultVisible = false } = props;
   const { src } = value;

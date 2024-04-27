@@ -1,5 +1,5 @@
-import { MiniText, useEditorStore } from '../../core';
-import type { DME } from '../../core';
+import { MiniText, useEditorStore } from '../..';
+import type { DME } from '../..';
 import type { EntityTableBlock } from './entity';
 import { useTableStore } from './store';
 import { StyledTable } from './styled';

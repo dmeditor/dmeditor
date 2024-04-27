@@ -1,6 +1,6 @@
 import { BorderBottom, BorderTop, Delete } from '@mui/icons-material';
 
-import { useEditorStore } from '../../../core';
+import { useEditorStore } from '../../..';
 import { PropertyButton, PropertyItem } from '../../../core/utils';
 import { useTableStore } from '../store';
 

@@ -1,5 +1,4 @@
-import { ImageSetting, useEditorStore } from '../../../core';
-import { ImageInfo } from '../../../core/config';
+import { DME, ImageSetting, useEditorStore } from '../../..';
 import { PropertyItem } from '../../../core/utils';
 import { ImageEntity } from '../Image';
 
@@ -8,7 +7,7 @@ export const Source = () => {
   const { data } = getSelectedBlock<ImageEntity>() || {};
   const { src } = data || {};
 
-  const handleChange = (value: ImageInfo) => {
+  const handleChange = (value: DME.ImageInfo) => {
     updateSelectedBlock<ImageEntity>((blockData) => {
       blockData.src = value?.src;
       blockData.externalId = value?.id;

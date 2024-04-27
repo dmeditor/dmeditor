@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MenuItem, Select as MUISelect } from '@mui/material';
 
-import { useEditorStore } from '../../../../core';
+import { useEditorStore } from '../../../..';
 import type { DME } from '../../../types';
 
 const Select = (props: DME.SettingComponentProps) => {

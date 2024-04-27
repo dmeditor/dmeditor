@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useEditorStore } from '../../../core';
+import { useEditorStore } from '../../..';
 import type { DME } from '../../../core/types';
 import { PropertyItem, Ranger } from '../../../core/utils';
 import { EntityLayout3Columns } from '../Layout3Columns';

@@ -5,7 +5,7 @@ import {
   registerSettingComponent,
   registerWidget,
   registerWidgetStyleOption,
-} from '../../core';
+} from '../..';
 import { Layout3Columns, layout3ColumnsWidget } from './Layout3Columns';
 import { Layout3ColumnsSetting } from './settings/Layout3ColumnsSetting';
 

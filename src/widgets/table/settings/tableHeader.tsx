@@ -1,7 +1,7 @@
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 import { Checkbox } from '@mui/material';
 
-import { useEditorStore } from '../../../core';
+import { useEditorStore } from '../../..';
 // import Align from '../../../core/setting-panel/property-setting/align/Align';
 // import Color from '../../../core/setting-panel/property-setting/color/Color';
 import { PickColor, PropertyButton, PropertyItem } from '../../../core/utils';

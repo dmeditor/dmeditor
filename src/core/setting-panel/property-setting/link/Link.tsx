@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 import { CloudOutlined } from '@mui/icons-material';
 import { Button, TextField } from '@mui/material';
 
-import { useEditorStore } from '../../../../core';
+import { useEditorStore } from '../../../..';
 import { BrowseLinkCallbackParams } from '../../../config';
 import type { DME } from '../../../types';
 import { LinkChooser, LinkRef } from '../../../utility';

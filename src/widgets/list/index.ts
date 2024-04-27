@@ -1,8 +1,8 @@
 import { ReorderOutlined } from '@mui/icons-material';
 import { nanoid } from 'nanoid';
 
-import type { DMEData } from '../../core';
-import { registerIcon, registerWidget, registerWidgetVariant } from '../../core';
+import type { DMEData } from '../..';
+import { registerIcon, registerWidget, registerWidgetVariant } from '../..';
 import listWidget from './definition';
 import { List } from './List';
 

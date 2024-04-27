@@ -3,8 +3,8 @@ import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, dmeConfig } from '../../core';
-import type { DME } from '../../core';
+import { BlockListRender, dmeConfig } from '../..';
+import type { DME } from '../..';
 
 interface CollapsableTextEntity {}
 

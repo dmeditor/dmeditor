@@ -1,6 +1,6 @@
 import { TitleOutlined } from '@mui/icons-material';
 
-import { registerIcon, registerWidget, registerWidgetStyleOption } from '../../core';
+import { registerIcon, registerWidget, registerWidgetStyleOption } from '../..';
 import { CollapsableText, CollapsableTextDefiniation } from './CollapsableText';
 
 export default () => {

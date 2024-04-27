@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import type { DME, DMEData } from '../../core';
+import type { DME, DMEData } from '../..';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
 
 const TabsWidget: DME.Widget = {

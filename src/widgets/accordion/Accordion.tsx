@@ -1,7 +1,7 @@
 import { ExpandMoreOutlined } from '@mui/icons-material';
 import { AccordionDetails, AccordionSummary, Accordion as MUIAccordion } from '@mui/material';
 
-import { BlockListRender } from '../../core';
+import { BlockListRender } from '../..';
 import { getAllowedTypes, isNull } from '../../core/utils';
 import { useAccordionStore } from './store';
 

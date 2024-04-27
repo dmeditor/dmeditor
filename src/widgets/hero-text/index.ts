@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
-import type { DMEData } from '../../core';
-import { registerWidget, registerWidgetStyle, registerWidgetVariant } from '../../core';
+import type { DMEData } from '../..';
+import { registerWidget, registerWidgetStyle, registerWidgetVariant } from '../..';
 import heroTextWidget from './definition';
 import { HeroText } from './HeroText';
 

@@ -12,7 +12,7 @@ function resolve(dir) {
 
 const commonConfig = {
   mode: 'production',
-  entry: './src/core/index',
+  entry: './src/index',
   externals: {
     react: 'commonjs-module react',
     'react-dom': 'commonjs-module react-dom',

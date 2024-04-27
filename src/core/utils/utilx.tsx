@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-import { dmeConfig } from '..';
+import { dmeConfig } from '../..';
 
 export interface BrowseProps {
   type?: any;
@@ -277,7 +277,6 @@ const DefaultBrowseUrl = (props: {
 };
 
 //set device manually, for simulation purpose
-
 
 export const sanitizeBlockData = (data: any) => {
   if (!data.style && data['style'] !== undefined) {

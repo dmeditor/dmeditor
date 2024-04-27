@@ -1,5 +1,5 @@
-import { MiniText, useEditorStore } from '../../core';
-import type { DME } from '../../core';
+import { MiniText, useEditorStore } from '../..';
+import type { DME } from '../..';
 import { EntityText } from './entity';
 
 interface RichTextProps extends DME.WidgetRenderProps<EntityText> {}

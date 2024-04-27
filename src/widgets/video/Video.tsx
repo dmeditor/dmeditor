@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-import type { DME, DMEData } from '../../core';
-import { dmeConfig, useEditorStore } from '../../core';
+import type { DME, DMEData } from '../..';
+import { dmeConfig, useEditorStore } from '../..';
 
 export type VideoEntity = {
   value: string;

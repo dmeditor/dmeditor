@@ -1,25 +1,21 @@
 import * as React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material';
-import { deepOrange } from '@mui/material/colors';
-
-import { DeviceType, setDevice } from '../../hooks/useDeivce';
-import emitter from '../../utils/event';
-import { BrowseProps, Util } from '../../utils/utilx';
-
-import '../../../locales/i18n';
-
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { deepOrange } from '@mui/material/colors';
 import { debounce } from 'lodash';
 
 import { getPageTheme, setPageSettings } from '../../components/page';
 // import { useTranslation } from 'react-i18next';
 
 import { dmeConfig } from '../../config';
+import { DeviceType, setDevice } from '../../hooks/useDeivce';
 import { BlockListRender } from '../../main/renderer';
 import SettingPanel from '../../setting-panel';
 import { TopBar } from '../../topbar/Topbar';
 import { DME, DMEData } from '../../types/dmeditor';
+import emitter from '../../utils/event';
+import { BrowseProps, Util } from '../../utils/utilx';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } from './style';

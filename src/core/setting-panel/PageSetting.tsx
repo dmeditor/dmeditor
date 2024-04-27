@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Alert, MenuItem, Select, TextField } from '@mui/material';
+import { css } from '@emotion/css';
+import { Alert, Button, MenuItem, Select, TextField } from '@mui/material';
 
-import { dmeConfig } from '..';
+import { dmeConfig, ImageSetting } from '../..';
 import { getPageSettings } from '../components/page';
 import { useEditorStore } from '../main/store';
-import { PropertyItem } from './Property';
 import { Required, SettingHeader, SettingItem } from './style';
 
 interface SettingTypeProps {
@@ -34,6 +34,9 @@ const SettingType = (props: SettingTypeProps) => {
           />
         </div>
       );
+    case 'image':
+      return '';
+    // return <ImageSetting value={currentValue} onChange={(v) => setCurrentValue(v)} />;
     case 'multitext':
       return (
         <div>

@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import type { DME, DMEData } from '../../core';
+import type { DME, DMEData } from '../..';
 import type { EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {

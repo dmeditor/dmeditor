@@ -1,7 +1,7 @@
 import { Checkbox as MUICheckbox } from '@mui/material';
 
-import { useEditorStore } from '../../../../core';
-import type { DME } from '../../../../core';
+import { useEditorStore } from '../../../..';
+import type { DME } from '../../../..';
 
 const Checkbox = (props: DME.SettingComponentProps) => {
   const { property, value } = props;

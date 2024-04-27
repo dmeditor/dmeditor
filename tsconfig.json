@@ -21,11 +21,10 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "paths": {
-      "dmeditor": ["src"],
       "dmeditor/*": ["src/*"]
     },
     "listEmittedFiles": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "./index.d.ts"],
-  "exclude": ["src/config/**/*", "node_modules", "src/locales/**/*"]
+  "exclude": ["node_modules", "src/locales/**/*"]
 }

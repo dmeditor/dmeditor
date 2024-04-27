@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import type { DME, DMEData } from '../../core';
+import type { DME, DMEData } from '../..';
 import { dmeConfig } from '../../core/config';
 import { CarouselEntity, initCarouselEntity } from './entity';
 

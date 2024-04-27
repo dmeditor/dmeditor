@@ -1,6 +1,6 @@
 import { Button, ButtonGroup as MUIButtonGroup } from '@mui/material';
 
-import { useEditorStore } from '../../../../core';
+import { useEditorStore } from '../../../..';
 
 const ButtonGroup = (props: {
   property: string;

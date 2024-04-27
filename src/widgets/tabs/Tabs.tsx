@@ -3,8 +3,8 @@ import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import { orange } from '@mui/material/colors';
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, useEditorStore } from '../../core';
-import type { DME } from '../../core';
+import { BlockListRender, useEditorStore } from '../..';
+import type { DME } from '../..';
 import { Nav, NavItem } from '../../core/components/nav';
 import { getAllowedTypes, isNull } from '../../core/utils';
 import { BaseTabs, TabPane } from './BaseTabs';

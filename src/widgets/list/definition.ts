@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
-import type { DME } from '../../core';
-import { dmeConfig, getWidgetVariant } from '../../core';
+import type { DME } from '../..';
+import { dmeConfig, getWidgetVariant } from '../..';
 
 const listWidget: DME.Widget = {
   category: 'section',

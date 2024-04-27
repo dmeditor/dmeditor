@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 
-import { useEditorStore } from '../../../../core';
+import { useEditorStore } from '../../../..';
 import { PropertyButton } from '../../../utils';
 
 export type AlignType = 'left' | 'center' | 'right';

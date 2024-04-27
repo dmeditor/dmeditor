@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { useEditorStore } from '../../core';
-import type { DME } from '../../core';
+import { useEditorStore } from '../..';
+import type { DME } from '../..';
 import { isHTMLElement } from '../../core/utils';
 import { EntityHeadingBlock } from './entity';
 

@@ -4,15 +4,7 @@ import type { DME } from '../types';
 
 export type BrowseLinkCallbackParams = string;
 
-export interface ImageInfo {
-  src: string;
-  description?: string;
-  title?: string;
-  thumbnail?: string;
-  id?: string | number;
-}
-
-export type BrowseImageCallbackParams = ImageInfo[];
+export type BrowseImageCallbackParams = DME.ImageInfo[];
 
 export interface CallbackConfig {
   browseImage?: ComponentType<{
@@ -54,7 +46,7 @@ export interface DMEConfigType {
   widgets?: { [widget: string]: widgetConfig };
   plugins?: {
     imageHandlers?: Array<
-      React.ComponentType<{ image: ImageInfo; onChange: (imageInfo: ImageInfo) => void }>
+      React.ComponentType<{ image: DME.ImageInfo; onChange: (imageInfo: DME.ImageInfo) => void }>
     >;
     [plugin: string]: any;
   };
@@ -147,7 +139,7 @@ const dmeConfig: {
   widgets: { [widget: string]: widgetConfig };
   plugins: {
     imageHandlers: Array<
-      React.ComponentType<{ image: ImageInfo; onChange: (imageInfo: ImageInfo) => void }>
+      React.ComponentType<{ image: DME.ImageInfo; onChange: (imageInfo: DME.ImageInfo) => void }>
     >;
     [plugin: string]: any;
   };

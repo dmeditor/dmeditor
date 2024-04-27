@@ -1,4 +1,4 @@
-import { registerIcon, registerWidget } from '../../core';
+import { registerIcon, registerWidget } from '../..';
 import TextDefinition from './definition';
 import Icon from './icon/text.svg';
 import Text from './Text';

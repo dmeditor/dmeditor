@@ -1,4 +1,4 @@
-import { registerWidget, registerWidgetStyleOption } from '../../core';
+import { registerWidget, registerWidgetStyleOption } from '../..';
 import { registerSettingComponent } from '../../core/setting-panel/register';
 import Carousel from './Carousel';
 import definition from './definition';

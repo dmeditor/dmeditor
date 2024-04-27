@@ -1,4 +1,4 @@
-import { registerSettingComponent, registerWidget } from '../../core';
+import { registerSettingComponent, registerWidget } from '../..';
 import SettingAccordion from '../../core/components/reusable-setting/First';
 import Accordion from './Accordion';
 import definition from './definition';

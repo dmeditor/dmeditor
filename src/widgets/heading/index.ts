@@ -1,4 +1,4 @@
-import { registerIcon, registerWidget } from '../../core';
+import { registerIcon, registerWidget } from '../..';
 import IconHeading from './assets/svg/heading.svg';
 import definition from './definition';
 import Heading from './Heading';

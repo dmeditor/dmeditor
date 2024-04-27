@@ -1,4 +1,4 @@
-import type { DME } from '../../core';
+import type { DME } from '../..';
 import { BlockListRender } from '../../core/components/block-list-render';
 import { getAllowedTypes } from '../../core/utils/register';
 import { EntityGrid } from './entity';

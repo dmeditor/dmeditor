@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useEditorStore } from '../../../../core';
+import { useEditorStore } from '../../../..';
 import { PickColor } from '../../../utils';
 
 const Color = (props: { value?: string; property: string }) => {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
 
-import { useEditorStore } from '../../../core';
+import { useEditorStore } from '../../..';
 import type { DME } from '../../types';
 import { PropertyButton } from '../../utils';
 
