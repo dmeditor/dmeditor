@@ -4,7 +4,9 @@ import { nanoid } from 'nanoid';
 import {
   DMEditor,
   dmeServerSideLoad,
+  initLanguage,
   registerDefaultWidgets,
+  registerWidgetStyleOption,
   // registerTheme,
   setDMEditorCallback,
   setDMEditorConfig,
@@ -12,6 +14,8 @@ import {
 import { BrowseImage, BrowseLink } from './callbacks';
 import { EditImage } from './EditImage';
 import registerSampleWidget from './SampleWidget';
+
+initLanguage('nor-NO');
 
 registerDefaultWidgets();
 registerSampleWidget();
@@ -55,6 +59,17 @@ setDMEditorConfig({
     imageHandlers: [EditImage],
   },
 });
+
+registerWidgetStyleOption('text', [
+  {
+    identifier: 'article-summary',
+    name: 'Article summary',
+    cssStyle: `
+    font-weight: bold;
+    padding: 5px 10px;
+`,
+  },
+]);
 
 setDMEditorCallback({ browseImage: BrowseImage, browseLink: BrowseLink });
 
