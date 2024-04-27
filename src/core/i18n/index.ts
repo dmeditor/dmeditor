@@ -1,7 +1,7 @@
 import i18nCore from 'i18next';
 
-import engGB from '../../locales/lang/eng-GB.json';
-import norNo from '../../locales/lang/nor-NO.json';
+import engGB from '../../locales/eng-GB.json';
+import norNo from '../../locales/nor-NO.json';
 
 const resources = {
   'eng-GB': engGB,
