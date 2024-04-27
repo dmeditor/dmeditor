@@ -18,8 +18,14 @@ import {
 } from '@mui/icons-material';
 import { BaseText, Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
 import type { Descendant } from 'slate';
-import { RenderLeafProps, useFocused, useSelected, useSlate, useSlateStatic } from 'slate-react';
-import type { ReactEditor } from 'slate-react';
+import {
+  ReactEditor,
+  RenderLeafProps,
+  useFocused,
+  useSelected,
+  useSlate,
+  useSlateStatic,
+} from 'slate-react';
 
 import { BrowseImageCallbackParams, dmeConfig } from '../../../config';
 import { ImageChooser } from '../../../utility/ImageChooser';
