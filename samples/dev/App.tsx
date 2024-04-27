@@ -10,7 +10,7 @@ import {
   // registerTheme,
   setDMEditorCallback,
   setDMEditorConfig,
-} from '../../src/core';
+} from '../../src';
 import { BrowseImage, BrowseLink } from './callbacks';
 import { EditImage } from './EditImage';
 import registerSampleWidget from './SampleWidget';

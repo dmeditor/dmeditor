@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 
+import type { DMEData } from '../../../src';
 import {
   getWidget,
   getWidgetVariant,
@@ -8,8 +9,7 @@ import {
   registerWidgetStyle,
   registerWidgetStyleOption,
   registerWidgetVariant,
-} from '../../../src/core';
-import type { DMEData } from '../../../src/core';
+} from '../../../src';
 import SampleWidget from './SampleWidget';
 import SettingInput from './SettingInput';
 
