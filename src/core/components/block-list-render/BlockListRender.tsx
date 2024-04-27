@@ -44,6 +44,7 @@ export const BlockListRender = (props: BlockListProps) => {
     clearAdding,
     updateSelectedBlockIndex,
     hoverPath,
+    executeAdding,
   } = useEditorStore();
 
   const { status: globalAddingStatus } = addBlockData || {};
@@ -73,10 +74,6 @@ export const BlockListRender = (props: BlockListProps) => {
   useEffect(() => {
     emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
       startAddBlock(parameters.context, parameters.index, parameters.position, parameters.types);
-      //todo: move this into zustand
-      if (parameters.types?.length === 1) {
-        addBlock(parameters.types[0]);
-      }
     });
 
     return () => {
@@ -97,17 +94,21 @@ export const BlockListRender = (props: BlockListProps) => {
   }, [depsAddingStatus]);
 
   const handleAdding = (position: 'before' | 'after', index: number) => {
-    const parameters = {
-      index: index,
-      position: position,
-    };
-    setAddParameters(parameters);
-    emitter.emit('addBlock', {
-      ...parameters,
-      context: props.path,
-      status: 'started',
-      types: props.allowedTypes,
-    });
+    if (props.allowedTypes?.length === 1) {
+      executeAdding(props.path, index, position, props.allowedTypes[0]);
+    } else {
+      const parameters = {
+        index: index,
+        position: position,
+      };
+      setAddParameters(parameters);
+      emitter.emit('addBlock', {
+        ...parameters,
+        context: props.path,
+        status: 'started',
+        types: props.allowedTypes,
+      });
+    }
   };
 
   const renderAddingMessage = () => {

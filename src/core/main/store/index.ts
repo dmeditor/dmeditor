@@ -47,6 +47,13 @@ type Actions = {
   updateHoverPath: (path: Array<number>) => void;
   clearAdding: () => void;
   addBlock: (type: string, style?: string) => void;
+  executeAdding: (
+    context: Array<number>,
+    index: number,
+    position: AddBlockPosition,
+    type: string,
+    style?: string,
+  ) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
@@ -98,12 +105,28 @@ const useEditorStore = create<Store & Actions>()(
       set((state) => {
         state.addBlockData = { context, index, position, status: 'started', types: types };
       }),
-    addBlock: (type: string, style?: string) =>
+    addBlock: (type: string, style?: string) => {
+      const state = get();
+      if (!state.addBlockData) {
+        return;
+      }
+      const { index, position, context } = state.addBlockData;
+
+      state.executeAdding(context, index, position, type, style);
       set((state) => {
-        if (!state.addBlockData) {
-          return;
+        if (state.addBlockData) {
+          state.addBlockData.status = 'done';
         }
-        const { index, position, context } = state.addBlockData;
+      });
+    },
+    executeAdding: (
+      context: Array<number>,
+      index: number,
+      position: AddBlockPosition,
+      type: string,
+      style?: string,
+    ) =>
+      set((state) => {
         if (index == -Infinity) {
           return;
         }
@@ -121,6 +144,7 @@ const useEditorStore = create<Store & Actions>()(
         if (style) {
           blockData.style = { _: style };
         }
+
         if (!blockData) {
           return;
         }
@@ -134,7 +158,7 @@ const useEditorStore = create<Store & Actions>()(
           listData.push(blockData);
           newPosition = 0;
         } else {
-          if (index <= listData.length - 1 && state.addBlockData.position) {
+          if (index <= listData.length - 1 && position) {
             // find the deepest children
             // let targetIndex = index;
             // let targetList = listData;
@@ -169,11 +193,10 @@ const useEditorStore = create<Store & Actions>()(
             }
           }
         }
+
         //update to new block
         state.selected.blockIndex = newPosition;
         state.selected.currentListPath = context;
-
-        state.addBlockData.status = 'done';
       }),
     cancelAdding: () =>
       set((state) => {
