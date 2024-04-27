@@ -84,15 +84,6 @@ type Actions = {
   getCopyBlock: () => DMEData.Block | undefined;
 };
 
-// const useEditorStore = create<Store & Actions>((set) => {
-//   // toggleProperty: (status) => set(() => ({ status })),
-//   const initialState = createDMEditor();
-//   return {
-//     ...initialState,
-//     // toggleProperty: (status) => set(() => ({ status })),
-//   };
-// });
-
 const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
     ...createDMEditor(),
@@ -159,32 +150,10 @@ const useEditorStore = create<Store & Actions>()(
           newPosition = 0;
         } else {
           if (index <= listData.length - 1 && position) {
-            // find the deepest children
-            // let targetIndex = index;
-            // let targetList = listData;
-            // while (targetList[targetIndex]?.children) {
-            //   targetList = targetList[targetIndex].children ?? [];
-            //   targetIndex = targetList.length - 1;
-            // }
-
             if (position === 'before') {
-              // if (targetList) {
-              //   targetList.splice(targetIndex, 0, blockData);
-              //   newPosition = targetIndex;
-              // } else {
-              //   listData.splice(index, 0, blockData);
-              //   newPosition = index;
-              // }
               listData.splice(index, 0, blockData);
               newPosition = index;
             } else if (position === 'after') {
-              // if (targetList) {
-              //   targetList.splice(targetIndex + 1, 0, blockData);
-              //   newPosition = targetIndex + 1;
-              // } else {
-              //   listData.splice(index + 1, 0, blockData);
-              //   newPosition = index + 1;
-              // }
               listData.splice(index + 1, 0, blockData);
               newPosition = index + 1;
             } else {
