@@ -410,7 +410,7 @@ const useEditorStore = create<Store & Actions>()(
         const [propKey, realPropsName] = propName.split('.');
         // the property is in the root of the block
         if (isEmptyString(propKey)) {
-          if (isPlainObject(state.storage[state.selected.blockIndex].data)) {
+          if (isPlainObject(block.data)) {
             block['data'][realPropsName] = propValue;
           } else {
             console.warn('data is not an object');
