@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { dmeConfig } from 'dmeditor/core/config';
 
 export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
   --dmee-bg-color: ${(props) => props.uiConfig['bg-color'] || '#1d4b64'};
@@ -8,14 +7,14 @@ export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
 `;
 
 export const Layout = {
-  Main: styled.div`
+  Main: styled.div<{ config: { zIndex: number } }>`
     --dmee-layout-property-width: 350px;
     --dmee-edit-max-width: 1200px;
 
     --dmee-selected-border-color: #fc7e4b;
     --dmee-hover-font-color: red;
 
-    --dmee-zindex: ${dmeConfig.editor.zIndex};
+    --dmee-zindex: ${(props) => props.config.zIndex};
     height: 100vh;
     display: grid;
     grid-template-columns: calc(100% - var(--dmee-layout-property-width)) var(

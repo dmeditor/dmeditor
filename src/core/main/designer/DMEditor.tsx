@@ -240,7 +240,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
     <Root uiConfig={dmeConfig.editor.ui}>
       <ThemeProvider theme={outerTheme}>
         <TopBar />
-        <Layout.Main ref={currentRef}>
+        <Layout.Main config={{ zIndex: dmeConfig.editor.zIndex }} ref={currentRef}>
           {/* <Toolbar readonlyMode={false} /> */}
 
           {/* <div className="dme-settings" style={{ display: settingsShown ? 'block' : 'none' }}>
