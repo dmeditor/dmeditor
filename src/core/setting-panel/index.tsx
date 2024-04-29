@@ -57,6 +57,8 @@ const SettingPanel = (props) => {
     isSelected,
     page,
     updatePage,
+    clearSelected,
+    updateSelectedBlockIndex,
   } = useEditorStore((state) => state);
 
   const { index: addBlockIndex, position: addBlockPosition } = addBlockData || {};
@@ -64,6 +66,7 @@ const SettingPanel = (props) => {
   const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
   const [selectedPathIndex, setSelectedPathIndex] = useState<number>();
+  console.log('🚀 ~ SettingPanel ~ setSelectedPathIndex:', selectedPathIndex);
 
   const currentList = getCurrentList();
   // const selectedBlock = useMemo(() => getSelectedBlock(), [blockId]);
@@ -116,11 +119,18 @@ const SettingPanel = (props) => {
   const selectPathItem = (level: number) => {
     if (level === 0) {
       setMode('list-overview');
+      clearSelected();
+      // const block = pathArray[1];
+      // updateSelectedBlockIndex(block.dataPath, block.id);
     } else {
       setMode('block-setting');
       if (!pathArray[level].disableClick) {
         setSelectedPathIndex(level);
       }
+
+      // update selected block
+      const block = pathArray[level];
+      updateSelectedBlockIndex(block.dataPath, block.id);
     }
   };
 
