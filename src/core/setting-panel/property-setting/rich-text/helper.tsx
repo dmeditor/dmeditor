@@ -16,8 +16,16 @@ import {
   LooksOneOutlined,
   LooksTwoOutlined,
 } from '@mui/icons-material';
-import { BaseText, Editor, Node, Point, Range, Element as SlateElement, Transforms } from 'slate';
-import type { Descendant } from 'slate';
+import {
+  BaseText,
+  Editor,
+  Node,
+  Point,
+  Range,
+  Element as SlateElement,
+  Transforms,
+  type Descendant,
+} from 'slate';
 import {
   ReactEditor,
   RenderLeafProps,
@@ -30,7 +38,11 @@ import {
 import { BrowseImageCallbackParams, dmeConfig } from '../../../config';
 import { ImageChooser } from '../../../utility/ImageChooser';
 import { imageExtensionIsValid, isNumber, isUrl } from '../../../utils';
-import { LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
+import Image from './Image';
+import { IMAGE_HEIGHT, IMAGE_WIDTH, LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
+
+export const getImageScale = (width: number, height: number) =>
+  Math.round((width / height) * 100) / 100;
 
 interface BaseProps {
   className: string;
@@ -355,56 +367,6 @@ const HoveringToolbar = () => {
   );
 };
 
-interface ImageProps {
-  attributes: Record<string, unknown>;
-  children: ReactNode;
-  element: {
-    url: string;
-  };
-}
-const Image = (props: ImageProps) => {
-  const { attributes, children, element } = props;
-  const editor = useSlateStatic();
-  const path = ReactEditor.findPath(editor, element);
-
-  const selected = useSelected();
-  const focused = useFocused();
-  return (
-    <div {...attributes}>
-      {children}
-      <div
-        contentEditable={false}
-        className={css`
-          position: relative;
-        `}
-      >
-        <img
-          src={element.url}
-          className={css`
-            display: block;
-            max-width: 100%;
-            max-height: 20em;
-            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-          `}
-        />
-        <Button
-          active
-          onClick={() => Transforms.removeNodes(editor, { at: path })}
-          className={css`
-            display: ${selected && focused ? 'inline' : 'none'};
-            position: absolute;
-            top: 0.5em;
-            left: 0.5em;
-            background-color: white;
-          `}
-        >
-          <DeleteOutlined />
-        </Button>
-      </div>
-    </div>
-  );
-};
-
 const InlineChromiumBugfix = () => (
   <span
     contentEditable={false}
@@ -608,14 +570,28 @@ const isImageUrl = (url: string) => {
 };
 
 type ImageElement = {
+  setting: {
+    width: number;
+    height: number;
+    scale: number;
+  };
   type: 'image';
   url: string;
   children: EmptyText[];
 };
 
-const insertImage = (editor, url: string) => {
+const insertImage = (editor: ReactEditor, url: string) => {
   const text = { text: '' };
-  const image: ImageElement = { type: 'image', url, children: [text] };
+  const image: ImageElement = {
+    type: 'image',
+    url,
+    children: [text],
+    setting: {
+      width: IMAGE_WIDTH,
+      height: IMAGE_HEIGHT,
+      scale: getImageScale(IMAGE_WIDTH, IMAGE_HEIGHT),
+    },
+  };
   Transforms.insertNodes(editor, image);
   Transforms.insertNodes(editor, {
     type: 'paragraph',
@@ -693,6 +669,42 @@ const withInlines = (editor: withInsertDataEdtior) => {
 
   return editor;
 };
+
+export const withImages = (editor: withInsertDataEdtior) => {
+  const { insertData, isVoid } = editor;
+
+  editor.isVoid = (element) => {
+    return element.type === 'image' ? true : isVoid(element);
+  };
+
+  editor.insertData = (data) => {
+    const text = data.getData('text/plain');
+    const { files } = data;
+
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const reader = new FileReader();
+        const [mime] = file.type.split('/');
+
+        if (mime === 'image') {
+          reader.addEventListener('load', () => {
+            const url = reader.result;
+            insertImage(editor, url);
+          });
+
+          reader.readAsDataURL(file);
+        }
+      }
+    } else if (isImageUrl(text)) {
+      insertImage(editor, text);
+    } else {
+      insertData(data);
+    }
+  };
+  return editor;
+};
+
+
 export {
   toggleMark,
   MarkButton,
