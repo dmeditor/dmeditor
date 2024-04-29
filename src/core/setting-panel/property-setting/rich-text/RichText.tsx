@@ -17,6 +17,7 @@ import {
   toggleMark,
   Toolbar,
   ToolsGroup,
+  withImages,
   withInlines,
 } from './helper';
 import MarkColor from './MarkColor';
@@ -56,7 +57,7 @@ const RichText = (props: { property: string; value: any }) => {
     [],
   );
 
-  const editor = useMemo(() => withInlines(withHistory(withReact(createEditor()))), []);
+  const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
 
   const { updateSelectedBlockProps } = useEditorStore();
   const handleValueChange = (newValue: Descendant[]) => {

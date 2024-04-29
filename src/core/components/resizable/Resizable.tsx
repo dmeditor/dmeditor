@@ -1,22 +1,21 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { Resizable, ResizableBox } from 'react-resizable';
+import React, { CSSProperties, SyntheticEvent, useEffect, useState } from 'react';
+import { ResizableBox } from 'react-resizable';
 
-import { SlateFun } from '../utils/Slate';
-
-export const ReactResizable = (props: {
-  children: any;
+const Resizable = (props: {
+  children: React.ReactNode;
   width?: number;
   height?: number;
-  imageScale?: any;
-  onChange?: (v: any) => void;
-  style?: any;
+  scale?: any;
+  onChange?: (value: any) => void;
+  style?: CSSProperties;
   isActive: boolean;
 }) => {
-  const [width, setWidth] = useState(props?.width || SlateFun.IMAGE_WIDTH);
-  const [height, setHeight] = useState(props?.height || SlateFun.IMAGE_HEIGHT);
+  const [width, setWidth] = useState(props?.width || 300);
+  const [height, setHeight] = useState(props?.height || 168);
   const [imageScale, setImageScale] = useState(
-    props?.imageScale || Math.round((width / height) * 100) / 100,
+    props?.scale || Math.round((width / height) * 100) / 100,
   );
+
   const [lockAspectRatio, setLockAspectRatio] = useState(true);
 
   const onResizeStartFunc = (e: SyntheticEvent<Element, Event>, { element, size, handle }: any) => {
@@ -56,7 +55,7 @@ export const ReactResizable = (props: {
   return (
     <ResizableBox
       className="box hover-handles"
-      style={props.style}
+      // style={props.style}
       width={width}
       height={height}
       onResizeStart={onResizeStartFunc}
@@ -68,3 +67,5 @@ export const ReactResizable = (props: {
     </ResizableBox>
   );
 };
+
+export default Resizable;

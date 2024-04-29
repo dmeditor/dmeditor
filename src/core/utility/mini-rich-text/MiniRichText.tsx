@@ -7,6 +7,8 @@ import {
   Element,
   HoveringToolbar,
   Leaf,
+  withImages,
+  withInlines,
   type MiniTextLeafProps,
 } from '../../setting-panel/property-setting/rich-text/helper';
 
@@ -31,7 +33,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
   );
 
   const renderLeaf = useCallback((props: MiniTextLeafProps) => <Leaf {...props} />, []) as any;
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
 
   const handleValueChange = (newValue: Descendant[]) => {
     if (!Array.isArray(newValue)) {
@@ -40,7 +42,21 @@ const MiniRichText = (props: MiniRichTextProps) => {
     }
     onValueChange?.(newValue);
   };
-  editor.children = value;
+  // TODO:
+  editor.children = value.map((i) => {
+    if (i.type === 'image') {
+      return {
+        ...i,
+        setting: {
+          ...i.setting,
+          width: i.width,
+          height: i.height,
+        },
+      };
+    } else {
+      return i;
+    }
+  });
 
   return (
     <div>
