@@ -324,6 +324,8 @@ const HoveringToolbar = () => {
     el.style.left = `${rect.left + window.scrollX - el.offsetWidth / 2 + rect.width / 2}px`;
   });
 
+  const zIndex = dmeConfig.editor.zIndex;
+
   return (
     <Portal>
       <Menu
@@ -331,7 +333,7 @@ const HoveringToolbar = () => {
         className={css`
           padding: 8px 7px 6px;
           position: absolute;
-          z-index: 51;
+          z-index: ${zIndex + 200};
           top: -10000px;
           left: -10000px;
           margin-top: -6px;
