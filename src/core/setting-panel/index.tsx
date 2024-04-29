@@ -66,7 +66,6 @@ const SettingPanel = (props) => {
   const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
   const [selectedPathIndex, setSelectedPathIndex] = useState<number>();
-  console.log('🚀 ~ SettingPanel ~ setSelectedPathIndex:', selectedPathIndex);
 
   const currentList = getCurrentList();
   // const selectedBlock = useMemo(() => getSelectedBlock(), [blockId]);
