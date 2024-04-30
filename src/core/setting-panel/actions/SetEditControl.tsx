@@ -23,11 +23,16 @@ export const SetEditControl = (props: { blockData: DMEData.Block }) => {
       `}
     >
       <label>Edit control: </label>
-      <Select onChange={update} size="small" defaultValue={props.blockData.editControl || 1}>
+      <Select
+        key={props.blockData.id}
+        onChange={update}
+        size="small"
+        defaultValue={props.blockData.editControl || 1}
+      >
         <MenuItem value={1}>Not set</MenuItem>
         <MenuItem value={0}>View only</MenuItem>
-        {/* <MenuItem value={2}>Edit but can not delete</MenuItem>
-        {category == 'container' && <MenuItem value={10}>Can not add / delete children</MenuItem>} */}
+        <MenuItem value={2}>Edit but can not delete</MenuItem>
+        {/* {category == 'container' && <MenuItem value={10}>Can not add / delete children</MenuItem>} */}
       </Select>
     </div>
   );

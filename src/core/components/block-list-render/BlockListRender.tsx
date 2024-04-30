@@ -127,7 +127,11 @@ export const BlockListRender = (props: BlockListProps) => {
       {props.blockData.map((blockData: DMEData.Block, index: number) => {
         const isActive = isInSelectedContext && index === selectedBlockIndex;
         let blockMode = props.mode;
-        if (blockData.editControl === 0 && canEditControl(blockData) === false) {
+        if (
+          blockMode == 'edit' &&
+          blockData.editControl === 0 &&
+          canEditControl(blockData) === false
+        ) {
           blockMode = 'view';
         }
         return (

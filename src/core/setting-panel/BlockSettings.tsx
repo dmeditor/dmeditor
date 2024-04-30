@@ -129,12 +129,16 @@ export const BlockSettings = (props: {
                 <Move />
                 <CopyPaste />
               </ActionPanelButtonGroup>
-              <ActionPanelButtonGroup>
-                <RightElement>
-                  <DeleteBlock />
-                </RightElement>
-              </ActionPanelButtonGroup>
-              {canEditControl(blockData) && <SetEditControl blockData={blockData} />}
+              {!(canEditControl(blockData) === false && blockData.editControl === 2) && (
+                <ActionPanelButtonGroup>
+                  <RightElement>
+                    <DeleteBlock />
+                  </RightElement>
+                </ActionPanelButtonGroup>
+              )}
+              {dmeConfig.callbacks.canEditControl && canEditControl(blockData) && (
+                <SetEditControl blockData={blockData} />
+              )}
             </ActionPanel>
           </>
         )}
