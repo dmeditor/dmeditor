@@ -31,7 +31,8 @@ export const ImageSetting = (props: {
           <img
             onClick={handleOpen}
             className={css`
-              width: 80%;
+              max-width: 80%;
+              max-height: 120px;
               cursor: pointer;
               border-radius: 5px;
               &:hover {
@@ -41,12 +42,14 @@ export const ImageSetting = (props: {
             src={dmeConfig.general.imagePath(src, 'thumbnail')}
           />
         )}
-        <Button color="info" onClick={handleOpen}>
-          Choose
-        </Button>
-        {dmeConfig.plugins.imageHandlers.map((Item) => (
-          <Item image={value} onChange={onChange} />
-        ))}
+        <div>
+          <Button color="info" onClick={handleOpen}>
+            Choose
+          </Button>
+          {dmeConfig.plugins.imageHandlers.map((Item) => (
+            <Item image={value} onChange={onChange} />
+          ))}
+        </div>
       </div>
       <ImageChooser
         value={[{ src: src || '', id: value?.id }]}
