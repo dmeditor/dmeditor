@@ -6,7 +6,7 @@ import { EntityGrid } from './entity';
 
 const gridWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
-  category: 'layout',
+  category: 'container',
   icon: 'grid',
   name: 'Grid',
   type: 'grid',

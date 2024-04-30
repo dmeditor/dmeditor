@@ -2,9 +2,12 @@ import { ReactElement, useMemo } from 'react';
 
 import { getWidgetName, getWidgetWithVariant } from '../../core/utils';
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
+import { dmeConfig } from '../config';
 import { useEditorStore } from '../main/store';
 import { getPropertyChildren, getPropertyValue, isNull, PropertyItem } from '../utils';
+import { canEditControl } from '../utils/editControl';
 import { CopyPaste, DeleteBlock, Move } from './actions';
+import { SetEditControl } from './actions/SetEditControl';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { ActionPanel, ActionPanelButtonGroup, RightElement, TabBodyContainer } from './style';
@@ -131,6 +134,7 @@ export const BlockSettings = (props: {
                   <DeleteBlock />
                 </RightElement>
               </ActionPanelButtonGroup>
+              {canEditControl(blockData) && <SetEditControl blockData={blockData} />}
             </ActionPanel>
           </>
         )}

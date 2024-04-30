@@ -2,6 +2,7 @@ import * as React from 'react';
 import { nanoid } from 'nanoid';
 
 import {
+  DMEData,
   DMEditor,
   dmeServerSideLoad,
   initLanguage,
@@ -71,7 +72,15 @@ registerWidgetStyleOption('text', [
   },
 ]);
 
-setDMEditorCallback({ browseImage: BrowseImage, browseLink: BrowseLink });
+const canEditControl = (blockData) => {
+  return true;
+};
+
+setDMEditorCallback({
+  browseImage: BrowseImage,
+  browseLink: BrowseLink,
+  canEditControl: canEditControl,
+});
 
 const { useRef, useEffect } = React;
 

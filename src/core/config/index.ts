@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-import type { DME } from '../types';
+import type { DME, DMEData } from '../types';
 
 export type BrowseLinkCallbackParams = string;
 
@@ -16,6 +16,7 @@ export interface CallbackConfig {
     value: BrowseLinkCallbackParams;
     onChange: (value: BrowseLinkCallbackParams) => void;
   }>;
+  canEditControl?: (block: DMEData.Block) => boolean;
 }
 
 export interface widgetConfig {

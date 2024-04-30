@@ -4,7 +4,7 @@ import type { DME } from '../..';
 import { dmeConfig, getWidgetVariant } from '../..';
 
 const listWidget: DME.Widget = {
-  category: 'section',
+  category: 'container',
   icon: 'list',
   name: 'List container',
   type: 'list',

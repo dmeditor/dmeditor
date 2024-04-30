@@ -149,7 +149,14 @@ export namespace DMEData {
   export interface Block<TData = DefaultDataType, TChild = DefaultBlockType>
     extends widgetBlockProperties {
     data: TData; //entity data from widget
-    serverData?: boolean;
+    serverData?: boolean; // only set by server
+
+    /* editControl: edit, delete
+     1 - no limit(same as undefined),0 - view only, 2 - can edit but can not delete,
+     >=10 is defined by widgets:
+     10 for container: can not add/delete but can edit child(unless there is override)
+    */
+    editControl?: number;
     children?: Array<TChild & BlockNode>;
   }
 

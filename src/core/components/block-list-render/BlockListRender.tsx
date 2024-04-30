@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AddOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import { dmeConfig } from 'dmeditor/core/config';
+import { canEditControl } from 'dmeditor/core/utils/editControl';
 
 import { useMousePosition } from '../../main/hooks/useMousePosition';
 import {
@@ -124,6 +126,10 @@ export const BlockListRender = (props: BlockListProps) => {
       )}
       {props.blockData.map((blockData: DMEData.Block, index: number) => {
         const isActive = isInSelectedContext && index === selectedBlockIndex;
+        let blockMode = props.mode;
+        if (blockData.editControl === 0 && canEditControl(blockData) === false) {
+          blockMode = 'view';
+        }
         return (
           <React.Fragment key={blockData.id}>
             {addParameters &&
@@ -132,7 +138,7 @@ export const BlockListRender = (props: BlockListProps) => {
               addParameters.position === 'before' &&
               renderAddingMessage()}
             <BlockWithContainer
-              mode={props.mode}
+              mode={blockMode}
               isActive={isActive}
               isHovering={hoverPath?.join(',') === [...props.path, index].join(',')}
               addingHorizontal={props.direction === 'horizontal'}
@@ -140,7 +146,7 @@ export const BlockListRender = (props: BlockListProps) => {
               onAddClick={(position) => handleAdding(position, index)}
             >
               <BlockRender
-                mode={props.mode}
+                mode={blockMode}
                 active={isActive}
                 path={[...props.path, index]}
                 data={blockData}

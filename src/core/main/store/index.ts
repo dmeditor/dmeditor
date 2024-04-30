@@ -74,6 +74,7 @@ type Actions = {
     callback: (blockData: Type, block?: any) => void,
   ) => void;
   updateSelectedBlockProps: (propName: string, propValue: string | number | Array<Object>) => void;
+  updateSelectedBlockEditControl: (value: number) => void;
   updateSelectedBlockStyle: (value: string, styleIdentifier: string) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
@@ -358,6 +359,18 @@ const useEditorStore = create<Store & Actions>()(
         const block = getDataByPath(state.storage, path);
         callback(block?.data as Type, block);
         // state.storage[state.selected.blockIndex]['data'] = data;
+      });
+    },
+    updateSelectedBlockEditControl: (value: number) => {
+      set((state) => {
+        const block = getDataByPath(state.storage, [
+          ...state.selected.currentListPath,
+          state.selected.blockIndex,
+        ]);
+        if (!block) {
+          return;
+        }
+        block.editControl = value;
       });
     },
     updateSelectedBlockStyle: (value: string, styleIdentifier: string) => {
