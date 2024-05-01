@@ -22,12 +22,11 @@ export const SetEditControl = (props: { blockData: DMEData.Block }) => {
         padding: 10px;
       `}
     >
-      <label>Edit control: </label>
+      <label>Edit control:</label>
       <Select
-        key={props.blockData.id}
         onChange={update}
         size="small"
-        defaultValue={props.blockData.editControl || 1}
+        defaultValue={props.blockData.editControl === undefined ? 1 : props.blockData.editControl}
       >
         <MenuItem value={1}>Not set</MenuItem>
         <MenuItem value={0}>View only</MenuItem>

@@ -52,6 +52,7 @@ setDMEditorConfig({
   },
   editor: {
     favouriteWidgets: ['text', 'button', 'hero-text:image'],
+    enableEditControl: true,
   },
   widgets: {
     heading: { defaultStyle: { _: 'big-space' } },

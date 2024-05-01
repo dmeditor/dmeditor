@@ -141,7 +141,7 @@ export const BlockSettings = (props: {
                 </ActionPanelButtonGroup>
               )}
               {editControlEnabled() && canEditControl(blockData) && (
-                <SetEditControl blockData={blockData} />
+                <SetEditControl key={blockData.id} blockData={blockData} />
               )}
             </ActionPanel>
           </>
