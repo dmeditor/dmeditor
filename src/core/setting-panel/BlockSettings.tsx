@@ -5,7 +5,7 @@ import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { dmeConfig } from '../config';
 import { useEditorStore } from '../main/store';
 import { getPropertyChildren, getPropertyValue, isNull, PropertyItem } from '../utils';
-import { canEditControl } from '../utils/editControl';
+import { canEditControl, editControlEnabled } from '../utils/editControl';
 import { CopyPaste, DeleteBlock, Move } from './actions';
 import { SetEditControl } from './actions/SetEditControl';
 import { defaultSettingTabs } from './config';
@@ -129,14 +129,18 @@ export const BlockSettings = (props: {
                 <Move />
                 <CopyPaste />
               </ActionPanelButtonGroup>
-              {!(canEditControl(blockData) === false && blockData.editControl === 2) && (
+              {!(
+                editControlEnabled() &&
+                canEditControl(blockData) === false &&
+                blockData.editControl === 2
+              ) && (
                 <ActionPanelButtonGroup>
                   <RightElement>
                     <DeleteBlock />
                   </RightElement>
                 </ActionPanelButtonGroup>
               )}
-              {dmeConfig.callbacks.canEditControl && canEditControl(blockData) && (
+              {editControlEnabled() && canEditControl(blockData) && (
                 <SetEditControl blockData={blockData} />
               )}
             </ActionPanel>

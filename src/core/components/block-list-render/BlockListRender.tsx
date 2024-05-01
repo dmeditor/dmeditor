@@ -129,8 +129,9 @@ export const BlockListRender = (props: BlockListProps) => {
         let blockMode = props.mode;
         if (
           blockMode == 'edit' &&
-          blockData.editControl === 0 &&
-          canEditControl(blockData) === false
+          dmeConfig.editor.enableEditControl &&
+          canEditControl(blockData) === false &&
+          blockData.editControl === 0
         ) {
           blockMode = 'view';
         }
