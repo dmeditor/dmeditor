@@ -73,6 +73,33 @@ registerWidgetStyleOption('text', [
   },
 ]);
 
+registerWidgetStyleOption('tabs', [
+  {
+    identifier: 'default',
+    name: 'Default',
+    cssClasses: {
+      root: 'bg-white',
+    },
+    cssStyle: `     
+      .dme-w-nav-item{
+        padding: 10px 20px;
+        background: #f0f0f0;
+        cursor: pointer;      
+        border-right:none;
+        border-top: none;
+
+        &:hover{
+          background: #cccccc;
+        }
+      }
+
+      .dme-w-nav-item:not(:first-child){
+        border-left: 1px solid #ccc;
+      }
+    `,
+  },
+]);
+
 const canEditControl = (blockData) => {
   return true;
 };
