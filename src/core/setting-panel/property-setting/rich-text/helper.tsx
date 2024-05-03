@@ -584,7 +584,7 @@ const insertImage = (editor: ReactEditor, url: string) => {
   const text = { text: '' };
   const image: ImageElement = {
     type: 'image',
-    url,
+    url: dmeConfig.general.imagePath(url),
     children: [text],
     setting: {
       width: IMAGE_WIDTH,
@@ -703,7 +703,6 @@ export const withImages = (editor: withInsertDataEdtior) => {
   };
   return editor;
 };
-
 
 export {
   toggleMark,
