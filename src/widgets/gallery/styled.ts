@@ -5,12 +5,14 @@ export const GalleryContainer = styled.div`
   display: flex;
 `;
 
-export const GalleryList = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-  list-style: none;
-`;
+export const GalleryList = styled.div((props: { columns: number }) => {
+  return {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${props.columns}, 1fr)`,
+    gap: '10px',
+    listStyle: 'none',
+  };
+});
 
 export const GalleryItem = styled.div`
   img {
