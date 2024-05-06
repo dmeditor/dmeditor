@@ -7,6 +7,7 @@ export const GalleryContainer = styled.div`
 
 export const GalleryList = styled.div((props: { columns: number }) => {
   return {
+    width: '100%',
     display: 'grid',
     gridTemplateColumns: `repeat(${props.columns}, 1fr)`,
     gap: '10px',

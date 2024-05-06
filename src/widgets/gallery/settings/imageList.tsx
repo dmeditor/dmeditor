@@ -59,7 +59,6 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
   };
 
   const addImage = (imageInfo: any) => {
-    console.log('🚀 ~ addImage ~ imageInfo:', imageInfo);
     const imageList = imageInfo.map((item: any) => ({ image: item.src }));
 
     updateSelectedBlock<GalleryEntity>((data) => {
@@ -109,10 +108,10 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
           ))
         : null}
       <Button size="small" variant="outlined" onClick={() => setShowImageChooser(true)}>
-        Add1
+        Add
       </Button>
       <ImageChooser
-        visible={showImageChooser}
+        visible={showImageChooser || value.length === 0}
         value={[]}
         multiple
         onConfirm={addImage}

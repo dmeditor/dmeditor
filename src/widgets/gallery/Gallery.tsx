@@ -67,7 +67,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
             {selectedImageIndex !== -1 && (
               <img
                 className={GalleryImage + ' dme-gallery-imgPrevItem'}
-                src={items[selectedImageIndex].image}
+                src={items[selectedImageIndex]?.image}
                 alt=""
               />
             )}
