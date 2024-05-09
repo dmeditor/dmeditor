@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Dialog, DialogContent } from '@mui/material';
-import { DME } from 'dmeditor/index';
 
+import { dmeConfig } from '../../core/config';
 import { GalleryEntity } from './entity';
 import {
   GalleryContainer,
@@ -53,7 +53,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
               key={item.image}
               onClick={() => handleClick(index)}
             >
-              <img src={item.image} alt={item.title} />
+              <img src={dmeConfig.general.imagePath(item.image)} alt={item.title} />
             </GalleryItem>
           ))}
         </GalleryList>
@@ -67,7 +67,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
             {selectedImageIndex !== -1 && (
               <img
                 className={GalleryImage + ' dme-gallery-imgPrevItem'}
-                src={items[selectedImageIndex]?.image}
+                src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                 alt=""
               />
             )}

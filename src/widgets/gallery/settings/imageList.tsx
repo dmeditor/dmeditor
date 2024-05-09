@@ -2,8 +2,8 @@ import { MouseEvent, useState } from 'react';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import type { DME } from 'dmeditor/index';
-import { ImageChooser, ImageSetting, useEditorStore } from 'dmeditor/index';
 
+import { ImageChooser, ImageSetting, useEditorStore } from '../../..';
 import { PropertyButton } from '../../../core/utils';
 import { GalleryEntity } from '../entity';
 
