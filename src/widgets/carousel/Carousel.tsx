@@ -122,7 +122,6 @@ const Carousel = (props) => {
     <StyledCarouselImage
       className={styleClasses['carousel-image'] || 'dme-carousel-image'}
       src={dmeConfig.general.imagePath(slide.image)}
-      alt={`slide${index}`}
     />
   );
 

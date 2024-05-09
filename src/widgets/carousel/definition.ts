@@ -31,7 +31,7 @@ const definition: DME.Widget = {
         defaultValue: 'default',
         options: [
           { value: 'default', label: 'Fade' },
-          { value: 'slide', label: 'Slide' },
+          // { value: 'slide', label: 'Slide' },
         ],
       },
     },
