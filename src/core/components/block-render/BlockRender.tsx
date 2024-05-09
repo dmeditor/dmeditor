@@ -7,7 +7,7 @@ import _debounce from 'lodash/debounce';
 import i18n from '../../i18n';
 import type { DMEData } from '../../types';
 import { getWidgetComponent, getWidgetStyle } from '../../utils/register';
-import { BlockDiv } from './styled';
+import { BlockWrapper } from './styled';
 
 interface BlockProps<Type = DMEData.DefaultDataType> {
   data: DMEData.Block<Type>;
@@ -81,7 +81,7 @@ export const BlockRender = memo((props: BlockProps) => {
   }, [id, styleData]);
 
   return Widget ? (
-    <BlockDiv className="dme-block-wrapper" onClick={onSelect}>
+    <BlockWrapper className="dme-block-wrapper" onClick={onSelect}>
       <Widget
         inBlock={props.inBlock ? true : false}
         {...cssStyles}
@@ -90,7 +90,7 @@ export const BlockRender = memo((props: BlockProps) => {
         mode={props.mode}
         active={active ? true : false}
       />
-    </BlockDiv>
+    </BlockWrapper>
   ) : (
     <></>
   );

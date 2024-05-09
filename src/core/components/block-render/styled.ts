@@ -1,3 +1,3 @@
 import styled from '@emotion/styled';
 
-export const BlockDiv = styled.div``;
+export const BlockWrapper = styled.div``;
