@@ -24,16 +24,16 @@ const definition: DME.Widget = {
   },
   settings: [
     {
+      name: 'Columns per row',
+      property: '.columns',
+      settingComponent: 'range',
+      parameters: { min: 1, max: 5 },
+    },
+    {
       name: '',
       property: '.items',
       custom: true,
       settingComponent: 'image-list',
-    },
-    {
-      name: 'Columns',
-      property: '.columns',
-      settingComponent: 'range',
-      parameters: { min: 1, max: 5 },
     },
   ],
 };
