@@ -27,7 +27,13 @@ const definition: DME.Widget = {
       name: '',
       property: '.items',
       custom: true,
-      settingComponent: 'carousel',
+      settingComponent: 'image-list',
+    },
+    {
+      name: 'Columns',
+      property: '.columns',
+      settingComponent: 'range',
+      parameters: { min: 1, max: 5 },
     },
   ],
 };

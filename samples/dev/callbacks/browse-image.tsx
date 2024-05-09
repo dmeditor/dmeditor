@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageList, ImageListItem } from '@mui/material';
 
 import { BrowseImageCallbackParams } from '../../../src/core/config';
@@ -59,6 +59,27 @@ export const BrowseImage: React.FC<{
   onChange: (value: BrowseImageCallbackParams) => void;
 }> = (props) => {
   const { onChange, value } = props;
+  const [localValue, setLocalValue] = useState(value || []);
+
+  const handleSelected = (index: number) => {
+    let selectedList: any[] = [];
+
+    if (localValue.some((val) => val.id === index)) {
+      selectedList = localValue.filter((val) => val.id !== index);
+    } else {
+      selectedList = [
+        ...localValue,
+        {
+          src: itemData[index].img,
+          id: index,
+          thumbnail: `${itemData[index].img}?w=164&h=164&fit=crop&auto=format`,
+        },
+      ];
+    }
+
+    setLocalValue(selectedList);
+    onChange(selectedList);
+  };
 
   return (
     <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
@@ -67,17 +88,11 @@ export const BrowseImage: React.FC<{
           <img
             style={{
               cursor: 'pointer',
-              border: value?.some((item) => item.id === index) ? '3px solid #ff5722' : 'none',
+              border: localValue?.some((val) => val.id === index || val.src === item.img)
+                ? '3px solid #ff5722'
+                : 'none',
             }}
-            onClick={() =>
-              onChange([
-                {
-                  src: item.img,
-                  thumbnail: `${item.img}?w=164&h=164&fit=crop&auto=format`,
-                  id: index,
-                },
-              ])
-            }
+            onClick={() => handleSelected(index)}
             srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
             src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
             alt={item.title}

@@ -16,7 +16,7 @@ import {
 export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
   const {
     blockNode: {
-      data: { items },
+      data: { items, columns },
     },
     rootClasses,
   } = props;
@@ -46,7 +46,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
   return (
     <>
       <GalleryContainer className={'dme-gallery-container ' + rootClasses}>
-        <GalleryList className="dme-gallery-imgList">
+        <GalleryList columns={columns} className="dme-gallery-imgList">
           {items.map((item, index) => (
             <GalleryItem
               className={'dme-gallery-imgItem'}
@@ -67,7 +67,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
             {selectedImageIndex !== -1 && (
               <img
                 className={GalleryImage + ' dme-gallery-imgPrevItem'}
-                src={items[selectedImageIndex].image}
+                src={items[selectedImageIndex]?.image}
                 alt=""
               />
             )}
