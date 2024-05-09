@@ -70,6 +70,15 @@ type Actions = {
   getCurrentBlock: () => DMEData.Block | null;
   getBlockByPath: (path: Array<number>) => DMEData.Block;
   getParents: () => Array<DMEData.Block & { path: Array<number> }>; //get parent Block from top to down, based on currentListPath
+  updateBlockByPath: <Type = DMEData.DefaultDataType>(
+    path: Array<number>,
+    callback: (blockData: Type, block?: any) => void,
+  ) => void;
+  updateBlockPropsByPath: (
+    path: Array<number>,
+    propName: string,
+    propValue: string | number | Array<Object>,
+  ) => void;
   updateSelectedBlock: <Type = DMEData.DefaultDataType>(
     callback: (blockData: Type, block?: any) => void,
   ) => void;
@@ -351,77 +360,37 @@ const useEditorStore = create<Store & Actions>()(
         state.selected.blockId = id;
       });
     },
-    updateSelectedBlock: <Type = DMEData.DefaultDataType>(
+    updateBlockByPath: <Type = DMEData.DefaultDataType>(
+      path: Array<number>,
       callback: (blockData: Type, block: unknown) => void,
     ) => {
       set((state) => {
-        const path = [...state.selected.currentListPath, state.selected.blockIndex];
         const block = getDataByPath(state.storage, path);
-        callback(block?.data as Type, block);
-        // state.storage[state.selected.blockIndex]['data'] = data;
-      });
-    },
-    updateSelectedBlockEditControl: (value: number) => {
-      set((state) => {
-        const block = getDataByPath(state.storage, [
-          ...state.selected.currentListPath,
-          state.selected.blockIndex,
-        ]);
+        console.log('🚀 ~ set ~ block:', block);
         if (!block) {
+          console.error('Block not found');
           return;
         }
-        block.editControl = value;
+        callback(block.data as Type, block);
       });
     },
-    updateSelectedBlockStyle: (value: string, styleIdentifier: string) => {
-      set((state) => {
-        const block = getDataByPath(state.storage, [
-          ...state.selected.currentListPath,
-          state.selected.blockIndex,
-        ]);
-        if (!block) {
-          return;
-        }
-        if (!block.style) {
-          block.style = {};
-        }
-        console.log(value, styleIdentifier);
-        if (styleIdentifier === '_') {
-          if (!value) {
-            block.style = {};
-          } else {
-            block.style = { _: value };
-          }
-        } else {
-          block.style[styleIdentifier] = value;
-        }
-      });
-    },
-    updateSelectedBlockProps: (propName, propValue) => {
-      set((state) => {
+    updateBlockPropsByPath(path, propName, propValue) {
+      const state = get();
+      state.updateBlockByPath(path, (_, block) => {
         if (!propName) {
           console.error('Invalid propName', propName);
           return;
         }
 
-        const block = getDataByPath(state.storage, [
-          ...state.selected.currentListPath,
-          state.selected.blockIndex,
-        ]);
         if (!block) {
-          console.error('Block not found');
           return;
         }
+        if (!block.data) {
+          block.data = {};
+        }
 
-        //todo: check this from entity
-        // if (!block['data']['settings'][propName]) {
-        //   console.error(`Property ${propName} not found`);
-        //   return;
-        // }
-
-        // todo: put settings to separate method
         const [propKey, realPropsName] = propName.split('.');
-        // the property is in the root of the block
+
         if (isEmptyString(propKey)) {
           if (isPlainObject(block.data)) {
             block['data'][realPropsName] = propValue;
@@ -443,15 +412,44 @@ const useEditorStore = create<Store & Actions>()(
           console.error(
             `Invalid propName: ${propName}, it should be "settings.${propName}" or ".${propName}"`,
           );
-          // state.storage[state.selected.blockIndex].data = {
-          //   ...state.storage[state.selected.blockIndex].data,
-          //   settings: {
-          //     ...(state.storage[state.selected.blockIndex].data.settings as any),
-          //     [realPropsName]: propValue,
-          //   },
-          // };
         }
       });
+    },
+    updateSelectedBlock: <Type = DMEData.DefaultDataType>(
+      callback: (blockData: Type, block: unknown) => void,
+    ) => {
+      const state = get();
+      const path = [...state.selected.currentListPath, state.selected.blockIndex];
+      state.updateBlockByPath(path, callback);
+    },
+    updateSelectedBlockEditControl: (value: number) => {
+      const state = get();
+      state.updateSelectedBlockProps('.editControl', value);
+    },
+    updateSelectedBlockStyle: (value: string, styleIdentifier: string) => {
+      set((state) => {
+        const path = [...state.selected.currentListPath, state.selected.blockIndex];
+        state.updateBlockByPath(path, (_, block) => {
+          if (!block.style) {
+            block.style = {};
+          }
+          if (styleIdentifier === '_') {
+            if (!value) {
+              block.style = {};
+            } else {
+              block.style = { _: value };
+            }
+          } else {
+            block.style[styleIdentifier] = value;
+          }
+        });
+      });
+    },
+    updateSelectedBlockProps: (propName, propValue) => {
+      const state = get();
+      const path = [...state.selected.currentListPath, state.selected.blockIndex];
+
+      state.updateBlockPropsByPath(path, propName, propValue);
     },
     toggleProperty: (status) => set(() => ({ status })),
     updatePage: (value: string, key: string) => {
