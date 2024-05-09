@@ -18,7 +18,7 @@ const Range = (props: {
   return (
     <Ranger
       defaultValue={value}
-      min={parameters?.min || 1}
+      min={parameters.min === undefined ? 1 : parameters.min}
       max={parameters?.max || 5}
       step={parameters?.step || 1}
       onChange={handleChange}
