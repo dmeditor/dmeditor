@@ -81,7 +81,7 @@ export const BlockRender = memo((props: BlockProps) => {
   }, [id, styleData]);
 
   return Widget ? (
-    <BlockDiv className="dme-wrapper" onClick={onSelect}>
+    <BlockDiv className="dme-block-wrapper" onClick={onSelect}>
       <Widget
         inBlock={props.inBlock ? true : false}
         {...cssStyles}
