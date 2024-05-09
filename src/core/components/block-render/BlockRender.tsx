@@ -1,11 +1,13 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
+import { useEditorStore } from 'dmeditor/core/main/store';
 import _debounce from 'lodash/debounce';
 
 import i18n from '../../i18n';
 import type { DMEData } from '../../types';
 import { getWidgetComponent, getWidgetStyle } from '../../utils/register';
+import { BlockDiv } from './styled';
 
 interface BlockProps<Type = DMEData.DefaultDataType> {
   data: DMEData.Block<Type>;
@@ -22,10 +24,19 @@ export const BlockRender = memo((props: BlockProps) => {
     data: { id, style: styleData },
   } = props;
 
+  const { updateSelectedBlockIndex } = useEditorStore();
+
   const blockType = props.data.type;
 
   const widgetArr = blockType.split(':');
   const Widget = getWidgetComponent(widgetArr[0]);
+
+  const onSelect = (e: React.MouseEvent) => {
+    if (props.mode === 'edit') {
+      e.stopPropagation();
+      updateSelectedBlockIndex(props.path, props.data.id || '');
+    }
+  };
 
   const cssStyles = useMemo(() => {
     let styleStr = '';
@@ -70,15 +81,16 @@ export const BlockRender = memo((props: BlockProps) => {
   }, [id, styleData]);
 
   return Widget ? (
-    // <div className={`${getCssStyles()} dme-block dme-blocktype-${widgetArr[0]} ${widgetArr[1]?'dme-blockvariant-'+widgetArr[1]:''}`}>
-    <Widget
-      inBlock={props.inBlock ? true : false}
-      {...cssStyles}
-      blockNode={props.data}
-      path={props.path}
-      mode={props.mode}
-      active={active ? true : false}
-    />
+    <BlockDiv className="dme-wrapper" onClick={onSelect}>
+      <Widget
+        inBlock={props.inBlock ? true : false}
+        {...cssStyles}
+        blockNode={props.data}
+        path={props.path}
+        mode={props.mode}
+        active={active ? true : false}
+      />
+    </BlockDiv>
   ) : (
     <></>
   );

@@ -31,7 +31,6 @@ interface BlockWithContainerProps {
   isActive?: boolean;
   isHovering?: boolean;
   mode: 'edit' | 'view';
-  onSelect: () => void;
   onAddClick: (position: 'before' | 'after') => void;
   children: any;
   addingHorizontal?: boolean;
@@ -66,10 +65,6 @@ export const BlockListRender = (props: BlockListProps) => {
       }
     });
     return result;
-  };
-
-  const select = (index: number) => {
-    updateSelectedBlockIndex([...props.path, index], props.blockData[index].id || '');
   };
 
   //register event
@@ -147,7 +142,6 @@ export const BlockListRender = (props: BlockListProps) => {
               isActive={isActive}
               isHovering={hoverPath?.join(',') === [...props.path, index].join(',')}
               addingHorizontal={props.direction === 'horizontal'}
-              onSelect={() => select(index)}
               onAddClick={(position) => handleAdding(position, index)}
             >
               <BlockRender
@@ -195,10 +189,6 @@ const BlockWithContainer = (props: BlockWithContainerProps) => {
       active={isActive}
       hovering={isHovering}
       {...containerAdditionalProps}
-      onClick={(e) => {
-        e.stopPropagation();
-        onSelect();
-      }}
     >
       {addPosition === 'before' && (
         <AddingTool position="before" horizontal={addingHorizontal}>
