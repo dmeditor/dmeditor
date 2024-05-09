@@ -56,13 +56,27 @@ const itemData = [
 
 export const BrowseImage: React.FC<{
   value: BrowseImageCallbackParams;
+  multiple?: boolean;
   onChange: (value: BrowseImageCallbackParams) => void;
 }> = (props) => {
-  const { onChange, value } = props;
+  const { onChange, value, multiple = false } = props;
   const [localValue, setLocalValue] = useState(value || []);
 
   const handleSelected = (index: number) => {
     let selectedList: any[] = [];
+
+    if (!multiple) {
+      selectedList = [
+        {
+          src: itemData[index].img,
+          id: index,
+          thumbnail: `${itemData[index].img}?w=164&h=164&fit=crop&auto=format`,
+        },
+      ];
+      setLocalValue(selectedList);
+      onChange(selectedList);
+      return;
+    }
 
     if (localValue.some((val) => val.id === index)) {
       selectedList = localValue.filter((val) => val.id !== index);
