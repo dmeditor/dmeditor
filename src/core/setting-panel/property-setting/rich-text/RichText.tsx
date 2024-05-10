@@ -11,6 +11,7 @@ import AddLinkButton from './AddLinkButton';
 import {
   BlockButton,
   Element,
+  formatImage,
   InsertImageButton,
   Leaf,
   MarkButton,
@@ -64,9 +65,13 @@ const RichText = (props: { property: string; value: any }) => {
     updateSelectedBlockProps(property, newValue);
   };
 
-  editor.children = value;
+  // TODO:
+  editor.children = formatImage(value);
 
-  const initialValue = useMemo(() => value || definition.events.createBlock().data.value, [value]);
+  const initialValue = useMemo(
+    () => formatImage(value) || definition.events.createBlock().data.value,
+    [value],
+  );
 
   return (
     <div

@@ -704,6 +704,23 @@ export const withImages = (editor: withInsertDataEdtior) => {
   return editor;
 };
 
+export const formatImage = (value: any[]) => {
+  return value.map((i) => {
+    if (i.type === 'image') {
+      return {
+        ...i,
+        setting: {
+          ...i.setting,
+          width: i.width,
+          height: i.height,
+        },
+      };
+    } else {
+      return i;
+    }
+  });
+};
+
 export {
   toggleMark,
   MarkButton,

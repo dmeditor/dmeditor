@@ -6,6 +6,7 @@ const Resizable = (props: {
   width?: number;
   height?: number;
   scale?: any;
+  className?: string;
   onChange?: (value: any) => void;
   style?: CSSProperties;
   isActive: boolean;
@@ -55,7 +56,7 @@ const Resizable = (props: {
   return (
     <ResizableBox
       className="box hover-handles"
-      // style={props.style}
+      style={props.style}
       width={width}
       height={height}
       onResizeStart={onResizeStartFunc}

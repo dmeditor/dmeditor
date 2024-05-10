@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 
 export const StyledResizable = css`
   .react-resizable {
@@ -67,3 +68,11 @@ export const StyledResizable = css`
     transform: rotate(45deg);
   }
 `;
+
+export const ImageWrapper = styled.div((props: { align: 'left' | 'center' | 'right' }) => {
+  const { align } = props;
+  return `
+  display: flex;
+  justify-content: ${align};
+  `;
+});
