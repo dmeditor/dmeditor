@@ -34,6 +34,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
               <th className="dme-w-th" key={i}>
                 <MiniText
                   key={i}
+                  viewmode={props.mode === 'view'}
                   value={cell}
                   onFocus={() => handleActiveCellChange(0, i)}
                   onValueChange={(newValue) => handleValueChange(0, i, newValue)}
@@ -51,6 +52,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
                 <td className="dm-w-td" key={jdx}>
                   <MiniText
                     key={idx + ',' + jdx}
+                    viewmode={props.mode === 'view'}
                     value={cell}
                     onFocus={() => handleActiveCellChange(idx, jdx)}
                     onValueChange={(newValue) => handleValueChange(idx, jdx, newValue)}
