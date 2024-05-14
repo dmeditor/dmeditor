@@ -21,14 +21,14 @@ export const TableColumn = () => {
 
       updateSelectedBlock((data) => {
         if (Array.isArray(data.value)) {
-          data.value?.forEach?.((row: any[]) => row.splice(activeColumnIndex, 0, ''));
+          data.value?.forEach?.((row: any[]) => row.splice(activeColumnIndex, 0, null));
         }
       });
     } else {
       setActiveCellIndex([activeCellIndex[0], activeColumnIndex]);
       updateSelectedBlock((data) => {
         if (Array.isArray(data.value)) {
-          data.value.forEach((row: any[]) => row.splice(activeColumnIndex + 1, 0, ''));
+          data.value.forEach((row: any[]) => row.splice(activeColumnIndex + 1, 0, null));
         }
       });
     }

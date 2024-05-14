@@ -20,8 +20,8 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
     });
   };
 
-  const handleActiveCellChange = (col: number, row: number) => {
-    setActiveIndex([col, row]);
+  const handleActiveCellChange = (row: number, cell: number) => {
+    setActiveIndex([row, cell]);
   };
   const tableValue = settings['hasHeader'] ? value.slice(1) : value;
 
@@ -32,9 +32,10 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
           <tr className="dme-w-tr">
             {value[0].map((cell, i) => (
               <th className="dme-w-th" key={i}>
-                <MiniRichText
+                <MiniText
+                  key={i}
                   value={cell}
-                  // onFocus={() => handleActiveCellChange(0, i)}
+                  onFocus={() => handleActiveCellChange(0, i)}
                   onValueChange={(newValue) => handleValueChange(0, i, newValue)}
                 />
               </th>
@@ -49,7 +50,9 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
               return (
                 <td className="dm-w-td" key={jdx}>
                   <MiniText
+                    key={idx + ',' + jdx}
                     value={cell}
+                    onFocus={() => handleActiveCellChange(idx, jdx)}
                     onValueChange={(newValue) => handleValueChange(idx, jdx, newValue)}
                   />
                 </td>

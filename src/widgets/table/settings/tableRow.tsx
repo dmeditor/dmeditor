@@ -14,7 +14,7 @@ export const TableRow = () => {
   }
 
   const handleInsertRow = (position: 'top' | 'bottom') => {
-    const newRow = (blockData.value as any)[0]?.map(() => '');
+    const newRow = (blockData.value as any)[0]?.map(() => null);
     const activeRowIndex = activeCellIndex[0];
 
     if (position === 'top') {

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FocusEventHandler } from 'react';
 import { createEditor, type Descendant, type Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
@@ -18,6 +19,7 @@ const { useCallback, useMemo } = React;
 export interface MiniRichTextProps {
   viewmode?: boolean;
   value?: Array<Descendant> | null;
+  onFocus?: FocusEventHandler<T> | undefined;
   onValueChange: (value: Descendant[]) => void;
 }
 
@@ -62,6 +64,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
           <Editable
             readOnly={props.viewmode}
             renderLeaf={renderLeaf}
+            onFocus={props.onFocus}
             renderElement={renderElement}
             placeholder="Input your content here"
           />
