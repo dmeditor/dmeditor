@@ -43,7 +43,6 @@ export const BlockListRender = (props: BlockListProps) => {
     addBlock,
     startAddBlock,
     clearAdding,
-    updateSelectedBlockIndex,
     hoverPath,
     executeAdding,
   } = useEditorStore();
@@ -67,17 +66,6 @@ export const BlockListRender = (props: BlockListProps) => {
     return result;
   };
 
-  //register event
-  useEffect(() => {
-    emitter.addListener('addBlock', (parameters: AddBlockParameters) => {
-      startAddBlock(parameters.context, parameters.index, parameters.position, parameters.types);
-    });
-
-    return () => {
-      emitter.removeListener('addBlock');
-    };
-  }, []);
-
   //only changed when there is addParameters( add button is clicked )
   const depsAddingStatus = addParameters ? globalAddingStatus : '';
 
@@ -94,17 +82,12 @@ export const BlockListRender = (props: BlockListProps) => {
     if (props.allowedTypes?.length === 1) {
       executeAdding(props.path, index, position, props.allowedTypes[0]);
     } else {
-      const parameters = {
+      setAddParameters({
         index: index,
         position: position,
-      };
-      setAddParameters(parameters);
-      emitter.emit('addBlock', {
-        ...parameters,
-        context: props.path,
-        status: 'started',
-        types: props.allowedTypes,
       });
+
+      startAddBlock(props.path, index, position, props.allowedTypes);
     }
   };
 
