@@ -17,12 +17,20 @@ const { useCallback, useMemo } = React;
 
 export interface MiniRichTextProps {
   viewmode?: boolean;
-  value: Array<Descendant>;
+  value?: Array<Descendant> | null;
   onValueChange: (value: Descendant[]) => void;
 }
 
+const emptyValue = [
+  {
+    type: 'paragraph',
+    children: [{ text: '' }],
+  },
+];
+
 const MiniRichText = (props: MiniRichTextProps) => {
-  const { value, onValueChange } = props;
+  const { onValueChange } = props;
+  const value = props.value || emptyValue;
 
   const renderElement = useCallback(
     (props: {

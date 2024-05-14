@@ -21,7 +21,6 @@ const AccordionWidget: DME.Widget = {
               title: 'Accordion1',
             },
             children: [
-              { type: 'heading', id: nanoid(), data: { value: 'Tab1 Title', level: 2 } },
               {
                 type: 'text',
                 id: '2',
@@ -42,7 +41,6 @@ const AccordionWidget: DME.Widget = {
               title: 'Accordion2',
             },
             children: [
-              { type: 'heading', id: nanoid(), data: { value: 'Tab2 Title', level: 2 } },
               {
                 type: 'text',
                 id: '2',

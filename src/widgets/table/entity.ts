@@ -1,5 +1,3 @@
-import { initialTextEntity } from '../text/entity';
-
 type TableValue = any[][];
 export type BorderType = 'none' | 'rowBorder' | 'border';
 
@@ -20,8 +18,8 @@ export interface EntityTableBlock {
 export const initialTableEntity = (): Pick<EntityTableBlock, 'value'> => {
   return {
     value: [
-      [initialTextEntity(), initialTextEntity()],
-      [initialTextEntity(), initialTextEntity()],
+      [null, null],
+      [null, null],
     ],
   };
 };

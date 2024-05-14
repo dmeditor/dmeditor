@@ -10,7 +10,7 @@ const initialTextEntity = (): EntityText => {
     value: [
       {
         type: 'paragraph',
-        children: [{ text: 'Sample text' }],
+        children: [{ text: '' }],
       },
     ],
   };

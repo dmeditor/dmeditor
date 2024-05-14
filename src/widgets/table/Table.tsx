@@ -16,7 +16,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
 
   const handleValueChange = (col: number, row: number, value: any) => {
     updateSelectedBlock((data) => {
-      (data.value as any[])[col][row].value = value;
+      (data.value as any[])[col][row] = value;
     });
   };
 
@@ -33,7 +33,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
             {value[0].map((cell, i) => (
               <th className="dme-w-th" key={i}>
                 <MiniRichText
-                  value={cell.value}
+                  value={cell}
                   // onFocus={() => handleActiveCellChange(0, i)}
                   onValueChange={(newValue) => handleValueChange(0, i, newValue)}
                 />
@@ -49,7 +49,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
               return (
                 <td className="dm-w-td" key={jdx}>
                   <MiniText
-                    value={cell.value}
+                    value={cell}
                     onValueChange={(newValue) => handleValueChange(idx, jdx, newValue)}
                   />
                 </td>
