@@ -22,6 +22,7 @@ const HeadingWidget: DME.Widget = {
         data: {
           value,
           settings: {
+            padding: 10,
             borderType: 'border',
             borderColor: '#ccc',
           },

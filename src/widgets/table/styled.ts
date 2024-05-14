@@ -26,6 +26,9 @@ export const StyledTable = styled.table<EntityTableBlock['settings']>((props) =>
           }
         : undefined),
     },
+    p: {
+      margin: 0,
+    },
     th: {
       fontWeight: headerIsBold ? 'bold' : 'normal',
       textAlign: headerAlign,
