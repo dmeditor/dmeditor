@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
 import { MenuItem, Select } from '@mui/material';
-import { useEditorStore } from 'dmeditor/core/main/store';
-import { DMEData } from 'dmeditor/core/types';
-import { getWidget } from 'dmeditor/core/utils/register';
+
+import { useEditorStore } from '../../../core/main/store';
+import { type DMEData } from '../../../core/types';
+import { getWidget } from '../../../core/utils/register';
 
 export const SetEditControl = (props: { blockData: DMEData.Block }) => {
   const { updateSelectedBlockEditControl } = useEditorStore();

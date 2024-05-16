@@ -1,9 +1,9 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
-import { useEditorStore } from 'dmeditor/core/main/store';
 import _debounce from 'lodash/debounce';
 
+import { useEditorStore } from '../../../core/main/store';
 import i18n from '../../i18n';
 import type { DMEData } from '../../types';
 import { getWidgetComponent, getWidgetStyle } from '../../utils/register';

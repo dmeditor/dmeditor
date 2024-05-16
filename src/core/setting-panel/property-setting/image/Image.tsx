@@ -1,4 +1,4 @@
-import { DME, ImageSetting, useEditorStore } from 'dmeditor/index';
+import { ImageSetting, useEditorStore, type DME } from '../../../../index';
 
 const Image = (props: { value?: string; property: string }) => {
   const { property, value } = props;

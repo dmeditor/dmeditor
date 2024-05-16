@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AddOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import { dmeConfig } from 'dmeditor/core/config';
-import { canEditControl } from 'dmeditor/core/utils/editControl';
 
+import { dmeConfig } from '../../../core/config';
+import { canEditControl } from '../../../core/utils/editControl';
 import { useMousePosition } from '../../main/hooks/useMousePosition';
 import {
   AddingMessage,

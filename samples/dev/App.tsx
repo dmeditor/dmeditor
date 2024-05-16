@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import {
   DMEData,
   DMEditor,
+  DMEditorView,
   dmeServerSideLoad,
   initLanguage,
   registerDefaultWidgets,
@@ -281,8 +282,8 @@ const App = () => {
     console.log(d);
   });
 
-  return <DMEditor ref={editorRef} />;
-  // return <DMEditorView data={data} theme="blue" />;
+  // return <DMEditor ref={editorRef} />;
+  return <DMEditorView data={data} theme="blue" />;
 };
 
 export default App;
