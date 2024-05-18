@@ -68,7 +68,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
             renderLeaf={renderLeaf}
             onFocus={props.onFocus}
             renderElement={renderElement}
-            placeholder="Input your content here"
+            placeholder={mode === 'view' ? '' : 'Input your content here'} //fixed: readonly empty still show placeholder
           />
         </div>
       </Slate>
