@@ -16,6 +16,7 @@ import {
   LooksOneOutlined,
   LooksTwoOutlined,
 } from '@mui/icons-material';
+import { DME } from 'dmeditor/core/types';
 import {
   BaseText,
   Editor,
@@ -408,6 +409,7 @@ const LinkComponent = ({ attributes, children, element }) => {
 //   element: SlateElement;
 // }) => {
 interface ElementProps {
+  // mode: DME.WidgetRenderProps['mode'];
   attributes: Record<string, unknown>;
   children: ReactNode;
   element: SlateElement;
@@ -415,6 +417,7 @@ interface ElementProps {
 const Element = (props: ElementProps) => {
   const { children, attributes, element } = props;
   const style = { textAlign: element.align };
+
   switch (element.type) {
     case 'block-quote':
       return (

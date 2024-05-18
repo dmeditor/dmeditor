@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { css } from '@emotion/css';
 import {
   DeleteOutlined,
@@ -9,9 +9,10 @@ import {
 import { Transforms } from 'slate';
 import { ReactEditor, useFocused, useSelected, useSlateStatic } from 'slate-react';
 
+import { type DME } from '../../../../core/types';
 import { Resizable } from '../../../components/resizable';
 import { Button } from './helper';
-import { ImageWrapper, StyledResizable } from './styled';
+import { StyledResizable } from './styled';
 
 interface Size {
   width: number;
@@ -20,6 +21,7 @@ interface Size {
   align?: 'left' | 'center' | 'right';
 }
 interface ImageProps {
+  mode: DME.WidgetRenderProps['mode'];
   attributes: Record<string, unknown>;
   children: ReactNode;
   element: {
@@ -29,7 +31,7 @@ interface ImageProps {
   } & Node;
 }
 
-const Image = (props: ImageProps) => {
+const ResizableImage = (props: ImageProps) => {
   const { attributes, children, element } = props;
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor as ReactEditor, element);
@@ -147,6 +149,34 @@ const Image = (props: ImageProps) => {
       </Resizable>
     </div>
   );
+};
+
+const ViewImage = (props: ImageProps) => {
+  const { attributes, children, element } = props;
+  const { height, width, scale } = element.setting;
+  const style = {
+    width: width * scale,
+    height: height * scale,
+    textAlign: element.setting.align ?? 'left',
+  };
+  return (
+    <div {...attributes} style={style}>
+      {children}
+      <img
+        src={element.url}
+        className={css`
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        `}
+      />
+    </div>
+  );
+};
+
+const Image = (props: ImageProps) => {
+  const { mode } = props;
+  return mode === 'view' ? <ViewImage {...props} /> : <ResizableImage {...props} />;
 };
 
 export default Image;

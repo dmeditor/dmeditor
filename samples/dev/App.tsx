@@ -131,133 +131,42 @@ const App = () => {
       type: 'heading',
     },
     {
-      id: `widget-${nanoid()}`,
-      style: { _: 'big-space' },
+      id: 'N-LAQWihvfZv1SmUAPoQx',
+      type: 'text',
       data: {
-        value: 'This is a heading 2',
-        level: 2,
-        settings: {
-          align: 'left',
-        },
-      },
-      type: 'heading:gradient',
-    },
-    {
-      id: `widget-${nanoid()}`,
-      data: {
-        value: 'This is a heading 2',
-        level: 2,
-        settings: {
-          align: 'right',
-          // value: '',
-        },
-      },
-      type: 'heading',
-    },
-    {
-      id: `widget-${nanoid()}`,
-      data: {
-        columns: 3,
-      },
-      type: 'grid',
-      children: [
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 1 ',
-            level: 2,
-          },
-          type: 'heading',
-        },
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 2',
-            level: 2,
-          },
-          type: 'heading',
-        },
-        {
-          id: `widget-${nanoid()}`,
-          type: 'list',
-          data: {},
-          children: [
-            {
-              id: `widget-${nanoid()}`,
-              data: {
-                value: 'This is a heading 1 in List ',
-                level: 2,
+        value: [
+          {
+            type: 'paragraph',
+            children: [
+              {
+                text: '',
               },
-              type: 'heading',
-            },
-            {
-              id: `widget-${nanoid()}`,
-              data: {
-                value: 'This is a heading 2 in List',
-                level: 2,
+            ],
+          },
+          {
+            type: 'image',
+            url: 'https://zeekrlife-oss.zeekrlife.com/frontend/atom/atom_json/JSON-2c293ed22f16f3602f139511e8d9479b/zeekr001_kv_2024-32788be256e0c4bcad0fced53952a5ec.png',
+            children: [
+              {
+                text: '',
               },
-              type: 'heading',
+            ],
+            setting: {
+              width: 127,
+              height: 71,
+              scale: 1.79,
             },
-            {
-              id: `widget-${nanoid()}`,
-              data: {
-                value: 'This is a heading 3 in List',
-                level: 2,
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                text: '',
               },
-              type: 'heading',
-            },
-          ],
-        },
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 3',
-            level: 2,
+            ],
           },
-          type: 'heading',
-        },
-      ],
-    },
-    {
-      id: `widget-${nanoid()}`,
-      data: {
-        value: 'This is a heading 3',
-        level: 2,
+        ],
       },
-      type: 'heading:gradient',
-    },
-    {
-      id: `widget-${nanoid()}`,
-      type: 'list',
-      data: {
-        direction: 'horizontal',
-      },
-      children: [
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 1 in List ',
-            level: 2,
-          },
-          type: 'heading',
-        },
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 2 in List',
-            level: 2,
-          },
-          type: 'heading',
-        },
-        {
-          id: `widget-${nanoid()}`,
-          data: {
-            value: 'This is a heading 3 in List',
-            level: 2,
-          },
-          type: 'heading',
-        },
-      ],
     },
   ];
   useEffect(() => {
@@ -271,6 +180,7 @@ const App = () => {
     ]);
     editorRef.current?.setPageData({ title: 'New page', theme: 'red', meta_key: 'test key' });
     editorRef.current?.onSave((data) => {
+      console.log(data);
       window.alert('Saved');
     });
     editorRef.current?.onCancel((data) => {
@@ -282,8 +192,8 @@ const App = () => {
     console.log(d);
   });
 
-  // return <DMEditor ref={editorRef} />;
-  return <DMEditorView data={data} theme="blue" />;
+  return <DMEditor ref={editorRef} />;
+  // return <DMEditorView data={data} theme="blue" />;
 };
 
 export default App;

@@ -13,13 +13,15 @@ import {
   withInlines,
   type MiniTextLeafProps,
 } from '../../setting-panel/property-setting/rich-text/helper';
+import { type DME } from '../../types';
 
 const { useCallback, useMemo } = React;
 
 export interface MiniRichTextProps {
-  viewmode?: boolean;
+  // viewmode?: boolean;
+  mode?: DME.WidgetRenderProps['mode'];
   value?: Array<Descendant> | null;
-  onFocus?: FocusEventHandler<T> | undefined;
+  onFocus?: FocusEventHandler | undefined;
   onValueChange: (value: Descendant[]) => void;
 }
 
@@ -31,7 +33,7 @@ const emptyValue = [
 ];
 
 const MiniRichText = (props: MiniRichTextProps) => {
-  const { onValueChange } = props;
+  const { onValueChange, mode } = props;
   const value = props.value || emptyValue;
 
   const renderElement = useCallback(
@@ -39,7 +41,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
       attributes: Record<string, unknown>;
       children: React.ReactNode;
       element: SlateElement;
-    }) => <Element {...props} />,
+    }) => <Element mode={mode} {...props} />,
     [],
   );
 
@@ -62,7 +64,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
         <div>
           <HoveringToolbar />
           <Editable
-            readOnly={props.viewmode}
+            readOnly={mode === 'view'}
             renderLeaf={renderLeaf}
             onFocus={props.onFocus}
             renderElement={renderElement}

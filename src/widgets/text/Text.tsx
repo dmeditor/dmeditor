@@ -1,5 +1,4 @@
-import { MiniText, useEditorStore } from '../..';
-import type { DME } from '../..';
+import { MiniText, useEditorStore, type DME } from '../..';
 import { EntityText } from './entity';
 
 interface RichTextProps extends DME.WidgetRenderProps<EntityText> {}
@@ -21,7 +20,7 @@ const Text = (props: RichTextProps) => {
   };
   return (
     <div className={props.rootClasses}>
-      <MiniText viewmode={props.mode === 'view'} value={value} onValueChange={handleValueChange} />
+      <MiniText mode={props.mode} value={value} onValueChange={handleValueChange} />
     </div>
   );
 };

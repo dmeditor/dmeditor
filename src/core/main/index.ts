@@ -26,23 +26,6 @@ function createDMEditor() {
     steps: [],
     storage: [] as DMEData.BlockList,
     page: { title: 'New page' },
-
-    // initEditor() {
-    //   this.widgets = [];
-    //   this.editorConfig = cloneDeep(defaultConfig);
-    // },
-    // changeViewMode(viewMode: ViewMode) {
-    //   return (this.editorConfig.viewMode = viewMode);
-    // },
-    // addWidget(widget) {
-    //   this.widgets.push(widget);
-    // },
-    // removeWidget(widget) {
-    //   const index = this.widgets.indexOf(widget);
-    //   if (index > -1) {
-    //     this.widgets.splice(index, 1);
-    //   }
-    // },
   };
 }
 

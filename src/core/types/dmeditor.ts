@@ -86,13 +86,17 @@ export namespace DME {
 
   export interface Block extends Widget {}
 
+  enum Mode {
+    Edit = 'edit',
+    View = 'view',
+  }
   export interface WidgetRenderProps<Type = DMEData.DefaultDataType> {
     blockNode: DMEData.Block<Type>;
     rootClasses: string;
     // key is the setting item(eg. 'root', value is styles' class value, eg.['big-space', 'dark'])
     styleClasses: { [key: string]: string };
     active: boolean;
-    mode: 'edit' | 'view';
+    mode: Mode;
     path: Array<number>;
   }
 

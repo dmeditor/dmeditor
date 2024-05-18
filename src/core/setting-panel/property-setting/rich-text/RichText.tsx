@@ -15,7 +15,6 @@ import {
   InsertImageButton,
   Leaf,
   MarkButton,
-  toggleMark,
   Toolbar,
   ToolsGroup,
   withImages,
