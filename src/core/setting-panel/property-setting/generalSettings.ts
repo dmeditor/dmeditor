@@ -6,22 +6,27 @@ export const generalSettings = [
     settingComponent: 'range',
     property: 'settings.general.padding',
     parameters: { min: 0, max: 100 },
+    category: 'block',
   },
   {
     name: 'Width',
-    settingComponent: 'input',
+    settingComponent: 'range',
     property: 'settings.general.width',
+    parameters: { min: 0, max: 700, step: 5 },
+    category: 'block',
   },
   {
     name: 'Align',
     settingComponent: 'align',
     property: 'settings.general.align',
+    category: 'block',
   },
   {
     name: 'Top margin',
     settingComponent: 'range',
     property: 'settings.general.marginTop',
     parameters: { min: 0, max: 100 },
+    category: 'block',
   },
   // {
   //   name: 'Background',
