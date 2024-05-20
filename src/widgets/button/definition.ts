@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { dmeConfig } from '../..';
-import type { DME, DMEData } from '../..';
+import { dmeConfig, type DME, type DMEData } from '../..';
 
 const buttonWidget: DME.Widget = {
   category: 'widget',

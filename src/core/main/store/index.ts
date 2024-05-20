@@ -85,7 +85,7 @@ type Actions = {
   getCopyBlock: () => DMEData.Block | undefined;
 };
 
-const useEditorStore = create<Store & Actions>()(
+export const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
     ...createDMEditor(),
     startAddBlock: (
@@ -498,5 +498,3 @@ const useEditorStore = create<Store & Actions>()(
     },
   })),
 );
-
-export { useEditorStore };

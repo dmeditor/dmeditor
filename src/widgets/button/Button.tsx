@@ -1,5 +1,4 @@
-import type { DME } from 'dmeditor/index';
-
+import type { DME } from '../../core/types';
 import { EntityButton } from './entity';
 import { getStyledButton } from './styled';
 
