@@ -53,7 +53,9 @@ export const RightElement = styled.div`
 `;
 
 export const TabBodyContainer = styled.div`
-  padding: 15px 20px;
+  padding: 15px 20px 150px 20px;
+  height: calc(100vh - 350px);
+  overflow: auto;
 `;
 
 export const ActionPanel = styled.div`

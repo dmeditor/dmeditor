@@ -1,3 +1,5 @@
+import { DMEData } from '../../core/types';
+
 type TableValue = any[][];
 export type BorderType = 'none' | 'rowBorder' | 'border';
 
@@ -12,6 +14,7 @@ export interface EntityTableBlock {
     headerIsBold?: boolean;
     headerAlign?: 'left' | 'center' | 'right';
     headerBackground?: string;
+    general?: DMEData.GeneralSettingType;
   };
 }
 

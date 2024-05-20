@@ -84,6 +84,8 @@ export namespace DME {
     icon?: string;
     cssClasses?: WidgetStyleClasses;
     cssStyle: string; //css style using css-in-js
+    //eg. marginTop: {value: 10, enabled:true}, enabled: false - disabled(default), true - changable
+    settings?: { [key: string]: { value: any | undefined; enabled?: boolean } };
   }
 
   export interface Block extends Widget {}
@@ -167,4 +169,12 @@ export namespace DMEData {
 
   //A section is alias of a block
   // type Section = Block;
+
+  export interface GeneralSettingType {
+    width?: number | string;
+    align?: 'left' | 'center' | 'right';
+    marginTop?: number;
+    padding?: number | number[];
+    background?: { color?: string; image?: string; imagePostion?: string };
+  }
 }

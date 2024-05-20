@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { dmeConfig } from '../..';
 import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import { EntityTableBlock, initialTableEntity } from './entity';
 
 const HeadingWidget: DME.Widget = {
@@ -69,6 +70,7 @@ const HeadingWidget: DME.Widget = {
       settingComponent: 'table-header',
       custom: true,
     },
+    ...generalSettings,
   ],
 };
 

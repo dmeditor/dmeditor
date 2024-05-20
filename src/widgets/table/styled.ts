@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 
+import { getGeneralStyle } from '../../core/setting-panel/property-setting';
 import { EntityTableBlock } from './entity';
 
 export const StyledTable = styled.table<EntityTableBlock['settings']>((props) => {
@@ -15,9 +16,9 @@ export const StyledTable = styled.table<EntityTableBlock['settings']>((props) =>
 
   return {
     borderCollapse: 'collapse',
-    width: '100%',
     'th, td': {
-      padding: padding + 'px',
+      ...(padding && { padding: padding + 'px' }),
+      minWidth: 40,
       border: borderType === 'none' ? 'none' : '1px solid ' + borderColor,
       ...(borderType === 'rowBorder'
         ? {

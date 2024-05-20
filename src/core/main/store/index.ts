@@ -425,7 +425,7 @@ export const useEditorStore = create<Store & Actions>()(
         // }
 
         // todo: put settings to separate method
-        const [propKey, realPropsName] = propName.split('.');
+        const [propKey, realPropsName, realPropsName2] = propName.split('.');
         // the property is in the root of the block
         if (isEmptyString(propKey)) {
           if (isPlainObject(block.data)) {
@@ -436,10 +436,24 @@ export const useEditorStore = create<Store & Actions>()(
         } else if (propKey === 'settings') {
           if (isPlainObject(block.data)) {
             if (isKeyInObject('settings', block.data)) {
-              block.data[propKey][realPropsName] = propValue;
+              if (realPropsName === 'general') {
+                console.log(realPropsName, realPropsName2);
+                if (isKeyInObject('general', block.data.settings)) {
+                  block.data.settings.general[realPropsName2] = propValue;
+                } else {
+                  console.log(realPropsName, realPropsName2, 22);
+                  block.data[propKey][realPropsName] = { [realPropsName2]: propValue };
+                }
+              } else {
+                block.data[propKey][realPropsName] = propValue;
+              }
             } else {
-              const settings = { [realPropsName]: propValue };
-              block.data[propKey] = settings;
+              if (realPropsName === 'general') {
+                block.data[propKey] = { general: { [realPropsName2]: propValue } };
+              } else {
+                const settings = { [realPropsName]: propValue };
+                block.data[propKey] = settings;
+              }
             }
           } else {
             console.warn('settings is not an object');
