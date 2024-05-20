@@ -19,6 +19,7 @@ const { useCallback, useMemo } = React;
 
 export interface MiniRichTextProps {
   // viewmode?: boolean;
+  placeHolder?: string;
   mode?: DME.WidgetRenderProps['mode'];
   value?: Array<Descendant> | null;
   onFocus?: FocusEventHandler | undefined;
@@ -68,7 +69,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
             renderLeaf={renderLeaf}
             onFocus={props.onFocus}
             renderElement={renderElement}
-            placeholder={mode === 'view' ? '' : 'Input your content here'} //fixed: readonly empty still show placeholder
+            placeholder={mode === 'view' ? '' : props.placeHolder || 'Input your content here'} //fixed: readonly empty still show placeholder
           />
         </div>
       </Slate>

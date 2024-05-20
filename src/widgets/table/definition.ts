@@ -39,7 +39,7 @@ const HeadingWidget: DME.Widget = {
       property: 'settings.borderType',
     },
     {
-      name: 'Padding',
+      name: 'Cell padding',
       settingComponent: 'range',
       property: 'settings.padding',
       parameters: { min: 0, max: 40 },
