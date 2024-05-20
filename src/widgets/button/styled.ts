@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 const StyledAnchor = styled.a<{ disabled?: boolean }>`
+  display: inline-block;
   text-decoration: none;
   ${(props) => (props.disabled ? 'pointer-events: none;' : '')}
 
