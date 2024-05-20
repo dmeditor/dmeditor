@@ -9,7 +9,7 @@ export const generalSettings = [
     category: 'block',
   },
   {
-    name: 'Width',
+    name: 'Block width',
     settingComponent: 'range',
     property: 'settings.general.width',
     parameters: { min: 0, max: 700, step: 5 },
