@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { BlockListRender, dmeConfig } from '../..';
 import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import { SyledLayout } from './styled';
 
 const layout2ColumnsWidget: DME.Widget = {
@@ -38,11 +39,15 @@ const layout2ColumnsWidget: DME.Widget = {
       settingComponent: 'range',
       parameters: { min: 1, max: 11 },
     },
+    ...generalSettings,
   ],
 };
 
 interface EntityLayout2Columns {
   columnWidth: number;
+  settings?: {
+    general?: DMEData.GeneralSettingType;
+  };
 }
 
 const Layout2Columns = (props: DME.WidgetRenderProps<EntityLayout2Columns>) => {

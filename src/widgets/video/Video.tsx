@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
 import { dmeConfig, useEditorStore } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 
 export type VideoEntity = {
   value: string;
@@ -12,6 +13,7 @@ export type VideoEntity = {
     width: number;
     height: number;
     align: 'left' | 'center' | 'right';
+    general?: DMEData.GeneralSettingType;
   };
 };
 
@@ -150,5 +152,6 @@ export const VideoDefinition: DME.Widget = {
       settingComponent: 'link',
       property: '.value',
     },
+    ...generalSettings,
   ],
 };

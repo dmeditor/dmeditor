@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { dmeConfig } from '../..';
 import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import { EntityHeroText } from './entity';
 
 const heroTextWidget: DME.Widget = {
@@ -69,6 +70,7 @@ const heroTextWidget: DME.Widget = {
       property: '.heroFullWidth',
       settingComponent: 'checkbox',
     },
+    ...generalSettings,
   ],
 };
 

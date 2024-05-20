@@ -34,28 +34,6 @@ const HeadingWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'BorderType',
-      settingComponent: 'table-border-type',
-      custom: true,
-      property: 'settings.borderType',
-    },
-    {
-      name: 'Cell padding',
-      settingComponent: 'range',
-      property: 'settings.padding',
-      parameters: { min: 0, max: 40 },
-    },
-    {
-      name: 'Border Color',
-      settingComponent: 'color',
-      property: 'settings.borderColor',
-    },
-    {
-      name: 'Odd row background',
-      settingComponent: 'color',
-      property: 'settings.oddRowBackground',
-    },
-    {
       name: 'Row',
       settingComponent: 'table-row',
       custom: true,
@@ -66,9 +44,36 @@ const HeadingWidget: DME.Widget = {
       custom: true,
     },
     {
+      name: 'BorderType',
+      settingComponent: 'table-border-type',
+      custom: true,
+      property: 'settings.borderType',
+      category: 'block',
+    },
+    {
+      name: 'Cell padding',
+      settingComponent: 'range',
+      property: 'settings.padding',
+      parameters: { min: 0, max: 40 },
+      category: 'block',
+    },
+    {
+      name: 'Border Color',
+      settingComponent: 'color',
+      property: 'settings.borderColor',
+      category: 'block',
+    },
+    {
+      name: 'Odd row background',
+      settingComponent: 'color',
+      property: 'settings.oddRowBackground',
+      category: 'block',
+    },
+    {
       name: 'Table Header',
       settingComponent: 'table-header',
       custom: true,
+      category: 'block',
     },
     ...generalSettings,
   ],

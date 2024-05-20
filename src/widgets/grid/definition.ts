@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { dmeConfig } from '../..';
 import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import { EntityGrid } from './entity';
 
 const gridWidget: DME.Widget = {
@@ -34,6 +35,7 @@ const gridWidget: DME.Widget = {
       property: '.columns',
       parameters: { min: 1, max: 5 },
     },
+    ...generalSettings,
   ],
 };
 

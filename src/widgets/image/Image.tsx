@@ -2,7 +2,8 @@ import { css } from '@emotion/css';
 import { nanoid } from 'nanoid';
 
 import { dmeConfig } from '../..';
-import type { DME } from '../..';
+import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 
 export interface ImageEntity {
   src: string;
@@ -10,12 +11,10 @@ export interface ImageEntity {
   externalId?: string | number;
   thumbnail?: string;
   description?: string;
-  settings: {
-    align?: 'left' | 'center' | 'right';
+  settings: DMEData.GeneralSettingType & {
     borderWidth?: number;
     borderColor?: string;
-    width?: number;
-    marginTop?: number;
+    general?: DMEData.GeneralSettingType;
   };
 }
 
@@ -39,35 +38,26 @@ export const ImageDefinition: DME.Widget = {
       name: 'Align',
       settingComponent: 'align',
       property: 'settings.align',
+      category: 'block',
     },
     {
       name: 'Border Width',
       settingComponent: 'range',
       property: 'settings.borderWidth',
+      category: 'block',
       parameters: { min: 0, max: 40 },
     },
     {
       name: 'Border Color',
       settingComponent: 'color',
       property: 'settings.borderColor',
-    },
-    {
-      name: 'Width',
-      settingComponent: 'range',
-      parameters: { min: 50, max: 800, step: 5 },
-      property: 'settings.width',
-    },
-    {
-      name: 'Margin',
-      settingComponent: 'range',
       category: 'block',
-      parameters: { min: 0, max: 200 },
-      property: 'settings.marginTop',
     },
+    ...generalSettings,
   ],
   events: {
     updateData: () => {},
-    createBlock: () => {
+    createBlock: (): DMEData.Block<ImageEntity> => {
       return {
         id: nanoid(),
         type: 'image',

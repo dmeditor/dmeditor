@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
 import { dmeConfig } from '../../core/config';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import { GalleryEntity, initGalleryEntity } from './entity';
 
 const definition: DME.Widget = {
@@ -35,6 +36,7 @@ const definition: DME.Widget = {
       custom: true,
       settingComponent: 'image-list',
     },
+    ...generalSettings,
   ],
 };
 

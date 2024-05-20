@@ -1,4 +1,4 @@
-// import type { DMEData } from '../../../core';
+import { DMEData } from '../../core/types';
 
 export interface EntityHeadingBlock {
   value: string;
@@ -10,5 +10,6 @@ export interface EntityHeadingBlock {
     marginTop?: number;
     padding?: number;
     width?: string | number;
+    general?: DMEData.GeneralSettingType;
   };
 }

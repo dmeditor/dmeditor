@@ -16,29 +16,31 @@ const Accordion = (props: any) => {
     if (isNull(key)) return;
     setActiveKey(key);
   };
-  return accordionList.map((accordion: any, index: number) => {
-    return (
-      <MUIAccordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreOutlined />}
-          aria-controls={`panel${index}-content`}
-          id={`panel${index}-header`}
-        >
-          {`${accordion?.meta?.title}` ?? ''}
-        </AccordionSummary>
-        <AccordionDetails>
-          <BlockListRender
-            mode={props.mode}
-            blockData={accordion.children || []}
-            path={props.path.concat(index)}
-            // direction={direction}
-            onSelect={handleSelect}
-            allowedTypes={getAllowedTypes(type)}
-          />
-        </AccordionDetails>
-      </MUIAccordion>
-    );
-  });
+  return (
+    <div>
+      {accordionList.map((accordion: any, index: number) => (
+        <MUIAccordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreOutlined />}
+            aria-controls={`panel${index}-content`}
+            id={`panel${index}-header`}
+          >
+            {`${accordion?.meta?.title}` ?? ''}
+          </AccordionSummary>
+          <AccordionDetails>
+            <BlockListRender
+              mode={props.mode}
+              blockData={accordion.children || []}
+              path={props.path.concat(index)}
+              // direction={direction}
+              onSelect={handleSelect}
+              allowedTypes={getAllowedTypes(type)}
+            />
+          </AccordionDetails>
+        </MUIAccordion>
+      ))}
+    </div>
+  );
 };
 
 export default Accordion;

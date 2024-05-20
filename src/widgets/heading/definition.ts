@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
 import { dmeConfig } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import { EntityHeadingBlock } from './entity';
 
 //should be HeadingWidget, which is a definition object. This file should be called definitin.ts
@@ -65,6 +66,7 @@ const HeadingWidget: DME.Widget = {
       property: 'settings.marginTop',
     },
     { name: '', settingComponent: 'heading', custom: true, property: '' },
+    ...generalSettings,
   ],
 };
 

@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 
 import { dmeConfig, useEditorStore } from '../..';
 import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 
 export type IFrameEntity = {
   value: string;
@@ -12,6 +13,7 @@ export type IFrameEntity = {
     width: number;
     height: number;
     align: 'left' | 'center' | 'right';
+    general?: DMEData.GeneralSettingType;
   };
 };
 
@@ -139,5 +141,6 @@ export const iFrameDefinition: DME.Widget = {
       property: 'settings.align',
       settingComponent: 'align',
     },
+    ...generalSettings,
   ],
 };

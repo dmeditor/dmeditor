@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { dmeConfig } from '../..';
 import type { DME, DMEData } from '../..';
 import { i18n } from '../../core/i18n';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import { initialTextEntity } from './entity';
 import type { EntityText } from './entity';
 
@@ -33,6 +34,7 @@ const TextWidget: DME.Widget = {
       property: '.value',
       settingComponent: 'rich-text',
     },
+    ...generalSettings,
   ],
 };
 

@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { BlockListRender, dmeConfig } from '../..';
 import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import { SyledLayout } from './styled';
 
 const layout3ColumnsWidget: DME.Widget = {
@@ -41,12 +42,16 @@ const layout3ColumnsWidget: DME.Widget = {
       name: '',
       settingComponent: 'layout-3columns/setting',
     },
+    ...generalSettings,
   ],
 };
 
 export interface EntityLayout3Columns {
   column1Width: number;
   column2Width: number;
+  settings?: {
+    general?: DMEData.GeneralSettingType;
+  };
 }
 
 const Layout3Columns = (props: DME.WidgetRenderProps<EntityLayout3Columns>) => {

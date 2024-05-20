@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import { dmeConfig, type DME, type DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 
 const buttonWidget: DME.Widget = {
   category: 'widget',
@@ -34,6 +35,7 @@ const buttonWidget: DME.Widget = {
       property: '.link',
       settingComponent: 'link',
     },
+    ...generalSettings,
   ],
 };
 

@@ -1,7 +1,12 @@
+import { DMEData } from '../../core/types';
+
 interface CarouselEntity {
   animation: 'default' | 'fade';
   autoPlay: boolean;
   items: Array<{ link: string; image: string; title?: string }>;
+  settings: {
+    general?: DMEData.GeneralSettingType;
+  };
 }
 
 const initCarouselEntity = (): CarouselEntity => ({
@@ -10,7 +15,8 @@ const initCarouselEntity = (): CarouselEntity => ({
   items: [
     {
       link: 'https://www.google.com',
-      image: 'https://bridge.site.digimaker.com/var/images/z/zip/upload-918282482-carousel_image.jpg',
+      image:
+        'https://bridge.site.digimaker.com/var/images/z/zip/upload-918282482-carousel_image.jpg',
       title: 'Coffee',
     },
     // {

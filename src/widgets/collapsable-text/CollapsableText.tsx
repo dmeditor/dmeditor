@@ -4,16 +4,19 @@ import { Collapse } from '@mui/material';
 import { nanoid } from 'nanoid';
 
 import { BlockListRender, dmeConfig } from '../..';
-import type { DME } from '../..';
+import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 
-interface CollapsableTextEntity {}
+interface CollapsableTextEntity {
+  general?: DMEData.GeneralSettingType;
+}
 
 export const CollapsableTextDefiniation: DME.Widget = {
   category: 'widget',
   name: 'Collapsable text',
   type: 'collapsable-text',
   icon: 'collapsable-text',
-  settings: [],
+  settings: [...generalSettings],
   events: {
     createBlock: () => {
       const defaultStyle = dmeConfig.widgets['collapsable-text']?.defaultStyle;

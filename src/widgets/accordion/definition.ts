@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
+import { generalSettings } from '../../core/setting-panel/property-setting';
 import type { EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {
@@ -13,7 +14,7 @@ const AccordionWidget: DME.Widget = {
       return {
         id: nanoid(),
         type: 'accordion',
-        data: null,
+        data: {},
         children: [
           {
             meta: {
@@ -66,6 +67,7 @@ const AccordionWidget: DME.Widget = {
       custom: true,
       settingComponent: 'accordion',
     },
+    ...generalSettings,
   ],
 };
 
