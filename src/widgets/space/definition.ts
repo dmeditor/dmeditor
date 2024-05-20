@@ -37,7 +37,7 @@ const spaceWidget: DME.Widget = {
       property: 'settings.height',
       settingComponent: 'range',
       parameters: {
-        min: 0,
+        min: 1,
         max: 100,
       },
     },
