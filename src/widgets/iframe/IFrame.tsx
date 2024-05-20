@@ -10,26 +10,10 @@ import { generalSettings } from '../../core/setting-panel/property-setting';
 export type IFrameEntity = {
   value: string;
   settings: {
-    width: number;
     height: number;
-    align: 'left' | 'center' | 'right';
     general?: DMEData.GeneralSettingType;
   };
 };
-
-const IFrameContainer = styled.div<IFrameEntity['settings']>((props) => {
-  return {
-    display: 'flex',
-    justifyContent:
-      props.align === 'center' ? 'center' : props.align === 'right' ? 'flex-end' : 'flex-start',
-    width: '100%',
-
-    '& iframe': {
-      width: props.width,
-      height: props.height,
-    },
-  };
-});
 
 const ConfirmDialog = (props: { onConfirm: (value: string) => void; onCancel?: () => void }) => {
   const [visible, setVisible] = useState(true);
@@ -85,9 +69,7 @@ export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
   return (
     <>
       {!!data.value && (
-        <IFrameContainer {...data.settings}>
-          <iframe src={data.value} />
-        </IFrameContainer>
+        <iframe src={data.value} style={{ height: data.settings.height, display: 'block' }} />
       )}
     </>
   );
@@ -109,9 +91,8 @@ export const iFrameDefinition: DME.Widget = {
         data: {
           value: '',
           settings: {
-            width: 300,
             height: 300,
-            align: 'center',
+            general: { align: 'center' },
           },
         },
       };
@@ -125,21 +106,11 @@ export const iFrameDefinition: DME.Widget = {
       settingComponent: 'link',
     },
     {
-      name: 'Width',
-      property: 'settings.width',
-      settingComponent: 'range',
-      parameters: { min: 300, max: 1000 },
-    },
-    {
       name: 'Height',
       property: 'settings.height',
       settingComponent: 'range',
+      category: 'block',
       parameters: { min: 300, max: 1000 },
-    },
-    {
-      name: 'Align',
-      property: 'settings.align',
-      settingComponent: 'align',
     },
     ...generalSettings,
   ],

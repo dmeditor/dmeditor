@@ -35,12 +35,6 @@ export const ImageDefinition: DME.Widget = {
       property: '.description',
     },
     {
-      name: 'Align',
-      settingComponent: 'align',
-      property: 'settings.align',
-      category: 'block',
-    },
-    {
       name: 'Border Width',
       settingComponent: 'range',
       property: 'settings.borderWidth',

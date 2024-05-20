@@ -26,9 +26,7 @@ const HeadingWidget: DME.Widget = {
         data: {
           value: 'This is a new block',
           level: 2,
-          settings: {
-            align: 'left',
-          },
+          settings: {},
         },
       };
     },
@@ -46,24 +44,17 @@ const HeadingWidget: DME.Widget = {
       property: '.level',
       parameters: { min: 1, max: 5 },
     },
-    { name: 'Align', settingComponent: 'align', property: 'settings.align' },
+    {
+      name: 'Text align',
+      settingComponent: 'align',
+      property: 'settings.align',
+      category: 'block',
+    },
     {
       name: 'Text color',
       settingComponent: 'color',
       property: 'settings.color',
-    },
-    {
-      name: 'Background',
-      settingComponent: 'color',
       category: 'block',
-      property: 'settings.backgroundColor',
-    },
-    {
-      name: 'Margin',
-      settingComponent: 'range',
-      parameters: { min: 0, max: 200 },
-      category: 'block',
-      property: 'settings.marginTop',
     },
     { name: '', settingComponent: 'heading', custom: true, property: '' },
     ...generalSettings,

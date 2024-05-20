@@ -16,7 +16,7 @@ export const generalSettings = [
     category: 'block',
   },
   {
-    name: 'Align',
+    name: 'Block align',
     settingComponent: 'align',
     property: 'settings.general.align',
     category: 'block',
