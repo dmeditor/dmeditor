@@ -6,6 +6,8 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
   const containerStyle: any = {};
   if (settings.width) {
     elementStyle['width'] = settings.width;
+  } else {
+    elementStyle['width'] = 'fit-content';
   }
   if (settings.align) {
     switch (settings.align) {

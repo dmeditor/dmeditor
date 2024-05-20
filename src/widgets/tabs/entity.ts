@@ -1,7 +1,7 @@
 import { DMEData } from '../../core/types';
 
 export interface EntityTabsData {
-  data: null;
+  data: {};
   settings?: {
     general?: DMEData.GeneralSettingType;
   };

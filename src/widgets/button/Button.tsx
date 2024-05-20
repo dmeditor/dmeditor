@@ -34,15 +34,17 @@ const Button = (props: ButtonProps) => {
     onClick?.();
   };
   return (
-    <Component
-      {...restProps}
-      {...buttonProps}
-      disabled={mode === 'edit'}
-      className={cls}
-      onClick={handleClick}
-    >
-      {value}
-    </Component>
+    <div>
+      <Component
+        {...restProps}
+        {...buttonProps}
+        disabled={mode === 'edit'}
+        className={cls}
+        onClick={handleClick}
+      >
+        {value}
+      </Component>
+    </div>
   );
 };
 
