@@ -56,12 +56,12 @@ type Actions = {
   ) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
-  loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => void;
+  loadJsonSchema: (jsonSchema: { widgets: DMEData.Block[] }) => void;
   getSelectedBlock: <T = DMEData.DefaultDataType>() => DMEData.Block<T> | undefined;
   getBlock: <T = DMEData.Block<DMEData.DefaultDataType>>(
     index: number,
   ) => DMEData.Block<T> | undefined;
-  removeBlock: (widget: ReactNode) => void;
+  removeBlock: (widget: DMEData.Block) => void;
   removeByPath: (path: Array<number>) => void;
   setSelected: (blockIndex?: number) => void;
   setStorage: (data: DMEData.Block[]) => void;
@@ -85,7 +85,7 @@ type Actions = {
   getCopyBlock: () => DMEData.Block | undefined;
 };
 
-const useEditorStore = create<Store & Actions>()(
+export const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
     ...createDMEditor(),
     startAddBlock: (
@@ -236,7 +236,7 @@ const useEditorStore = create<Store & Actions>()(
       const state = get();
       return state.selected.blockIndex !== -Infinity;
     },
-    loadJsonSchema: (jsonSchema: { widgets: ReactNode[] }) => {
+    loadJsonSchema: (jsonSchema) => {
       set((state) => {
         let flag = false;
         if (!!jsonSchema && !!jsonSchema.widgets) {
@@ -263,6 +263,10 @@ const useEditorStore = create<Store & Actions>()(
     getBlock: <T>(index: number) => {
       const state = get();
       const currentList = state.getCurrentList();
+      if (!currentList) {
+        state.clearSelected();
+        return;
+      }
       if (isStrictlyInfinity(index) || index < 0 || currentList.length <= index) {
         state.clearSelected();
         return;
@@ -287,9 +291,9 @@ const useEditorStore = create<Store & Actions>()(
         list.splice(index, 1);
       });
     },
-    removeBlock: (block: ReactNode) =>
+    removeBlock: (block) =>
       set((state) => {
-        state.storage = state.storage.filter((w) => w !== widget);
+        state.storage = state.storage.filter((w) => w !== block);
       }),
     setSelected: (blockIndex?: number) => {
       set((state) => {
@@ -314,6 +318,7 @@ const useEditorStore = create<Store & Actions>()(
           acc[cur.type] = cur;
           return acc;
         }, {});
+
         state.storage = blocks.map((block) => {
           if (!block || !block.type) {
             return block;
@@ -443,13 +448,6 @@ const useEditorStore = create<Store & Actions>()(
           console.error(
             `Invalid propName: ${propName}, it should be "settings.${propName}" or ".${propName}"`,
           );
-          // state.storage[state.selected.blockIndex].data = {
-          //   ...state.storage[state.selected.blockIndex].data,
-          //   settings: {
-          //     ...(state.storage[state.selected.blockIndex].data.settings as any),
-          //     [realPropsName]: propValue,
-          //   },
-          // };
         }
       });
     },
@@ -498,5 +496,3 @@ const useEditorStore = create<Store & Actions>()(
     },
   })),
 );
-
-export { useEditorStore };
