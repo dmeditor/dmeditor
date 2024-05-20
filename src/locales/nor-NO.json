@@ -15,6 +15,10 @@
     "Add above ": "Legg til blokk over ",
     "Add under ": "Legg til blokk under "
   },
+  "tool": {
+    "Save": "Lagre",
+    "Cancel": "Avbryt"
+  },
   "widget": {
     "Image": "Bilder",
     "Text": "Tekst",

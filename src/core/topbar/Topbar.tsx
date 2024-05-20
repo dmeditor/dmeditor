@@ -15,6 +15,7 @@ import {
 import { Button, Tooltip } from '@mui/material';
 
 import emitter from '../../core/utils/event';
+import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import { ActionsContainer, Container, Logo, LogoContainer, ToolsContainer } from './style';
 
@@ -68,10 +69,10 @@ export const TopBar = () => {
       </ToolsContainer>
       <ActionsContainer>
         <ToolButton onClick={save}>
-          Save <Save {...smallIcon} />
+          {i18n('Save', 'tool')} <Save {...smallIcon} />
         </ToolButton>
         <ToolButton onClick={cancel}>
-          Cancel <Cancel {...smallIcon} />
+          {i18n('Cancel', 'tool')} <Cancel {...smallIcon} />
         </ToolButton>
         {/* <ToolButton>
           <ShoppingBagOutlined />
