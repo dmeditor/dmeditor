@@ -26,6 +26,9 @@ const HeadingWidget: DME.Widget = {
             padding: 10,
             borderType: 'border',
             borderColor: '#ccc',
+            general: {
+              align: 'center',
+            },
           },
         },
       };
@@ -55,6 +58,12 @@ const HeadingWidget: DME.Widget = {
       settingComponent: 'range',
       property: 'settings.padding',
       parameters: { min: 0, max: 40 },
+      category: 'block',
+    },
+    {
+      name: 'Text color',
+      settingComponent: 'color',
+      property: 'settings.color',
       category: 'block',
     },
     {

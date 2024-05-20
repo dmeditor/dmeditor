@@ -9,6 +9,7 @@ export interface EntityTableBlock {
     borderType?: BorderType;
     padding?: number;
     borderColor?: string;
+    color?: string;
     oddRowBackground?: string;
     hasHeader?: boolean;
     headerIsBold?: boolean;

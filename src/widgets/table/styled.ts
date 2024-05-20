@@ -12,13 +12,16 @@ export const StyledTable = styled.table<EntityTableBlock['settings']>((props) =>
     headerAlign,
     headerBackground,
     padding,
+    color,
   } = props;
 
   return {
     borderCollapse: 'collapse',
+    minWidth: 200,
+    color: color,
     'th, td': {
       ...(padding && { padding: padding + 'px' }),
-      minWidth: 40,
+      minWidth: 20,
       border: borderType === 'none' ? 'none' : '1px solid ' + borderColor,
       ...(borderType === 'rowBorder'
         ? {
