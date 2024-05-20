@@ -1,3 +1,5 @@
+import { Category, Display, Mode, PageSettingType } from '../enum';
+
 export namespace DME {
   interface Setting {
     property?: string;
@@ -15,7 +17,7 @@ export namespace DME {
   export type PageSetting = {
     identifier: string;
     name: string;
-    type: 'text' | 'multitext';
+    type: PageSettingType;
   };
 
   export type PageTheme = {
@@ -28,17 +30,17 @@ export namespace DME {
   export interface Widget {
     type: string;
     name: string;
-    icon: string | (() => unknown); //base 64(eg. png/svg) or url, or component
-    category: 'widget' | 'container' | 'mixed' | 'layout' | 'section';
+    icon: string | (() => unknown); // base 64(eg. png/svg) or url, or component
+    category: Category;
     alias?: string;
     enabledStyles?: Array<string>;
     isBaseWidget?: boolean; //true if it's base widget used for variants
     allowedTypes?: Array<string> | string; //allwed types for direct children
     events: {
-      //   onInput: () => void 0,
-      //   onChange: () => void 0,
-      //   onFocus: () => void 0,
-      //   onBlur: () => void 0,
+      // onInput: () => void 0,
+      // onChange: () => void 0,
+      // onFocus: () => void 0,
+      // onBlur: () => void 0,
       updateData?: (settings: Setting, data: DMEData.Block) => void;
       //when create an empty block
       createBlock: () => DMEData.Block<any, any>;
@@ -67,7 +69,7 @@ export namespace DME {
 
   export interface WidgetStyle {
     identifier: string; // '_' for root
-    display?: 'dropdown' | 'button-group' | 'radio' | 'inline-block'; //dropdown is default if not set.
+    display?: Display; //dropdown is default if not set.
     name: string; //'Style' if not set
     options: Array<WidgetStyleOption>;
   }
@@ -86,10 +88,6 @@ export namespace DME {
 
   export interface Block extends Widget {}
 
-  enum Mode {
-    Edit = 'edit',
-    View = 'view',
-  }
   export interface WidgetRenderProps<Type = DMEData.DefaultDataType> {
     blockNode: DMEData.Block<Type>;
     rootClasses: string;
