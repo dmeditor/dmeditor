@@ -14,9 +14,6 @@ export const SetEditControl = (props: { blockData: DMEData.Block }) => {
     updateSelectedBlockEditControl(value);
   };
 
-  // const category = useMemo(() => {
-  //   return getWidget(props.blockData.type).category;
-  // }, [props.blockData.type]);
   return (
     <div
       className={css`

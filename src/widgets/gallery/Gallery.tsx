@@ -3,6 +3,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Dialog, DialogContent } from '@mui/material';
 
 import { dmeConfig } from '../../core/config';
+import { DME } from '../../core/types';
 import { GalleryEntity } from './entity';
 import {
   GalleryContainer,

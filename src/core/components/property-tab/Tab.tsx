@@ -11,6 +11,12 @@ export const PropertyTab = (props: { tabs: Array<TabData>; active?: number }) =>
   const [active, setActive] = useState(props.active ? props.active : 0);
 
   useEffect(() => {
+    if (active > props.tabs.length - 1) {
+      setActive(props.tabs.length - 1);
+    }
+  }, [props.tabs]);
+
+  useEffect(() => {
     setActive(props.active ? props.active : 0);
   }, [props.active]);
 
@@ -22,7 +28,11 @@ export const PropertyTab = (props: { tabs: Array<TabData>; active?: number }) =>
         `}
       >
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs variant="fullWidth" value={active} onChange={(e: any, newValue: number) => setActive(newValue)}>
+          <Tabs
+            variant="fullWidth"
+            value={active}
+            onChange={(e: any, newValue: number) => setActive(newValue)}
+          >
             {props.tabs.map((tab: TabData, index: number) => (
               <Tab key={tab.title} sx={{ textTransform: 'none' }} label={tab.title} />
             ))}

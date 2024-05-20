@@ -150,5 +150,7 @@ export const BlockSettings = (props: {
     );
   };
 
-  return <div>{blockData && <PropertyTab tabs={getTabData()}></PropertyTab>}</div>;
+  const tabData = getTabData();
+
+  return <div>{blockData && <PropertyTab tabs={tabData}></PropertyTab>}</div>;
 };
