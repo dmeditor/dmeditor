@@ -1,11 +1,12 @@
 import { ExpandMoreOutlined } from '@mui/icons-material';
 import { AccordionDetails, AccordionSummary, Accordion as MUIAccordion } from '@mui/material';
 
-import { BlockListRender } from '../..';
+import { BlockListRender, DME } from '../..';
 import { getAllowedTypes, isNull } from '../../core/utils';
+import { EntityAccordion } from './entity';
 import { useAccordionStore } from './store';
 
-const Accordion = (props: any) => {
+const Accordion = (props: DME.WidgetRenderProps<EntityAccordion>) => {
   const {
     blockNode: { children: accordionList = [], type },
     rootClasses,

@@ -28,9 +28,10 @@ export const generalSettings = [
     parameters: { min: 0, max: 100 },
     category: 'block',
   },
-  // {
-  //   name: 'Background',
-  //   settingComponent: 'input', //todo: create background color component
-  //   property: 'settings.background',
-  // },
+  {
+    name: 'Background',
+    settingComponent: 'color', //todo: create background color component
+    property: 'settings.general.background',
+    category: 'block',
+  },
 ];

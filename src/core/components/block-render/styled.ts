@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { DMEData } from 'dmeditor/core/types';
+import { isObject } from 'lodash';
 
 const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
   const elementStyle: any = {};
@@ -7,7 +8,9 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
   if (settings.width) {
     elementStyle['width'] = settings.width;
   } else {
-    elementStyle['width'] = 'fit-content';
+    if (settings.align) {
+      elementStyle['width'] = 'fit-content';
+    }
   }
   if (settings.align) {
     switch (settings.align) {
@@ -29,7 +32,10 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
   if (settings.padding) {
     containerStyle['padding'] = settings.padding;
   }
-  if (settings.background && settings.background?.color) {
+  if (settings.background && typeof settings.background === 'string') {
+    containerStyle['backgroundColor'] = settings.background;
+  }
+  if (settings.background && isObject(settings.background)) {
     containerStyle['backgroundColor'] = settings.background?.color;
   }
   return {

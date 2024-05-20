@@ -175,6 +175,6 @@ export namespace DMEData {
     align?: 'left' | 'center' | 'right';
     marginTop?: number;
     padding?: number | number[];
-    background?: { color?: string; image?: string; imagePostion?: string };
+    background?: string | { color?: string; image?: string; imagePostion?: string };
   }
 }
