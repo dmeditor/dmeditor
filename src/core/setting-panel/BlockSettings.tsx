@@ -90,7 +90,7 @@ export const BlockSettings = (props: {
   const renderATab = (category: string): ReactElement => {
     const filteredSettings = getFilteredSettings(category);
     return (
-      <TabBodyContainer>
+      <TabBodyContainer fullHeight={category === 'block'}>
         {/* <PropertyGroup
           header="Block settings"
           expandable={true}
