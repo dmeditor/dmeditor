@@ -5,7 +5,6 @@ import { DME } from 'dmeditor/core/types';
 import { partial } from 'lodash';
 
 import { dmeConfig } from '../../core/config';
-import { DME } from '../../core/types';
 import { GalleryEntity } from './entity';
 import {
   GalleryContainer,
@@ -25,7 +24,7 @@ const galleryClassName = partial(generateClassName, 'gallery');
 export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
   const {
     blockNode: {
-      data: { items, columns },
+      data: { items, columns, gap = 10 },
     },
     rootClasses,
   } = props;
@@ -55,7 +54,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
   return (
     <>
       <GalleryContainer className={rootClasses}>
-        <GalleryList columns={columns} className={galleryClassName('imgList')}>
+        <GalleryList columns={columns} gap={gap} className={galleryClassName('imgList')}>
           {items.map((item, index) => (
             <GalleryItem
               className={galleryClassName('imgWrapper')}

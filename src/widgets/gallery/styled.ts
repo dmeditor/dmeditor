@@ -5,12 +5,12 @@ export const GalleryContainer = styled.div`
   display: flex;
 `;
 
-export const GalleryList = styled.div((props: { columns: number }) => {
+export const GalleryList = styled.div((props: { columns: number; gap: number }) => {
   return {
     width: '100%',
     display: 'grid',
     gridTemplateColumns: `repeat(${props.columns}, 1fr)`,
-    gap: '10px',
+    gap: `${props.gap}px`,
     listStyle: 'none',
   };
 });

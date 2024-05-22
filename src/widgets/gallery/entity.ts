@@ -3,6 +3,7 @@ import { DMEData } from '../../core/types';
 interface GalleryEntity {
   items: Array<{ image: string; title?: string }>;
   columns: number;
+  gap: number;
   settings?: {
     general?: DMEData.GeneralSettingType;
   };
@@ -11,6 +12,7 @@ interface GalleryEntity {
 const initGalleryEntity = (): GalleryEntity => ({
   items: [],
   columns: 3,
+  gap: 10,
 });
 
 export { initGalleryEntity };
