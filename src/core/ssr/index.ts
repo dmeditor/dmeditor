@@ -1,7 +1,5 @@
 import { iterateBlockList } from '../main/store/helper';
-import { DMEData } from '../types/dmeditor';
-
-export type ServerSideLoadFunction = (data: DMEData.Block, serverParameters: any) => Promise<void>;
+import { DMEData, ServerSideLoadFunction } from '../types/dmeditor';
 
 //widget serverSideLoad map
 const serverSideLoadMap: { [widget: string]: ServerSideLoadFunction } = {};

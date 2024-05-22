@@ -29,7 +29,7 @@ export const BlockRender = memo((props: BlockProps) => {
   const blockType = props.data.type;
 
   const widgetArr = blockType.split(':');
-  const Widget = getWidgetComponent(widgetArr[0]);
+  const Widget = getWidgetComponent(widgetArr[0]).render;
 
   const onSelect = (e: React.MouseEvent) => {
     if (props.mode === 'edit') {

@@ -1,4 +1,8 @@
+import { ComponentType } from 'react';
+
 import { Category, Display, Mode, PageSettingType } from '../enum';
+
+export type ServerSideLoadFunction = (data: DMEData.Block, serverParameters: any) => Promise<void>;
 
 export namespace DME {
   interface Setting {
@@ -72,6 +76,12 @@ export namespace DME {
     display?: Display; //dropdown is default if not set.
     name: string; //'Style' if not set
     options: Array<WidgetStyleOption>;
+  }
+
+  export interface WidgetImplemenation {
+    render: ComponentType<any>;
+    preview?: ComponentType<{ blockData: any; mode?: 'list' }>;
+    onServerSideLoad?: ServerSideLoadFunction;
   }
 
   //css classes, useful when using class names or class based framework(eg. tailwind).
