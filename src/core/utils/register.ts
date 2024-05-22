@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import { AccessAlarm } from '@mui/icons-material';
 
 import { registerServerSideLoad, ServerSideLoadFunction } from '../ssr';
-import type { DME } from '../types';
+import type { DME, DMEData } from '../types';
 
 export const components: {
   // TODO: make it more type safe
@@ -16,7 +16,7 @@ export const layoutDefinition: { [key: string]: DME.Widget } = {};
 export const customDefinition: { [key: string]: DME.Widget } = {};
 
 //get widget component for rendering
-export const getWidgetComponent = (type: string): any => {
+export const getWidgetComponent = (type: string): DME.WidgetImplemenation => {
   const component = components[type];
   return component ? component : null;
 };
@@ -86,7 +86,10 @@ export function addCustomDefinition(widget: DME.Widget) {
   customDefinition[widget.type] = widget;
 }
 
-export function registerWidgetComponent(widgetName: string, widgetInstance: ComponentType<any>) {
+export function registerWidgetComponent(
+  widgetName: string,
+  widgetInstance: DME.WidgetImplemenation,
+) {
   if (components[widgetName]) {
     console.warn(`Widget ${widgetName} is already registered.`);
     return;
@@ -94,12 +97,9 @@ export function registerWidgetComponent(widgetName: string, widgetInstance: Comp
   components[widgetName] = widgetInstance;
 }
 
-export function registerWidget(
-  definition: DME.Widget,
-  implementation: { render: ComponentType<any>; onServerSideLoad?: ServerSideLoadFunction },
-) {
+export function registerWidget(definition: DME.Widget, implementation: DME.WidgetImplemenation) {
   registerWidgetDefinition(definition);
-  registerWidgetComponent(definition.type, implementation.render);
+  registerWidgetComponent(definition.type, implementation);
   if (implementation.onServerSideLoad) {
     registerServerSideLoad(definition.type, implementation.onServerSideLoad);
   }

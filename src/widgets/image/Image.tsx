@@ -106,3 +106,14 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
     </div>
   );
 };
+
+export const Preview = (props: { blockData: DMEData.Block<ImageEntity> }) => {
+  return (
+    <img
+      src={dmeConfig.general.imagePath(props.blockData.data.src, 'thumbnail')}
+      className={css`
+        height: 20px;
+      `}
+    />
+  );
+};
