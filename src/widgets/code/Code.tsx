@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CloseOutlined } from '@mui/icons-material';
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -12,6 +13,7 @@ import {
 
 import { DME, useEditorStore } from '../..';
 import { CodeEntity } from './entity';
+import { StyledCode } from './styled';
 
 export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   const {
@@ -39,7 +41,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   };
 
   return (
-    <div className={rootClasses}>
+    <StyledCode editMode={props.mode === 'edit'} className={rootClasses}>
       {content ? (
         <div dangerouslySetInnerHTML={{ __html: content }} />
       ) : (
@@ -62,7 +64,17 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
             </IconButton>
           </DialogTitle>
           <DialogContent sx={{ width: 500 }}>
+            <div>
+              <Alert>
+                Important: <br />
+                1. Code is used for case where there is no available widget, use widget if there is
+                insetad of Code. eg. Facebook page widget. <br />
+                2. Code doesn't support javascript tag for now. (Workaround: ask project dever to
+                add javascript if needed.)
+              </Alert>
+            </div>
             <TextField
+              sx={{ mt: 2 }}
               autoFocus
               multiline
               rows={10}
@@ -80,6 +92,6 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
           </DialogActions>
         </Dialog>
       )}
-    </div>
+    </StyledCode>
   );
 }

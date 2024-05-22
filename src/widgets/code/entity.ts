@@ -9,9 +9,7 @@ interface CodeEntity {
 
 const initCodeEntity = (): CodeEntity => ({
   content: '',
-  settings: {
-    general: { padding: 20 },
-  },
+  settings: {},
 });
 
 export { initCodeEntity };
