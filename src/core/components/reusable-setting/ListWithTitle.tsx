@@ -5,13 +5,13 @@ import { useEditorStore } from '../../..';
 import type { DME } from '../../types';
 import { PropertyButton } from '../../utils';
 
-const ReusableSettingFirst = (props: DME.SettingComponentProps) => {
+const ListWithTitle = (props: DME.SettingComponentProps) => {
   const {
     block: { children: value },
   } = props;
 
   const { updateSelectedBlock } = useEditorStore();
-  const handleMoveUp = (e, index) => {
+  const handleMoveUp = (e: MouseEvent, index: number) => {
     updateSelectedBlock((_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
@@ -22,7 +22,7 @@ const ReusableSettingFirst = (props: DME.SettingComponentProps) => {
       block.children[index - 1] = temp;
     });
   };
-  const handleMoveDown = (e, index) => {
+  const handleMoveDown = (e: MouseEvent, index: number) => {
     updateSelectedBlock((_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
@@ -34,7 +34,7 @@ const ReusableSettingFirst = (props: DME.SettingComponentProps) => {
     });
   };
 
-  const changeTitle = (e: React.MouseEvent<any>, index: number) => {
+  const changeTitle = (e: MouseEvent, index: number) => {
     updateSelectedBlock((_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
@@ -92,4 +92,4 @@ const ReusableSettingFirst = (props: DME.SettingComponentProps) => {
     : null;
 };
 
-export default ReusableSettingFirst;
+export default ListWithTitle;
