@@ -65,7 +65,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
           </DialogTitle>
           <DialogContent sx={{ width: 500 }}>
             <div>
-              <Alert>
+              <Alert severity="warning">
                 Important: <br />
                 1. Code is used for case where there is no available widget, use widget if there is
                 insetad of Code. eg. Facebook page widget. <br />
