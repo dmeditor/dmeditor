@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { useMemo } from 'react';
-import ReactDOM from 'react-dom';
 
 import type { DMEData } from '../../types';
 import { getWidget, getWidgetComponent, getWidgetStyle } from '../../utils/register';
 
-export const PreviewRender = (props: { blockData: DMEData.Block; mode?: 'list' }) => {
+export const BlockPreviewRender = (props: { blockData: DMEData.Block; mode?: 'list' }) => {
   const { blockData } = props;
 
   const PreviewComponent = useMemo(() => {

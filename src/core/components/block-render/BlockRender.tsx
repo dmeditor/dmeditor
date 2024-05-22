@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
 import _debounce from 'lodash/debounce';
 
-import { useEditorStore } from '../../../core/main/store';
 import i18n from '../../i18n';
+import { useEditorStore } from '../../main/store';
 import type { DMEData } from '../../types';
 import { getWidgetComponent, getWidgetStyle } from '../../utils/register';
 import { BlockWrapper } from './styled';
