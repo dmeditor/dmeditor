@@ -29,7 +29,7 @@ export function CodeInput(props: DME.SettingComponentProps<CodeEntity>) {
   }, [content]);
 
   return (
-    <PropertyItem label="content">
+    <PropertyItem label={props.name}>
       <TextField value={value} onChange={handleChange} multiline rows={6} />
       <Button variant="text" onClick={handleUpdate}>
         Update

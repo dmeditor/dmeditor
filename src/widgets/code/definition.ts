@@ -26,7 +26,7 @@ const definition: DME.Widget = {
   },
   settings: [
     {
-      name: 'Content',
+      name: 'Code',
       property: '',
       custom: true,
       settingComponent: 'codeInput',
