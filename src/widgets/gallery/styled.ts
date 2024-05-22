@@ -18,14 +18,15 @@ export const GalleryList = styled.div((props: { columns: number }) => {
 export const GalleryItem = styled.div`
   img {
     cursor: pointer;
-    width: 100%;
+    width: auto;
     height: 200px;
   }
 `;
 
 export const GalleryImage = css`
-  width: 1000px;
-  height: 40rem;
+  width: auto;
+  height: auto;
+  max-height: 40rem;
 `;
 
 export const GalleryDialog = styled.div`

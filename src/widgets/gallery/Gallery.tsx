@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import { Dialog, DialogContent } from '@mui/material';
+import { CloseOutlined, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import { Dialog, DialogContent, IconButton } from '@mui/material';
+import { DME } from 'dmeditor/core/types';
+import { partial } from 'lodash';
 
 import { dmeConfig } from '../../core/config';
 import { DME } from '../../core/types';
@@ -13,6 +15,12 @@ import {
   GalleryList,
   IconWrapper,
 } from './styled';
+
+const generateClassName = (module: string, rule: string) => {
+  return `dme-${module}-${rule}`;
+};
+
+const galleryClassName = partial(generateClassName, 'gallery');
 
 export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
   const {
@@ -46,11 +54,11 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
 
   return (
     <>
-      <GalleryContainer className={'dme-gallery-container ' + rootClasses}>
-        <GalleryList columns={columns} className="dme-gallery-imgList">
+      <GalleryContainer className={rootClasses}>
+        <GalleryList columns={columns} className={galleryClassName('imgList')}>
           {items.map((item, index) => (
             <GalleryItem
-              className={'dme-gallery-imgItem'}
+              className={galleryClassName('imgWrapper')}
               key={item.image}
               onClick={() => handleClick(index)}
             >
@@ -60,14 +68,25 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
         </GalleryList>
       </GalleryContainer>
       <Dialog maxWidth={false} open={open} onClose={handleClose}>
+        <IconButton
+          aria-label="close"
+          onClick={() => setOpen(false)}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+          }}
+        >
+          <CloseOutlined />
+        </IconButton>
         <DialogContent>
-          <GalleryDialog>
+          <GalleryDialog className={galleryClassName('dialogContent')}>
             <IconWrapper onClick={handlePrev}>
               <KeyboardArrowLeft fontSize="large" />
             </IconWrapper>
             {selectedImageIndex !== -1 && (
               <img
-                className={GalleryImage + ' dme-gallery-imgPrevItem'}
+                className={GalleryImage + ` ${galleryClassName('dialogImg')}`}
                 src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                 alt=""
               />
