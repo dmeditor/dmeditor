@@ -27,9 +27,9 @@ const definition: DME.Widget = {
   settings: [
     {
       name: 'Content',
-      property: '.content',
-      settingComponent: 'input',
-      parameters: { multiline: true, rows: 6 },
+      property: '',
+      custom: true,
+      settingComponent: 'codeInput',
     },
     ...generalSettings,
   ],
