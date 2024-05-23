@@ -11,7 +11,7 @@ const Space = (props: DME.WidgetRenderProps<EntitySpace>) => {
   } = props;
 
   return (
-    <StyledSpace className={rootClasses} height={settings?.height || 2}>
+    <StyledSpace className={rootClasses} spaceHeight={settings?.height || 2}>
       <div className={props.styleClasses['space-item'] || 'dme-w-space-item'}></div>
     </StyledSpace>
   );
