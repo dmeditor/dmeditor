@@ -10,6 +10,7 @@ import { CopyPaste, DeleteBlock, Move } from './actions';
 import { SetEditControl } from './actions/SetEditControl';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
+import { SettingList } from './SettingList';
 import { ActionPanel, ActionPanelButtonGroup, RightElement, TabBodyContainer } from './style';
 import { StyleSettings } from './style-settings/StyleSettings';
 
@@ -97,23 +98,7 @@ export const BlockSettings = (props: {
           open={blockOpen}
           onOpenClose={(open) => setBlockOpen(open)}
         > */}
-        {filteredSettings?.map((setting) => {
-          if (setting.custom) {
-            return <Property {...{ ...setting, block: blockData }} />;
-          } else {
-            const settingComponent = setting.settingComponent;
-            // const value = getValueByPath(setting.property, selectedBlock?.data);
-            const value = isNull(blockData.data)
-              ? getPropertyChildren(setting.property, blockData.children)
-              : getPropertyValue(setting.property, blockData.data);
-            return settingComponent ? (
-              <PropertyItem label={setting.name} key={setting.property}>
-                <Property {...{ ...setting, block: blockData, value: value }} />
-              </PropertyItem>
-            ) : null;
-          }
-        })}
-        {/* </PropertyGroup> */}
+        <SettingList blockData={blockData} />
 
         {category == 'widget' && (
           <>

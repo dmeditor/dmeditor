@@ -37,7 +37,7 @@ export namespace DME {
     icon: string | (() => unknown); // base 64(eg. png/svg) or url, or component
     category: string;
     alias?: string;
-    widgetType?: 'basic' | 'mixed' | 'container';
+    widgetType?: 'widget' | 'mixed' | 'list';
     // availableIn?: string; //conext for using this widget, eg. a widget identifier, no context meaning it's for all.
     enabledStyles?: Array<string>;
     isBaseWidget?: boolean; //true if it's base widget used for variants

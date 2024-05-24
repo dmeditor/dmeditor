@@ -9,6 +9,7 @@ const listWidget: DME.Widget = {
   icon: 'list',
   name: 'List container',
   type: 'list',
+  widgetType: 'list',
   events: {
     createBlock: (variant?: string) => {
       const defaultStyle = dmeConfig.widgets['list']?.defaultStyle;

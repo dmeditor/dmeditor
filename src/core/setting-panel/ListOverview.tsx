@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
-import { DragIndicator, KeyboardArrowRight } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { AddOutlined, DragIndicator, KeyboardArrowRight, PlusOne } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
 
 import { getWidgetWithVariant } from '../../core/utils';
 import { useEditorStore } from '../main/store';
@@ -94,6 +94,11 @@ export const ListOverview = (props: ListOverviewProps) => {
           ))}
         </tbody>
       </table>
+      <div>
+        <IconButton>
+          <AddOutlined />
+        </IconButton>
+      </div>
     </div>
   );
 };
