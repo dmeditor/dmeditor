@@ -1,7 +1,7 @@
 import { Category, Display, Mode, PageSettingType } from '../enum';
 
 export namespace DME {
-  interface Setting {
+  export interface Setting {
     property?: string;
     name: string;
     custom?: boolean; //if true it will not invoke directly instead of use name->value(left/right) layout.
@@ -31,8 +31,10 @@ export namespace DME {
     type: string;
     name: string;
     icon: string | (() => unknown); // base 64(eg. png/svg) or url, or component
-    category: Category;
+    category: string;
     alias?: string;
+    widgetType?: 'basic' | 'mixed' | 'container';
+    // availableIn?: string; //conext for using this widget, eg. a widget identifier, no context meaning it's for all.
     enabledStyles?: Array<string>;
     isBaseWidget?: boolean; //true if it's base widget used for variants
     allowedTypes?: Array<string> | string; //allwed types for direct children
@@ -138,6 +140,15 @@ export namespace DMEData {
     id?: string;
     type: string;
     style?: { [style: string]: string };
+    isEmbed?: boolean;
+    serverData?: boolean; // only set by server
+
+    /* editControl: edit, delete
+     1 - no limit(same as undefined),0 - view only, 2 - can edit but can not delete,
+     >=10 is defined by widgets:
+     10 for container: can not add/delete but can edit child(unless there is override)
+    */
+    editControl?: number;
   }
 
   export interface DefaultBlockType extends widgetBlockProperties {
@@ -153,14 +164,6 @@ export namespace DMEData {
   export interface Block<TData = DefaultDataType, TChild = DefaultBlockType>
     extends widgetBlockProperties {
     data: TData; //entity data from widget
-    serverData?: boolean; // only set by server
-
-    /* editControl: edit, delete
-     1 - no limit(same as undefined),0 - view only, 2 - can edit but can not delete,
-     >=10 is defined by widgets:
-     10 for container: can not add/delete but can edit child(unless there is override)
-    */
-    editControl?: number;
     children?: Array<TChild & BlockNode>;
   }
 
