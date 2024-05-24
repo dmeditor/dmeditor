@@ -1,5 +1,5 @@
 import { registerSettingComponent, registerWidget } from '../..';
-import SettingAccordion from '../../core/components/reusable-setting/First';
+import SettingAccordion from '../../core/components/reusable-setting/ListWithTitle';
 import Accordion from './Accordion';
 import definition from './definition';
 

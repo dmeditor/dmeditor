@@ -7,7 +7,7 @@ import {
   registerWidgetStyle,
   registerWidgetStyleOption,
 } from '../..';
-import SettingTabs from '../../core/components/reusable-setting/First';
+import SettingTabs from '../../core/components/reusable-setting/ListWithTitle';
 import TabsWidget from './definition';
 import Tabs from './Tabs';
 
