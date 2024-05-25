@@ -130,7 +130,11 @@ export const SettingList = (props: {
                 return (
                   <StyledSettingList.Children level={level}>
                     {blockData.children ? (
-                      <ListOverview data={blockData.children} selectedIndex={0} />
+                      <ListOverview
+                        data={blockData.children}
+                        blockPath={blockPath}
+                        selectedIndex={0}
+                      />
                     ) : (
                       <></>
                     )}

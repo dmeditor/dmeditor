@@ -8,6 +8,7 @@ import { DMEData } from '../types/dmeditor';
 
 interface ListOverviewProps {
   data: DMEData.BlockList;
+  blockPath: Array<number>;
   selectedIndex: number;
 }
 
@@ -32,6 +33,7 @@ const trStyle = `
 `;
 
 export const ListOverview = (props: ListOverviewProps) => {
+  const { blockPath } = props;
   const { updateSelectedBlockIndex, updateHoverPath } = useEditorStore();
 
   const getName = (type: string) => {
@@ -43,14 +45,14 @@ export const ListOverview = (props: ListOverviewProps) => {
   };
 
   const jumpTo = (index: number) => {
-    updateSelectedBlockIndex([index], props.data[index].id || '');
+    updateSelectedBlockIndex([...blockPath, index], props.data[index].id || '');
   };
 
   const hover = (index: number) => {
     if (index === -1) {
       updateHoverPath([]);
     } else {
-      updateHoverPath([index]);
+      updateHoverPath([...blockPath, index]);
     }
   };
 
