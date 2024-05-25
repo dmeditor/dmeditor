@@ -35,6 +35,7 @@ const listWidget: DME.Widget = {
     {
       name: 'Direction',
       property: '.direction',
+      category: 'block',
       settingComponent: 'button-group',
       parameters: {
         options: [
@@ -47,6 +48,7 @@ const listWidget: DME.Widget = {
       name: 'Align',
       property: '.align',
       settingComponent: 'button-group',
+      category: 'block',
       parameters: {
         options: [
           { text: 'Left', value: 'left' },
