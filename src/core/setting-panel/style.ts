@@ -53,7 +53,7 @@ export const RightElement = styled.div`
 `;
 
 export const TabBodyContainer = styled.div<{ fullHeight?: boolean }>`
-  padding: 15px 20px 150px 20px;
+  padding: 15px 5px 150px 5px;
   height: calc(100vh - ${(props) => (props.fullHeight ? 200 : 350)}px);
   overflow: auto;
 `;
@@ -106,3 +106,12 @@ export const AdddBlockHeader = styled.div`
   background-color: white;
   z-index: 10;
 `;
+
+export const StyledSettingList = {
+  Group: styled.div<{ level: number }>`
+    padding: 0px ${(props) => props.level * 5}px;
+  `,
+  Children: styled.div<{ level: number }>`
+    padding: 0px ${(props) => props.level * 10}px;
+  `,
+};

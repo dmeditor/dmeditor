@@ -98,7 +98,7 @@ export const BlockSettings = (props: {
           open={blockOpen}
           onOpenClose={(open) => setBlockOpen(open)}
         > */}
-        <SettingList blockData={blockData} />
+        <SettingList blockData={blockData} blockPath={dataPath} />
 
         {category == 'widget' && (
           <>

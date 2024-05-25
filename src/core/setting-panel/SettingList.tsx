@@ -1,4 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import {
+  ArrowDownwardOutlined,
+  ArrowDropDownOutlined,
+  ArrowRight,
+  ArrowRightOutlined,
+} from '@mui/icons-material';
+import { Button, Collapse, IconButton } from '@mui/material';
 
 import { DME, DMEData } from '../types';
 import {
@@ -11,19 +18,23 @@ import {
 } from '../utils';
 import { ListOverview } from './ListOverview';
 import Property from './property-setting/property-item';
+import { StyledSettingList } from './style';
 
 //Show settings of a widget, recurisively when there is embed
 export const SettingList = (props: {
   blockData: DMEData.Block;
+  blockPath: Array<number>;
   category?: string;
   level?: number;
 }) => {
-  const { blockData, level = 0, category } = props;
+  const { blockData, level = 0, category, blockPath } = props;
 
   const widgetDef = useMemo(() => {
     const def = getWidget(blockData.type);
     return def;
   }, [blockData.type]);
+
+  const [expanded, setExpanded] = useState(level === 0);
 
   //get Widget setting with variant
   const settingConfigList = useMemo(() => {
@@ -50,7 +61,7 @@ export const SettingList = (props: {
       <div>
         {settingConfigList?.map((setting) => {
           if (setting.custom) {
-            return <Property {...{ ...setting, block: blockData }} />;
+            return <Property {...{ ...setting, block: blockData, blockPath: blockPath }} />;
           } else {
             const settingComponent = setting.settingComponent;
 
@@ -62,7 +73,9 @@ export const SettingList = (props: {
               : undefined;
             return settingComponent ? (
               <PropertyItem label={setting.name} key={setting.property}>
-                <Property {...{ ...setting, block: blockData, value: value }} />
+                <Property
+                  {...{ ...setting, block: blockData, value: value, blockPath: blockPath }}
+                />
               </PropertyItem>
             ) : null;
           }
@@ -74,9 +87,14 @@ export const SettingList = (props: {
   const renderChildrenSettings = () => {
     return (
       <div>
-        {blockData.children?.map((item) => (
+        {blockData.children?.map((item, index) => (
           <div>
-            <SettingList blockData={item} category={category} level={level + 1} />
+            <SettingList
+              blockData={item}
+              category={category}
+              blockPath={[...blockPath, index]}
+              level={level + 1}
+            />
           </div>
         ))}
       </div>
@@ -86,32 +104,49 @@ export const SettingList = (props: {
   return (
     <div>
       {level > 0 && (
-        <div style={{ fontSize: 18 }}>
-          <label>{widgetDef.name}</label>
+        <div>
+          <Button
+            onClick={() => {
+              setExpanded(!expanded);
+            }}
+          >
+            {expanded ? <ArrowDropDownOutlined /> : <ArrowRightOutlined />}
+            <span>{widgetDef.name}</span>
+          </Button>
         </div>
       )}
-      <div style={{ padding: 5 }}>{renderCurrentSettings()}</div>
-      <div style={{ padding: 5 }}>
-        {(() => {
-          if (widgetDef.widgetType === 'list') {
-            if (blockData.isEmbed) {
-              return <div>{renderChildrenSettings()}</div>;
+      <Collapse in={expanded}>
+        <StyledSettingList.Group level={level}>{renderCurrentSettings()}</StyledSettingList.Group>
+        <div>
+          {(() => {
+            if (widgetDef.widgetType === 'list') {
+              if (blockData.isEmbed) {
+                return (
+                  <StyledSettingList.Children level={level}>
+                    {renderChildrenSettings()}
+                  </StyledSettingList.Children>
+                );
+              } else {
+                return (
+                  <StyledSettingList.Children level={level}>
+                    {blockData.children ? (
+                      <ListOverview data={blockData.children} selectedIndex={0} />
+                    ) : (
+                      <></>
+                    )}
+                  </StyledSettingList.Children>
+                );
+              }
             } else {
               return (
-                <div>
-                  {blockData.children ? (
-                    <ListOverview data={blockData.children} selectedIndex={0} />
-                  ) : (
-                    <></>
-                  )}
-                </div>
+                <StyledSettingList.Children level={level}>
+                  {renderChildrenSettings()}
+                </StyledSettingList.Children>
               );
             }
-          } else {
-            return <div>{renderChildrenSettings()}</div>;
-          }
-        })()}
-      </div>
+          })()}
+        </div>
+      </Collapse>
     </div>
   );
 };
