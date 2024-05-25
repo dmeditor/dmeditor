@@ -117,7 +117,7 @@ export const SettingList = (props: {
       )}
       <Collapse in={expanded}>
         <StyledSettingList.Group level={level}>{renderCurrentSettings()}</StyledSettingList.Group>
-        {['list', 'mixed'].includes(widgetDef.widgetType) && (
+        {widgetDef.widgetType && ['list', 'mixed'].includes(widgetDef.widgetType) && (
           <div>
             {(() => {
               if (widgetDef.widgetType === 'list') {

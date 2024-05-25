@@ -49,7 +49,7 @@ type SettingPanelMode = 'block-setting' | 'list-overview' | 'page-setting' | 'ad
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
 const SettingPanel = (props) => {
   const {
-    selected: { blockIndex: selectedBlockIndex, currentListPath, blockId },
+    selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData,
     getSelectedBlock,
     getCurrentList,
@@ -65,7 +65,6 @@ const SettingPanel = (props) => {
 
   const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
-  const [selectedPathIndex, setSelectedPathIndex] = useState<number>();
 
   const currentList = getCurrentList();
   // const selectedBlock = useMemo(() => getSelectedBlock(), [blockId]);
@@ -88,10 +87,10 @@ const SettingPanel = (props) => {
         text: getWidgetName(selectedBlock?.type || ''),
         id: selectedBlock?.id || '',
         dataPath: [...currentListPath, selectedBlockIndex],
+        selected: true,
       });
     }
 
-    setSelectedPathIndex(pathArray.length - 1);
     setPathArray(pathArray);
   };
 
@@ -115,21 +114,14 @@ const SettingPanel = (props) => {
     updatePath();
   }, [selectedBlockIndex, addBlockIndex, currentListPath.join()]);
 
-  const selectPathItem = (level: number) => {
-    if (level === 0) {
+  const selectPathItem = (item: PathItem) => {
+    if (item.dataPath.length === 0) {
       setMode('list-overview');
       clearSelected();
-      // const block = pathArray[1];
-      // updateSelectedBlockIndex(block.dataPath, block.id);
     } else {
       setMode('block-setting');
-      if (!pathArray[level].disableClick) {
-        setSelectedPathIndex(level);
-      }
-
       // update selected block
-      const block = pathArray[level];
-      updateSelectedBlockIndex(block.dataPath, block.id);
+      updateSelectedBlockIndex(item.dataPath, item.id);
     }
   };
 
@@ -152,11 +144,7 @@ const SettingPanel = (props) => {
           </PageTitle>
           <Space />
           {['list-overview', 'block-setting'].includes(mode) && (
-            <Path
-              selectedId={selectedBlock?.id || 'page'}
-              pathArray={pathArray}
-              onSelect={selectPathItem}
-            />
+            <Path pathArray={pathArray} onSelect={selectPathItem} />
           )}
 
           {mode === 'list-overview' && (
@@ -170,8 +158,8 @@ const SettingPanel = (props) => {
             </>
           )}
 
-          {mode === 'block-setting' && selectedPathIndex && (
-            <BlockSettings {...props} dataPath={pathArray[selectedPathIndex].dataPath} />
+          {mode === 'block-setting' && (
+            <BlockSettings {...props} dataPath={[...currentListPath, selectedBlockIndex]} />
           )}
 
           {mode === 'page-setting' && (

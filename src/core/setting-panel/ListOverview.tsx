@@ -33,8 +33,8 @@ const trStyle = `
 `;
 
 export const ListOverview = (props: ListOverviewProps) => {
-  const { blockPath } = props;
-  const { updateSelectedBlockIndex, updateHoverPath } = useEditorStore();
+  const { blockPath, data } = props;
+  const { updateSelectedBlockIndex, updateHoverPath, startAddBlock } = useEditorStore();
 
   const getName = (type: string) => {
     const [widget, variant] = getWidgetWithVariant(type);
@@ -54,6 +54,10 @@ export const ListOverview = (props: ListOverviewProps) => {
     } else {
       updateHoverPath([...blockPath, index]);
     }
+  };
+
+  const addUnder = () => {
+    startAddBlock(blockPath, data.length - 1, 'after');
   };
 
   return (
@@ -96,8 +100,12 @@ export const ListOverview = (props: ListOverviewProps) => {
           ))}
         </tbody>
       </table>
-      <div>
-        <IconButton>
+      <div
+        className={css`
+          text-align: center;
+        `}
+      >
+        <IconButton title="Add under" onClick={() => addUnder()}>
           <AddOutlined />
         </IconButton>
       </div>

@@ -7,37 +7,26 @@ import { PathContainer, PathItem } from './style';
 export interface PathItem {
   text: string;
   id: string;
-  disableClick?: boolean;
-  selected?:boolean;
-  dataPath: Array<number>
+  selected?: boolean;
+  dataPath: Array<number>;
 }
 
 export interface PathProps {
   pathArray: Array<PathItem>;
-  selectedId: string;
-  onSelect: (index: number) => void;
+  onSelect: (item: PathItem) => void;
 }
 
 export const Path = (props: PathProps) => {
-
-  const [selectedId, setSelectedId] = useState(props.selectedId)
-
-  useEffect(() => {
-    setSelectedId(props.selectedId);
-  }, [props.selectedId]);
-
   return (
     <PathContainer>
       {props.pathArray.map((item, index) => (
-        <span key={item.id}>
+        <span key={item.dataPath.join(',')}>
           <PathItem
-            key={item.id}
-            canClick={!item.disableClick&&(selectedId !== item.id)}
-            selected={selectedId === item.id}
+            canClick={!item.selected}
+            selected={item.selected}
             onClick={() => {
-              if (!item.disableClick && selectedId !== item.id) {
-                setSelectedId(item.id);
-                props.onSelect(index);
+              if (!item.selected) {
+                props.onSelect(item);
               }
             }}
           >
