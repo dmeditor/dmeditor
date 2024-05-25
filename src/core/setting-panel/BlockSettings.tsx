@@ -37,12 +37,10 @@ export const BlockSettings = (props: {
 }) => {
   const { dataPath } = props;
 
-  // const [blockData, setBlockData] = useState<DMEData.Block>();
+  const { getBlockByPath, updateSelectedBlockStyle } = useEditorStore();
 
-  const { getBlockByPath, getSelectedBlock, updateSelectedBlockStyle } = useEditorStore();
-
+  //todo: cache it, using useMemo?
   const blockData = getBlockByPath(dataPath);
-  // const blockData = getSelectedBlock();
 
   const blockType = blockData?.type || '';
 

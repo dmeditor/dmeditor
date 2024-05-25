@@ -159,7 +159,11 @@ const SettingPanel = (props) => {
           )}
 
           {mode === 'block-setting' && (
-            <BlockSettings {...props} dataPath={[...currentListPath, selectedBlockIndex]} />
+            <>
+              {isSelected() && (
+                <BlockSettings {...props} dataPath={[...currentListPath, selectedBlockIndex]} />
+              )}
+            </>
           )}
 
           {mode === 'page-setting' && (
