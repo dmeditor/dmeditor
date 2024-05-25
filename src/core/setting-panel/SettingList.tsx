@@ -117,39 +117,41 @@ export const SettingList = (props: {
       )}
       <Collapse in={expanded}>
         <StyledSettingList.Group level={level}>{renderCurrentSettings()}</StyledSettingList.Group>
-        <div>
-          {(() => {
-            if (widgetDef.widgetType === 'list') {
-              if (blockData.isEmbed) {
+        {['list', 'mixed'].includes(widgetDef.widgetType) && (
+          <div>
+            {(() => {
+              if (widgetDef.widgetType === 'list') {
+                if (blockData.isEmbed) {
+                  return (
+                    <StyledSettingList.Children level={level}>
+                      {renderChildrenSettings()}
+                    </StyledSettingList.Children>
+                  );
+                } else {
+                  return (
+                    <StyledSettingList.Children level={level}>
+                      {blockData.children ? (
+                        <ListOverview
+                          data={blockData.children}
+                          blockPath={blockPath}
+                          selectedIndex={-1}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </StyledSettingList.Children>
+                  );
+                }
+              } else {
                 return (
                   <StyledSettingList.Children level={level}>
                     {renderChildrenSettings()}
                   </StyledSettingList.Children>
                 );
-              } else {
-                return (
-                  <StyledSettingList.Children level={level}>
-                    {blockData.children ? (
-                      <ListOverview
-                        data={blockData.children}
-                        blockPath={blockPath}
-                        selectedIndex={0}
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </StyledSettingList.Children>
-                );
               }
-            } else {
-              return (
-                <StyledSettingList.Children level={level}>
-                  {renderChildrenSettings()}
-                </StyledSettingList.Children>
-              );
-            }
-          })()}
-        </div>
+            })()}
+          </div>
+        )}
       </Collapse>
     </div>
   );
