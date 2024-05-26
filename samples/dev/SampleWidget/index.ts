@@ -56,6 +56,7 @@ const registerSampleWidget = function () {
   registerWidgetVariant({
     widget: 'heading',
     identifier: 'simple',
+    category: 'basic',
     name: 'Simple heading',
     enabledStyles: ['_'],
     enabledSettings: ['.value', 'settings.color'],
@@ -87,6 +88,7 @@ const registerSampleWidget = function () {
     widget: 'list',
     identifier: 'article-block',
     name: 'Article block',
+    category: 'design',
     enabledSettings: [],
     allowedTypes: ['heading:simple'],
     //todo: use property?

@@ -7,7 +7,7 @@ import { EntityHeroText } from './entity';
 
 const heroTextWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
-  category: 'mixed',
+  category: 'media',
   icon: 'TextFormatOutlined',
   name: 'Hero text',
   type: 'hero-text',

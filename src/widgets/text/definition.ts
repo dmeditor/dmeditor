@@ -8,7 +8,7 @@ import { initialTextEntity } from './entity';
 import type { EntityText } from './entity';
 
 const TextWidget: DME.Widget = {
-  category: 'widget',
+  category: 'basic',
   icon: 'text',
   name: i18n('Text', 'widget'),
   type: 'text',

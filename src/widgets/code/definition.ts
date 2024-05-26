@@ -7,7 +7,7 @@ import { generalSettings } from '../../core/setting-panel/property-setting';
 import { CodeEntity, initCodeEntity } from './entity';
 
 const definition: DME.Widget = {
-  category: Category.Widget,
+  category: 'basic',
   icon: 'code',
   name: 'Code',
   type: 'code',

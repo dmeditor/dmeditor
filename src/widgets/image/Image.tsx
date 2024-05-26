@@ -22,7 +22,7 @@ export const ImageDefinition: DME.Widget = {
   type: 'image',
   icon: 'image',
   name: 'Image',
-  category: 'widget',
+  category: 'basic',
   settings: [
     {
       name: 'Source',

@@ -43,6 +43,7 @@ export interface DMEConfigType {
     favouriteWidgets?: Array<string>;
     zIndex?: number;
     enableEditControl?: boolean;
+    categories?: Array<DME.WidgetCategory>;
     ui: { [variable: string]: string };
   };
   widgets?: { [widget: string]: widgetConfig };
@@ -75,6 +76,12 @@ const defaultConfig = () => {
       favouriteWidgets: [],
       zIndex: 1000,
       enableEditControl: false,
+      categories: [
+        { identifier: 'basic', name: 'Basic' },
+        { identifier: 'design', name: 'Design' },
+        { identifier: 'intractive', name: 'Intractive' },
+        { identifier: 'media', name: 'Media' },
+      ],
       richText: {
         fontFamily: [
           { value: '', label: 'Font' },
@@ -133,6 +140,7 @@ const dmeConfig: {
     defaultTheme: string;
     favouriteWidgets: Array<string>;
     enableEditControl: boolean;
+    categories: Array<DME.WidgetCategory>;
     richText: {
       fontFamily: Array<{ value: string; label: string }>;
       fontSize: Array<{ value: string; label: string }>;

@@ -5,7 +5,7 @@ import { generalSettings } from '../../core/setting-panel/property-setting';
 import type { EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {
-  category: 'layout',
+  category: 'intractive',
   icon: 'TextFormatOutlined',
   name: 'Accordion',
   type: 'accordion',

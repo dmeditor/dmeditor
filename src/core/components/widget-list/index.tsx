@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
-import { ChevronRightOutlined } from '@mui/icons-material';
+import { ArrowForwardIosOutlined, ChevronRightOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { dmeConfig } from '../../config';
@@ -139,29 +139,46 @@ export const WidgetList = (props: WidgetListProps) => {
           title: 'Widgets',
           element: (
             <StyleTabBody>
-              {Object.keys(definitions)
-                .filter((widget) => matchFilter(widget))
-                .map((widgetType) => (
-                  <MenuItem
-                    icon={definitions[widgetType].icon}
-                    widget={widgetType}
-                    name={definitions[widgetType].name}
-                    baseName=""
-                    onClick={() => props.onSelect(widgetType)}
-                  />
-                ))}
-              <div className={space} />
-              {Object.keys(widgetDefinition).map((widget) =>
-                filterVariant(widget).map((variant) => (
-                  <MenuItem
-                    widget={widget + ':' + variant.identifier}
-                    icon={widgetDefinition[widget].icon}
-                    name={variant.name}
-                    baseName={widgetDefinition[widget].name}
-                    onClick={() => props.onSelect(widget + ':' + variant.identifier)}
-                  />
-                )),
-              )}
+              {dmeConfig.editor.categories.map((category) => (
+                <div>
+                  <div style={{ fontSize: 16, fontWeight: 'bold', marginTop: 10, marginBottom: 5 }}>
+                    <ArrowForwardIosOutlined style={{ fontSize: 12 }} /> {category.name}
+                  </div>
+                  <div>
+                    {Object.keys(definitions)
+                      .filter((widget) => matchFilter(widget))
+                      .map((widgetType) =>
+                        definitions[widgetType].category === category.identifier ? (
+                          <MenuItem
+                            icon={definitions[widgetType].icon}
+                            widget={widgetType}
+                            name={definitions[widgetType].name}
+                            baseName=""
+                            onClick={() => props.onSelect(widgetType)}
+                          />
+                        ) : (
+                          <></>
+                        ),
+                      )}
+                    <div className={space} />
+                    {Object.keys(widgetDefinition).map((widget) =>
+                      filterVariant(widget).map((variant) =>
+                        variant.category === category.identifier ? (
+                          <MenuItem
+                            widget={widget + ':' + variant.identifier}
+                            icon={widgetDefinition[widget].icon}
+                            name={variant.name}
+                            baseName={widgetDefinition[widget].name}
+                            onClick={() => props.onSelect(widget + ':' + variant.identifier)}
+                          />
+                        ) : (
+                          <></>
+                        ),
+                      ),
+                    )}
+                  </div>
+                </div>
+              ))}
 
               <div className={moreWidget}>
                 <Button variant="outlined">

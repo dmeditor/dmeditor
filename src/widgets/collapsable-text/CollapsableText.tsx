@@ -12,7 +12,7 @@ interface CollapsableTextEntity {
 }
 
 export const CollapsableTextDefiniation: DME.Widget = {
-  category: 'widget',
+  category: 'intractive',
   name: 'Collapsable text',
   type: 'collapsable-text',
   icon: 'collapsable-text',

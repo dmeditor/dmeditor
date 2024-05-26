@@ -6,7 +6,7 @@ import { generalSettings } from '../../core/setting-panel/property-setting';
 import { EntitySpace } from './entity';
 
 const spaceWidget: DME.Widget = {
-  category: 'widget',
+  category: 'design',
   icon: 'button', //todo: change icon
   name: 'Space',
   type: 'space',

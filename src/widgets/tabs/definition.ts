@@ -6,7 +6,7 @@ import type { EntityTabsBlock, EntityTabsData } from './entity';
 
 const TabsWidget: DME.Widget = {
   allowedTypes: ['heading', 'text', 'image'],
-  category: 'layout',
+  category: 'intractive',
   icon: 'tabs',
   name: 'Tabs',
   type: 'tabs',

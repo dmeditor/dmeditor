@@ -76,7 +76,7 @@ export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
 };
 
 export const iFrameDefinition: DME.Widget = {
-  category: 'widget',
+  category: 'basic',
   icon: 'iframe',
   name: 'IFrame',
   type: 'iframe',

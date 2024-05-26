@@ -14,6 +14,11 @@ export namespace DME {
     // [key: string]: string|number
   }
 
+  export interface WidgetCategory {
+    identifier: string;
+    name: string;
+  }
+
   export type PageSetting = {
     identifier: string;
     name: string;
@@ -62,6 +67,7 @@ export namespace DME {
     identifier: string;
     name: string;
     cssStyle?: string; //built-in style for the variant
+    category: string;
     enabledStyles?: Array<string>;
     enabledSettings?: Array<string>;
     allowedTypes?: Array<string>; //can be sub widget inside
