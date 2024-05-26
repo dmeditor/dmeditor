@@ -25,9 +25,10 @@ export const SettingList = (props: {
   blockData: DMEData.Block;
   blockPath: Array<number>;
   category?: string;
+  styleTags: Array<string>;
   level?: number;
 }) => {
-  const { blockData, level = 0, category, blockPath } = props;
+  const { blockData, level = 0, category, blockPath, styleTags } = props;
 
   const widgetDef = useMemo(() => {
     const def = getWidget(blockData.type);
@@ -50,7 +51,29 @@ export const SettingList = (props: {
           );
         });
       } else {
-        result = widgetDef?.settings.filter((item) => item.category === category);
+        result = widgetDef?.settings.filter((item) => {
+          if (item.category === category) {
+            if (item.category !== 'block') {
+              return true;
+            } else {
+              if (!item.styleTags) {
+                return true;
+              } else {
+                //if
+                let matchResult = false;
+                for (const tag of styleTags) {
+                  if (item.styleTags.includes(tag)) {
+                    matchResult = true;
+                    break;
+                  }
+                }
+                return matchResult;
+              }
+            }
+          } else {
+            return false;
+          }
+        });
       }
       return result;
     }
@@ -84,12 +107,13 @@ export const SettingList = (props: {
     );
   };
 
-  const renderChildrenSettings = () => {
+  const renderChildrenSettings = (styleTags: Array<string>) => {
     return (
       <div>
         {blockData.children?.map((item, index) => (
           <div>
             <SettingList
+              styleTags={styleTags}
               blockData={item}
               category={category}
               blockPath={[...blockPath, index]}
@@ -124,7 +148,7 @@ export const SettingList = (props: {
                 if (blockData.isEmbed) {
                   return (
                     <StyledSettingList.Children level={level}>
-                      {renderChildrenSettings()}
+                      {renderChildrenSettings(['core', 'list'])}
                     </StyledSettingList.Children>
                   );
                 } else {
@@ -145,7 +169,7 @@ export const SettingList = (props: {
               } else {
                 return (
                   <StyledSettingList.Children level={level}>
-                    {renderChildrenSettings()}
+                    {renderChildrenSettings(['core'])}
                   </StyledSettingList.Children>
                 );
               }

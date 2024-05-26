@@ -1,6 +1,6 @@
 import { ReactElement, useMemo } from 'react';
 
-import { getWidgetName, getWidgetWithVariant } from '../../core/utils';
+import { getWidgetName, getWidgetWithVariant, widgetDefinition } from '../../core/utils';
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { dmeConfig } from '../config';
 import { useEditorStore } from '../main/store';
@@ -100,6 +100,7 @@ export const BlockSettings = (props: {
           blockData={blockData}
           category={category === 'widget' ? undefined : 'block'}
           blockPath={dataPath}
+          styleTags={['core', 'block', 'list']}
         />
 
         {category == 'widget' && (
