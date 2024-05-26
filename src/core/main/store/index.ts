@@ -445,22 +445,22 @@ export const useEditorStore = create<Store & Actions>()(
       state.updateSelectedBlockProps('.editControl', value);
     },
     updateSelectedBlockStyle: (value: string, styleIdentifier: string) => {
-      set((state) => {
-        const path = [...state.selected.currentListPath, state.selected.blockIndex];
-        state.updateBlockByPath(path, (_, block) => {
-          if (!block.style) {
+      const state = get();
+      const path = [...state.selected.currentListPath, state.selected.blockIndex];
+
+      state.updateBlockByPath(path, (_, block) => {
+        if (!block.style) {
+          block.style = {};
+        }
+        if (styleIdentifier === '_') {
+          if (!value) {
             block.style = {};
-          }
-          if (styleIdentifier === '_') {
-            if (!value) {
-              block.style = {};
-            } else {
-              block.style = { _: value };
-            }
           } else {
-            block.style[styleIdentifier] = value;
+            block.style = { _: value };
           }
-        });
+        } else {
+          block.style[styleIdentifier] = value;
+        }
       });
     },
     updateSelectedBlockProps: (propName, propValue) => {
