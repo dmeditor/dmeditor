@@ -53,7 +53,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
 
   return (
     <>
-      <GalleryContainer className={rootClasses}>
+      <GalleryContainer>
         <GalleryList columns={columns} gap={gap} className={galleryClassName('imgList')}>
           {items.map((item, index) => (
             <GalleryItem

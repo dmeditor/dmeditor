@@ -22,7 +22,7 @@ const Text = (props: RichTextProps) => {
     }
   };
   return (
-    <TextContainer className={props.rootClasses} {...data.settings}>
+    <TextContainer {...data.settings}>
       <MiniText mode={props.mode} value={value} onValueChange={handleValueChange} />
     </TextContainer>
   );

@@ -73,7 +73,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const { borderWidth, borderColor, align } = settings;
 
   return (
-    <div className={rootClasses} style={{ marginTop: settings.marginTop || 'auto' }}>
+    <div>
       {!src && (
         <div
           className={css`

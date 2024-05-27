@@ -24,9 +24,6 @@ const Button = (props: ButtonProps) => {
     buttonProps['href'] = link;
   }
   let cls = '';
-  if (rootClasses) {
-    cls += rootClasses;
-  }
   if (styleClasses) {
     cls += ` ${styleClasses}`;
   }

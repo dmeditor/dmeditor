@@ -65,7 +65,7 @@ const Layout3Columns = (props: DME.WidgetRenderProps<EntityLayout3Columns>) => {
   } = props;
 
   return (
-    <SyledLayout className={rootClasses} column1Width={column1Width} column2Width={column2Width}>
+    <SyledLayout column1Width={column1Width} column2Width={column2Width}>
       <div className={(styleClasses?.['column1'] || '') + ' dme-w-column1'}>
         <BlockListRender
           mode={props.mode}

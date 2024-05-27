@@ -63,7 +63,7 @@ const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
   };
 
   return (
-    <HeroTextContainer updown={device === 'mobile'} className={props.rootClasses}>
+    <HeroTextContainer updown={device === 'mobile'}>
       {imageLeft() && (
         <>
           {renderImage()}

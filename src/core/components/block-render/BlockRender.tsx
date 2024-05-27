@@ -82,7 +82,7 @@ export const BlockRender = memo((props: BlockProps) => {
 
   return Widget ? (
     <BlockWrapper
-      className="dme-block-wrapper"
+      className={'dme-block-wrapper ' + cssStyles.rootClasses}
       onClick={onSelect}
       generalSettings={props.data.data.settings?.general}
     >
