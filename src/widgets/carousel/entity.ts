@@ -17,7 +17,7 @@ const initCarouselEntity = (): CarouselEntity => ({
       link: 'https://www.google.com',
       image:
         'https://bridge.site.digimaker.com/var/images/z/zip/upload-918282482-carousel_image.jpg',
-      title: 'Coffee',
+      title: '',
     },
     // {
     //   link: 'https://www.google.com',
@@ -29,7 +29,7 @@ const initCarouselEntity = (): CarouselEntity => ({
       link: 'https://www.google.com',
       image:
         'https://bridge.site.digimaker.com/var/images/f/fbq/upload-295610395-voksen_kirke1.jpg',
-      title: 'Real Coffee',
+      title: '',
     },
   ],
 });
