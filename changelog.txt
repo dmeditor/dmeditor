@@ -1,3 +1,16 @@
+
+
+0.2.0-beta.1
+- 2024-05-27 [BC]put root to container instead of widget - use inside key(eg. button) or '>'(eg. >div) insead
+- 2024-05-27 add color setting in text
+- 2024-05-27 hero-text: use BLockRender intead BlockListRender to children instead, so the general setting can apply
+- 2024-05-26 [BC]added category for widget
+- 2024-05-26 [BC]added category & styleTags for a setting
+
+
+- 2023-12 - 2024-05 Core rewritten
+
+--------------------------------
 0.1.0-beta.12
 
 0.1.0-beta.11
