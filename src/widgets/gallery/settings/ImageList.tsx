@@ -12,14 +12,15 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
     block: {
       data: { items: value },
     },
+    blockPath,
   } = props;
 
   const [showImageChooser, setShowImageChooser] = useState(false);
 
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
 
   const handleMoveUp = (_: MouseEvent<HTMLButtonElement>, index: number) => {
-    updateSelectedBlock<GalleryEntity>(({ items }) => {
+    updateBlockByPath<GalleryEntity>(blockPath, ({ items }) => {
       if (!items) {
         console.error('Carousel items not found!');
         return;
@@ -31,7 +32,7 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
   };
 
   const handleMoveDown = (_: MouseEvent<HTMLButtonElement>, index: number) => {
-    updateSelectedBlock<GalleryEntity>(({ items }) => {
+    updateBlockByPath<GalleryEntity>(blockPath, ({ items }) => {
       if (!items) {
         console.error('Carousel items not found!');
         return;
@@ -43,7 +44,7 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
   };
 
   const handleDelete = (_: MouseEvent<HTMLButtonElement>, index: number) => {
-    updateSelectedBlock<GalleryEntity>(({ items }: { items: any }) => {
+    updateBlockByPath<GalleryEntity>(blockPath, ({ items }: { items: any }) => {
       if (!items) {
         console.error('Carousel items not found!');
         return;
@@ -53,7 +54,7 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
   };
 
   const updateImage = (index: number, image: string) => {
-    updateSelectedBlock<GalleryEntity>((data) => {
+    updateBlockByPath<GalleryEntity>(blockPath, (data) => {
       data.items[index] = { ...data.items[index], image };
     });
   };
@@ -61,7 +62,7 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
   const addImage = (imageInfo: any) => {
     const imageList = imageInfo.map((item: any) => ({ image: item.src }));
 
-    updateSelectedBlock<GalleryEntity>((data) => {
+    updateBlockByPath<GalleryEntity>(blockPath, (data) => {
       data.items = [...data.items, ...imageList];
     });
   };

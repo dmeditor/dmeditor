@@ -9,11 +9,12 @@ const Text = (props: RichTextProps) => {
     blockNode: {
       data: { value },
     },
+    path,
   } = props;
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
   const handleValueChange = (newValue: Array<any>) => {
     if (active) {
-      updateSelectedBlock<EntityText>((entity) => {
+      updateBlockByPath<EntityText>(path, (entity) => {
         entity.value = newValue;
       });
     }

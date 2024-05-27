@@ -1,17 +1,17 @@
 import * as React from 'react';
 
-import { useEditorStore } from '../../../..';
+import { DME, useEditorStore } from '../../../..';
 import { PickColor } from '../../../utils';
 
-const Color = (props: { value?: string; property: string }) => {
-  const { property, value } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+const Color = (props: { value?: string; property: string } & DME.SettingComponentProps) => {
+  const { property, value, blockPath } = props;
+  const { updateBlockPropsByPath } = useEditorStore();
 
   return (
     <PickColor
       color={value ? value : ''}
       onChange={(value) => {
-        updateSelectedBlockProps(property, value);
+        updateBlockPropsByPath(blockPath, property, value);
       }}
     ></PickColor>
   );

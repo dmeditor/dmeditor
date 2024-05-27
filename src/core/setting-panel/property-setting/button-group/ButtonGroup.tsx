@@ -1,17 +1,19 @@
 import { Button, ButtonGroup as MUIButtonGroup } from '@mui/material';
 
-import { useEditorStore } from '../../../..';
+import { DME, useEditorStore } from '../../../..';
 
-const ButtonGroup = (props: {
-  property: string;
-  value: string;
-  parameters: { options: Array<{ text: string; value: string }> };
-}) => {
-  const { property, parameters, value } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+const ButtonGroup = (
+  props: DME.SettingComponentProps & {
+    property: string;
+    value: string;
+    parameters: { options: Array<{ text: string; value: string }> };
+  },
+) => {
+  const { property, parameters, value, blockPath } = props;
+  const { updateBlockPropsByPath } = useEditorStore();
 
   const handleChange = (value: string) => {
-    updateSelectedBlockProps(property, value);
+    updateBlockPropsByPath(blockPath, property, value);
   };
 
   return (

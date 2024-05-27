@@ -18,12 +18,13 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
     blockNode: { children: tabList = [], type },
     rootClasses,
     styleClasses,
+    path,
   } = props;
 
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
 
   const addTab = () => {
-    updateSelectedBlock((_, block) => {
+    updateBlockByPath(path, (_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
         return;

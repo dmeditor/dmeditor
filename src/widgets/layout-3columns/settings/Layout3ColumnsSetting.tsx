@@ -6,9 +6,10 @@ import { PropertyItem, Ranger } from '../../../core/utils';
 import { EntityLayout3Columns } from '../Layout3Columns';
 
 export const Layout3ColumnsSetting = (props: DME.SettingComponentProps) => {
-  const { updateSelectedBlock, getSelectedBlock } = useEditorStore();
+  const { blockPath } = props;
+  const { updateBlockByPath, getBlockByPath } = useEditorStore();
 
-  const blockData = getSelectedBlock<EntityLayout3Columns>();
+  const blockData = getBlockByPath<EntityLayout3Columns>(blockPath);
 
   const [column1Width, setColumn1Width] = useState(blockData?.data.column1Width || 4);
   const [column2Width, setColumn2Width] = useState(blockData?.data.column2Width || 4);
@@ -30,7 +31,7 @@ export const Layout3ColumnsSetting = (props: DME.SettingComponentProps) => {
   };
 
   useEffect(() => {
-    updateSelectedBlock<EntityLayout3Columns>((data) => {
+    updateBlockByPath<EntityLayout3Columns>(blockPath, (data) => {
       data.column1Width = column1Width;
       data.column2Width = column2Width;
     });

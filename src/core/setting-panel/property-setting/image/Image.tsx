@@ -1,11 +1,11 @@
 import { ImageSetting, useEditorStore, type DME } from '../../../../index';
 
-const Image = (props: { value?: string; property: string }) => {
-  const { property, value } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+const Image = (props: { value?: string; property: string } & DME.SettingComponentProps) => {
+  const { property, value, blockPath } = props;
+  const { updateBlockPropsByPath } = useEditorStore();
 
   const handleChange = (value: DME.ImageInfo) => {
-    updateSelectedBlockProps(property, value?.src);
+    updateBlockPropsByPath(blockPath, property, value?.src);
   };
 
   return (

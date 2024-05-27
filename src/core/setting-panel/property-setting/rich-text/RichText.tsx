@@ -5,7 +5,7 @@ import type { Descendant, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
-import { useEditorStore } from '../../../..';
+import { DME, useEditorStore } from '../../../..';
 import definition from '../../../../widgets/text/definition';
 import AddLinkButton from './AddLinkButton';
 import {
@@ -26,8 +26,8 @@ import RemoveLinkButton from './RemoveLinkButton';
 
 const { useCallback, useMemo } = React;
 
-const RichText = (props: { property: string; value: any }) => {
-  const { property, value = [] } = props;
+const RichText = (props: DME.SettingComponentProps & { property: string; value: any }) => {
+  const { property, value = [], blockPath } = props;
 
   const renderElement = useCallback(
     (props: {
@@ -59,9 +59,9 @@ const RichText = (props: { property: string; value: any }) => {
 
   const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
 
-  const { updateSelectedBlockProps } = useEditorStore();
+  const { updateBlockPropsByPath } = useEditorStore();
   const handleValueChange = (newValue: Descendant[]) => {
-    updateSelectedBlockProps(property, newValue);
+    updateBlockPropsByPath(blockPath, property, newValue);
   };
 
   // TODO:

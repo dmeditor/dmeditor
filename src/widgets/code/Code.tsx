@@ -21,9 +21,10 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
     blockNode: {
       data: { content },
     },
+    path,
   } = props;
 
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
   const [open, setOpen] = useState(!content);
   const [value, setValue] = useState('');
   let mounted = false;
@@ -35,7 +36,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
 
   const handleOk = () => {
     handleClose();
-    updateSelectedBlock((data) => {
+    updateBlockByPath(path, (data) => {
       data.content = value;
     });
   };

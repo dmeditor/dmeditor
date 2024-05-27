@@ -2,13 +2,16 @@ import { DME, ImageSetting, useEditorStore } from '../../..';
 import { PropertyItem } from '../../../core/utils';
 import { ImageEntity } from '../Image';
 
-export const Source = () => {
-  const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
-  const { data } = getSelectedBlock<ImageEntity>() || {};
+export const Source = (props: DME.SettingComponentProps<ImageEntity>) => {
+  const {
+    block: { data },
+    blockPath,
+  } = props;
+  const { updateBlockByPath } = useEditorStore();
   const { src } = data || {};
 
   const handleChange = (value: DME.ImageInfo) => {
-    updateSelectedBlock<ImageEntity>((blockData) => {
+    updateBlockByPath<ImageEntity>(blockPath, (blockData) => {
       blockData.src = value?.src;
       blockData.externalId = value?.id;
       blockData.thumbnail = value?.thumbnail;

@@ -10,16 +10,17 @@ export function CodeInput(props: DME.SettingComponentProps<CodeEntity>) {
     block: {
       data: { content },
     },
+    blockPath,
   } = props;
   const [value, setValue] = useState(content || '');
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
   const handleUpdate = () => {
-    updateSelectedBlock<CodeEntity>((data) => {
+    updateBlockByPath<CodeEntity>(blockPath, (data) => {
       data.content = value;
     });
   };

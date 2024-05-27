@@ -1,13 +1,14 @@
 import { BorderBottom, BorderTop, Delete } from '@mui/icons-material';
 
-import { useEditorStore } from '../../..';
+import { DME, useEditorStore } from '../../..';
 import { PropertyButton, PropertyItem } from '../../../core/utils';
 import { useTableStore } from '../store';
 
-export const TableRow = () => {
+export const TableRow = (props: DME.SettingComponentProps) => {
+  const { blockPath } = props;
   const { activeCellIndex, setActiveCellIndex } = useTableStore();
-  const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
-  const { data: blockData } = getSelectedBlock() || {};
+  const { getBlockByPath, updateBlockByPath } = useEditorStore();
+  const { data: blockData } = getBlockByPath(blockPath) || {};
 
   if (!blockData || !Array.isArray(blockData.value)) {
     return null;
@@ -20,11 +21,11 @@ export const TableRow = () => {
     if (position === 'top') {
       setActiveCellIndex([activeRowIndex + 1, activeCellIndex[1]]);
 
-      updateSelectedBlock((data) => {
+      updateBlockByPath(blockPath, (data) => {
         (data.value as string[][]).splice(activeRowIndex, 0, newRow);
       });
     } else {
-      updateSelectedBlock((data) =>
+      updateBlockByPath(blockPath, (data) =>
         (data.value as string[][]).splice(activeRowIndex + 1, 0, newRow),
       );
     }
@@ -35,7 +36,7 @@ export const TableRow = () => {
 
     setActiveCellIndex([activeRowIndex - 1, activeCellIndex[1]]);
 
-    updateSelectedBlock((data) => {
+    updateBlockByPath(blockPath, (data) => {
       if (Array.isArray(data.value)) {
         data.value.splice(activeRowIndex, 1);
       }

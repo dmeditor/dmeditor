@@ -9,11 +9,12 @@ const Select = (props: DME.SettingComponentProps) => {
     parameters: { options, defaultValue },
     property,
     value,
+    blockPath,
   } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+  const { updateBlockPropsByPath } = useEditorStore();
 
   const handleChange = (value: string) => {
-    updateSelectedBlockProps(property || '', value);
+    updateBlockPropsByPath(blockPath, property || '', value);
   };
 
   return (

@@ -40,6 +40,7 @@ export const SettingList = (props: {
   //get Widget setting with variant
   const settingConfigList = useMemo(() => {
     const [widgetDef, variant] = getWidgetWithVariant(blockData.type);
+    console.log('🚀 ~ settingConfigList ~ widgetDef:', widgetDef);
     let result: Array<DME.Setting> = [];
     if (widgetDef) {
       if (variant && variant.enabledSettings) {
@@ -94,6 +95,7 @@ export const SettingList = (props: {
                 ? getPropertyChildren(setting.property, blockData.children)
                 : getPropertyValue(setting.property, blockData.data)
               : undefined;
+            console.log('🚀 ~ {settingConfigList?.map ~ value:', value);
             return settingComponent ? (
               <PropertyItem label={setting.name} key={setting.property}>
                 <Property

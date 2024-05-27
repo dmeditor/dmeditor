@@ -12,14 +12,15 @@ const Carousel = (props: DME.SettingComponentProps) => {
     block: {
       data: { items: value },
     },
+    blockPath,
   } = props;
 
   const [showImageChooser, setShowImageChooser] = useState(false);
 
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
 
   const handleMoveUp = (_: MouseEvent<HTMLButtonElement>, index: number) => {
-    updateSelectedBlock<CarouselEntity>(({ items }) => {
+    updateBlockByPath<CarouselEntity>(blockPath, ({ items }) => {
       if (!items) {
         console.error('Carousel items not found!');
         return;
@@ -31,7 +32,7 @@ const Carousel = (props: DME.SettingComponentProps) => {
   };
 
   const handleMoveDown = (_: MouseEvent<HTMLButtonElement>, index: number) => {
-    updateSelectedBlock<CarouselEntity>(({ items }) => {
+    updateBlockByPath<CarouselEntity>(blockPath, ({ items }) => {
       if (!items) {
         console.error('Carousel items not found!');
         return;
@@ -43,7 +44,7 @@ const Carousel = (props: DME.SettingComponentProps) => {
   };
 
   const handleDelete = (_: MouseEvent<HTMLButtonElement>, index: number) => {
-    updateSelectedBlock<CarouselEntity>(({ items }: { items: any }) => {
+    updateBlockByPath<CarouselEntity>(blockPath, ({ items }: { items: any }) => {
       if (!items) {
         console.error('Carousel items not found!');
         return;
@@ -53,13 +54,13 @@ const Carousel = (props: DME.SettingComponentProps) => {
   };
 
   const updateImage = (index: number, image: string) => {
-    updateSelectedBlock<CarouselEntity>((data) => {
+    updateBlockByPath<CarouselEntity>(blockPath, (data) => {
       data.items[index] = { ...data.items[index], image };
     });
   };
 
   const addImage = (imageInfo: any) => {
-    updateSelectedBlock<CarouselEntity>((data) => {
+    updateBlockByPath<CarouselEntity>(blockPath, (data) => {
       data.items = [...data.items, { image: imageInfo[0].src, link: '' }];
     });
   };

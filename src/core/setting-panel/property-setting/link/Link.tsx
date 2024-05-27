@@ -9,17 +9,17 @@ import type { DME } from '../../../types';
 import { LinkChooser, LinkRef } from '../../../utility';
 
 export const Link = (props: DME.SettingComponentProps) => {
-  const { property, value } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+  const { property, value, blockPath } = props;
+  const { updateBlockPropsByPath } = useEditorStore();
   const linkRef = useRef<LinkRef>(null);
 
   const handleChange = (value: string) => {
-    updateSelectedBlockProps(property || '', value);
+    updateBlockPropsByPath(blockPath, property || '', value);
   };
 
   const handleConfirm = (value: BrowseLinkCallbackParams) => {
     if (value) {
-      updateSelectedBlockProps(property || '', value);
+      updateBlockPropsByPath(blockPath, property || '', value);
     }
   };
 

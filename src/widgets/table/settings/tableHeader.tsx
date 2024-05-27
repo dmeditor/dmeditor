@@ -1,7 +1,7 @@
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 import { Checkbox } from '@mui/material';
 
-import { useEditorStore } from '../../..';
+import { DME, useEditorStore } from '../../..';
 // import Align from '../../../core/setting-panel/property-setting/align/Align';
 // import Color from '../../../core/setting-panel/property-setting/color/Color';
 import { PickColor, PropertyButton, PropertyItem } from '../../../core/utils';
@@ -13,28 +13,33 @@ const alignList: { value: AlignType; icon: React.ReactNode }[] = [
   { value: 'right', icon: <FormatAlignRight /> },
 ];
 
-export const TableHeader = () => {
-  const { getSelectedBlock, updateSelectedBlockProps } = useEditorStore();
-  const { data } = getSelectedBlock() || {};
+export const TableHeader = (props: DME.SettingComponentProps) => {
+  const { blockPath } = props;
+  const { getBlockByPath, updateBlockPropsByPath } = useEditorStore();
+  const { data } = getBlockByPath(blockPath) || {};
 
   if (!data) {
     return null;
   }
 
   const toggleHeader = () => {
-    updateSelectedBlockProps('settings.hasHeader', !data.settings?.['hasHeader'] as any);
+    updateBlockPropsByPath(blockPath, 'settings.hasHeader', !data.settings?.['hasHeader'] as any);
   };
 
   const toggleIsBold = () => {
-    updateSelectedBlockProps('settings.headerIsBold', !data.settings?.['headerIsBold'] as any);
+    updateBlockPropsByPath(
+      blockPath,
+      'settings.headerIsBold',
+      !data.settings?.['headerIsBold'] as any,
+    );
   };
 
   const handleAlignChange = (value: AlignType) => {
-    updateSelectedBlockProps('settings.headerAlign', value);
+    updateBlockPropsByPath(blockPath, 'settings.headerAlign', value);
   };
 
   const handleBackgroundChange = (value: string) => {
-    updateSelectedBlockProps('settings.headerBackground', value);
+    updateBlockPropsByPath(blockPath, 'settings.headerBackground', value);
   };
 
   return (

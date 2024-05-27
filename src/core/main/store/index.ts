@@ -371,7 +371,6 @@ export const useEditorStore = create<Store & Actions>()(
     ) => {
       set((state) => {
         const block = getDataByPath(state.storage, path);
-        console.log('🚀 ~ set ~ block:', block);
         if (!block) {
           console.error('Block not found');
           return;

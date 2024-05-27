@@ -23,8 +23,8 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
 
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
-  const { blockNode, rootClasses, styleClasses } = props;
-  const { updateSelectedBlock } = useEditorStore();
+  const { blockNode, rootClasses, styleClasses, path } = props;
+  const { updateBlockByPath } = useEditorStore();
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {
     id,
@@ -49,7 +49,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
   };
 
   const handleChange = (value: string) => {
-    updateSelectedBlock<EntityHeadingBlock>((entity) => {
+    updateBlockByPath<EntityHeadingBlock>(path, (entity) => {
       entity.value = value;
     });
   };

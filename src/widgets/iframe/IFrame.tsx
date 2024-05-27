@@ -53,11 +53,11 @@ const ConfirmDialog = (props: { onConfirm: (value: string) => void; onCancel?: (
 };
 
 export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
   const { data } = props.blockNode || {};
 
   const handleConfirm = (value: string) => {
-    updateSelectedBlock((blockData) => {
+    updateBlockByPath(props.path, (blockData) => {
       blockData.value = value;
     });
   };

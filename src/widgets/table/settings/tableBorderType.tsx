@@ -1,7 +1,8 @@
 import { BorderAll, BorderClearOutlined, BorderHorizontalOutlined } from '@mui/icons-material';
 
-import { useEditorStore } from '../../..';
+import { DME, useEditorStore } from '../../..';
 import { PropertyButton, PropertyItem } from '../../../core/utils';
+import { EntityTableBlock } from '../entity';
 
 type BorderType = 'none' | 'border' | 'rowBorder';
 
@@ -12,12 +13,12 @@ const borderIconMap = new Map<BorderType, React.ReactNode>([
   ['border', <BorderAll />],
 ]);
 
-export const TableBorderType = (props: { property: string; value?: BorderType }) => {
-  const { value, property } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+export const TableBorderType = (props: DME.SettingComponentProps<EntityTableBlock>) => {
+  const { value, property, blockPath } = props;
+  const { updateBlockPropsByPath } = useEditorStore();
 
   const handleBorderTypeChange = (value: BorderType) => {
-    updateSelectedBlockProps(property, value);
+    updateBlockPropsByPath(blockPath, property!, value);
   };
 
   return (

@@ -4,11 +4,11 @@ import { useEditorStore } from '../../../..';
 import type { DME } from '../../../..';
 
 const Input = (props: DME.SettingComponentProps) => {
-  const { property, value, parameters } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+  const { property, value, parameters, blockPath } = props;
+  const { updateBlockPropsByPath } = useEditorStore();
 
   const handleChange = (v: string) => {
-    updateSelectedBlockProps(property, v);
+    updateBlockPropsByPath(blockPath, property!, v);
   };
 
   return (

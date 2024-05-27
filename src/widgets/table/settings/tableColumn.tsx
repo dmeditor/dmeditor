@@ -1,13 +1,14 @@
 import { BorderLeft, BorderRight, Delete } from '@mui/icons-material';
 
-import { useEditorStore } from '../../..';
+import { DME, useEditorStore } from '../../..';
 import { PropertyButton, PropertyItem } from '../../../core/utils';
 import { useTableStore } from '../store';
 
-export const TableColumn = () => {
+export const TableColumn = (props: DME.SettingComponentProps) => {
+  const { blockPath } = props;
   const { activeCellIndex, setActiveCellIndex } = useTableStore();
-  const { getSelectedBlock, updateSelectedBlock } = useEditorStore();
-  const { data: blockData } = getSelectedBlock() || {};
+  const { updateBlockByPath, getBlockByPath } = useEditorStore();
+  const { data: blockData } = getBlockByPath(blockPath) || {};
 
   if (!blockData || !Array.isArray(blockData.value)) {
     return null;
@@ -19,14 +20,14 @@ export const TableColumn = () => {
     if (position === 'left') {
       setActiveCellIndex([activeCellIndex[0], activeColumnIndex + 1]);
 
-      updateSelectedBlock((data) => {
+      updateBlockByPath(blockPath, (data) => {
         if (Array.isArray(data.value)) {
           data.value?.forEach?.((row: any[]) => row.splice(activeColumnIndex, 0, null));
         }
       });
     } else {
       setActiveCellIndex([activeCellIndex[0], activeColumnIndex]);
-      updateSelectedBlock((data) => {
+      updateBlockByPath(blockPath, (data) => {
         if (Array.isArray(data.value)) {
           data.value.forEach((row: any[]) => row.splice(activeColumnIndex + 1, 0, null));
         }
@@ -38,7 +39,7 @@ export const TableColumn = () => {
     const activeColumnIndex = activeCellIndex[1];
 
     setActiveCellIndex([activeCellIndex[0], activeColumnIndex - 1]);
-    updateSelectedBlock((data) => {
+    updateBlockByPath(blockPath, (data) => {
       if (Array.isArray(data.value)) {
         data.value.forEach((row: any[]) => row.splice(activeColumnIndex, 1));
       }

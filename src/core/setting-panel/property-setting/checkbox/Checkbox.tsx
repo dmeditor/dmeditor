@@ -4,11 +4,11 @@ import { useEditorStore } from '../../../..';
 import type { DME } from '../../../..';
 
 const Checkbox = (props: DME.SettingComponentProps) => {
-  const { property, value } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+  const { property, value, blockPath } = props;
+  const { updateBlockPropsByPath } = useEditorStore();
 
   const handleChange = (v: boolean) => {
-    updateSelectedBlockProps(property || '', v);
+    updateBlockPropsByPath(blockPath, property || '', v);
   };
 
   return (

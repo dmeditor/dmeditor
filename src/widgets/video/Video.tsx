@@ -73,12 +73,12 @@ const ConfirmDialog = (props: {
 };
 
 export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
-  const { updateSelectedBlock } = useEditorStore();
-  const { rootClasses } = props;
+  const { updateBlockByPath } = useEditorStore();
+  const { rootClasses, path } = props;
   const { data } = props.blockNode;
 
   const handleConfirm = (value: string) => {
-    updateSelectedBlock((blockData) => {
+    updateBlockByPath(path, (blockData) => {
       blockData.value = value;
     });
   };

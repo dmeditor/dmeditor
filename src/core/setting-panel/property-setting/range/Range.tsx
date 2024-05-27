@@ -1,18 +1,20 @@
 import * as React from 'react';
 
-import { useEditorStore } from '../../../..';
+import { DME, useEditorStore } from '../../../..';
 import { Ranger } from '../../../utils';
 
-const Range = (props: {
-  property: string;
-  value: number;
-  parameters: { min: number; max: number; step?: number };
-}) => {
-  const { property, parameters, value } = props;
-  const { updateSelectedBlockProps } = useEditorStore();
+const Range = (
+  props: DME.SettingComponentProps & {
+    property: string;
+    value: number;
+    parameters: { min: number; max: number; step?: number };
+  },
+) => {
+  const { property, parameters, value, blockPath } = props;
+  const { updateBlockPropsByPath } = useEditorStore();
 
   const handleChange = (value: number) => {
-    updateSelectedBlockProps(property, value);
+    updateBlockPropsByPath(blockPath, property, value);
   };
 
   return (

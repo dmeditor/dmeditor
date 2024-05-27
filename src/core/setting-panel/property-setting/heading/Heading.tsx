@@ -2,14 +2,10 @@ import * as React from 'react';
 import { LoopOutlined } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
 
-import { useEditorStore } from '../../../..';
 import { PropertyButton, PropertyItem, Ranger, Util } from '../../../utils';
 import useHeadingStore from '../../store/heading';
 
-const { useState, useRef, useEffect } = React;
-
 const HeadingSetting = (props: unknown) => {
-  const toggleProperty = useEditorStore((state) => state.toggleProperty);
   const { headingStateChange, id, level, value } = useHeadingStore((state) => state);
   // const defaultValue: any = useRef(data);
 
@@ -21,16 +17,6 @@ const HeadingSetting = (props: unknown) => {
       .toLowerCase();
     headingStateChange('id', newId);
   };
-
-  // useEffect(() => {
-  //   let newData = {
-  //     ...props.blockdata,
-  //     data: text,
-  //     settings: { level: level, style: commonSettings, id: id },
-  //     style: styleIdentifier,
-  //   };
-  //   props.onChange(newData, true);
-  // }, [text, level, id, commonSettings, styleIdentifier]);
 
   const handleLevelChange = (value: number) => {
     headingStateChange('level', value.toString());

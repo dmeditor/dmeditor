@@ -8,11 +8,12 @@ import { PropertyButton } from '../../../core/utils';
 const Tabs = (props: DME.SettingComponentProps) => {
   const {
     block: { children: value },
+    blockPath,
   } = props;
 
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
   const handleMoveUp = (e: MouseEvent, index: number) => {
-    updateSelectedBlock((_, block) => {
+    updateBlockByPath(blockPath, (_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
         return;
@@ -24,7 +25,7 @@ const Tabs = (props: DME.SettingComponentProps) => {
   };
 
   const handleMoveDown = (e: MouseEvent, index: number) => {
-    updateSelectedBlock((_, block) => {
+    updateBlockByPath(blockPath, (_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
         return;
@@ -36,7 +37,7 @@ const Tabs = (props: DME.SettingComponentProps) => {
   };
 
   const changeTitle = (e: React.MouseEvent<any>, index: number) => {
-    updateSelectedBlock((_, block) => {
+    updateBlockByPath(blockPath, (_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
         return;
@@ -46,7 +47,7 @@ const Tabs = (props: DME.SettingComponentProps) => {
   };
 
   const handleDelete = (e, index) => {
-    updateSelectedBlock((_, block) => {
+    updateBlockByPath(blockPath, (_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
         return;

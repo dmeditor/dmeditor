@@ -5,17 +5,17 @@ import { useTableStore } from './store';
 import { StyledTable } from './styled';
 
 const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
-  const { blockNode, rootClasses } = props;
+  const { blockNode, rootClasses, path } = props;
   const {
     id,
     data: { value, settings },
   } = blockNode;
 
-  const { updateSelectedBlock } = useEditorStore();
+  const { updateBlockByPath } = useEditorStore();
   const { setActiveCellIndex: setActiveIndex } = useTableStore();
 
   const handleValueChange = (col: number, row: number, value: any) => {
-    updateSelectedBlock((data) => {
+    updateBlockByPath(path, (data) => {
       (data.value as any[])[col][row] = value;
     });
   };
