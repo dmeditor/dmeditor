@@ -60,6 +60,7 @@ const heroTextWidget: DME.Widget = {
       name: 'Hero position',
       property: '.heroPosition',
       settingComponent: 'button-group',
+      category: 'block',
       parameters: {
         options: [
           { text: 'Left', value: 'left' },
@@ -69,6 +70,7 @@ const heroTextWidget: DME.Widget = {
     },
     {
       name: 'Full hero',
+      category: 'block',
       property: '.heroFullWidth',
       settingComponent: 'checkbox',
     },
