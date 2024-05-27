@@ -23,7 +23,7 @@ const listWidget: DME.Widget = {
       }
       return {
         id: nanoid(),
-        data: {},
+        data: { setting: { general: { padding: 5 } } },
         type: 'list',
         ...styleObj,
         children: [],
