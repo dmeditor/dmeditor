@@ -5,7 +5,7 @@ import { dmeConfig, getWidgetVariant } from '../..';
 import { generalSettings } from '../../core/setting-panel/property-setting';
 
 const listWidget: DME.Widget = {
-  category: 'container',
+  category: 'design',
   icon: 'list',
   name: 'List container',
   type: 'list',

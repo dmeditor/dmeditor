@@ -9,6 +9,7 @@ const register = () => {
   registerWidget(heroTextWidget, { render: HeroText });
   registerWidgetVariant({
     widget: 'hero-text',
+    category: 'media',
     identifier: 'image',
     name: 'Image text',
     allowedTypes: ['heading', 'list:button'],

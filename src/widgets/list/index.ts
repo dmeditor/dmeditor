@@ -12,6 +12,7 @@ const register = () => {
   registerWidgetVariant({
     widget: 'list',
     identifier: 'button',
+    category: 'basic',
     name: 'Button list',
     allowedTypes: ['button'],
     getDefaultData: (): DMEData.Block<unknown> => {

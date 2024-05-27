@@ -9,7 +9,7 @@ import { EntityHeadingBlock } from './entity';
 //todo: define a type for this.
 const HeadingWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
-  category: 'widget',
+  category: 'basic',
   icon: 'ic-heading',
   name: 'Heading',
   type: 'heading',

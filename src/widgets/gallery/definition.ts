@@ -7,7 +7,7 @@ import { generalSettings } from '../../core/setting-panel/property-setting';
 import { GalleryEntity, initGalleryEntity } from './entity';
 
 const definition: DME.Widget = {
-  category: Category.Widget,
+  category: 'media',
   icon: 'gallery',
   name: 'Gallery',
   type: 'gallery',

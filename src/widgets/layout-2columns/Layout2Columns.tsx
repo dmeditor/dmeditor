@@ -6,7 +6,7 @@ import { generalSettings } from '../../core/setting-panel/property-setting';
 import { SyledLayout } from './styled';
 
 const layout2ColumnsWidget: DME.Widget = {
-  category: 'layout',
+  category: 'design',
   icon: 'layout-2columns',
   name: '2 Columns layout',
   type: 'layout-2columns',

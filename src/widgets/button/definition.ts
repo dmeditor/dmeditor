@@ -4,7 +4,7 @@ import { dmeConfig, type DME, type DMEData } from '../..';
 import { generalSettings } from '../../core/setting-panel/property-setting';
 
 const buttonWidget: DME.Widget = {
-  category: 'widget',
+  category: 'basic',
   icon: 'button',
   name: 'Button',
   type: 'button',

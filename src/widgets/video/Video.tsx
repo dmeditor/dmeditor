@@ -104,7 +104,7 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
 };
 
 export const VideoDefinition: DME.Widget = {
-  category: 'widget',
+  category: 'basic',
   icon: 'video',
   name: 'Video',
   type: 'video',

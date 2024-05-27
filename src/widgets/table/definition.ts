@@ -6,7 +6,7 @@ import { generalSettings } from '../../core/setting-panel/property-setting';
 import { EntityTableBlock, initialTableEntity } from './entity';
 
 const HeadingWidget: DME.Widget = {
-  category: 'widget',
+  category: 'basic',
   icon: 'table',
   name: 'Table',
   type: 'table',

@@ -6,7 +6,7 @@ import { generalSettings } from '../../core/setting-panel/property-setting';
 import { CarouselEntity, initCarouselEntity } from './entity';
 
 const definition: DME.Widget = {
-  category: 'widget',
+  category: 'media',
   icon: 'carousel',
   name: 'Carousel',
   type: 'carousel',
