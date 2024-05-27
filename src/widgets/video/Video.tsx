@@ -92,7 +92,7 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
   return (
     <>
       <ConfirmDialog onConfirm={handleConfirm} value={videoUrl} />
-      <Container {...data.settings} className={rootClasses}>
+      <Container {...data.settings}>
         <video controls src={videoUrl}>
           <object width="100%" data={videoUrl}>
             <embed width="100%" src={videoUrl} />

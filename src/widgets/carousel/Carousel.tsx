@@ -232,7 +232,7 @@ const Carousel = (props) => {
   });
 
   return (
-    <div ref={carouselRef} className={rootClasses}>
+    <div ref={carouselRef}>
       {getTransitionIndicator()}
       {getTransitionChildren()}
     </div>

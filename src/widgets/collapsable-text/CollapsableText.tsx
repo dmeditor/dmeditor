@@ -50,7 +50,7 @@ export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEnti
   } = props;
 
   return (
-    <div className={rootClasses}>
+    <div>
       <div className={styleClasses['button-container'] || '' + ' dme-w-button-container'}>
         <button
           className={styleClasses['button'] || '' + ' dme-w-button'}

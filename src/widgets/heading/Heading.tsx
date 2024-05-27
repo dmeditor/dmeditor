@@ -56,13 +56,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
 
   return (
     <>
-      <div
-        className={rootClasses}
-        style={{
-          backgroundColor: data.settings?.['backgroundColor'],
-          marginTop: data.settings?.['marginTop'],
-        }}
-      >
+      <div>
         <HeadingComponent
           level={level}
           className={styleClasses['h'] || '' + ' dme-w-heading-h'}

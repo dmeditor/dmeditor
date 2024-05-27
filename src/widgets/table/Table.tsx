@@ -26,7 +26,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   const tableValue = settings['hasHeader'] ? value.slice(1) : value;
 
   return (
-    <StyledTable className={rootClasses} id={id} {...settings}>
+    <StyledTable id={id} {...settings}>
       {settings['hasHeader'] && (
         <thead>
           <tr className="dme-w-tr">

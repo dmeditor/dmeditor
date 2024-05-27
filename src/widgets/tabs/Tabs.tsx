@@ -77,7 +77,7 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
 
   return (
     <>
-      <div className={rootClasses}>
+      <div>
         <BaseTabs
         // defaultActiveKey={key}
         >

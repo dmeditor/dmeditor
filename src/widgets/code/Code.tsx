@@ -42,7 +42,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   };
 
   return (
-    <StyledCode editMode={props.mode === 'edit'} className={rootClasses}>
+    <StyledCode editMode={props.mode === 'edit'}>
       {content ? (
         <div dangerouslySetInnerHTML={{ __html: content }} />
       ) : (
