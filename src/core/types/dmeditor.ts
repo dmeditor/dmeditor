@@ -138,7 +138,7 @@ export namespace DMEData {
   export interface DefaultDataType {
     settings?: {
       [index: string]: string | number;
-    };
+    } & { general?: GeneralSettingType };
     [index: string]:
       | string
       | number
