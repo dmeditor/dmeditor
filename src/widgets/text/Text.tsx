@@ -1,5 +1,6 @@
 import { MiniText, useEditorStore, type DME } from '../..';
 import { EntityText } from './entity';
+import { TextContainer } from './styled';
 
 interface RichTextProps extends DME.WidgetRenderProps<EntityText> {}
 
@@ -8,6 +9,7 @@ const Text = (props: RichTextProps) => {
     active,
     blockNode: {
       data: { value },
+      data,
     },
     path,
   } = props;
@@ -20,9 +22,9 @@ const Text = (props: RichTextProps) => {
     }
   };
   return (
-    <div className={props.rootClasses}>
+    <TextContainer className={props.rootClasses} {...data.settings}>
       <MiniText mode={props.mode} value={value} onValueChange={handleValueChange} />
-    </div>
+    </TextContainer>
   );
 };
 

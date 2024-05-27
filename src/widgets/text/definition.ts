@@ -34,6 +34,12 @@ const TextWidget: DME.Widget = {
       property: '.value',
       settingComponent: 'rich-text',
     },
+    {
+      name: 'Text color',
+      property: 'settings.color',
+      settingComponent: 'color',
+      category: 'block',
+    },
     ...generalSettings,
   ],
 };

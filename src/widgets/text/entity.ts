@@ -6,6 +6,7 @@ export interface EntityText {
     children: Array<{ text: string }>;
   }>;
   settings?: {
+    color?: string;
     general?: DMEData.GeneralSettingType;
   };
 }
