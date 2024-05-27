@@ -14,13 +14,13 @@ const register = () => {
       {
         identifier: 'primary',
         name: 'Primary',
-        cssClasses: { root: 'bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded' },
+        cssClasses: { button: 'bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded' },
         cssStyle: '',
       },
       {
         identifier: 'cancel',
         name: 'Cancel',
-        cssClasses: { root: 'bg-gray-100 hover:bg-gray-500 hover:text-white py-1 px-4 rounded' },
+        cssClasses: { button: 'bg-gray-100 hover:bg-gray-500 hover:text-white py-1 px-4 rounded' },
         cssStyle: '',
       },
     ],
@@ -33,19 +33,19 @@ const register = () => {
       {
         identifier: 'small',
         name: 'Small',
-        cssClasses: { root: 'py-1 px-4' },
+        cssClasses: { button: 'py-1 px-4' },
         cssStyle: '',
       },
       {
         identifier: 'medium',
         name: 'Medium',
-        cssClasses: { root: 'py-2 px-4' },
+        cssClasses: { button: 'py-2 px-4' },
         cssStyle: '',
       },
       {
         identifier: 'large',
         name: 'Large',
-        cssClasses: { root: 'py-3 px-6' },
+        cssClasses: { button: 'py-3 px-6' },
         cssStyle: '',
       },
     ],

@@ -14,7 +14,7 @@ const Button = (props: ButtonProps) => {
     mode,
     ...restProps
   } = props;
-  const { buttonType = 'link', rootClasses, styleClasses, onClick } = restProps;
+  const { buttonType = 'link', styleClasses, onClick } = restProps;
   const Component = getStyledButton(buttonType);
 
   const buttonProps: {
@@ -22,10 +22,6 @@ const Button = (props: ButtonProps) => {
   } = {};
   if (buttonType === 'link') {
     buttonProps['href'] = link;
-  }
-  let cls = '';
-  if (styleClasses) {
-    cls += ` ${styleClasses}`;
   }
   const handleClick = () => {
     onClick?.();
@@ -36,7 +32,7 @@ const Button = (props: ButtonProps) => {
         {...restProps}
         {...buttonProps}
         disabled={mode === 'edit'}
-        className={cls}
+        className={styleClasses['button'] || '' + ' dme-w-button'}
         onClick={handleClick}
       >
         {value}

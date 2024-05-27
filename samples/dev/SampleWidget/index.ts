@@ -133,10 +133,12 @@ const registerSampleWidget = function () {
       identifier: 'project-primary',
       name: 'Project primary',
       cssStyle: `
+      .dme-w-button{
         padding: 8px 20px;
         background:green;
         color: white;
         border-radius: 16px;
+      }
       `,
     },
   ]);
@@ -147,10 +149,12 @@ const registerSampleWidget = function () {
       identifier: 'theme-primary',
       name: 'Theme primary',
       cssStyle: `
+      .dme-w-button{
         padding: 8px 20px;
         background:var(--project-main-color);
         color: white;
         border-radius: 16px;
+      }
       `,
     },
   ]);
@@ -230,11 +234,11 @@ const registerSampleWidget = function () {
       identifier: 'project-layout',
       name: 'Project layout',
       cssStyle: `
-        & > .dme-w-column1{
+         .dme-w-column1{
           padding: 10px;
           background: #d9d9ff;
         }
-        & > .dme-w-column2{
+         .dme-w-column2{
           padding: 10px;
           background: #eaeaff;
         }
