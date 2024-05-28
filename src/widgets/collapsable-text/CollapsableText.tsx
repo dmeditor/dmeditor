@@ -8,7 +8,10 @@ import type { DME, DMEData } from '../..';
 import { generalSettings } from '../../core/setting-panel/property-setting';
 
 interface CollapsableTextEntity {
-  general?: DMEData.GeneralSettingType;
+  text: string;
+  settings?: {
+    general?: DMEData.GeneralSettingType;
+  };
 }
 
 export const CollapsableTextDefiniation: DME.Widget = {
@@ -16,22 +19,32 @@ export const CollapsableTextDefiniation: DME.Widget = {
   name: 'Collapsable text',
   type: 'collapsable-text',
   icon: 'collapsable-text',
-  settings: [...generalSettings],
+  settings: [
+    {
+      name: 'Text',
+      property: '.text',
+      settingComponent: 'input',
+    },
+    ...generalSettings,
+  ],
   events: {
     createBlock: () => {
       const defaultStyle = dmeConfig.widgets['collapsable-text']?.defaultStyle;
       const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
-        data: {},
+        data: { text: 'Show more' },
         type: 'collapsable-text',
         ...styleObj,
         children: [
           {
-            id: '0',
-            data: {},
-            type: 'list',
-            children: [],
+            id: nanoid(),
+            type: 'heading',
+            data: {
+              value: 'This is a new block',
+              level: 2,
+              settings: {},
+            },
           },
         ],
       };
@@ -43,9 +56,8 @@ export const CollapsableTextDefiniation: DME.Widget = {
 export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEntity>) => {
   const [expanded, setExpanded] = useState(true);
   const {
-    blockNode: { children = [] },
+    blockNode: { data, children = [] },
     path,
-    rootClasses,
     styleClasses,
   } = props;
 
@@ -56,7 +68,7 @@ export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEnti
           className={styleClasses['button'] || '' + ' dme-w-button'}
           onClick={() => setExpanded(!expanded)}
         >
-          Show more
+          {data.text}
           {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
         </button>
       </div>

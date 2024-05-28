@@ -1,6 +1,7 @@
 
 
 0.2.0-beta.1
+- 2024-05-28 updated collpable-text: add text & use children render directly
 - 2024-05-27 [BC]put root to container instead of widget - use inside key(eg. button) or '>'(eg. >div) insead
 - 2024-05-27 add color setting in text
 - 2024-05-27 hero-text: use BLockRender intead BlockListRender to children instead, so the general setting can apply

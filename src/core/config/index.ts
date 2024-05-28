@@ -79,8 +79,8 @@ const defaultConfig = () => {
       categories: [
         { identifier: 'basic', name: 'Basic' },
         { identifier: 'design', name: 'Design' },
-        { identifier: 'intractive', name: 'Intractive' },
         { identifier: 'media', name: 'Media' },
+        { identifier: 'intractive', name: 'Intractive' },
       ],
       richText: {
         fontFamily: [
