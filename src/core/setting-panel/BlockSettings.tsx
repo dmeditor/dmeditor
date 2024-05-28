@@ -41,7 +41,7 @@ export const BlockSettings = (props: {
 
   //todo: cache it, using useMemo?
   const blockData = getBlockByPath(dataPath);
-  const closestBlock = getClosestBlock(dataPath);
+  const [closestBlock] = getClosestBlock(dataPath, (block) => !block?.isEmbed) || [];
 
   const blockType = blockData?.type || '';
 

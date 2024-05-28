@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowDownwardOutlined,
   ArrowDropDownOutlined,
@@ -30,15 +30,14 @@ export const SettingList = (props: {
   level?: number;
 }) => {
   const { blockData: originData, level = 0, category, blockPath, styleTags } = props;
-  const { getParents, getSelectedBlock } = useEditorStore();
-  const parents = getParents();
+  const { getClosestBlock, getSelectedBlock, selected } = useEditorStore();
   const isSelected = getSelectedBlock()?.id === originData.id;
   const isRoot = level === 0;
+  const isOriginRootEmbed = originData.isEmbed && isRoot;
 
-  const blockData =
-    originData.isEmbed && isRoot
-      ? parents.reverse().find((parent) => !parent.isEmbed) ?? originData
-      : originData;
+  const blockData = isOriginRootEmbed
+    ? getClosestBlock(blockPath, (parent) => !parent.isEmbed)?.[0] ?? originData
+    : originData;
 
   const widgetDef = useMemo(() => {
     const def = getWidget(blockData.type);
@@ -135,6 +134,12 @@ export const SettingList = (props: {
     );
   };
 
+  useEffect(() => {
+    if (selected.blockId === originData.id) {
+      setExpanded(true);
+    }
+  }, [selected]);
+
   return (
     <div>
       {level > 0 && (
@@ -149,7 +154,7 @@ export const SettingList = (props: {
           </Button>
         </div>
       )}
-      <Collapse in={expanded}>
+      <Collapse in={level === 0 || expanded}>
         <StyledSettingList.Group level={level}>{renderCurrentSettings()}</StyledSettingList.Group>
         {widgetDef.widgetType && ['list', 'mixed'].includes(widgetDef.widgetType) && (
           <div>

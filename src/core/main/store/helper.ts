@@ -100,7 +100,7 @@ export const iteratePath = (
     const block = temp[v];
     const currentPath = pathArray.slice(0, index + 1);
     callback(block, currentPath);
-    temp = block.children || [];
+    temp = block?.children || [];
   });
 };
 
