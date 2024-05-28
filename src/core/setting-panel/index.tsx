@@ -55,6 +55,7 @@ const SettingPanel = (props) => {
     getCurrentList,
     getParents,
     isSelected,
+    getClosestBlock,
     page,
     updatePage,
     clearSelected,
@@ -65,6 +66,9 @@ const SettingPanel = (props) => {
 
   const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
+  const [closestBlock = null, closestBlockPath = []] = isSelected()
+    ? getClosestBlock([...currentListPath, selectedBlockIndex], (block) => !block?.isEmbed) || []
+    : [];
 
   const currentList = getCurrentList();
   // const selectedBlock = useMemo(() => getSelectedBlock(), [blockId]);
@@ -83,11 +87,21 @@ const SettingPanel = (props) => {
           });
         }
       }
-      pathArray.push({
-        text: getWidgetName(selectedBlock?.type || ''),
-        id: selectedBlock?.id || '',
-        dataPath: [...currentListPath, selectedBlockIndex],
-        selected: true,
+
+      if (selectedBlock && !selectedBlock.isEmbed) {
+        pathArray.push({
+          text: getWidgetName(selectedBlock?.type || ''),
+          id: selectedBlock?.id || '',
+          dataPath: [...currentListPath, selectedBlockIndex],
+        });
+      }
+    }
+
+    if (closestBlock) {
+      pathArray.forEach((item) => {
+        if (item.id === closestBlock.id) {
+          item.selected = true;
+        }
       });
     }
 
@@ -159,11 +173,7 @@ const SettingPanel = (props) => {
           )}
 
           {mode === 'block-setting' && (
-            <>
-              {isSelected() && (
-                <BlockSettings {...props} dataPath={[...currentListPath, selectedBlockIndex]} />
-              )}
-            </>
+            <>{isSelected() && <BlockSettings {...props} dataPath={closestBlockPath} />}</>
           )}
 
           {mode === 'page-setting' && (

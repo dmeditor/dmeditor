@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowDownwardOutlined,
   ArrowDropDownOutlined,
@@ -7,6 +7,7 @@ import {
 } from '@mui/icons-material';
 import { Button, Collapse, IconButton } from '@mui/material';
 
+import { useEditorStore } from '../../';
 import { DME, DMEData } from '../types';
 import {
   getPropertyChildren,
@@ -28,19 +29,26 @@ export const SettingList = (props: {
   styleTags: Array<string>;
   level?: number;
 }) => {
-  const { blockData, level = 0, category, blockPath, styleTags } = props;
+  const { blockData: originData, level = 0, category, blockPath, styleTags } = props;
+  const { getClosestBlock, getSelectedBlock, selected } = useEditorStore();
+  const isSelected = getSelectedBlock()?.id === originData.id;
+  const isRoot = level === 0;
+  const isOriginRootEmbed = originData.isEmbed && isRoot;
+
+  const blockData = isOriginRootEmbed
+    ? getClosestBlock(blockPath, (parent) => !parent.isEmbed)?.[0] ?? originData
+    : originData;
 
   const widgetDef = useMemo(() => {
     const def = getWidget(blockData.type);
     return def;
   }, [blockData.type]);
 
-  const [expanded, setExpanded] = useState(level === 0);
+  const [expanded, setExpanded] = useState(isSelected);
 
   //get Widget setting with variant
   const settingConfigList = useMemo(() => {
     const [widgetDef, variant] = getWidgetWithVariant(blockData.type);
-    console.log('🚀 ~ settingConfigList ~ widgetDef:', widgetDef);
     let result: Array<DME.Setting> = [];
     if (widgetDef) {
       if (variant && variant.enabledSettings) {
@@ -95,7 +103,6 @@ export const SettingList = (props: {
                 ? getPropertyChildren(setting.property, blockData.children)
                 : getPropertyValue(setting.property, blockData.data)
               : undefined;
-            console.log('🚀 ~ {settingConfigList?.map ~ value:', value);
             return settingComponent ? (
               <PropertyItem label={setting.name} key={setting.property}>
                 <Property
@@ -127,6 +134,12 @@ export const SettingList = (props: {
     );
   };
 
+  useEffect(() => {
+    if (selected.blockId === originData.id) {
+      setExpanded(true);
+    }
+  }, [selected]);
+
   return (
     <div>
       {level > 0 && (
@@ -141,9 +154,9 @@ export const SettingList = (props: {
           </Button>
         </div>
       )}
-      <Collapse in={expanded}>
+      <Collapse in={level === 0 || expanded}>
         <StyledSettingList.Group level={level}>{renderCurrentSettings()}</StyledSettingList.Group>
-        {widgetDef.widgetType && ['list', 'mixed'].includes(widgetDef.widgetType) && (
+        {widgetDef?.widgetType && ['list', 'mixed'].includes(widgetDef.widgetType) && (
           <div>
             {(() => {
               if (widgetDef.widgetType === 'list') {

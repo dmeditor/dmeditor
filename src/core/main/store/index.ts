@@ -69,6 +69,10 @@ type Actions = {
   getCurrentList: () => DMEData.BlockList | null;
   getCurrentBlock: () => DMEData.Block | null;
   getBlockByPath: (path: Array<number>) => DMEData.Block;
+  getClosestBlock: (
+    path: Array<number>,
+    callback?: (block: DMEData.Block) => boolean,
+  ) => [DMEData.Block, Array<number>] | null;
   getParents: () => Array<DMEData.Block & { path: Array<number> }>; //get parent Block from top to down, based on currentListPath
   updateBlockByPath: <Type = DMEData.DefaultDataType>(
     path: Array<number>,
@@ -227,6 +231,31 @@ export const useEditorStore = create<Store & Actions>()(
     getBlockByPath: (path: Array<number>): DMEData.Block => {
       const state = get();
       return getDataByPath(state.storage, path) ?? { type: 'unknown', data: {} };
+    },
+    getClosestBlock: (
+      path: Array<number>,
+      callback?: (block: DMEData.Block) => boolean,
+    ): [DMEData.Block, Array<number>] | null => {
+      const state = get();
+
+      if (path.length === 0) {
+        return null;
+      }
+
+      let result = null;
+      let resultPath: number[] = [];
+
+      iteratePath(path, state.storage, (item, path) => {
+        if (callback?.(item)) {
+          result = item;
+          resultPath = path;
+        } else if (!callback) {
+          result = item;
+          resultPath = path;
+        }
+      });
+
+      return result ? [result, resultPath] : null;
     },
     getParents: (): Array<DMEData.Block & { path: Array<number> }> => {
       const state = get();
