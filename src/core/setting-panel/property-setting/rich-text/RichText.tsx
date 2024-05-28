@@ -113,6 +113,13 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
+          onKeyDown={(event: any) => {
+            //soft break
+            if (event.key === 'Enter' && event.shiftKey) {
+              event.preventDefault();
+              editor.insertText('\n');
+            }
+          }}
           style={{ padding: 10, minHeight: 100, height: 160, resize: 'vertical', overflow: 'auto' }}
           placeholder="Enter some rich text…"
           // spellCheck

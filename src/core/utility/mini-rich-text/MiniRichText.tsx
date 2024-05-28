@@ -69,6 +69,13 @@ const MiniRichText = (props: MiniRichTextProps) => {
             renderLeaf={renderLeaf}
             onFocus={props.onFocus}
             renderElement={renderElement}
+            onKeyDown={(event: any) => {
+              //soft break
+              if (event.key === 'Enter' && event.shiftKey) {
+                event.preventDefault();
+                editor.insertText('\n');
+              }
+            }}
             placeholder={mode === 'view' ? '' : props.placeHolder || 'Input your content here'} //fixed: readonly empty still show placeholder
           />
         </div>
