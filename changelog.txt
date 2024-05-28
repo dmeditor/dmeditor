@@ -1,6 +1,7 @@
 
 
 0.2.0-beta.1
+- 2024-05-28 added: highlight select item in mixed widget
 - 2024-05-28 updated collpable-text: add text & use children render directly
 - 2024-05-27 [BC]put root to container instead of widget - use inside key(eg. button) or '>'(eg. >div) insead
 - 2024-05-27 add color setting in text
