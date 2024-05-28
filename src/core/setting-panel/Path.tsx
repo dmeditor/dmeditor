@@ -17,9 +17,11 @@ export interface PathProps {
 }
 
 export const Path = (props: PathProps) => {
+  const { pathArray } = props;
+
   return (
     <PathContainer>
-      {props.pathArray.map((item, index) => (
+      {pathArray.map((item, index) => (
         <span key={item.dataPath.join(',')}>
           <PathItem
             canClick={!item.selected}

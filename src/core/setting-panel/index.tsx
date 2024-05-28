@@ -83,12 +83,15 @@ const SettingPanel = (props) => {
           });
         }
       }
-      pathArray.push({
-        text: getWidgetName(selectedBlock?.type || ''),
-        id: selectedBlock?.id || '',
-        dataPath: [...currentListPath, selectedBlockIndex],
-        selected: true,
-      });
+
+      if (selectedBlock && !selectedBlock.isEmbed) {
+        pathArray.push({
+          text: getWidgetName(selectedBlock?.type || ''),
+          id: selectedBlock?.id || '',
+          dataPath: [...currentListPath, selectedBlockIndex],
+          selected: true,
+        });
+      }
     }
 
     setPathArray(pathArray);

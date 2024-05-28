@@ -37,10 +37,11 @@ export const BlockSettings = (props: {
 }) => {
   const { dataPath } = props;
 
-  const { getBlockByPath, updateSelectedBlockStyle } = useEditorStore();
+  const { getBlockByPath, updateSelectedBlockStyle, getClosestBlock } = useEditorStore();
 
   //todo: cache it, using useMemo?
   const blockData = getBlockByPath(dataPath);
+  const closestBlock = getClosestBlock(dataPath);
 
   const blockType = blockData?.type || '';
 
@@ -71,7 +72,7 @@ export const BlockSettings = (props: {
 
   const settingCategory = useMemo(() => {
     const result = defaultSettingTabs;
-    result['widget'] = getWidgetName(blockType);
+    result['widget'] = getWidgetName(closestBlock?.type || '');
     return result;
   }, [blockType]);
 

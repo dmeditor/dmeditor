@@ -7,6 +7,7 @@ import {
 } from '@mui/icons-material';
 import { Button, Collapse, IconButton } from '@mui/material';
 
+import { useEditorStore } from '../../';
 import { DME, DMEData } from '../types';
 import {
   getPropertyChildren,
@@ -28,19 +29,27 @@ export const SettingList = (props: {
   styleTags: Array<string>;
   level?: number;
 }) => {
-  const { blockData, level = 0, category, blockPath, styleTags } = props;
+  const { blockData: originData, level = 0, category, blockPath, styleTags } = props;
+  const { getParents, getSelectedBlock } = useEditorStore();
+  const parents = getParents();
+  const isSelected = getSelectedBlock()?.id === originData.id;
+  const isRoot = level === 0;
+
+  const blockData =
+    originData.isEmbed && isRoot
+      ? parents.reverse().find((parent) => !parent.isEmbed) ?? originData
+      : originData;
 
   const widgetDef = useMemo(() => {
     const def = getWidget(blockData.type);
     return def;
   }, [blockData.type]);
 
-  const [expanded, setExpanded] = useState(level === 0);
+  const [expanded, setExpanded] = useState(isSelected);
 
   //get Widget setting with variant
   const settingConfigList = useMemo(() => {
     const [widgetDef, variant] = getWidgetWithVariant(blockData.type);
-    console.log('🚀 ~ settingConfigList ~ widgetDef:', widgetDef);
     let result: Array<DME.Setting> = [];
     if (widgetDef) {
       if (variant && variant.enabledSettings) {
@@ -95,7 +104,6 @@ export const SettingList = (props: {
                 ? getPropertyChildren(setting.property, blockData.children)
                 : getPropertyValue(setting.property, blockData.data)
               : undefined;
-            console.log('🚀 ~ {settingConfigList?.map ~ value:', value);
             return settingComponent ? (
               <PropertyItem label={setting.name} key={setting.property}>
                 <Property
