@@ -4,8 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/ma
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig, useEditorStore } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
+import { dmeConfig, generalSettings, useEditorStore } from '../..';
 
 export type VideoEntity = {
   value: string;

@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { dmeConfig, type DME, type DMEData } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
+import { dmeConfig, generalSettings, type DME, type DMEData } from '../..';
 
 const buttonWidget: DME.Widget = {
   category: 'basic',

@@ -1,8 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import type { DME } from '../..';
-import { dmeConfig, getWidgetVariant } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
+import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
 
 const listWidget: DME.Widget = {
   category: 'design',

@@ -3,9 +3,8 @@ import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, dmeConfig } from '../..';
+import { BlockListRender, dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
 
 interface CollapsableTextEntity {
   text: string;

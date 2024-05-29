@@ -1,8 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig } from '../../core/config';
-import { generalSettings } from '../../core/setting-panel/property-setting';
+import { dmeConfig, generalSettings } from '../..';
 import { CarouselEntity, initCarouselEntity } from './entity';
 
 const definition: DME.Widget = {

@@ -1,9 +1,8 @@
 import { css } from '@emotion/css';
 import { nanoid } from 'nanoid';
 
-import { dmeConfig } from '../..';
+import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
 
 export interface ImageEntity {
   src: string;

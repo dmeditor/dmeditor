@@ -1,9 +1,8 @@
 import { nanoid } from 'nanoid';
 
-import { dmeConfig } from '../..';
+import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { i18n } from '../../core/i18n';
-import { generalSettings } from '../../core/setting-panel/property-setting';
 import { initialTextEntity } from './entity';
 import type { EntityText } from './entity';
 

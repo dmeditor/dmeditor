@@ -1,8 +1,7 @@
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, dmeConfig } from '../..';
+import { BlockListRender, dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
 import { SyledLayout } from './styled';
 
 const layout3ColumnsWidget: DME.Widget = {

@@ -1,9 +1,8 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig } from '../../core/config';
+import { dmeConfig, generalSettings } from '../..';
 import { Category } from '../../core/enum';
-import { generalSettings } from '../../core/setting-panel/property-setting';
 import { CodeEntity, initCodeEntity } from './entity';
 
 const definition: DME.Widget = {

@@ -1,8 +1,7 @@
 import { nanoid } from 'nanoid';
 
-import { dmeConfig } from '../..';
+import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
 import { EntityGrid } from './entity';
 
 const gridWidget: DME.Widget = {

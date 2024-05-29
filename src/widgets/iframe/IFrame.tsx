@@ -3,9 +3,8 @@ import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-import { dmeConfig, useEditorStore } from '../..';
+import { dmeConfig, generalSettings, useEditorStore } from '../..';
 import type { DME, DMEData } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
 
 export type IFrameEntity = {
   value: string;

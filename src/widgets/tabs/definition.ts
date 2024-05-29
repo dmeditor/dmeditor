@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { generalSettings } from '../../core/setting-panel/property-setting';
+import { generalSettings } from '../..';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
 
 const TabsWidget: DME.Widget = {
