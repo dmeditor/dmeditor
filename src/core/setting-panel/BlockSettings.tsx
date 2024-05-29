@@ -79,10 +79,7 @@ export const BlockSettings = (props: {
   const getTabData = () => {
     const tabs: Array<TabData> = [];
     Object.keys(settingCategory).map((identifier) => {
-      const filteredSettings = getFilteredSettings(identifier);
-      if ((filteredSettings && filteredSettings?.length > 0) || identifier === 'widget') {
-        tabs.push({ title: settingCategory[identifier], element: renderATab(identifier) });
-      }
+      tabs.push({ title: settingCategory[identifier], element: renderATab(identifier) });
     });
     return tabs;
   };
