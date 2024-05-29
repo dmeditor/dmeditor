@@ -97,6 +97,15 @@ export const BlockSettings = (props: {
           open={blockOpen}
           onOpenClose={(open) => setBlockOpen(open)}
         > */}
+        {category == 'block' && (
+          <StyleSettings
+            values={blockData?.style || {}}
+            blockType={blockType}
+            onChange={(v, style) => {
+              updateSelectedBlockStyle(v, style);
+            }}
+          />
+        )}
         <SettingList
           blockData={blockData}
           category={category === 'widget' ? undefined : 'block'}
@@ -106,13 +115,6 @@ export const BlockSettings = (props: {
 
         {category == 'widget' && (
           <>
-            <StyleSettings
-              values={blockData?.style || {}}
-              blockType={blockType}
-              onChange={(v, style) => {
-                updateSelectedBlockStyle(v, style);
-              }}
-            />
             <ActionPanel>
               <ActionPanelButtonGroup>
                 <Move />

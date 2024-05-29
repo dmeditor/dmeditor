@@ -15,7 +15,7 @@ import {
   widgetDefinition,
   widgetStyles,
 } from '../../utils/register';
-import { PropertyItem } from '../Property';
+import { PropertyGroup, PropertyItem } from '../Property';
 import { ButtonGroup } from './ButtonGroup';
 import { DropDown } from './DropDown';
 import { InlineBlock } from './InlineBlock';
@@ -36,20 +36,26 @@ export const StyleSettings = (props: StyleSettingProps) => {
     return !isCustomStyle || (isCustomStyle && styleIdentifier === '_');
   };
 
-  return styles.map((style) => {
-    const styleObj = getWidgetStyle(blockType, style);
-    if (styleObj.options.length === 0 || !showItem(style)) {
-      return <React.Fragment key={styleObj.identifier}></React.Fragment>;
-    }
+  return styles.length > 0 ? (
+    <PropertyGroup header="Styles">
+      {styles.map((style) => {
+        const styleObj = getWidgetStyle(blockType, style);
+        if (styleObj.options.length === 0 || !showItem(style)) {
+          return <React.Fragment key={styleObj.identifier}></React.Fragment>;
+        }
 
-    return (
-      <PropertyItem label={styleObj.name} key={styleObj.identifier}>
-        {(!styleObj.display || styleObj.display === 'inline-block') && (
-          <InlineBlock {...props} style={styleObj} />
-        )}
-        {styleObj.display === 'button-group' && <ButtonGroup {...props} style={styleObj} />}
-        {styleObj.display === 'dropdown' && <DropDown {...props} style={styleObj} />}
-      </PropertyItem>
-    );
-  });
+        return (
+          <PropertyItem label={styleObj.name} key={styleObj.identifier}>
+            {(!styleObj.display || styleObj.display === 'inline-block') && (
+              <InlineBlock {...props} style={styleObj} />
+            )}
+            {styleObj.display === 'button-group' && <ButtonGroup {...props} style={styleObj} />}
+            {styleObj.display === 'dropdown' && <DropDown {...props} style={styleObj} />}
+          </PropertyItem>
+        );
+      })}
+    </PropertyGroup>
+  ) : (
+    <></>
+  );
 };
