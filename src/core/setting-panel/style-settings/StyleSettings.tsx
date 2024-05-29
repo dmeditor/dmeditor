@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   InputLabel,
   MenuItem,
@@ -36,7 +36,17 @@ export const StyleSettings = (props: StyleSettingProps) => {
     return !isCustomStyle || (isCustomStyle && styleIdentifier === '_');
   };
 
-  return styles.length > 0 ? (
+  const hasStyle = useMemo(() => {
+    for (const style of styles) {
+      const styleObj = getWidgetStyle(blockType, style);
+      if (styleObj.options.length > 0 && showItem(style)) {
+        return true;
+      }
+    }
+    return false;
+  }, [blockType]);
+
+  return hasStyle ? (
     <PropertyGroup header="Styles">
       {styles.map((style) => {
         const styleObj = getWidgetStyle(blockType, style);

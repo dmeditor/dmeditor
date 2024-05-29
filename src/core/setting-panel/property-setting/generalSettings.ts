@@ -2,12 +2,12 @@ import { DME, DMEData } from '../../../core/types';
 
 export const generalSettings: Array<DME.Setting> = [
   {
-    name: 'Width',
+    name: 'Content width',
     settingComponent: 'range',
     property: 'settings.general.width',
     parameters: { min: 0, max: 700, step: 5 },
     category: 'block',
-    group: 'block',
+    group: 'style_content',
     styleTags: ['block', 'list'],
   },
   {
@@ -15,7 +15,7 @@ export const generalSettings: Array<DME.Setting> = [
     settingComponent: 'align',
     property: 'settings.general.align',
     category: 'block',
-    group: 'block',
+    group: 'style_content',
     styleTags: ['block', 'list'],
   },
   {
@@ -23,7 +23,7 @@ export const generalSettings: Array<DME.Setting> = [
     settingComponent: 'color',
     property: 'settings.general.blockBackground',
     category: 'block',
-    group: 'block',
+    group: 'style_content',
     styleTags: ['block'],
   },
   {
@@ -33,7 +33,7 @@ export const generalSettings: Array<DME.Setting> = [
     parameters: { min: 0, max: 100 },
     category: 'block',
     styleTags: ['core'],
-    group: 'container',
+    group: 'style_block',
   },
   {
     name: 'Top margin',
@@ -41,7 +41,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.marginTop',
     parameters: { min: 0, max: 100 },
     category: 'block',
-    group: 'container',
+    group: 'style_block',
     styleTags: ['list'],
   },
   {
@@ -49,7 +49,7 @@ export const generalSettings: Array<DME.Setting> = [
     settingComponent: 'color', //todo: create background color component
     property: 'settings.general.background',
     category: 'block',
-    group: 'container',
+    group: 'style_block',
     styleTags: ['core'],
   },
 ];

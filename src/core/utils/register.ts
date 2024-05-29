@@ -54,7 +54,7 @@ export const defaultStyle = (): DME.WidgetStyle => {
   const preDefinedStyle = {
     identifier: '_',
     display: 'dropdown',
-    name: 'Pre-defined style',
+    name: 'Pre-defined',
     options: [] as Array<DME.WidgetStyleOption>,
   } as DME.WidgetStyle;
   return preDefinedStyle;

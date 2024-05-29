@@ -77,9 +77,9 @@ const defaultConfig = () => {
       zIndex: 1000,
       enableEditControl: false,
       settingGroups: {
-        block: 'Block',
-        text: 'Text',
-        container: 'Container',
+        style_content: 'Content',
+        style_text: 'Text',
+        style_block: 'Block',
       },
       categories: [
         { identifier: 'basic', name: 'Basic' },

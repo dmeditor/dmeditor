@@ -16,7 +16,7 @@ export const PropertyItem = (props: {
 
   return label ? (
     <StyledSettingItem.Container autoWidth={autoWidth}>
-      <StyledSettingItem.Label>{props.label}</StyledSettingItem.Label>
+      <StyledSettingItem.Label>{props.label}: </StyledSettingItem.Label>
       <StyledSettingItem.Setting>{props.children}</StyledSettingItem.Setting>
     </StyledSettingItem.Container>
   ) : (
