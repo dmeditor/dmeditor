@@ -27,17 +27,15 @@ const Button = (props: ButtonProps) => {
     onClick?.();
   };
   return (
-    <div>
-      <Component
-        {...restProps}
-        {...buttonProps}
-        disabled={mode === 'edit'}
-        className={styleClasses['button'] || '' + ' dme-w-button'}
-        onClick={handleClick}
-      >
-        {value}
-      </Component>
-    </div>
+    <Component
+      {...restProps}
+      {...buttonProps}
+      disabled={mode === 'edit'}
+      className={styleClasses['button'] || '' + ' dme-w-button'}
+      onClick={handleClick}
+    >
+      {value}
+    </Component>
   );
 };
 
