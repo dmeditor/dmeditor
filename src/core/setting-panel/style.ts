@@ -53,7 +53,7 @@ export const RightElement = styled.div`
 `;
 
 export const TabBodyContainer = styled.div<{ fullHeight?: boolean }>`
-  padding: 15px 10px 150px 10px;
+  padding: 0px 15px 150px 15px;
   height: calc(100vh - ${(props) => (props.fullHeight ? 200 : 350)}px);
   overflow: auto;
 `;
