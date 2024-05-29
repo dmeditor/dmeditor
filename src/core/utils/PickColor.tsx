@@ -46,9 +46,9 @@ export const PickColor = (props: { color: string; onChange: (color: string) => v
           display: 'inline-block',
           border: '1px solid #cccccc',
           cursor: 'pointer',
-          width: '26px',
-          height: '26px',
-          borderRadius: 15,
+          width: '22px',
+          height: '22px',
+          borderRadius: 12,
           background: props.color,
         }}
       ></span>

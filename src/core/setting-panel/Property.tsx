@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
 import { Button, ButtonProps, Collapse, Grid, InputLabel, Tooltip } from '@mui/material';
 
+import { StyledSettingItem } from './style';
+
 export const PropertyItem = (props: {
   label?: string;
   autoWidth?: boolean;
@@ -13,20 +15,12 @@ export const PropertyItem = (props: {
   const vertical = props.vertical ? true : false;
 
   return label ? (
-    <Grid container spacing={2} columns={12}>
-      <Grid item xs={autoWidth ? false : vertical ? 12 : 3}>
-        <InputLabel title={props.label} style={{ fontSize: '14px', lineHeight: 2 }}>
-          {props.label}
-        </InputLabel>
-      </Grid>
-      <Grid item sx={{ padding: 1 }} xs={autoWidth ? false : vertical ? 12 : 9}>
-        {props.children}
-      </Grid>
-    </Grid>
+    <StyledSettingItem.Container autoWidth={autoWidth}>
+      <StyledSettingItem.Label>{props.label}</StyledSettingItem.Label>
+      <StyledSettingItem.Setting>{props.children}</StyledSettingItem.Setting>
+    </StyledSettingItem.Container>
   ) : (
-    <Grid item sx={{ padding: 1 }} xs={autoWidth ? false : vertical ? 12 : 12}>
-      {props.children}
-    </Grid>
+    <StyledSettingItem.Setting>{props.children}</StyledSettingItem.Setting>
   );
 };
 

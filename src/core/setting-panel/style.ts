@@ -115,3 +115,19 @@ export const StyledSettingList = {
     padding: 0px ${(props) => props.level * 10}px;
   `,
 };
+
+export const StyledSettingItem = {
+  Container: styled.div<{ autoWidth?: boolean }>`
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+  `,
+  Label: styled.label`
+    min-width: 120px;
+    color: #333333;
+    font-size: 14px;
+  `,
+  Setting: styled.div`
+    min-width: 200px;
+  `,
+};
