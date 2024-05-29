@@ -35,7 +35,7 @@ const buttonWidget: DME.Widget = {
       property: '.link',
       settingComponent: 'link',
     },
-    ...generalSettings.filter((item) => item.group !== 'block'),
+    ...generalSettings.filter((item) => item.group !== 'style_content'),
   ],
 };
 
