@@ -12,6 +12,10 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
       elementStyle['width'] = 'fit-content';
     }
   }
+
+  if (settings.blockBackground && typeof settings.blockBackground === 'string') {
+    elementStyle['backgroundColor'] = settings.blockBackground;
+  }
   if (settings.align) {
     switch (settings.align) {
       case 'left':

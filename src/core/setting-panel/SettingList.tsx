@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material';
 import { Button, Collapse, IconButton } from '@mui/material';
 
-import { useEditorStore } from '../../';
+import { dmeConfig, useEditorStore } from '../../';
 import { DME, DMEData } from '../types';
 import {
   getPropertyChildren,
@@ -15,11 +15,12 @@ import {
   getWidget,
   getWidgetWithVariant,
   isNull,
+  PropertyGroup,
   PropertyItem,
 } from '../utils';
 import { ListOverview } from './ListOverview';
 import Property from './property-setting/property-item';
-import { StyledSettingList } from './style';
+import { StyledSettingList, StyledSettingNoGroup } from './style';
 
 //Show settings of a widget, recurisively when there is embed
 export const SettingList = (props: {
@@ -88,30 +89,63 @@ export const SettingList = (props: {
     }
   }, [blockData.id, category]);
 
+  const settingGroups = useMemo(() => {
+    const groups: Array<string | undefined> = [];
+    if (settingConfigList) {
+      settingConfigList.map((item) => {
+        if (!groups.includes(item.group)) {
+          groups.push(item.group);
+        }
+      });
+    }
+    return groups;
+  }, [blockData.id]);
+
+  const renderSettingList = (list?: DME.Setting[]) => {
+    if (!list) {
+      return <></>;
+    }
+    return list.map((setting) => {
+      if (setting.custom) {
+        return <Property {...{ ...setting, block: blockData, blockPath: blockPath }} />;
+      } else {
+        const settingComponent = setting.settingComponent;
+
+        //todo: use better way to filter children
+        const value = setting.property
+          ? isNull(blockData.data)
+            ? getPropertyChildren(setting.property, blockData.children)
+            : getPropertyValue(setting.property, blockData.data)
+          : undefined;
+        return settingComponent ? (
+          <PropertyItem label={setting.name} key={setting.property}>
+            <Property {...{ ...setting, block: blockData, value: value, blockPath: blockPath }} />
+          </PropertyItem>
+        ) : null;
+      }
+    });
+  };
+
   const renderCurrentSettings = () => {
     return (
       <div>
-        {settingConfigList?.map((setting) => {
-          if (setting.custom) {
-            return <Property {...{ ...setting, block: blockData, blockPath: blockPath }} />;
-          } else {
-            const settingComponent = setting.settingComponent;
+        {settingGroups.map((group) => (
+          <div>
+            {group && (
+              <PropertyGroup header={dmeConfig.editor.settingGroups[group]}>
+                <div>
+                  {renderSettingList(settingConfigList?.filter((item) => item.group === group))}
+                </div>
+              </PropertyGroup>
+            )}
 
-            //todo: use better way to filter children
-            const value = setting.property
-              ? isNull(blockData.data)
-                ? getPropertyChildren(setting.property, blockData.children)
-                : getPropertyValue(setting.property, blockData.data)
-              : undefined;
-            return settingComponent ? (
-              <PropertyItem label={setting.name} key={setting.property}>
-                <Property
-                  {...{ ...setting, block: blockData, value: value, blockPath: blockPath }}
-                />
-              </PropertyItem>
-            ) : null;
-          }
-        })}
+            {!group && (
+              <StyledSettingNoGroup>
+                {renderSettingList(settingConfigList?.filter((item) => item.group === group))}
+              </StyledSettingNoGroup>
+            )}
+          </div>
+        ))}
       </div>
     );
   };

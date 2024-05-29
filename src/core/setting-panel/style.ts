@@ -53,7 +53,7 @@ export const RightElement = styled.div`
 `;
 
 export const TabBodyContainer = styled.div<{ fullHeight?: boolean }>`
-  padding: 0px 15px 150px 15px;
+  padding: 0px 10px 150px 10px;
   height: calc(100vh - ${(props) => (props.fullHeight ? 200 : 350)}px);
   overflow: auto;
 `;
@@ -118,8 +118,8 @@ export const StyledSettingList = {
 
 export const StyledSettingItem = {
   Container: styled.div<{ autoWidth?: boolean }>`
-    margin-top: 8px;
     display: flex;
+    padding: 4px 0px;
     align-items: center;
   `,
   Label: styled.label`
@@ -128,6 +128,25 @@ export const StyledSettingItem = {
     font-size: 14px;
   `,
   Setting: styled.div`
-    min-width: 200px;
+    min-width: 180px;
   `,
 };
+
+export const StyledSettingGroup = {
+  Container: styled.fieldset<{ expandable?: boolean; open?: boolean }>`
+    margin-top: 15px;
+    ${(props) => (props.expandable && !props.open ? 'border: none;' : 'border: 1px solid #dddddd;')}
+    padding: 5px 10px;
+    border-radius: 4px;
+  `,
+  Header: styled.legend`
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+  `,
+  Body: styled.div``,
+};
+
+export const StyledSettingNoGroup = styled.div`
+  padding: 5px 10px;
+`;

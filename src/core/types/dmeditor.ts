@@ -12,6 +12,7 @@ export namespace DME {
     settingComponent: string; //registered setting component, eg. 'color', or 'align',
     styleTags?: Array<string>; //eg. core, general
     category?: string;
+    group?: string;
     parameters?: {
       [key: string]: unknown;
     };
@@ -196,6 +197,7 @@ export namespace DMEData {
     align?: 'left' | 'center' | 'right';
     marginTop?: number;
     padding?: number | number[];
+    blockBackground?: string | { color?: string; image?: string; imagePostion?: string };
     background?: string | { color?: string; image?: string; imagePostion?: string };
   }
 }

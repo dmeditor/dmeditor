@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
 import { Button, ButtonProps, Collapse, Grid, InputLabel, Tooltip } from '@mui/material';
 
-import { StyledSettingItem } from './style';
+import { StyledSettingGroup, StyledSettingItem } from './style';
 
 export const PropertyItem = (props: {
   label?: string;
@@ -33,33 +33,33 @@ export const PropertyGroup = (props: {
 }) => {
   const [open, setOpen] = useState(props.expandable && props.open ? true : false);
 
-  const renderBody = () => {
-    return <div style={{ paddingLeft: '10px', paddingTop: '10px' }}>{props.children}</div>;
-  };
-
   return (
-    <div>
-      <div
-        onClick={() => {
-          if (props.expandable) {
-            setOpen(!open);
-            if (props.onOpenClose) props.onOpenClose(!open);
-          }
-        }}
-      >
-        <label style={{ color: '#004f00' }}>
-          {props.expandable && (
-            <span>
-              {!open && <KeyboardArrowRight />}
-              {open && <KeyboardArrowDown />}
-            </span>
-          )}
-          {props.header}
-        </label>
-      </div>
-      {props.expandable && <Collapse in={open}>{renderBody()}</Collapse>}
-      {!props.expandable && <>{renderBody()}</>}
-    </div>
+    <StyledSettingGroup.Container
+      expandable={props.expandable}
+      open={open}
+      onClick={() => {
+        if (props.expandable) {
+          setOpen(!open);
+          if (props.onOpenClose) props.onOpenClose(!open);
+        }
+      }}
+    >
+      <StyledSettingGroup.Header>
+        {props.expandable && (
+          <span>
+            {!open && <KeyboardArrowRight style={{ fontSize: 16 }} />}
+            {open && <KeyboardArrowDown style={{ fontSize: 16 }} />}
+          </span>
+        )}
+        {props.header}
+      </StyledSettingGroup.Header>
+      {props.expandable && (
+        <Collapse in={open}>
+          <StyledSettingGroup.Body>{props.children}</StyledSettingGroup.Body>
+        </Collapse>
+      )}
+      {!props.expandable && <StyledSettingGroup.Body>{props.children}</StyledSettingGroup.Body>}
+    </StyledSettingGroup.Container>
   );
 };
 

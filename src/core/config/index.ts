@@ -76,6 +76,11 @@ const defaultConfig = () => {
       favouriteWidgets: [],
       zIndex: 1000,
       enableEditControl: false,
+      settingGroups: {
+        block: 'Block',
+        text: 'Text',
+        container: 'Container',
+      },
       categories: [
         { identifier: 'basic', name: 'Basic' },
         { identifier: 'design', name: 'Design' },
@@ -141,6 +146,7 @@ const dmeConfig: {
     favouriteWidgets: Array<string>;
     enableEditControl: boolean;
     categories: Array<DME.WidgetCategory>;
+    settingGroups: { [key: string]: string };
     richText: {
       fontFamily: Array<{ value: string; label: string }>;
       fontSize: Array<{ value: string; label: string }>;
