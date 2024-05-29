@@ -11,7 +11,6 @@ import { BlockWrapper } from './styled';
 
 interface BlockProps<Type = DMEData.DefaultDataType> {
   data: DMEData.Block<Type>;
-  active?: boolean;
   path: Array<number>;
   mode: 'edit' | 'view';
   inBlock?: boolean;
@@ -20,11 +19,16 @@ const { memo, useMemo } = React;
 
 export const BlockRender = memo((props: BlockProps) => {
   const {
-    active,
+    path,
     data: { id, style: styleData },
   } = props;
 
-  const { updateSelectedBlockIndex } = useEditorStore();
+  const {
+    updateSelectedBlockIndex,
+    selected: { blockIndex: selectedBlockIndex, currentListPath },
+  } = useEditorStore();
+
+  const active = path.join(',') === [...currentListPath, selectedBlockIndex].join(',');
 
   const blockType = props.data.type;
 
@@ -84,6 +88,7 @@ export const BlockRender = memo((props: BlockProps) => {
     <BlockWrapper
       className={'dme-block-wrapper ' + cssStyles.rootClasses}
       onClick={onSelect}
+      active={active}
       generalSettings={props.data.data.settings?.general}
     >
       <Widget

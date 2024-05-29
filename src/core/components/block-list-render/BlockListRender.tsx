@@ -28,7 +28,6 @@ interface BlockListProps {
 }
 
 interface BlockWithContainerProps {
-  isActive?: boolean;
   isHovering?: boolean;
   mode: 'edit' | 'view';
   onAddClick: (position: 'before' | 'after') => void;
@@ -103,7 +102,6 @@ export const BlockListRender = (props: BlockListProps) => {
         </StyledAddWidgetButton>
       )}
       {props.blockData.map((blockData: DMEData.Block, index: number) => {
-        const isActive = isInSelectedContext && index === selectedBlockIndex;
         let blockMode = props.mode;
         if (
           blockMode == 'edit' &&
@@ -122,17 +120,11 @@ export const BlockListRender = (props: BlockListProps) => {
               renderAddingMessage()}
             <BlockWithContainer
               mode={blockMode}
-              isActive={isActive}
               isHovering={hoverPath?.join(',') === [...props.path, index].join(',')}
               addingHorizontal={props.direction === 'horizontal'}
               onAddClick={(position) => handleAdding(position, index)}
             >
-              <BlockRender
-                mode={blockMode}
-                active={isActive}
-                path={[...props.path, index]}
-                data={blockData}
-              />
+              <BlockRender mode={blockMode} path={[...props.path, index]} data={blockData} />
             </BlockWithContainer>
 
             {addParameters &&
@@ -150,7 +142,7 @@ export const BlockListRender = (props: BlockListProps) => {
 const containerAdditionalProps = { className: 'dme-block-container' };
 
 const BlockWithContainer = (props: BlockWithContainerProps) => {
-  const { isActive, mode, isHovering, onSelect, onAddClick, addingHorizontal } = props;
+  const { mode, isHovering, onAddClick, addingHorizontal } = props;
 
   if (mode === 'view') {
     return <StyledBlock {...containerAdditionalProps}>{props.children}</StyledBlock>;
@@ -167,12 +159,7 @@ const BlockWithContainer = (props: BlockWithContainerProps) => {
   };
 
   return (
-    <StyledBlock
-      ref={blockContainerRef}
-      active={isActive}
-      hovering={isHovering}
-      {...containerAdditionalProps}
-    >
+    <StyledBlock ref={blockContainerRef} hovering={isHovering} {...containerAdditionalProps}>
       {addPosition === 'before' && (
         <AddingTool position="before" horizontal={addingHorizontal}>
           <StyledButtonContainer>

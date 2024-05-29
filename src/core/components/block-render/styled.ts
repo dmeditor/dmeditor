@@ -48,8 +48,24 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
   };
 };
 
-export const BlockWrapper = styled.div<{ generalSettings?: DMEData.GeneralSettingType }>`
+export const BlockWrapper = styled.div<{
+  generalSettings?: DMEData.GeneralSettingType;
+  active?: boolean;
+}>`
   ${(props) => (props.generalSettings ? getGeneralStyle(props.generalSettings) : {})}
+
+  ${(props) => {
+    if (props.active) {
+      return `
+      outline: 2px solid var(--dmee-selected-border-color) !important;
+      border-radius: 4px;
+      z-index: var(--dmee-zindex);
+      `;
+    } else {
+      return `
+      `;
+    }
+  }}
 
   &:hover {
     outline: 2px dotted var(--dmee-selected-border-color);

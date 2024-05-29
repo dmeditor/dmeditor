@@ -10,18 +10,6 @@ export const StyledBlock = styled.div<{ active?: boolean; hovering?: boolean }>`
         border-radius: 4px;`;
     }
   }}
-  ${(props) => {
-    if (props.active) {
-      return `
-      outline: 2px solid var(--dmee-selected-border-color) !important;
-      border-radius: 4px;
-      z-index: var(--dmee-zindex);
-      `;
-    } else {
-      return `
-      `;
-    }
-  }}
 
   position: relative;
 `;
