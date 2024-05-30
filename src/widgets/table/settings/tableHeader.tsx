@@ -4,7 +4,7 @@ import { Checkbox } from '@mui/material';
 import { DME, useEditorStore } from '../../..';
 // import Align from '../../../core/setting-panel/property-setting/align/Align';
 // import Color from '../../../core/setting-panel/property-setting/color/Color';
-import { PickColor, PropertyButton, PropertyItem } from '../../../core/utils';
+import { PickColor, PropertyButton, PropertyGroup, PropertyItem } from '../../../core/utils';
 
 type AlignType = 'left' | 'center' | 'right';
 const alignList: { value: AlignType; icon: React.ReactNode }[] = [
@@ -48,7 +48,7 @@ export const TableHeader = (props: DME.SettingComponentProps) => {
         <Checkbox checked={!!data.settings?.['hasHeader']} onChange={toggleHeader} />
       </PropertyItem>
       {!!data.settings?.['hasHeader'] && (
-        <>
+        <PropertyGroup header="Header">
           <PropertyItem label="Align">
             {alignList.map((alignItem) => {
               return (
@@ -72,7 +72,7 @@ export const TableHeader = (props: DME.SettingComponentProps) => {
               onChange={handleBackgroundChange}
             />
           </PropertyItem>
-        </>
+        </PropertyGroup>
       )}
     </>
   );

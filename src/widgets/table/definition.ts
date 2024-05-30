@@ -46,13 +46,6 @@ const HeadingWidget: DME.Widget = {
       custom: true,
     },
     {
-      name: 'BorderType',
-      settingComponent: 'table-border-type',
-      custom: true,
-      property: 'settings.borderType',
-      category: 'block',
-    },
-    {
       name: 'Cell padding',
       settingComponent: 'range',
       property: 'settings.padding',
@@ -66,8 +59,17 @@ const HeadingWidget: DME.Widget = {
       category: 'block',
     },
     {
+      name: 'BorderType',
+      settingComponent: 'table-border-type',
+      custom: true,
+      group: 'style_border',
+      property: 'settings.borderType',
+      category: 'block',
+    },
+    {
       name: 'Border Color',
       settingComponent: 'color',
+      group: 'style_border',
       property: 'settings.borderColor',
       category: 'block',
     },
