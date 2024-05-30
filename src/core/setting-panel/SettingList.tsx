@@ -131,6 +131,15 @@ export const SettingList = (props: {
   const renderCurrentSettings = () => {
     return (
       <div>
+        {category === 'block' && (
+          <StyleSettings
+            values={blockData?.style || {}}
+            blockType={blockData.type}
+            onChange={(v, style) => {
+              updateBlockStyleByPath(v, style, blockPath);
+            }}
+          />
+        )}
         {settingGroups.map((group) => (
           <div>
             {group && (
@@ -191,15 +200,6 @@ export const SettingList = (props: {
         </div>
       )}
       <Collapse in={level === 0 || expanded}>
-        {category === 'block' && (
-          <StyleSettings
-            values={blockData?.style || {}}
-            blockType={blockData.type}
-            onChange={(v, style) => {
-              updateBlockStyleByPath(v, style, blockPath);
-            }}
-          />
-        )}
         <StyledSettingList.Group level={level}>{renderCurrentSettings()}</StyledSettingList.Group>
         {widgetDef?.widgetType && ['list', 'mixed'].includes(widgetDef.widgetType) && (
           <div>
