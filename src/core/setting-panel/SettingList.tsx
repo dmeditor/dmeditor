@@ -33,6 +33,7 @@ export const SettingList = (props: {
   level?: number;
 }) => {
   const { blockData: originData, level = 0, category, blockPath, styleTags } = props;
+  const currentStyleTags = blockPath.length === 1 ? [...styleTags, 'root'] : styleTags;
   const { getClosestBlock, updateBlockStyleByPath, getSelectedBlock, selected } = useEditorStore();
   const isSelected = getSelectedBlock()?.id === originData.id;
   const isRoot = level === 0;
@@ -73,7 +74,7 @@ export const SettingList = (props: {
               } else {
                 //if
                 let matchResult = false;
-                for (const tag of styleTags) {
+                for (const tag of currentStyleTags) {
                   if (item.styleTags.includes(tag)) {
                     matchResult = true;
                     break;

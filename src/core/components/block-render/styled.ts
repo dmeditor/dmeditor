@@ -33,14 +33,24 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
   if (settings.marginTop) {
     containerStyle['marginTop'] = settings.marginTop;
   }
-  if (settings.padding) {
-    containerStyle['padding'] = settings.padding;
-  }
   if (settings.background && typeof settings.background === 'string') {
     containerStyle['backgroundColor'] = settings.background;
   }
   if (settings.background && isObject(settings.background)) {
     containerStyle['backgroundColor'] = settings.background?.color;
+  }
+
+  if (settings.backgroundFullWidth) {
+    containerStyle['marginLeft'] = 'calc((var(--dme-main-width) - var(--dme-container-width)) / 2)';
+    containerStyle['paddingLeft'] =
+      'calc((var(--dme-container-width) - var(--dme-main-width)) / 2)';
+    containerStyle['marginRight'] =
+      'calc((var(--dme-main-width) - var(--dme-container-width)) / 2)';
+    containerStyle['paddingRight'] =
+      'calc((var(--dme-container-width) - var(--dme-main-width)) / 2)';
+  }
+  if (settings.padding) {
+    containerStyle['padding'] = settings.padding;
   }
   return {
     ...(Object.keys(containerStyle).length > 0 && { '&': containerStyle }),

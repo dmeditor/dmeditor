@@ -52,4 +52,12 @@ export const generalSettings: Array<DME.Setting> = [
     group: 'style_block',
     styleTags: ['core'],
   },
+  {
+    name: 'Background full',
+    settingComponent: 'switch',
+    property: 'settings.general.backgroundFullWidth',
+    category: 'block',
+    group: 'style_block',
+    styleTags: ['root'],
+  },
 ];
