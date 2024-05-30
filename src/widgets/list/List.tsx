@@ -7,7 +7,7 @@ import { StyledList } from './styled';
 const List = (props: DME.WidgetRenderProps<EntityList>) => {
   const {
     blockNode: {
-      data: { direction, align },
+      data: { direction },
       children,
     },
     blockNode,
