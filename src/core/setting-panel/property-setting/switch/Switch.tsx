@@ -11,7 +11,7 @@ const Color = (props: { value?: boolean; property: string } & DME.SettingCompone
     updateBlockPropsByPath(blockPath, property || '', v);
   };
 
-  return <Switch defaultChecked={value} onChange={(e) => handleChange(e.target.checked)} />;
+  return <Switch checked={value ? true : false} onChange={(e) => handleChange(e.target.checked)} />;
 };
 
 export default Color;
