@@ -1,4 +1,4 @@
-import { makeStyles, Slider, Stack, styled } from '@mui/material';
+import { Grid, Input, Slider, styled } from '@mui/material';
 
 const CustomSlider = styled(Slider)(({ theme }) => ({
   '& .MuiSlider-thumb': {
@@ -22,25 +22,47 @@ export const Ranger = (props: {
   onChange?: (v: number, event: any) => void;
   onFinish?: (v: number) => void;
 }) => {
+  const { value, onChange, min, max, defaultValue } = props;
+  const handleChange = (e: Event, value: number | number[]) => {
+    onChange?.(value as number, e);
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    onChange?.(parseInt(e.target.value, 10), e);
+  };
   return (
-    <CustomSlider
-      defaultValue={props.defaultValue || 0}
-      valueLabelDisplay="auto"
-      step={props.step}
-      marks
-      value={props.value ? props.value : props.defaultValue || 0}
-      min={props.min}
-      max={props.max}
-      onChange={(e: any, v: number | Array<number>) => {
-        if (props.onChange) {
-          props.onChange(v as number, e);
-        }
-      }}
-      onChangeCommitted={(e: any, v: number | Array<number>) => {
-        if (props.onFinish) {
-          props.onFinish(v as number);
-        }
-      }}
-    />
+    <Grid container spacing={2} alignItems="center">
+      <Grid item xs>
+        <CustomSlider
+          defaultValue={props.defaultValue || 0}
+          valueLabelDisplay="auto"
+          step={props.step}
+          marks
+          value={value ? value : props.defaultValue || 0}
+          min={min}
+          max={max}
+          onChange={(e: Event, v: number | Array<number>) => {
+            handleChange(e, v);
+          }}
+          onChangeCommitted={(e: any, v: number | Array<number>) => {
+            if (props.onFinish) {
+              props.onFinish(v as number);
+            }
+          }}
+        />
+      </Grid>
+      <Grid item>
+        <Input
+          value={value ? value : defaultValue}
+          size="small"
+          onChange={handleInputChange}
+          inputProps={{
+            min,
+            max,
+            type: 'number',
+            'aria-labelledby': 'input-slider',
+          }}
+        />
+      </Grid>
+    </Grid>
   );
 };

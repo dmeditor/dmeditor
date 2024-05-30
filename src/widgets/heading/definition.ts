@@ -25,7 +25,9 @@ const HeadingWidget: DME.Widget = {
         data: {
           value: 'This is a new block',
           level: 2,
-          settings: {},
+          settings: {
+            general: {},
+          },
         },
       };
     },
