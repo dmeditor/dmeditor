@@ -1,3 +1,4 @@
+import path from 'path';
 import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowDownwardOutlined,
@@ -21,6 +22,7 @@ import {
 import { ListOverview } from './ListOverview';
 import Property from './property-setting/property-item';
 import { StyledSettingList, StyledSettingNoGroup } from './style';
+import { StyleSettings } from './style-settings/StyleSettings';
 
 //Show settings of a widget, recurisively when there is embed
 export const SettingList = (props: {
@@ -31,7 +33,7 @@ export const SettingList = (props: {
   level?: number;
 }) => {
   const { blockData: originData, level = 0, category, blockPath, styleTags } = props;
-  const { getClosestBlock, getSelectedBlock, selected } = useEditorStore();
+  const { getClosestBlock, updateBlockStyleByPath, getSelectedBlock, selected } = useEditorStore();
   const isSelected = getSelectedBlock()?.id === originData.id;
   const isRoot = level === 0;
   const isOriginRootEmbed = originData.isEmbed && isRoot;
@@ -189,6 +191,15 @@ export const SettingList = (props: {
         </div>
       )}
       <Collapse in={level === 0 || expanded}>
+        {category === 'block' && (
+          <StyleSettings
+            values={blockData?.style || {}}
+            blockType={blockData.type}
+            onChange={(v, style) => {
+              updateBlockStyleByPath(v, style, blockPath);
+            }}
+          />
+        )}
         <StyledSettingList.Group level={level}>{renderCurrentSettings()}</StyledSettingList.Group>
         {widgetDef?.widgetType && ['list', 'mixed'].includes(widgetDef.widgetType) && (
           <div>

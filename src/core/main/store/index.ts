@@ -88,7 +88,7 @@ type Actions = {
   ) => void;
   updateSelectedBlockProps: (propName: string, propValue: string | number | Array<Object>) => void;
   updateSelectedBlockEditControl: (value: number) => void;
-  updateSelectedBlockStyle: (value: string, styleIdentifier: string) => void;
+  updateBlockStyleByPath: (value: string, styleIdentifier: string, path: Array<number>) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
   updatePage: (value: string, key: string) => void;
@@ -472,9 +472,8 @@ export const useEditorStore = create<Store & Actions>()(
       const state = get();
       state.updateSelectedBlockProps('.editControl', value);
     },
-    updateSelectedBlockStyle: (value: string, styleIdentifier: string) => {
+    updateBlockStyleByPath: (value: string, styleIdentifier: string, path: Array<number>) => {
       const state = get();
-      const path = [...state.selected.currentListPath, state.selected.blockIndex];
 
       state.updateBlockByPath(path, (_, block) => {
         if (!block.style) {

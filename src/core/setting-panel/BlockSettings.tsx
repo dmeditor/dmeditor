@@ -37,7 +37,7 @@ export const BlockSettings = (props: {
 }) => {
   const { dataPath } = props;
 
-  const { getBlockByPath, updateSelectedBlockStyle, getClosestBlock } = useEditorStore();
+  const { getBlockByPath, getClosestBlock } = useEditorStore();
 
   //todo: cache it, using useMemo?
   const blockData = getBlockByPath(dataPath);
@@ -94,15 +94,6 @@ export const BlockSettings = (props: {
           open={blockOpen}
           onOpenClose={(open) => setBlockOpen(open)}
         > */}
-        {category == 'block' && (
-          <StyleSettings
-            values={blockData?.style || {}}
-            blockType={blockType}
-            onChange={(v, style) => {
-              updateSelectedBlockStyle(v, style);
-            }}
-          />
-        )}
         <SettingList
           blockData={blockData}
           category={category === 'widget' ? undefined : 'block'}
