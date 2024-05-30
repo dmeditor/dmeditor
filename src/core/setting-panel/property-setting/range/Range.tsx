@@ -1,28 +1,29 @@
-import * as React from 'react';
-
-import { DME, useEditorStore } from '../../../..';
-import { Ranger } from '../../../utils';
+import { useEditorStore, type DME } from '../../../..';
+// import { Ranger } from '../../../utils';
+import { Ranger } from '../../../utility/ranger';
 
 const Range = (
   props: DME.SettingComponentProps & {
     property: string;
     value: number;
-    parameters: { min: number; max: number; step?: number };
+    parameters: { min: number; max: number; step?: number; disabled?: boolean };
   },
 ) => {
   const { property, parameters, value, blockPath } = props;
   const { updateBlockPropsByPath } = useEditorStore();
 
-  const handleChange = (value: number) => {
+  const handleChange = (value: number | undefined) => {
+    if (!value) return;
     updateBlockPropsByPath(blockPath, property, value);
   };
 
   return (
     <Ranger
-      defaultValue={value}
-      min={parameters.min === undefined ? 1 : parameters.min}
+      initialValue={value}
+      min={parameters?.min || 1}
       max={parameters?.max || 5}
       step={parameters?.step || 1}
+      disabled={parameters?.disabled || false}
       onChange={handleChange}
     ></Ranger>
   );
