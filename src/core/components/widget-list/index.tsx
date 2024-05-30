@@ -41,12 +41,6 @@ const itemStyle = css`
   }
 `;
 
-const moreWidget = css`
-  margin-top: 10px;
-  padding: 10px;
-  text-align: center;
-`;
-
 interface WidgetListProps {
   filter?: Array<string> | string;
   onSelect: (type: string, style?: string) => void;
@@ -179,12 +173,6 @@ export const WidgetList = (props: WidgetListProps) => {
                   </div>
                 </div>
               ))}
-
-              <div className={moreWidget}>
-                <Button variant="outlined">
-                  Add more <ChevronRightOutlined />
-                </Button>
-              </div>
             </StyleTabBody>
           ),
         },

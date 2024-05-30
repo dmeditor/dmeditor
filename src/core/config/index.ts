@@ -80,6 +80,7 @@ const defaultConfig = () => {
         style_content: 'Content',
         style_text: 'Text',
         style_block: 'Block',
+        style_border: 'Border',
       },
       categories: [
         { identifier: 'basic', name: 'Basic' },
