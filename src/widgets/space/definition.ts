@@ -41,7 +41,11 @@ const spaceWidget: DME.Widget = {
       },
     },
     ...generalSettings.filter((item) =>
-      ['settings.general.background', 'settings.general.marginTop'].includes(item.property),
+      [
+        'settings.general.background',
+        'settings.general.marginTop',
+        'settings.general.fullWidth',
+      ].includes(item.property),
     ),
   ],
 };
