@@ -71,7 +71,7 @@ const heroTextWidget: DME.Widget = {
       name: 'Full hero',
       category: 'block',
       property: '.heroFullWidth',
-      settingComponent: 'checkbox',
+      settingComponent: 'switch',
     },
     ...generalSettings,
   ],
