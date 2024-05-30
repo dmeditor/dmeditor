@@ -11,15 +11,10 @@ const List = (props: DME.WidgetRenderProps<EntityList>) => {
       children,
     },
     blockNode,
-    rootClasses,
   } = props;
 
   return (
-    <StyledList
-      horizontal={direction === 'horizontal'}
-      align={align}
-      className="dme-blocktype-list"
-    >
+    <StyledList horizontal={direction === 'horizontal'} className="dme-blocktype-list">
       <BlockListRender
         mode={props.mode}
         blockData={children || []}
