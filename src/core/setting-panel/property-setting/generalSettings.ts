@@ -53,9 +53,9 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['core'],
   },
   {
-    name: 'Background full',
-    settingComponent: 'switch',
-    property: 'settings.general.backgroundFullWidth',
+    name: 'Full width',
+    settingComponent: 'switch', //todo: make a full width so it will change general.padding also.
+    property: 'settings.general.fullWidth',
     category: 'block',
     group: 'style_block',
     styleTags: ['root'],

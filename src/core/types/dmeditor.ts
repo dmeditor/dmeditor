@@ -197,7 +197,7 @@ export namespace DMEData {
     align?: 'left' | 'center' | 'right';
     marginTop?: number;
     padding?: number | number[];
-    backgroundFullWidth?: boolean;
+    fullWidth?: boolean;
     blockBackground?: string | { color?: string; image?: string; imagePostion?: string };
     background?: string | { color?: string; image?: string; imagePostion?: string };
   }

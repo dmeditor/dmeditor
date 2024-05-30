@@ -40,7 +40,7 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
     containerStyle['backgroundColor'] = settings.background?.color;
   }
 
-  if (settings.backgroundFullWidth) {
+  if (settings.fullWidth) {
     containerStyle['marginLeft'] = 'calc((var(--dme-main-width) - var(--dme-container-width)) / 2)';
     containerStyle['paddingLeft'] =
       'calc((var(--dme-container-width) - var(--dme-main-width)) / 2)';
