@@ -14,6 +14,8 @@ import {
   getPropertyChildren,
   getPropertyValue,
   getWidget,
+  getWidgetStyle,
+  getWidgetStyleOption,
   getWidgetWithVariant,
   isNull,
   PropertyGroup,
@@ -34,7 +36,18 @@ export const SettingList = (props: {
 }) => {
   const { blockData: originData, level = 0, category, blockPath, styleTags } = props;
   const currentStyleTags = blockPath.length === 1 ? [...styleTags, 'root'] : styleTags;
-  const { getClosestBlock, updateBlockStyleByPath, getSelectedBlock, selected } = useEditorStore();
+  const {
+    getClosestBlock,
+    updateBlockStyleByPath,
+    updateBlockPropsByPath,
+    getSelectedBlock,
+    selected,
+  } = useEditorStore();
+
+  const [settingStatus, setSettingStatus] = useState<{
+    [key: string]: DME.WidgetStyleSettingStatus;
+  }>({});
+
   const isSelected = getSelectedBlock()?.id === originData.id;
   const isRoot = level === 0;
   const isOriginRootEmbed = originData.isEmbed && isRoot;
@@ -49,6 +62,18 @@ export const SettingList = (props: {
   }, [blockData.type]);
 
   const [expanded, setExpanded] = useState(isSelected);
+
+  //init setting status
+  useEffect(() => {
+    const styles = originData.style;
+    if (styles) {
+      for (const style of Object.keys(styles)) {
+        for (const option of Object.keys(styles[style])) {
+          resetSettingStatus(option, style);
+        }
+      }
+    }
+  }, [originData.id]);
 
   //get Widget setting with variant
   const settingConfigList = useMemo(() => {
@@ -104,6 +129,47 @@ export const SettingList = (props: {
     return groups;
   }, [blockData.id]);
 
+  const resetSettingStatus = (styleOption: string, style: string) => {
+    const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
+    if (!optionDef) {
+      return;
+    }
+    const statusObj: any = {};
+    if (!optionDef.settings) {
+      return;
+    }
+    for (const key of Object.keys(optionDef.settings)) {
+      const setting = optionDef.settings[key];
+      if (setting.status) {
+        statusObj[key] = setting.status;
+      }
+    }
+    setSettingStatus(statusObj);
+  };
+
+  const switchStyleOption = (styleOption: string, style: string) => {
+    //update style
+    updateBlockStyleByPath(styleOption, style, blockPath);
+
+    //update style setting data to
+    const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
+    if (!optionDef) {
+      return;
+    }
+
+    const styleSettings = optionDef.settings;
+    if (styleSettings) {
+      //todo: clear up style settings
+
+      // setSelectedStyleSettings(styleSettings);
+      for (const property of Object.keys(styleSettings)) {
+        const value = styleSettings[property].value;
+        updateBlockPropsByPath(blockPath, property, value);
+      }
+    }
+    resetSettingStatus(styleOption, style);
+  };
+
   const renderSettingList = (list?: DME.Setting[]) => {
     if (!list) {
       return <></>;
@@ -115,7 +181,7 @@ export const SettingList = (props: {
         const settingComponent = setting.settingComponent;
 
         //todo: use better way to filter children
-        const value = setting.property
+        let value = setting.property
           ? isNull(blockData.data)
             ? getPropertyChildren(setting.property, blockData.children)
             : getPropertyValue(setting.property, blockData.data)
@@ -136,9 +202,7 @@ export const SettingList = (props: {
           <StyleSettings
             values={blockData?.style || {}}
             blockType={blockData.type}
-            onChange={(v, style) => {
-              updateBlockStyleByPath(v, style, blockPath);
-            }}
+            onChange={switchStyleOption}
           />
         )}
         {settingGroups.map((group) => (

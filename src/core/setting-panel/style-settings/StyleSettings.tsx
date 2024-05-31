@@ -23,7 +23,7 @@ import { InlineBlock } from './InlineBlock';
 export interface StyleSettingProps {
   blockType: string;
   values: { [styleIdentifier: string]: string };
-  onChange: (v: string, style: string) => void;
+  onChange: (optionIdentifier: string, styleIdentifier: string) => void;
 }
 
 export const StyleSettings = (props: StyleSettingProps) => {
