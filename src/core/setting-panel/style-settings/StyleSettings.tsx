@@ -54,7 +54,6 @@ export const StyleSettings = (props: StyleSettingProps) => {
           return <React.Fragment key={styleObj.identifier}></React.Fragment>;
         }
 
-        console.log('wing', props);
         return (
           <PropertyItem label={styleObj.name} key={styleObj.identifier}>
             {(!styleObj.display || styleObj.display === 'inline-block') && (

@@ -11,11 +11,9 @@ import { Button, Collapse, IconButton } from '@mui/material';
 import { dmeConfig, useEditorStore } from '../../';
 import { DME, DMEData } from '../types';
 import {
-  getPropertyChildren,
-  getPropertyValue,
+  getPropertyFromChildren,
+  getPropertyFromData,
   getWidget,
-  getWidgetStyle,
-  getWidgetStyles,
   getWidgetWithVariant,
   isNull,
   PropertyGroup,
@@ -115,39 +113,17 @@ export const SettingList = (props: {
         return <Property {...{ ...setting, block: blockData, blockPath: blockPath }} />;
       } else {
         const settingComponent = setting.settingComponent;
+        const { property } = setting;
+        if (!property) return null;
 
-        const { type } = blockData;
-        // const styles = Object.keys(getWidgetStyles(type) || {});
-        const styleObj = getWidgetStyle(type);
+        const { data, children } = blockData;
+        const value = isNull(data)
+          ? getPropertyFromChildren(property, children)
+          : getPropertyFromData(property, blockData);
 
-        if (blockData?.style) {
-          const { style } = blockData;
-          if (styleObj.identifier in style) {
-            const cssStyleObj = styleObj.options.find(
-              (option) => option.identifier === style[styleObj.identifier],
-            );
-            if (!cssStyleObj?.cssStyle) {
-              console.warn(`Css style is not initial!`);
-              return;
-            }
-            // css Style is: "\n       padding: 50px;\n       background: #efefef\n    "
-            const { cssStyle } = cssStyleObj;
-
-            // setting.property is property: 'settings.general.padding'
-            if (setting?.property) {
-              const attribute = setting.property.split('.').pop();
-            }
-          }
-        }
-        //todo: use better way to filter children
-        const value = setting.property
-          ? isNull(blockData.data)
-            ? getPropertyChildren(setting.property, blockData.children)
-            : getPropertyValue(setting.property, blockData.data)
-          : undefined;
         return settingComponent ? (
           <PropertyItem label={setting.name} key={setting.property}>
-            <Property {...{ ...setting, block: blockData, value: value, blockPath: blockPath }} />
+            <Property {...{ ...setting, block: blockData, value, blockPath: blockPath }} />
           </PropertyItem>
         ) : null;
       }
