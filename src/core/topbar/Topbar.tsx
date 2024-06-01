@@ -54,6 +54,7 @@ export const TopBar = () => {
   };
 
   const changeMode = (mode: DME.Mode) => {
+    setDevice('');
     setMode(mode);
   };
 

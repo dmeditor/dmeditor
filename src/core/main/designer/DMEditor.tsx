@@ -126,7 +126,6 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
 
   //when switch mode, set default device
   useEffect(() => {
-    setDevice('');
     if (mode === 'view') {
       setViewDevice('pc');
     }
