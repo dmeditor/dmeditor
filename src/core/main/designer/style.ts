@@ -66,6 +66,7 @@ export const View = {
     & > div {
       max-width: var(--dme-main-width);
       margin: auto;
+      height: 100%;
     }
   `,
   DeviceItem: styled.div<{ selected?: boolean }>`
