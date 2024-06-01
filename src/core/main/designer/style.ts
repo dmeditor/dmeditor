@@ -52,9 +52,9 @@ export const View = {
         case 'pc':
           return '--dme-container-width: 1200px;--dme-main-width: 1000px;';
         case 'tablet':
-          return '--dme-container-width:810px; --dme-main-width: 810px;';
+          return '--dme-container-width:810px; --dme-main-width: var(--dme-container-width);';
         case 'mobile':
-          return '--dme-container-width:400px;--dme-main-width: 400px;';
+          return '--dme-container-width:400px;--dme-main-width: var(--dme-container-width);';
       }
     }};
     width: var(--dme-container-width);
@@ -66,7 +66,7 @@ export const View = {
     & > div {
       max-width: var(--dme-main-width);
       margin: auto;
-      height: 100%;
+      min-height: 100%;
     }
   `,
   DeviceItem: styled.div<{ selected?: boolean }>`
