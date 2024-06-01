@@ -54,6 +54,9 @@ setDMEditorConfig({
   editor: {
     favouriteWidgets: ['text', 'button', 'hero-text:image'],
     enableEditControl: true,
+    ui: {
+      'bg-editarea': '#666666',
+    },
   },
   widgets: {
     heading: { defaultStyle: { _: 'big-space' } },

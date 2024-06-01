@@ -21,14 +21,14 @@ export const Logo = styled.img`
 `;
 
 export const ToolsContainer = styled.div`
-  width: 60%;
+  width: 65%;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 export const ActionsContainer = styled.div`
-  width: 30%;
+  width: 25%;
   padding-right: 10px;
   display: flex;
   justify-content: right;

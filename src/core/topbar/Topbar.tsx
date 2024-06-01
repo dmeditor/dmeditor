@@ -35,10 +35,10 @@ export const ToolButton = (props) => (
   <Button
     sx={{
       textTransform: 'none',
-      background: props.selected ? '#0a2c3e' : 'none',
+      background: props.selected ? '#337ca2' : 'none',
       color: props.selected ? '#ffffff' : '#a6d8ed',
       ':hover': {
-        background: '#0a2c3e',
+        background: '#337ca2',
       },
       marginLeft: '5px',
     }}

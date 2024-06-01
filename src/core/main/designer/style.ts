@@ -29,7 +29,7 @@ export const Layout = {
     margin-top: var(--dmee-topbar-height);
   `,
   View: styled.div`
-    background: #666666;
+    background: var(--dmee-bg-editarea);
     margin-top: var(--dmee-topbar-height);
     height: calc(100vh - var(--dmee-topbar-height));
   `,
