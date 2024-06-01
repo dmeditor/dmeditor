@@ -10,7 +10,7 @@ import { getPageTheme, setPageSettings } from '../../components/page';
 
 import { dmeConfig } from '../../config';
 import { DeviceType, setDevice } from '../../hooks/useDeivce';
-import { BlockListRender } from '../../main/renderer';
+import { BlockListRender, DMEditorView } from '../../main/renderer';
 import SettingPanel from '../../setting-panel';
 import { TopBar } from '../../topbar/Topbar';
 import { DME, DMEData } from '../../types/dmeditor';
@@ -18,7 +18,8 @@ import emitter from '../../utils/event';
 import { BrowseProps, Util } from '../../utils/utilx';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
-import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer } from './style';
+import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer, View } from './style';
+import { ViewDevices } from './ViewDevices';
 
 const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
 
@@ -50,7 +51,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
     () => ({
       setEditorJson: (data: string | Array<DMEData.Block>) => {
         const list = loadData(data);
-        emitter.emit('setWidgets', list);
+        emitter.emit('setStorage', list);
       },
       setPageSettings: (settings: Array<DME.PageSetting>) => {
         setPageSettings(settings);
@@ -70,9 +71,8 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
     [],
   );
 
-  const [viewmode, setViewmode] = useState('edit');
+  const [viewDevice, setViewDevice] = useState('pc');
 
-  const [settingsShown, setSettingsShown] = useState(false);
   const {
     selected: { blockIndex: selectedBlockIndex },
     storage,
@@ -81,6 +81,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
     clearSelected,
     setPageData,
     page,
+    mode,
   } = useEditorStore();
   const blockIndexRef = useRef(selectedBlockIndex);
 
@@ -92,7 +93,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
     blockIndexRef.current = index;
   }, []);
 
-  const handleUpdateWidgets = useCallback((data: DMEData.Block[]) => {
+  const handleUpdateStorage = useCallback((data: DMEData.Block[]) => {
     setStorage(data);
   }, []);
 
@@ -107,44 +108,13 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
 
   // useEffectLayout
   useEffect(() => {
-    emitter.addListener('updateSelectedWidgetIndex', handleUpdateSelctedWidgetIndex);
-    emitter.addListener('setWidgets', handleUpdateWidgets);
+    emitter.addListener('setStorage', handleUpdateStorage);
     return () => {
-      emitter.removeListener('updateSelectedWidgetIndex');
-      emitter.removeListener('setWidgets');
+      emitter.removeListener('setStorage');
       emitter.removeListener('save');
       emitter.removeListener('cancel');
     };
   }, []);
-
-  useEffect(() => {
-    // if (selectedBlockIndex !== blockIndexRef.current) {
-    //   handleWidgetIndexChange(selectedBlockIndex);
-    // }
-  }, [selectedBlockIndex]);
-
-  const handleWidgetIndexChange = debounce((index: number) => {
-    emitter.emit('updateSelectedWidgetIndex', index);
-  }, 0.1e3);
-
-  const emitCurrentElements = debounce((elements: any) => {
-    emitter.emit('currentElements', elements);
-  }, 0.1e3);
-
-  const onActiveIndexChanged = debounce((index: number) => {
-    emitter.emit('activeIndexChanged', index);
-  }, 0.1e3);
-
-  useEffect(() => {
-    if (selectedBlockIndex !== blockIndexRef.current) {
-      onActiveIndexChanged(selectedBlockIndex);
-    }
-  }, [selectedBlockIndex]);
-
-  const showSettings = (e: any) => {
-    e.preventDefault();
-    setSettingsShown(!settingsShown);
-  };
 
   const containerRef = useRef<HTMLDivElement>(null);
   const editRef = useRef<HTMLDivElement>(null);
@@ -154,15 +124,21 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
     clearSelected();
   };
 
-  const onChangeViewMode = (e: any, type: string) => {
-    e.preventDefault();
-    setViewmode(type);
-    if (type == 'pc') {
+  //when switch mode, set default device
+  useEffect(() => {
+    setDevice('');
+    if (mode === 'view') {
+      setViewDevice('pc');
+    }
+  }, [mode]);
+
+  const changeViewDevice = (device: string) => {
+    setViewDevice(device);
+    if (device === 'pc') {
       setDevice('');
     } else {
-      setDevice(type as DeviceType);
+      setDevice(device as DeviceType);
     }
-    setSettingsShown(false);
   };
 
   const getEditCssVariables = () => {
@@ -236,60 +212,57 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
     },
   });
 
+  const renderEdit = () => {
+    return (
+      <Layout.Main config={{ zIndex: dmeConfig.editor.zIndex }} ref={currentRef}>
+        <Layout.Edit>
+          <EditContainer ref={containerRef} onClick={resetStatus}>
+            <EditArea
+              ref={editRef}
+              className={
+                css(dmeConfig.general.projectStyles[props.projectStyle || 'default']) +
+                ' ' +
+                getThemeCss
+              }
+            >
+              {/* need EmptyBlock otherwise first block's margin-top is based on body */}
+              <EmtpyBlock />
+              <div
+                style={getEditCssVariables()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <BlockListRender blockData={storage} path={[]} mode="edit" />
+              </div>
+            </EditArea>
+          </EditContainer>
+        </Layout.Edit>
+        <Layout.SettingPanel>
+          <SettingContainer>
+            <SettingPanel />
+          </SettingContainer>
+        </Layout.SettingPanel>
+      </Layout.Main>
+    );
+  };
+
+  const renderView = () => {
+    return (
+      <Layout.View>
+        <ViewDevices onChange={(v) => changeViewDevice(v)} />
+        <View.Container device={viewDevice}>
+          <DMEditorView data={storage} projectStyle={props.projectStyle} />
+        </View.Container>
+      </Layout.View>
+    );
+  };
+
   return (
     <Root uiConfig={dmeConfig.editor.ui}>
       <ThemeProvider theme={outerTheme}>
         <TopBar />
-        <Layout.Main config={{ zIndex: dmeConfig.editor.zIndex }} ref={currentRef}>
-          {/* <Toolbar readonlyMode={false} /> */}
-
-          {/* <div className="dme-settings" style={{ display: settingsShown ? 'block' : 'none' }}>
-          <div>{Util.renderPageTab()}</div>
-        </div> */}
-
-          <Layout.Edit>
-            <EditContainer
-              ref={containerRef}
-              style={settingsShown ? { display: 'none' } : {}}
-              onClick={resetStatus}
-            >
-              <EditArea
-                ref={editRef}
-                className={
-                  css(dmeConfig.general.projectStyles[props.projectStyle || 'default']) +
-                  ' ' +
-                  getThemeCss
-                }
-              >
-                {/* need EmptyBlock otherwise first block's margin-top is based on body */}
-                <EmtpyBlock />
-                {viewmode === 'edit' && (
-                  <div
-                    style={getEditCssVariables()}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <BlockListRender blockData={storage} path={[]} mode="edit" />
-                  </div>
-                )}
-                {/* {viewmode !== 'edit' && (
-              <DMEditorView
-                key={viewmode}
-                data={storage}
-                getFileUrl={props.getFileUrl}
-                getImageUrl={props.getImageUrl}
-              />
-            )} */}
-              </EditArea>
-            </EditContainer>
-          </Layout.Edit>
-          <Layout.SettingPanel>
-            <SettingContainer>
-              <SettingPanel />
-            </SettingContainer>
-          </Layout.SettingPanel>
-        </Layout.Main>
+        {mode === 'edit' ? renderEdit() : renderView()}
       </ThemeProvider>
     </Root>
   );

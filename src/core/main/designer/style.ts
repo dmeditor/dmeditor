@@ -26,13 +26,46 @@ export const Layout = {
   `,
   Edit: styled.div`
     border-right: 1px solid #cccccc;
-    overflow-y: auto;
     margin-top: var(--dmee-topbar-height);
+  `,
+  View: styled.div`
+    background: #666666;
+    margin-top: var(--dmee-topbar-height);
+    height: calc(100vh - var(--dmee-topbar-height));
   `,
   SettingPanel: styled.div`
     margin-top: var(--dmee-topbar-height);
     background-color: white;
     position: relative;
+  `,
+};
+
+export const ViewDevicesContainer = styled.div`
+  text-align: center;
+`;
+
+export const View = {
+  Container: styled.div<{ device: string }>`
+    ${(props) => {
+      switch (props.device) {
+        case 'pc':
+          return '--dme-container-width: 1200px;--dme-main-width: 1000px;';
+        case 'tablet':
+          return '--dme-container-width:810px; --dme-main-width: 810px;';
+        case 'mobile':
+          return '--dme-container-width:400px;--dme-main-width: 400px;';
+      }
+    }};
+    width: var(--dme-container-width);
+    height: 80vh;
+    overflow-y: auto;
+    margin: 10px auto;
+    background: #cccccc;
+
+    & > div {
+      max-width: var(--dme-main-width);
+      margin: auto;
+    }
   `,
 };
 

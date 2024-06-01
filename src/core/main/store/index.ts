@@ -5,7 +5,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
-import type { DMEData } from '../../types/dmeditor';
+import type { DME, DMEData } from '../../types/dmeditor';
 import { isEmptyString, isKeyInObject, isStrictlyInfinity } from '../../utils';
 import emitter from '../../utils/event';
 import { getWidgetWithVariant, properties } from '../../utils/register';
@@ -29,6 +29,7 @@ type Store = {
     //eg. [0,1] means first on root level, second on second level
     currentListPath: Array<number>;
   };
+  mode: DME.Mode;
   copyBlock?: DMEData.Block;
   hoverPath?: Array<number>;
   addBlockData?: AddBlockParameters;
@@ -54,6 +55,7 @@ type Actions = {
     type: string,
     style?: string,
   ) => void;
+  setMode: (mode: DME.Mode) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: DMEData.Block[] }) => void;
@@ -122,6 +124,11 @@ export const useEditorStore = create<Store & Actions>()(
         if (state.addBlockData) {
           state.addBlockData.status = 'done';
         }
+      });
+    },
+    setMode: (mode: DME.Mode) => {
+      set((state) => {
+        state.mode = mode;
       });
     },
     executeAdding: (

@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import {
+  ArrowDownward,
   ArrowDropDown,
+  ArrowDropDownOutlined,
   Cancel,
   ComputerOutlined,
   EditOutlined,
@@ -11,25 +13,38 @@ import {
   Save,
   Send,
   ShoppingBagOutlined,
+  VisibilityOutlined,
 } from '@mui/icons-material';
-import { Button, Tooltip } from '@mui/material';
+import { Button, IconButton, Tooltip } from '@mui/material';
 
 import emitter from '../../core/utils/event';
+import { setDevice } from '../hooks/useDeivce';
 import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
+import { DME } from '../types';
 import { ActionsContainer, Container, Logo, LogoContainer, ToolsContainer } from './style';
 
-const ToolButton = (props?: object) => (
+export const largeIcon = { style: { fontSize: '28px' } };
+export const smallIcon = { style: { fontSize: '20px', marginLeft: 2 } };
+
+export const ToolButton = (props) => (
   <Button
-    sx={{ textTransform: 'none', color: '#a6d8ed', fontSize: 16, marginLeft: '5px' }}
+    sx={{
+      textTransform: 'none',
+      background: props.selected ? '#333333' : 'none',
+      color: props.selected ? '#ffffff' : '#a6d8ed',
+      ':hover': {
+        background: '#333333',
+      },
+      fontSize: 16,
+      marginLeft: '5px',
+    }}
     {...props}
   ></Button>
 );
 
 export const TopBar = () => {
-  const largeIcon = { style: { fontSize: '28px' } };
-  const smallIcon = { style: { fontSize: '20px', marginLeft: 2 } };
-  const { storage, page } = useEditorStore();
+  const { storage, page, mode, setMode } = useEditorStore();
 
   const save = () => {
     emitter.emit('save', { data: storage, page: page });
@@ -37,6 +52,10 @@ export const TopBar = () => {
 
   const cancel = () => {
     emitter.emit('cancel', { data: storage, page: page });
+  };
+
+  const changeMode = (mode: DME.Mode) => {
+    setMode(mode);
   };
 
   return (
@@ -48,9 +67,15 @@ export const TopBar = () => {
         {/* todo: import locally */}
       </LogoContainer>
       <ToolsContainer>
-        <ToolButton>
+        <ToolButton selected={mode === 'edit'} onClick={() => changeMode('edit')}>
           <Tooltip title="Edit mode">
-            <EditOutlined {...largeIcon} />
+            <EditOutlined {...smallIcon} />
+          </Tooltip>
+        </ToolButton>
+        <span style={{ borderRight: '1px solid #cccccc', marginLeft: '4px' }}></span>
+        <ToolButton selected={mode === 'view'} onClick={() => changeMode('view')}>
+          <Tooltip title="Preview">
+            <VisibilityOutlined {...smallIcon} />
           </Tooltip>
         </ToolButton>
         {/* <ToolButton>

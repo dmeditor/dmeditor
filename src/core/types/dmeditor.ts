@@ -20,6 +20,9 @@ export namespace DME {
     // [key: string]: string|number
   }
 
+  export type Device = 'pc' | 'tablet' | 'mobile';
+  export type Mode = 'edit' | 'view';
+
   export interface WidgetCategory {
     identifier: string;
     name: string;

@@ -1,4 +1,4 @@
-import type { DMEData } from '../types';
+import type { DME, DMEData } from '../types';
 import { simpleCloneDeep } from '../utils';
 
 export type LayoutMode = 'pc' | 'mobile' | 'tablet';
@@ -26,6 +26,7 @@ function createDMEditor() {
     steps: [],
     storage: [] as DMEData.BlockList,
     page: { title: 'New page' },
+    mode: 'edit' as DME.Mode,
   };
 }
 
