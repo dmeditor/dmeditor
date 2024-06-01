@@ -31,12 +31,11 @@ export const ToolButton = (props) => (
   <Button
     sx={{
       textTransform: 'none',
-      background: props.selected ? '#333333' : 'none',
+      background: props.selected ? '#0a2c3e' : 'none',
       color: props.selected ? '#ffffff' : '#a6d8ed',
       ':hover': {
-        background: '#333333',
+        background: '#0a2c3e',
       },
-      fontSize: 16,
       marginLeft: '5px',
     }}
     {...props}
@@ -68,14 +67,14 @@ export const TopBar = () => {
       </LogoContainer>
       <ToolsContainer>
         <ToolButton selected={mode === 'edit'} onClick={() => changeMode('edit')}>
-          <Tooltip title="Edit mode">
-            <EditOutlined {...smallIcon} />
+          <Tooltip title="Edit">
+            <EditOutlined />
           </Tooltip>
         </ToolButton>
-        <span style={{ borderRight: '1px solid #cccccc', marginLeft: '4px' }}></span>
+        <span style={{ borderRight: '1px solid #cccccc', marginLeft: '4px' }}>&nbsp;</span>
         <ToolButton selected={mode === 'view'} onClick={() => changeMode('view')}>
           <Tooltip title="Preview">
-            <VisibilityOutlined {...smallIcon} />
+            <VisibilityOutlined />
           </Tooltip>
         </ToolButton>
         {/* <ToolButton>
@@ -94,10 +93,10 @@ export const TopBar = () => {
       </ToolsContainer>
       <ActionsContainer>
         <ToolButton onClick={save}>
-          {i18n('Save', 'tool')} <Save {...smallIcon} />
+          {i18n('Save', 'tool')} <Save />
         </ToolButton>
         <ToolButton onClick={cancel}>
-          {i18n('Cancel', 'tool')} <Cancel {...smallIcon} />
+          {i18n('Cancel', 'tool')} <Cancel />
         </ToolButton>
         {/* <ToolButton>
           <ShoppingBagOutlined />

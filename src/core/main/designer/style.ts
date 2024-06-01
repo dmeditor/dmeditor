@@ -42,6 +42,7 @@ export const Layout = {
 
 export const ViewDevicesContainer = styled.div`
   text-align: center;
+  padding: 5px 0px;
 `;
 
 export const View = {
@@ -57,15 +58,24 @@ export const View = {
       }
     }};
     width: var(--dme-container-width);
-    height: 80vh;
+    height: calc(100vh - 120px);
     overflow-y: auto;
-    margin: 10px auto;
+    margin: auto;
     background: #cccccc;
 
     & > div {
       max-width: var(--dme-main-width);
       margin: auto;
     }
+  `,
+  DeviceItem: styled.div<{ selected?: boolean }>`
+    display: inline-block;
+    border-radius: 4px;
+    margin-left: 5px;
+    &:hover {
+      background: #494d4f;
+    }
+    background: ${(props) => (props.selected ? '#494d4f' : 'none')};
   `,
 };
 

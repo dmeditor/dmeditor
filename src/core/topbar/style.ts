@@ -22,11 +22,14 @@ export const Logo = styled.img`
 
 export const ToolsContainer = styled.div`
   width: 60%;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ActionsContainer = styled.div`
   width: 30%;
   padding-right: 20px;
-  text-align: right;
+  display: flex;
+  justify-content: right;
 `;

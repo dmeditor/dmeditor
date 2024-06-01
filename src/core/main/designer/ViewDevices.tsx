@@ -4,7 +4,7 @@ import { IconButton } from '@mui/material';
 import { DME } from 'dmeditor/core/types';
 
 import { useEditorStore } from '../store';
-import { ViewDevicesContainer } from './style';
+import { View, ViewDevicesContainer } from './style';
 
 const devices = [
   {
@@ -35,12 +35,14 @@ export const ViewDevices = (props: { onChange: (device: string) => void }) => {
   return (
     <ViewDevicesContainer>
       {devices.map((item) => (
-        <IconButton
-          sx={{ background: device === item.identifier ? '#cccccc' : 'none' }}
+        <View.DeviceItem
+          selected={device === item.identifier}
           onClick={() => select(item.identifier)}
         >
-          {item.icon}
-        </IconButton>
+          <IconButton sx={{ color: '#ffffff' }} size="small">
+            {item.icon}
+          </IconButton>
+        </View.DeviceItem>
       ))}
     </ViewDevicesContainer>
   );
