@@ -93,6 +93,7 @@ export const Required = styled.span`
 
 export const ClickEditInput = styled.input`
   width: 100%;
+  font-size: 18px;
   border: 0px;
 `;
 
