@@ -47,25 +47,18 @@ export const ViewDevicesContainer = styled.div`
 `;
 
 export const View = {
-  Container: styled.div<{ device: string }>`
-    ${(props) => {
-      switch (props.device) {
-        case 'pc':
-          return '--dme-container-width: 1200px;--dme-main-width: 1000px;';
-        case 'tablet':
-          return '--dme-container-width:810px; --dme-main-width: var(--dme-container-width);';
-        case 'mobile':
-          return '--dme-container-width:400px;--dme-main-width: var(--dme-container-width);';
-      }
-    }};
-    width: var(--dme-container-width);
+  Container: styled.div<{ containerWidth: number; contentWidth: number }>`
+    width: ${(props) => props.containerWidth}px;
     height: calc(100vh - 120px);
     overflow-y: auto;
+    overflow-x: hidden;
     margin: auto;
     background: #ffffff;
     border: 1px solid #333333;
 
     & > div {
+      --dme-container-width: ${(props) => props.containerWidth}px !important;
+      --dme-main-width: ${(props) => props.contentWidth}px !important;
       max-width: var(--dme-main-width);
       margin: auto;
       min-height: 100%;

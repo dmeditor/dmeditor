@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { useMemo } from 'react';
+import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { deepOrange } from '@mui/material/colors';
-import { debounce } from 'lodash';
 
 import { getPageTheme, setPageSettings } from '../../components/page';
 // import { useTranslation } from 'react-i18next';
@@ -15,37 +14,18 @@ import SettingPanel from '../../setting-panel';
 import { TopBar } from '../../topbar/Topbar';
 import { DME, DMEData } from '../../types/dmeditor';
 import emitter from '../../utils/event';
-import { BrowseProps, Util } from '../../utils/utilx';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
+import { muiTheme } from './muiTheme';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer, View } from './style';
 import { ViewDevices } from './ViewDevices';
 
-const { useCallback, useEffect, useImperativeHandle, useRef, useState } = React;
-
 export interface DMEditorProps {
-  data: Array<any>;
   projectStyle?: string;
-  menu?: React.ReactElement;
   lang?: string; //default 'eng-GB'
-  onChangeActive?: (activeBlock: Number) => void;
-  onChange?: (data: Array<any>) => void;
-  browseImage?: (props: BrowseProps) => JSX.Element;
-  browseLink?: (props: BrowseProps) => JSX.Element;
-  customProperty?: (props: any) => JSX.Element;
-  preBlock?: (props: any) => JSX.Element;
-  pageTab?: () => JSX.Element;
-  toast?: {
-    error: (message: string, options: any) => void;
-    message: (message: string, options: any) => void;
-  };
-  pageTabActiveIndex?: number;
-  getFileUrl?: (path: string) => string;
-  getImageUrl?: (path: string) => string;
 }
 
 export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: React.Ref<any>) => {
-  // const [blocks, setBlocks] = useState(props.data ? [...props.data] : []);
   useImperativeHandle(
     currentRef,
     () => ({
@@ -73,25 +53,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
 
   const [viewDevice, setViewDevice] = useState('pc');
 
-  const {
-    selected: { blockIndex: selectedBlockIndex },
-    storage,
-    updateSelectedBlockIndex,
-    setStorage,
-    clearSelected,
-    setPageData,
-    page,
-    mode,
-  } = useEditorStore();
-  const blockIndexRef = useRef(selectedBlockIndex);
-
-  Util.fileUrl = props.getFileUrl;
-  Util.imageUrl = props.getImageUrl;
-
-  const handleUpdateSelctedWidgetIndex = useCallback((index: number) => {
-    updateSelectedBlockIndex([index], storage[index].id || '');
-    blockIndexRef.current = index;
-  }, []);
+  const { storage, setStorage, clearSelected, setPageData, page, mode } = useEditorStore();
 
   const handleUpdateStorage = useCallback((data: DMEData.Block[]) => {
     setStorage(data);
@@ -149,67 +111,11 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
       : {};
   };
 
-  const outerTheme = createTheme({
-    palette: {
-      primary: deepOrange,
-    },
-    components: {
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            '& .MuiOutlinedInput-root': {
-              '&:hover fieldset': {
-                borderColor: '#777777',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#888888',
-                borderWidth: 1,
-              },
-            },
-          },
-        },
-      },
-      MuiTooltip: {
-        styleOverrides: {
-          tooltip: {
-            backgroundColor: 'black',
-            '& .MuiTooltip-arrow': {
-              color: 'black',
-            },
-          },
-        },
-      },
-      MuiTabs: {
-        styleOverrides: {
-          root: {
-            // '& .MuiMenu-paper':{
-            //   color: 'black'
-            // }
-          },
-        },
-      },
-      MuiTab: {
-        styleOverrides: {
-          root: {
-            '& .Mui-selected': {},
-          },
-        },
-      },
-      MuiButtonBase: {
-        defaultProps: {
-          disableRipple: true,
-        },
-        styleOverrides: {
-          root: {
-            '&.MuiButton-root': {
-              minWidth: '30px',
-              padding: '5px',
-            },
-          },
-        },
-      },
-    },
-  });
+  const previewDeviceWidths = {
+    pc: [1200, 1000],
+    tablet: [810, 800],
+    mobile: [400, 400],
+  };
 
   const renderEdit = () => {
     return (
@@ -250,7 +156,10 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
     return (
       <Layout.View>
         <ViewDevices onChange={(v) => changeViewDevice(v)} />
-        <View.Container device={viewDevice}>
+        <View.Container
+          containerWidth={previewDeviceWidths[viewDevice][0]}
+          contentWidth={previewDeviceWidths[viewDevice][1]}
+        >
           <DMEditorView data={storage} projectStyle={props.projectStyle} />
         </View.Container>
       </Layout.View>
@@ -259,7 +168,7 @@ export const DMEditor = React.forwardRef((props: DMEditorProps, currentRef: Reac
 
   return (
     <Root uiConfig={dmeConfig.editor.ui}>
-      <ThemeProvider theme={outerTheme}>
+      <ThemeProvider theme={muiTheme}>
         <TopBar />
         {mode === 'edit' ? renderEdit() : renderView()}
       </ThemeProvider>

@@ -68,17 +68,17 @@ export const TopBar = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const switchFullScreen = () => {
+    closeMenu();
     if (isFullScreen) {
       document.exitFullscreen();
     } else {
       document.body.requestFullscreen();
     }
-    closeMenu();
   };
 
   const closeMenu = () => {
-    setAnchorEl(null);
     setMenuOpen(false);
+    setAnchorEl(null);
   };
 
   useEffect(() => {
