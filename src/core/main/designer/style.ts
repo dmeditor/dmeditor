@@ -61,7 +61,8 @@ export const View = {
     height: calc(100vh - 120px);
     overflow-y: auto;
     margin: auto;
-    background: #cccccc;
+    background: #ffffff;
+    border: 1px solid #333333;
 
     & > div {
       max-width: var(--dme-main-width);
