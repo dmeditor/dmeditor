@@ -1,21 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ArrowDownward,
   ArrowDropDown,
   ArrowDropDownOutlined,
   Cancel,
+  CloseFullscreenOutlined,
   ComputerOutlined,
   EditOutlined,
   ExpandMore,
   ExpandMoreOutlined,
+  HelpOutlineOutlined,
   LayersOutlined,
   MoreHorizOutlined,
+  MoreVertOutlined,
+  OpenInFullOutlined,
   Save,
   Send,
   ShoppingBagOutlined,
   VisibilityOutlined,
 } from '@mui/icons-material';
-import { Button, IconButton, Tooltip } from '@mui/material';
+import { Button, Divider, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 
 import emitter from '../../core/utils/event';
 import { setDevice } from '../hooks/useDeivce';
@@ -58,6 +62,35 @@ export const TopBar = () => {
     setMode(mode);
   };
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const switchFullScreen = () => {
+    if (isFullScreen) {
+      document.exitFullscreen();
+    } else {
+      document.body.requestFullscreen();
+    }
+    closeMenu();
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+    setMenuOpen(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener('fullscreenchange', (event) => {
+      if (document.fullscreenElement) {
+        setIsFullScreen(true);
+      } else {
+        setIsFullScreen(false);
+      }
+    });
+  }, []);
+
   return (
     <Container>
       <LogoContainer>
@@ -78,31 +111,47 @@ export const TopBar = () => {
             <VisibilityOutlined />
           </Tooltip>
         </ToolButton>
-        {/* <ToolButton>
-          <Tooltip title="Preview">
-            <ComputerOutlined {...largeIcon} />
-          </Tooltip>
-        </ToolButton>
-        <ToolButton>
-          <ArrowDropDown {...largeIcon} />
-        </ToolButton>
-        <ToolButton>
-          <Tooltip title="Layers">
-            <LayersOutlined {...largeIcon} />
-          </Tooltip>
-        </ToolButton> */}
       </ToolsContainer>
       <ActionsContainer>
         <ToolButton onClick={save}>
-          {i18n('Save', 'tool')} <Save />
+          {i18n('Save', 'tool')}&nbsp;
+          <Save />
         </ToolButton>
         <ToolButton onClick={cancel}>
-          {i18n('Cancel', 'tool')} <Cancel />
+          {i18n('Cancel', 'tool')}&nbsp;
+          <Cancel />
         </ToolButton>
-        {/* <ToolButton>
-          <ShoppingBagOutlined />
-        </ToolButton> */}
+        <ToolButton
+          onClick={(e) => {
+            setMenuOpen(true);
+            setAnchorEl(e.currentTarget);
+          }}
+        >
+          <MoreVertOutlined />
+        </ToolButton>
       </ActionsContainer>
+      <Menu open={menuOpen} anchorEl={anchorEl} onClose={closeMenu}>
+        <MenuItem onClick={switchFullScreen}>
+          {!isFullScreen ? (
+            <>
+              <OpenInFullOutlined fontSize="small" /> &nbsp; Full screen
+            </>
+          ) : (
+            <>
+              <CloseFullscreenOutlined fontSize="small" /> &nbsp; Exit full screen
+            </>
+          )}
+        </MenuItem>
+        <Divider />
+        <MenuItem
+          onClick={() => {
+            closeMenu();
+            window.open('https://dmeditor.io/user-guide', '_blank', 'noopener,noreferrer');
+          }}
+        >
+          <HelpOutlineOutlined fontSize="small" /> &nbsp; Help
+        </MenuItem>
+      </Menu>
     </Container>
   );
 };

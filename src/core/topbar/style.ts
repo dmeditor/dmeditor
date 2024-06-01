@@ -29,7 +29,7 @@ export const ToolsContainer = styled.div`
 
 export const ActionsContainer = styled.div`
   width: 30%;
-  padding-right: 20px;
+  padding-right: 10px;
   display: flex;
   justify-content: right;
 `;
