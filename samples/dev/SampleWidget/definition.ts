@@ -17,7 +17,7 @@ export const sampleWidgetDef = {
       name: 'Inside background',
       settingComponent: 'color',
       category: 'block',
-      property: 'settings.backgroundColor',
+      property: 'settings.insideBackground',
     },
     {
       name: 'Width',
@@ -35,7 +35,7 @@ export const sampleWidgetDef = {
         text: 'Sample',
         settings: {
           width: 300,
-          backgroundColor: '#cccccc',
+          insideBackground: '#cccccc',
           general: {
             background: '#FFFDDB',
           },

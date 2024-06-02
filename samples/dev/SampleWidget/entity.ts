@@ -5,7 +5,7 @@ export interface EntitySampleWidget {
   text: string;
   settings: {
     width: number;
-    backgroundColor?: string;
+    insideBackground?: string;
     general?: DMEData.GeneralSettingType;
   };
 }

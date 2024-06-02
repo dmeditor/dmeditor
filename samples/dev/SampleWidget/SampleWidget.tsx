@@ -12,19 +12,14 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
     blockNode: {
       data: { settings, text },
     },
+    path,
   } = props;
 
-  const [width, setWidth] = useState(settings.width ?? 300);
-
-  const { updateSelectedBlock } = useEditorStore();
-
-  useEffect(() => {
-    setWidth(settings.width ?? 300);
-  }, [settings.width]);
+  const { updateBlockByPath } = useEditorStore();
 
   const updateWidth = (e, v) => {
     //update data with entity
-    updateSelectedBlock<EntitySampleWidget>((data) => {
+    updateBlockByPath<EntitySampleWidget>(path, (data) => {
       data.settings.width = v as number;
     });
   };
@@ -34,17 +29,17 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
       <Slider
         aria-label="Width"
         valueLabelDisplay="auto"
-        value={width}
+        value={settings.width}
         step={5}
         max={800}
         onChange={updateWidth}
       />
 
       <div
-        style={{ width: width }}
+        style={{ width: settings.width }}
         className={css`
           height: 300px;
-          background: ${settings.backgroundColor ?? '#ffe3e3'};
+          background: ${settings.insideBackground ?? '#ffe3e3'};
         `}
       >
         {text}
