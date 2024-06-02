@@ -15,12 +15,14 @@ import {
 } from '../../src';
 import { BrowseImage, BrowseLink } from './callbacks';
 import { EditImage } from './EditImage';
+import { registerStyles } from './registerStyles';
 import registerSampleWidget from './SampleWidget';
 
 initLanguage('nor-NO');
 
 registerDefaultWidgets();
 registerSampleWidget();
+registerStyles();
 
 setDMEditorConfig({
   general: {
