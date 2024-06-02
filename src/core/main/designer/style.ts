@@ -22,12 +22,17 @@ export const Layout = {
     margin: 0px auto;
     background-color: var(--dmee-bg-editarea);
   `,
-  Separator: styled.div`
-    background-color: #d1d5db;
+  Separator: styled.div<{ resizing?: boolean }>`
+    border-left: 1px solid #000000;
+    background: ${(props) => (props.resizing ? '#666666' : '#ffffff')};
     cursor: col-resize;
+    transition: background-color 0.15s 0.15s ease-in-out;
+    &:hover {
+      border-left-color: #000000;
+      background: #666666;
+    }
   `,
   Edit: styled.div`
-    border-right: 1px solid #cccccc;
     margin-top: var(--dmee-topbar-height);
     overflow-y: auto;
   `,

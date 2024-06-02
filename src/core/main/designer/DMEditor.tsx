@@ -59,7 +59,11 @@ export const DMEditor = React.forwardRef(
       }),
       [],
     );
-    const { separatorProps, position } = useResizable({
+    const {
+      separatorProps,
+      position,
+      isDragging: resizing,
+    } = useResizable({
       axis: 'x',
       reverse: true,
       initial: 350,
@@ -163,7 +167,7 @@ export const DMEditor = React.forwardRef(
               </EditArea>
             </EditContainer>
           </Layout.Edit>
-          <Layout.Separator {...separatorProps} />
+          <Layout.Separator {...separatorProps} resizing={resizing} />
           <Layout.SettingPanel>
             <SettingContainer>
               <SettingPanel />
