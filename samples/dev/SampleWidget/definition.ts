@@ -9,6 +9,11 @@ export const sampleWidgetDef = {
   icon: 'A',
   settings: [
     {
+      name: 'Text',
+      settingComponent: 'input',
+      property: '.text',
+    },
+    {
       name: 'Inside background',
       settingComponent: 'color',
       category: 'block',
@@ -27,9 +32,9 @@ export const sampleWidgetDef = {
       id: nanoid(),
       type: 'sample',
       data: {
-        level: 2,
+        text: 'Sample',
         settings: {
-          width: 100,
+          width: 300,
           backgroundColor: '#cccccc',
           general: {
             background: '#FFFDDB',

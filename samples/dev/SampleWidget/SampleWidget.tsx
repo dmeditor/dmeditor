@@ -10,7 +10,7 @@ const { useState, useEffect } = React;
 export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) => {
   const {
     blockNode: {
-      data: { settings },
+      data: { settings, text },
     },
   } = props;
 
@@ -47,7 +47,7 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
           background: ${settings.backgroundColor ?? '#ffe3e3'};
         `}
       >
-        Width: {width}
+        {text}
       </div>
     </div>
   );
