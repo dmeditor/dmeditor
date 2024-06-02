@@ -18,6 +18,8 @@ const initLanguage = (language: string) => {
   });
 };
 
+initLanguage('eng-GB');
+
 const i18n = (text: string, ns?: string) => {
   return i18nCore.t(text, ns ? { ns: ns } : {});
 };
