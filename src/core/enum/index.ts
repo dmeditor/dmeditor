@@ -18,8 +18,4 @@ export enum Display {
   InlineBlock = 'inline-block',
 }
 
-export enum PageSettingType {
-  // 'text' | 'multitext';
-  'Text' = 'text',
-  'MultiText' = 'multitext',
-}
+export type PageSettingType = 'text' | 'multitext' | 'image' | 'richtext';

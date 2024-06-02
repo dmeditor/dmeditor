@@ -13,6 +13,7 @@ import {
   setDMEditorCallback,
   setDMEditorConfig,
 } from '../../src';
+import { DMEditorRefType } from '../../src/core/main/designer/DMEditor';
 import { BrowseImage, BrowseLink } from './callbacks';
 import { EditImage } from './EditImage';
 import { registerStyles } from './registerStyles';
@@ -119,7 +120,7 @@ setDMEditorCallback({
 const { useRef, useEffect } = React;
 
 const App = () => {
-  const editorRef = useRef(null);
+  const editorRef = useRef<DMEditorRefType>(null);
   // const [editor] = useEditor()
   const data = [
     {
@@ -174,30 +175,37 @@ const App = () => {
       },
     },
   ];
+
   useEffect(() => {
-    // editorRef.current.setDesingerJson(jsonString(data))
-    editorRef.current?.setEditorJson(data);
-    editorRef.current?.setPageSettings([
-      { identifier: 'cover_image', name: 'Cover image', type: 'image' },
-      { identifier: 'summary', name: 'Summary', type: 'richtext' },
-      { identifier: 'meta_key', name: 'Meta key', type: 'text' },
-      { identifier: 'meta_description', name: 'Meta description', type: 'multitext' },
-    ]);
-    editorRef.current?.setPageData({ title: 'New page', theme: 'red', meta_key: 'test key' });
-    editorRef.current?.onSave((data) => {
-      console.log(data);
-      window.alert('Saved');
-    });
-    editorRef.current?.onCancel((data) => {
-      window.alert('Cancel');
-    });
+    const editor = editorRef.current;
+    if (editor) {
+      editor.setEditorJson(data);
+      editor.setPageSettings([
+        { identifier: 'cover_image', name: 'Cover image', type: 'image' },
+        { identifier: 'summary', name: 'Summary', type: 'richtext' },
+        { identifier: 'meta_key', name: 'Meta key', type: 'text' },
+        { identifier: 'meta_description', name: 'Meta description', type: 'multitext' },
+      ]);
+      editor.setPageData({ title: 'New page', theme: 'red', meta_key: 'test key' });
+      editor.onSave((data) => {
+        console.log(data);
+        window.alert('Saved');
+      });
+      editor.onCancel(() => {
+        window.alert('Cancel');
+      });
+    }
   }, []);
 
   dmeServerSideLoad(data, null).then((d) => {
     console.log(d);
   });
 
-  return <DMEditor ref={editorRef} />;
+  return (
+    <div>
+      <DMEditor ref={editorRef} />
+    </div>
+  );
   // return <DMEditorView data={data} theme="blue" />;
 };
 
