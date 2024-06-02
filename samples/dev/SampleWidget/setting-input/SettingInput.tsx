@@ -6,13 +6,9 @@ import { EntitySampleWidget } from '../entity';
 
 const SettingInput = (props: DME.SettingComponentProps) => {
   const { property, value, blockPath } = props;
-  const { getSelectedBlock, updateBlockPropsByPath } = useEditorStore();
-
-  //Get block data
-  const blockData = getSelectedBlock<EntitySampleWidget>();
+  const { updateBlockPropsByPath } = useEditorStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //update data with dynamic property
     if (property) {
       updateBlockPropsByPath(blockPath, property, e.target.value);
     }
@@ -21,8 +17,6 @@ const SettingInput = (props: DME.SettingComponentProps) => {
   return (
     <div>
       <TextField onChange={handleChange} value={value} />
-      {/* Show background color instead */}
-      Color: {blockData?.data.settings.backgroundColor}
     </div>
   );
 };
