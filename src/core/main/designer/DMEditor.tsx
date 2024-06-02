@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import { ThemeProvider } from '@mui/material';
+import { useResizable } from 'react-resizable-layout';
 
 import { getPageTheme, setPageSettings } from '../../components/page';
 import { dmeConfig } from '../../config';
@@ -58,6 +59,13 @@ export const DMEditor = React.forwardRef(
       }),
       [],
     );
+    const { separatorProps, position } = useResizable({
+      axis: 'x',
+      reverse: true,
+      initial: 350,
+      min: 350,
+      max: 600,
+    });
 
     const [viewDevice, setViewDevice] = useState('pc');
 
@@ -127,7 +135,11 @@ export const DMEditor = React.forwardRef(
 
     const renderEdit = () => {
       return (
-        <Layout.Main config={{ zIndex: dmeConfig.editor.zIndex }} ref={currentRef}>
+        <Layout.Main
+          config={{ zIndex: dmeConfig.editor.zIndex }}
+          ref={currentRef}
+          settingWidth={position}
+        >
           <Layout.Edit>
             <EditContainer ref={containerRef} onClick={resetStatus}>
               <EditArea
@@ -151,6 +163,7 @@ export const DMEditor = React.forwardRef(
               </EditArea>
             </EditContainer>
           </Layout.Edit>
+          <Layout.Separator {...separatorProps} />
           <Layout.SettingPanel>
             <SettingContainer>
               <SettingPanel />

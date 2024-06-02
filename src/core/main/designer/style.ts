@@ -7,8 +7,8 @@ export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
 `;
 
 export const Layout = {
-  Main: styled.div<{ config: { zIndex: number } }>`
-    --dmee-layout-property-width: 350px;
+  Main: styled.div<{ config: { zIndex: number }; settingWidth: number }>`
+    --dmee-layout-property-width: ${(props) => props.settingWidth}px;
     --dmee-edit-max-width: 1200px;
 
     --dmee-selected-border-color: #fc7e4b;
@@ -17,12 +17,14 @@ export const Layout = {
     --dmee-zindex: ${(props) => props.config.zIndex};
     height: 100vh;
     display: grid;
-    grid-template-columns: calc(100% - var(--dmee-layout-property-width)) var(
-        --dmee-layout-property-width
-      );
+    grid-template-columns: 1fr 5px var(--dmee-layout-property-width);
     color: #333333;
     margin: 0px auto;
     background-color: var(--dmee-bg-editarea);
+  `,
+  Separator: styled.div`
+    background-color: #d1d5db;
+    cursor: col-resize;
   `,
   Edit: styled.div`
     border-right: 1px solid #cccccc;
