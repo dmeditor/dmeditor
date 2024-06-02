@@ -19,8 +19,6 @@ import { EditImage } from './EditImage';
 import { registerStyles } from './registerStyles';
 import registerSampleWidget from './SampleWidget';
 
-initLanguage('nor-NO');
-
 registerDefaultWidgets();
 registerSampleWidget();
 registerStyles();
