@@ -1,7 +1,10 @@
+import { DMEData } from '../../../src';
+
 /* Entity of a widget, which is the data format */
-export interface EntitySampleWidget{
-    settings: {
-      width: number;
-      backgroundColor?: string;
-    };
-  }
+export interface EntitySampleWidget {
+  settings: {
+    width: number;
+    backgroundColor?: string;
+    general?: DMEData.GeneralSettingType;
+  };
+}

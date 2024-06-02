@@ -1,19 +1,21 @@
 import * as React from 'react';
 import { TextField } from '@mui/material';
 
-import { DME, useEditorStore } from '../../../src';
-import { EntitySampleWidget } from './entity';
+import { DME, useEditorStore } from '../../../../src';
+import { EntitySampleWidget } from '../entity';
 
 const SettingInput = (props: DME.SettingComponentProps) => {
-  const { property, value } = props;
-  const { getSelectedBlock, updateSelectedBlockProps } = useEditorStore();
+  const { property, value, blockPath } = props;
+  const { getSelectedBlock, updateBlockPropsByPath } = useEditorStore();
 
   //Get block data
   const blockData = getSelectedBlock<EntitySampleWidget>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //update data with dynamic property
-    updateSelectedBlockProps(property, e.target.value);
+    if (property) {
+      updateBlockPropsByPath(blockPath, property, e.target.value);
+    }
   };
 
   return (
