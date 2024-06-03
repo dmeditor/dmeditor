@@ -200,6 +200,10 @@ const App = () => {
           console.log(data);
           window.alert('Saved');
         }}
+        onChange={(data) => {
+          console.log('changed');
+          console.log(data.data);
+        }}
         onCancel={() => {
           window.alert('Cancel');
         }}

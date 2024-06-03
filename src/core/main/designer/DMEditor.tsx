@@ -21,9 +21,8 @@ import { ViewDevices } from './ViewDevices';
 
 export interface DMEditorProps {
   projectStyle?: string;
-  onSave?: (
-    callback: (savedData: { data: Array<DMEData.Block>; page: DMEData.Page }) => void,
-  ) => void;
+  onSave?: (savedData: DMEData.SavedData) => void;
+  onChange?: (savedData: DMEData.SavedData) => void;
   onCancel?: (callback: () => void) => void;
 }
 
@@ -63,6 +62,8 @@ export const DMEditor = React.forwardRef(
       max: 600,
     });
 
+    const { projectStyle, onChange, onSave, onCancel } = props;
+
     const [viewDevice, setViewDevice] = useState('pc');
 
     const { storage, setStorage, clearSelected, setPageData, page, mode } = useEditorStore();
@@ -80,25 +81,33 @@ export const DMEditor = React.forwardRef(
       return '';
     }, [page.theme]);
 
-    // useEffectLayout
     useEffect(() => {
       emitter.addListener('setStorage', handleUpdateStorage);
 
-      if (props.onSave) {
-        emitter.addListener('save', props.onSave);
+      if (onSave) {
+        emitter.addListener('save', onSave);
       }
 
-      if (props.onCancel) {
-        emitter.addListener('cancel', props.onCancel);
+      if (onChange) {
+        console.log('dddd');
+        emitter.addListener('change', onChange);
+      }
+
+      if (onCancel) {
+        emitter.addListener('cancel', onCancel);
       }
 
       return () => {
         emitter.removeListener('setStorage');
-        if (props.onSave) {
+        if (onSave) {
           emitter.removeListener('save');
         }
 
-        if (props.onCancel) {
+        if (onChange) {
+          emitter.removeListener('change');
+        }
+
+        if (onCancel) {
           emitter.removeListener('cancel');
         }
       };
@@ -111,6 +120,12 @@ export const DMEditor = React.forwardRef(
     const resetStatus = () => {
       clearSelected();
     };
+
+    useEffect(() => {
+      if (onChange) {
+        emitter.emit('change', { data: storage, page: page });
+      }
+    }, [storage]);
 
     //when switch mode, set default device
     useEffect(() => {
@@ -156,7 +171,7 @@ export const DMEditor = React.forwardRef(
               <EditArea
                 ref={editRef}
                 className={
-                  css(dmeConfig.general.projectStyles[props.projectStyle || 'default']) +
+                  css(dmeConfig.general.projectStyles[projectStyle || 'default']) +
                   ' ' +
                   getThemeCss
                 }
@@ -192,7 +207,7 @@ export const DMEditor = React.forwardRef(
             containerWidth={previewDeviceWidths[viewDevice][0]}
             contentWidth={previewDeviceWidths[viewDevice][1]}
           >
-            <DMEditorView data={storage} projectStyle={props.projectStyle} />
+            <DMEditorView data={storage} projectStyle={projectStyle} />
           </View.Container>
         </Layout.View>
       );

@@ -158,6 +158,11 @@ export namespace DMEData {
     [index: string]: string | undefined;
   }
 
+  export interface SavedData {
+    data: Array<Block>;
+    page: Page;
+  }
+
   interface widgetBlockProperties {
     id?: string;
     type: string;

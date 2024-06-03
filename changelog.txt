@@ -1,6 +1,7 @@
 
 
 0.2.0-beta.1
+- 2024-06-03 added: onChange on <DMEditor />
 - 2024-06-03 [BC]updated: use setData instead of setEditorJson
 - 2024-06-03 [BC]updated: put onSave & onCancel into <DMEditor />
 - 2024-06-02 added: resize on sidebar
