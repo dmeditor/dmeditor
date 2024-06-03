@@ -89,7 +89,6 @@ export const DMEditor = React.forwardRef(
       }
 
       if (onChange) {
-        console.log('dddd');
         emitter.addListener('change', onChange);
       }
 
