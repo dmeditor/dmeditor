@@ -177,7 +177,7 @@ const App = () => {
   useEffect(() => {
     const editor = editorRef.current;
     if (editor) {
-      editor.setEditorJson(data);
+      editor.setData(data);
       editor.setPageSettings([
         { identifier: 'cover_image', name: 'Cover image', type: 'image' },
         { identifier: 'summary', name: 'Summary', type: 'richtext' },

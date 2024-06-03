@@ -28,7 +28,7 @@ export interface DMEditorProps {
 }
 
 export interface DMEditorRefType {
-  setEditorJson: (data: string | Array<DMEData.Block>) => void;
+  setData: (data: string | Array<DMEData.Block>) => void;
   setPageSettings: (settings: Array<DME.PageSetting>) => void;
   setPageData: (data: DMEData.Page) => void;
 }
@@ -38,7 +38,7 @@ export const DMEditor = React.forwardRef(
     useImperativeHandle(
       currentRef,
       () => ({
-        setEditorJson: (data: string | Array<DMEData.Block>) => {
+        setData: (data: string | Array<DMEData.Block>) => {
           const list = loadData(data);
           emitter.emit('setStorage', list);
         },
