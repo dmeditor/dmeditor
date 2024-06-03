@@ -185,13 +185,6 @@ const App = () => {
         { identifier: 'meta_description', name: 'Meta description', type: 'multitext' },
       ]);
       editor.setPageData({ title: 'New page', theme: 'red', meta_key: 'test key' });
-      editor.onSave((data) => {
-        console.log(data);
-        window.alert('Saved');
-      });
-      editor.onCancel(() => {
-        window.alert('Cancel');
-      });
     }
   }, []);
 
@@ -201,7 +194,16 @@ const App = () => {
 
   return (
     <div>
-      <DMEditor ref={editorRef} />
+      <DMEditor
+        ref={editorRef}
+        onSave={(data) => {
+          console.log(data);
+          window.alert('Saved');
+        }}
+        onCancel={() => {
+          window.alert('Cancel');
+        }}
+      />
     </div>
   );
   // return <DMEditorView data={data} theme="blue" />;

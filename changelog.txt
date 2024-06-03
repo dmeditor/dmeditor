@@ -1,6 +1,8 @@
 
 
 0.2.0-beta.1
+- 2024-06-03 [BC]updated: put onSave & onCancel into <DMEditor />
+- 2024-06-02 added: resize on sidebar
 - 2024-05-30 added: full width switch on root
 - 2024-05-29 added: setting grouping
 - 2024-05-29 added: block background

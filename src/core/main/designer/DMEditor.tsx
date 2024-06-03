@@ -21,16 +21,16 @@ import { ViewDevices } from './ViewDevices';
 
 export interface DMEditorProps {
   projectStyle?: string;
+  onSave?: (
+    callback: (savedData: { data: Array<DMEData.Block>; page: DMEData.Page }) => void,
+  ) => void;
+  onCancel?: (callback: () => void) => void;
 }
 
 export interface DMEditorRefType {
   setEditorJson: (data: string | Array<DMEData.Block>) => void;
   setPageSettings: (settings: Array<DME.PageSetting>) => void;
   setPageData: (data: DMEData.Page) => void;
-  onSave: (
-    callback: (savedData: { data: Array<DMEData.Block>; page: DMEData.Page }) => void,
-  ) => void;
-  onCancel: (callback: () => void) => void;
 }
 
 export const DMEditor = React.forwardRef(
@@ -47,14 +47,6 @@ export const DMEditor = React.forwardRef(
         },
         setPageData: (data: DMEData.Page) => {
           setPageData(data);
-        },
-        onSave: (
-          callback: (savedData: { data: Array<DMEData.Block>; page: DMEData.Page }) => void,
-        ) => {
-          emitter.addListener('save', callback);
-        },
-        onCancel: (callback: () => void) => {
-          emitter.addListener('cancel', callback);
         },
       }),
       [],
@@ -91,6 +83,15 @@ export const DMEditor = React.forwardRef(
     // useEffectLayout
     useEffect(() => {
       emitter.addListener('setStorage', handleUpdateStorage);
+
+      if (props.onSave) {
+        emitter.addListener('save', props.onSave);
+      }
+
+      if (props.onCancel) {
+        emitter.addListener('cancel', props.onCancel);
+      }
+
       return () => {
         emitter.removeListener('setStorage');
         emitter.removeListener('save');
