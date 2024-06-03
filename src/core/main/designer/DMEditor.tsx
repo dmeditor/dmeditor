@@ -143,6 +143,7 @@ export const DMEditor = React.forwardRef(
           config={{ zIndex: dmeConfig.editor.zIndex }}
           ref={currentRef}
           settingWidth={position}
+          resizing={resizing}
         >
           <Layout.Edit>
             <EditContainer ref={containerRef} onClick={resetStatus}>

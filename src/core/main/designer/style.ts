@@ -7,7 +7,8 @@ export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
 `;
 
 export const Layout = {
-  Main: styled.div<{ config: { zIndex: number }; settingWidth: number }>`
+  Main: styled.div<{ config: { zIndex: number }; settingWidth: number; resizing?: boolean }>`
+    ${(props) => (props.resizing ? 'user-select: none;' : '')}
     --dmee-layout-property-width: ${(props) => props.settingWidth}px;
     --dmee-edit-max-width: 1200px;
 
