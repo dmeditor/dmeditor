@@ -94,8 +94,13 @@ export const DMEditor = React.forwardRef(
 
       return () => {
         emitter.removeListener('setStorage');
-        emitter.removeListener('save');
-        emitter.removeListener('cancel');
+        if (props.onSave) {
+          emitter.removeListener('save');
+        }
+
+        if (props.onCancel) {
+          emitter.removeListener('cancel');
+        }
       };
     }, []);
 
