@@ -161,7 +161,6 @@ export const DMEditor = React.forwardRef(
       return (
         <Layout.Main
           config={{ zIndex: dmeConfig.editor.zIndex }}
-          ref={currentRef}
           settingWidth={position}
           resizing={resizing}
         >
@@ -213,7 +212,7 @@ export const DMEditor = React.forwardRef(
     };
 
     return (
-      <Root uiConfig={dmeConfig.editor.ui}>
+      <Root uiConfig={dmeConfig.editor.ui} ref={currentRef}>
         <ThemeProvider theme={muiTheme}>
           <TopBar />
           {mode === 'edit' ? renderEdit() : renderView()}
