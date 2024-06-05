@@ -11,7 +11,7 @@ const Align = (props: DME.SettingComponentProps) => {
   const { value, property, blockPath } = props;
   const { updateBlockPropsByPath } = useEditorStore();
 
-  const BlockButton = ({ formats }: { formats: AlignType }) => {
+  const BlockButton = ({ formats }: { formats?: AlignType }) => {
     const ele: React.ReactNode = null;
     if (formats === 'left') return <FormatAlignLeft />;
     if (formats === 'center') return <FormatAlignCenter />;
@@ -19,7 +19,7 @@ const Align = (props: DME.SettingComponentProps) => {
     return ele;
   };
 
-  const handleAlignChange = (value: AlignType) => {
+  const handleAlignChange = (value?: AlignType) => {
     updateBlockPropsByPath(blockPath, property!, value);
   };
 
@@ -28,7 +28,13 @@ const Align = (props: DME.SettingComponentProps) => {
       <PropertyButton
         title={format}
         key={format}
-        onClick={() => handleAlignChange(format)}
+        onClick={() => {
+          if (value !== format) {
+            handleAlignChange(format);
+          } else {
+            handleAlignChange(undefined);
+          }
+        }}
         selected={value === format}
       >
         <BlockButton formats={format} />
