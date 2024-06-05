@@ -140,6 +140,9 @@ export const SettingList = (props: {
   const switchStyleOption = (styleOption: string, style: string) => {
     //update style
     updateBlockStyleByPath(styleOption, style, blockPath);
+    if (style === '_' && styleOption === '') {
+      setSettingStatus({});
+    }
 
     //update style setting data to
     const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
