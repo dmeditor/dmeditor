@@ -66,7 +66,7 @@ export const Ranger = (props: {
           }}
         />
       </Grid>
-      <Grid item xs={2}>
+      {/* <Grid item xs={2}>
         <Input
           disabled={disabled}
           value={value ? value : defaultValue}
@@ -80,7 +80,7 @@ export const Ranger = (props: {
             'aria-labelledby': 'input-slider',
           }}
         />
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };
