@@ -7,6 +7,7 @@ import { DME, DMEData } from '../types';
 import {
   getPropertyValue,
   getWidget,
+  getWidgetStyle,
   getWidgetStyleOption,
   getWidgetWithVariant,
   PropertyGroup,
@@ -120,6 +121,10 @@ export const SettingList = (props: {
   }, [blockData.id]);
 
   const resetSettingStatus = (styleOption: string, style: string) => {
+    if (style === '_' && styleOption === '') {
+      setSettingStatus({});
+      return;
+    }
     const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
     if (!optionDef) {
       return;
@@ -140,26 +145,39 @@ export const SettingList = (props: {
   const switchStyleOption = (styleOption: string, style: string) => {
     //update style
     updateBlockStyleByPath(styleOption, style, blockPath);
-    if (style === '_' && styleOption === '') {
-      setSettingStatus({});
-    }
+    resetSettingStatus(styleOption, style);
 
-    //update style setting data to
-    const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
-    if (!optionDef) {
-      return;
-    }
+    //update style setting data to style setting value
+    if (styleOption === '') {
+      //when it's set to none
+      const properties: Array<string> = [];
+      for (const option of getWidgetStyle(blockData.type, style).options) {
+        if (option.settings) {
+          for (const key of Object.keys(option.settings)) {
+            if (!properties.includes(key)) {
+              properties.push(key);
+            }
+          }
+        }
+      }
+      for (const property of properties) {
+        updateBlockPropsByPath(blockPath, property, undefined);
+      }
+    } else {
+      const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
+      if (!optionDef) {
+        return;
+      }
 
-    const styleSettings = optionDef.settings;
-    if (styleSettings) {
-      //todo: clear up style settings
-      // setSelectedStyleSettings(styleSettings);
-      for (const property of Object.keys(styleSettings)) {
-        const value = styleSettings[property].value;
-        updateBlockPropsByPath(blockPath, property, value);
+      const styleSettings = optionDef.settings;
+      if (styleSettings) {
+        // setSelectedStyleSettings(styleSettings);
+        for (const property of Object.keys(styleSettings)) {
+          const value = styleSettings[property].value;
+          updateBlockPropsByPath(blockPath, property, value);
+        }
       }
     }
-    resetSettingStatus(styleOption, style);
   };
 
   const renderSettingList = (list?: DME.Setting[]) => {

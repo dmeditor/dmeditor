@@ -133,6 +133,7 @@ export namespace DME {
     value?: unknown; //if custom is true, value will be not set,
     block: DMEData.Block<T>;
     blockPath: Array<number>;
+    disabled?: boolean;
   }
 
   export interface ImageInfo {
