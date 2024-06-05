@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import { ThemeProvider } from '@mui/material';
+import useResizeObserver from '@react-hook/resize-observer';
 import { useResizable } from 'react-resizable-layout';
 
 import { getPageTheme, setPageSettings } from '../../components/page';
@@ -32,6 +33,93 @@ export interface DMEditorRefType {
   setPageData: (data: DMEData.Page) => void;
 }
 
+const Editor = (props: { projectStyle?: string }) => {
+  const {
+    separatorProps,
+    position,
+    isDragging: resizing,
+  } = useResizable({
+    axis: 'x',
+    reverse: true,
+    initial: 350,
+    min: 350,
+    max: 600,
+  });
+  const { projectStyle } = props;
+
+  const { storage, clearSelected, page } = useEditorStore();
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const editRef = useRef<HTMLDivElement>(null);
+  const [variables, initVariables] = useState<React.CSSProperties>({});
+  const getThemeCss = useMemo(() => {
+    const themeIdentifier = page.theme || dmeConfig.editor.defaultTheme;
+    const theme = getPageTheme(themeIdentifier);
+    if (theme) {
+      return css(theme.cssStyle);
+    }
+    return '';
+  }, [page.theme]);
+
+  const resetStatus = () => {
+    clearSelected();
+  };
+  const setVariables = useCallback(() => {
+    const container = containerRef.current;
+    const editor = editRef.current;
+
+    if (container && editor) {
+      const width = editor.offsetWidth;
+      const containerWidth = container.offsetWidth;
+
+      const style = {
+        '--dme-main-width': `${width}px`,
+        '--dme-container-width': `${containerWidth}px`,
+      } as React.CSSProperties;
+
+      initVariables(style);
+    }
+  }, []);
+
+  useResizeObserver(containerRef, setVariables);
+
+  return (
+    <Layout.Main
+      config={{ zIndex: dmeConfig.editor.zIndex }}
+      settingWidth={position}
+      resizing={resizing}
+    >
+      <Layout.Edit>
+        <EditContainer ref={containerRef} onClick={resetStatus}>
+          <EditArea
+            ref={editRef}
+            className={
+              css(dmeConfig.general.projectStyles[projectStyle || 'default']) + ' ' + getThemeCss
+            }
+          >
+            {/* need EmptyBlock otherwise first block's margin-top is based on body */}
+            <EmtpyBlock />
+            <div
+              style={variables}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <BlockListRender blockData={storage} path={[]} mode="edit" />
+            </div>
+          </EditArea>
+        </EditContainer>
+      </Layout.Edit>
+      <Layout.Separator {...separatorProps} resizing={resizing} />
+      <Layout.SettingPanel>
+        <SettingContainer>
+          <SettingPanel />
+        </SettingContainer>
+      </Layout.SettingPanel>
+    </Layout.Main>
+  );
+};
+
 export const DMEditor = React.forwardRef(
   (props: DMEditorProps, currentRef: React.Ref<DMEditorRefType>) => {
     useImperativeHandle(
@@ -50,37 +138,16 @@ export const DMEditor = React.forwardRef(
       }),
       [],
     );
-    const {
-      separatorProps,
-      position,
-      isDragging: resizing,
-    } = useResizable({
-      axis: 'x',
-      reverse: true,
-      initial: 350,
-      min: 350,
-      max: 600,
-    });
 
     const { projectStyle, onChange, onSave, onCancel } = props;
 
     const [viewDevice, setViewDevice] = useState('pc');
-    const [variables, initVariables] = useState<React.CSSProperties>({});
 
-    const { storage, setStorage, clearSelected, setPageData, page, mode } = useEditorStore();
+    const { storage, setStorage, setPageData, page, mode } = useEditorStore();
 
     const handleUpdateStorage = useCallback((data: DMEData.Block[]) => {
       setStorage(data);
     }, []);
-
-    const getThemeCss = useMemo(() => {
-      const themeIdentifier = page.theme || dmeConfig.editor.defaultTheme;
-      const theme = getPageTheme(themeIdentifier);
-      if (theme) {
-        return css(theme.cssStyle);
-      }
-      return '';
-    }, [page.theme]);
 
     useEffect(() => {
       emitter.addListener('setStorage', handleUpdateStorage);
@@ -113,14 +180,6 @@ export const DMEditor = React.forwardRef(
       };
     }, []);
 
-    const containerRef = useRef<HTMLDivElement>(null);
-    const editRef = useRef<HTMLDivElement>(null);
-
-    // reset to initial status
-    const resetStatus = () => {
-      clearSelected();
-    };
-
     useEffect(() => {
       if (onChange) {
         emitter.emit('change', { data: storage, page: page });
@@ -143,67 +202,10 @@ export const DMEditor = React.forwardRef(
       }
     };
 
-    useEffect(() => {
-      const container = containerRef.current;
-      const editor = editRef.current;
-
-      if (container && editor) {
-        const width = editor.offsetWidth;
-        const containerWidth = container.offsetWidth;
-
-        const style = {
-          '--dme-main-width': `${width}px`,
-          '--dme-container-width': `${containerWidth}px`,
-        } as React.CSSProperties;
-
-        initVariables(style);
-      }
-    }, []);
-
     const previewDeviceWidths = {
       pc: [1200, 1000],
       tablet: [810, 800],
       mobile: [400, 400],
-    };
-
-    const renderEdit = () => {
-      return (
-        <Layout.Main
-          config={{ zIndex: dmeConfig.editor.zIndex }}
-          settingWidth={position}
-          resizing={resizing}
-        >
-          <Layout.Edit>
-            <EditContainer ref={containerRef} onClick={resetStatus}>
-              <EditArea
-                ref={editRef}
-                className={
-                  css(dmeConfig.general.projectStyles[projectStyle || 'default']) +
-                  ' ' +
-                  getThemeCss
-                }
-              >
-                {/* need EmptyBlock otherwise first block's margin-top is based on body */}
-                <EmtpyBlock />
-                <div
-                  style={variables}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <BlockListRender blockData={storage} path={[]} mode="edit" />
-                </div>
-              </EditArea>
-            </EditContainer>
-          </Layout.Edit>
-          <Layout.Separator {...separatorProps} resizing={resizing} />
-          <Layout.SettingPanel>
-            <SettingContainer>
-              <SettingPanel />
-            </SettingContainer>
-          </Layout.SettingPanel>
-        </Layout.Main>
-      );
     };
 
     const renderView = () => {
@@ -224,7 +226,7 @@ export const DMEditor = React.forwardRef(
       <Root uiConfig={dmeConfig.editor.ui} ref={currentRef}>
         <ThemeProvider theme={muiTheme}>
           <TopBar />
-          {mode === 'edit' ? renderEdit() : renderView()}
+          {mode === 'edit' ? <Editor projectStyle={projectStyle} /> : renderView()}
         </ThemeProvider>
       </Root>
     );
