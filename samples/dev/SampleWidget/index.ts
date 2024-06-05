@@ -180,6 +180,10 @@ const registerSampleWidget = function () {
   registerWidgetStyleOption('heading', [
     {
       identifier: 'theme',
+      settings: {
+        'settings.general.padding': { value: 20 },
+        'settings.general.marginTop': { value: 10, status: 'disabled' },
+      },
       name: 'Theme - heading',
       cssStyle: `
         margin-top: 10px;
@@ -201,7 +205,10 @@ const registerSampleWidget = function () {
         identifier: 'big-space',
         name: 'Big space',
         cssClasses: { root: 'pt-6 leading-3 text-3xl' },
-        settings: { 'settings.general.padding': { value: 80 } },
+        settings: {
+          'settings.general.padding': { value: 80, status: 'disabled' },
+          'settings.general.marginTop': { value: 10, status: 'hidden' },
+        },
         cssStyle: `
        background: #efefef
     `,

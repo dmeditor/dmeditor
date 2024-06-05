@@ -1,23 +1,14 @@
-import path from 'path';
 import { useEffect, useMemo, useState } from 'react';
-import {
-  ArrowDownwardOutlined,
-  ArrowDropDownOutlined,
-  ArrowRight,
-  ArrowRightOutlined,
-} from '@mui/icons-material';
-import { Button, Collapse, IconButton } from '@mui/material';
+import { ArrowDropDownOutlined, ArrowRightOutlined } from '@mui/icons-material';
+import { Button, Collapse } from '@mui/material';
 
 import { dmeConfig, useEditorStore } from '../../';
 import { DME, DMEData } from '../types';
 import {
-  getPropertyChildren,
   getPropertyValue,
   getWidget,
-  getWidgetStyle,
   getWidgetStyleOption,
   getWidgetWithVariant,
-  isNull,
   PropertyGroup,
   PropertyItem,
 } from '../utils';
@@ -45,9 +36,8 @@ export const SettingList = (props: {
   } = useEditorStore();
 
   const [settingStatus, setSettingStatus] = useState<{
-    [key: string]: DME.WidgetStyleSettingStatus;
+    [index: string | symbol]: DME.WidgetStyleSettingStatus;
   }>({});
-
   const isSelected = getSelectedBlock()?.id === originData.id;
   const isRoot = level === 0;
   const isOriginRootEmbed = originData.isEmbed && isRoot;
@@ -160,7 +150,6 @@ export const SettingList = (props: {
     const styleSettings = optionDef.settings;
     if (styleSettings) {
       //todo: clear up style settings
-
       // setSelectedStyleSettings(styleSettings);
       for (const property of Object.keys(styleSettings)) {
         const value = styleSettings[property].value;
@@ -179,16 +168,23 @@ export const SettingList = (props: {
         return <Property {...{ ...setting, block: blockData, blockPath: blockPath }} />;
       } else {
         const settingComponent = setting.settingComponent;
+        // const settings = getPropertyFromSettings(blockData);
+        const { property } = setting;
+        if (!property) {
+          return undefined;
+        }
+        const value = getPropertyValue(property, blockData);
+        const propertyProps = {
+          ...setting,
+          block: blockData,
+          value,
+          blockPath,
+          disabled: settingStatus[property] === 'disabled',
+        };
 
-        //todo: use better way to filter children
-        let value = setting.property
-          ? isNull(blockData.data)
-            ? getPropertyChildren(setting.property, blockData.children)
-            : getPropertyValue(setting.property, blockData.data)
-          : undefined;
-        return settingComponent ? (
+        return settingComponent && settingStatus[property] !== 'hidden' ? (
           <PropertyItem label={setting.name} key={setting.property}>
-            <Property {...{ ...setting, block: blockData, value: value, blockPath: blockPath }} />
+            <Property {...propertyProps} />
           </PropertyItem>
         ) : null;
       }
@@ -203,6 +199,9 @@ export const SettingList = (props: {
             values={blockData?.style || {}}
             blockType={blockData.type}
             onChange={switchStyleOption}
+            // onChange={(v, style) => {
+            // updateBlockStyleByPath(v, style, blockPath);
+            // }}
           />
         )}
         {settingGroups.map((group) => (
