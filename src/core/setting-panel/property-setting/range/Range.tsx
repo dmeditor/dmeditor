@@ -1,6 +1,4 @@
-import * as React from 'react';
-
-import { DME, useEditorStore } from '../../../..';
+import { useEditorStore, type DME } from '../../../..';
 import { Ranger } from '../../../utils';
 
 const Range = (
@@ -8,9 +6,10 @@ const Range = (
     property: string;
     value: number;
     parameters: { min: number; max: number; step?: number };
+    disabled?: boolean;
   },
 ) => {
-  const { property, parameters, value, blockPath } = props;
+  const { property, parameters, value, blockPath, disabled } = props;
   const { updateBlockPropsByPath } = useEditorStore();
 
   const handleChange = (value: number) => {
@@ -19,6 +18,7 @@ const Range = (
 
   return (
     <Ranger
+      disabled={disabled}
       defaultValue={value}
       min={parameters.min === undefined ? 1 : parameters.min}
       max={parameters?.max || 5}

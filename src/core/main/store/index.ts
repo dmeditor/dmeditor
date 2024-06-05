@@ -90,7 +90,11 @@ type Actions = {
   ) => void;
   updateSelectedBlockProps: (propName: string, propValue: string | number | Array<Object>) => void;
   updateSelectedBlockEditControl: (value: number) => void;
-  updateBlockStyleByPath: (value: string, styleIdentifier: string, path: Array<number>) => void;
+  updateBlockStyleByPath: (
+    optionIdentifier: string,
+    styleIdentifier: string,
+    path: Array<number>,
+  ) => void;
   toggleProperty: (status: boolean) => void;
   isSelected: () => boolean;
   updatePage: (value: string, key: string) => void;

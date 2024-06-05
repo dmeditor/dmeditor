@@ -101,14 +101,20 @@ export namespace DME {
   //key is for element - it's value is up to the widget, eg. for image text, {'root' - is for root, 'image' - image}
   export type WidgetStyleClasses = { [key: string]: string };
 
+  export type WidgetStyleSettingStatus = 'valid' | 'disabled' | 'hidden';
+
+  export interface WidgetStyleOptionSettings {
+    //eg. {setting.general.marginTop: {value: 10, enabled:true}}
+    [key: string]: { value: any | undefined; status?: WidgetStyleSettingStatus };
+  }
+
   export interface WidgetStyleOption {
     identifier: string;
     name: string;
     icon?: string;
     cssClasses?: WidgetStyleClasses;
     cssStyle: string; //css style using css-in-js
-    //eg. marginTop: {value: 10, enabled:true}, enabled: false - disabled(default), true - changable
-    settings?: { [key: string]: { value: any | undefined; enabled?: boolean } };
+    settings?: WidgetStyleOptionSettings;
   }
 
   export interface Block extends Widget {}

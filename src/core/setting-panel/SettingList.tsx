@@ -1,21 +1,14 @@
-import path from 'path';
 import { useEffect, useMemo, useState } from 'react';
-import {
-  ArrowDownwardOutlined,
-  ArrowDropDownOutlined,
-  ArrowRight,
-  ArrowRightOutlined,
-} from '@mui/icons-material';
-import { Button, Collapse, IconButton } from '@mui/material';
+import { ArrowDropDownOutlined, ArrowRightOutlined } from '@mui/icons-material';
+import { Button, Collapse } from '@mui/material';
 
 import { dmeConfig, useEditorStore } from '../../';
 import { DME, DMEData } from '../types';
 import {
-  getPropertyChildren,
   getPropertyValue,
   getWidget,
+  getWidgetStyleOption,
   getWidgetWithVariant,
-  isNull,
   PropertyGroup,
   PropertyItem,
 } from '../utils';
@@ -34,7 +27,17 @@ export const SettingList = (props: {
 }) => {
   const { blockData: originData, level = 0, category, blockPath, styleTags } = props;
   const currentStyleTags = blockPath.length === 1 ? [...styleTags, 'root'] : styleTags;
-  const { getClosestBlock, updateBlockStyleByPath, getSelectedBlock, selected } = useEditorStore();
+  const {
+    getClosestBlock,
+    updateBlockStyleByPath,
+    updateBlockPropsByPath,
+    getSelectedBlock,
+    selected,
+  } = useEditorStore();
+
+  const [settingStatus, setSettingStatus] = useState<{
+    [index: string | symbol]: DME.WidgetStyleSettingStatus;
+  }>({});
   const isSelected = getSelectedBlock()?.id === originData.id;
   const isRoot = level === 0;
   const isOriginRootEmbed = originData.isEmbed && isRoot;
@@ -49,6 +52,18 @@ export const SettingList = (props: {
   }, [blockData.type]);
 
   const [expanded, setExpanded] = useState(isSelected);
+
+  //init setting status
+  useEffect(() => {
+    const styles = originData.style;
+    if (styles) {
+      for (const style of Object.keys(styles)) {
+        for (const option of Object.keys(styles[style])) {
+          resetSettingStatus(option, style);
+        }
+      }
+    }
+  }, [originData.id]);
 
   //get Widget setting with variant
   const settingConfigList = useMemo(() => {
@@ -104,6 +119,49 @@ export const SettingList = (props: {
     return groups;
   }, [blockData.id]);
 
+  const resetSettingStatus = (styleOption: string, style: string) => {
+    const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
+    if (!optionDef) {
+      return;
+    }
+    const statusObj: any = {};
+    if (!optionDef.settings) {
+      return;
+    }
+    for (const key of Object.keys(optionDef.settings)) {
+      const setting = optionDef.settings[key];
+      if (setting.status) {
+        statusObj[key] = setting.status;
+      }
+    }
+    setSettingStatus(statusObj);
+  };
+
+  const switchStyleOption = (styleOption: string, style: string) => {
+    //update style
+    updateBlockStyleByPath(styleOption, style, blockPath);
+    if (style === '_' && styleOption === '') {
+      setSettingStatus({});
+    }
+
+    //update style setting data to
+    const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
+    if (!optionDef) {
+      return;
+    }
+
+    const styleSettings = optionDef.settings;
+    if (styleSettings) {
+      //todo: clear up style settings
+      // setSelectedStyleSettings(styleSettings);
+      for (const property of Object.keys(styleSettings)) {
+        const value = styleSettings[property].value;
+        updateBlockPropsByPath(blockPath, property, value);
+      }
+    }
+    resetSettingStatus(styleOption, style);
+  };
+
   const renderSettingList = (list?: DME.Setting[]) => {
     if (!list) {
       return <></>;
@@ -113,16 +171,23 @@ export const SettingList = (props: {
         return <Property {...{ ...setting, block: blockData, blockPath: blockPath }} />;
       } else {
         const settingComponent = setting.settingComponent;
+        // const settings = getPropertyFromSettings(blockData);
+        const { property } = setting;
+        if (!property) {
+          return undefined;
+        }
+        const value = getPropertyValue(property, blockData);
+        const propertyProps = {
+          ...setting,
+          block: blockData,
+          value,
+          blockPath,
+          disabled: settingStatus[property] === 'disabled',
+        };
 
-        //todo: use better way to filter children
-        const value = setting.property
-          ? isNull(blockData.data)
-            ? getPropertyChildren(setting.property, blockData.children)
-            : getPropertyValue(setting.property, blockData.data)
-          : undefined;
-        return settingComponent ? (
+        return settingComponent && settingStatus[property] !== 'hidden' ? (
           <PropertyItem label={setting.name} key={setting.property}>
-            <Property {...{ ...setting, block: blockData, value: value, blockPath: blockPath }} />
+            <Property {...propertyProps} />
           </PropertyItem>
         ) : null;
       }
@@ -136,9 +201,10 @@ export const SettingList = (props: {
           <StyleSettings
             values={blockData?.style || {}}
             blockType={blockData.type}
-            onChange={(v, style) => {
-              updateBlockStyleByPath(v, style, blockPath);
-            }}
+            onChange={switchStyleOption}
+            // onChange={(v, style) => {
+            // updateBlockStyleByPath(v, style, blockPath);
+            // }}
           />
         )}
         {settingGroups.map((group) => (

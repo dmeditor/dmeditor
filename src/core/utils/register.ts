@@ -175,6 +175,15 @@ export function getWidgetStyle(widget: string, style?: string): DME.WidgetStyle 
   return styleObj;
 }
 
+export function getWidgetStyleOption(
+  widget: string,
+  option: string,
+  style?: string,
+): DME.WidgetStyleOption | undefined {
+  const styleDef = getWidgetStyle(widget, style);
+  return styleDef.options.find((item) => item.identifier == option);
+}
+
 //filter by keys
 function filterByKeys<T>(obj: { [prop: string]: T }, keys: Array<string>) {
   let result: { [prop: string]: T } = {};

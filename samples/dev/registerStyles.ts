@@ -8,62 +8,6 @@ import {
 } from '../../src';
 
 export const registerStyles = () => {
-  registerWidgetVariant({
-    widget: 'heading',
-    identifier: 'simple',
-    category: 'basic',
-    name: 'Simple heading',
-    enabledStyles: ['_'],
-    enabledSettings: ['.value', 'settings.color'],
-    getDefaultData: () => {
-      return {
-        id: nanoid(),
-        type: 'heading:simple',
-        style: { _: 'gradient' },
-        data: { value: 'Simple heading', level: 2, settings: {} },
-      };
-    },
-  });
-  registerWidgetStyleOption('heading:simple', [
-    {
-      identifier: 'gradient',
-      name: 'Gradient',
-      cssStyle: `
-        text-align:center;
-        padding: 10px;
-        color: white;
-        background: linear-gradient(172deg, rgba(232,23,23,1) 0%, rgba(231,159,255,1) 66%, rgba(255,216,246,1) 100%);
-    `,
-      icon: '',
-    },
-  ]);
-
-  //list variant
-  registerWidgetVariant({
-    widget: 'list',
-    identifier: 'article-block',
-    name: 'Article block',
-    category: 'design',
-    enabledSettings: [],
-    allowedTypes: ['heading:simple'],
-    //todo: use property?
-    getDefaultData: (): DMEData.Block<any> => {
-      // const variant = getWidgetVariant('heading', 'gradient');
-      // let variantData: any = [];
-      // if (variant && variant.getDefaultData) {
-      //   variantData = [variant.getDefaultData()];
-      // }
-
-      // const headingData = [getWidget('heading')?.events.createBlock()] || [];
-      return {
-        id: nanoid(),
-        type: 'list:article-block',
-        data: { settings: {} },
-        // children: [...headingData],
-      };
-    },
-  });
-
   //heading style
   registerWidgetStyle('heading', {
     identifier: 'margin',
@@ -135,6 +79,10 @@ export const registerStyles = () => {
   registerWidgetStyleOption('heading', [
     {
       identifier: 'theme',
+      settings: {
+        'settings.general.padding': { value: 20 },
+        'settings.general.marginTop': { value: 10, status: 'disabled' },
+      },
       name: 'Theme - heading',
       cssStyle: `
         margin-top: 10px;
@@ -156,8 +104,11 @@ export const registerStyles = () => {
         identifier: 'big-space',
         name: 'Big space',
         cssClasses: { root: 'pt-6 leading-3 text-3xl' },
+        settings: {
+          'settings.general.padding': { value: 80, status: 'disabled' },
+          'settings.general.marginTop': { value: 10, status: 'hidden' },
+        },
         cssStyle: `
-       padding: 50px;
        background: #efefef
     `,
         icon: '',
