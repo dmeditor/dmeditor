@@ -65,6 +65,7 @@ export const DMEditor = React.forwardRef(
     const { projectStyle, onChange, onSave, onCancel } = props;
 
     const [viewDevice, setViewDevice] = useState('pc');
+    const [variables, initVariables] = useState<React.CSSProperties>({});
 
     const { storage, setStorage, clearSelected, setPageData, page, mode } = useEditorStore();
 
@@ -142,14 +143,22 @@ export const DMEditor = React.forwardRef(
       }
     };
 
-    const getEditCssVariables = () => {
-      return containerRef?.current && editRef?.current
-        ? ({
-            '--dme-container-width': containerRef?.current?.offsetWidth + 'px',
-            '--dme-main-width': editRef?.current?.offsetWidth + 'px',
-          } as React.CSSProperties)
-        : {};
-    };
+    useEffect(() => {
+      const container = containerRef.current;
+      const editor = editRef.current;
+
+      if (container && editor) {
+        const width = editor.offsetWidth;
+        const containerWidth = container.offsetWidth;
+
+        const style = {
+          '--dme-main-width': `${width}px`,
+          '--dme-container-width': `${containerWidth}px`,
+        } as React.CSSProperties;
+
+        initVariables(style);
+      }
+    }, []);
 
     const previewDeviceWidths = {
       pc: [1200, 1000],
@@ -177,7 +186,7 @@ export const DMEditor = React.forwardRef(
                 {/* need EmptyBlock otherwise first block's margin-top is based on body */}
                 <EmtpyBlock />
                 <div
-                  style={getEditCssVariables()}
+                  style={variables}
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
