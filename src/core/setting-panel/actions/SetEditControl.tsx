@@ -4,7 +4,6 @@ import { MenuItem, Select } from '@mui/material';
 
 import { useEditorStore } from '../../../core/main/store';
 import { type DMEData } from '../../../core/types';
-import { getWidget } from '../../../core/utils/register';
 
 export const SetEditControl = (props: { blockData: DMEData.Block }) => {
   const { updateSelectedBlockEditControl } = useEditorStore();
