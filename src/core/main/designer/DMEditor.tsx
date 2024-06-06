@@ -121,7 +121,7 @@ const Editor = (props: { projectStyle?: string }) => {
 };
 
 export const DMEditor = React.forwardRef(
-  (props: DMEditorProps, currentRef: React.Ref<DMEditorRefType>) => {
+  (props: DMEditorProps, currentRef: React.ForwardedRef<DMEditorRefType>) => {
     useImperativeHandle(
       currentRef,
       () => ({
@@ -144,6 +144,16 @@ export const DMEditor = React.forwardRef(
     const [viewDevice, setViewDevice] = useState('pc');
 
     const { storage, setStorage, setPageData, page, mode } = useEditorStore();
+
+    const reset = useEditorStore((state) => state.reset);
+    useEffect(() => {
+      reset();
+      return () => {
+        if (currentRef?.current) {
+          currentRef.current = null;
+        }
+      };
+    }, [reset]);
 
     const handleUpdateStorage = useCallback((data: DMEData.Block[]) => {
       setStorage(data);
