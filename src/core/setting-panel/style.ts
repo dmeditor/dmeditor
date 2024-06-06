@@ -130,6 +130,7 @@ export const StyledSettingItem = {
   `,
   Setting: styled.div`
     min-width: 180px;
+    position: relative;
   `,
 };
 

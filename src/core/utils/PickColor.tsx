@@ -53,7 +53,7 @@ export const PickColor = (props: { color: string; onChange: (color: string) => v
         }}
       ></span>
       {showColorPicker && (
-        <div ref={modalRef} style={{ position: 'absolute', right: 0, zIndex: 100 }}>
+        <div ref={modalRef} style={{ position: 'absolute', top: 30, right: 0, zIndex: 100 }}>
           <SketchPicker
             presetColors={[
               '#f44336',
