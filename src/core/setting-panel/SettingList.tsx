@@ -10,6 +10,7 @@ import {
   getWidgetStyle,
   getWidgetStyleOption,
   getWidgetWithVariant,
+  isKeyInObject,
   PropertyGroup,
   PropertyItem,
 } from '../utils';
@@ -119,23 +120,53 @@ export const SettingList = (props: {
     return groups;
   }, [blockData.id]);
 
+  //get all setting keys under this style, regarless of options
+  const getStyleSettingKeys = (blockType: string, style: string) => {
+    let settingKeys: Array<string> = [];
+    for (const option of getWidgetStyle(blockData.type, style).options) {
+      if (option.settings) {
+        for (const key of Object.keys(option.settings)) {
+          if (!settingKeys.includes(key)) {
+            settingKeys.push(key);
+          }
+        }
+      }
+    }
+    return settingKeys;
+  };
+
   const resetSettingStatus = (styleOption: string, style: string) => {
-    if (style === '_' && styleOption === '') {
-      setSettingStatus({});
-      return;
-    }
-    const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
-    if (!optionDef) {
-      return;
-    }
-    const statusObj: any = {};
-    if (!optionDef.settings) {
-      return;
-    }
-    for (const key of Object.keys(optionDef.settings)) {
-      const setting = optionDef.settings[key];
-      if (setting.status) {
-        statusObj[key] = setting.status;
+    let statusObj = { ...settingStatus };
+
+    //when it's set to none
+    if (styleOption === '') {
+      if (style === '_') {
+        statusObj = {};
+      } else {
+        const settingKeys = getStyleSettingKeys(blockData.type, style);
+        for (const key of settingKeys) {
+          if (isKeyInObject(key, statusObj)) {
+            delete statusObj[key];
+          }
+        }
+      }
+    } else {
+      //when it's set to value
+      if (style === '_') {
+        statusObj = {};
+      }
+      const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
+      if (!optionDef) {
+        return;
+      }
+      if (!optionDef.settings) {
+        return;
+      }
+      for (const key of Object.keys(optionDef.settings)) {
+        const setting = optionDef.settings[key];
+        if (setting.status) {
+          statusObj[key] = setting.status;
+        }
       }
     }
     setSettingStatus(statusObj);
@@ -149,16 +180,7 @@ export const SettingList = (props: {
     //update style setting data to style setting value
     if (styleOption === '') {
       //when it's set to none
-      const properties: Array<string> = [];
-      for (const option of getWidgetStyle(blockData.type, style).options) {
-        if (option.settings) {
-          for (const key of Object.keys(option.settings)) {
-            if (!properties.includes(key)) {
-              properties.push(key);
-            }
-          }
-        }
-      }
+      const properties = getStyleSettingKeys(blockData.type, style);
       for (const property of properties) {
         updateBlockPropsByPath(blockPath, property, undefined);
       }
