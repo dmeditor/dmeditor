@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button } from '@mui/material';
 import { nanoid } from 'nanoid';
 
 import {
@@ -119,6 +120,7 @@ const { useRef, useEffect } = React;
 
 const App = () => {
   const editorRef = useRef<DMEditorRefType>(null);
+  const editorRef2 = useRef<DMEditorRefType>(null);
   // const [editor] = useEditor()
   const data = [
     {
@@ -195,22 +197,41 @@ const App = () => {
     console.log(d);
   });
 
+  const [showFirstEditor, setShowFirstEditor] = React.useState(true);
+
+  const handleChangeEditor = () => {
+    setShowFirstEditor(!showFirstEditor);
+    console.log('change editor', editorRef, editorRef2);
+  };
   return (
     <div>
-      <DMEditor
-        ref={editorRef}
-        onSave={(data) => {
-          console.log(data);
-          window.alert('Saved');
-        }}
-        onChange={(data) => {
-          console.log('changed');
-          console.log(data.data);
-        }}
-        onCancel={() => {
-          window.alert('Cancel');
-        }}
-      />
+      <Button
+        style={{ position: 'fixed', left: '10px', top: '40px', zIndex: '999999' }}
+        onClick={handleChangeEditor}
+      >
+        Change DMEditor
+      </Button>
+      {showFirstEditor && (
+        <DMEditor
+          ref={editorRef}
+          onSave={(data) => {
+            console.log(data);
+            window.alert('Saved');
+          }}
+          onChange={(data) => {
+            console.log('changed');
+            console.log(data.data);
+          }}
+          onCancel={() => {
+            window.alert('Cancel');
+          }}
+        />
+      )}
+      {!showFirstEditor && (
+        <div>
+          <DMEditor ref={editorRef2} />
+        </div>
+      )}
     </div>
   );
   // return <DMEditorView data={data} theme="blue" />;
