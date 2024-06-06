@@ -59,9 +59,8 @@ export const SettingList = (props: {
     const styles = originData.style;
     if (styles) {
       for (const style of Object.keys(styles)) {
-        for (const option of Object.keys(styles[style])) {
-          resetSettingStatus(option, style);
-        }
+        const option = styles[style];
+        resetSettingStatus(option, style);
       }
     }
   }, [originData.id]);
