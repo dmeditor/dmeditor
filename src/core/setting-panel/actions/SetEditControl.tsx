@@ -18,9 +18,17 @@ export const SetEditControl = (props: { blockData: DMEData.Block }) => {
     <div
       className={css`
         padding: 10px;
+        margin-top: 10px;
+        border-top: 1px solid #dddddd;
       `}
     >
-      <label>Edit control:</label>
+      <label
+        className={css`
+          margin-right: 10px;
+        `}
+      >
+        Edit control:
+      </label>
       <Select
         onChange={update}
         size="small"

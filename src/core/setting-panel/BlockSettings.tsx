@@ -103,6 +103,9 @@ export const BlockSettings = (props: {
 
         {category == 'widget' && (
           <>
+            {editControlEnabled() && canEditControl(blockData) && (
+              <SetEditControl key={blockData.id} blockData={blockData} />
+            )}
             <ActionPanel>
               <ActionPanelButtonGroup>
                 <Move />
@@ -118,9 +121,6 @@ export const BlockSettings = (props: {
                     <DeleteBlock />
                   </RightElement>
                 </ActionPanelButtonGroup>
-              )}
-              {editControlEnabled() && canEditControl(blockData) && (
-                <SetEditControl key={blockData.id} blockData={blockData} />
               )}
             </ActionPanel>
           </>
