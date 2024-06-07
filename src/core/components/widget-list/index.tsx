@@ -5,7 +5,14 @@ import {
   ExpandMore as ExpandMoreIcon,
   PushPin,
 } from '@mui/icons-material';
-import { Accordion, AccordionDetails, AccordionSummary, IconButton, Popover } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  IconButton,
+  Popover,
+  styled,
+} from '@mui/material';
 
 import { dmeConfig } from '../../config';
 import { i18n } from '../../i18n';
@@ -57,6 +64,24 @@ interface WidgetListProps {
   filter?: Array<string> | string;
   onSelect: (type: string, style?: string) => void;
 }
+
+const GagetoryAccordion = styled(Accordion)(({ theme }) => {
+  return {
+    boxShadow: 'none',
+    '.Mui-expanded.MuiAccordionSummary-root': { minHeight: 0 },
+    '.MuiAccordionSummary-root': {
+      padding: 0,
+      height: 30,
+      minHeight: 0,
+    },
+    '.Mui-expanded.MuiAccordionSummary-content': {
+      margin: '10px 0px',
+    },
+    '.MuiAccordionDetails-root': {
+      padding: '0px 5px',
+    },
+  };
+});
 
 export const WidgetList = (props: WidgetListProps) => {
   const { filter } = props;
@@ -133,10 +158,7 @@ export const WidgetList = (props: WidgetListProps) => {
   return (
     <StyleTabBody>
       {groupedWidgets.map(({ category, widgets }) => (
-        <Accordion
-          key={category.identifier}
-          {...(category.identifier === 'pinned' ? { expanded: true } : {})}
-        >
+        <GagetoryAccordion key={category.identifier} defaultExpanded={true}>
           <AccordionSummary>
             {category.identifier === 'pinned' ? (
               <PushPin style={{ fontSize: 14 }} />
@@ -152,7 +174,7 @@ export const WidgetList = (props: WidgetListProps) => {
               ))}
             </StyleWidgetList>
           </AccordionDetails>
-        </Accordion>
+        </GagetoryAccordion>
       ))}
     </StyleTabBody>
   );
@@ -191,7 +213,7 @@ const WidgetItem = (props: {
         <div>{icon && SvgIcon({ name: icon as string, size: 20 })}</div>
         <div className={StyleWidgetItemText}>{name}</div>
         {multipleStyles && (
-          <IconButton onClick={handleClick}>
+          <IconButton size="small" onClick={handleClick} sx={{ ml: 2 }}>
             <ExpandMoreIcon />
           </IconButton>
         )}
