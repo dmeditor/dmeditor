@@ -1,7 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { css } from '@emotion/css';
-import { ArrowForwardIosOutlined, ChevronRightOutlined } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import {
+  ArrowForwardIosOutlined,
+  ExpandMore as ExpandMoreIcon,
+  PushPin,
+} from '@mui/icons-material';
+import { Accordion, AccordionDetails, AccordionSummary, IconButton, Popover } from '@mui/material';
 
 import { dmeConfig } from '../../config';
 import { i18n } from '../../i18n';
@@ -9,13 +13,21 @@ import type { DME } from '../../types/dmeditor';
 import {
   customDefinition,
   getWidgetStyle,
+  getWidgetStyles,
   layoutDefinition,
   widgetDefinition,
   widgetStyles,
 } from '../../utils/register';
 import { SvgIcon } from '../icon';
 import { PropertyTab } from '../property-tab';
-import { StyleTabBody } from './styled';
+import {
+  StyleTabBody,
+  StyleWidgetItem,
+  StyleWidgetItemText,
+  StyleWidgetList,
+  StyleWidgetStyleItem,
+  StyleWidgetStyleList,
+} from './styled';
 
 //internal css: emotion
 //extendable css: class - dme-block-text
@@ -49,6 +61,18 @@ interface WidgetListProps {
 export const WidgetList = (props: WidgetListProps) => {
   const { filter } = props;
 
+  const matchFilter = (widget: string) => {
+    if (!filter) {
+      return true;
+    }
+    if (typeof filter === 'string') {
+      return widget.match(filter);
+    } else {
+      // array
+      return filter.includes(widget);
+    }
+  };
+
   const definitions = useMemo(() => {
     // widgetDefinition is the default definition and it is not empty
     const customDefinitionLength = Object.keys(customDefinition).length;
@@ -65,6 +89,32 @@ export const WidgetList = (props: WidgetListProps) => {
     }
   }, [customDefinition, layoutDefinition, widgetDefinition]);
 
+  const groupedWidgets = useMemo(() => {
+    const categories = dmeConfig.editor.categories;
+    const result: { category: DME.WidgetCategory; widgets: DME.Widget[] }[] = [];
+
+    categories.forEach((category) => {
+      const widgets = Object.keys(definitions)
+        .filter(
+          (widget) => definitions[widget].category === category.identifier && matchFilter(widget),
+        )
+        .map((widget) => definitions[widget]);
+
+      result.push({ category, widgets });
+    });
+
+    result.unshift({
+      category: { identifier: 'pinned', name: 'Pinned' },
+      widgets: Object.keys(definitions)
+        .filter(
+          (widget) => dmeConfig.editor.favouriteWidgets.includes(widget) && matchFilter(widget),
+        )
+        .map((widget) => definitions[widget]),
+    });
+
+    return result;
+  }, [definitions]);
+
   const preDefinedStyles = useMemo(() => {
     const result: { [widget: string]: Array<DME.WidgetStyleOption> } = {};
     Object.keys(widgetStyles).forEach((widget) => {
@@ -74,18 +124,6 @@ export const WidgetList = (props: WidgetListProps) => {
     return result;
   }, [widgetStyles]);
 
-  const matchFilter = (widget: string) => {
-    if (!filter) {
-      return true;
-    }
-    if (typeof filter === 'string') {
-      return widget.match(filter);
-    } else {
-      // array
-      return filter.includes(widget);
-    }
-  };
-
   const filterVariant = (widget: string) => {
     const variants = widgetDefinition[widget].variants;
     const result = variants.filter((item) => matchFilter(widget + ':' + item.identifier));
@@ -93,130 +131,92 @@ export const WidgetList = (props: WidgetListProps) => {
   };
 
   return (
-    <PropertyTab
-      tabs={[
-        {
-          title: i18n('Common'),
-          element: (
-            <StyleTabBody>
-              {dmeConfig.editor.favouriteWidgets.map((widgetType) => {
-                const arr = widgetType.split(':');
-                if (arr.length === 1) {
-                  return (
-                    <MenuItem
-                      icon={definitions[widgetType].icon}
-                      widget={widgetType}
-                      name={definitions[widgetType].name}
-                      baseName=""
-                      onClick={() => props.onSelect(widgetType)}
-                    />
-                  );
-                } else {
-                  return (
-                    <MenuItem
-                      icon={definitions[arr[0]].icon}
-                      widget={widgetType}
-                      name={
-                        widgetDefinition[arr[0]].variants.find((item) => item.identifier === arr[1])
-                          ?.name || ''
-                      }
-                      baseName=""
-                      onClick={() => props.onSelect(widgetType)}
-                    />
-                  );
-                }
-              })}
-            </StyleTabBody>
-          ),
-        },
-        {
-          title: 'Widgets',
-          element: (
-            <StyleTabBody>
-              {dmeConfig.editor.categories.map((category) => (
-                <div>
-                  <div style={{ fontSize: 16, fontWeight: 'bold', marginTop: 10, marginBottom: 5 }}>
-                    <ArrowForwardIosOutlined style={{ fontSize: 12 }} /> {category.name}
-                  </div>
-                  <div>
-                    {Object.keys(definitions)
-                      .filter((widget) => matchFilter(widget))
-                      .map((widgetType) =>
-                        definitions[widgetType].category === category.identifier ? (
-                          <MenuItem
-                            icon={definitions[widgetType].icon}
-                            widget={widgetType}
-                            name={definitions[widgetType].name}
-                            baseName=""
-                            onClick={() => props.onSelect(widgetType)}
-                          />
-                        ) : (
-                          <></>
-                        ),
-                      )}
-                    <div className={space} />
-                    {Object.keys(widgetDefinition).map((widget) =>
-                      filterVariant(widget).map((variant) =>
-                        variant.category === category.identifier ? (
-                          <MenuItem
-                            widget={widget + ':' + variant.identifier}
-                            icon={widgetDefinition[widget].icon}
-                            name={variant.name}
-                            baseName={widgetDefinition[widget].name}
-                            onClick={() => props.onSelect(widget + ':' + variant.identifier)}
-                          />
-                        ) : (
-                          <></>
-                        ),
-                      ),
-                    )}
-                  </div>
-                </div>
+    <StyleTabBody>
+      {groupedWidgets.map(({ category, widgets }) => (
+        <Accordion
+          key={category.identifier}
+          {...(category.identifier === 'pinned' ? { expanded: true } : {})}
+        >
+          <AccordionSummary>
+            {category.identifier === 'pinned' ? (
+              <PushPin style={{ fontSize: 14 }} />
+            ) : (
+              <ArrowForwardIosOutlined style={{ fontSize: 12 }} />
+            )}
+            {category.name}
+          </AccordionSummary>
+          <AccordionDetails>
+            <StyleWidgetList>
+              {widgets.map((widget) => (
+                <WidgetItem widget={widget} onSelect={props.onSelect} />
               ))}
-            </StyleTabBody>
-          ),
-        },
-      ]}
-    />
+            </StyleWidgetList>
+          </AccordionDetails>
+        </Accordion>
+      ))}
+    </StyleTabBody>
   );
 };
 
-const MenuItem = (props: {
-  icon?: any;
-  widget: string;
-  name: string;
-  baseName: string;
-  onClick: () => void;
+const WidgetItem = (props: {
+  widget: DME.Widget;
+  onSelect?: (widget: string, style?: string) => void;
 }) => {
-  const { icon, widget, name, baseName, onClick } = props;
+  const { widget, onSelect } = props;
+  const { name, icon } = widget;
+  const styles = getWidgetStyle(widget.type);
+  const styleOptions = styles.options;
+  const multipleStyles = styleOptions.length > 0;
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleWidgetSelect = () => {
+    onSelect?.(widget.type);
+  };
+
+  const open = Boolean(anchorEl);
 
   return (
-    <div className={itemStyle} onClick={onClick}>
-      <div
-        className={css`
-          width: 30px;
-        `}
-      >
-        {icon && SvgIcon({ name: icon, size: 20 })}
-      </div>
-      <div
-        className={css`
-          color: #666666;
-        `}
-      >
-        <span>{name}</span>
-        {baseName && (
-          <span
-            className={css`
-              color: #999999;
-              margin-left: 5px;
-              font-size: 0.9rem;
-            `}
-          >
-            {baseName}
-          </span>
+    <>
+      <StyleWidgetItem onClick={handleWidgetSelect}>
+        <div>{icon && SvgIcon({ name: icon as string, size: 20 })}</div>
+        <div className={StyleWidgetItemText}>{name}</div>
+        {multipleStyles && (
+          <IconButton onClick={handleClick}>
+            <ExpandMoreIcon />
+          </IconButton>
         )}
-      </div>
-    </div>
+      </StyleWidgetItem>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+      >
+        <StyleWidgetStyleList>
+          {styleOptions.map((style) => (
+            <StyleWidgetStyleItem
+              onClick={() => onSelect?.(widget.type, style.identifier)}
+              key={style.identifier}
+            >
+              <img src="https://via.placeholder.com/150" />
+              <span>{style.name}</span>
+            </StyleWidgetStyleItem>
+          ))}
+        </StyleWidgetStyleList>
+      </Popover>
+    </>
   );
 };
