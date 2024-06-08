@@ -10,13 +10,14 @@ export const StyleWidgetList = styled.div`
   grid-template-columns: repeat(2, minmax(100px, 1fr));
 `;
 
-export const StyleWidgetItem = styled.div`
+export const StyleWidgetItem = styled.div<{ active?: boolean }>`
   padding: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
+  background-color: ${(props) => (props.active ? '#f7f7f7' : 'transparent')};
   &:hover {
-    background-color: #f7f7f7;
+    background-color: ${(props) => (props.active ? '#f7f7f7' : '#f7f7f7')};
   }
 `;
 
@@ -27,17 +28,17 @@ export const StyleWidgetItemText = css`
   margin-left: 5px;
 `;
 
-export const StyleWidgetStyleList = styled.div`
-  display: grid;
-  padding: 8px;
-  grid-template-columns: repeat(2, minmax(100px, 1fr));
-  grid-gap: 8px;
-`;
+export const StyleWidgetStyleList = styled.div<{ row: number }>((props) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, minmax(100px, 1fr))',
+  gridRow: `${props.row + 2}`,
+  gridColumn: '1 / -1',
+  backgroundColor: '#f7f7f7',
+  padding: '5px',
+}));
 
 export const StyleWidgetStyleItem = styled.div`
   padding: 5px;
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -9,8 +9,8 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  ClickAwayListener,
   IconButton,
-  Popover,
   styled,
 } from '@mui/material';
 
@@ -169,8 +169,8 @@ export const WidgetList = (props: WidgetListProps) => {
           </AccordionSummary>
           <AccordionDetails>
             <StyleWidgetList>
-              {widgets.map((widget) => (
-                <WidgetItem widget={widget} onSelect={props.onSelect} />
+              {widgets.map((widget, index) => (
+                <WidgetItem widget={widget} onSelect={props.onSelect} index={index} />
               ))}
             </StyleWidgetList>
           </AccordionDetails>
@@ -182,63 +182,61 @@ export const WidgetList = (props: WidgetListProps) => {
 
 const WidgetItem = (props: {
   widget: DME.Widget;
+  index: number;
   onSelect?: (widget: string, style?: string) => void;
 }) => {
-  const { widget, onSelect } = props;
+  const COLUMN_COUNT = 2;
+  const { widget, onSelect, index } = props;
+  const row = Math.floor(index / COLUMN_COUNT);
   const { name, icon } = widget;
   const styles = getWidgetStyle(widget.type);
   const styleOptions = styles.options;
   const multipleStyles = styleOptions.length > 0;
 
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
+    setOpen(!open);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
 
   const handleWidgetSelect = () => {
     onSelect?.(widget.type);
   };
 
-  const open = Boolean(anchorEl);
-
   return (
     <>
-      <StyleWidgetItem onClick={handleWidgetSelect}>
+      <StyleWidgetItem active={open}>
         <div>{icon && SvgIcon({ name: icon as string, size: 20 })}</div>
-        <div className={StyleWidgetItemText}>{name}</div>
+        <div className={StyleWidgetItemText} onClick={handleWidgetSelect}>
+          {name}
+        </div>
         {multipleStyles && (
           <IconButton size="small" onClick={handleClick} sx={{ ml: 2 }}>
             <ExpandMoreIcon />
           </IconButton>
         )}
       </StyleWidgetItem>
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-      >
-        <StyleWidgetStyleList>
-          {styleOptions.map((style) => (
-            <StyleWidgetStyleItem
-              onClick={() => onSelect?.(widget.type, style.identifier)}
-              key={style.identifier}
-            >
-              <img src="https://via.placeholder.com/150" />
-              <span>{style.name}</span>
-            </StyleWidgetStyleItem>
-          ))}
-        </StyleWidgetStyleList>
-      </Popover>
+      {open && (
+        <ClickAwayListener onClickAway={handleClose}>
+          <StyleWidgetStyleList row={row}>
+            {styleOptions.map((style) => (
+              <StyleWidgetStyleItem
+                onClick={() => onSelect?.(widget.type, style.identifier)}
+                key={style.identifier}
+              >
+                <div>
+                  <img src="https://via.placeholder.com/150" />
+                </div>
+                <div>{style.name}</div>
+              </StyleWidgetStyleItem>
+            ))}
+          </StyleWidgetStyleList>
+        </ClickAwayListener>
+      )}
     </>
   );
 };
