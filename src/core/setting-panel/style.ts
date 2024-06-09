@@ -78,7 +78,7 @@ export const PathContainer = styled.div`
 
 export const AddBlockContainer = styled.div`
   height: calc(100vh - var(--dmee-topbar-height));
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 5px;
 `;
 

@@ -27,6 +27,7 @@ import {
 } from '../../utils/register';
 import { SvgIcon } from '../icon';
 import { PropertyTab } from '../property-tab';
+import Dot from './dot.svg';
 import {
   StyleTabBody,
   StyleWidgetItem,
@@ -76,6 +77,8 @@ const GagetoryAccordion = styled(Accordion)(({ theme }) => {
     },
     '.Mui-expanded.MuiAccordionSummary-content': {
       margin: '10px 0px',
+      display: 'flex',
+      alignItems: 'center',
     },
     '.MuiAccordionDetails-root': {
       padding: '0px 5px',
@@ -161,9 +164,9 @@ export const WidgetList = (props: WidgetListProps) => {
         <GagetoryAccordion key={category.identifier} defaultExpanded={true}>
           <AccordionSummary>
             {category.identifier === 'pinned' ? (
-              <PushPin style={{ fontSize: 14 }} />
+              <PushPin style={{ fontSize: 18 }} />
             ) : (
-              <ArrowForwardIosOutlined style={{ fontSize: 12 }} />
+              <ArrowForwardIosOutlined style={{ fontSize: 15 }} />
             )}
             {category.name}
           </AccordionSummary>
@@ -211,12 +214,12 @@ const WidgetItem = (props: {
     <>
       <StyleWidgetItem active={open}>
         <div>{icon && SvgIcon({ name: icon as string, size: 20 })}</div>
-        <div className={StyleWidgetItemText} onClick={handleWidgetSelect}>
+        <div className={StyleWidgetItemText} onClick={handleWidgetSelect} style={{ flexGrow: 1 }}>
           {name}
         </div>
         {multipleStyles && (
           <IconButton size="small" onClick={handleClick} sx={{ ml: 2 }}>
-            <ExpandMoreIcon />
+            <Dot />
           </IconButton>
         )}
       </StyleWidgetItem>
@@ -224,15 +227,17 @@ const WidgetItem = (props: {
         <ClickAwayListener onClickAway={handleClose}>
           <StyleWidgetStyleList row={row}>
             {styleOptions.map((style) => (
-              <StyleWidgetStyleItem
+              <StyleWidgetStyleItem.Main
                 onClick={() => onSelect?.(widget.type, style.identifier)}
                 key={style.identifier}
               >
-                <div>
-                  <img src="https://via.placeholder.com/150" />
-                </div>
-                <div>{style.name}</div>
-              </StyleWidgetStyleItem>
+                {style.icon && (
+                  <StyleWidgetStyleItem.Image>
+                    <img src={style.icon} />
+                  </StyleWidgetStyleItem.Image>
+                )}
+                <StyleWidgetStyleItem.Name>{style.name}</StyleWidgetStyleItem.Name>
+              </StyleWidgetStyleItem.Main>
             ))}
           </StyleWidgetStyleList>
         </ClickAwayListener>

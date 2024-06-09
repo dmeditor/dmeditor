@@ -34,13 +34,32 @@ export const StyleWidgetStyleList = styled.div<{ row: number }>((props) => ({
   gridRow: `${props.row + 2}`,
   gridColumn: '1 / -1',
   backgroundColor: '#f7f7f7',
-  padding: '5px',
+  padding: '20px 10px',
+  gap: 10,
 }));
 
-export const StyleWidgetStyleItem = styled.div`
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-`;
+export const StyleWidgetStyleItem = {
+  Main: styled.div`
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      background: #f0f0f0;
+      border: 1px solid #eeeeee;
+    }
+  `,
+  Image: styled.div`
+    padding-bottom: 10px;
+    & > img {
+      max-height: 30px;
+    }
+  `,
+  Name: styled.div`
+    font-size: 0.95rem;
+    padding: 5px 0px;
+  `,
+};
