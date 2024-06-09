@@ -225,7 +225,7 @@ const WidgetItem = (props: {
           {name}
         </div>
         {multipleStyles && (
-          <IconButton size="small" onClick={handleClick} sx={{ ml: 2 }} title="Styles">
+          <IconButton size="small" onClick={handleClick} sx={{ ml: 0 }} title="Customized">
             <Dot />
           </IconButton>
         )}

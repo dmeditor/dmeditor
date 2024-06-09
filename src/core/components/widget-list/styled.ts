@@ -12,12 +12,14 @@ export const StyleWidgetList = styled.div`
 
 export const StyleWidgetItem = styled.div<{ active?: boolean }>`
   padding: 5px;
+  margin-top: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  background-color: ${(props) => (props.active ? '#f7f7f7' : 'transparent')};
+  background-color: ${(props) => (props.active ? '#eeeeee' : 'transparent')};
   &:hover {
-    background-color: ${(props) => (props.active ? '#f7f7f7' : '#f7f7f7')};
+    color: #000000;
+    background-color: ${(props) => (props.active ? '#eeeeee' : '#eeeeee')};
   }
 `;
 
@@ -33,23 +35,25 @@ export const StyleWidgetStyleList = styled.div<{ row: number }>((props) => ({
   gridTemplateColumns: 'repeat(2, minmax(100px, 1fr))',
   gridRow: `${props.row + 2}`,
   gridColumn: '1 / -1',
-  backgroundColor: '#f7f7f7',
+  backgroundColor: '#eeeeee',
   padding: '20px 10px',
   gap: 10,
+  marginBottom: 10,
 }));
 
 export const StyleWidgetStyleItem = {
   Main: styled.div`
     background: #ffffff;
     border: 1px solid #f0f0f0;
+    color: #000000;
     padding: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
     &:hover {
-      background: #f0f0f0;
-      border: 1px solid #eeeeee;
+      background: #ffffff;
+      border: 1px solid #cccccc;
     }
   `,
   Image: styled.div`
