@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { ArrowBack, Settings } from '@mui/icons-material';
+import {
+  ArrowBack,
+  ArrowBackIosOutlined,
+  ArrowForwardIosOutlined,
+  Settings,
+} from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { getWidgetName } from '../../core/utils/register';
@@ -139,6 +144,35 @@ const SettingPanel = (props) => {
     }
   };
 
+  const previous = () => {
+    if (selectedBlockIndex > 0) {
+      const list = getCurrentList();
+      const newPath = [...currentListPath];
+      const newIndex = selectedBlockIndex - 1;
+      newPath[newPath.length - 1] = newIndex;
+      if (list && list[newIndex]) {
+        const id = list[newIndex].id;
+        updateSelectedBlockIndex(newPath, id || '');
+      }
+    }
+  };
+
+  const next = () => {
+    const list = getCurrentList();
+    if (!list) {
+      return;
+    }
+    if (selectedBlockIndex <= list.length - 1) {
+      const newPath = [...currentListPath];
+      const newIndex = selectedBlockIndex + 1;
+      newPath[newPath.length - 1] = newIndex;
+      if (list && list[newIndex]) {
+        const id = list[newIndex].id;
+        updateSelectedBlockIndex(newPath, id || '');
+      }
+    }
+  };
+
   const setPageSettingMode = () => {
     setMode('page-setting');
   };
@@ -158,7 +192,21 @@ const SettingPanel = (props) => {
           </PageTitle>
           <Space />
           {['list-overview', 'block-setting'].includes(mode) && (
-            <Path pathArray={pathArray} onSelect={selectPathItem} />
+            <>
+              <RightElement>
+                <Button
+                  title="Previous block"
+                  disabled={selectedBlockIndex <= 0}
+                  onClick={previous}
+                >
+                  <ArrowBackIosOutlined style={{ fontSize: 16 }} />
+                </Button>
+                <Button title="Next block" onClick={next}>
+                  <ArrowForwardIosOutlined style={{ fontSize: 16 }} />
+                </Button>
+              </RightElement>
+              <Path pathArray={pathArray} onSelect={selectPathItem} />
+            </>
           )}
 
           {mode === 'list-overview' && (
