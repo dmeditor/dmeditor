@@ -15,8 +15,8 @@ import {
 export const AddBlock = () => {
   const { addBlock, cancelAdding, addBlockData } = useEditorStore((state) => state);
 
-  const addBlockDone = (type: string, style?: string) => {
-    addBlock(type, style);
+  const addBlockDone = (type: string, addedData: { style?: string; savedBlock?: any }) => {
+    addBlock(type, addedData);
   };
 
   const cancel = () => {

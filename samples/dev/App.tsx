@@ -113,6 +113,42 @@ setDMEditorCallback({
   browseImage: BrowseImage,
   browseLink: BrowseLink,
   canEditControl: canEditControl,
+  getSavedBlocks: (widget: string) => {
+    switch (widget) {
+      case 'button':
+        return [
+          {
+            name: 'Hello',
+            savedData: {
+              id: nanoid(),
+              type: 'button',
+              style: { _: 'project-primary' },
+              data: { value: 'New button', link: '#' },
+            },
+          },
+        ];
+      case 'list':
+        return [
+          {
+            name: 'button list',
+            savedData: {
+              id: nanoid(),
+              type: 'list',
+              allowedTypes: ['button'],
+              data: { direction: 'horizontal' },
+              children: [
+                {
+                  id: nanoid(),
+                  type: 'button',
+                  data: { value: 'Button', link: '#' },
+                },
+              ],
+            },
+          },
+        ];
+    }
+    return [];
+  },
 });
 
 const { useRef, useEffect } = React;

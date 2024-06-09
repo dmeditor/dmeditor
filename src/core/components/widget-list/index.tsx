@@ -63,10 +63,10 @@ const itemStyle = css`
 
 interface WidgetListProps {
   filter?: Array<string> | string;
-  onSelect: (type: string, style?: string) => void;
+  onSelect: (type: string, addData: { style?: string; savedBlock?: any }) => void;
 }
 
-const GagetoryAccordion = styled(Accordion)(({ theme }) => {
+const CateoryAccordion = styled(Accordion)(({ theme }) => {
   return {
     boxShadow: 'none',
     '.Mui-expanded.MuiAccordionSummary-root': { minHeight: 0 },
@@ -82,6 +82,7 @@ const GagetoryAccordion = styled(Accordion)(({ theme }) => {
     },
     '.MuiAccordionDetails-root': {
       padding: '0px 5px',
+      color: '#666666',
     },
   };
 });
@@ -161,7 +162,7 @@ export const WidgetList = (props: WidgetListProps) => {
   return (
     <StyleTabBody>
       {groupedWidgets.map(({ category, widgets }) => (
-        <GagetoryAccordion key={category.identifier} defaultExpanded={true}>
+        <CateoryAccordion key={category.identifier} defaultExpanded={true}>
           <AccordionSummary>
             {category.identifier === 'pinned' ? (
               <PushPin style={{ fontSize: 18 }} />
@@ -177,7 +178,7 @@ export const WidgetList = (props: WidgetListProps) => {
               ))}
             </StyleWidgetList>
           </AccordionDetails>
-        </GagetoryAccordion>
+        </CateoryAccordion>
       ))}
     </StyleTabBody>
   );
@@ -186,7 +187,7 @@ export const WidgetList = (props: WidgetListProps) => {
 const WidgetItem = (props: {
   widget: DME.Widget;
   index: number;
-  onSelect?: (widget: string, style?: string) => void;
+  onSelect?: (widget: string, addData: { style?: string; savedBlock?: any }) => void;
 }) => {
   const COLUMN_COUNT = 2;
   const { widget, onSelect, index } = props;
@@ -194,7 +195,13 @@ const WidgetItem = (props: {
   const { name, icon } = widget;
   const styles = getWidgetStyle(widget.type);
   const styleOptions = styles.options;
-  const multipleStyles = styleOptions.length > 0;
+  const savedBlockData = useMemo(() => {
+    if (!dmeConfig.callbacks.getSavedBlocks) {
+      return [];
+    }
+    return dmeConfig.callbacks.getSavedBlocks(widget.type);
+  }, [widget.type]);
+  const multipleStyles = styleOptions.length > 0 || savedBlockData.length > 0;
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -207,7 +214,7 @@ const WidgetItem = (props: {
   };
 
   const handleWidgetSelect = () => {
-    onSelect?.(widget.type);
+    onSelect?.(widget.type, {});
   };
 
   return (
@@ -218,7 +225,7 @@ const WidgetItem = (props: {
           {name}
         </div>
         {multipleStyles && (
-          <IconButton size="small" onClick={handleClick} sx={{ ml: 2 }}>
+          <IconButton size="small" onClick={handleClick} sx={{ ml: 2 }} title="Styles">
             <Dot />
           </IconButton>
         )}
@@ -228,7 +235,7 @@ const WidgetItem = (props: {
           <StyleWidgetStyleList row={row}>
             {styleOptions.map((style) => (
               <StyleWidgetStyleItem.Main
-                onClick={() => onSelect?.(widget.type, style.identifier)}
+                onClick={() => onSelect?.(widget.type, { style: style.identifier })}
                 key={style.identifier}
               >
                 {style.icon && (
@@ -237,6 +244,19 @@ const WidgetItem = (props: {
                   </StyleWidgetStyleItem.Image>
                 )}
                 <StyleWidgetStyleItem.Name>{style.name}</StyleWidgetStyleItem.Name>
+              </StyleWidgetStyleItem.Main>
+            ))}
+            {savedBlockData.map((item) => (
+              <StyleWidgetStyleItem.Main
+                key={item.name}
+                onClick={() => onSelect?.(widget.type, { savedBlock: item.savedData })}
+              >
+                {item.image && (
+                  <StyleWidgetStyleItem.Image>
+                    <img src={item.image} />
+                  </StyleWidgetStyleItem.Image>
+                )}
+                <StyleWidgetStyleItem.Name>{item.name}</StyleWidgetStyleItem.Name>
               </StyleWidgetStyleItem.Main>
             ))}
           </StyleWidgetStyleList>

@@ -6,6 +6,18 @@ export type BrowseLinkCallbackParams = string;
 
 export type BrowseImageCallbackParams = DME.ImageInfo[];
 
+export interface SavedBlockData {
+  name: string;
+  image?: string;
+  savedData: {
+    id?: string;
+    type?: string;
+    style?: { [style: string]: string };
+    data: DMEData.DefaultDataType;
+    children?: Array<DMEData.DefaultBlockType>;
+  };
+}
+
 export interface CallbackConfig {
   browseImage?: ComponentType<{
     value: BrowseImageCallbackParams;
@@ -17,6 +29,7 @@ export interface CallbackConfig {
     onChange: (value: BrowseLinkCallbackParams) => void;
   }>;
   canEditControl?: (block: DMEData.Block) => boolean;
+  getSavedBlocks?: (widget: string) => Array<SavedBlockData>;
 }
 
 export interface widgetConfig {

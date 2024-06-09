@@ -36,13 +36,13 @@ export type Actions = {
   cancelAdding: () => void;
   updateHoverPath: (path: Array<number>) => void;
   clearAdding: () => void;
-  addBlock: (type: string, style?: string) => void;
+  addBlock: (type: string, addData?: { style?: string; savedBlock?: any }) => void;
   executeAdding: (
     context: Array<number>,
     index: number,
     position: AddBlockPosition,
     type: string,
-    style?: string,
+    addData?: { style?: string; savedBlock?: any },
   ) => void;
   setMode: (mode: DME.Mode) => void;
   clearWidgets: () => void;

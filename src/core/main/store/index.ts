@@ -23,14 +23,14 @@ export const useEditorStore = create<Store & Actions>()(
       set((state) => {
         state.addBlockData = { context, index, position, status: 'started', types: types };
       }),
-    addBlock: (type: string, style?: string) => {
+    addBlock: (type: string, addData?: { style?: string; savedBlock?: any }) => {
       const state = get();
       if (!state.addBlockData) {
         return;
       }
       const { index, position, context } = state.addBlockData;
 
-      state.executeAdding(context, index, position, type, style);
+      state.executeAdding(context, index, position, type, addData);
       set((state) => {
         if (state.addBlockData) {
           state.addBlockData.status = 'done';
@@ -47,7 +47,7 @@ export const useEditorStore = create<Store & Actions>()(
       index: number,
       position: AddBlockParameters['position'],
       type: string,
-      style?: string,
+      addData?: { style?: string; savedBlock?: any },
     ) =>
       set((state) => {
         if (index == -Infinity) {
@@ -59,13 +59,17 @@ export const useEditorStore = create<Store & Actions>()(
           return;
         }
         let blockData: any;
-        if (variant) {
-          blockData = variant.getDefaultData?.();
+        if (addData && addData.savedBlock) {
+          blockData = addData.savedBlock;
         } else {
-          blockData = widget.events.createBlock();
-        }
-        if (style) {
-          blockData.style = { _: style };
+          if (variant) {
+            blockData = variant.getDefaultData?.();
+          } else {
+            blockData = widget.events.createBlock();
+          }
+          if (addData && addData.style) {
+            blockData.style = { _: addData.style };
+          }
         }
 
         if (!blockData) {
