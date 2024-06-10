@@ -32,7 +32,7 @@ export const EditSideTools = () => {
       const list = getCurrentList();
       const newPath = [...currentListPath];
       const newIndex = selectedBlockIndex - 1;
-      newPath[newPath.length - 1] = newIndex;
+      newPath.push(newIndex);
       if (list && list[newIndex]) {
         const id = list[newIndex].id;
         updateSelectedBlockIndex(newPath, id || '');
@@ -49,10 +49,10 @@ export const EditSideTools = () => {
     if (!isSelected()) {
       updateSelectedBlockIndex([0], list[0].id || '');
     } else {
-      if (selectedBlockIndex <= list.length - 1) {
+      if (selectedBlockIndex < list.length - 1) {
         const newPath = [...currentListPath];
         const newIndex = selectedBlockIndex + 1;
-        newPath[newPath.length - 1] = newIndex;
+        newPath.push(newIndex);
         if (list && list[newIndex]) {
           const id = list[newIndex].id;
           updateSelectedBlockIndex(newPath, id || '');

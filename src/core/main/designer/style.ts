@@ -36,7 +36,6 @@ export const Layout = {
   Edit: styled.div`
     margin-top: var(--dmee-topbar-height);
     overflow-y: auto;
-    position: relative;
   `,
   View: styled.div`
     background: var(--dmee-bg-editarea);
@@ -107,9 +106,9 @@ export const EditArea = styled.div`
 
 export const SideTool = {
   Container: styled.div`
-    position: absolute;
+    position: fixed;
     bottom: 40vh;
-    right: 10px;
+    right: calc(var(--dmee-layout-property-width) + 20px);
   `,
   Item: styled.div`
     margin-top: 10px;
