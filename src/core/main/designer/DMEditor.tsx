@@ -16,6 +16,7 @@ import { DME, DMEData } from '../../types/dmeditor';
 import emitter from '../../utils/event';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
+import { EditSideTools } from './EditSideTools';
 import { muiTheme } from './muiTheme';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer, View } from './style';
 import { ViewDevices } from './ViewDevices';
@@ -109,6 +110,7 @@ const Editor = (props: { projectStyle?: string }) => {
             </div>
           </EditArea>
         </EditContainer>
+        <EditSideTools />
       </Layout.Edit>
       <Layout.Separator {...separatorProps} resizing={resizing} />
       <Layout.SettingPanel>

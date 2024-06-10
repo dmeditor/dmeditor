@@ -144,35 +144,6 @@ const SettingPanel = (props) => {
     }
   };
 
-  const previous = () => {
-    if (selectedBlockIndex > 0) {
-      const list = getCurrentList();
-      const newPath = [...currentListPath];
-      const newIndex = selectedBlockIndex - 1;
-      newPath[newPath.length - 1] = newIndex;
-      if (list && list[newIndex]) {
-        const id = list[newIndex].id;
-        updateSelectedBlockIndex(newPath, id || '');
-      }
-    }
-  };
-
-  const next = () => {
-    const list = getCurrentList();
-    if (!list) {
-      return;
-    }
-    if (selectedBlockIndex <= list.length - 1) {
-      const newPath = [...currentListPath];
-      const newIndex = selectedBlockIndex + 1;
-      newPath[newPath.length - 1] = newIndex;
-      if (list && list[newIndex]) {
-        const id = list[newIndex].id;
-        updateSelectedBlockIndex(newPath, id || '');
-      }
-    }
-  };
-
   const setPageSettingMode = () => {
     setMode('page-setting');
   };
@@ -192,21 +163,7 @@ const SettingPanel = (props) => {
           </PageTitle>
           <Space />
           {['list-overview', 'block-setting'].includes(mode) && (
-            <>
-              <RightElement>
-                <Button
-                  title="Previous block"
-                  disabled={selectedBlockIndex <= 0}
-                  onClick={previous}
-                >
-                  <ArrowBackIosOutlined style={{ fontSize: 16 }} />
-                </Button>
-                <Button title="Next block" onClick={next}>
-                  <ArrowForwardIosOutlined style={{ fontSize: 16 }} />
-                </Button>
-              </RightElement>
-              <Path pathArray={pathArray} onSelect={selectPathItem} />
-            </>
+            <Path pathArray={pathArray} onSelect={selectPathItem} />
           )}
 
           {mode === 'list-overview' && (
