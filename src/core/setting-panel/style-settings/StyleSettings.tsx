@@ -30,16 +30,11 @@ export const StyleSettings = (props: StyleSettingProps) => {
   const { blockType } = props;
 
   const styles = Object.keys(getWidgetStyles(blockType) || {});
-  const isCustomStyle = Object.keys(props.values).includes('_');
-
-  const showItem = (styleIdentifier: string) => {
-    return !isCustomStyle || (isCustomStyle && styleIdentifier === '_');
-  };
 
   const hasStyle = useMemo(() => {
     for (const style of styles) {
       const styleObj = getWidgetStyle(blockType, style);
-      if (styleObj.options.length > 0 && showItem(style)) {
+      if (styleObj.options.length > 0) {
         return true;
       }
     }
@@ -50,7 +45,7 @@ export const StyleSettings = (props: StyleSettingProps) => {
     <PropertyGroup header="Styles">
       {styles.map((style) => {
         const styleObj = getWidgetStyle(blockType, style);
-        if (styleObj.options.length === 0 || !showItem(style)) {
+        if (styleObj.options.length === 0) {
           return <React.Fragment key={styleObj.identifier}></React.Fragment>;
         }
 
