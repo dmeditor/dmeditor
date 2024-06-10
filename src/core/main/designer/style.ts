@@ -111,7 +111,7 @@ export const SideTool = {
     right: calc(var(--dmee-layout-property-width) + 20px);
   `,
   Item: styled.div`
-    margin-top: 10px;
+    margin-top: 12px;
   `,
 };
 

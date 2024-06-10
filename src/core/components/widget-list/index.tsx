@@ -221,7 +221,12 @@ const WidgetItem = (props: {
     <>
       <StyleWidgetItem active={open}>
         <div>{icon && SvgIcon({ name: icon as string, size: 20 })}</div>
-        <div className={StyleWidgetItemText} onClick={handleWidgetSelect} style={{ flexGrow: 1 }}>
+        <div
+          title={name}
+          className={StyleWidgetItemText}
+          onClick={handleWidgetSelect}
+          style={{ flexGrow: 1 }}
+        >
           {name}
         </div>
         {multipleStyles && (
