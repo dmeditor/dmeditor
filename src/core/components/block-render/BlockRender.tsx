@@ -89,10 +89,10 @@ export const BlockRender = memo((props: BlockProps) => {
     <BlockWrapper
       className={'dme-block-wrapper ' + cssStyles.rootClasses}
       onClick={onSelect}
+      {...(props.mode === 'edit' && props.data.id && { id: props.data.id })}
       active={active}
       generalSettings={props.data.data.settings?.general}
     >
-      {props.mode === 'edit' && <a id={props.data.id}></a>}
       <Widget
         inBlock={props.inBlock ? true : false}
         {...cssStyles}
