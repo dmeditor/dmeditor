@@ -21,13 +21,14 @@ import { StyleSettings } from './style-settings/StyleSettings';
 
 //Show settings of a widget, recurisively when there is embed
 export const SettingList = (props: {
+  rootWidget: string;
   blockData: DMEData.Block;
   blockPath: Array<number>;
   category?: string;
   styleTags: Array<string>;
   level?: number;
 }) => {
-  const { blockData: originData, level = 0, category, blockPath, styleTags } = props;
+  const { blockData: originData, level = 0, category, blockPath, styleTags, rootWidget } = props;
   const currentStyleTags = blockPath.length === 1 ? [...styleTags, 'root'] : styleTags;
   const {
     getClosestBlock,
@@ -270,17 +271,29 @@ export const SettingList = (props: {
   const renderChildrenSettings = (styleTags: Array<string>) => {
     return (
       <div>
-        {blockData.children?.map((item, index) => (
-          <div>
-            <SettingList
-              styleTags={styleTags}
-              blockData={item}
-              category={category}
-              blockPath={[...blockPath, index]}
-              level={level + 1}
-            />
-          </div>
-        ))}
+        {blockData.children?.map((item, index) => {
+          const newPath = [...blockPath, index];
+          const pathToRoot = newPath.slice(newPath.length - 1 - level);
+          let childSettings: DME.ChildSettings = {};
+          if (item.isEmbed) {
+            const [def] = getWidgetWithVariant(rootWidget);
+            if (def?.events.childSettings) {
+              childSettings = def.events.childSettings(pathToRoot, item);
+            }
+          }
+          return (
+            <div>
+              <SettingList
+                rootWidget={rootWidget}
+                styleTags={childSettings.styleTags || styleTags}
+                blockData={item}
+                category={category}
+                blockPath={newPath}
+                level={level + 1}
+              />
+            </div>
+          );
+        })}
       </div>
     );
   };

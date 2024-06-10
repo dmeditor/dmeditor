@@ -37,11 +37,14 @@ const heroTextWidget: DME.Widget = {
           {
             id: nanoid(),
             type: 'list',
+            isEmbed: true,
+            allowedTypes: ['heading', 'text', 'button'],
             data: { settings: { general: { padding: 10 } } },
             children: [
               {
                 id: nanoid(),
                 type: 'heading',
+                isEmbed: true,
                 data: {
                   value: 'Heading 2',
                   level: 2,
@@ -51,6 +54,15 @@ const heroTextWidget: DME.Widget = {
           },
         ],
       };
+    },
+    childSettings: (path: Array<number>, blockData: DMEData.Block) => {
+      const result: DME.ChildSettings = {};
+      if (path.length === 1) {
+        result.styleTags = [];
+      } else {
+        result.styleTags = ['core'];
+      }
+      return result;
     },
     updateData: () => {},
   },
@@ -73,7 +85,7 @@ const heroTextWidget: DME.Widget = {
       property: '.heroFullWidth',
       settingComponent: 'switch',
     },
-    ...generalSettings,
+    ...generalSettings.filter((item) => !item.styleTags?.includes('block')),
   ],
 };
 

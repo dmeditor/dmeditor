@@ -41,7 +41,7 @@ export const BlockSettings = (props: {
 
   //todo: cache it, using useMemo?
   const blockData = getBlockByPath(dataPath);
-  const [closestBlock] = getClosestBlock(dataPath, (block) => !block?.isEmbed) || [];
+  const [rootBlock] = getClosestBlock(dataPath, (block) => !block?.isEmbed) || [];
 
   const blockType = blockData?.type || '';
 
@@ -72,7 +72,7 @@ export const BlockSettings = (props: {
 
   const settingCategory = useMemo(() => {
     const result = defaultSettingTabs;
-    result['widget'] = getWidgetName(closestBlock?.type || '');
+    result['widget'] = getWidgetName(rootBlock?.type || '');
     return result;
   }, [blockType]);
 
@@ -98,6 +98,7 @@ export const BlockSettings = (props: {
           blockData={blockData}
           category={category === 'widget' ? undefined : 'block'}
           blockPath={dataPath}
+          rootWidget={blockData.type}
           styleTags={['core', 'block', 'list']}
         />
 

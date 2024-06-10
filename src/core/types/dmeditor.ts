@@ -41,6 +41,12 @@ export namespace DME {
     config?: unknown;
   };
 
+  export type ChildSettings = {
+    styleTags?: Array<string>; // style tags of this child
+    ownSettingView?: boolean; //has it's own setting view or embeded
+    styleOption?: WidgetStyleOption; //style option only under this widget
+  };
+
   export interface Widget {
     type: string;
     name: string;
@@ -60,6 +66,8 @@ export namespace DME {
       updateData?: (settings: Setting, data: DMEData.Block) => void;
       //when create an empty block
       createBlock: () => DMEData.Block<any, any>;
+
+      childSettings?: (childPath: Array<number>, blockData: DMEData.Block) => ChildSettings;
 
       //when used for default, eg. image inside another widget
       defaultBlock?: () => DMEData.Block<any>;
@@ -176,6 +184,7 @@ export namespace DMEData {
     style?: { [style: string]: string };
     isEmbed?: boolean;
     serverData?: boolean; // only set by server
+    allowedTypes?: Array<string>; // used for list/grid/mixed-widget
 
     /* editControl: edit, delete
      1 - no limit(same as undefined),0 - view only, 2 - can edit but can not delete,
