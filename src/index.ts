@@ -1,5 +1,6 @@
 export { useEditorStore } from './core/main/store';
-export { DMEditor } from './core/main/designer/DMEditor';
+export * from './core/main/designer/DMEditor';
+
 // register widgets
 export {
   addCustomDefinition,
