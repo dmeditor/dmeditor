@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
 import _debounce from 'lodash/debounce';
@@ -91,6 +92,7 @@ export const BlockRender = memo((props: BlockProps) => {
       active={active}
       generalSettings={props.data.data.settings?.general}
     >
+      {props.mode === 'edit' && <a id={props.data.id}></a>}
       <Widget
         inBlock={props.inBlock ? true : false}
         {...cssStyles}

@@ -2,7 +2,7 @@ import { css } from '@emotion/css';
 import { AddOutlined, DragIndicator, KeyboardArrowRight, PlusOne } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 
-import { getWidgetWithVariant } from '../../core/utils';
+import { getWidgetWithVariant, scrollBlockToView } from '../../core/utils';
 import { useEditorStore } from '../main/store';
 import { DMEData } from '../types/dmeditor';
 
@@ -45,7 +45,9 @@ export const ListOverview = (props: ListOverviewProps) => {
   };
 
   const jumpTo = (index: number) => {
-    updateSelectedBlockIndex([...blockPath, index], props.data[index].id || '');
+    const id = props.data[index].id || '';
+    updateSelectedBlockIndex([...blockPath, index], id);
+    scrollBlockToView(id);
   };
 
   const hover = (index: number) => {

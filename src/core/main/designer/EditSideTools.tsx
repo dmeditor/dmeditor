@@ -9,8 +9,8 @@ import {
   KeyboardArrowUpOutlined,
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import { next, previous } from 'slate';
 
+import { scrollBlockToView } from '../../../core/utils';
 import { useEditorStore } from '../store';
 import { SideTool } from './style';
 
@@ -25,17 +25,29 @@ export const EditSideTools = () => {
     updateSelectedBlockIndex,
   } = useEditorStore();
 
-  const currentList = getCurrentList();
-
   const previous = () => {
-    if (selectedBlockIndex > 0) {
-      const list = getCurrentList();
-      const newPath = [...currentListPath];
-      const newIndex = selectedBlockIndex - 1;
+    const list = getCurrentList();
+    if (!list || list.length === 0) {
+      return;
+    }
+
+    const selected = isSelected();
+    const newPath = [...currentListPath];
+    if (!selected || (selected && selectedBlockIndex === 0)) {
+      const newIndex = list.length - 1;
+      const id = list[newIndex].id || '';
       newPath.push(newIndex);
-      if (list && list[newIndex]) {
-        const id = list[newIndex].id;
-        updateSelectedBlockIndex(newPath, id || '');
+      updateSelectedBlockIndex(newPath, id);
+      scrollBlockToView(id);
+    } else {
+      if (selectedBlockIndex > 0) {
+        const newIndex = selectedBlockIndex - 1;
+        newPath.push(newIndex);
+        if (list && list[newIndex]) {
+          const id = list[newIndex].id || '';
+          updateSelectedBlockIndex(newPath, id);
+          scrollBlockToView(id);
+        }
       }
     }
   };
@@ -46,16 +58,21 @@ export const EditSideTools = () => {
       return;
     }
 
-    if (!isSelected()) {
-      updateSelectedBlockIndex([0], list[0].id || '');
+    const selected = isSelected();
+    const newPath = [...currentListPath];
+    if (!selected || (selected && selectedBlockIndex === list.length - 1)) {
+      const id = list[0].id || '';
+      newPath.push(0);
+      updateSelectedBlockIndex(newPath, id);
+      scrollBlockToView(id);
     } else {
       if (selectedBlockIndex < list.length - 1) {
-        const newPath = [...currentListPath];
         const newIndex = selectedBlockIndex + 1;
         newPath.push(newIndex);
         if (list && list[newIndex]) {
-          const id = list[newIndex].id;
-          updateSelectedBlockIndex(newPath, id || '');
+          const id = list[newIndex].id || '';
+          updateSelectedBlockIndex(newPath, id);
+          scrollBlockToView(id);
         }
       }
     }
@@ -72,24 +89,12 @@ export const EditSideTools = () => {
   return (
     <SideTool.Container>
       <SideTool.Item>
-        <Button
-          variant="outlined"
-          sx={buttonStyle}
-          title="Previous block"
-          disabled={!isSelected() || selectedBlockIndex <= 0}
-          onClick={previous}
-        >
+        <Button variant="outlined" sx={buttonStyle} title="Previous block" onClick={previous}>
           <KeyboardArrowUpOutlined />
         </Button>
       </SideTool.Item>
       <SideTool.Item>
-        <Button
-          title="Next block"
-          variant="outlined"
-          sx={buttonStyle}
-          disabled={!currentList || selectedBlockIndex >= currentList.length - 1}
-          onClick={next}
-        >
+        <Button title="Next block" variant="outlined" sx={buttonStyle} onClick={next}>
           <KeyboardArrowDownOutlined />
         </Button>
       </SideTool.Item>

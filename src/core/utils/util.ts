@@ -283,3 +283,11 @@ export const getPropertyValue = (property: string, blockData: DMEData.Block) => 
     ? getPropertyFromChildren(property, blockData.children)
     : getPropertyFromData(property, blockData);
 };
+
+// scroll element to view
+export const scrollBlockToView = (id: string) => {
+  const element = document.getElementById(id);
+  element?.scrollIntoView({
+    behavior: 'smooth',
+  });
+};
