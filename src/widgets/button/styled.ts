@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
 
-const StyledAnchor = styled.a<{ disabled?: boolean }>`
-  display: inline-block;
+const StyledAnchor = styled.a<{ disabled?: boolean; textAlign?: string }>`
+  display: block;
+  width: fit-content;
   text-decoration: none;
   ${(props) => (props.disabled ? 'pointer-events: none;' : '')}
+
+  ${(props) => (props.textAlign ? 'text-align: ' + props.textAlign + ';' : '')}
 
   &:disabled {
     pointer-events: none;
@@ -11,10 +14,12 @@ const StyledAnchor = styled.a<{ disabled?: boolean }>`
   }
 `;
 
-const StyledButton = styled.button<{ disabled?: boolean }>`
-  display: inline-block;
+const StyledButton = styled.button<{ disabled?: boolean; textAlign?: string }>`
+  display: block;
   text-decoration: none;
   pointer: cursor;
+
+  ${(props) => (props.textAlign ? 'text-align: ' + props.textAlign + ';' : '')}
 
   &:disabled {
     pointer: not-allowed;
