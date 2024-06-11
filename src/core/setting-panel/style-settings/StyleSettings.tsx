@@ -31,6 +31,8 @@ export const StyleSettings = (props: StyleSettingProps) => {
 
   const styles = Object.keys(getWidgetStyles(blockType) || {});
 
+  const isCustomStyle = Object.keys(props.values).includes('_');
+
   const hasStyle = useMemo(() => {
     for (const style of styles) {
       const styleObj = getWidgetStyle(blockType, style);
@@ -46,6 +48,10 @@ export const StyleSettings = (props: StyleSettingProps) => {
       {styles.map((style) => {
         const styleObj = getWidgetStyle(blockType, style);
         if (styleObj.options.length === 0) {
+          return <React.Fragment key={styleObj.identifier}></React.Fragment>;
+        }
+
+        if (isCustomStyle && style !== '_') {
           return <React.Fragment key={styleObj.identifier}></React.Fragment>;
         }
 
