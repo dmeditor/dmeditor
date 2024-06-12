@@ -35,6 +35,7 @@ const listWidget: DME.Widget = {
       name: 'Direction',
       property: '.direction',
       category: 'block',
+      styleTags: ['core'],
       settingComponent: 'button-group',
       parameters: {
         options: [

@@ -34,7 +34,13 @@ const buttonWidget: DME.Widget = {
       property: '.link',
       settingComponent: 'link',
     },
-    ...generalSettings.filter((item) => item.group !== 'style_content'),
+    {
+      name: 'Text align',
+      property: 'settings.textAlign',
+      settingComponent: 'align',
+      category: 'block',
+    },
+    ...generalSettings,
   ],
 };
 

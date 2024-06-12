@@ -9,7 +9,7 @@ interface ButtonProps extends DME.WidgetRenderProps<EntityButton> {
 const Button = (props: ButtonProps) => {
   const {
     blockNode: {
-      data: { value, link },
+      data: { value, link, settings },
     },
     mode,
     ...restProps
@@ -22,6 +22,9 @@ const Button = (props: ButtonProps) => {
   } = {};
   if (buttonType === 'link') {
     buttonProps['href'] = link;
+  }
+  if (settings?.textAlign) {
+    buttonProps['textAlign'] = settings.textAlign;
   }
   const handleClick = () => {
     onClick?.();
