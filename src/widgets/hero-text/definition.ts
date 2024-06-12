@@ -57,7 +57,14 @@ const heroTextWidget: DME.Widget = {
     },
     embedConfig: {
       enabledSettings: (settings, context) => {
-        return settings;
+        const result = settings.filter((item) => {
+          if (item.category !== 'block') {
+            return true;
+          } else {
+            return item.styleTags?.includes('core');
+          }
+        });
+        return result;
       },
     },
     updateData: () => {},
