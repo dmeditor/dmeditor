@@ -99,7 +99,6 @@ export const BlockSettings = (props: {
           category={category === 'widget' ? undefined : 'block'}
           blockPath={dataPath}
           rootWidget={blockData.type}
-          styleTags={['core', 'block', 'list']}
         />
 
         {category == 'widget' && (

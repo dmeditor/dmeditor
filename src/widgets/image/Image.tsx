@@ -39,6 +39,7 @@ export const ImageDefinition: DME.Widget = {
       property: 'settings.borderWidth',
       parameters: { min: 0, max: 40 },
       category: 'block',
+      styleTags: ['core'],
       group: 'style_border',
     },
     {
@@ -46,6 +47,7 @@ export const ImageDefinition: DME.Widget = {
       settingComponent: 'color',
       property: 'settings.borderColor',
       category: 'block',
+      styleTags: ['core'],
       group: 'style_border',
     },
     ...generalSettings,

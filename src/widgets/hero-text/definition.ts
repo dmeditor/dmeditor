@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
+import { arrayHasCommonElement } from '../../core/utils';
 import { EntityHeroText } from './entity';
 
 const heroTextWidget: DME.Widget = {
@@ -61,7 +62,19 @@ const heroTextWidget: DME.Widget = {
           if (item.category !== 'block') {
             return true;
           } else {
-            return item.styleTags?.includes('core');
+            if (context.relativePath.length === 1) {
+              if (context.relativePath[0] === 0) {
+                //image
+                if (!item.styleTags) {
+                  return true;
+                }
+                return arrayHasCommonElement(item.styleTags, ['container']);
+              } else {
+                //list
+                return item.property === 'settings.general.padding';
+              }
+            }
+            return true;
           }
         });
         return result;

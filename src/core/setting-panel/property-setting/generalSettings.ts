@@ -32,7 +32,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.padding',
     parameters: { min: 0, max: 100 },
     category: 'block',
-    styleTags: ['core'],
+    styleTags: ['container'],
     group: 'style_block',
   },
   {
@@ -50,7 +50,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.background',
     category: 'block',
     group: 'style_block',
-    styleTags: ['core'],
+    styleTags: ['container'],
   },
   {
     name: 'Full width',

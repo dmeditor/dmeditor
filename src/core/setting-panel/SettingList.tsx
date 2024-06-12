@@ -25,11 +25,9 @@ export const SettingList = (props: {
   blockData: DMEData.Block;
   blockPath: Array<number>;
   category?: string;
-  styleTags: Array<string>;
   level?: number;
 }) => {
-  const { blockData: originData, level = 0, category, blockPath, styleTags, rootWidget } = props;
-  const currentStyleTags = blockPath.length === 1 ? [...styleTags, 'root'] : styleTags;
+  const { blockData: originData, level = 0, category, blockPath, rootWidget } = props;
   const {
     getClosestBlock,
     updateBlockStyleByPath,
@@ -90,39 +88,36 @@ export const SettingList = (props: {
         });
       } else {
         let settings = widgetDef?.settings;
-        if (blockData.isEmbed) {
-          const configObject = getEmbedConfigObject();
-          if (configObject?.enabledSettings) {
-            settings = configObject.enabledSettings(settings, {
-              childPath: blockPath.slice(blockPath.length - 1 - level),
-              blockData: blockData,
-            });
-          }
-        }
 
+        //filter from system
         result = settings.filter((item) => {
           if (item.category === category) {
             if (item.category !== 'block') {
               return true;
             } else {
-              if (!item.styleTags) {
-                return true;
-              } else {
-                //if
-                let matchResult = false;
-                for (const tag of currentStyleTags) {
-                  if (item.styleTags.includes(tag)) {
-                    matchResult = true;
-                    break;
-                  }
+              if (item.styleTags) {
+                //if not in root
+                if (blockPath.length > 1 && item.styleTags.includes('root')) {
+                  return false;
                 }
-                return matchResult;
               }
+              return true;
             }
           } else {
             return false;
           }
         });
+
+        //filter from mixed-widget root
+        if (blockData.isEmbed) {
+          const configObject = getEmbedConfigObject();
+          if (configObject?.enabledSettings) {
+            result = configObject.enabledSettings(result, {
+              relativePath: blockPath.slice(blockPath.length - level),
+              blockData: blockData,
+            });
+          }
+        }
       }
       return result;
     }
@@ -287,7 +282,7 @@ export const SettingList = (props: {
     );
   };
 
-  const renderChildrenSettings = (styleTags: Array<string>) => {
+  const renderChildrenSettings = () => {
     return (
       <div>
         {blockData.children?.map((item, index) => {
@@ -296,7 +291,6 @@ export const SettingList = (props: {
             <div>
               <SettingList
                 rootWidget={rootWidget}
-                styleTags={styleTags}
                 blockData={item}
                 category={category}
                 blockPath={newPath}
@@ -338,7 +332,7 @@ export const SettingList = (props: {
                 if (blockData.isEmbed) {
                   return (
                     <StyledSettingList.Children level={level}>
-                      {renderChildrenSettings(['core', 'list'])}
+                      {renderChildrenSettings()}
                     </StyledSettingList.Children>
                   );
                 } else {
