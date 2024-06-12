@@ -41,11 +41,10 @@ export namespace DME {
     config?: unknown;
   };
 
-  export type ChildSettings = {
-    styleTags?: Array<string>; // style tags of this child
-    ownSettingView?: boolean; //has it's own setting view or embeded
-    styleOption?: WidgetStyleOption; //style option only under this widget
-  };
+  export interface EmbedChildContext {
+    relativePath: Array<number>;
+    blockData: DMEData.Block;
+  }
 
   export interface Widget {
     type: string;
@@ -67,7 +66,13 @@ export namespace DME {
       //when create an empty block
       createBlock: () => DMEData.Block<any, any>;
 
-      childSettings?: (childPath: Array<number>, blockData: DMEData.Block) => ChildSettings;
+      embedConfig?: {
+        enabledSettings?: (settings: Array<Setting>, context: EmbedChildContext) => Array<Setting>;
+
+        ownView?: (childParams: EmbedChildConfigParams) => boolean;
+
+        styleOption?: (childParams: EmbedChildConfigParams) => WidgetStyleOption;
+      };
 
       //when used for default, eg. image inside another widget
       defaultBlock?: () => DMEData.Block<any>;

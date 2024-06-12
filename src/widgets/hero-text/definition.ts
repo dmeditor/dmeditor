@@ -55,14 +55,10 @@ const heroTextWidget: DME.Widget = {
         ],
       };
     },
-    childSettings: (path: Array<number>, blockData: DMEData.Block) => {
-      const result: DME.ChildSettings = {};
-      if (path.length === 1) {
-        result.styleTags = [];
-      } else {
-        result.styleTags = ['core'];
-      }
-      return result;
+    embedConfig: {
+      enabledSettings: (settings, context) => {
+        return settings;
+      },
     },
     updateData: () => {},
   },

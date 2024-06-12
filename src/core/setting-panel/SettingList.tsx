@@ -67,6 +67,14 @@ export const SettingList = (props: {
     }
   }, [originData.id]);
 
+  const getEmbedConfigObject = () => {
+    const [def] = getWidgetWithVariant(rootWidget);
+    if (def?.events.embedConfig) {
+      return def.events.embedConfig;
+    }
+    return null;
+  };
+
   //get Widget setting with variant
   const settingConfigList = useMemo(() => {
     const [widgetDef, variant] = getWidgetWithVariant(blockData.type);
@@ -81,7 +89,18 @@ export const SettingList = (props: {
           );
         });
       } else {
-        result = widgetDef?.settings.filter((item) => {
+        let settings = widgetDef?.settings;
+        if (blockData.isEmbed) {
+          const configObject = getEmbedConfigObject();
+          if (configObject?.enabledSettings) {
+            settings = configObject.enabledSettings(settings, {
+              childPath: blockPath.slice(blockPath.length - 1 - level),
+              blockData: blockData,
+            });
+          }
+        }
+
+        result = settings.filter((item) => {
           if (item.category === category) {
             if (item.category !== 'block') {
               return true;
@@ -273,19 +292,11 @@ export const SettingList = (props: {
       <div>
         {blockData.children?.map((item, index) => {
           const newPath = [...blockPath, index];
-          const pathToRoot = newPath.slice(newPath.length - 1 - level);
-          let childSettings: DME.ChildSettings = {};
-          if (item.isEmbed) {
-            const [def] = getWidgetWithVariant(rootWidget);
-            if (def?.events.childSettings) {
-              childSettings = def.events.childSettings(pathToRoot, item);
-            }
-          }
           return (
             <div>
               <SettingList
                 rootWidget={rootWidget}
-                styleTags={childSettings.styleTags || styleTags}
+                styleTags={styleTags}
                 blockData={item}
                 category={category}
                 blockPath={newPath}
