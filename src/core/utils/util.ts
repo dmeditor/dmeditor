@@ -291,3 +291,14 @@ export const scrollBlockToView = (id: string) => {
     behavior: 'smooth',
   });
 };
+
+export const arrayHasCommonElement = (a: Array<unknown>, b: Array<unknown>) => {
+  for (const i of a) {
+    for (const j of b) {
+      if (i === j) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
