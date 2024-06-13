@@ -69,9 +69,9 @@ export namespace DME {
       embedConfig?: {
         enabledSettings?: (settings: Array<Setting>, context: EmbedChildContext) => Array<Setting>;
 
-        ownView?: (childParams: EmbedChildConfigParams) => boolean;
+        hasOwnView?: (context: EmbedChildContext) => boolean;
 
-        styleOption?: (childParams: EmbedChildConfigParams) => WidgetStyleOption;
+        styleOption?: (context: EmbedChildContext) => WidgetStyleOption;
       };
 
       //when used for default, eg. image inside another widget

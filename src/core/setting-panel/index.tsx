@@ -71,8 +71,9 @@ const SettingPanel = (props) => {
 
   const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
-  const [closestBlock = null, closestBlockPath = []] = isSelected()
-    ? getClosestBlock([...currentListPath, selectedBlockIndex], (block) => !block?.isEmbed) || []
+  const selectedPath = [...currentListPath, selectedBlockIndex];
+  const [rootBlock = null, rootBlockPath = []] = isSelected()
+    ? getClosestBlock(selectedPath, (block) => !block?.isEmbed) || []
     : [];
 
   const currentList = getCurrentList();
@@ -102,9 +103,9 @@ const SettingPanel = (props) => {
       }
     }
 
-    if (closestBlock) {
+    if (rootBlock) {
       pathArray.forEach((item) => {
-        if (item.id === closestBlock.id) {
+        if (item.id === rootBlock.id) {
           item.selected = true;
         }
       });
@@ -178,7 +179,15 @@ const SettingPanel = (props) => {
           )}
 
           {mode === 'block-setting' && (
-            <>{isSelected() && <BlockSettings {...props} dataPath={closestBlockPath} />}</>
+            <>
+              {isSelected() && (
+                <BlockSettings
+                  rootPath={rootBlockPath}
+                  rootBlock={rootBlock}
+                  selectedPath={selectedPath}
+                />
+              )}
+            </>
           )}
 
           {mode === 'page-setting' && (

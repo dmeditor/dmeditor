@@ -24,28 +24,19 @@ export const SettingList = (props: {
   rootWidget: string;
   blockData: DMEData.Block;
   blockPath: Array<number>;
+  selectedPath: Array<number>;
   category?: string;
   level?: number;
 }) => {
-  const { blockData: originData, level = 0, category, blockPath, rootWidget } = props;
-  const {
-    getClosestBlock,
-    updateBlockStyleByPath,
-    updateBlockPropsByPath,
-    getSelectedBlock,
-    selected,
-  } = useEditorStore();
+  const { blockData, selectedPath, level = 0, category, blockPath, rootWidget } = props;
+  const { updateBlockStyleByPath, updateBlockPropsByPath } = useEditorStore();
 
   const [settingStatus, setSettingStatus] = useState<{
     [index: string | symbol]: DME.WidgetStyleSettingStatus;
   }>({});
-  const isSelected = getSelectedBlock()?.id === originData.id;
-  const isRoot = level === 0;
-  const isOriginRootEmbed = originData.isEmbed && isRoot;
 
-  const blockData = isOriginRootEmbed
-    ? getClosestBlock(blockPath, (parent) => !parent.isEmbed)?.[0] ?? originData
-    : originData;
+  //if selected path contains block path, it's selected (meaning parents are also selected)
+  const isSelected = level > 0 && selectedPath.join(',').startsWith(blockPath.join(','));
 
   const widgetDef = useMemo(() => {
     const def = getWidget(blockData.type);
@@ -56,14 +47,14 @@ export const SettingList = (props: {
 
   //init setting status
   useEffect(() => {
-    const styles = originData.style;
+    const styles = blockData.style;
     if (styles) {
       for (const style of Object.keys(styles)) {
         const option = styles[style];
         resetSettingStatus(option, style);
       }
     }
-  }, [originData.id]);
+  }, [blockData.id]);
 
   const getEmbedConfigObject = () => {
     const [def] = getWidgetWithVariant(rootWidget);
@@ -294,6 +285,7 @@ export const SettingList = (props: {
                 blockData={item}
                 category={category}
                 blockPath={newPath}
+                selectedPath={selectedPath}
                 level={level + 1}
               />
             </div>
@@ -304,10 +296,8 @@ export const SettingList = (props: {
   };
 
   useEffect(() => {
-    if (selected.blockId === originData.id) {
-      setExpanded(true);
-    }
-  }, [selected]);
+    setExpanded(isSelected);
+  }, [isSelected]);
 
   return (
     <div>
@@ -353,7 +343,7 @@ export const SettingList = (props: {
               } else {
                 return (
                   <StyledSettingList.Children level={level}>
-                    {renderChildrenSettings(['core'])}
+                    {renderChildrenSettings()}
                   </StyledSettingList.Children>
                 );
               }

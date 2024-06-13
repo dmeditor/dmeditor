@@ -4,6 +4,7 @@ import { getWidgetName, getWidgetWithVariant, widgetDefinition } from '../../cor
 import { PropertyTab, TabData } from '../components/property-tab/Tab';
 import { dmeConfig } from '../config';
 import { useEditorStore } from '../main/store';
+import { DMEData } from '../types';
 import { getPropertyChildren, getPropertyValue, isNull, PropertyItem } from '../utils';
 import { canEditControl, editControlEnabled } from '../utils/editControl';
 import { CopyPaste, DeleteBlock, Move } from './actions';
@@ -12,36 +13,18 @@ import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
 import { SettingList } from './SettingList';
 import { ActionPanel, ActionPanelButtonGroup, RightElement, TabBodyContainer } from './style';
-import { StyleSettings } from './style-settings/StyleSettings';
-
-interface CommonSettingsType {
-  align: string;
-  backgroundColor: string;
-  color: string;
-  marginTop: number;
-  height: number;
-  padding: number;
-  width: number;
-
-  blockIndex: number;
-}
 
 export const BlockSettings = (props: {
-  commonSettings: any;
-  settingList?: Array<string>;
-  onDelete?: () => void;
-  onChange: (data: any) => void;
-  commonChange: (type: keyof CommonSettingsType, data: any) => void;
-
-  dataPath: Array<number>;
+  selectedPath: Array<number>;
+  rootPath: Array<number>;
+  rootBlock: DMEData.Block;
 }) => {
-  const { dataPath } = props;
+  const { selectedPath, rootPath, rootBlock } = props;
 
-  const { getBlockByPath, getClosestBlock } = useEditorStore();
+  const { getBlockByPath } = useEditorStore();
 
   //todo: cache it, using useMemo?
-  const blockData = getBlockByPath(dataPath);
-  const [rootBlock] = getClosestBlock(dataPath, (block) => !block?.isEmbed) || [];
+  const blockData = getBlockByPath(selectedPath);
 
   const blockType = blockData?.type || '';
 
@@ -95,9 +78,10 @@ export const BlockSettings = (props: {
           onOpenClose={(open) => setBlockOpen(open)}
         > */}
         <SettingList
-          blockData={blockData}
+          blockData={rootBlock}
+          blockPath={rootPath}
+          selectedPath={selectedPath}
           category={category === 'widget' ? undefined : 'block'}
-          blockPath={dataPath}
           rootWidget={blockData.type}
         />
 
