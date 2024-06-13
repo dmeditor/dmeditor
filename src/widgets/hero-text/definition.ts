@@ -79,6 +79,12 @@ const heroTextWidget: DME.Widget = {
         });
         return result;
       },
+      // hasOwnView: (context) => {
+      //   if (context.relativePath.length >= 2 && context.relativePath[0] === 1) {
+      //     return true;
+      //   }
+      //   return false;
+      // },
     },
     updateData: () => {},
   },
