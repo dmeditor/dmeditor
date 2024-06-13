@@ -15,7 +15,7 @@ const HeadingWidget: DME.Widget = {
   themeStyles: 'Theme heading',
   events: {
     createBlock: (): DMEData.Block<EntityHeadingBlock> => {
-      const defaultStyle = dmeConfig.widgets['button']?.defaultStyle;
+      const defaultStyle = dmeConfig.widgets['heading']?.defaultStyle;
       const styleObj = defaultStyle ? { style: defaultStyle } : {};
 
       return {
