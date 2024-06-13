@@ -5,6 +5,7 @@ import { Button, Collapse } from '@mui/material';
 import { dmeConfig, useEditorStore } from '../../';
 import { DME, DMEData } from '../types';
 import {
+  arrayStarts,
   getPropertyValue,
   getWidget,
   getWidgetStyle,
@@ -36,7 +37,7 @@ export const SettingList = (props: {
   }>({});
 
   //if selected path contains block path, it's selected (meaning parents are also selected)
-  const isSelected = level > 0 && selectedPath.join(',').startsWith(blockPath.join(','));
+  const isSelected = level > 0 && arrayStarts(selectedPath, blockPath);
 
   const widgetDef = useMemo(() => {
     const def = getWidget(blockData.type);

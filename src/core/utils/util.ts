@@ -302,3 +302,17 @@ export const arrayHasCommonElement = (a: Array<unknown>, b: Array<unknown>) => {
   }
   return false;
 };
+
+export const arrayStarts = (a: Array<unknown>, b: Array<unknown>) => {
+  if (a.length < b.length) {
+    return false;
+  }
+  for (let i = 0; i <= a.length - 1; i++) {
+    if (i <= b.length - 1) {
+      if (a[i] !== b[i]) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
