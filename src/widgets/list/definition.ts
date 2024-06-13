@@ -6,7 +6,7 @@ import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
 const listWidget: DME.Widget = {
   category: 'design',
   icon: 'list',
-  name: 'List container',
+  name: 'List',
   type: 'list',
   widgetType: 'list',
   events: {
