@@ -20,6 +20,7 @@ const Grid = (props: DME.WidgetRenderProps<EntityGrid>) => {
         path={props.path}
         mode={props.mode}
         direction="horizontal"
+        isEmbed={blockNode.isEmbed}
         allowedTypes={getAllowedTypes(blockNode.type)}
       />
     </StyledGrid>

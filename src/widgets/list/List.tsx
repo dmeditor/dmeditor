@@ -20,6 +20,7 @@ const List = (props: DME.WidgetRenderProps<EntityList>) => {
         blockData={children || []}
         path={props.path}
         direction={direction}
+        isEmbed={blockNode.isEmbed}
         allowedTypes={getAllowedTypes(blockNode.type)}
       />
     </StyledList>
