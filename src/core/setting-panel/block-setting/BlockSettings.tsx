@@ -1,18 +1,25 @@
 import { ReactElement, useMemo } from 'react';
 
-import { getWidgetName, getWidgetWithVariant, widgetDefinition } from '../../core/utils';
-import { PropertyTab, TabData } from '../components/property-tab/Tab';
-import { dmeConfig } from '../config';
-import { useEditorStore } from '../main/store';
-import { DMEData } from '../types';
-import { getPropertyChildren, getPropertyValue, isNull, PropertyItem } from '../utils';
-import { canEditControl, editControlEnabled } from '../utils/editControl';
-import { CopyPaste, DeleteBlock, Move } from './actions';
-import { SetEditControl } from './actions/SetEditControl';
-import { defaultSettingTabs } from './config';
-import Property from './property-setting/property-item';
+import { PropertyTab, TabData } from '../../components/property-tab/Tab';
+import { dmeConfig } from '../../config';
+import { useEditorStore } from '../../main/store';
+import { DMEData } from '../../types';
+import {
+  getPropertyChildren,
+  getPropertyValue,
+  getWidgetName,
+  getWidgetWithVariant,
+  isNull,
+  PropertyItem,
+  widgetDefinition,
+} from '../../utils';
+import { canEditControl, editControlEnabled } from '../../utils/editControl';
+import { CopyPaste, DeleteBlock, Move } from '../actions';
+import { SetEditControl } from '../actions/SetEditControl';
+import { defaultSettingTabs } from '../config';
+import Property from '../property-setting/property-item';
 import { SettingTree } from './SettingTree';
-import { ActionPanel, ActionPanelButtonGroup, RightElement, TabBodyContainer } from './style';
+import { ActionPanel, ActionPanelButtonGroup, RightElement, TabBodyContainer } from './styled';
 
 export const BlockSettings = (props: {
   selectedPath: Array<number>;

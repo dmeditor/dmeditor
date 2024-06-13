@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowDropDownOutlined, ArrowRightOutlined } from '@mui/icons-material';
 import { Button, Collapse } from '@mui/material';
 
-import { dmeConfig, useEditorStore } from '../..';
-import { DME, DMEData } from '../types';
+import { dmeConfig, useEditorStore } from '../../..';
+import { DME, DMEData } from '../../types';
 import {
   arrayStarts,
   getPropertyValue,
@@ -14,11 +14,11 @@ import {
   isKeyInObject,
   PropertyGroup,
   PropertyItem,
-} from '../utils';
-import { ListOverview } from './ListOverview';
-import Property from './property-setting/property-item';
-import { StyledSettingList, StyledSettingNoGroup } from './style';
-import { StyleSettings } from './style-settings/StyleSettings';
+} from '../../utils';
+import { ListOverview } from '../ListOverview';
+import Property from '../property-setting/property-item';
+import { StyleSettings } from '../style-settings/StyleSettings';
+import { StyledSettingList, StyledSettingNoGroup } from './styled';
 
 //Show settings of a widget, recurisively when there is embed
 export const SettingTree = (props: {

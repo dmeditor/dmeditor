@@ -48,30 +48,6 @@ export const PathItem = styled.span<{ canClick?: boolean; selected?: boolean }>`
       : ''};
 `;
 
-export const RightElement = styled.div`
-  float: right;
-`;
-
-export const TabBodyContainer = styled.div<{ fullHeight?: boolean }>`
-  padding: 0 10px;
-  height: calc(100vh - ${(props) => (props.fullHeight ? 200 : 250)}px);
-  overflow: auto;
-`;
-
-export const ActionPanel = styled.div`
-  border-top: 1px solid #cccccc;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  width: 100%;
-  padding: 20px 0px;
-  background-color: white;
-`;
-
-export const ActionPanelButtonGroup = styled.span`
-  padding: 0px 5px;
-`;
-
 export const PathContainer = styled.div`
   padding: 0px 10px;
 `;
@@ -108,15 +84,6 @@ export const AdddBlockHeader = styled.div`
   z-index: 10;
 `;
 
-export const StyledSettingList = {
-  Group: styled.div<{ level: number }>`
-    padding: 0px ${(props) => props.level * 5}px;
-  `,
-  Children: styled.div<{ level: number }>`
-    padding: 0px ${(props) => props.level * 10}px;
-  `,
-};
-
 export const StyledSettingItem = {
   Container: styled.div<{ autoWidth?: boolean }>`
     display: flex;
@@ -148,7 +115,3 @@ export const StyledSettingGroup = {
   `,
   Body: styled.div``,
 };
-
-export const StyledSettingNoGroup = styled.div`
-  padding: 5px 10px;
-`;

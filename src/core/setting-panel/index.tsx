@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 import { getWidgetName } from '../../core/utils/register';
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
-import { BlockSettings } from './BlockSettings';
+import { BlockSettings } from './block-setting/BlockSettings';
 import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
 import { Path, PathItem } from './Path';
