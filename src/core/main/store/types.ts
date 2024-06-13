@@ -60,11 +60,8 @@ export type Actions = {
   getCurrentList: () => DMEData.BlockList | null;
   getCurrentBlock: () => DMEData.Block | null;
   getBlockByPath: (path: Array<number>) => DMEData.Block;
-  getClosestBlock: (
-    path: Array<number>,
-    callback?: (block: DMEData.Block) => boolean,
-  ) => [DMEData.Block, Array<number>] | null;
-  getParents: () => Array<DMEData.Block & { path: Array<number> }>; //get parent Block from top to down, based on currentListPath
+  getClosestBlock: (path: Array<number>) => [DMEData.Block, Array<number>] | [];
+  getParents: (path: Array<number>) => Array<DMEData.Block & { path: Array<number> }>; //get parent Block from top to down, based on currentListPath
   updateBlockByPath: <Type = DMEData.DefaultDataType>(
     path: Array<number>,
     callback: (blockData: Type, block?: any) => void,

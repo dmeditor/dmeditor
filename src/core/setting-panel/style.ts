@@ -119,3 +119,7 @@ export const StyledSettingGroup = {
 export const RightElement = styled.div`
   float: right;
 `;
+
+export const AlignRight = styled.div`
+  text-align: right;
+`;

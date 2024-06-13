@@ -90,7 +90,7 @@ export const BlockSettings = (props: {
           blockPath={rootPath}
           selectedPath={selectedPath}
           category={category === 'widget' ? undefined : 'block'}
-          rootWidget={blockData.type}
+          rootWidget={rootBlock.type}
         />
 
         {category == 'widget' && (

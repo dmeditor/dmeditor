@@ -154,35 +154,33 @@ export const useEditorStore = create<Store & Actions>()(
       const state = get();
       return getDataByPath(state.storage, path) ?? { type: 'unknown', data: {} };
     },
-    getClosestBlock: (
-      path: Array<number>,
-      callback?: (block: DMEData.Block) => boolean,
-    ): [DMEData.Block, Array<number>] | null => {
+    getClosestBlock: (path: Array<number>): [DMEData.Block, Array<number>] | [] => {
       const state = get();
 
       if (path.length === 0) {
-        return null;
+        return [];
       }
 
-      let result = null;
-      let resultPath: number[] = [];
-
+      const parents: Array<any> = [];
       iteratePath(path, state.storage, (item, path) => {
-        if (callback?.(item)) {
-          result = item;
-          resultPath = path;
-        } else if (!callback) {
-          result = item;
-          resultPath = path;
-        }
+        parents.push([item, path]);
       });
+      parents.reverse();
 
-      return result ? [result, resultPath] : null;
+      for (const item of parents) {
+        if (!item[0].isEmbed) {
+          return item;
+        }
+      }
+      return [];
     },
-    getParents: (): Array<DMEData.Block & { path: Array<number> }> => {
+    getParents: (path: Array<number>): Array<DMEData.Block & { path: Array<number> }> => {
       const state = get();
       const result: Array<DMEData.Block & { path: Array<number> }> = [];
-      iteratePath(state.selected.currentListPath, state.storage, (item, path) => {
+      if (path.length === 0) {
+        return [];
+      }
+      iteratePath(path.slice(0, path.length - 1), state.storage, (item, path) => {
         result.push({ ...item, path: path });
       });
       return result;

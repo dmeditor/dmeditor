@@ -1,13 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowDropDownOutlined, ArrowRightOutlined } from '@mui/icons-material';
+import {
+  ArrowDropDownOutlined,
+  ArrowForwardIosOutlined,
+  ArrowRightAltOutlined,
+  ArrowRightOutlined,
+} from '@mui/icons-material';
 import { Button, Collapse } from '@mui/material';
 
 import { dmeConfig, useEditorStore } from '../../..';
 import { DME, DMEData } from '../../types';
 import {
   arrayStarts,
+  getEmbedConfigObject,
   getPropertyValue,
   getWidget,
+  getWidgetName,
   getWidgetStyle,
   getWidgetStyleOption,
   getWidgetWithVariant,
@@ -18,6 +25,7 @@ import {
 import { ListOverview } from '../ListOverview';
 import Property from '../property-setting/property-item';
 import { StyleSettings } from '../style-settings/StyleSettings';
+import { isEmbedOwnSetting } from './embedSetting';
 import { StyledSettingList, StyledSettingNoGroup } from './styled';
 
 //Show settings of a widget, recurisively when there is embed
@@ -30,7 +38,8 @@ export const SettingTree = (props: {
   level?: number;
 }) => {
   const { blockData, selectedPath, level = 0, category, blockPath, rootWidget } = props;
-  const { updateBlockStyleByPath, updateBlockPropsByPath } = useEditorStore();
+  const { updateBlockStyleByPath, updateBlockPropsByPath, updateSelectedBlockIndex } =
+    useEditorStore();
 
   const [settingStatus, setSettingStatus] = useState<{
     [index: string | symbol]: DME.WidgetStyleSettingStatus;
@@ -56,14 +65,6 @@ export const SettingTree = (props: {
       }
     }
   }, [blockData.id]);
-
-  const getEmbedConfigObject = () => {
-    const [def] = getWidgetWithVariant(rootWidget);
-    if (def?.events.embedConfig) {
-      return def.events.embedConfig;
-    }
-    return null;
-  };
 
   //get Widget setting with variant
   const settingConfigList = useMemo(() => {
@@ -102,7 +103,7 @@ export const SettingTree = (props: {
 
         //filter from mixed-widget root
         if (blockData.isEmbed) {
-          const configObject = getEmbedConfigObject();
+          const configObject = getEmbedConfigObject(rootWidget);
           if (configObject?.enabledSettings) {
             result = configObject.enabledSettings(result, {
               relativePath: blockPath.slice(blockPath.length - level),
@@ -279,18 +280,32 @@ export const SettingTree = (props: {
       <div>
         {blockData.children?.map((item, index) => {
           const newPath = [...blockPath, index];
-          return (
-            <div>
-              <SettingTree
-                rootWidget={rootWidget}
-                blockData={item}
-                category={category}
-                blockPath={newPath}
-                selectedPath={selectedPath}
-                level={level + 1}
-              />
-            </div>
-          );
+          const isOwnView =
+            item.isEmbed &&
+            isEmbedOwnSetting(item, newPath.slice(newPath.length - (level + 1)), rootWidget);
+          if (isOwnView) {
+            return (
+              <div>
+                <span>{getWidgetName(item.type)}</span>
+                <Button onClick={() => updateSelectedBlockIndex(newPath, item.id || '')}>
+                  <ArrowRightAltOutlined />
+                </Button>
+              </div>
+            );
+          } else {
+            return (
+              <div>
+                <SettingTree
+                  rootWidget={rootWidget}
+                  blockData={item}
+                  category={category}
+                  blockPath={newPath}
+                  selectedPath={selectedPath}
+                  level={level + 1}
+                />
+              </div>
+            );
+          }
         })}
       </div>
     );
@@ -319,28 +334,20 @@ export const SettingTree = (props: {
         {widgetDef?.widgetType && ['list', 'mixed'].includes(widgetDef.widgetType) && (
           <div>
             {(() => {
-              if (widgetDef.widgetType === 'list') {
-                if (blockData.isEmbed) {
-                  return (
-                    <StyledSettingList.Children level={level}>
-                      {renderChildrenSettings()}
-                    </StyledSettingList.Children>
-                  );
-                } else {
-                  return (
-                    <StyledSettingList.Children level={level}>
-                      {blockData.children ? (
-                        <ListOverview
-                          data={blockData.children}
-                          blockPath={blockPath}
-                          selectedIndex={-1}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </StyledSettingList.Children>
-                  );
-                }
+              if (widgetDef.widgetType === 'list' && !blockData.isEmbed) {
+                return (
+                  <StyledSettingList.Children level={level}>
+                    {blockData.children ? (
+                      <ListOverview
+                        data={blockData.children}
+                        blockPath={blockPath}
+                        selectedIndex={-1}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </StyledSettingList.Children>
+                );
               } else {
                 return (
                   <StyledSettingList.Children level={level}>

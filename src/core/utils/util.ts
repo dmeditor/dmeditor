@@ -2,7 +2,7 @@
 
 import type { DMEData } from '../types';
 import { logger } from './log';
-import { getWidgetStyle } from './register';
+import { getWidgetStyle, getWidgetWithVariant } from './register';
 
 export function jsonParse<T>(obj: string): T {
   try {
@@ -315,4 +315,12 @@ export const arrayStarts = (a: Array<unknown>, b: Array<unknown>) => {
     }
   }
   return true;
+};
+
+export const getEmbedConfigObject = (rootWidget: string) => {
+  const [def] = getWidgetWithVariant(rootWidget);
+  if (def?.events.embedConfig) {
+    return def.events.embedConfig;
+  }
+  return null;
 };

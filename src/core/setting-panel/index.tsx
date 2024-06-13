@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useMemo } from 'react';
 import {
   ArrowBack,
   ArrowBackIosOutlined,
@@ -11,10 +12,11 @@ import { getWidgetName } from '../../core/utils/register';
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './block-setting/BlockSettings';
+import { isEmbedOwnSetting } from './block-setting/embedSetting';
 import { ListOverview } from './ListOverview';
 import { PageSetting } from './PageSetting';
 import { Path, PathItem } from './Path';
-import { ClickEditInput, PageTitle, RightElement, SettingHeader, Space } from './style';
+import { AlignRight, ClickEditInput, PageTitle, RightElement, SettingHeader, Space } from './style';
 
 const { useEffect, useState } = React;
 
@@ -72,20 +74,21 @@ const SettingPanel = (props) => {
   const [mode, setMode] = useState<SettingPanelMode>('list-overview');
   const [pathArray, setPathArray] = useState([] as Array<PathItem>);
   const selectedPath = [...currentListPath, selectedBlockIndex];
-  const [rootBlock = null, rootBlockPath = []] = isSelected()
-    ? getClosestBlock(selectedPath, (block) => !block?.isEmbed) || []
-    : [];
-
-  const currentList = getCurrentList();
   // const selectedBlock = useMemo(() => getSelectedBlock(), [blockId]);
   const selectedBlock = getSelectedBlock();
+  const [rootBlock, rootBlockPath] = selectedBlock?.isEmbed
+    ? getClosestBlock(selectedPath)
+    : [selectedBlock, selectedPath];
+
+  const currentList = getCurrentList();
 
   const updatePath = () => {
     const pathArray: Array<PathItem> = [{ text: 'Page', id: 'page', dataPath: [] }];
-    if (isSelected()) {
-      const parents = getParents();
+    if (isSelected() && rootBlockPath) {
+      //parents
+      const parents = getParents(rootBlockPath);
       for (const item of parents) {
-        if (item.type) {
+        if (item.type && !item.isEmbed) {
           pathArray.push({
             text: getWidgetName(item.type),
             id: item.id || '',
@@ -94,13 +97,12 @@ const SettingPanel = (props) => {
         }
       }
 
-      if (selectedBlock && !selectedBlock.isEmbed) {
-        pathArray.push({
-          text: getWidgetName(selectedBlock?.type || ''),
-          id: selectedBlock?.id || '',
-          dataPath: [...currentListPath, selectedBlockIndex],
-        });
-      }
+      //push current
+      pathArray.push({
+        text: getWidgetName(rootBlock?.type || ''),
+        id: rootBlock?.id || '',
+        dataPath: rootBlockPath,
+      });
     }
 
     if (rootBlock) {
@@ -178,17 +180,40 @@ const SettingPanel = (props) => {
             </>
           )}
 
-          {mode === 'block-setting' && (
-            <>
-              {isSelected() && (
-                <BlockSettings
-                  rootPath={rootBlockPath}
-                  rootBlock={rootBlock}
-                  selectedPath={selectedPath}
-                />
-              )}
-            </>
-          )}
+          {mode === 'block-setting' &&
+            isSelected() &&
+            rootBlockPath &&
+            rootBlock &&
+            selectedBlock && (
+              <>
+                {isEmbedOwnSetting(
+                  selectedBlock,
+                  selectedPath.slice(rootBlockPath.length),
+                  rootBlock.type,
+                ) ? (
+                  <div>
+                    <AlignRight>
+                      <Button
+                        onClick={() => updateSelectedBlockIndex(rootBlockPath, rootBlock?.id || '')}
+                      >
+                        Back to {getWidgetName(rootBlock?.type || '')}
+                      </Button>
+                    </AlignRight>
+                    <BlockSettings
+                      rootPath={selectedPath}
+                      rootBlock={selectedBlock}
+                      selectedPath={selectedPath}
+                    />
+                  </div>
+                ) : (
+                  <BlockSettings
+                    rootPath={rootBlockPath}
+                    rootBlock={rootBlock}
+                    selectedPath={selectedPath}
+                  />
+                )}
+              </>
+            )}
 
           {mode === 'page-setting' && (
             <>
