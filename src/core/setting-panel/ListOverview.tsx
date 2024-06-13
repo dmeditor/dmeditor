@@ -59,7 +59,7 @@ export const ListOverview = (props: ListOverviewProps) => {
   };
 
   const addUnder = () => {
-    startAddBlock(blockPath, data.length - 1, 'after');
+    startAddBlock(blockPath, data.length - 1, 'after', {});
   };
 
   return (
