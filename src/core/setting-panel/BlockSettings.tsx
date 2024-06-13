@@ -11,7 +11,7 @@ import { CopyPaste, DeleteBlock, Move } from './actions';
 import { SetEditControl } from './actions/SetEditControl';
 import { defaultSettingTabs } from './config';
 import Property from './property-setting/property-item';
-import { SettingList } from './SettingList';
+import { SettingTree } from './SettingTree';
 import { ActionPanel, ActionPanelButtonGroup, RightElement, TabBodyContainer } from './style';
 
 export const BlockSettings = (props: {
@@ -77,7 +77,7 @@ export const BlockSettings = (props: {
           open={blockOpen}
           onOpenClose={(open) => setBlockOpen(open)}
         > */}
-        <SettingList
+        <SettingTree
           blockData={rootBlock}
           blockPath={rootPath}
           selectedPath={selectedPath}

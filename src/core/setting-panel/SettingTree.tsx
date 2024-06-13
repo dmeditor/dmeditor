@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowDropDownOutlined, ArrowRightOutlined } from '@mui/icons-material';
 import { Button, Collapse } from '@mui/material';
 
-import { dmeConfig, useEditorStore } from '../../';
+import { dmeConfig, useEditorStore } from '../..';
 import { DME, DMEData } from '../types';
 import {
   arrayStarts,
@@ -21,7 +21,7 @@ import { StyledSettingList, StyledSettingNoGroup } from './style';
 import { StyleSettings } from './style-settings/StyleSettings';
 
 //Show settings of a widget, recurisively when there is embed
-export const SettingList = (props: {
+export const SettingTree = (props: {
   rootWidget: string;
   blockData: DMEData.Block;
   blockPath: Array<number>;
@@ -281,7 +281,7 @@ export const SettingList = (props: {
           const newPath = [...blockPath, index];
           return (
             <div>
-              <SettingList
+              <SettingTree
                 rootWidget={rootWidget}
                 blockData={item}
                 category={category}
