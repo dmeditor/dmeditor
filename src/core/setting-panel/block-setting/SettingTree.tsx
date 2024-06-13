@@ -4,6 +4,7 @@ import {
   ArrowForwardIosOutlined,
   ArrowRightAltOutlined,
   ArrowRightOutlined,
+  DeleteOutline,
 } from '@mui/icons-material';
 import { Button, Collapse } from '@mui/material';
 
@@ -36,9 +37,10 @@ export const SettingTree = (props: {
   selectedPath: Array<number>;
   category?: string;
   level?: number;
+  canDelete?: boolean;
 }) => {
   const { blockData, selectedPath, level = 0, category, blockPath, rootWidget } = props;
-  const { updateBlockStyleByPath, updateBlockPropsByPath, updateSelectedBlockIndex } =
+  const { updateBlockStyleByPath, updateBlockPropsByPath, updateSelectedBlockIndex, removeByPath } =
     useEditorStore();
 
   const [settingStatus, setSettingStatus] = useState<{
@@ -302,6 +304,7 @@ export const SettingTree = (props: {
                   blockPath={newPath}
                   selectedPath={selectedPath}
                   level={level + 1}
+                  canDelete={widgetDef.widgetType === 'list'}
                 />
               </div>
             );
@@ -327,6 +330,11 @@ export const SettingTree = (props: {
             {expanded ? <ArrowDropDownOutlined /> : <ArrowRightOutlined />}
             <span>{widgetDef.name}</span>
           </Button>
+          {props.canDelete && (
+            <Button onClick={() => removeByPath(blockPath)}>
+              <DeleteOutline fontSize="small" />
+            </Button>
+          )}
         </div>
       )}
       <Collapse in={level === 0 || expanded}>
