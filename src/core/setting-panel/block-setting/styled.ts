@@ -1,9 +1,5 @@
 import styled from '@emotion/styled';
 
-export const RightElement = styled.div`
-  float: right;
-`;
-
 export const TabBodyContainer = styled.div<{ fullHeight?: boolean }>`
   padding: 0 10px;
   height: calc(100vh - ${(props) => (props.fullHeight ? 200 : 250)}px);

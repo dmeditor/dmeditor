@@ -115,3 +115,7 @@ export const StyledSettingGroup = {
   `,
   Body: styled.div``,
 };
+
+export const RightElement = styled.div`
+  float: right;
+`;

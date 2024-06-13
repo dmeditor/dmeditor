@@ -18,8 +18,9 @@ import { CopyPaste, DeleteBlock, Move } from '../actions';
 import { SetEditControl } from '../actions/SetEditControl';
 import { defaultSettingTabs } from '../config';
 import Property from '../property-setting/property-item';
+import { RightElement } from '../style';
 import { SettingTree } from './SettingTree';
-import { ActionPanel, ActionPanelButtonGroup, RightElement, TabBodyContainer } from './styled';
+import { ActionPanel, ActionPanelButtonGroup, TabBodyContainer } from './styled';
 
 export const BlockSettings = (props: {
   selectedPath: Array<number>;
