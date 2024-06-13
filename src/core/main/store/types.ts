@@ -8,6 +8,7 @@ export interface AddBlockParameters {
   context: Array<number>;
   status: 'started' | 'done';
   types?: Array<string> | string;
+  isEmbed?: boolean;
 }
 
 export type Store = {
@@ -31,7 +32,7 @@ export type Actions = {
     context: Array<number>,
     index: number,
     position: AddBlockPosition,
-    types?: Array<string> | string,
+    extraParams: { types?: Array<string> | string; isEmbed?: boolean },
   ) => void;
   cancelAdding: () => void;
   updateHoverPath: (path: Array<number>) => void;
@@ -42,6 +43,7 @@ export type Actions = {
     index: number,
     position: AddBlockPosition,
     type: string,
+    isEmbed: boolean,
     addData?: { style?: string; savedBlock?: any },
   ) => void;
   setMode: (mode: DME.Mode) => void;

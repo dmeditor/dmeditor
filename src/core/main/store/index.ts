@@ -18,19 +18,26 @@ export const useEditorStore = create<Store & Actions>()(
       context: Array<number>,
       index: number,
       position: AddBlockParameters['position'],
-      types?: Array<string> | string,
+      extraParams: { types?: Array<string> | string; isEmbed?: boolean },
     ) =>
       set((state) => {
-        state.addBlockData = { context, index, position, status: 'started', types: types };
+        state.addBlockData = {
+          context,
+          index,
+          position,
+          status: 'started',
+          types: extraParams.types,
+          isEmbed: extraParams.isEmbed,
+        };
       }),
     addBlock: (type: string, addData?: { style?: string; savedBlock?: any }) => {
       const state = get();
       if (!state.addBlockData) {
         return;
       }
-      const { index, position, context } = state.addBlockData;
+      const { index, position, context, isEmbed } = state.addBlockData;
 
-      state.executeAdding(context, index, position, type, addData);
+      state.executeAdding(context, index, position, type, isEmbed ? true : false, addData);
       set((state) => {
         if (state.addBlockData) {
           state.addBlockData.status = 'done';
@@ -47,6 +54,7 @@ export const useEditorStore = create<Store & Actions>()(
       index: number,
       position: AddBlockParameters['position'],
       type: string,
+      isEmbed: boolean,
       addData?: { style?: string; savedBlock?: any },
     ) =>
       set((state) => {
@@ -58,12 +66,12 @@ export const useEditorStore = create<Store & Actions>()(
         if (!widget) {
           return;
         }
-        let blockData: any;
+        let blockData: DMEData.Block;
         if (addData && addData.savedBlock) {
           blockData = addData.savedBlock;
         } else {
           if (variant) {
-            blockData = variant.getDefaultData?.();
+            blockData = variant.getDefaultData?.() as any;
           } else {
             blockData = widget.events.createBlock();
           }
@@ -74,6 +82,10 @@ export const useEditorStore = create<Store & Actions>()(
 
         if (!blockData) {
           return;
+        }
+
+        if (isEmbed) {
+          blockData.isEmbed = true;
         }
 
         const listData = getListByPath(state.storage, context || []);

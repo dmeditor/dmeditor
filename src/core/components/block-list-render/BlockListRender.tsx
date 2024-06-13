@@ -22,7 +22,7 @@ interface BlockListProps {
   blockData: DMEData.BlockList;
   path: Array<number>;
   allowedTypes?: string[] | string;
-  isInternal?: boolean;
+  isEmbed?: boolean;
   direction?: 'vertical' | 'horizontal';
   mode: 'edit' | 'view';
 }
@@ -79,14 +79,23 @@ export const BlockListRender = (props: BlockListProps) => {
 
   const handleAdding = (position: 'before' | 'after', index: number) => {
     if (props.allowedTypes?.length === 1) {
-      executeAdding(props.path, index, position, props.allowedTypes[0]);
+      executeAdding(
+        props.path,
+        index,
+        position,
+        props.allowedTypes[0],
+        props.isEmbed ? true : false,
+      );
     } else {
       setAddParameters({
         index: index,
         position: position,
       });
 
-      startAddBlock(props.path, index, position, props.allowedTypes);
+      startAddBlock(props.path, index, position, {
+        types: props.allowedTypes,
+        isEmbed: props.isEmbed,
+      });
     }
   };
 
