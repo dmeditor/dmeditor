@@ -3,40 +3,48 @@ import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
 import { useEditorStore } from '../../..';
 import { PropertyButton } from '../Property';
 
-export const Move = () => {
-  const {
-    selected: { currentListPath, blockIndex },
-    removeByPath,
-    getCurrentBlock,
-    setSelected,
-    moveTo,
-    getCurrentList,
-  } = useEditorStore();
+export const Move = (props: { blockPath: Array<number> }) => {
+  const { blockPath } = props;
+
+  const { removeByPath, setSelected, moveTo, getBlockByPath, storage } = useEditorStore();
 
   const handleMoveUp = () => {
-    const currentBlock = getCurrentBlock();
-    const targetIndex = blockIndex - 1;
-    console.log('🚀 ~ handleMoveUp ~ targetIndex:', targetIndex);
+    if (blockPath.length === 0) {
+      return;
+    }
+    const currentBlock = getBlockByPath(blockPath);
+    const targetIndex = blockPath[blockPath.length - 1] - 1;
 
     if (targetIndex < 0 || !currentBlock) {
       return;
     }
 
-    removeByPath([...currentListPath, blockIndex]);
-    moveTo(currentBlock, [...currentListPath, targetIndex]);
+    //todo: put these 3 into state
+    removeByPath(blockPath);
+    moveTo(currentBlock, [...blockPath.slice(0, blockPath.length - 1), targetIndex]);
     setSelected(targetIndex);
   };
   const handleMoveDown = () => {
-    const currentBlock = getCurrentBlock();
-    const targetIndex = blockIndex + 1;
-    const currentList = getCurrentList() || [];
-
-    if (!currentBlock || targetIndex >= currentList.length) {
+    if (blockPath.length === 0) {
       return;
     }
 
-    removeByPath([...currentListPath, blockIndex]);
-    moveTo(currentBlock, [...currentListPath, targetIndex]);
+    const currentBlock = getBlockByPath(blockPath);
+    const blockIndex = blockPath[blockPath.length - 1];
+    const targetIndex = blockIndex + 1;
+    const currentList =
+      blockPath.length === 1
+        ? storage
+        : getBlockByPath(blockPath.slice(0, blockPath.length - 1)).children;
+
+    console.log(targetIndex);
+    console.log(currentList);
+    if (!currentBlock || !currentList || targetIndex >= currentList.length) {
+      return;
+    }
+
+    removeByPath(blockPath);
+    moveTo(currentBlock, [...blockPath.splice(0, blockPath.length - 1), targetIndex]);
     setSelected(targetIndex);
   };
 

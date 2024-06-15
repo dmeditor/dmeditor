@@ -10,6 +10,7 @@ import {
 
 import type { DME } from '../../types/dmeditor';
 import {
+  getValidStyles,
   getWidgetStyle,
   getWidgetStyles,
   widgetDefinition,
@@ -22,41 +23,42 @@ import { InlineBlock } from './InlineBlock';
 
 export interface StyleSettingProps {
   blockType: string;
+  enabledStyles?: { [styleIdentifier: string]: Array<string> };
   values: { [styleIdentifier: string]: string };
   onChange: (optionIdentifier: string, styleIdentifier: string) => void;
 }
 
 export const StyleSettings = (props: StyleSettingProps) => {
-  const { blockType } = props;
+  const { blockType, enabledStyles } = props;
 
-  const styles = Object.keys(getWidgetStyles(blockType) || {});
+  const styles = Object.keys(getValidStyles(blockType));
 
   const isCustomStyle = Object.keys(props.values).includes('_');
 
-  const hasStyle = useMemo(() => {
-    for (const style of styles) {
-      const styleObj = getWidgetStyle(blockType, style);
-      if (styleObj.options.length > 0) {
-        return true;
-      }
-    }
-    return false;
-  }, [blockType]);
+  if (styles.length === 0 || (enabledStyles && Object.keys(enabledStyles).length === 0)) {
+    return <></>;
+  }
 
-  return hasStyle ? (
+  return (
     <PropertyGroup header="Styles">
       {styles.map((style) => {
-        const styleObj = getWidgetStyle(blockType, style);
-        if (styleObj.options.length === 0) {
-          return <React.Fragment key={styleObj.identifier}></React.Fragment>;
-        }
+        let styleObj = getWidgetStyle(blockType, style);
 
         if (isCustomStyle && style !== '_') {
           return <React.Fragment key={styleObj.identifier}></React.Fragment>;
         }
 
+        if (enabledStyles && enabledStyles[styleObj.identifier]) {
+          const enabledOptions = enabledStyles[styleObj.identifier];
+          const options = styleObj.options.filter((option) =>
+            enabledOptions.includes(option.identifier),
+          );
+          styleObj = { ...styleObj, options: options };
+        }
+
         return (
           <PropertyItem label={styleObj.name} key={styleObj.identifier}>
+            {enabledStyles && <div>enabled: {Object.keys(enabledStyles).join(',')}</div>}
             {(!styleObj.display || styleObj.display === 'inline-block') && (
               <InlineBlock {...props} style={styleObj} />
             )}
@@ -66,7 +68,5 @@ export const StyleSettings = (props: StyleSettingProps) => {
         );
       })}
     </PropertyGroup>
-  ) : (
-    <></>
   );
 };

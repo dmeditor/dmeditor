@@ -14,6 +14,7 @@ import {
   arrayStarts,
   getEmbedConfigObject,
   getPropertyValue,
+  getValidStyles,
   getWidget,
   getWidgetName,
   getWidgetStyle,
@@ -68,13 +69,24 @@ export const SettingTree = (props: {
     }
   }, [blockData.id]);
 
-  //get Widget setting with variant
-  const settingConfigList = useMemo(() => {
-    const [widgetDef, variant] = getWidgetWithVariant(blockData.type);
-    let result: Array<DME.Setting> = [];
+  const validStyles = useMemo(() => {
+    return getValidStyles(blockData.type);
+  }, [blockData.id]);
+
+  //get Widget settings & styles
+  const settingConfigs = useMemo(() => {
+    const blockType = blockData.type;
+    const [widgetDef, variant] = getWidgetWithVariant(blockType);
+    let settingList: Array<DME.Setting> = [];
+    let result: {
+      enabledStyles?: { [styleKey: string]: Array<string> };
+      settings: Array<DME.Setting>;
+    } = {
+      settings: [],
+    };
     if (widgetDef) {
       if (variant && variant.enabledSettings) {
-        result = widgetDef.settings.filter((item: DME.Setting) => {
+        settingList = widgetDef.settings.filter((item: DME.Setting) => {
           return (
             item.property &&
             variant.enabledSettings?.includes(item.property) &&
@@ -82,10 +94,10 @@ export const SettingTree = (props: {
           );
         });
       } else {
-        let settings = widgetDef?.settings;
+        let settingList = widgetDef?.settings;
 
         //filter from system
-        result = settings.filter((item) => {
+        settingList = settingList.filter((item) => {
           if (item.category === category) {
             if (item.category !== 'block') {
               return true;
@@ -103,11 +115,23 @@ export const SettingTree = (props: {
           }
         });
 
+        //style keys
+        const styleKeys: { [key: string]: Array<string> } = {};
+        for (const style of Object.values(validStyles)) {
+          const optionKeys = [];
+          for (const option of style.options) {
+            optionKeys.push(option.identifier);
+          }
+          styleKeys[style.identifier] = optionKeys;
+        }
+        result = { settings: settingList };
+
         //filter from mixed-widget root
         if (blockData.isEmbed) {
           const configObject = getEmbedConfigObject(rootWidget);
+
           if (configObject?.enabledSettings) {
-            result = configObject.enabledSettings(result, {
+            result = configObject.enabledSettings(settingList, styleKeys, {
               relativePath: blockPath.slice(blockPath.length - level),
               blockData: blockData,
             });
@@ -120,8 +144,8 @@ export const SettingTree = (props: {
 
   const settingGroups = useMemo(() => {
     const groups: Array<string | undefined> = [];
-    if (settingConfigList) {
-      settingConfigList.map((item) => {
+    if (settingConfigs && settingConfigs.settings) {
+      settingConfigs.settings.map((item) => {
         if (!groups.includes(item.group)) {
           groups.push(item.group);
         }
@@ -145,6 +169,7 @@ export const SettingTree = (props: {
     return settingKeys;
   };
 
+  //set settting status between style selection and settings
   const resetSettingStatus = (styleOption: string, style: string) => {
     let statusObj = { ...settingStatus };
 
@@ -249,11 +274,9 @@ export const SettingTree = (props: {
         {category === 'block' && (
           <StyleSettings
             values={blockData?.style || {}}
+            enabledStyles={settingConfigs?.enabledStyles}
             blockType={blockData.type}
             onChange={switchStyleOption}
-            // onChange={(v, style) => {
-            // updateBlockStyleByPath(v, style, blockPath);
-            // }}
           />
         )}
         {settingGroups.map((group) => (
@@ -261,14 +284,16 @@ export const SettingTree = (props: {
             {group && (
               <PropertyGroup header={dmeConfig.editor.settingGroups[group]}>
                 <div>
-                  {renderSettingList(settingConfigList?.filter((item) => item.group === group))}
+                  {renderSettingList(
+                    settingConfigs?.settings.filter((item) => item.group === group),
+                  )}
                 </div>
               </PropertyGroup>
             )}
 
             {!group && (
               <StyledSettingNoGroup>
-                {renderSettingList(settingConfigList?.filter((item) => item.group === group))}
+                {renderSettingList(settingConfigs?.settings.filter((item) => item.group === group))}
               </StyledSettingNoGroup>
             )}
           </div>

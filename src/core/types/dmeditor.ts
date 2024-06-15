@@ -67,7 +67,11 @@ export namespace DME {
       createBlock: () => DMEData.Block<any, any>;
 
       embedConfig?: {
-        enabledSettings?: (settings: Array<Setting>, context: EmbedChildContext) => Array<Setting>;
+        enabledSettings?: (
+          settings: Array<Setting>,
+          styles: { [key: string]: Array<string> },
+          context: EmbedChildContext,
+        ) => { settings: Array<Setting>; enabledStyles?: { [key: string]: Array<string> } };
 
         hasOwnView?: (context: EmbedChildContext) => boolean;
       };

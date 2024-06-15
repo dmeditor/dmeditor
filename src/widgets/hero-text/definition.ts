@@ -57,8 +57,8 @@ const heroTextWidget: DME.Widget = {
       };
     },
     embedConfig: {
-      enabledSettings: (settings, context) => {
-        const result = settings.filter((item) => {
+      enabledSettings: (settings, styles, context) => {
+        const settingResult = settings.filter((item) => {
           if (item.category !== 'block') {
             return true;
           } else {
@@ -77,14 +77,14 @@ const heroTextWidget: DME.Widget = {
             return true;
           }
         });
-        return result;
+        return { settings: settingResult, enabledStyles: {} };
       },
-      // hasOwnView: (context) => {
-      //   if (context.relativePath.length >= 2 && context.relativePath[0] === 1) {
-      //     return true;
-      //   }
-      //   return false;
-      // },
+      hasOwnView: (context) => {
+        if (context.relativePath.length >= 2 && context.relativePath[0] === 1) {
+          return true;
+        }
+        return false;
+      },
     },
     updateData: () => {},
   },

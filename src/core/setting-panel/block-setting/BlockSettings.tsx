@@ -24,46 +24,17 @@ import { ActionPanel, ActionPanelButtonGroup, TabBodyContainer } from './styled'
 
 export const BlockSettings = (props: {
   selectedPath: Array<number>;
-  rootPath: Array<number>;
-  rootBlock: DMEData.Block;
+  blockPath: Array<number>;
+  blockData: DMEData.Block;
+  rootWidget: string;
 }) => {
-  const { selectedPath, rootPath, rootBlock } = props;
-
-  const { getBlockByPath } = useEditorStore();
-
-  //todo: cache it, using useMemo?
-  const blockData = getBlockByPath(selectedPath);
+  const { selectedPath, blockPath, blockData, rootWidget } = props;
 
   const blockType = blockData?.type || '';
 
-  //get Widget setting with variant
-  const getWidgetSettings = (widget: string) => {
-    const [widgetDef, variant] = getWidgetWithVariant(widget);
-    if (widgetDef) {
-      if (variant && variant.enabledSettings) {
-        const filteredSettings = widgetDef.settings.filter((item) => {
-          return variant.enabledSettings?.includes(item.property);
-        });
-        return filteredSettings;
-      }
-      return widgetDef?.settings;
-    }
-  };
-
-  const selectedWidgetSetings = useMemo(
-    () => getWidgetSettings(blockData?.type || ''),
-    [blockData?.type],
-  );
-
-  const getFilteredSettings = (category: string) => {
-    return selectedWidgetSetings?.filter((item) =>
-      item.category ? item.category === category : category === 'widget',
-    );
-  };
-
   const settingCategory = useMemo(() => {
     const result = defaultSettingTabs;
-    result['widget'] = getWidgetName(rootBlock?.type || '');
+    result['widget'] = getWidgetName(blockData.type || '');
     return result;
   }, [blockType]);
 
@@ -76,21 +47,14 @@ export const BlockSettings = (props: {
   };
 
   const renderATab = (category: string): ReactElement => {
-    const filteredSettings = getFilteredSettings(category);
     return (
       <TabBodyContainer fullHeight={category === 'block'}>
-        {/* <PropertyGroup
-          header="Block settings"
-          expandable={true}
-          open={blockOpen}
-          onOpenClose={(open) => setBlockOpen(open)}
-        > */}
         <SettingTree
-          blockData={rootBlock}
-          blockPath={rootPath}
+          blockData={blockData}
+          blockPath={blockPath}
           selectedPath={selectedPath}
           category={category === 'widget' ? undefined : 'block'}
-          rootWidget={rootBlock.type}
+          rootWidget={rootWidget}
         />
 
         {category == 'widget' && (
@@ -100,7 +64,7 @@ export const BlockSettings = (props: {
             )}
             <ActionPanel>
               <ActionPanelButtonGroup>
-                <Move />
+                <Move blockPath={blockPath} />
                 <CopyPaste />
               </ActionPanelButtonGroup>
               {!(
@@ -110,7 +74,7 @@ export const BlockSettings = (props: {
               ) && (
                 <ActionPanelButtonGroup>
                   <RightElement>
-                    <DeleteBlock />
+                    <DeleteBlock blockPath={blockPath} />
                   </RightElement>
                 </ActionPanelButtonGroup>
               )}

@@ -200,16 +200,18 @@ const SettingPanel = (props) => {
                       </Button>
                     </AlignRight>
                     <BlockSettings
-                      rootPath={selectedPath}
-                      rootBlock={selectedBlock}
+                      blockPath={selectedPath}
+                      blockData={selectedBlock}
                       selectedPath={selectedPath}
+                      rootWidget={rootBlock.type}
                     />
                   </div>
                 ) : (
                   <BlockSettings
-                    rootPath={rootBlockPath}
-                    rootBlock={rootBlock}
+                    blockPath={rootBlockPath}
+                    blockData={rootBlock}
                     selectedPath={selectedPath}
+                    rootWidget={rootBlock.type}
                   />
                 )}
               </>

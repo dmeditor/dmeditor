@@ -218,6 +218,19 @@ export function getWidgetStyles(widget: string, allStyles?: boolean) {
   }
 }
 
+//remove empty option style
+export function getValidStyles(widget: string) {
+  const allStyles = getWidgetStyles(widget) || {};
+  const validStyles: { [key: string]: DME.WidgetStyle } = {};
+  for (const styleKey of Object.keys(allStyles)) {
+    const styleObj = allStyles[styleKey];
+    if (styleObj.options.length > 0) {
+      validStyles[styleKey] = styleObj;
+    }
+  }
+  return validStyles;
+}
+
 export const getAllowedTypes = (widgetStr: string) => {
   const [widget, variant] = getWidgetWithVariant(widgetStr);
   if (variant) {
@@ -244,7 +257,7 @@ export const IconDefinition: {
 
 export const registerIcon = (icon: Icon) => {
   if (IconDefinition.icons.find((i) => i.name === icon.name)) {
-    throw new Error(`Icon with name ${icon.name} already exists!`);
+    console.warn(`Icon with name ${icon.name} already exists. Ignore`);
   } else {
     IconDefinition.icons.push(icon);
   }

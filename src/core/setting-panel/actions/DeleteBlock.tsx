@@ -3,14 +3,11 @@ import { DeleteOutline } from '@mui/icons-material';
 import { useEditorStore } from '../../..';
 import { PropertyButton } from '../Property';
 
-export const DeleteBlock = () => {
-  const {
-    selected: { currentListPath, blockIndex },
-    removeByPath,
-  } = useEditorStore();
+export const DeleteBlock = (props: { blockPath: Array<number> }) => {
+  const { removeByPath } = useEditorStore();
 
   const handleDelete = () => {
-    removeByPath([...currentListPath, blockIndex]);
+    removeByPath(props.blockPath);
   };
 
   return (
