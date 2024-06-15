@@ -1,4 +1,4 @@
-import TabIcon from '@mui/icons-material/Tab';
+import { TabOutlined } from '@mui/icons-material';
 
 import {
   registerIcon,
@@ -12,7 +12,7 @@ import TabsWidget from './definition';
 import Tabs from './Tabs';
 
 export default () => {
-  registerIcon({ name: 'tabs', component: TabIcon });
+  registerIcon({ name: 'tabs', component: TabOutlined });
   registerWidget(TabsWidget, {
     render: Tabs,
   });
