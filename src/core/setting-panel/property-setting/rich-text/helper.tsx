@@ -365,7 +365,7 @@ const HoveringToolbar = () => {
         <MarkButton format="italic" />
         <MarkButton format="underline" />
         <AddLinkButton />
-        <RemoveLinkButton />
+        {isLinkActive(editor) && <RemoveLinkButton />}
       </Menu>
     </Portal>
   );
