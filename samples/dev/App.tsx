@@ -57,6 +57,7 @@ setDMEditorConfig({
     enableEditControl: true,
     defaultStyle: {
       heading: { _: 'theme' },
+      button: { _: 'project-primary' },
     },
     ui: {
       'bg-editarea': '#666666',
