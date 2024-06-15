@@ -27,8 +27,9 @@ export const BlockSettings = (props: {
   blockPath: Array<number>;
   blockData: DMEData.Block;
   rootWidget: string;
+  embedLevel?: number;
 }) => {
-  const { selectedPath, blockPath, blockData, rootWidget } = props;
+  const { selectedPath, blockPath, blockData, rootWidget, embedLevel } = props;
 
   const blockType = blockData?.type || '';
 
@@ -54,6 +55,7 @@ export const BlockSettings = (props: {
           blockPath={blockPath}
           selectedPath={selectedPath}
           category={category === 'widget' ? undefined : 'block'}
+          level={embedLevel === undefined ? 0 : embedLevel}
           rootWidget={rootWidget}
         />
 
@@ -74,7 +76,7 @@ export const BlockSettings = (props: {
               ) && (
                 <ActionPanelButtonGroup>
                   <RightElement>
-                    <DeleteBlock blockPath={blockPath} />
+                    <DeleteBlock blockPath={selectedPath} />
                   </RightElement>
                 </ActionPanelButtonGroup>
               )}

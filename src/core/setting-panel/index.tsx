@@ -203,6 +203,7 @@ const SettingPanel = (props) => {
                       blockPath={selectedPath}
                       blockData={selectedBlock}
                       selectedPath={selectedPath}
+                      embedLevel={selectedPath.length - rootBlockPath.length}
                       rootWidget={rootBlock.type}
                     />
                   </div>

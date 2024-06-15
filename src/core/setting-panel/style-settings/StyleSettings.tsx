@@ -48,17 +48,20 @@ export const StyleSettings = (props: StyleSettingProps) => {
           return <React.Fragment key={styleObj.identifier}></React.Fragment>;
         }
 
-        if (enabledStyles && enabledStyles[styleObj.identifier]) {
-          const enabledOptions = enabledStyles[styleObj.identifier];
-          const options = styleObj.options.filter((option) =>
-            enabledOptions.includes(option.identifier),
-          );
-          styleObj = { ...styleObj, options: options };
+        if (enabledStyles) {
+          if (enabledStyles[styleObj.identifier]) {
+            const enabledOptions = enabledStyles[styleObj.identifier];
+            const options = styleObj.options.filter((option) =>
+              enabledOptions.includes(option.identifier),
+            );
+            styleObj = { ...styleObj, options: options };
+          } else {
+            return <React.Fragment key={styleObj.identifier}></React.Fragment>;
+          }
         }
 
         return (
           <PropertyItem label={styleObj.name} key={styleObj.identifier}>
-            {enabledStyles && <div>enabled: {Object.keys(enabledStyles).join(',')}</div>}
             {(!styleObj.display || styleObj.display === 'inline-block') && (
               <InlineBlock {...props} style={styleObj} />
             )}
