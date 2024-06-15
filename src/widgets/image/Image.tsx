@@ -1,5 +1,4 @@
 import { css } from '@emotion/css';
-import { nanoid } from 'nanoid';
 
 import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
@@ -54,9 +53,8 @@ export const ImageDefinition: DME.Widget = {
   ],
   events: {
     updateData: () => {},
-    createBlock: (): DMEData.Block<ImageEntity> => {
+    createBlock: (): DMEData.CreatedBlock<ImageEntity> => {
       return {
-        id: nanoid(),
         type: 'image',
         data: {
           src: '',

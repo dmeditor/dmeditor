@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { EntityTableBlock, initialTableEntity } from './entity';
@@ -10,11 +8,10 @@ const HeadingWidget: DME.Widget = {
   name: 'Table',
   type: 'table',
   events: {
-    createBlock: (): DMEData.Block<EntityTableBlock> => {
+    createBlock: (): DMEData.CreatedBlock<EntityTableBlock> => {
       const { value } = initialTableEntity();
 
       return {
-        id: nanoid(),
         type: 'table',
         data: {
           value,

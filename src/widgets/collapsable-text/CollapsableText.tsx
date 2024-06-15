@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
-import { nanoid } from 'nanoid';
 
 import { BlockListRender, dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
@@ -29,7 +28,6 @@ export const CollapsableTextDefiniation: DME.Widget = {
   events: {
     createBlock: () => {
       return {
-        id: nanoid(),
         data: { text: 'Show more' },
         type: 'collapsable-text',
         children: [

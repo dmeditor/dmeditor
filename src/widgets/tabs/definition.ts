@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import type { DME, DMEData } from '../..';
 import { generalSettings } from '../..';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
@@ -11,10 +9,9 @@ const TabsWidget: DME.Widget = {
   name: 'Tabs',
   type: 'tabs',
   events: {
-    createBlock: (): DMEData.Block<EntityTabsData, EntityTabsBlock> => {
+    createBlock: (): DMEData.CreatedBlock<EntityTabsData, EntityTabsBlock> => {
       return {
         data: {},
-        id: nanoid(),
         style: { _: 'default' },
         type: 'tabs',
         children: [

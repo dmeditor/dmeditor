@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { EntityGrid } from './entity';
@@ -12,9 +10,8 @@ const gridWidget: DME.Widget = {
   type: 'grid',
   allowedTypes: '^(?!.*grid).*$',
   events: {
-    createBlock: (): DMEData.Block<EntityGrid> => {
+    createBlock: (): DMEData.CreatedBlock<EntityGrid> => {
       return {
-        id: nanoid(),
         type: 'grid',
         data: {
           columns: 3,

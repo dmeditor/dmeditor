@@ -74,11 +74,17 @@ export const useEditorStore = create<Store & Actions>()(
           if (variant) {
             blockData = variant.getDefaultData?.() as any;
           } else {
-            blockData = widget.events.createBlock();
+            const createdBlock = widget.events.createBlock();
             const defaultStyle = dmeConfig.editor.defaultStyle[type];
-            if (!blockData.style && defaultStyle) {
-              blockData.style = defaultStyle;
+            if (!createdBlock.style && defaultStyle) {
+              createdBlock.style = defaultStyle;
             }
+
+            if (!createdBlock.id) {
+              createdBlock.id = nanoid();
+            }
+
+            blockData = createdBlock as DMEData.Block;
           }
           if (addData && addData.style) {
             blockData.style = { _: addData.style };
@@ -294,29 +300,7 @@ export const useEditorStore = create<Store & Actions>()(
           return acc;
         }, {});
 
-        state.storage = blocks.map((block) => {
-          if (!block || !block.type) {
-            return block;
-          }
-          if (!propertiesMap[block.type]) {
-            return block;
-          } else {
-            const initBlockData = propertiesMap[block.type].events.createBlock();
-
-            return {
-              ...block,
-              data: {
-                ...initBlockData,
-                ...block.data,
-                settings: {
-                  ...initBlockData.settings,
-                  ...block.data.settings,
-                },
-              },
-            };
-          }
-        });
-        // state.selected.currentList = state.storage;
+        state.storage = blocks;
       });
     },
     updateSelectedBlockIndex: (pathArray: Array<number>, id: string) => {

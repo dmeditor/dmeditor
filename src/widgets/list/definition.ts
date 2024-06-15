@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import type { DME } from '../..';
 import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
 
@@ -18,7 +16,6 @@ const listWidget: DME.Widget = {
         }
       }
       return {
-        id: nanoid(),
         data: { setting: { general: { padding: 5 } } },
         type: 'list',
         children: [],

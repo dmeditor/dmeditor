@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { i18n } from '../../core/i18n';
@@ -12,9 +10,8 @@ const TextWidget: DME.Widget = {
   name: i18n('Text', 'widget'),
   type: 'text',
   events: {
-    createBlock: (): DMEData.Block<EntityText> => {
+    createBlock: (): DMEData.CreatedBlock<EntityText> => {
       return {
-        id: nanoid(),
         type: 'text',
         data: {
           ...initialTextEntity(),

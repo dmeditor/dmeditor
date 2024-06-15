@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import { BlockListRender, dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { SyledLayout } from './styled';
@@ -10,9 +8,8 @@ const layout3ColumnsWidget: DME.Widget = {
   name: '3 Columns layout',
   type: 'layout-3columns',
   events: {
-    createBlock: (): DMEData.Block<EntityLayout3Columns, {}> => {
+    createBlock: (): DMEData.CreatedBlock<EntityLayout3Columns, {}> => {
       return {
-        id: nanoid(),
         data: { column1Width: 4, column2Width: 4 },
         type: 'layout-3columns',
         children: [

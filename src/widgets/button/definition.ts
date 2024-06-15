@@ -1,6 +1,4 @@
-import { nanoid } from 'nanoid';
-
-import { dmeConfig, generalSettings, type DME, type DMEData } from '../..';
+import { generalSettings, type DME, type DMEData } from '../..';
 
 const buttonWidget: DME.Widget = {
   category: 'basic',
@@ -8,9 +6,8 @@ const buttonWidget: DME.Widget = {
   name: 'Button',
   type: 'button',
   events: {
-    createBlock: (): DMEData.Block => {
+    createBlock: (): DMEData.CreatedBlock => {
       return {
-        id: nanoid(),
         type: 'button',
         data: {
           value: 'New button',

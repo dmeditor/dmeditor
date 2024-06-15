@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import type { DME, DMEData } from '../..';
 import { dmeConfig, generalSettings } from '../..';
 import { EntityHeadingBlock } from './entity';
@@ -14,9 +12,8 @@ const HeadingWidget: DME.Widget = {
   type: 'heading',
   themeStyles: 'Theme heading',
   events: {
-    createBlock: (): DMEData.Block<EntityHeadingBlock> => {
+    createBlock: (): DMEData.CreatedBlock<EntityHeadingBlock> => {
       return {
-        id: nanoid(),
         type: 'heading',
         data: {
           value: 'This is a new block',

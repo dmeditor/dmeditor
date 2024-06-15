@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import type { DME, DMEData } from '../..';
 import { dmeConfig, generalSettings } from '../..';
 import { Category } from '../../core/enum';
@@ -11,9 +9,8 @@ const definition: DME.Widget = {
   name: 'Code',
   type: 'code',
   events: {
-    createBlock: (): DMEData.Block<CodeEntity> => {
+    createBlock: (): DMEData.CreatedBlock<CodeEntity> => {
       return {
-        id: `${nanoid()}-code`,
         type: 'code',
         data: initCodeEntity(),
       };

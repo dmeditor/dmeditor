@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
-import { nanoid } from 'nanoid';
 
 import { dmeConfig, generalSettings, useEditorStore } from '../..';
 import type { DME, DMEData } from '../..';
@@ -80,9 +79,8 @@ export const iFrameDefinition: DME.Widget = {
   name: 'IFrame',
   type: 'iframe',
   events: {
-    createBlock: (): DMEData.Block<IFrameEntity> => {
+    createBlock: (): DMEData.CreatedBlock<IFrameEntity> => {
       return {
-        id: nanoid(),
         type: 'iframe',
         data: {
           value: '',

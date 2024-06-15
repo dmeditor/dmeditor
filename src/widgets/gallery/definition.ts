@@ -1,8 +1,5 @@
-import { nanoid } from 'nanoid';
-
 import type { DME, DMEData } from '../..';
 import { dmeConfig, generalSettings } from '../..';
-import { Category } from '../../core/enum';
 import { GalleryEntity, initGalleryEntity } from './entity';
 
 const definition: DME.Widget = {
@@ -11,9 +8,8 @@ const definition: DME.Widget = {
   name: 'Gallery',
   type: 'gallery',
   events: {
-    createBlock: (): DMEData.Block<GalleryEntity> => {
+    createBlock: (): DMEData.CreatedBlock<GalleryEntity> => {
       return {
-        id: nanoid(),
         type: 'gallery',
         style: { _: 'default' },
         data: initGalleryEntity(),

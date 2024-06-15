@@ -64,7 +64,7 @@ export namespace DME {
       // onBlur: () => void 0,
       updateData?: (settings: Setting, data: DMEData.Block) => void;
       //when create an empty block
-      createBlock: () => DMEData.Block<any, any>;
+      createBlock: () => DMEData.CreatedBlock<any, any>;
 
       embedConfig?: {
         enabledSettings?: (
@@ -211,10 +211,15 @@ export namespace DMEData {
   }
 
   //Block entity, which is a node in the data tree
-  export interface Block<TData = DefaultDataType, TChild = DefaultBlockType>
+  export interface CreatedBlock<TData = DefaultDataType, TChild = DefaultBlockType>
     extends widgetBlockProperties {
     data: TData; //entity data from widget
     children?: Array<TChild & BlockNode>;
+  }
+
+  //Block entity, which is a node in the data tree
+  export interface Block<TData = DefaultDataType, TChild = DefaultBlockType> extends CreatedBlock {
+    id: string;
   }
 
   //Block list

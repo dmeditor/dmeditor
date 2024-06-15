@@ -67,10 +67,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
   // TODO:
   editor.children = formatImage(value);
 
-  const initialValue = useMemo(
-    () => formatImage(value) || definition.events.createBlock().data.value,
-    [value],
-  );
+  const initialValue = useMemo(() => formatImage(value), [value]);
 
   return (
     <div

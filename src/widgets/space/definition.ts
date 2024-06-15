@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import type { DME, DMEData } from '../..';
 import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
 import { EntitySpace } from './entity';
@@ -10,9 +8,8 @@ const spaceWidget: DME.Widget = {
   name: 'Space',
   type: 'space',
   events: {
-    createBlock: (variant?: string): DMEData.Block<EntitySpace> => {
+    createBlock: (variant?: string): DMEData.CreatedBlock<EntitySpace> => {
       return {
-        id: nanoid(),
         data: {
           settings: {
             height: 5,

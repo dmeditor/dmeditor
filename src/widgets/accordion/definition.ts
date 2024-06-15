@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import type { DME, DMEData } from '../..';
 import { generalSettings } from '../..';
 import type { EntityAccordion } from './entity';
@@ -10,9 +8,8 @@ const AccordionWidget: DME.Widget = {
   name: 'Accordion',
   type: 'accordion',
   events: {
-    createBlock: (): DMEData.Block<EntityAccordion> => {
+    createBlock: (): DMEData.CreatedBlock<EntityAccordion> => {
       return {
-        id: nanoid(),
         type: 'accordion',
         data: {},
         children: [

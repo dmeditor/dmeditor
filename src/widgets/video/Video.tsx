@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
-import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, useEditorStore } from '../..';
+import { generalSettings, useEditorStore } from '../..';
 
 export type VideoEntity = {
   value: string;
@@ -108,9 +107,8 @@ export const VideoDefinition: DME.Widget = {
   name: 'Video',
   type: 'video',
   events: {
-    createBlock: (): DMEData.Block<VideoEntity> => {
+    createBlock: (): DMEData.CreatedBlock<VideoEntity> => {
       return {
-        id: nanoid(),
         type: 'video',
         data: {
           value: '',

@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { arrayHasCommonElement } from '../../core/utils';
@@ -16,9 +14,8 @@ const heroTextWidget: DME.Widget = {
   //childen :{hero: 'image', list: 'list:button'}
   //or {hero: 'image', list: {type: 'list', children:{'list:button', <variant definition>}}
   events: {
-    createBlock: (): DMEData.Block<EntityHeroText> => {
+    createBlock: (): DMEData.CreatedBlock<EntityHeroText> => {
       return {
-        id: nanoid(),
         type: 'hero-text',
         data: {},
         children: [

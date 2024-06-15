@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 import type { DME, DMEData } from '../..';
 import { dmeConfig, generalSettings } from '../..';
 import { CarouselEntity, initCarouselEntity } from './entity';
@@ -10,9 +8,8 @@ const definition: DME.Widget = {
   name: 'Carousel',
   type: 'carousel',
   events: {
-    createBlock: (): DMEData.Block<CarouselEntity> => {
+    createBlock: (): DMEData.CreatedBlock<CarouselEntity> => {
       return {
-        id: nanoid(),
         type: 'carousel',
         style: { _: 'default' },
         data: initCarouselEntity(),
