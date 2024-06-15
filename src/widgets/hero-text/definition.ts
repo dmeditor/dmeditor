@@ -71,13 +71,18 @@ const heroTextWidget: DME.Widget = {
                 return arrayHasCommonElement(item.styleTags, ['container']);
               } else {
                 //list
-                return item.property === 'settings.general.padding';
+                return true;
               }
             }
             return true;
           }
         });
-        return { settings: settingResult, enabledStyles: {} };
+        let enabledStyles: any = {};
+        //list elements
+        if (context.relativePath[0] === 1 && context.relativePath.length === 2) {
+          enabledStyles = undefined;
+        }
+        return { settings: settingResult };
       },
       hasOwnView: (context) => {
         if (context.relativePath.length >= 2 && context.relativePath[0] === 1) {
