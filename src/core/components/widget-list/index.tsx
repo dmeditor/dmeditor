@@ -161,25 +161,29 @@ export const WidgetList = (props: WidgetListProps) => {
 
   return (
     <StyleTabBody>
-      {groupedWidgets.map(({ category, widgets }) => (
-        <CateoryAccordion key={category.identifier} defaultExpanded={true}>
-          <AccordionSummary>
-            {category.identifier === 'pinned' ? (
-              <PushPin style={{ fontSize: 18 }} />
-            ) : (
-              <ArrowForwardIosOutlined style={{ fontSize: 15 }} />
-            )}
-            {category.name}
-          </AccordionSummary>
-          <AccordionDetails>
-            <StyleWidgetList>
-              {widgets.map((widget, index) => (
-                <WidgetItem widget={widget} onSelect={props.onSelect} index={index} />
-              ))}
-            </StyleWidgetList>
-          </AccordionDetails>
-        </CateoryAccordion>
-      ))}
+      {groupedWidgets.map(({ category, widgets }) =>
+        widgets.length > 0 ? (
+          <CateoryAccordion key={category.identifier} defaultExpanded={true}>
+            <AccordionSummary>
+              {category.identifier === 'pinned' ? (
+                <PushPin style={{ fontSize: 18 }} />
+              ) : (
+                <ArrowForwardIosOutlined style={{ fontSize: 15 }} />
+              )}
+              {category.name}
+            </AccordionSummary>
+            <AccordionDetails>
+              <StyleWidgetList>
+                {widgets.map((widget, index) => (
+                  <WidgetItem widget={widget} onSelect={props.onSelect} index={index} />
+                ))}
+              </StyleWidgetList>
+            </AccordionDetails>
+          </CateoryAccordion>
+        ) : (
+          <></>
+        ),
+      )}
     </StyleTabBody>
   );
 };
