@@ -11,7 +11,8 @@ const ConfirmDialog = (props: {
 }) => {
   const [url, setUrl] = useState(props.value ?? '');
 
-  const handleConfirm = () => {
+  const handleConfirm = (e: MouseEvent) => {
+    e.preventDefault();
     props.onConfirm(url);
   };
 

@@ -15,11 +15,18 @@ const insertLink = (editor: Editor, url: string) => {
 const AddLinkButton = () => {
   const editor = useSlate();
   const [visible, setVisible] = useState(false);
+  // editor selection is lost when the dialog is opened
+  const [tempSelection, setTempSelection] = useState(editor.selection);
+
   const handleConfirm = (url: string) => {
     if (!url) return;
+    if (!editor.selection?.anchor.offset && !editor.selection?.focus.offset) {
+      editor.selection = tempSelection;
+    }
     insertLink(editor, url);
     setVisible(false);
   };
+
   return (
     <>
       <Button
@@ -27,6 +34,7 @@ const AddLinkButton = () => {
         onClick={(event: MouseEvent) => {
           event.preventDefault();
           setVisible(true);
+          setTempSelection(editor.selection);
         }}
       >
         <AddLinkOutlined />

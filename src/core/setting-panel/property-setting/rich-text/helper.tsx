@@ -16,7 +16,6 @@ import {
   LooksOneOutlined,
   LooksTwoOutlined,
 } from '@mui/icons-material';
-import { DME } from 'dmeditor/core/types';
 import {
   BaseText,
   Editor,
@@ -39,8 +38,10 @@ import {
 import { BrowseImageCallbackParams, dmeConfig } from '../../../config';
 import { ImageChooser } from '../../../utility/ImageChooser';
 import { imageExtensionIsValid, isNumber, isUrl } from '../../../utils';
+import AddLinkButton from './AddLinkButton';
 import Image from './Image';
 import { IMAGE_HEIGHT, IMAGE_WIDTH, LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
+import RemoveLinkButton from './RemoveLinkButton';
 
 export const getImageScale = (width: number, height: number) =>
   Math.round((width / height) * 100) / 100;
@@ -363,6 +364,8 @@ const HoveringToolbar = () => {
         <MarkButton format="bold" />
         <MarkButton format="italic" />
         <MarkButton format="underline" />
+        <AddLinkButton />
+        <RemoveLinkButton />
       </Menu>
     </Portal>
   );

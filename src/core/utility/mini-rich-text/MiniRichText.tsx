@@ -46,7 +46,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
     [],
   );
 
-  const renderLeaf = useCallback((props: MiniTextLeafProps) => <Leaf {...props} />, []) as any;
+  const renderLeaf = useCallback((props: MiniTextLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
 
   const handleValueChange = (newValue: Descendant[]) => {

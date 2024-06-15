@@ -5,7 +5,7 @@ import type { Descendant, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
-import { DME, useEditorStore } from '../../../..';
+import { useEditorStore, type DME } from '../../../..';
 import definition from '../../../../widgets/text/definition';
 import AddLinkButton from './AddLinkButton';
 import {
