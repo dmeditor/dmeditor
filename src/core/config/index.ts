@@ -182,8 +182,12 @@ const dmeConfig: {
 
 const setDMEditorConfig = (config: DMEConfigType) => {
   for (const key of Object.keys(config)) {
-    if (dmeConfig[key]) {
-      dmeConfig[key] = { ...dmeConfig[key], ...config[key] };
+    if (key === 'editor' && config.editor.categories) {
+      dmeConfig.editor.categories = [...dmeConfig.editor.categories, ...config.editor.categories];
+    } else {
+      if (dmeConfig[key]) {
+        dmeConfig[key] = { ...dmeConfig[key], ...config[key] };
+      }
     }
   }
 };
