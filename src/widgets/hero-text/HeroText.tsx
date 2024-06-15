@@ -54,7 +54,7 @@ const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
   );
   const renderList = () => (
     <div className={getClass('list') + ' dme-w-list'}>
-      <BlockRender data={children[1]} mode={mode} active={props.active} path={[...path, 1]} />
+      <BlockRender data={children[1]} mode={mode} path={[...path, 1]} />
     </div>
   );
 

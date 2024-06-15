@@ -11,9 +11,6 @@ const listWidget: DME.Widget = {
   widgetType: 'list',
   events: {
     createBlock: (variant?: string) => {
-      const defaultStyle = dmeConfig.widgets['list']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
-
       if (variant) {
         const variantDef = getWidgetVariant('list', variant);
         if (variantDef && variantDef.getDefaultData) {
@@ -24,7 +21,6 @@ const listWidget: DME.Widget = {
         id: nanoid(),
         data: { setting: { general: { padding: 5 } } },
         type: 'list',
-        ...styleObj,
         children: [],
       };
     },

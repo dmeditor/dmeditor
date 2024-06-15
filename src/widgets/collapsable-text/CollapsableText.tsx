@@ -28,13 +28,10 @@ export const CollapsableTextDefiniation: DME.Widget = {
   ],
   events: {
     createBlock: () => {
-      const defaultStyle = dmeConfig.widgets['collapsable-text']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
         data: { text: 'Show more' },
         type: 'collapsable-text',
-        ...styleObj,
         children: [
           {
             id: nanoid(),

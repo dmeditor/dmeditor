@@ -4,6 +4,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 import { createDMEditor } from '..';
+import { dmeConfig } from '../../../core/config';
 import type { DME, DMEData } from '../../types/dmeditor';
 import { isEmptyString, isKeyInObject, isStrictlyInfinity } from '../../utils';
 import emitter from '../../utils/event';
@@ -74,6 +75,10 @@ export const useEditorStore = create<Store & Actions>()(
             blockData = variant.getDefaultData?.() as any;
           } else {
             blockData = widget.events.createBlock();
+            const defaultStyle = dmeConfig.editor.defaultStyle[type];
+            if (!blockData.style && defaultStyle) {
+              blockData.style = defaultStyle;
+            }
           }
           if (addData && addData.style) {
             blockData.style = { _: addData.style };

@@ -11,13 +11,10 @@ const definition: DME.Widget = {
   type: 'carousel',
   events: {
     createBlock: (): DMEData.Block<CarouselEntity> => {
-      const defaultStyle = dmeConfig.widgets['carousel']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
         type: 'carousel',
         style: { _: 'default' },
-        // ...styleObj,
         data: initCarouselEntity(),
       };
     },

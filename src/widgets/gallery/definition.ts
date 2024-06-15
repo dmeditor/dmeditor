@@ -12,13 +12,10 @@ const definition: DME.Widget = {
   type: 'gallery',
   events: {
     createBlock: (): DMEData.Block<GalleryEntity> => {
-      const defaultStyle = dmeConfig.widgets['gallery']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
         type: 'gallery',
         style: { _: 'default' },
-        // ...styleObj,
         data: initGalleryEntity(),
       };
     },

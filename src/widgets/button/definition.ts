@@ -9,12 +9,9 @@ const buttonWidget: DME.Widget = {
   type: 'button',
   events: {
     createBlock: (): DMEData.Block => {
-      const defaultStyle = dmeConfig.widgets['button']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
         type: 'button',
-        ...styleObj,
         data: {
           value: 'New button',
           link: '#',

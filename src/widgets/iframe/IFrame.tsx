@@ -81,12 +81,9 @@ export const iFrameDefinition: DME.Widget = {
   type: 'iframe',
   events: {
     createBlock: (): DMEData.Block<IFrameEntity> => {
-      const defaultStyle = dmeConfig.widgets['iframe']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
         type: 'iframe',
-        ...styleObj,
         data: {
           value: '',
           settings: {

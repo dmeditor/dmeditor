@@ -11,14 +11,10 @@ const layout3ColumnsWidget: DME.Widget = {
   type: 'layout-3columns',
   events: {
     createBlock: (): DMEData.Block<EntityLayout3Columns, {}> => {
-      const defaultStyle = dmeConfig.widgets['layout-3columns']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
-
       return {
         id: nanoid(),
         data: { column1Width: 4, column2Width: 4 },
         type: 'layout-3columns',
-        ...styleObj,
         children: [
           {
             children: [],

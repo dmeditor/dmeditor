@@ -11,9 +11,6 @@ const spaceWidget: DME.Widget = {
   type: 'space',
   events: {
     createBlock: (variant?: string): DMEData.Block<EntitySpace> => {
-      const defaultStyle = dmeConfig.widgets['space']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
-
       return {
         id: nanoid(),
         data: {
@@ -25,7 +22,6 @@ const spaceWidget: DME.Widget = {
           },
         },
         type: 'space',
-        ...styleObj,
       };
     },
     updateData: () => {},

@@ -12,13 +12,9 @@ const definition: DME.Widget = {
   type: 'code',
   events: {
     createBlock: (): DMEData.Block<CodeEntity> => {
-      const defaultStyle = dmeConfig.widgets['code']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: `${nanoid()}-code`,
         type: 'code',
-        style: { _: 'default' },
-        ...styleObj,
         data: initCodeEntity(),
       };
     },

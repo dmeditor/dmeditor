@@ -55,6 +55,9 @@ setDMEditorConfig({
   editor: {
     favouriteWidgets: ['text', 'button', 'hero-text:image'],
     enableEditControl: true,
+    defaultStyle: {
+      heading: { _: 'theme' },
+    },
     ui: {
       'bg-editarea': '#666666',
     },
@@ -130,10 +133,10 @@ setDMEditorCallback({
       case 'list':
         return [
           {
-            name: 'button list',
+            name: 'Button list',
             savedData: {
               id: nanoid(),
-              type: 'list',
+              type: 'list:button',
               allowedTypes: ['button'],
               data: { direction: 'horizontal' },
               children: [

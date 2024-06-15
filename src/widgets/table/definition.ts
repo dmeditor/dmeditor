@@ -11,14 +11,11 @@ const HeadingWidget: DME.Widget = {
   type: 'table',
   events: {
     createBlock: (): DMEData.Block<EntityTableBlock> => {
-      const defaultStyle = dmeConfig.widgets['table']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       const { value } = initialTableEntity();
 
       return {
         id: nanoid(),
         type: 'table',
-        ...styleObj,
         data: {
           value,
           settings: {

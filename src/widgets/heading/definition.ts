@@ -15,13 +15,9 @@ const HeadingWidget: DME.Widget = {
   themeStyles: 'Theme heading',
   events: {
     createBlock: (): DMEData.Block<EntityHeadingBlock> => {
-      const defaultStyle = dmeConfig.widgets['heading']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
-
       return {
         id: nanoid(),
         type: 'heading',
-        ...styleObj,
         data: {
           value: 'This is a new block',
           level: 2,

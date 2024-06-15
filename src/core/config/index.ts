@@ -33,7 +33,6 @@ export interface CallbackConfig {
 }
 
 export interface widgetConfig {
-  defaultStyle?: { [identifier: string]: string };
   allowedTypes?: Array<string>;
   [prop: string]: any;
 }
@@ -56,6 +55,7 @@ export interface DMEConfigType {
     favouriteWidgets?: Array<string>;
     zIndex?: number;
     enableEditControl?: boolean;
+    defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
     categories?: Array<DME.WidgetCategory>;
     ui: { [variable: string]: string };
   };
@@ -89,6 +89,7 @@ const defaultConfig = () => {
       favouriteWidgets: [],
       zIndex: 1000,
       enableEditControl: false,
+      defaultStyle: {},
       settingGroups: {
         style_content: 'Content',
         style_text: 'Text',
@@ -158,6 +159,7 @@ const dmeConfig: {
   editor: {
     defaultTheme: string;
     favouriteWidgets: Array<string>;
+    defaultStyle: { [widget: string]: { [styleKey: string]: string } };
     enableEditControl: boolean;
     categories: Array<DME.WidgetCategory>;
     settingGroups: { [key: string]: string };

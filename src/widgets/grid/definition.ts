@@ -13,12 +13,9 @@ const gridWidget: DME.Widget = {
   allowedTypes: '^(?!.*grid).*$',
   events: {
     createBlock: (): DMEData.Block<EntityGrid> => {
-      const defaultStyle = dmeConfig.widgets['grid']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
       return {
         id: nanoid(),
         type: 'grid',
-        ...styleObj,
         data: {
           columns: 3,
         },

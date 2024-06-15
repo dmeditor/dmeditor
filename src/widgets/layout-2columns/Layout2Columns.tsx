@@ -11,14 +11,10 @@ const layout2ColumnsWidget: DME.Widget = {
   type: 'layout-2columns',
   events: {
     createBlock: (): DMEData.Block<EntityLayout2Columns, {}> => {
-      const defaultStyle = dmeConfig.widgets['layout-2columns']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
-
       return {
         id: nanoid(),
         data: { columnWidth: 6 },
         type: 'layout-2columns',
-        ...styleObj,
         children: [
           {
             children: [],

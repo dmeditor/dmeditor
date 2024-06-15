@@ -109,13 +109,9 @@ export const VideoDefinition: DME.Widget = {
   type: 'video',
   events: {
     createBlock: (): DMEData.Block<VideoEntity> => {
-      const defaultStyle = dmeConfig.widgets['video']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
-
       return {
         id: nanoid(),
         type: 'video',
-        ...styleObj,
         data: {
           value: '',
           settings: {

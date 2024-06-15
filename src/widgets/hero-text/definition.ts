@@ -17,14 +17,10 @@ const heroTextWidget: DME.Widget = {
   //or {hero: 'image', list: {type: 'list', children:{'list:button', <variant definition>}}
   events: {
     createBlock: (): DMEData.Block<EntityHeroText> => {
-      const defaultStyle = dmeConfig.widgets['hero-text']?.defaultStyle;
-      const styleObj = defaultStyle ? { style: defaultStyle } : {};
-
       return {
         id: nanoid(),
         type: 'hero-text',
         data: {},
-        ...styleObj,
         children: [
           {
             id: nanoid(),
@@ -71,7 +67,7 @@ const heroTextWidget: DME.Widget = {
                 return arrayHasCommonElement(item.styleTags, ['container']);
               } else {
                 //list
-                return true;
+                return item.styleTags?.includes('container');
               }
             }
             return true;
