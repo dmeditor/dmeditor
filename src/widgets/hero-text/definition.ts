@@ -78,7 +78,7 @@ const heroTextWidget: DME.Widget = {
         if (context.relativePath[0] === 1 && context.relativePath.length === 2) {
           enabledStyles = undefined;
         }
-        return { settings: settingResult };
+        return { settings: settingResult, enabledStyles: enabledStyles };
       },
       hasOwnView: (context) => {
         if (context.relativePath.length >= 2 && context.relativePath[0] === 1) {
