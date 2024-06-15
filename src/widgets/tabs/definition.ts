@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import type { DME, DMEData } from '../..';
 import { generalSettings } from '../..';
 import type { EntityTabsBlock, EntityTabsData } from './entity';

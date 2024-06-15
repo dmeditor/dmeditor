@@ -32,7 +32,6 @@ export const CollapsableTextDefiniation: DME.Widget = {
         type: 'collapsable-text',
         children: [
           {
-            id: nanoid(),
             type: 'heading',
             data: {
               value: 'This is a new block',

@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import { dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { arrayHasCommonElement } from '../../core/utils';
