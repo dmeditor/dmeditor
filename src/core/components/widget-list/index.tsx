@@ -212,6 +212,7 @@ const WidgetItem = (props: {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     setOpen(!open);
   };
 
@@ -225,16 +226,9 @@ const WidgetItem = (props: {
 
   return (
     <>
-      <StyleWidgetItem active={open}>
-        <div onClick={handleWidgetSelect}>
-          {icon && SvgIcon({ name: icon as string, size: 20 })}
-        </div>
-        <div
-          title={name}
-          className={StyleWidgetItemText}
-          onClick={handleWidgetSelect}
-          style={{ flexGrow: 1 }}
-        >
+      <StyleWidgetItem active={open} onClick={handleWidgetSelect}>
+        <div>{icon && SvgIcon({ name: icon as string, size: 20 })}</div>
+        <div title={name} className={StyleWidgetItemText} style={{ flexGrow: 1 }}>
           {name}
         </div>
         {multipleStyles && (

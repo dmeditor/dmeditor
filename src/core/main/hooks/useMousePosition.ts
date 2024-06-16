@@ -11,7 +11,7 @@ const useMousePosition = (element: HTMLDivElement | null, leftRight?: boolean) =
   const elementY = element?.getBoundingClientRect().top || 0;
   const elementX = element?.getBoundingClientRect().left || 0;
 
-  const shownPositionRange = 50; //50px
+  const shownPositionRange = 40; //40px
   const mouseMove = (e: any) => {
     let onFirstHalf = true;
     let result: PositionType = '';
