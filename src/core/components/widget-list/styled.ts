@@ -12,8 +12,7 @@ export const StyleWidgetList = styled.div`
 
 export const StyleWidgetItem = styled.div<{ active?: boolean }>`
   padding: 5px;
-  margin-top: 5px;
-  height: 26px;
+  height: 28px;
   display: flex;
   align-items: center;
   cursor: pointer;
