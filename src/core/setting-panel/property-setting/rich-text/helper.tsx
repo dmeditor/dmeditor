@@ -494,6 +494,7 @@ const Leaf = ({ attributes, children, leaf }: MiniTextLeafProps) => {
     fontSize: leaf['font-size'],
     color: leaf.color,
   };
+
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
