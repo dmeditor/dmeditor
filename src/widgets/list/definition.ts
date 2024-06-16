@@ -16,7 +16,7 @@ const listWidget: DME.Widget = {
         }
       }
       return {
-        data: { setting: { general: { padding: 5 } } },
+        data: { settings: { general: { padding: 10 } } },
         type: 'list',
         children: [],
       };
