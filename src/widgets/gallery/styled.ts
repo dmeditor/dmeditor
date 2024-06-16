@@ -19,6 +19,8 @@ export const GalleryItem = styled.div`
   img {
     cursor: pointer;
     width: 100%;
+    object-fit: cover;
+    height: 100%;
   }
 `;
 
