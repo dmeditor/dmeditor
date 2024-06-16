@@ -63,7 +63,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
     <div>
       <Slate editor={editor} initialValue={value} onValueChange={handleValueChange}>
         <div>
-          <HoveringToolbar />
+          {mode === 'edit' && <HoveringToolbar />}
           <Editable
             readOnly={mode === 'view'}
             renderLeaf={renderLeaf}

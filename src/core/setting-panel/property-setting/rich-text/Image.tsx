@@ -10,6 +10,7 @@ import { Transforms } from 'slate';
 import { ReactEditor, useFocused, useSelected, useSlateStatic } from 'slate-react';
 
 import { type DME } from '../../../../core/types';
+import { imageStyleObj, imageStyleString } from '../../../../core/utils';
 import { Resizable } from '../../../components/resizable';
 import { Button } from './helper';
 import { StyledResizable } from './styled';
@@ -153,21 +154,15 @@ const ResizableImage = (props: ImageProps) => {
 
 const ViewImage = (props: ImageProps) => {
   const { attributes, children, element } = props;
-  const { height, width, scale } = element.setting;
-  const style = {
-    width: width * scale,
-    height: height * scale,
-    textAlign: element.setting.align ?? 'left',
-  };
+
   return (
-    <div {...attributes} style={style}>
+    <div {...attributes} style={imageStyleObj(element, ['text-align'])}>
       {children}
       <img
         src={element.url}
+        style={imageStyleObj(element, ['width', 'height'])}
         className={css`
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+          ${imageStyleString(element, ['width', 'height'])}
         `}
       />
     </div>

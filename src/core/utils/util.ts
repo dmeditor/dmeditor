@@ -1,5 +1,7 @@
 'use strict';
 
+import { BaseNode, Descendant, Node, Element as SlateElement } from 'slate';
+
 import type { DMEData } from '../types';
 import { logger } from './log';
 import { getWidgetStyle } from './register';
@@ -290,4 +292,43 @@ export const scrollBlockToView = (id: string) => {
   element?.scrollIntoView({
     behavior: 'smooth',
   });
+};
+
+export const imageStyleObj = (element: SlateElement, filters?: string[]) => {
+  const {
+    width,
+    height,
+    align,
+    scale,
+    setting: { width: settingWidth, height: settingHeight, scale: settingScale },
+  } = element;
+
+  // if filters=['width', 'height']
+  // return { width: xxx, height:  xxx }
+  if (filters) {
+    return filters.reduce((acc, key) => {
+      if (key === 'width') {
+        acc.width = width ? width : settingWidth;
+      } else if (key === 'height') {
+        acc.height = height ? height : settingHeight;
+      } else if (key === 'text-align') {
+        acc.textAlign = align ? align : 'left';
+      }
+      return acc;
+    }, {});
+  }
+  return {
+    width: width ? `${width}px` : `${settingWidth}px`,
+    height: height ? `${height}px` : `${settingHeight}px`,
+    textAlign: align ? align : 'left',
+    'object-fit': 'contain',
+  };
+};
+
+export const imageStyleString = (element: SlateElement, filters?: string[]) => {
+  const styles = imageStyleObj(element);
+  return Object.keys(styles)
+    .filter((key) => filters && filters.includes(key))
+    .map((key) => `${key}:${styles[key]};`)
+    .join('');
 };
