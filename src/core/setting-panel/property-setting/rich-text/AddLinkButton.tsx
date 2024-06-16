@@ -3,8 +3,10 @@ import { AddLinkOutlined } from '@mui/icons-material';
 import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
-import ConfirmDialog from '../../../utility/ConfirmDialog';
-import { Button, isLinkActive, wrapLink } from './helper';
+import { isUrl } from '../../../../core/utils';
+import { useAlert } from '../../../hooks/useAlert';
+import { ConfirmDialog } from '../../../utility';
+import { Button, getLink, isLinkActive, wrapLink } from './helper';
 
 const insertLink = (editor: Editor, url: string) => {
   if (editor.selection) {
@@ -15,13 +17,14 @@ const insertLink = (editor: Editor, url: string) => {
 const AddLinkButton = () => {
   const editor = useSlate();
   const [visible, setVisible] = useState(false);
-  // editor selection is lost when the dialog is opened
-  const [tempSelection, setTempSelection] = useState(editor.selection);
+  const link = getLink(editor);
+  const { showAlert, AlertComponent } = useAlert();
 
   const handleConfirm = (url: string) => {
     if (!url) return;
-    if (!editor.selection?.anchor.offset && !editor.selection?.focus.offset) {
-      editor.selection = tempSelection;
+    if (!isUrl(url)) {
+      showAlert('Invalid Url', 'warning');
+      return;
     }
     insertLink(editor, url);
     setVisible(false);
@@ -31,10 +34,10 @@ const AddLinkButton = () => {
     <>
       <Button
         active={isLinkActive(editor)}
-        onClick={(event: MouseEvent) => {
+        // use onMouseDown instead of onClick to avoid editor reset focus
+        onMouseDown={(event: MouseEvent) => {
           event.preventDefault();
           setVisible(true);
-          setTempSelection(editor.selection);
         }}
       >
         <AddLinkOutlined />
@@ -42,11 +45,13 @@ const AddLinkButton = () => {
       {visible ? (
         <ConfirmDialog
           visible={visible}
+          value={link}
           label="Link url"
           onConfirm={handleConfirm}
           onCancel={() => setVisible(false)}
         />
       ) : null}
+      {AlertComponent}
     </>
   );
 };

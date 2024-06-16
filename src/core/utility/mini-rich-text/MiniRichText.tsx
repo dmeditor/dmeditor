@@ -67,7 +67,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
           <Editable
             readOnly={mode === 'view'}
             renderLeaf={renderLeaf}
-            onFocus={props.onFocus}
+            onFocus={props?.onFocus}
             renderElement={renderElement}
             onKeyDown={(event: any) => {
               //soft break

@@ -11,8 +11,7 @@ const ConfirmDialog = (props: {
 }) => {
   const [url, setUrl] = useState(props.value ?? '');
 
-  const handleConfirm = (e: MouseEvent) => {
-    e.preventDefault();
+  const handleConfirm = () => {
     props.onConfirm(url);
   };
 
@@ -24,7 +23,7 @@ const ConfirmDialog = (props: {
     <Dialog open={props.visible} fullWidth>
       <DialogContent>
         <TextField
-          autoFocus
+          // autoFocus
           required
           margin="dense"
           name="url"

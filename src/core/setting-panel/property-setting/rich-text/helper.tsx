@@ -356,10 +356,10 @@ const HoveringToolbar = () => {
           border-radius: 4px;
           transition: opacity 0.75s;
         `}
-        onMouseDown={(e: MouseEvent) => {
-          // prevent toolbar from taking focus away from editor
-          e.preventDefault();
-        }}
+        // onMouseDown={(e: MouseEvent) => {
+        //   // prevent toolbar from taking focus away from editor
+        //   e.preventDefault();
+        // }}
       >
         <MarkButton format="bold" />
         <MarkButton format="italic" />
@@ -613,6 +613,19 @@ const isLinkActive = (editor: Editor) => {
       !Editor.isEditor(node) && SlateElement?.isElement(node) && (node as LinkNode).type === 'link',
   });
   return !!link;
+};
+
+export const getLink = (editor: Editor): string => {
+  const [link] = Editor.nodes(editor, {
+    match: (node: Node) =>
+      !Editor.isEditor(node) && SlateElement?.isElement(node) && (node as LinkNode).type === 'link',
+  });
+  if (link) {
+    if ('url' in link[0]) {
+      return link[0].url as string;
+    }
+  }
+  return '';
 };
 
 const unwrapLink = (editor: Editor) => {
