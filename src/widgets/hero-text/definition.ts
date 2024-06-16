@@ -54,7 +54,7 @@ const heroTextWidget: DME.Widget = {
     embedConfig: {
       enabledSettings: (settings, styles, context) => {
         const settingResult = settings.filter((item) => {
-          if (item.category !== 'block') {
+          if (item.category !== 'style') {
             return true;
           } else {
             if (context.relativePath.length === 1) {
