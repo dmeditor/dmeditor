@@ -218,7 +218,8 @@ export namespace DMEData {
   }
 
   //Block entity, which is a node in the data tree
-  export interface Block<TData = DefaultDataType, TChild = DefaultBlockType> extends CreatedBlock {
+  export interface Block<TData = DefaultDataType, TChild = DefaultBlockType>
+    extends CreatedBlock<TData, TChild> {
     id: string;
   }
 
