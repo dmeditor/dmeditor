@@ -24,7 +24,7 @@ const definition: DME.Widget = {
       parameters: { min: 1, max: 5 },
     },
     {
-      name: 'Gap between images',
+      name: 'Image gap',
       property: '.gap',
       settingComponent: 'range',
       parameters: { min: 0, max: 100 },
