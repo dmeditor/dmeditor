@@ -93,7 +93,7 @@ const defaultConfig = () => {
       settingGroups: {
         style_content: 'Content',
         style_text: 'Text',
-        style_block: 'Block',
+        style_block: 'Block container',
         style_border: 'Border',
       },
       categories: [

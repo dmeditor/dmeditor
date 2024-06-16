@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ClassNames } from '@emotion/react';
 
 import { Button } from '../../../widgets/button';
 import { EntityTabsBlock } from '../../../widgets/tabs/entity';
@@ -20,18 +21,9 @@ const NavItem = (props: NavItemProps) => {
   const rootClasses = props.rootClasses;
   const { activeKey, setActiveKey } = useTabsStore();
   const isActive = activeKey === props.tabKey;
-  let cls = props.className;
+  let cls = props.className || '';
   if (isActive) {
-    cls += ' border-gray-200';
-  } else {
-    cls += ' border-transparent';
-  }
-  let styles: React.CSSProperties | undefined = undefined;
-  if (isActive) {
-    // styles.borderBottomColor = 'white';
-    styles = {
-      borderBottomColor: 'white',
-    };
+    cls += ' dme-w-active';
   }
   const handleClick = () => {
     if (isActive) return;
@@ -39,19 +31,11 @@ const NavItem = (props: NavItemProps) => {
   };
   const navProps = {
     ...props,
-    styleClasses: cls,
-    blockNode,
+    className: cls,
     onClick: handleClick,
   };
-  return (
-    <Button
-      style={styles}
-      {...navProps}
-      buttonType="button"
-      rootClasses={rootClasses}
-      onClick={handleClick}
-    />
-  );
+
+  return <button {...navProps} />;
 };
 
 export default NavItem;

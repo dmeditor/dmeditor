@@ -6,8 +6,13 @@ import {
   registerWidgetStyleOption,
   registerWidgetVariant,
 } from '../../src';
+import { defaultStyles } from './defaultStyles';
 
 export const registerStyles = () => {
+  for (const widget of Object.keys(defaultStyles)) {
+    registerWidgetStyleOption(widget, [defaultStyles[widget]]);
+  }
+
   //heading style
   registerWidgetStyle('heading', {
     identifier: 'margin',
@@ -17,6 +22,7 @@ export const registerStyles = () => {
       {
         identifier: 'big-margin',
         name: 'Big',
+        settings: { 'settings.general.padding': { value: 10 } },
         cssStyle: `
          margin-top: 50px;
          margin-bottom: 50px;
@@ -65,6 +71,7 @@ export const registerStyles = () => {
       {
         identifier: 'small-margin',
         name: 'Small',
+        settings: { 'settings.general.padding': { value: 5, status: 'disabled' } },
         cssStyle: `
        margin-top: 10px;
        margin-bottom: 10px;
