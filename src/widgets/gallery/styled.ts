@@ -18,8 +18,7 @@ export const GalleryList = styled.div((props: { columns: number; gap: number }) 
 export const GalleryItem = styled.div`
   img {
     cursor: pointer;
-    width: auto;
-    height: 200px;
+    width: 100%;
   }
 `;
 

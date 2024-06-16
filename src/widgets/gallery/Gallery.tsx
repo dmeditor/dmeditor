@@ -54,10 +54,10 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
   return (
     <>
       <GalleryContainer>
-        <GalleryList columns={columns} gap={gap} className={galleryClassName('imgList')}>
+        <GalleryList columns={columns} gap={gap} className={galleryClassName('img-list')}>
           {items.map((item, index) => (
             <GalleryItem
-              className={galleryClassName('imgWrapper')}
+              className={galleryClassName('img-wrapper')}
               key={item.image}
               onClick={() => handleClick(index)}
             >
@@ -79,13 +79,13 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
           <CloseOutlined />
         </IconButton>
         <DialogContent>
-          <GalleryDialog className={galleryClassName('dialogContent')}>
+          <GalleryDialog className={galleryClassName('dialog-content')}>
             <IconWrapper onClick={handlePrev}>
               <KeyboardArrowLeft fontSize="large" />
             </IconWrapper>
             {selectedImageIndex !== -1 && (
               <img
-                className={GalleryImage + ` ${galleryClassName('dialogImg')}`}
+                className={GalleryImage + ` ${galleryClassName('dialog-img')}`}
                 src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                 alt=""
               />
