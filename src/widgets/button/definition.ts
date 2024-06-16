@@ -32,7 +32,7 @@ const buttonWidget: DME.Widget = {
       name: 'Text align',
       property: 'settings.textAlign',
       settingComponent: 'align',
-      category: 'block',
+      category: 'style',
     },
     ...generalSettings,
   ],

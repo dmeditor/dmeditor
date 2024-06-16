@@ -27,7 +27,7 @@ const listWidget: DME.Widget = {
     {
       name: 'Direction',
       property: '.direction',
-      category: 'block',
+      category: 'style',
       styleTags: ['core'],
       settingComponent: 'button-group',
       parameters: {
@@ -40,7 +40,7 @@ const listWidget: DME.Widget = {
     {
       name: 'Item gap',
       property: '.itemGap',
-      category: 'block',
+      category: 'style',
       styleTags: ['core'],
       settingComponent: 'range',
       parameters: { min: 0, max: 100 },

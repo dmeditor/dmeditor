@@ -30,7 +30,7 @@ const TextWidget: DME.Widget = {
       name: 'Text color',
       property: 'settings.color',
       settingComponent: 'color',
-      category: 'block',
+      category: 'style',
     },
     ...generalSettings,
   ],

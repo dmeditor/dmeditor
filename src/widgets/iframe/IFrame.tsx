@@ -103,7 +103,7 @@ export const iFrameDefinition: DME.Widget = {
       name: 'Height',
       property: 'settings.height',
       settingComponent: 'range',
-      category: 'block',
+      category: 'style',
       parameters: { min: 300, max: 1000 },
     },
     ...generalSettings,

@@ -49,12 +49,12 @@ export const BlockSettings = (props: {
 
   const renderATab = (category: string): ReactElement => {
     return (
-      <TabBodyContainer fullHeight={category === 'block'}>
+      <TabBodyContainer fullHeight={category === 'style'}>
         <SettingTree
           blockData={blockData}
           blockPath={blockPath}
           selectedPath={selectedPath}
-          category={category === 'widget' ? undefined : 'block'}
+          category={category === 'widget' ? undefined : 'style'}
           level={embedLevel === undefined ? 0 : embedLevel}
           rootWidget={rootWidget}
         />

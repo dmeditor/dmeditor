@@ -101,7 +101,7 @@ export const SettingTree = (props: {
         //filter from system
         settingList = settingList.filter((item) => {
           if (item.category === category) {
-            if (item.category !== 'block') {
+            if (item.category !== 'style') {
               return true;
             } else {
               if (item.styleTags) {
@@ -273,7 +273,7 @@ export const SettingTree = (props: {
   const renderCurrentSettings = () => {
     return (
       <div>
-        {category === 'block' && (
+        {category === 'style' && (
           <StyleSettings
             values={blockData?.style || {}}
             enabledStyles={settingConfigs?.enabledStyles}
