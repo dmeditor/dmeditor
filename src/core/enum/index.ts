@@ -11,11 +11,6 @@ export enum Category {
   Section = 'section',
 }
 
-export enum Display {
-  Dropdown = 'dropdown',
-  ButtonGroup = 'button-group',
-  Radio = 'radio',
-  InlineBlock = 'inline-block',
-}
+export type Display = 'dropdown' | 'button-group' | 'radio' | 'inline-block';
 
 export type PageSettingType = 'text' | 'multitext' | 'image' | 'richtext';
