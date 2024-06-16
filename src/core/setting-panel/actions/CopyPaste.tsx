@@ -23,7 +23,6 @@ export const CopyPaste = () => {
 
   const handlePaste = () => {
     const copyBlock = getCopyBlock();
-    console.log('🚀 ~ handlePaste ~ copyBlock:', copyBlock);
 
     if (!copyBlock) {
       return;
@@ -34,16 +33,11 @@ export const CopyPaste = () => {
 
   return (
     <>
-      <PropertyButton color="warning" variant="outlined" title="Copy" onClick={handleCopy}>
+      <PropertyButton color="warning" title="Copy" onClick={handleCopy}>
         <ContentCopy />
       </PropertyButton>
       {copiedBlock && (
-        <PropertyButton
-          color="warning"
-          variant="outlined"
-          title="Paste under"
-          onClick={handlePaste}
-        >
+        <PropertyButton color="warning" title="Paste under" onClick={handlePaste}>
           <ContentPaste />
         </PropertyButton>
       )}

@@ -50,10 +50,10 @@ export const Move = (props: { blockPath: Array<number> }) => {
 
   return (
     <>
-      <PropertyButton color="warning" variant="outlined" title="Move up" onClick={handleMoveUp}>
+      <PropertyButton color="warning" title="Move up" onClick={handleMoveUp}>
         <ArrowUpward />
       </PropertyButton>
-      <PropertyButton color="warning" variant="outlined" title="Move down" onClick={handleMoveDown}>
+      <PropertyButton color="warning" title="Move down" onClick={handleMoveDown}>
         <ArrowDownward />
       </PropertyButton>
     </>

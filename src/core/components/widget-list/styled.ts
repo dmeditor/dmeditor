@@ -16,10 +16,12 @@ export const StyleWidgetItem = styled.div<{ active?: boolean }>`
   display: flex;
   align-items: center;
   cursor: pointer;
-  background-color: ${(props) => (props.active ? '#dddddd' : 'transparent')};
+  border-left: 2px solid transparent;
+  background-color: ${(props) => (props.active ? '#ffffff' : 'transparent')};
   &:hover {
     color: #000000;
-    background-color: #dddddd;
+    background-color: #ffffff;
+    border-left: 2px solid #cccccc;
   }
 `;
 
@@ -35,7 +37,7 @@ export const StyleWidgetStyleList = styled.div<{ row: number }>((props) => ({
   gridTemplateColumns: 'repeat(2, minmax(100px, 1fr))',
   gridRow: `${props.row + 2}`,
   gridColumn: '1 / -1',
-  backgroundColor: '#dddddd',
+  backgroundColor: '#ffffff',
   padding: '20px 10px',
   gap: 10,
   marginBottom: 10,
@@ -44,7 +46,7 @@ export const StyleWidgetStyleList = styled.div<{ row: number }>((props) => ({
 export const StyleWidgetStyleItem = {
   Main: styled.div`
     background: #ffffff;
-    border: 1px solid #f0f0f0;
+    border: 1px solid #eeeeee;
     color: #000000;
     padding: 5px;
     display: flex;
