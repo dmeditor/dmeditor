@@ -11,6 +11,7 @@ import useEventCallback from './hooks/useEventCallback';
 // import useUpdateEffect from './hooks/useUpdateEffect';
 import {
   StyledCarouselCaption,
+  StyledCarouselContainer,
   StyledCarouselImage,
   StyledCarouselIndicatorButton,
   StyledCarouselIndicatorItem,
@@ -232,10 +233,10 @@ const Carousel = (props) => {
   });
 
   return (
-    <div ref={carouselRef}>
+    <StyledCarouselContainer ref={carouselRef}>
       {getTransitionIndicator()}
       {getTransitionChildren()}
-    </div>
+    </StyledCarouselContainer>
   );
 };
 

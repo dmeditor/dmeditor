@@ -15,14 +15,13 @@ export default () => {
     {
       identifier: 'default',
       name: 'Default',
-      cssClasses: {
-        root: 'carousel',
-        'w-full': 'w-full',
-        'carousel-item': 'carousel-item',
-        'carousel-inner': 'overflow-hidden relative w-full',
-        'carousel-image': 'w-full max-h-80 min-h-48',
-        // 'carsouel-item-start': ''
-      },
+      // cssClasses: {
+      //   root: 'carousel',
+      //   'w-full': 'w-full',
+      //   'carousel-item': 'carousel-item',
+      //   'carousel-inner': 'overflow-hidden relative w-full',
+      //   'carousel-image': 'w-full max-h-80 min-h-48',
+      // },
       cssStyle: `
         .carousel-item.active,.carousel-item-next,.carousel-item-prev {
           display: block;

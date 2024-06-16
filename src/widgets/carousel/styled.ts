@@ -110,3 +110,11 @@ export const StyledCarouselIndicatorButton = styled.button`
     content: '';
   }
 `;
+
+export const StyledCarouselContainer = styled.div`
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+`;
