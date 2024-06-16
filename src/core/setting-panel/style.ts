@@ -71,6 +71,7 @@ export const ClickEditInput = styled.input`
   width: 100%;
   font-size: 18px;
   border: 0px;
+  background: var(--dmee-bg-sidearea);
 `;
 
 export const WidgetListContainer = styled.div``;
@@ -80,8 +81,6 @@ export const AdddBlockHeader = styled.div`
   right: 0px;
   top: 0px;
   width: 100%; */
-  background-color: white;
-  z-index: 10;
 `;
 
 export const StyledSettingItem = {

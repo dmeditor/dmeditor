@@ -15,6 +15,8 @@ export const Layout = {
     --dmee-selected-border-color: #fc7e4b;
     --dmee-hover-font-color: red;
 
+    --dmee-bg-sidearea: #f3f4f6;
+
     --dmee-zindex: ${(props) => props.config.zIndex};
     height: 100vh;
     display: grid;
@@ -44,7 +46,7 @@ export const Layout = {
   `,
   SettingPanel: styled.div`
     margin-top: var(--dmee-topbar-height);
-    background-color: white;
+    background-color: var(--dmee-bg-sidearea);
     position: relative;
   `,
 };

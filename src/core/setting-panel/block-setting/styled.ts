@@ -13,7 +13,6 @@ export const ActionPanel = styled.div`
   right: 0px;
   width: 100%;
   padding: 20px 0px;
-  background-color: white;
 `;
 
 export const ActionPanelButtonGroup = styled.span`

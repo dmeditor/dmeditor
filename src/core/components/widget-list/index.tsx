@@ -74,6 +74,7 @@ const CateoryAccordion = styled(Accordion)(({ theme }) => {
       padding: 0,
       height: 30,
       minHeight: 0,
+      backgroundColor: 'var(--dmee-bg-sidearea)',
     },
     '.Mui-expanded.MuiAccordionSummary-content': {
       margin: '10px 0px',
@@ -83,6 +84,7 @@ const CateoryAccordion = styled(Accordion)(({ theme }) => {
     '.MuiAccordionDetails-root': {
       padding: '0px 5px',
       color: '#666666',
+      backgroundColor: 'var(--dmee-bg-sidearea)',
     },
   };
 });
