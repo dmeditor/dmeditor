@@ -66,6 +66,8 @@ export const SettingTree = (props: {
         const option = styles[style];
         resetSettingStatus(option, style);
       }
+    } else {
+      setSettingStatus({});
     }
   }, [blockData.id]);
 
