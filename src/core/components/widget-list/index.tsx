@@ -198,7 +198,7 @@ const WidgetItem = (props: {
   const row = Math.floor(index / COLUMN_COUNT);
   const { name, icon } = widget;
   const styles = getWidgetStyle(widget.type);
-  const styleOptions = styles.options;
+  const styleOptions = styles.options.filter((option) => !option.identifier.startsWith('_'));
   const savedBlockData = useMemo(() => {
     if (!dmeConfig.callbacks.getSavedBlocks) {
       return [];

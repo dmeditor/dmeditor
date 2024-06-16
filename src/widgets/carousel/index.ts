@@ -13,7 +13,7 @@ export default () => {
   });
   registerWidgetStyleOption('carousel', [
     {
-      identifier: 'default',
+      identifier: '_default',
       name: 'Default',
       // cssClasses: {
       //   root: 'carousel',

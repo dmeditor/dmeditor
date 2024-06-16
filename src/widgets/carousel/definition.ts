@@ -11,7 +11,7 @@ const definition: DME.Widget = {
     createBlock: (): DMEData.CreatedBlock<CarouselEntity> => {
       return {
         type: 'carousel',
-        style: { _: 'default' },
+        style: { _: '_default' },
         data: initCarouselEntity(),
       };
     },

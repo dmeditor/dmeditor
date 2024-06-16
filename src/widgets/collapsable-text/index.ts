@@ -9,7 +9,7 @@ export default () => {
   registerWidgetStyleOption('collapsable-text', [
     {
       name: 'Default',
-      identifier: 'default',
+      identifier: '_default',
       cssClasses: { button: 'bg-blue-500 hover:bg-blue-700 text-white py-2 px-4' },
       cssStyle: `
         .dme-w-button-container{
