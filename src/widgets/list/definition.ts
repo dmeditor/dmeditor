@@ -37,6 +37,14 @@ const listWidget: DME.Widget = {
         ],
       },
     },
+    {
+      name: 'Item gap',
+      property: '.itemGap',
+      category: 'block',
+      styleTags: ['core'],
+      settingComponent: 'range',
+      parameters: { min: 0, max: 100 },
+    },
     ...generalSettings,
   ],
 };

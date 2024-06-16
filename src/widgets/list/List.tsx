@@ -7,14 +7,18 @@ import { StyledList } from './styled';
 const List = (props: DME.WidgetRenderProps<EntityList>) => {
   const {
     blockNode: {
-      data: { direction },
+      data: { direction, itemGap },
       children,
     },
     blockNode,
   } = props;
 
   return (
-    <StyledList horizontal={direction === 'horizontal'} className="dme-blocktype-list">
+    <StyledList
+      horizontal={direction === 'horizontal'}
+      itemGap={itemGap}
+      className="dme-blocktype-list"
+    >
       <BlockListRender
         mode={props.mode}
         blockData={children || []}
