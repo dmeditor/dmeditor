@@ -59,6 +59,7 @@ setDMEditorConfig({
       heading: { _: 'theme' },
       button: { _: 'project-primary' },
       tabs: { _: '_default' },
+      'collapsable-text': { _: '_default' },
     },
     ui: {
       'bg-editarea': '#666666',

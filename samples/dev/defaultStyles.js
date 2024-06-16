@@ -6,14 +6,14 @@
  import { defaultStyles } from './defaultStyles';
 
  for (const widget of Object.keys(defaultStyles)) {
-    registerWidgetStyleOption(widget, [defaultStyles[widget]]);
+    registerWidgetStyleOption(widget, [
+      { identifier: '_default', name: 'Default', ...defaultStyles[widget] },
+    ]);
  }
  */
 
 export const defaultStyles = {
-    'tabs':{
-            identifier:'_default', 
-            name:'Default',
+    'tabs':{            
             cssStyle:`
             div[role='tablist']{
                 border-bottom: 1px solid #cccccc;
@@ -43,5 +43,26 @@ export const defaultStyles = {
             }            
 
             `
-        }
+        },
+    'collapsable-text':{
+        cssStyle:`
+             .dme-w-button-container{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .dme-w-button{
+                padding: 10px 15px;
+                display:flex;
+                border: none;
+                cursor: pointer;
+                background: white;
+                font-size: 1rem;
+            }
+            .dme-w-button:hover{
+                background: #f0f0f0;
+            }
+        `
+    }
     }

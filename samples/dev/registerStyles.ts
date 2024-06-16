@@ -10,7 +10,9 @@ import { defaultStyles } from './defaultStyles';
 
 export const registerStyles = () => {
   for (const widget of Object.keys(defaultStyles)) {
-    registerWidgetStyleOption(widget, [defaultStyles[widget]]);
+    registerWidgetStyleOption(widget, [
+      { identifier: '_default', name: 'Default', ...defaultStyles[widget] },
+    ]);
   }
 
   //heading style
