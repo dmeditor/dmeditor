@@ -11,7 +11,7 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['block', 'list'],
   },
   {
-    name: 'Position',
+    name: 'Self position',
     settingComponent: 'align',
     property: 'settings.general.align',
     category: 'style',
