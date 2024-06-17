@@ -463,5 +463,23 @@ export const useEditorStore = create<Store & Actions>()(
     reset: () => {
       set(() => createDMEditor());
     },
+    getRecentColors: () => {
+      const state = get();
+      return state.recentColors;
+    },
+    updateRecentColors: (color: string) => {
+      set((state) => {
+        if (state.recentColors.includes(color)) {
+          return;
+        }
+        state.recentColors.unshift(color);
+        if (state.recentColors.length > 10) {
+          state.recentColors = state.recentColors.slice(0, 10);
+        }
+        if (window && window.localStorage) {
+          window.localStorage.setItem('recentColors', JSON.stringify(state.recentColors));
+        }
+      });
+    },
   })),
 );

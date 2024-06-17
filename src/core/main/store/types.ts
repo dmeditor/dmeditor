@@ -25,6 +25,7 @@ export type Store = {
   addBlockData?: AddBlockParameters;
   storage: DMEData.BlockList; //data layer
   page: DMEData.Page;
+  recentColors: Array<string>;
 };
 
 export type Actions = {
@@ -91,4 +92,6 @@ export type Actions = {
   setCopyBlock: (block: DMEData.Block) => void;
   getCopyBlock: () => DMEData.Block | undefined;
   reset: () => void;
+  getRecentColors: () => Array<string>;
+  updateRecentColors: (color: string) => void;
 };

@@ -13,6 +13,15 @@ export type LayoutMode = 'pc' | 'mobile' | 'tablet';
 
 function createDMEditor() {
   // const defaultConfig = simpleCloneDeep(getDefaultOptions());
+  let recentColors: string[] = [];
+
+  if (window && window.localStorage) {
+    const colors = window.localStorage.getItem('recentColors');
+    if (colors) {
+      recentColors = JSON.parse(colors);
+    }
+  }
+
   return {
     selected: {
       blockId: '',
@@ -29,6 +38,7 @@ function createDMEditor() {
     copyBlock: undefined,
     hoverPath: undefined,
     addBlockData: undefined,
+    recentColors,
   };
 }
 
