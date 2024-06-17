@@ -1,8 +1,8 @@
 import type { DME } from '../..';
 import { EntityLine } from './entity';
-import { StyledSpace } from './styled';
+import { StyledLine } from './styled';
 
-const Space = (props: DME.WidgetRenderProps<EntityLine>) => {
+const Line = (props: DME.WidgetRenderProps<EntityLine>) => {
   const {
     blockNode: {
       data: { settings },
@@ -12,13 +12,13 @@ const Space = (props: DME.WidgetRenderProps<EntityLine>) => {
 
   return (
     <div>
-      <StyledSpace
-        className={props.styleClasses['space-item'] || 'dme-w-space-item'}
+      <StyledLine
+        className={props.styleClasses['line-item'] || 'dme-w-line-item'}
         spaceHeight={settings?.height || 2}
         spaceColor={settings?.color}
-      ></StyledSpace>
+      ></StyledLine>
     </div>
   );
 };
 
-export { Space };
+export { Line };

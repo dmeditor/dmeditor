@@ -1,12 +1,12 @@
 import { HorizontalRuleOutlined } from '@mui/icons-material';
 
 import { registerIcon, registerWidget } from '../..';
-import spaceWidget from './definition';
-import { Space } from './Space';
+import lineWidget from './definition';
+import { Line } from './Line';
 
 const register = () => {
   registerIcon({ name: 'line', component: HorizontalRuleOutlined });
-  registerWidget(spaceWidget, { render: Space });
+  registerWidget(lineWidget, { render: Line });
 };
 
 export default register;
