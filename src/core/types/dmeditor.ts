@@ -202,6 +202,7 @@ export namespace DMEData {
   }
 
   export interface DefaultBlockType extends widgetBlockProperties {
+    id: string;
     data: DefaultDataType; //entity data from widget
     children?: Array<DefaultBlockType>;
   }
@@ -224,7 +225,7 @@ export namespace DMEData {
   }
 
   //Block list
-  export interface BlockList extends Array<Block> {}
+  export type BlockList = Array<Block>;
 
   //A section is alias of a block
   // type Section = Block;
