@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
   --dmee-bg-color: ${(props) => props.uiConfig['bg-color'] || '#1d4b64'};
   --dmee-topbar-height: 40px;
-  --dmee-bg-editarea: ${(props) => props.uiConfig['bg-editarea'] || '#666666'};
+  --dmee-bg-editarea: ${(props) => props.uiConfig['bg-editarea'] || '#646c71'};
 `;
 
 export const Layout = {

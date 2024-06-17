@@ -6,15 +6,8 @@ import {
   registerWidgetStyleOption,
   registerWidgetVariant,
 } from '../../src';
-import { defaultStyles } from './defaultStyles';
 
 export const registerStyles = () => {
-  for (const widget of Object.keys(defaultStyles)) {
-    registerWidgetStyleOption(widget, [
-      { identifier: '_default', name: 'Default', ...defaultStyles[widget] },
-    ]);
-  }
-
   //heading style
   registerWidgetStyle('heading', {
     identifier: 'margin',

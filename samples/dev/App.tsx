@@ -15,6 +15,7 @@ import {
 } from '../../src';
 import { DMEditorRefType } from '../../src/core/main/designer/DMEditor';
 import { BrowseImage, BrowseLink } from './callbacks';
+import { defaultStyles } from './defaultStyles';
 import { EditImage } from './EditImage';
 import { registerStyles } from './registerStyles';
 import registerSampleWidget from './SampleWidget';
@@ -22,6 +23,14 @@ import registerSampleWidget from './SampleWidget';
 registerDefaultWidgets();
 registerSampleWidget();
 registerStyles();
+
+const defaultStyleConfig = {};
+for (const widget of Object.keys(defaultStyles)) {
+  registerWidgetStyleOption(widget, [
+    { identifier: '_default', name: 'Default', ...defaultStyles[widget] },
+  ]);
+  defaultStyleConfig[widget] = { _: '_default' };
+}
 
 setDMEditorConfig({
   general: {
@@ -56,13 +65,12 @@ setDMEditorConfig({
     favouriteWidgets: ['text', 'button', 'hero-text:image'],
     enableEditControl: true,
     defaultStyle: {
+      ...defaultStyleConfig,
       heading: { _: 'theme' },
       button: { _: 'project-primary' },
-      tabs: { _: '_default' },
-      'collapsable-text': { _: '_default' },
     },
     ui: {
-      'bg-editarea': '#666666',
+      // 'bg-editarea': '#666666',
     },
   },
   widgets: {

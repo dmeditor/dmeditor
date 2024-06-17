@@ -5,11 +5,23 @@
  * 
  import { defaultStyles } from './defaultStyles';
 
+ const defaultStyleConfig = {}
  for (const widget of Object.keys(defaultStyles)) {
     registerWidgetStyleOption(widget, [
       { identifier: '_default', name: 'Default', ...defaultStyles[widget] },
     ]);
+    defaultStyleConfig[widget] = {_:'_default'}
  }
+
+
+setDMEditorConfig({
+ //other config
+ editor: {   
+    defaultStyle: {      
+      ...defaultStyleConfig
+    }
+}
+)
  */
 
 export const defaultStyles = {
