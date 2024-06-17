@@ -2,7 +2,7 @@ import { DME, DMEData } from '../../../core/types';
 
 export const generalSettings: Array<DME.Setting> = [
   {
-    name: 'Content width',
+    name: 'Block width',
     settingComponent: 'range',
     property: 'settings.general.width',
     parameters: { min: 0, max: 700, step: 5 },
