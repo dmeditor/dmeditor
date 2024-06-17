@@ -91,9 +91,9 @@ const defaultConfig = () => {
       enableEditControl: false,
       defaultStyle: {},
       settingGroups: {
-        style_content: 'Content',
+        style_block: 'Block',
         style_text: 'Text',
-        style_block: 'Block container',
+        style_block_container: 'Block container',
         style_border: 'Border',
       },
       categories: [
