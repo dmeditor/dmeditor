@@ -1,4 +1,4 @@
-import { CollectionsOutlined } from '@mui/icons-material';
+import { ViewCarouselOutlined } from '@mui/icons-material';
 
 import { registerIcon, registerWidget, registerWidgetStyleOption } from '../..';
 import { registerSettingComponent } from '../../core/setting-panel/register';
@@ -7,7 +7,7 @@ import definition from './definition';
 import SettingCarousel from './settings/SettingCarousel';
 
 export default () => {
-  registerIcon({ name: 'carousel', component: CollectionsOutlined });
+  registerIcon({ name: 'carousel', component: ViewCarouselOutlined });
   registerWidget(definition, {
     render: Carousel,
   });
