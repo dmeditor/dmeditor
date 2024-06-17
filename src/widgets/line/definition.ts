@@ -1,31 +1,35 @@
 import type { DME, DMEData } from '../..';
 import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
-import { EntitySpace } from './entity';
+import { EntityLine } from './entity';
 
-const spaceWidget: DME.Widget = {
+const lineWidget: DME.Widget = {
   category: 'design',
-  icon: 'button', //todo: change icon
-  name: 'Space',
-  type: 'space',
+  icon: 'line',
+  name: 'Line',
+  type: 'line',
   events: {
-    createBlock: (variant?: string): DMEData.CreatedBlock<EntitySpace> => {
+    createBlock: (variant?: string): DMEData.CreatedBlock<EntityLine> => {
       return {
         data: {
           settings: {
-            height: 20,
-            general: {
-              background: '#cccccc',
-            },
+            height: 1,
+            color: '#999999',
+            general: { padding: 10 },
           },
         },
-        type: 'space',
+        type: 'line',
       };
     },
     updateData: () => {},
   },
   settings: [
     {
-      name: 'Height',
+      name: 'Line color',
+      property: 'settings.color',
+      settingComponent: 'color',
+    },
+    {
+      name: 'Line height',
       property: 'settings.height',
       settingComponent: 'range',
       parameters: {
@@ -37,10 +41,11 @@ const spaceWidget: DME.Widget = {
       [
         'settings.general.background',
         'settings.general.marginTop',
+        'settings.general.padding',
         'settings.general.fullWidth',
-      ].includes(item.property),
+      ].includes(item.property || ''),
     ),
   ],
 };
 
-export default spaceWidget;
+export default lineWidget;
