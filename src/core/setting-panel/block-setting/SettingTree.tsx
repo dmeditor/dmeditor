@@ -262,7 +262,11 @@ export const SettingTree = (props: {
         };
 
         return settingComponent && settingStatus[property] !== 'hidden' ? (
-          <PropertyItem label={setting.name} key={setting.property}>
+          <PropertyItem
+            upDown={propertyProps.display?.upDown}
+            label={setting.name}
+            key={setting.property}
+          >
             <Property {...propertyProps} />
           </PropertyItem>
         ) : null;

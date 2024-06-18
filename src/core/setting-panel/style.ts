@@ -84,8 +84,8 @@ export const AdddBlockHeader = styled.div`
 `;
 
 export const StyledSettingItem = {
-  Container: styled.div<{ autoWidth?: boolean }>`
-    display: flex;
+  Container: styled.div<{ upDown?: boolean; autoWidth?: boolean }>`
+    display: ${(props) => (props.upDown ? 'block' : 'flex')};
     padding: 4px 0px;
     align-items: center;
   `,
@@ -94,7 +94,8 @@ export const StyledSettingItem = {
     color: #333333;
     font-size: 14px;
   `,
-  Setting: styled.div`
+  Setting: styled.div<{ upDown?: boolean }>`
+    ${(props) => (props.upDown ? 'padding: 10px 5px;' : '')}
     min-width: 180px;
     position: relative;
   `,

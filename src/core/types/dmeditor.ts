@@ -13,6 +13,9 @@ export namespace DME {
     styleTags?: Array<string>; //eg. core, general
     category?: string;
     group?: string;
+    display?: {
+      upDown?: boolean;
+    };
     parameters?: {
       [key: string]: unknown;
     };

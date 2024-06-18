@@ -7,17 +7,17 @@ import { StyledSettingGroup, StyledSettingItem } from './style';
 export const PropertyItem = (props: {
   label?: string;
   autoWidth?: boolean;
-  vertical?: boolean;
+  upDown?: boolean;
   children: any;
 }) => {
   const { label } = props;
   const autoWidth = props.autoWidth ? true : false;
-  const vertical = props.vertical ? true : false;
+  const upDown = props.upDown ? true : false;
 
   return label ? (
-    <StyledSettingItem.Container autoWidth={autoWidth}>
+    <StyledSettingItem.Container upDown={upDown} autoWidth={autoWidth}>
       <StyledSettingItem.Label>{props.label}: </StyledSettingItem.Label>
-      <StyledSettingItem.Setting>{props.children}</StyledSettingItem.Setting>
+      <StyledSettingItem.Setting upDown={upDown}>{props.children}</StyledSettingItem.Setting>
     </StyledSettingItem.Container>
   ) : (
     <StyledSettingItem.Setting>{props.children}</StyledSettingItem.Setting>
