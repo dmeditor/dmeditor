@@ -1,10 +1,9 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Refresh } from '@mui/icons-material';
-import { Button, IconButton, Popover } from '@mui/material';
-import { SketchPicker } from 'react-color';
+import { IconButton, Popover } from '@mui/material';
+import { SketchPicker, type ColorResult } from 'react-color';
 
 import { DME, useEditorStore } from '../../../..';
-import { PickColor } from '../../../utils';
 import {
   colorFullRing,
   ColorItem,
@@ -15,6 +14,13 @@ import {
   ColorPickerWrapper,
   Divider,
 } from './styled';
+
+/**
+ * TODO
+ * 1. ColorPicker component
+ *  1.1 ColorSetting component depends on ColorPicker
+ * 2. undefined color
+ */
 
 const PRESET_COLORS = [
   '#f44336',
@@ -64,15 +70,16 @@ const SimpleColor = (props: { value?: string; onSelected?: (color: string) => vo
 const AdvancedColor = (props: { value?: string; onChange?: (color: string) => void }) => {
   const { value = '', onChange } = props;
 
-  const handleChange = (color: any) => {
-    onChange?.(color.hex);
+  const handleChange = (color: ColorResult) => {
+    const rgba = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
+    onChange?.(rgba);
   };
 
   return (
     <SketchPicker
       color={value}
       presetColors={[]}
-      onChangeComplete={handleChange}
+      onChange={handleChange}
       styles={{
         default: {
           picker: {
@@ -91,7 +98,11 @@ const RecentColor = (props: {
   onChange?: (color: string) => void;
   recentColors?: string[];
 }) => {
-  const { value, recentColors = [] } = props;
+  const { recentColors = [], value } = props;
+
+  const isMatched = useMemo(() => {
+    return PRESET_COLORS.includes(value ?? '');
+  }, [value]);
 
   if (recentColors.length === 0) {
     return null;
@@ -110,7 +121,7 @@ const RecentColor = (props: {
             <ColorItem
               key={index}
               style={{ background: color }}
-              selected={value === color}
+              selected={!isMatched && value === color}
               onClick={() => handleSelected(color)}
             />
           );
@@ -210,20 +221,6 @@ const ColorPicker = (props: { value?: string; property: string } & DME.SettingCo
         </ColorPickerWrapper>
       </Popover>
     </ul>
-  );
-};
-
-const Color = (props: { value?: string; property: string } & DME.SettingComponentProps) => {
-  const { property, value, blockPath } = props;
-  const { updateBlockPropsByPath } = useEditorStore();
-
-  return (
-    <PickColor
-      color={value ? value : ''}
-      onChange={(value) => {
-        updateBlockPropsByPath(blockPath, property, value);
-      }}
-    ></PickColor>
   );
 };
 
