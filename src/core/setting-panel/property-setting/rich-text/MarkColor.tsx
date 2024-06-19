@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
-import { PickColor } from '../../../utils';
+import { PickColor, useRecentColors } from '../../../utils';
 
 type ColorType = 'color';
 
@@ -40,11 +40,12 @@ const isSelected = (editor: Editor, format: ColorType, color: string) => {
 const MarkColor = (props: { format: ColorType }) => {
   const { format } = props;
   const editor = useSlate();
-  const [_, setColor] = useState('');
+  const { recentColors, handleUpdateRecentColors } = useRecentColors();
+  const [color, setColor] = useState('');
 
-  const handleChange = (color: string) => {
-    setColor(color);
-    isSelected(editor, format, color);
+  const handleChange = (color?: string) => {
+    setColor(color ?? '');
+    isSelected(editor, format, color ?? '');
   };
 
   const currentValue = () => {
@@ -52,7 +53,7 @@ const MarkColor = (props: { format: ColorType }) => {
     if (active) {
       return value;
     } else {
-      return '#000000';
+      return '';
     }
   };
 
@@ -63,7 +64,12 @@ const MarkColor = (props: { format: ColorType }) => {
         vertical-align: middle;
       `}
     >
-      <PickColor color={currentValue()} onChange={handleChange} />
+      <PickColor
+        color={currentValue()}
+        onChange={handleChange}
+        recentColors={recentColors}
+        onChangeComplete={handleUpdateRecentColors}
+      />
     </div>
   );
 };

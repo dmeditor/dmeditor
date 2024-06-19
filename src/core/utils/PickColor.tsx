@@ -1,97 +1,288 @@
-import { useEffect, useRef, useState } from 'react';
-import { SketchPicker } from 'react-color';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { Refresh } from '@mui/icons-material';
+import { IconButton, Popover } from '@mui/material';
+import { SketchPicker, type ColorResult } from 'react-color';
 
-export const PickColor = (props: { color: string; onChange: (color: string) => void }) => {
-  const [showColorPicker, setShowColorPicker] = useState(false);
-  const modalRef = useRef(null);
-  let originalColor: string = '';
-  const changeColor = (color: any, e: any) => {
-    e.preventDefault();
-    if (originalColor === '') {
-      originalColor = props.color ? props.color : '';
-    }
-    change(color.hex);
+import { DME, useEditorStore } from '../..';
+
+const PRESET_COLORS = [
+  '#f44336',
+  '#e91e63',
+  '#9c27b0',
+  '#673ab7',
+  '#3f51b5',
+  '#2196f3',
+  '#03a9f4',
+  '#00bcd4',
+  '#009688',
+  '#4caf50',
+  '#8bc34a',
+  '#cddc39',
+  '#ffeb3b',
+  '#ffc107',
+  '#ff9800',
+  '#ff5722',
+  '#795548',
+  '#607d8b',
+];
+
+const colorList = css`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  align-items: center;
+`;
+
+const Divider = styled.div`
+  border-left: 1px solid #ccc;
+  height: 20px;
+  margin: 0 10px;
+`;
+
+const ColorItem = styled.li<{ selected?: boolean }>`
+  position: relative;
+  display: inline-block;
+  margin: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #fff;
+
+  &::before {
+    content: ' ';
+    display: ${(props) => (props.selected ? 'inline-block' : 'none')};
+    width: 50%;
+    height: 20%;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: translate(-50%, -60%) rotate(-45deg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+`;
+
+const ColorPickerContainer = styled.div<{
+  width?: number;
+  displaySelectedColor?: boolean;
+  color?: string;
+}>`
+  --width: ${(props) => props.width ?? 22}px;
+  display: inline-block;
+  width: var(--width);
+  height: var(--width);
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  background: ${(props) =>
+    props.displaySelectedColor && props.color
+      ? props.color
+      : 'conic-gradient(#f00, #f90, #ff0, #0f0, #0ff, #00f, #90f, #f00)'};
+  mask: ${(props) =>
+    props.displaySelectedColor && props.color
+      ? 'none'
+      : 'radial-gradient(circle, transparent 40%, white 41%)'};
+`;
+
+const ColorPickerWrapper = styled.div`
+  position: relative;
+  padding: 16px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const ColorModeText = styled.span<{ active: boolean }>`
+  color: ${(props) => (props.active ? '#000' : '#ccc')};
+  cursor: pointer;
+`;
+
+const colorPickerTitle = css`
+  display: flex;
+  align-items: center;
+  padding: 5px;
+`;
+
+const SimpleColor = (props: { value?: string; onSelected?: (color: string) => void }) => {
+  const { value } = props;
+  const presetColors = PRESET_COLORS;
+
+  const handleSelected = (color: string) => {
+    props.onSelected?.(color);
   };
-  const change = (colorV: any) => {
-    if (props.onChange) {
-      props.onChange(colorV);
-    }
+
+  return (
+    <ul className={colorList} style={{ marginTop: 8 }}>
+      {presetColors.map((color, index) => {
+        return (
+          <ColorItem
+            key={index}
+            style={{ background: color }}
+            selected={value === color}
+            onClick={() => handleSelected(color)}
+          />
+        );
+      })}
+    </ul>
+  );
+};
+
+const AdvancedColor = (props: { value?: string; onChange?: (color: string) => void }) => {
+  const { value = '', onChange } = props;
+
+  const handleChange = (color: ColorResult) => {
+    const rgba = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
+    onChange?.(rgba);
   };
-  const resetColor = () => {
-    change(originalColor);
-    setShowColorPicker(false);
+
+  return (
+    <SketchPicker
+      color={value}
+      presetColors={[]}
+      onChange={handleChange}
+      styles={{
+        default: {
+          picker: {
+            width: 300,
+            padding: 0,
+            boxShadow: 'none',
+          },
+        },
+      }}
+    />
+  );
+};
+
+const RecentColor = (props: {
+  value?: string;
+  onChange?: (color: string) => void;
+  recentColors?: string[];
+}) => {
+  const { recentColors = [], value } = props;
+
+  const isMatched = useMemo(() => {
+    return PRESET_COLORS.includes(value ?? '');
+  }, [value]);
+
+  if (recentColors.length === 0) {
+    return null;
+  }
+
+  const handleSelected = (color: string) => {
+    props.onChange?.(color);
   };
-  useEffect(() => {
-    function handler(event: Event) {
-      const current = modalRef.current as any;
-      if (!current || !current.contains(event.target)) {
-        setShowColorPicker(false);
-      }
-    }
-    window.addEventListener('click', handler);
-    return () => window.removeEventListener('click', handler);
-  }, []);
+
   return (
     <>
-      <span
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setShowColorPicker(!showColorPicker);
+      <p>Recent</p>
+      <ul className={colorList}>
+        {recentColors.map((color, index) => {
+          return (
+            <ColorItem
+              key={index}
+              style={{ background: color }}
+              selected={!isMatched && value === color}
+              onClick={() => handleSelected(color)}
+            />
+          );
+        })}
+      </ul>
+    </>
+  );
+};
+
+export const useRecentColors = () => {
+  const { getRecentColors, updateRecentColors } = useEditorStore();
+  const recentColors = getRecentColors();
+
+  const handleUpdateRecentColors = (color?: string) => {
+    if (color) {
+      updateRecentColors(color);
+    }
+  };
+
+  return { recentColors, handleUpdateRecentColors };
+};
+
+export const PickColor = (props: {
+  color: string | undefined;
+  displaySelectedColor?: boolean;
+  width?: number;
+  recentColors?: string[];
+  onChange?: (color?: string) => void;
+  onChangeComplete?: (color?: string) => void;
+}) => {
+  const {
+    color,
+    recentColors = [],
+    onChange,
+    onChangeComplete,
+    displaySelectedColor = true,
+  } = props;
+
+  const [localValue, setLocalValue] = useState<string | undefined>(color);
+  const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<'simple' | 'advanced'>('simple');
+  const colorPickerRef = useRef<HTMLDivElement>(null);
+
+  const handleClose = () => {
+    setOpen(false);
+    setLocalValue(color);
+    onChangeComplete?.(color);
+  };
+
+  const handleReset = () => {
+    onChange?.(localValue);
+  };
+
+  const handleChange = (color: string) => {
+    onChange?.(color);
+  };
+
+  return (
+    <>
+      <ColorPickerContainer
+        ref={colorPickerRef}
+        width={props.width}
+        color={color}
+        displaySelectedColor={displaySelectedColor}
+        onClick={() => setOpen(true)}
+      />
+      <Popover
+        open={open}
+        anchorEl={colorPickerRef.current}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
-        onMouseDown={(event: any) => {
-          event.preventDefault();
-        }}
-        style={{
-          display: 'inline-block',
-          border: '1px solid #cccccc',
-          cursor: 'pointer',
-          width: '22px',
-          height: '22px',
-          borderRadius: 12,
-          background: props.color,
-        }}
-      ></span>
-      {showColorPicker && (
-        <div ref={modalRef} style={{ position: 'absolute', top: 30, right: 0, zIndex: 100 }}>
-          <SketchPicker
-            presetColors={[
-              '#f44336',
-              '#e91e63',
-              '#9c27b0',
-              '#673ab7',
-              '#3f51b5',
-              '#2196f3',
-              '#03a9f4',
-              '#00bcd4',
-              '#009688',
-              '#4caf50',
-              '#8bc34a',
-              '#cddc39',
-              '#ffeb3b',
-              '#ffc107',
-              '#ff9800',
-              '#ff5722',
-              '#795548',
-              '#607d8b',
-            ]}
-            color={props.color ? props.color : '#F5FFE3'}
-            disableAlpha={true}
-            onChange={changeColor}
-          />
-          <div style={{ padding: 5 }}>
-            <a
-              href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                resetColor();
-              }}
-            >
-              Reset
-            </a>
+        onClose={handleClose}
+      >
+        <ColorPickerWrapper>
+          <div className={colorPickerTitle}>
+            <ColorModeText active={mode === 'simple'} onClick={() => setMode('simple')}>
+              Simple
+            </ColorModeText>
+            <Divider />
+            <ColorModeText active={mode === 'advanced'} onClick={() => setMode('advanced')}>
+              Advanced
+            </ColorModeText>
+            <IconButton onClick={handleReset} style={{ marginLeft: 'auto' }}>
+              <Refresh />
+            </IconButton>
           </div>
-        </div>
-      )}
+          {mode === 'simple' ? (
+            <SimpleColor value={color} onSelected={handleChange} />
+          ) : (
+            <AdvancedColor value={color} onChange={handleChange} />
+          )}
+          <RecentColor recentColors={recentColors} value={color} onChange={handleChange} />
+        </ColorPickerWrapper>
+      </Popover>
     </>
   );
 };

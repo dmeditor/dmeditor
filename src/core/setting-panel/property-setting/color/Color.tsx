@@ -1,166 +1,20 @@
-import { useMemo, useRef, useState } from 'react';
-import { Refresh } from '@mui/icons-material';
-import { IconButton, Popover } from '@mui/material';
-import { SketchPicker, type ColorResult } from 'react-color';
-
 import { DME, useEditorStore } from '../../../..';
-import {
-  colorFullRing,
-  ColorItem,
-  colorList,
-  ColorModeText,
-  ColorPickerItem,
-  colorPickerTitle,
-  ColorPickerWrapper,
-  Divider,
-} from './styled';
+import { PickColor, useRecentColors } from '../../../utils/PickColor';
+import { colorList, ColorPickerItem } from './styled';
 
-/**
- * TODO
- * 1. ColorPicker component
- *  1.1 ColorSetting component depends on ColorPicker
- * 2. undefined color
- */
-
-const PRESET_COLORS = [
-  '#f44336',
-  '#e91e63',
-  '#9c27b0',
-  '#673ab7',
-  '#3f51b5',
-  '#2196f3',
-  '#03a9f4',
-  '#00bcd4',
-  '#009688',
-  '#4caf50',
-  '#8bc34a',
-  '#cddc39',
-  '#ffeb3b',
-  '#ffc107',
-  '#ff9800',
-  '#ff5722',
-  '#795548',
-  '#607d8b',
-];
-
-const SimpleColor = (props: { value?: string; onSelected?: (color: string) => void }) => {
-  const { value } = props;
-  const presetColors = PRESET_COLORS;
-
-  const handleSelected = (color: string) => {
-    props.onSelected?.(color);
-  };
-
-  return (
-    <ul className={colorList} style={{ marginTop: 8 }}>
-      {presetColors.map((color, index) => {
-        return (
-          <ColorItem
-            key={index}
-            style={{ background: color }}
-            selected={value === color}
-            onClick={() => handleSelected(color)}
-          />
-        );
-      })}
-    </ul>
-  );
-};
-
-const AdvancedColor = (props: { value?: string; onChange?: (color: string) => void }) => {
-  const { value = '', onChange } = props;
-
-  const handleChange = (color: ColorResult) => {
-    const rgba = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
-    onChange?.(rgba);
-  };
-
-  return (
-    <SketchPicker
-      color={value}
-      presetColors={[]}
-      onChange={handleChange}
-      styles={{
-        default: {
-          picker: {
-            width: 300,
-            padding: 0,
-            boxShadow: 'none',
-          },
-        },
-      }}
-    />
-  );
-};
-
-const RecentColor = (props: {
-  value?: string;
-  onChange?: (color: string) => void;
-  recentColors?: string[];
-}) => {
-  const { recentColors = [], value } = props;
-
-  const isMatched = useMemo(() => {
-    return PRESET_COLORS.includes(value ?? '');
-  }, [value]);
-
-  if (recentColors.length === 0) {
-    return null;
-  }
-
-  const handleSelected = (color: string) => {
-    props.onChange?.(color);
-  };
-
-  return (
-    <>
-      <p>Recent</p>
-      <ul className={colorList}>
-        {recentColors.map((color, index) => {
-          return (
-            <ColorItem
-              key={index}
-              style={{ background: color }}
-              selected={!isMatched && value === color}
-              onClick={() => handleSelected(color)}
-            />
-          );
-        })}
-      </ul>
-    </>
-  );
-};
-
-const ColorPicker = (props: { value?: string; property: string } & DME.SettingComponentProps) => {
+const ColorSetting = (props: { value?: string; property: string } & DME.SettingComponentProps) => {
   const { property, value, blockPath } = props;
-  const { updateBlockPropsByPath, getRecentColors, updateRecentColors } = useEditorStore();
-  const projectColors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', 'transparent'];
-  const colorPickerRef = useRef<HTMLLIElement>(null);
-  const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState<'simple' | 'advanced'>('simple');
-  const [localValue, setLocalValue] = useState<string | undefined>(value);
-  const recentColors = getRecentColors();
+  const { updateBlockPropsByPath } = useEditorStore();
+  const projectColors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', undefined];
+  const { recentColors, handleUpdateRecentColors } = useRecentColors();
 
-  const handleClose = () => {
-    setOpen(false);
-    setLocalValue(value);
-
-    if (value) {
-      updateRecentColors(value);
-    }
-  };
-
-  const handleReset = () => {
-    updateBlockPropsByPath(blockPath, property, localValue);
+  const handleChange = (color?: string) => {
+    updateBlockPropsByPath(blockPath, property, color);
   };
 
   return (
     <ul className={colorList}>
-      <ColorPickerItem
-        style={{ background: value ?? 'transparent' }}
-        selected
-        transparent={!value}
-      />
+      <ColorPickerItem style={{ background: value ?? 'unset' }} selected unset={!value} />
       {projectColors.map((color, index) => {
         return (
           <ColorPickerItem
@@ -169,59 +23,20 @@ const ColorPicker = (props: { value?: string; property: string } & DME.SettingCo
             onClick={() => {
               updateBlockPropsByPath(blockPath, property, color);
             }}
-            transparent={color === 'transparent'}
+            unset={!color}
           />
         );
       })}
-      <li className={colorFullRing} ref={colorPickerRef} onClick={() => setOpen(true)} />
-      <Popover
-        open={open}
-        anchorEl={colorPickerRef.current}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        onClose={handleClose}
-      >
-        <ColorPickerWrapper>
-          <div className={colorPickerTitle}>
-            <ColorModeText active={mode === 'simple'} onClick={() => setMode('simple')}>
-              Simple
-            </ColorModeText>
-            <Divider />
-            <ColorModeText active={mode === 'advanced'} onClick={() => setMode('advanced')}>
-              Advanced
-            </ColorModeText>
-            <IconButton onClick={handleReset} style={{ marginLeft: 'auto' }}>
-              <Refresh />
-            </IconButton>
-          </div>
-          {mode === 'simple' ? (
-            <SimpleColor
-              value={value}
-              onSelected={(color) => {
-                updateBlockPropsByPath(blockPath, property, color);
-              }}
-            />
-          ) : (
-            <AdvancedColor
-              value={value}
-              onChange={(color) => {
-                updateBlockPropsByPath(blockPath, property, color);
-              }}
-            />
-          )}
-          <RecentColor
-            recentColors={recentColors}
-            value={value}
-            onChange={(color) => {
-              updateBlockPropsByPath(blockPath, property, color);
-            }}
-          />
-        </ColorPickerWrapper>
-      </Popover>
+      <PickColor
+        color={value}
+        width={20}
+        displaySelectedColor={false}
+        recentColors={recentColors}
+        onChange={handleChange}
+        onChangeComplete={handleUpdateRecentColors}
+      />
     </ul>
   );
 };
 
-export default ColorPicker;
+export default ColorSetting;

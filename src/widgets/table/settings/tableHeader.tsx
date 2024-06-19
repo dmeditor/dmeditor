@@ -38,7 +38,7 @@ export const TableHeader = (props: DME.SettingComponentProps) => {
     updateBlockPropsByPath(blockPath, 'settings.headerAlign', value);
   };
 
-  const handleBackgroundChange = (value: string) => {
+  const handleBackgroundChange = (value?: string) => {
     updateBlockPropsByPath(blockPath, 'settings.headerBackground', value);
   };
 
