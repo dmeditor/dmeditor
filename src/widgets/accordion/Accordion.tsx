@@ -33,9 +33,7 @@ const Accordion = (props: DME.WidgetRenderProps<EntityAccordion>) => {
               mode={props.mode}
               blockData={accordion.children || []}
               path={props.path.concat(index)}
-              // direction={direction}
-              onSelect={handleSelect}
-              allowedTypes={getAllowedTypes(type)}
+              allowedTypes={props.blockNode.allowedTypes}
             />
           </AccordionDetails>
         </MUIAccordion>

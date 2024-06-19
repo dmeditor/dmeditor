@@ -54,6 +54,12 @@ export interface DMEConfigType {
     defaultTheme: string;
     favouriteWidgets?: Array<string>;
     zIndex?: number;
+    colors?: {
+      text?: Array<string>;
+      border?: Array<string>;
+      background?: Array<string>;
+      [colorGroup: string]: Array<string> | undefined;
+    };
     enableEditControl?: boolean;
     defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
     categories?: Array<DME.WidgetCategory>;
@@ -90,6 +96,11 @@ const defaultConfig = () => {
       zIndex: 1000,
       enableEditControl: false,
       defaultStyle: {},
+      colors: {
+        text: ['#000000', '#cccccc', '#ffffff'],
+        border: ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff'],
+        background: ['#ffffff', '#cccccc', '#dddddd', '#ffe6de', '#deffde', '#defeff', '#ffdee8'],
+      },
       settingGroups: {
         style_block: 'Block',
         style_text: 'Text',
@@ -159,6 +170,7 @@ const dmeConfig: {
   editor: {
     defaultTheme: string;
     favouriteWidgets: Array<string>;
+    colors: { [colorGroup: string]: Array<string> };
     defaultStyle: { [widget: string]: { [styleKey: string]: string } };
     enableEditControl: boolean;
     categories: Array<DME.WidgetCategory>;

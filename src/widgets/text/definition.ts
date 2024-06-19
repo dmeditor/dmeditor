@@ -30,6 +30,12 @@ const TextWidget: DME.Widget = {
       name: 'Text color',
       property: 'settings.color',
       settingComponent: 'color',
+      parameters: {
+        colorGroup: 'text',
+      },
+      display: {
+        upDown: true,
+      },
       category: 'style',
     },
     ...generalSettings,

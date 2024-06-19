@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { Refresh } from '@mui/icons-material';
-import { IconButton, Popover } from '@mui/material';
+import { IconButton, Popover, Tooltip } from '@mui/material';
 import { SketchPicker, type ColorResult } from 'react-color';
 
 import { DME, useEditorStore } from '../..';
@@ -44,6 +44,12 @@ const Divider = styled.div`
 `;
 
 const ColorItem = styled.li<{ selected?: boolean }>`
+  transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.25);
+    border-color: #999999;
+  }
+
   position: relative;
   display: inline-block;
   margin: 3px;
@@ -51,7 +57,7 @@ const ColorItem = styled.li<{ selected?: boolean }>`
   height: 20px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid #fff;
+  border: 1px solid #fff;
 
   &::before {
     content: ' ';
@@ -92,7 +98,7 @@ const ColorPickerContainer = styled.div<{
 const ColorPickerWrapper = styled.div`
   position: relative;
   padding: 16px;
-  width: 300px;
+  width: 220px;
   border: 1px solid #ccc;
   border-radius: 4px;
 `;
@@ -148,7 +154,7 @@ const AdvancedColor = (props: { value?: string; onChange?: (color: string) => vo
       styles={{
         default: {
           picker: {
-            width: 300,
+            width: 220,
             padding: 0,
             boxShadow: 'none',
           },
@@ -216,6 +222,7 @@ export const PickColor = (props: {
   recentColors?: string[];
   onChange?: (color?: string) => void;
   onChangeComplete?: (color?: string) => void;
+  title?: string;
 }) => {
   const {
     color,
@@ -223,6 +230,7 @@ export const PickColor = (props: {
     onChange,
     onChangeComplete,
     displaySelectedColor = true,
+    title,
   } = props;
 
   const [localValue, setLocalValue] = useState<string | undefined>(color);
@@ -246,13 +254,15 @@ export const PickColor = (props: {
 
   return (
     <>
-      <ColorPickerContainer
-        ref={colorPickerRef}
-        width={props.width}
-        color={color}
-        displaySelectedColor={displaySelectedColor}
-        onClick={() => setOpen(true)}
-      />
+      <Tooltip title={title}>
+        <ColorPickerContainer
+          ref={colorPickerRef}
+          width={props.width}
+          color={color}
+          displaySelectedColor={displaySelectedColor}
+          onClick={() => setOpen(true)}
+        />
+      </Tooltip>
       <Popover
         open={open}
         anchorEl={colorPickerRef.current}

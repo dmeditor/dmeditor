@@ -49,6 +49,12 @@ const HeadingWidget: DME.Widget = {
     {
       name: 'Text color',
       settingComponent: 'color',
+      parameters: {
+        colorGroup: 'text',
+      },
+      display: {
+        upDown: true,
+      },
       property: 'settings.color',
       category: 'style',
     },
@@ -65,11 +71,23 @@ const HeadingWidget: DME.Widget = {
       settingComponent: 'color',
       group: 'style_border',
       property: 'settings.borderColor',
+      parameters: {
+        colorGroup: 'border',
+      },
+      display: {
+        upDown: true,
+      },
       category: 'style',
     },
     {
       name: 'Odd row background',
       settingComponent: 'color',
+      parameters: {
+        colorGroup: 'background',
+      },
+      display: {
+        upDown: true,
+      },
       property: 'settings.oddRowBackground',
       category: 'style',
     },

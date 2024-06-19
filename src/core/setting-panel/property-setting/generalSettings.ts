@@ -23,6 +23,12 @@ export const generalSettings: Array<DME.Setting> = [
     settingComponent: 'color',
     property: 'settings.general.blockBackground',
     category: 'style',
+    parameters: {
+      colorGroup: 'background',
+    },
+    display: {
+      upDown: true,
+    },
     group: 'style_block',
     styleTags: ['block'],
   },
@@ -46,9 +52,15 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Background',
-    settingComponent: 'color', //todo: create background color component
+    settingComponent: 'color',
     property: 'settings.general.background',
     category: 'style',
+    parameters: {
+      colorGroup: 'background',
+    },
+    display: {
+      upDown: true,
+    },
     group: 'style_block_container',
     styleTags: ['container'],
   },

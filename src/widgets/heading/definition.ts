@@ -47,7 +47,13 @@ const HeadingWidget: DME.Widget = {
       name: 'Text color',
       settingComponent: 'color',
       property: 'settings.color',
+      parameters: {
+        colorGroup: 'text',
+      },
       category: 'style',
+      display: {
+        upDown: true,
+      },
       styleTags: ['core'],
     },
     { name: '', settingComponent: 'heading', custom: true, property: '' },

@@ -1,11 +1,28 @@
-import { DME, useEditorStore } from '../../../..';
+import { ContrastOutlined } from '@mui/icons-material';
+import { Tooltip } from '@mui/material';
+
+import { DME, dmeConfig, useEditorStore } from '../../../..';
 import { PickColor, useRecentColors } from '../../../utils/PickColor';
 import { colorList, ColorPickerItem } from './styled';
 
+const ColorNotSet = (props) => {
+  const style = props.style;
+  return (
+    <Tooltip title={props.toolTip}>
+      <ContrastOutlined
+        style={{ transform: 'rotate(45deg)', fontSize: 22, color: '#666666', ...style }}
+      />
+    </Tooltip>
+  );
+};
+
 const ColorSetting = (props: { value?: string; property: string } & DME.SettingComponentProps) => {
-  const { property, value, blockPath } = props;
+  const { property, value, blockPath, parameters } = props;
   const { updateBlockPropsByPath } = useEditorStore();
-  const projectColors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', undefined];
+  const projectColors = (parameters && parameters['colors']) ||
+    dmeConfig.editor.colors[
+      parameters && parameters['colorGroup'] ? (parameters['colorGroup'] as string) : 'default'
+    ] || ['#000000', '#fffffff'];
   const { recentColors, handleUpdateRecentColors } = useRecentColors();
 
   const handleChange = (color?: string) => {
@@ -14,7 +31,9 @@ const ColorSetting = (props: { value?: string; property: string } & DME.SettingC
 
   return (
     <ul className={colorList}>
-      <ColorPickerItem style={{ background: value ?? 'unset' }} selected unset={!value} />
+      <ColorPickerItem style={{ background: value ?? 'unset' }} selected unset={!value}>
+        {!value && <ColorNotSet style={{ color: '#999999', fontSize: 26 }} />}
+      </ColorPickerItem>
       {projectColors.map((color, index) => {
         return (
           <ColorPickerItem
@@ -24,10 +43,22 @@ const ColorSetting = (props: { value?: string; property: string } & DME.SettingC
               updateBlockPropsByPath(blockPath, property, color);
             }}
             unset={!color}
-          />
+          >
+            {!color && <ColorNotSet toolTip="Unset" />}
+          </ColorPickerItem>
         );
       })}
+      <ColorPickerItem
+        style={{ background: undefined, marginLeft: 'auto', marginRight: 8 }}
+        onClick={() => {
+          updateBlockPropsByPath(blockPath, property, undefined);
+        }}
+        unset={true}
+      >
+        <ColorNotSet toolTip="Unset" />
+      </ColorPickerItem>
       <PickColor
+        title="Color palette"
         color={value}
         width={20}
         displaySelectedColor={false}

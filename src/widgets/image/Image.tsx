@@ -45,6 +45,12 @@ export const ImageDefinition: DME.Widget = {
       name: 'Border Color',
       settingComponent: 'color',
       property: 'settings.borderColor',
+      parameters: {
+        colorGroup: 'border',
+      },
+      display: {
+        upDown: true,
+      },
       category: 'style',
       styleTags: ['core'],
       group: 'style_border',
