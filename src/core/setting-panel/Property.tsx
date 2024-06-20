@@ -65,15 +65,17 @@ export const PropertyGroup = (props: {
 
 export const PropertyButton = (props: ButtonProps & { title?: string; selected?: boolean }) => {
   let sx: any = {
-    color: props.color ? props.color : '#8a8a8a',
-    marginRight: '2px',
+    color: props.color ? props.color : '#888888',
+    marginRight: '4px',
+    borderRadius: '3px',
     ':hover': {
-      bgcolor: '#eaeaea',
+      bgcolor: '#666666',
+      color: '#ffffff',
     },
   };
 
   if (props.selected) {
-    sx = { ...sx, color: 'green' };
+    sx = { ...sx, bgcolor: '#666666', color: '#ffffff' };
   }
 
   let buttonProps = { ...props };
