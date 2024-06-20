@@ -22,7 +22,7 @@ export const TableBorderType = (props: DME.SettingComponentProps<EntityTableBloc
   };
 
   return (
-    <PropertyItem label="BorderType">
+    <>
       {alignsList.map((format) => {
         return (
           <PropertyButton
@@ -35,6 +35,6 @@ export const TableBorderType = (props: DME.SettingComponentProps<EntityTableBloc
           </PropertyButton>
         );
       })}
-    </PropertyItem>
+    </>
   );
 };

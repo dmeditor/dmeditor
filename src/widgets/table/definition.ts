@@ -56,9 +56,8 @@ const HeadingWidget: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'BorderType',
+      name: 'Border type',
       settingComponent: 'table-border-type',
-      custom: true,
       group: 'style_border',
       property: 'settings.borderType',
       category: 'style',
