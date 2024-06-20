@@ -48,9 +48,6 @@ export const ImageDefinition: DME.Widget = {
       parameters: {
         colorGroup: 'border',
       },
-      display: {
-        upDown: true,
-      },
       category: 'style',
       styleTags: ['core'],
       group: 'style_border',

@@ -30,9 +30,6 @@ const lineWidget: DME.Widget = {
       parameters: {
         colorGroup: 'background',
       },
-      display: {
-        upDown: true,
-      },
     },
     {
       name: 'Line height',

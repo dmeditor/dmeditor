@@ -33,9 +33,6 @@ const TextWidget: DME.Widget = {
       parameters: {
         colorGroup: 'text',
       },
-      display: {
-        upDown: true,
-      },
       category: 'style',
     },
     ...generalSettings,

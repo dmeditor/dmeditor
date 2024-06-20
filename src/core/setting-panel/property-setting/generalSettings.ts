@@ -26,9 +26,6 @@ export const generalSettings: Array<DME.Setting> = [
     parameters: {
       colorGroup: 'background',
     },
-    display: {
-      upDown: true,
-    },
     group: 'style_block',
     styleTags: ['block'],
   },
@@ -57,9 +54,6 @@ export const generalSettings: Array<DME.Setting> = [
     category: 'style',
     parameters: {
       colorGroup: 'background',
-    },
-    display: {
-      upDown: true,
     },
     group: 'style_block_container',
     styleTags: ['container'],
