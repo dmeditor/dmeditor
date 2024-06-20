@@ -9,6 +9,7 @@ import { ImageChooser } from './ImageChooser';
 export const ImageSetting = (props: {
   defaultVisible?: boolean;
   value: DME.ImageInfo;
+  parameters?: { [key: string]: unknown };
   onChange: (value: DMEImageInfo) => void;
 }) => {
   const { value, onChange, defaultVisible = false } = props;
@@ -47,7 +48,7 @@ export const ImageSetting = (props: {
             Choose
           </Button>
           {dmeConfig.plugins.imageHandlers.map((Item) => (
-            <Item image={value} onChange={onChange} />
+            <Item image={value} parameters={props.parameters} onChange={onChange} />
           ))}
         </div>
       </div>

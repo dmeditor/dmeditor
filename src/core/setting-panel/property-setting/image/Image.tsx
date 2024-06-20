@@ -11,6 +11,7 @@ const Image = (props: { value?: string; property: string } & DME.SettingComponen
   return (
     <ImageSetting
       value={{ src: value || '', id: value }}
+      parameters={props.parameters}
       defaultVisible={false}
       onChange={handleChange}
     />

@@ -185,7 +185,11 @@ const dmeConfig: {
   widgets: { [widget: string]: widgetConfig };
   plugins: {
     imageHandlers: Array<
-      React.ComponentType<{ image: DME.ImageInfo; onChange: (imageInfo: DME.ImageInfo) => void }>
+      React.ComponentType<{
+        image: DME.ImageInfo;
+        parameters?: { [key: string]: unknown };
+        onChange: (imageInfo: DME.ImageInfo) => void;
+      }>
     >;
     [plugin: string]: any;
   };
