@@ -31,8 +31,16 @@ const ColorSetting = (props: { value?: string; property: string } & DME.SettingC
 
   return (
     <ul className={colorList}>
-      <ColorPickerItem style={{ background: value ?? 'unset' }} selected unset={!value}>
-        {!value && <ColorNotSet style={{ color: '#999999', fontSize: 26 }} />}
+      <ColorPickerItem
+        style={{ background: value ?? 'unset', cursor: value ? 'pointer' : 'initial' }}
+        selected
+        title={value ? 'Click to unset' : 'Not set'}
+        unset={!value}
+        onClick={() => {
+          updateBlockPropsByPath(blockPath, property, undefined);
+        }}
+      >
+        {!value && <ColorNotSet style={{ fontSize: 28 }} />}
       </ColorPickerItem>
       {projectColors.map((color, index) => {
         return (
@@ -48,15 +56,6 @@ const ColorSetting = (props: { value?: string; property: string } & DME.SettingC
           </ColorPickerItem>
         );
       })}
-      <ColorPickerItem
-        style={{ background: undefined, marginLeft: 'auto', marginRight: 8 }}
-        onClick={() => {
-          updateBlockPropsByPath(blockPath, property, undefined);
-        }}
-        unset={true}
-      >
-        <ColorNotSet toolTip="Unset" />
-      </ColorPickerItem>
       <PickColor
         title="Color palette"
         color={value}
