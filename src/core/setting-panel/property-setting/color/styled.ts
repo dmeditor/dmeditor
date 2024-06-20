@@ -2,9 +2,12 @@ import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 
 export const ColorPickerItem = styled.li<{ selected?: boolean; unset?: boolean }>`
-  transition: all 0.3s ease;
+  transition: all ${(props) => (props.selected ? '0.1' : '0.3')}s ease;
   &:hover {
-    ${(props) => !props.unset && !props.selected && 'transform: scale(1.25);border-color: #999999;'}
+    ${(props) =>
+      !props.unset &&
+      (props.selected ? 'border-color: #000000;border-width: 1px;' : 'border-color: #999999;')}
+    ${(props) => !props.unset && !props.selected && 'transform: scale(1.25);'}
   }
   overflow: hidden;
   position: relative;
