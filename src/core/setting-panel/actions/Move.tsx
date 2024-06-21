@@ -1,4 +1,5 @@
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
 import { useEditorStore } from '../../..';
 import { PropertyButton } from '../Property';
@@ -50,12 +51,12 @@ export const Move = (props: { blockPath: Array<number> }) => {
 
   return (
     <>
-      <PropertyButton color="warning" title="Move up" onClick={handleMoveUp}>
+      <Button color="warning" title="Move up" onClick={handleMoveUp}>
         <ArrowUpward />
-      </PropertyButton>
-      <PropertyButton color="warning" title="Move down" onClick={handleMoveDown}>
+      </Button>
+      <Button color="warning" title="Move down" onClick={handleMoveDown}>
         <ArrowDownward />
-      </PropertyButton>
+      </Button>
     </>
   );
 };

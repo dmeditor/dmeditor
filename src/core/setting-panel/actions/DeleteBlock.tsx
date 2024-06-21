@@ -1,4 +1,5 @@
 import { DeleteOutline } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
 import { useEditorStore } from '../../..';
 import { PropertyButton } from '../Property';
@@ -11,8 +12,8 @@ export const DeleteBlock = (props: { blockPath: Array<number> }) => {
   };
 
   return (
-    <PropertyButton onClick={handleDelete} variant="outlined" color="warning" title="Delete">
+    <Button onClick={handleDelete} variant="outlined" color="warning" title="Delete">
       <DeleteOutline /> Delete
-    </PropertyButton>
+    </Button>
   );
 };

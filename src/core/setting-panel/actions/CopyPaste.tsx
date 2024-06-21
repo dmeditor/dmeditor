@@ -1,4 +1,5 @@
 import { ContentCopy, ContentPaste } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
 import { useEditorStore } from '../../..';
 import { PropertyButton } from '../Property';
@@ -33,13 +34,13 @@ export const CopyPaste = () => {
 
   return (
     <>
-      <PropertyButton color="warning" title="Copy" onClick={handleCopy}>
+      <Button color="warning" title="Copy" onClick={handleCopy}>
         <ContentCopy />
-      </PropertyButton>
+      </Button>
       {copiedBlock && (
-        <PropertyButton color="warning" title="Paste under" onClick={handlePaste}>
+        <Button color="warning" title="Paste under" onClick={handlePaste}>
           <ContentPaste />
-        </PropertyButton>
+        </Button>
       )}
     </>
   );
