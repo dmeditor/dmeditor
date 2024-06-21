@@ -1,4 +1,4 @@
-import { ContrastOutlined } from '@mui/icons-material';
+import { ContrastOutlined, Delete, DeleteOutlined } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
 
 import { DME, dmeConfig, useEditorStore } from '../../../..';
@@ -35,7 +35,7 @@ const ColorSetting = (props: { value?: string; property: string } & DME.SettingC
   return (
     <ul className={colorList}>
       <ColorPickerItem
-        style={{ background: value ?? 'unset', cursor: value ? 'pointer' : 'initial' }}
+        style={{ backgroundColor: value ?? 'unset', cursor: value ? 'pointer' : 'initial' }}
         selected
         title={value ? 'Click to unset' : 'Not set'}
         unset={!value}
