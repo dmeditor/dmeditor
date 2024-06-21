@@ -26,6 +26,11 @@ export namespace DME {
   export type Device = 'pc' | 'tablet' | 'mobile';
   export type Mode = 'edit' | 'view';
 
+  export interface ColorConfig {
+    color: string;
+    name?: string;
+  }
+
   export interface WidgetCategory {
     identifier: string;
     name: string;

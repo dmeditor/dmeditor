@@ -35,7 +35,8 @@ for (const widget of Object.keys(defaultStyles)) {
 setDMEditorConfig({
   general: {
     projectStyles: {
-      default: `background: white`,
+      default: `background: white;
+      `,
     },
     themes: [
       {
@@ -70,21 +71,25 @@ setDMEditorConfig({
       button: { _: 'project-primary' },
     },
     colors: {
-      text: ['#000000', '#cccccc', '#ffffff'],
-      border: ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff'],
+      text: [{ color: '#000000' }, { color: '#cccccc' }, { color: '#ffffff' }],
+      border: [
+        { color: '#000000' },
+        { color: '#333333' },
+        { color: '#666666' },
+        { color: '#999999' },
+        { color: '#cccccc' },
+        { color: '#ffffff' },
+      ],
       background: [
-        '#ffffff',
-        '#cccccc',
-        '#dddddd',
-        '#ffe6de',
-        '#deffde',
-        '#defeff',
-        '#ffdee8',
-        '#000000',
-        '#333333',
-        '#666666',
-        '#490303',
-        '#031243',
+        { color: '#ffffff', name: 'White' },
+        { color: '#cccccc', name: 'Light white' },
+        { color: '#dddddd' },
+        { color: '#ffe6de' },
+        { color: '#666666' },
+        { color: '#034323' },
+        { color: '#433803' },
+        { color: '#430318' },
+        { color: '#432603' },
       ],
     },
     ui: {

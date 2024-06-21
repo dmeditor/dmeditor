@@ -19,10 +19,13 @@ const ColorNotSet = (props) => {
 const ColorSetting = (props: { value?: string; property: string } & DME.SettingComponentProps) => {
   const { property, value, blockPath, parameters } = props;
   const { updateBlockPropsByPath } = useEditorStore();
-  const projectColors = (parameters && parameters['colors']) ||
+  const projectColors: Array<DME.ColorConfig> = (parameters && parameters['colors']) ||
     dmeConfig.editor.colors[
       parameters && parameters['colorGroup'] ? (parameters['colorGroup'] as string) : 'default'
-    ] || ['#000000', '#fffffff'];
+    ] || [
+      { color: '#000000', name: 'Black' },
+      { color: '#fffffff', name: 'white' },
+    ];
   const { recentColors, handleUpdateRecentColors } = useRecentColors();
 
   const handleChange = (color?: string) => {
@@ -42,18 +45,17 @@ const ColorSetting = (props: { value?: string; property: string } & DME.SettingC
       >
         {!value && <ColorNotSet style={{ fontSize: 28 }} />}
       </ColorPickerItem>
-      {projectColors.map((color, index) => {
+      {projectColors.map((colorItem, index) => {
         return (
           <ColorPickerItem
             key={index}
-            style={{ background: color }}
+            title={colorItem.color && colorItem.name ? colorItem.name : ''}
+            style={{ background: colorItem.color }}
             onClick={() => {
-              updateBlockPropsByPath(blockPath, property, color);
+              updateBlockPropsByPath(blockPath, property, colorItem.color);
             }}
-            unset={!color}
-          >
-            {!color && <ColorNotSet toolTip="Unset" />}
-          </ColorPickerItem>
+            unset={!colorItem.color}
+          ></ColorPickerItem>
         );
       })}
       <PickColor

@@ -55,10 +55,10 @@ export interface DMEConfigType {
     favouriteWidgets?: Array<string>;
     zIndex?: number;
     colors?: {
-      text?: Array<string>;
-      border?: Array<string>;
-      background?: Array<string>;
-      [colorGroup: string]: Array<string> | undefined;
+      text?: Array<DME.ColorConfig>;
+      border?: Array<DME.ColorConfig>;
+      background?: Array<DME.ColorConfig>;
+      [colorGroup: string]: Array<DME.ColorConfig> | undefined;
     };
     enableEditControl?: boolean;
     defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
@@ -97,9 +97,29 @@ const defaultConfig = () => {
       enableEditControl: false,
       defaultStyle: {},
       colors: {
-        text: ['#000000', '#cccccc', '#ffffff'],
-        border: ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff'],
-        background: ['#ffffff', '#cccccc', '#dddddd', '#ffe6de', '#deffde', '#defeff', '#ffdee8'],
+        text: [
+          { color: '#000000', name: 'Black' },
+          { color: '#cccccc', name: 'Black' },
+          { color: '#ffffff', name: '' },
+        ],
+        border: [
+          { color: '#ffffff' },
+          { color: '#000000' },
+          { color: '#333333' },
+          { color: '#666666' },
+          { color: '#999999' },
+          { color: '#cccccc' },
+          { color: '#ffffff' },
+        ],
+        background: [
+          { color: '#ffffff' },
+          { color: '#cccccc' },
+          { color: '#dddddd' },
+          { color: '#ffe6de' },
+          { color: '#deffde' },
+          { color: '#defeff' },
+          { color: '#ffdee8' },
+        ],
       },
       settingGroups: {
         style_block: 'Block',
@@ -170,7 +190,7 @@ const dmeConfig: {
   editor: {
     defaultTheme: string;
     favouriteWidgets: Array<string>;
-    colors: { [colorGroup: string]: Array<string> };
+    colors: { [colorGroup: string]: Array<DME.ColorConfig> };
     defaultStyle: { [widget: string]: { [styleKey: string]: string } };
     enableEditControl: boolean;
     categories: Array<DME.WidgetCategory>;
