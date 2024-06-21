@@ -68,11 +68,13 @@ export const PropertyButton = (props: ButtonProps & { title?: string; selected?:
     color: props.color ? props.color : '#999999',
     border: '1px solid transparent',
     marginRight: '3px',
-    ':hover': {
-      bgcolor: '#ffffff',
-      color: '#666666',
-      borderColor: '#666666',
-    },
+    ':hover': props.selected
+      ? { bgcolor: '#ffffff' }
+      : {
+          bgcolor: '#fcfcfc',
+          borderColor: '#999999',
+          color: '#999999',
+        },
   };
 
   if (props.selected) {
