@@ -88,10 +88,9 @@ const Editor = (props: { projectStyle?: string }) => {
     <Layout.Main
       config={{ zIndex: dmeConfig.editor.zIndex }}
       settingWidth={position}
-      onClick={resetStatus}
       resizing={resizing}
     >
-      <Layout.Edit>
+      <Layout.Edit onClick={resetStatus}>
         <EditContainer ref={containerRef}>
           <EditArea
             ref={editRef}
