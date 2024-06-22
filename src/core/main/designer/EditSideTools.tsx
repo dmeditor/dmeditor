@@ -25,7 +25,8 @@ export const EditSideTools = () => {
     updateSelectedBlockIndex,
   } = useEditorStore();
 
-  const previous = () => {
+  const previous = (e) => {
+    e.stopPropagation();
     const list = getCurrentList();
     if (!list || list.length === 0) {
       return;
@@ -52,7 +53,8 @@ export const EditSideTools = () => {
     }
   };
 
-  const next = () => {
+  const next = (e) => {
+    e.stopPropagation();
     const list = getCurrentList();
     if (!list || list.length === 0) {
       return;
