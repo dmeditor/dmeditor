@@ -57,7 +57,7 @@ const ColorItem = styled.li<{ selected?: boolean }>`
   height: 20px;
   border-radius: 50%;
   cursor: pointer;
-  border: 1px solid #fff;
+  border: 0.5px solid #cccccc;
 
   &::before {
     content: ' ';
@@ -142,8 +142,15 @@ const AdvancedColor = (props: { value?: string; onChange?: (color: string) => vo
   const { value = '', onChange } = props;
 
   const handleChange = (color: ColorResult) => {
-    const rgba = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
-    onChange?.(rgba);
+    let hex = color.hex;
+    if (color.rgb.a) {
+      let end = Math.round(color.rgb.a * 255).toString(16);
+      if (end.length === 1) {
+        end = '0' + end;
+      }
+      hex = hex + end;
+    }
+    onChange?.(hex);
   };
 
   return (
@@ -191,6 +198,7 @@ const RecentColor = (props: {
           return (
             <ColorItem
               key={index}
+              title={color}
               style={{ background: color }}
               selected={!isMatched && value === color}
               onClick={() => handleSelected(color)}
