@@ -143,7 +143,7 @@ const AdvancedColor = (props: { value?: string; onChange?: (color: string) => vo
 
   const handleChange = (color: ColorResult) => {
     let hex = color.hex;
-    if (color.rgb.a) {
+    if (color.rgb.a && color.rgb.a !== 1) {
       let end = Math.round(color.rgb.a * 255).toString(16);
       if (end.length === 1) {
         end = '0' + end;
