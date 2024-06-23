@@ -90,7 +90,7 @@ export const StyledSettingItem = {
     align-items: center;
   `,
   Label: styled.label`
-    min-width: 120px;
+    min-width: 100px;
     color: #333333;
     font-size: 14px;
   `,

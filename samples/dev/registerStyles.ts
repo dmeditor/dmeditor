@@ -107,7 +107,7 @@ export const registerStyles = () => {
         name: 'Big space',
         cssClasses: { root: 'pt-6 leading-3 text-3xl' },
         settings: {
-          'settings.general.padding': { value: 80, status: 'disabled' },
+          'settings.general.padding': { value: 80 },
           'settings.general.marginTop': { value: 10, status: 'hidden' },
         },
         cssStyle: `
