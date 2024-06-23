@@ -4,5 +4,9 @@ import { EntityText } from './entity';
 
 type SettingsType = EntityText['settings'];
 export const TextContainer = styled.div((props: SettingsType) => {
-  return { ...(props?.color && { color: props.color }) };
+  return {
+    ...(props?.color && { color: props.color }),
+    'p:first-child': { 'margin-top': 0 },
+    'p:last-child': { 'margin-bottom': 0 },
+  };
 });

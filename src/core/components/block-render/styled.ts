@@ -61,11 +61,12 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
 export const BlockWrapper = styled.div<{
   generalSettings?: DMEData.GeneralSettingType;
   active?: boolean;
+  editMode?: boolean;
 }>`
   ${(props) => (props.generalSettings ? getGeneralStyle(props.generalSettings) : {})}
 
   ${(props) => {
-    if (props.active) {
+    if (props.editMode && props.active) {
       return `
       outline: 2px solid var(--dmee-selected-border-color) !important;
       border-radius: 4px;
@@ -78,8 +79,12 @@ export const BlockWrapper = styled.div<{
   }}
 
   &:hover {
-    outline: 2px dotted var(--dmee-selected-border-color);
-    border-radius: 4px;
-    z-index: calc(var(--dmee-zindex) + 50);
+    ${(props) =>
+      props.editMode &&
+      `
+        outline: 2px dotted var(--dmee-selected-border-color);
+        border-radius: 4px;
+        z-index: calc(var(--dmee-zindex) + 50);
+    `}
   }
 `;

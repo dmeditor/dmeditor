@@ -168,7 +168,12 @@ const BlockWithContainer = (props: BlockWithContainerProps) => {
   };
 
   return (
-    <StyledBlock ref={blockContainerRef} hovering={isHovering} {...containerAdditionalProps}>
+    <StyledBlock
+      ref={blockContainerRef}
+      hovering={isHovering}
+      editMode={mode === 'edit'}
+      {...containerAdditionalProps}
+    >
       {addPosition === 'before' && (
         <AddingTool position="before" horizontal={addingHorizontal}>
           <StyledButtonContainer>

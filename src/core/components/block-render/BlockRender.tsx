@@ -91,6 +91,7 @@ export const BlockRender = memo((props: BlockProps) => {
       onClick={onSelect}
       {...(props.mode === 'edit' && props.data.id && { id: props.data.id })}
       active={active}
+      editMode={props.mode === 'edit'}
       generalSettings={props.data.data.settings?.general}
     >
       <Widget
