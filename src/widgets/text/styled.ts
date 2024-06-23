@@ -8,5 +8,6 @@ export const TextContainer = styled.div((props: SettingsType) => {
     ...(props?.color && { color: props.color }),
     'p:first-child': { 'margin-top': 0 },
     'p:last-child': { 'margin-bottom': 0 },
+    img: { 'max-width': '100%' },
   };
 });
