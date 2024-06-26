@@ -3,9 +3,9 @@ import { DME, DMEData } from '../../../core/types';
 export const generalSettings: Array<DME.Setting> = [
   {
     name: 'Block width',
-    settingComponent: 'range',
+    settingComponent: 'distance',
     property: 'settings.general.width',
-    parameters: { min: 0, max: 700, step: 5 },
+    parameters: { min: 0, max: 700, step: 5, unit: ['px', '%'] },
     category: 'style',
     group: 'style_block',
     styleTags: ['block', 'list'],
