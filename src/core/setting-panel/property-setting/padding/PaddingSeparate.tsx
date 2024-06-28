@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
-import { InsertLinkOutlined, LeakRemove, LinkOffOutlined } from '@mui/icons-material';
+import React, { ChangeEvent, useState } from 'react';
+import { InsertLinkOutlined, LinkOffOutlined } from '@mui/icons-material';
 import {
   Box,
   Divider,
@@ -11,7 +11,20 @@ import {
   TextField,
 } from '@mui/material';
 
-import { createHandleInputChange, handleKeyDown } from './helper';
+import { InputManager } from './handlers/InputHandler';
+import {
+  createHandleInputChange,
+  createHandleInputKeyDown,
+  setChangingValue,
+  // TYPE_UNDEFINED_VALUE,
+  // UNDEFINED_VALUE,
+} from './helper';
+import {
+  PaddingStandardProps,
+  UNDEFINED_VALUE,
+  type PaddingChangingValue,
+  type PaddingSeparateValue,
+} from './types';
 
 const CustomSlider = styled(Slider)(({ theme }) => ({
   '& .MuiSlider-thumb': {
@@ -26,64 +39,68 @@ const CustomSlider = styled(Slider)(({ theme }) => ({
   },
 }));
 
-interface PaddingStandardProps {
-  defaultValue?: number;
-  disabled?: boolean;
-  value?: number;
-  min: number;
-  max: number;
-  step?: number;
-  onChange?: (
-    value:
-      | number
-      | string
-      | {
-          top: number;
-          bottom: number;
-          left: number;
-          right: number;
-        },
-    event: any,
-  ) => void;
-  onChangePaddingType: () => void;
+interface PaddingSeparateProps extends PaddingStandardProps {
+  onChange?: (value: number | string | PaddingSeparateValue) => void;
 }
 
-const PaddingSeparate: React.FC<PaddingStandardProps> = (props) => {
+
+
+const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
   const { value, min, max, step, disabled, onChange, onChangePaddingType } = props;
-  const handleTopChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value) || 0;
-    setPaddingValues((prev) => ({ ...prev, top: value }));
-    if (isLinkedTB) {
-      setPaddingValues((prev) => ({ ...prev, bottom: value }));
-    }
-  };
-
-  const handleBottomChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value) || 0;
-    setPaddingValues((prev) => ({ ...prev, bottom: value }));
-  };
-
-  const handleLeftChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value) || 0;
-    setPaddingValues((prev) => ({ ...prev, left: value }));
-    if (isLinkedLR) {
-      setPaddingValues((prev) => ({ ...prev, right: value }));
-    }
-  };
-
-  const handleRightChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value) || 0;
-    setPaddingValues((prev) => ({ ...prev, right: value }));
-  };
-
-  const [paddingValues, setPaddingValues] = useState({
+  const [inputManager] = useState(() => new InputManager());
+  const [paddingValues, setPaddingValues] = useState<PaddingChangingValue>({
     top: value,
     bottom: value,
     left: value,
     right: value,
   });
+
   const [isLinkedTB, setIsLinkedTB] = useState(true);
   const [isLinkedLR, setIsLinkedLR] = useState(true);
+
+  const handleTopChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    setPaddingValues((prev) => ({ ...prev, top: setChangingValue(value) }));
+
+    if (isLinkedTB) {
+      setPaddingValues((prev) => ({
+        ...prev,
+        bottom: setChangingValue(value),
+      }));
+    }
+  };
+
+  const handleBottomChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    setPaddingValues((prev) => ({
+      ...prev,
+      bottom: setChangingValue(value),
+    }));
+  };
+
+  const handleLeftChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    setPaddingValues((prev) => ({ ...prev, left: setChangingValue(value) }));
+    if (isLinkedLR) {
+      setPaddingValues((prev) => ({
+        ...prev,
+        right: setChangingValue(value),
+      }));
+    }
+  };
+
+  const handleRightChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = event;
+    setPaddingValues((prev) => ({ ...prev, right: setChangingValue(value) }));
+  };
 
   const handleSliderChange =
     (key: keyof typeof paddingValues) => (e: Event, value: number | number[]) => {
@@ -106,31 +123,38 @@ const PaddingSeparate: React.FC<PaddingStandardProps> = (props) => {
       min,
       max,
       onChange: (value, e) => {
-        if (value !== '') {
-          setPaddingValues((prev) => {
-            const updated = { ...prev, [key]: value };
-            if (isLinkedTB && (key === 'top' || key === 'bottom')) {
-              updated.top = updated.bottom = value;
-            }
-            if (isLinkedLR && (key === 'left' || key === 'right')) {
-              updated.left = updated.right = value;
-            }
-            onChange?.(updated, e);
-            return updated;
-          });
-        } else {
-          setPaddingValues((prev) => {
-            const updated = { ...prev, [key]: undefined };
-            if (isLinkedTB && (key === 'top' || key === 'bottom')) {
-              updated.top = updated.bottom = undefined;
-            }
-            if (isLinkedLR && (key === 'left' || key === 'right')) {
-              updated.left = updated.right = undefined;
-            }
-            onChange?.(updated, e);
-            return updated;
-          });
-        }
+        inputManager.setValue(key, value);
+        setPaddingValues((prev) => {
+          const updated = { ...prev, [key]: value };
+          if (isLinkedTB && (key === 'top' || key === 'bottom')) {
+            updated.top = updated.bottom = inputManager.getValue(key);
+          }
+          if (isLinkedLR && (key === 'left' || key === 'right')) {
+            updated.left = updated.right = inputManager.getValue(key);
+          }
+          onChange?.(updated, e);
+          return updated;
+        });
+      },
+    });
+
+  const handleKeyDown = (key: keyof typeof paddingValues) =>
+    createHandleInputKeyDown({
+      min,
+      max,
+      onKeyDown: (value, e) => {
+        inputManager.setValue(key, value);
+        setPaddingValues((prev) => {
+          const updated = { ...prev, [key]: value };
+          if (isLinkedTB && (key === 'top' || key === 'bottom')) {
+            updated.top = updated.bottom = inputManager.getValue(key);
+          }
+          if (isLinkedLR && (key === 'left' || key === 'right')) {
+            updated.left = updated.right = inputManager.getValue(key);
+          }
+          onChange?.(updated, e);
+          return updated;
+        });
       },
     });
 
@@ -160,10 +184,9 @@ const PaddingSeparate: React.FC<PaddingStandardProps> = (props) => {
                   size="small"
                   onBlur={handleInputChange('top')}
                   onChange={handleTopChange}
-                  placeholder="-"
                   fullWidth
                   InputProps={{
-                    onKeyDown: handleKeyDown,
+                    onKeyDown: handleKeyDown('top'),
                     inputMode: 'numeric',
                     endAdornment: <InputAdornment position="end">px</InputAdornment>,
                   }}
@@ -198,11 +221,11 @@ const PaddingSeparate: React.FC<PaddingStandardProps> = (props) => {
                   size="small"
                   onBlur={handleInputChange('bottom')}
                   onChange={handleBottomChange}
-                  placeholder="-"
+                  // placeholder="-"
                   fullWidth
                   InputProps={{
                     inputMode: 'numeric',
-                    onKeyDown: handleKeyDown,
+                    onKeyDown: handleKeyDown('bottom'),
                     endAdornment: <InputAdornment position="end">px</InputAdornment>,
                   }}
                 />
@@ -233,11 +256,10 @@ const PaddingSeparate: React.FC<PaddingStandardProps> = (props) => {
                   size="small"
                   onBlur={handleInputChange('left')}
                   onChange={handleLeftChange}
-                  placeholder="-"
                   fullWidth
                   InputProps={{
                     inputMode: 'numeric',
-                    onKeyDown: handleKeyDown,
+                    onKeyDown: handleKeyDown('left'),
                     endAdornment: <InputAdornment position="end">px</InputAdornment>,
                   }}
                 />
@@ -261,7 +283,6 @@ const PaddingSeparate: React.FC<PaddingStandardProps> = (props) => {
                   min={min}
                   max={max}
                   onChange={handleSliderChange('right')}
-                  //   orientation="vertical"
                 />
               </Grid>
               <Grid item xs={5}>
@@ -272,11 +293,10 @@ const PaddingSeparate: React.FC<PaddingStandardProps> = (props) => {
                   size="small"
                   onBlur={handleInputChange('right')}
                   onChange={handleRightChange}
-                  placeholder="-"
                   fullWidth
                   InputProps={{
                     inputMode: 'numeric',
-                    onKeyDown: handleKeyDown,
+                    onKeyDown: handleKeyDown('right'),
                     endAdornment: <InputAdornment position="end">px</InputAdornment>,
                   }}
                 />
@@ -286,7 +306,7 @@ const PaddingSeparate: React.FC<PaddingStandardProps> = (props) => {
         </Box>
       </Grid>
       <Grid item xs={2}>
-        <LeakRemove style={{ cursor: 'pointer' }} onClick={onChangePaddingType} />
+        <InsertLinkOutlined style={{ cursor: 'pointer' }} onClick={onChangePaddingType} />
       </Grid>
     </Grid>
   );

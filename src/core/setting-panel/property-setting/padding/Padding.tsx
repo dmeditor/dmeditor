@@ -3,44 +3,36 @@ import React, { useState } from 'react';
 import { useEditorStore } from '../../../main/store';
 import { type DME } from '../../../types';
 import { isNumber } from '../../../utils';
+import { convertToNumber } from './helper';
 import PaddingSeparate from './PaddingSeparate';
 import PaddingStandard from './PaddingStandard';
-import PaddingSymmetric from './PaddingSymmetric';
+import { UNDEFINED_VALUE, type PaddingSeparateValue, type PaddingType } from './types';
 
-type PaddingType = 'standard' | 'symmetric' | 'separate';
+// import PaddingSymmetric from './PaddingSymmetric';
 
 const Padding: React.FC<DME.SettingComponentProps> = (props) => {
   const { value, parameters, blockPath, property, disabled } = props;
   const min = isNumber(parameters?.min) ? parameters?.min : 0;
   const max = isNumber(parameters?.max) ? parameters?.max : 100;
   const step = isNumber(parameters?.step) ? parameters?.step : 1;
-  const currentValue = isNumber(value) ? value : undefined;
+  // const currentValue = isNumber(value) ? value : undefined;
+  const currentValue = convertToNumber(value as number | string | null | undefined);
   const [paddingType, setPaddingType] = useState<PaddingType>('standard');
 
   const { updateBlockPropsByPath } = useEditorStore();
-  const onChange = (
-    value:
-      | number
-      | string
-      | {
-          top: number;
-          bottom: number;
-          left: number;
-          right: number;
-        },
-    event: any,
-  ) => {
+  const onChange = (value: number | string | PaddingSeparateValue) => {
     if (!property) {
       return;
     }
     if (typeof value === 'number' || typeof value === 'string') {
-      updateBlockPropsByPath(blockPath, property, value);
+      updateBlockPropsByPath(blockPath, property, value === UNDEFINED_VALUE ? undefined : value);
     } else {
+      const { top, right, bottom, left } = value;
       updateBlockPropsByPath(blockPath, property, [
-        value.top,
-        value.right,
-        value.bottom,
-        value.left,
+        top === UNDEFINED_VALUE ? undefined : top,
+        right === UNDEFINED_VALUE ? undefined : right,
+        bottom === UNDEFINED_VALUE ? undefined : bottom,
+        left === UNDEFINED_VALUE ? undefined : left,
       ]);
     }
   };
@@ -55,10 +47,10 @@ const Padding: React.FC<DME.SettingComponentProps> = (props) => {
           max={max}
           step={step}
           onChange={onChange}
-          onChangePaddingType={() => setPaddingType('symmetric')}
+          onChangePaddingType={() => setPaddingType('separate')}
         />
       )}
-      {paddingType === 'symmetric' && (
+      {/* {paddingType === 'symmetric' && (
         <PaddingSymmetric
           disabled={disabled}
           value={currentValue}
@@ -68,7 +60,7 @@ const Padding: React.FC<DME.SettingComponentProps> = (props) => {
           onChange={onChange}
           onChangePaddingType={() => setPaddingType('separate')}
         />
-      )}
+      )} */}
       {paddingType === 'separate' && (
         <PaddingSeparate
           disabled={disabled}

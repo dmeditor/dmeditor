@@ -1,11 +1,14 @@
-import { useRef, useState } from 'react';
-import { InsertLinkOutlined } from '@mui/icons-material';
+import { useState } from 'react';
+import { Tune } from '@mui/icons-material';
 import { Grid, InputAdornment, Slider, styled, TextField } from '@mui/material';
 
 import { isNumber } from '../../../utils';
-import { createHandleInputChange, handleKeyDown } from './helper';
+import { InputHandler } from './handlers/InputHandler';
+import { SliderHandler } from './handlers/SliderHandler';
+import { createHandleInputChange, createHandleInputKeyDown, setChangingValue } from './helper';
+import { PaddingStandardProps, TYPE_UNDEFINED_VALUE, UNDEFINED_VALUE } from './types';
 
-const CustomSlider = styled(Slider)(({ theme }) => ({
+const CustomSlider = styled(Slider)(() => ({
   '& .MuiSlider-thumb': {
     width: 18,
     height: 18,
@@ -18,40 +21,59 @@ const CustomSlider = styled(Slider)(({ theme }) => ({
   },
 }));
 
-const PaddingStandard = (props: {
-  defaultValue?: number;
-  disabled?: boolean;
-  value?: number;
-  min: number;
-  max: number;
-  step?: number;
-  onChange?: (v: number | string, event: any) => void;
-  onChangePaddingType: () => void;
-}) => {
+const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
   const { value, onChange, min, max, step, disabled, onChangePaddingType } = props;
+  const [inputHandler] = useState(() => new InputHandler());
+  const [sliderHandler] = useState(() => new SliderHandler());
+
   const [sliderValue, setSliderValue] = useState(value);
   const [currentValue, setCurrentValue] = useState(value);
 
-  const handleChange = (e: Event, value: number | number[]) => {
+  const handleSliderChange = (_: Event, value: number | number[]) => {
     if (isNumber(value)) {
-      onChange?.(value, e);
+      onChange?.(value);
       setSliderValue(value);
       setCurrentValue(value);
     }
   };
 
-  const handleInputChange = createHandleInputChange({
+  const handleInputBlur = createHandleInputChange({
     min,
     max,
-    onChange: (value, e) => {
-      onChange?.(value, e);
-      if (value !== '') {
-        setCurrentValue(value);
-        setSliderValue(value);
-      } else {
-        setCurrentValue(undefined);
-        setSliderValue(undefined);
-      }
+    onChange: (value, _) => {
+      console.log('wing fff', value)
+      onChange?.(value);
+      inputHandler.value = value;
+      sliderHandler.value = value;
+      setCurrentValue(inputHandler.value);
+      setSliderValue(sliderHandler.value);
+
+      // if (value !== '') {
+      //   setCurrentValue(value);
+      //   setSliderValue(value);
+      // } else {
+      //   setCurrentValue(UNDEFINED_VALUE);
+      //   setSliderValue(undefined);
+      // }
+    },
+  });
+
+  const handleKeyDown = createHandleInputKeyDown({
+    min,
+    max,
+    onKeyDown: (value, _) => {
+      onChange?.(value);
+      inputHandler.value = value;
+      sliderHandler.value = value;
+      setCurrentValue(inputHandler.value);
+      setSliderValue(sliderHandler.value);
+      // if (value !== '') {
+      //   setCurrentValue(value);
+      //   setSliderValue(value);
+      // } else {
+      //   setCurrentValue(undefined);
+      //   setSliderValue(undefined);
+      // }
     },
   });
 
@@ -67,7 +89,7 @@ const PaddingStandard = (props: {
           min={min}
           max={max}
           onChange={(e: Event, v: number | Array<number>) => {
-            handleChange(e, v);
+            handleSliderChange(e, v);
           }}
         />
       </Grid>
@@ -76,12 +98,14 @@ const PaddingStandard = (props: {
           disabled={disabled}
           value={currentValue}
           size="small"
-          onBlur={handleInputChange}
+          onBlur={handleInputBlur}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-            const newValue = e.target.value;
-            setCurrentValue(newValue ? parseInt(newValue, 10) : undefined);
+            const {
+              target: { value },
+            } = e;
+            setCurrentValue(setChangingValue(value));
           }}
-          placeholder="-"
+          // placeholder="-"
           fullWidth
           InputProps={{
             inputMode: 'numeric',
@@ -91,7 +115,7 @@ const PaddingStandard = (props: {
         />
       </Grid>
       <Grid item xs={2}>
-        <InsertLinkOutlined style={{ cursor: 'pointer' }} onClick={onChangePaddingType} />
+        <Tune style={{ cursor: 'pointer' }} onClick={onChangePaddingType} />
       </Grid>
     </Grid>
   );
