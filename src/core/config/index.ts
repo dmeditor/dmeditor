@@ -51,7 +51,7 @@ export interface DMEConfigType {
     };
   };
   editor: {
-    defaultTheme: string;
+    defaultTheme?: string;
     favouriteWidgets?: Array<string>;
     zIndex?: number;
     colors?: {
@@ -99,7 +99,7 @@ const defaultConfig = () => {
       colors: {
         text: [
           { color: '#000000', name: 'Black' },
-          { color: '#cccccc', name: 'Black' },
+          { color: '#cccccc', name: 'Light gray' },
           { color: '#ffffff', name: '' },
         ],
         border: [
@@ -218,12 +218,11 @@ const dmeConfig: {
 
 const setDMEditorConfig = (config: DMEConfigType) => {
   for (const key of Object.keys(config)) {
+    if (dmeConfig[key]) {
+      dmeConfig[key] = { ...dmeConfig[key], ...config[key] };
+    }
     if (key === 'editor' && config.editor.categories) {
       dmeConfig.editor.categories = [...dmeConfig.editor.categories, ...config.editor.categories];
-    } else {
-      if (dmeConfig[key]) {
-        dmeConfig[key] = { ...dmeConfig[key], ...config[key] };
-      }
     }
   }
 };
