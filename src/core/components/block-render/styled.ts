@@ -30,6 +30,16 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
         elementStyle['marginRight'] = '0px';
     }
   }
+  if (settings.padding) {
+    if (Array.isArray(settings.padding)) {
+      const position = ['Top', 'Right', 'Bottom', 'Left'];
+      position.forEach((pos, index) => {
+        containerStyle[`padding${pos}`] = (settings.padding! as number[])[index];
+      });
+    } else {
+      containerStyle['padding'] = settings.padding;
+    }
+  }
   if (settings.marginTop) {
     containerStyle['marginTop'] = settings.marginTop;
   }
@@ -48,9 +58,6 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
       'calc((var(--dme-main-width) - var(--dme-container-width)) / 2)';
     containerStyle['paddingRight'] =
       'calc((var(--dme-container-width) - var(--dme-main-width)) / 2)';
-  }
-  if (settings.padding) {
-    containerStyle['padding'] = settings.padding;
   }
   return {
     ...(Object.keys(containerStyle).length > 0 && { '&': containerStyle }),

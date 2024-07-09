@@ -31,7 +31,8 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Padding',
-    settingComponent: 'range',
+    // settingComponent: 'range',
+    settingComponent: 'padding',
     property: 'settings.general.padding',
     parameters: { min: 0, max: 100 },
     category: 'style',

@@ -13,7 +13,7 @@ import {
   StyledBlock,
   StyledButtonContainer,
 } from '../../main/renderer/styled';
-import { AddBlockParameters, AddBlockPosition, useEditorStore } from '../../main/store';
+import { useEditorStore } from '../../main/store';
 import type { DMEData } from '../../types/dmeditor';
 import emitter from '../../utils/event';
 import { BlockRender } from '../block-render/BlockRender';
