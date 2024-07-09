@@ -29,58 +29,25 @@ export const Ranger = (props: {
     onChange?.(value as number, e);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    let value = parseInt(e.target.value, 10);
-    if (value < min) {
-      value = min;
-    }
-    if (value > max) {
-      value = max;
-    }
-    if (isNaN(value)) {
-      onChange?.('', e);
-    } else {
-      onChange?.(value, e);
-    }
-  };
 
   return (
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs>
-        <CustomSlider
-          disabled={disabled}
-          defaultValue={props.defaultValue || 0}
-          valueLabelDisplay="auto"
-          step={props.step}
-          marks
-          value={value ? value : props.defaultValue || 0}
-          min={min}
-          max={max}
-          onChange={(e: Event, v: number | Array<number>) => {
-            handleChange(e, v);
-          }}
-          onChangeCommitted={(e: any, v: number | Array<number>) => {
-            if (props.onFinish) {
-              props.onFinish(v as number);
-            }
-          }}
-        />
-      </Grid>
-      {/* <Grid item xs={2}>
-        <Input
-          disabled={disabled}
-          value={value ? value : defaultValue}
-          size="small"
-          onChange={handleInputChange}
-          placeholder="-"
-          inputProps={{
-            // min,
-            // max,
-            // type: 'number',
-            'aria-labelledby': 'input-slider',
-          }}
-        />
-      </Grid> */}
-    </Grid>
+    <CustomSlider
+      disabled={disabled}
+      defaultValue={props.defaultValue || 0}
+      valueLabelDisplay="auto"
+      step={props.step}
+      marks
+      value={value ? value : props.defaultValue || 0}
+      min={min}
+      max={max}
+      onChange={(e: Event, v: number | Array<number>) => {
+        handleChange(e, v);
+      }}
+      onChangeCommitted={(e: any, v: number | Array<number>) => {
+        if (props.onFinish) {
+          props.onFinish(v as number);
+        }
+      }}
+    />
   );
 };
