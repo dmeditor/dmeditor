@@ -70,10 +70,6 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
   }, []);
 
   const { setActiveKey } = useTabsStore();
-  const handleSelect = (key: string | number) => {
-    if (isNull(key)) return;
-    setActiveKey(key);
-  };
 
   return (
     <>
@@ -90,13 +86,15 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
                 {`${item?.meta?.title}` ?? ''}
               </NavItem>
             ))}
-            <span className="flex items-center">
-              <AddCircleOutlineOutlined
-                style={{ cursor: 'pointer' }}
-                onClick={addTab}
-                sx={{ color: orange[500] }}
-              />
-            </span>
+            {props.mode === 'edit' && (
+              <span className="flex items-center">
+                <AddCircleOutlineOutlined
+                  style={{ cursor: 'pointer' }}
+                  onClick={addTab}
+                  sx={{ color: orange[500] }}
+                />
+              </span>
+            )}
           </Nav>
           <div>
             {tabList.map((item, index) => {
@@ -108,7 +106,6 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
                       blockData={item.children || []}
                       path={props.path.concat(index)}
                       // direction={direction}
-                      onSelect={handleSelect}
                       allowedTypes={getAllowedTypes(type)}
                     />
                   </div>
