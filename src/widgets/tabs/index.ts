@@ -1,12 +1,6 @@
 import { TabOutlined } from '@mui/icons-material';
 
-import {
-  registerIcon,
-  registerSettingComponent,
-  registerWidget,
-  registerWidgetStyle,
-  registerWidgetStyleOption,
-} from '../..';
+import { registerIcon, registerSettingComponent, registerWidget } from '../..';
 import SettingTabs from '../../core/components/reusable-setting/ListWithTitle';
 import TabsWidget from './definition';
 import Tabs from './Tabs';

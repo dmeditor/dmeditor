@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-import { Category, Display, Mode, PageSettingType } from '../enum';
+import { Display, PageSettingType } from '../enum';
 
 export type ServerSideLoadFunction = (data: DMEData.Block, serverParameters: any) => Promise<void>;
 
@@ -8,19 +8,15 @@ export namespace DME {
   export interface Setting {
     property?: string;
     name: string;
-    custom?: boolean; //if true it will not invoke directly instead of use name->value(left/right) layout.
-    settingComponent: string; //registered setting component, eg. 'color', or 'align',
-    styleTags?: Array<string>; //eg. core, general
+    custom?: boolean; // If true, it will not invoke directly but use name->value layout.
+    settingComponent: string; // Registered setting component, e.g., 'color' or 'align'.
+    styleTags?: string[]; // e.g., core, general
     category?: string;
     group?: string;
     display?: {
       upDown?: boolean;
     };
-    parameters?: {
-      [key: string]: unknown;
-    };
-    //category:string
-    // [key: string]: string|number
+    parameters?: Record<string, unknown>;
   }
 
   export type Device = 'pc' | 'tablet' | 'mobile';
@@ -50,85 +46,69 @@ export namespace DME {
   };
 
   export interface EmbedChildContext {
-    relativePath: Array<number>;
+    relativePath: number[];
     blockData: DMEData.Block;
   }
 
   export interface Widget {
     type: string;
     name: string;
-    icon: string | (() => unknown); // base 64(eg. png/svg) or url, or component
+    icon: string | (() => unknown); // Base64 (e.g., png/svg), URL, or component.
     category: string;
     alias?: string;
     widgetType?: 'widget' | 'mixed' | 'list';
-    // availableIn?: string; //conext for using this widget, eg. a widget identifier, no context meaning it's for all.
-    enabledStyles?: Array<string>;
-    isBaseWidget?: boolean; //true if it's base widget used for variants
-    allowedTypes?: Array<string> | string; //allwed types for direct children
+    enabledStyles?: string[];
+    isBaseWidget?: boolean; // True if it's a base widget used for variants.
+    allowedTypes?: string[] | string; // Allowed types for direct children.
     events: {
-      // onInput: () => void 0,
-      // onChange: () => void 0,
-      // onFocus: () => void 0,
-      // onBlur: () => void 0,
       updateData?: (settings: Setting, data: DMEData.Block) => void;
-      //when create an empty block
       createBlock: () => DMEData.CreatedBlock<any, any>;
-
       embedConfig?: {
         enabledSettings?: (
-          settings: Array<Setting>,
-          styles: { [key: string]: Array<string> },
+          settings: Setting[],
+          styles: Record<string, string[]>,
           context: EmbedChildContext,
-        ) => { settings: Array<Setting>; enabledStyles?: { [key: string]: Array<string> } };
-
+        ) => { settings: Setting[]; enabledStyles?: Record<string, string[]> };
         hasOwnView?: (context: EmbedChildContext) => boolean;
       };
-
-      //when used for default, eg. image inside another widget
       defaultBlock?: () => DMEData.Block<any>;
-
-      //validate data
       validate?: (data: any) => boolean;
     };
-    // style: {},
-    settings: Array<Setting>;
+    settings: Setting[];
   }
 
   export interface WidgetVariant {
-    widget: string; //widget which is based on
+    widget: string; // Widget which is based on.
     identifier: string;
     name: string;
-    cssStyle?: string; //built-in style for the variant
+    cssStyle?: string; // Built-in style for the variant.
     category: string;
-    enabledStyles?: Array<string>;
-    enabledSettings?: Array<string>;
-    allowedTypes?: Array<string>; //can be sub widget inside
-    isInternal?: boolean; // intenal variant will only used inside another widget.
+    enabledStyles?: string[];
+    enabledSettings?: string[];
+    allowedTypes?: string[]; // Can be sub widget inside.
+    isInternal?: boolean; // Internal variant will only be used inside another widget.
     getDefaultData?: () => DMEData.Block<unknown>;
   }
 
   export interface WidgetStyle {
-    identifier: string; // '_' for root
-    display?: Display; //dropdown is default if not set.
-    name: string; //'Style' if not set
-    options: Array<WidgetStyleOption>;
+    identifier: string; // '_' for root.
+    display?: Display; // Dropdown is default if not set.
+    name: string; // 'Style' if not set.
+    options: WidgetStyleOption[];
   }
 
-  export interface WidgetImplemenation {
+  export interface WidgetImplementation {
     render: ComponentType<any>;
     preview?: ComponentType<{ blockData: any; mode?: 'list' }>;
     onServerSideLoad?: ServerSideLoadFunction;
   }
 
-  //css classes, useful when using class names or class based framework(eg. tailwind).
-  //key is for element - it's value is up to the widget, eg. for image text, {'root' - is for root, 'image' - image}
-  export type WidgetStyleClasses = { [key: string]: string };
+  export type WidgetStyleClasses = Record<string, string>;
 
   export type WidgetStyleSettingStatus = 'valid' | 'disabled' | 'hidden';
 
   export interface WidgetStyleOptionSettings {
-    //eg. {setting.general.marginTop: {value: 10, enabled:true}}
-    [key: string]: { value: any | undefined; status?: WidgetStyleSettingStatus };
+    [key: string]: { value: any; status?: WidgetStyleSettingStatus };
   }
 
   export interface WidgetStyleOption {
@@ -136,26 +116,25 @@ export namespace DME {
     name: string;
     icon?: string;
     cssClasses?: WidgetStyleClasses;
-    cssStyle: string; //css style using css-in-js
+    cssStyle: string; // CSS style using CSS-in-JS.
     settings?: WidgetStyleOptionSettings;
   }
 
-  export interface Block extends Widget {}
+  // export interface Block extends Widget {}
 
-  export interface WidgetRenderProps<Type = DMEData.DefaultDataType> {
-    blockNode: DMEData.Block<Type>;
+  export interface WidgetRenderProps<Type = DMEData.DefaultDataType, Node = unknown> {
+    blockNode: DMEData.Block<Type, Node>;
     rootClasses: string;
-    // key is the setting item(eg. 'root', value is styles' class value, eg.['big-space', 'dark'])
-    styleClasses: { [key: string]: string };
+    styleClasses: Record<string, string>;
     active: boolean;
     mode: Mode;
-    path: Array<number>;
+    path: number[];
   }
 
   export interface SettingComponentProps<T = unknown> extends Setting {
-    value?: unknown; //if custom is true, value will be not set,
+    value?: unknown; // If custom is true, value will not be set.
     block: DMEData.Block<T>;
-    blockPath: Array<number>;
+    blockPath: number[];
     disabled?: boolean;
   }
 
@@ -179,7 +158,7 @@ export namespace DMEData {
       | boolean
       | undefined
       | Record<string, string | boolean | number>
-      | Array<any>;
+      | any[];
   }
 
   export interface Page {
@@ -189,54 +168,42 @@ export namespace DMEData {
   }
 
   export interface SavedData {
-    data: Array<Block>;
+    data: Block[];
     page: Page;
   }
 
-  interface widgetBlockProperties {
+  interface WidgetBlockProperties {
     id?: string;
     type: string;
-    style?: { [style: string]: string };
+    style?: Record<string, string>;
     isEmbed?: boolean;
-    serverData?: boolean; // only set by server
-    allowedTypes?: Array<string>; // used for list/grid/mixed-widget
-
-    /* editControl: edit, delete
-     1 - no limit(same as undefined),0 - view only, 2 - can edit but can not delete,
-     >=10 is defined by widgets:
-     10 for container: can not add/delete but can edit child(unless there is override)
-    */
-    editControl?: number;
+    serverData?: boolean; // Only set by server.
+    allowedTypes?: string[]; // Used for list/grid/mixed-widget.
+    editControl?: number; // Edit control levels.
   }
 
-  export interface DefaultBlockType extends widgetBlockProperties {
+  export interface DefaultBlockType extends WidgetBlockProperties {
     id: string;
-    data: DefaultDataType; //entity data from widget
-    children?: Array<DefaultBlockType>;
+    data: DefaultDataType; // Entity data from widget.
+    children?: DefaultBlockType[];
   }
 
   export interface BlockNode {
-    children?: Array<Block>;
+    children?: Block[];
   }
 
-  //Block entity, which is a node in the data tree
-  export interface CreatedBlock<TData = DefaultDataType, TChild = DefaultBlockType>
-    extends widgetBlockProperties {
-    data: TData; //entity data from widget
-    children?: Array<TChild & BlockNode>;
+  export interface CreatedBlock<Data = DefaultDataType, Child = DefaultBlockType>
+    extends WidgetBlockProperties {
+    data: Data; // Entity data from widget.
+    children?: (BlockNode & Child)[];
   }
 
-  //Block entity, which is a node in the data tree
-  export interface Block<TData = DefaultDataType, TChild = DefaultBlockType>
-    extends CreatedBlock<TData, TChild> {
+  export interface Block<Data = DefaultDataType, Child = DefaultBlockType>
+    extends CreatedBlock<Data, Child> {
     id: string;
   }
 
-  //Block list
-  export type BlockList = Array<Block>;
-
-  //A section is alias of a block
-  // type Section = Block;
+  export type BlockList = Block[];
 
   export interface GeneralSettingType {
     width?: number | string;
@@ -244,7 +211,7 @@ export namespace DMEData {
     marginTop?: number;
     padding?: number | number[];
     fullWidth?: boolean;
-    blockBackground?: string | { color?: string; image?: string; imagePostion?: string };
-    background?: string | { color?: string; image?: string; imagePostion?: string };
+    blockBackground?: string | { color?: string; image?: string; imagePosition?: string };
+    background?: string | { color?: string; image?: string; imagePosition?: string };
   }
 }

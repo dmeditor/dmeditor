@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowDropDownOutlined,
-  ArrowForwardIosOutlined,
   ArrowRightAltOutlined,
   ArrowRightOutlined,
   DeleteOutline,

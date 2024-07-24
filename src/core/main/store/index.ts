@@ -483,3 +483,4 @@ export const useEditorStore = create<Store & Actions>()(
     },
   })),
 );
+export type { AddBlockParameters };

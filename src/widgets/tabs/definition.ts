@@ -12,7 +12,9 @@ const TabsWidget: DME.Widget = {
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityTabsData, EntityTabsBlock> => {
       return {
-        data: {},
+        data: {
+          settings: {},
+        },
         type: 'tabs',
         children: [
           {

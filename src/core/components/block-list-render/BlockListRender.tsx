@@ -8,15 +8,13 @@ import { useMousePosition } from '../../main/hooks/useMousePosition';
 import {
   AddingMessage,
   AddingTool,
-  BlockListStyle,
   StyledAddWidgetButton,
-  StyledBlock,
   StyledButtonContainer,
 } from '../../main/renderer/styled';
-import { useEditorStore } from '../../main/store';
+import { useEditorStore, type AddBlockParameters } from '../../main/store';
 import type { DMEData } from '../../types/dmeditor';
-import emitter from '../../utils/event';
 import { BlockRender } from '../block-render/BlockRender';
+import { StyledBlock } from './styled';
 
 interface BlockListProps {
   blockData: DMEData.BlockList;
@@ -50,7 +48,7 @@ export const BlockListRender = (props: BlockListProps) => {
   const isInSelectedContext = currentListPath.join(',') === props.path.join(',');
 
   const [addParameters, setAddParameters] = useState<{
-    position: AddBlockPosition;
+    position: AddBlockParameters['position'];
     index: number;
   }>();
 
@@ -127,6 +125,7 @@ export const BlockListRender = (props: BlockListProps) => {
               addParameters.index === index &&
               addParameters.position === 'before' &&
               renderAddingMessage()}
+
             <BlockWithContainer
               mode={blockMode}
               isHovering={hoverPath?.join(',') === [...props.path, index].join(',')}

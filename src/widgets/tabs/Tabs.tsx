@@ -3,30 +3,27 @@ import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import { orange } from '@mui/material/colors';
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, useEditorStore } from '../..';
-import type { DME } from '../..';
+import { BlockListRender, useEditorStore, type DME } from '../..';
 import { Nav, NavItem } from '../../core/components/nav';
 import { getAllowedTypes, isNull } from '../../core/utils';
+import { logger } from '../../core/utils/log';
 import { BaseTabs, TabPane } from './BaseTabs';
-import type { EntityTabsBlock } from './entity';
-import { useTabsStore } from './store';
+import type { EntityTabsBlock, EntityTabsData } from './entity';
 
-const { useEffect } = React;
-
-const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
+const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock>> = (props) => {
   const {
     blockNode: { children: tabList = [], type },
-    rootClasses,
     styleClasses,
     path,
   } = props;
 
   const { updateBlockByPath } = useEditorStore();
+  const [activeKey, setActiveKey] = React.useState<string | number>('1');
 
   const addTab = () => {
     updateBlockByPath(path, (_, block) => {
       if (!block.children) {
-        console.error('Tabs children not found!');
+        logger.error('Tabs children not found!');
         return;
       }
       block.children.push({
@@ -55,7 +52,7 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
     });
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     function handler(event: Event) {
       var elem = event.target as any;
       while (elem) {
@@ -69,21 +66,19 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
     return () => window.removeEventListener('click', handler);
   }, []);
 
-  const { setActiveKey } = useTabsStore();
-
   return (
     <>
       <div>
-        <BaseTabs
-        // defaultActiveKey={key}
-        >
+        <BaseTabs activeKey={activeKey}>
           <Nav className={styleClasses['nav']}>
-            {tabList.map((item, index) => (
+            {tabList.map(({ meta: { tabKey, title } }) => (
               <NavItem
-                tabKey={item.meta.tabKey}
+                activeKey={activeKey}
+                onTabClick={(key) => setActiveKey(key)}
+                tabKey={tabKey}
                 className={styleClasses['nav-item'] || 'dme-w-nav-item'}
               >
-                {`${item?.meta?.title}` ?? ''}
+                <>{title ?? ''}</>
               </NavItem>
             ))}
             {props.mode === 'edit' && (
@@ -96,16 +91,16 @@ const Tabs = (props: DME.WidgetRenderProps<EntityTabsBlock>) => {
               </span>
             )}
           </Nav>
+
           <div>
-            {tabList.map((item, index) => {
+            {tabList.map(({ meta: { tabKey, title }, children }, index) => {
               return (
-                <TabPane key={item.id} tabKey={item.meta.tabKey} title={item.data}>
+                <TabPane activeKey={activeKey} key={index} tabKey={tabKey} title={title}>
                   <div>
                     <BlockListRender
                       mode={props.mode}
-                      blockData={item.children || []}
+                      blockData={children || []}
                       path={props.path.concat(index)}
-                      // direction={direction}
                       allowedTypes={getAllowedTypes(type)}
                     />
                   </div>

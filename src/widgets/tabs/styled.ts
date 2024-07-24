@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const StyledBaseTabs = styled.div((props: any) => {
+export const StyledBaseTabs = styled.div((props: { isActive: boolean }) => {
   const { isActive } = props;
 
   return {
