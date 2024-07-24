@@ -61,7 +61,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
               key={item.image}
               onClick={() => handleClick(index)}
             >
-              <img src={dmeConfig.general.imagePath(item.image)} alt={item.title} />
+              <img src={dmeConfig.general.imagePath(item.image, 'thumbnail')} alt={item.title} />
             </GalleryItem>
           ))}
         </GalleryList>
