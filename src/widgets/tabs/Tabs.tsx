@@ -18,7 +18,9 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock>> = (
   } = props;
 
   const { updateBlockByPath } = useEditorStore();
-  const [activeKey, setActiveKey] = React.useState<string | number>('1');
+  const [activeKey, setActiveKey] = React.useState<string | number>(
+    tabList.length > 0 ? tabList[0].meta.tabKey : '1',
+  );
 
   const addTab = () => {
     updateBlockByPath(path, (_, block) => {
