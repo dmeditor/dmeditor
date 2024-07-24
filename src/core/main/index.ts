@@ -15,7 +15,7 @@ function createDMEditor() {
   // const defaultConfig = simpleCloneDeep(getDefaultOptions());
   let recentColors: string[] = [];
 
-  if (window && window.localStorage) {
+  if (typeof window !== 'undefined' && window.localStorage) {
     const colors = window.localStorage.getItem('recentColors');
     if (colors) {
       recentColors = JSON.parse(colors);
