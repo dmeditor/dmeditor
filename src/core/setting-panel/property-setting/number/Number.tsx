@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { InfoOutlined, InfoRounded } from '@mui/icons-material';
-import { TextField, Tooltip } from '@mui/material';
+import { TextField } from '@mui/material';
 
 import { useEditorStore } from '../../../..';
 import type { DME } from '../../../..';
@@ -9,10 +8,23 @@ const Number = (props: DME.SettingComponentProps) => {
   const { property, value, parameters, blockPath } = props;
   const { updateBlockPropsByPath } = useEditorStore();
 
-  const [v, setV] = useState<string>(value + '');
+  const [v, setV] = useState<string>(value === undefined ? '' : value + '');
 
-  const validate = (v: string) => {
-    if (!v) {
+  const getMinMax = () => {
+    let minMax: { min?: number; max?: number } = {};
+    if (parameters) {
+      if (parameters['min'] !== undefined) {
+        minMax['min'] = parameters['min'] as number;
+      }
+      if (parameters['max'] !== undefined) {
+        minMax['max'] = parameters['max'] as number;
+      }
+    }
+    return minMax;
+  };
+
+  const setValidValue = (v: string) => {
+    if (v === '') {
       setV('');
     }
     if (/\d+/.test(v)) {
@@ -23,8 +35,12 @@ const Number = (props: DME.SettingComponentProps) => {
   };
 
   const handleChange = () => {
-    const vInt = parseInt(v);
-    updateBlockPropsByPath(blockPath, property!, vInt);
+    if (v === '') {
+      updateBlockPropsByPath(blockPath, property!, undefined);
+    } else {
+      const vInt = parseInt(v);
+      updateBlockPropsByPath(blockPath, property!, vInt);
+    }
   };
 
   return (
@@ -32,10 +48,11 @@ const Number = (props: DME.SettingComponentProps) => {
       <TextField
         style={{ width: 80 }}
         size="small"
+        InputProps={{ inputProps: getMinMax() }}
         type="number"
-        value={v}
+        value={v || ''}
         onBlur={handleChange}
-        onChange={(e) => validate(e.target.value)}
+        onChange={(e) => setValidValue(e.target.value)}
       />
     </>
   );
