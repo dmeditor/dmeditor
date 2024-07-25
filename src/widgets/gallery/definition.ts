@@ -24,6 +24,12 @@ const definition: DME.Widget = {
       parameters: { min: 1, max: 5 },
     },
     {
+      name: 'Items per page',
+      property: '.itemsPerPage',
+      settingComponent: 'number',
+      description: 'Empty/0 mean no paginzation',
+    },
+    {
       name: 'Image gap',
       property: '.gap',
       settingComponent: 'range',

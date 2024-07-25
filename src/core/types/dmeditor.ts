@@ -10,6 +10,7 @@ export namespace DME {
     name: string;
     custom?: boolean; // If true, it will not invoke directly but use name->value layout.
     settingComponent: string; // Registered setting component, e.g., 'color' or 'align'.
+    description?: string;
     styleTags?: string[]; // e.g., core, general
     category?: string;
     group?: string;

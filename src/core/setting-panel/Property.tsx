@@ -1,11 +1,26 @@
 import React, { useState } from 'react';
-import { KeyboardArrowDown, KeyboardArrowRight } from '@mui/icons-material';
-import { Button, ButtonProps, Collapse, Grid, InputLabel, Tooltip } from '@mui/material';
+import {
+  InfoOutlined,
+  InfoRounded,
+  InfoSharp,
+  KeyboardArrowDown,
+  KeyboardArrowRight,
+} from '@mui/icons-material';
+import {
+  Button,
+  ButtonProps,
+  Collapse,
+  Grid,
+  IconButton,
+  InputLabel,
+  Tooltip,
+} from '@mui/material';
 
 import { StyledSettingGroup, StyledSettingItem } from './style';
 
 export const PropertyItem = (props: {
   label?: string;
+  description?: string;
   autoWidth?: boolean;
   upDown?: boolean;
   children: any;
@@ -18,6 +33,11 @@ export const PropertyItem = (props: {
     <StyledSettingItem.Container upDown={upDown} autoWidth={autoWidth}>
       <StyledSettingItem.Label>{props.label}: </StyledSettingItem.Label>
       <StyledSettingItem.Setting upDown={upDown}>{props.children}</StyledSettingItem.Setting>
+      {props.description && (
+        <Tooltip title={props.description}>
+          <InfoOutlined sx={{ verticalAlign: 'bottom' }} fontSize="small" />
+        </Tooltip>
+      )}
     </StyledSettingItem.Container>
   ) : (
     <StyledSettingItem.Setting>{props.children}</StyledSettingItem.Setting>

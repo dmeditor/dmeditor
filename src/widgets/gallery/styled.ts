@@ -31,15 +31,42 @@ export const GalleryImage = css`
 `;
 
 export const GalleryDialog = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
   width: 100%;
 `;
 
-export const IconWrapper = styled.span`
-  display: inline-block;
-  margin: 0 4px;
+export const IconWrapper = styled.div<{ isRight?: boolean }>`
   cursor: pointer;
+  position: absolute;
+  width: 30%;
+  height: 100%;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  ${(props) =>
+    props.isRight
+      ? 'flex-direction:row-reverse;right: 0px; padding-right: 30px; }}'
+      : 'left:0px;padding-left: 30px'};
+`;
+
+export const VerticalMiddle = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+`;
+
+export const ImageIndicator = styled.div`
+  text-align: center;
+  position: absolute;
+  bottom: 5px;
+  text-align: center;
+  width: 100%;
+  font-size: 16px;
+  color: white;
+  text-shadow: 1px 1px 1px #333333;
+  text-align: center;
+`;
+
+export const PaginationContainer = styled.div`
+  text-align: right;
 `;
