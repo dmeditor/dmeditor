@@ -23,18 +23,22 @@ const Number = (props: DME.SettingComponentProps) => {
     return minMax;
   };
 
-  const setValidValue = (v: string) => {
-    if (v === '') {
-      setV('');
-    }
-    if (/\d+/.test(v)) {
-      if (parseInt(v) >= 0) {
-        setV(v);
+  const setValidValue = (newV: string) => {
+    if (newV === '' || /\d+/.test(newV)) {
+      let previous = v === '' ? 0 : parseInt(v);
+      if (newV === '') {
+        setV('');
+      }
+      if (parseInt(newV) >= 0) {
+        setV(newV);
+      }
+      if (parseInt(newV) == previous + 1 || parseInt(newV) == previous - 1) {
+        handleChange(newV);
       }
     }
   };
 
-  const handleChange = () => {
+  const handleChange = (v: string) => {
     if (v === '') {
       updateBlockPropsByPath(blockPath, property!, undefined);
     } else {
@@ -51,7 +55,7 @@ const Number = (props: DME.SettingComponentProps) => {
         InputProps={{ inputProps: getMinMax() }}
         type="number"
         value={v || ''}
-        onBlur={handleChange}
+        onBlur={() => handleChange(v)}
         onChange={(e) => setValidValue(e.target.value)}
       />
     </>
