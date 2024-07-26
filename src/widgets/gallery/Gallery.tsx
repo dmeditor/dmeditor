@@ -66,6 +66,14 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
     }
   };
 
+  const getCurrentIndex = () => {
+    if (!itemsPerPage) {
+      return selectedImageIndex;
+    } else {
+      return currentPage * itemsPerPage + selectedImageIndex;
+    }
+  };
+
   return (
     <>
       <GalleryContainer>
@@ -139,12 +147,12 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
               <div>
                 <img
                   className={GalleryImage + ` ${galleryClassName('dialog-img')}`}
-                  src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
+                  src={dmeConfig.general.imagePath(items[getCurrentIndex()]?.image)}
                 />
                 <ImageIndicator
                   className={styleClasses['gallery-indicator'] || 'dme-w-gallery-indicator'}
                 >
-                  <span>{selectedImageIndex + 1}</span>
+                  <span>{getCurrentIndex() + 1}</span>
                   <span> / </span>
                   <span>{items.length}</span>
                 </ImageIndicator>

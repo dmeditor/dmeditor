@@ -38,15 +38,15 @@ export const GalleryDialog = styled.div`
 export const IconWrapper = styled.div<{ isRight?: boolean }>`
   cursor: pointer;
   position: absolute;
-  width: 30%;
+  width: 50%;
   height: 100%;
   top: 0px;
   display: flex;
   align-items: center;
   ${(props) =>
     props.isRight
-      ? 'flex-direction:row-reverse;right: 0px; padding-right: 30px; }}'
-      : 'left:0px;padding-left: 30px'};
+      ? 'flex-direction:row-reverse;right: 0px; padding-right: 20px; }}'
+      : 'left:0px;padding-left: 20px'};
 `;
 
 export const VerticalMiddle = styled.div`
