@@ -7,6 +7,7 @@ import { SketchPicker, type ColorResult } from 'react-color';
 
 import { DME, useEditorStore } from '../..';
 
+// 8 columns
 const PRESET_COLORS = [
   '#f44336',
   '#e91e63',
@@ -26,15 +27,20 @@ const PRESET_COLORS = [
   '#ff5722',
   '#795548',
   '#607d8b',
+  '#ffffff',
+  '#cccccc',
+  '#999999',
+  '#666666',
+  '#333333',
+  '#000000',
 ];
 
 const colorList = css`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   padding: 0;
   margin: 0;
   list-style: none;
-  align-items: center;
 `;
 
 const Divider = styled.div`
