@@ -40,7 +40,11 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
 
   const handleClick = (index: number) => {
     setOpen(true);
-    setSelectedImageIndex(index);
+    if (!itemsPerPage) {
+      setSelectedImageIndex(index);
+    } else {
+      setSelectedImageIndex(currentPage * itemsPerPage + index);
+    }
   };
 
   const handleClose = (_evt: React.SyntheticEvent, reason: string) => {
@@ -50,11 +54,11 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
   };
 
   const handleNext = () => {
-    setSelectedImageIndex((prevIndex) => (prevIndex + 1) % items.length);
+    setSelectedImageIndex((index) => (index + 1) % items.length);
   };
 
   const handlePrev = () => {
-    setSelectedImageIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
+    setSelectedImageIndex((index) => (index - 1 + items.length) % items.length);
   };
 
   const getCurrentItems = () => {
@@ -63,14 +67,6 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
       return items.slice(currentIndex, currentIndex + itemsPerPage);
     } else {
       return items;
-    }
-  };
-
-  const getCurrentIndex = () => {
-    if (!itemsPerPage) {
-      return selectedImageIndex;
-    } else {
-      return currentPage * itemsPerPage + selectedImageIndex;
     }
   };
 
@@ -147,12 +143,12 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
               <div>
                 <img
                   className={GalleryImage + ` ${galleryClassName('dialog-img')}`}
-                  src={dmeConfig.general.imagePath(items[getCurrentIndex()]?.image)}
+                  src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                 />
                 <ImageIndicator
                   className={styleClasses['gallery-indicator'] || 'dme-w-gallery-indicator'}
                 >
-                  <span>{getCurrentIndex() + 1}</span>
+                  <span>{selectedImageIndex + 1}</span>
                   <span> / </span>
                   <span>{items.length}</span>
                 </ImageIndicator>
