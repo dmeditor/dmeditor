@@ -1,27 +1,24 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
 import _debounce from 'lodash/debounce';
 
-import i18n from '../../i18n';
+import { Mode } from '../../../core/enum';
 import { useEditorStore } from '../../main/store';
-import type { DMEData } from '../../types';
+import type { DME, DMEData } from '../../types';
 import { getWidgetComponent, getWidgetStyle } from '../../utils/register';
 import { BlockWrapper } from './styled';
 
-interface BlockProps<Type = DMEData.DefaultDataType> {
-  data: DMEData.Block<Type>;
-  path: Array<number>;
-  mode: 'edit' | 'view';
+interface BlockRenderProps extends Pick<DME.WidgetRenderProps, 'mode' | 'path'> {
+  data: DMEData.Block<DMEData.DefaultBlockType>;
   inBlock?: boolean;
 }
-const { memo, useMemo } = React;
 
-export const BlockRender = memo((props: BlockProps) => {
+export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
   const {
     path,
     data: { id, style: styleData },
+    mode,
   } = props;
 
   const {
@@ -37,15 +34,16 @@ export const BlockRender = memo((props: BlockProps) => {
   const Widget = getWidgetComponent(widgetArr[0]).render;
 
   const onSelect = (e: React.MouseEvent) => {
-    if (props.mode === 'edit') {
+    if (props.mode === Mode.Edit) {
       e.stopPropagation();
       updateSelectedBlockIndex(props.path, props.data.id || '');
     }
   };
 
-  const cssStyles = useMemo(() => {
+  const cssStyles = React.useMemo(() => {
     let styleStr = '';
     let styleClasses: { [key: string]: string } = {};
+
     if (styleData) {
       for (const styleIdentifier of Object.keys(styleData)) {
         const widgetStyle = getWidgetStyle(blockType, styleIdentifier);
@@ -89,9 +87,9 @@ export const BlockRender = memo((props: BlockProps) => {
     <BlockWrapper
       className={'dme-block-wrapper ' + cssStyles.rootClasses}
       onClick={onSelect}
-      {...(props.mode === 'edit' && props.data.id && { id: props.data.id })}
+      {...(mode === Mode.Edit && props.data.id && { id: props.data.id })}
       active={active}
-      editMode={props.mode === 'edit'}
+      editMode={mode === 'edit'}
       generalSettings={props.data.data.settings?.general}
     >
       <Widget
@@ -99,7 +97,7 @@ export const BlockRender = memo((props: BlockProps) => {
         {...cssStyles}
         blockNode={props.data}
         path={props.path}
-        mode={props.mode}
+        mode={mode}
         active={active ? true : false}
       />
     </BlockWrapper>

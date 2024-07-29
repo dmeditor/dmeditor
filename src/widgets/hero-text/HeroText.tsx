@@ -1,29 +1,26 @@
 import { useMemo } from 'react';
 import { css } from '@emotion/css';
 
-import { BlockListRender, BlockRender, useDevice } from '../..';
+import { BlockRender, useDevice } from '../..';
 import type { DME } from '../..';
 import { dmeFullWidthLeft, dmeFullWidthRight } from '../../core/config';
-import { getAllowedTypes } from '../../core/utils/register';
 import { EntityHeroText } from './entity';
-// import { ImageContainer } from './style';
 import { HeroTextContainer } from './styled';
 
-const HeroText = (props: DME.WidgetRenderProps<EntityHeroText>) => {
+const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText>> = (props) => {
   const {
     blockNode: {
       children,
       data: { heroPosition, heroFullWidth },
     },
     path,
-    blockNode,
     mode,
     styleClasses,
   } = props;
 
   if (children?.length !== 2) {
     console.warn('Image text should be 2 children. Ignored.');
-    return <></>;
+    return null;
   }
 
   const getClass = (type: string) => {
