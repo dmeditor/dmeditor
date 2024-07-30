@@ -173,8 +173,8 @@ export namespace DMEData {
   }
 
   interface WidgetBlockProperties {
-    id?: string;
     type: string;
+    id?: string;
     style?: Record<string, string>;
     isEmbed?: boolean;
     serverData?: boolean; // Only set by server.

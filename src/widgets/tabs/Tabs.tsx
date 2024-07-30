@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 
 import { BlockListRender, useEditorStore, type DME } from '../..';
 import { Nav, NavItem } from '../../core/components/nav';
-import { getAllowedTypes, isNull } from '../../core/utils';
+import { getAllowedTypes } from '../../core/utils';
 import { logger } from '../../core/utils/log';
 import { BaseTabs, TabPane } from './BaseTabs';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
