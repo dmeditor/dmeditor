@@ -35,6 +35,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
   const [open, setOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(-1);
   const [currentPage, setCurrentPage] = useState(0);
+  const galleryEl = React.useRef<HTMLDivElement>(null);
 
   const totalPage = itemsPerPage ? Math.ceil(items.length / itemsPerPage) : 1;
 
@@ -59,6 +60,14 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
 
   const handlePrev = () => {
     setSelectedImageIndex((index) => (index - 1 + items.length) % items.length);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      handlePrev();
+    } else if (e.key === 'ArrowRight') {
+      handleNext();
+    }
   };
 
   const getCurrentItems = () => {
@@ -121,7 +130,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
         </PaginationContainer>
       )}
 
-      <Dialog maxWidth={false} open={open} onClose={handleClose}>
+      <Dialog maxWidth={false} open={open} onClose={handleClose} onKeyDown={handleKeyDown}>
         <IconButton
           aria-label="close"
           onClick={() => setOpen(false)}
@@ -135,13 +144,14 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
           <CloseOutlined fontSize="large" style={{ color: '#cccccc' }} />
         </IconButton>
         <DialogContent sx={{ padding: 0 }}>
-          <GalleryDialog className={galleryClassName('dialog-content')}>
+          <GalleryDialog ref={galleryEl} className={galleryClassName('dialog-content')}>
             <IconWrapper onClick={handlePrev}>
               <KeyboardArrowLeft fontSize="large" style={{ color: '#cccccc' }} />
             </IconWrapper>
             {selectedImageIndex !== -1 && (
               <div>
                 <img
+                  key={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                   className={GalleryImage + ` ${galleryClassName('dialog-img')}`}
                   src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                 />
