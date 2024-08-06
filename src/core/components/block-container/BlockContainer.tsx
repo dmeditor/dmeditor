@@ -2,15 +2,16 @@ import React, { useRef } from 'react';
 import { AddOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { Mode } from '../../../core/enum';
+import { Mode } from '../../constants';
 import { useMousePosition } from '../../main/hooks/useMousePosition';
 import { AddingTool, StyledButtonContainer } from '../../main/renderer/styled';
+import type { DME } from '../../types/dmeditor';
 import { BlockContainerWrapper, PositionRangeWrapper } from './styled';
 
 export type PositionType = '' | 'before' | 'after';
 
 interface BlockContainerProps {
-  mode: Mode;
+  mode: DME.Mode;
   isHovering: boolean;
   addingHorizontal?: boolean;
   children: React.ReactNode;
@@ -38,7 +39,7 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
     }
   };
 
-  if (mode === Mode.View) {
+  if (mode === Mode.view) {
     return (
       <BlockContainerWrapper hovering={isHovering} editMode={false} {...containerAdditionalProps}>
         {children}
@@ -50,26 +51,16 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
     <BlockContainerWrapper
       ref={blockContainerRef}
       hovering={isHovering}
-      editMode={mode === Mode.Edit}
+      editMode={mode === Mode.edit}
       {...containerAdditionalProps}
     >
       <PositionRangeWrapper
         range={showPositionRange}
-        editMode={mode === Mode.Edit}
+        editMode={mode === Mode.edit}
         showBefore={addPosition === 'before'}
         showAfter={addPosition === 'after'}
         horizontal={addingHorizontal}
       >
-        {/* {addPosition === 'before' && (
-          <AddingTool position={addPosition} horizontal={addingHorizontal}>
-            <StyledButtonContainer>
-              <Button onClick={addButtonClicked}>
-                <AddOutlined />
-              </Button>
-            </StyledButtonContainer>
-          </AddingTool>
-        )} */}
-
         {addPosition && (
           <AddingTool position={addPosition} horizontal={addingHorizontal}>
             <StyledButtonContainer>
@@ -81,16 +72,6 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
         )}
 
         {children}
-
-        {/* {addPosition === 'after' && (
-          <AddingTool position={addPosition} horizontal={addingHorizontal}>
-            <StyledButtonContainer>
-              <Button onClick={addButtonClicked}>
-                <AddOutlined />
-              </Button>
-            </StyledButtonContainer>
-          </AddingTool>
-        )} */}
       </PositionRangeWrapper>
     </BlockContainerWrapper>
   );

@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-import { Display, PageSettingType } from '../enum';
+import { Display, Mode, PageSettingType } from '../constants';
 
 export type ServerSideLoadFunction = (data: DMEData.Block, serverParameters: any) => Promise<void>;
 
@@ -20,7 +20,8 @@ export namespace DME {
   }
 
   export type Device = 'pc' | 'tablet' | 'mobile';
-  export type Mode = 'edit' | 'view';
+  // export type Mode = 'edit' | 'view';
+  export type Mode = keyof typeof Mode;
 
   export interface ColorConfig {
     color: string;

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
 import _debounce from 'lodash/debounce';
 
-import { Mode } from '../../../core/enum';
+import { Mode } from '../../constants';
 import { useEditorStore } from '../../main/store';
 import type { DME, DMEData } from '../../types';
 import { getWidgetComponent, getWidgetStyle } from '../../utils/register';
@@ -34,7 +34,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
   const Widget = getWidgetComponent(widgetArr[0]).render;
 
   const onSelect = (e: React.MouseEvent) => {
-    if (props.mode === Mode.Edit) {
+    if (props.mode === Mode.edit) {
       e.stopPropagation();
       updateSelectedBlockIndex(props.path, props.data.id || '');
     }
@@ -90,7 +90,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
       active={active}
       editMode={mode === 'edit'}
       generalSettings={props.data.data.settings?.general}
-      {...(mode === Mode.Edit && props.data.id && { id: props.data.id })}
+      {...(mode === Mode.edit && props.data.id && { id: props.data.id })}
     >
       <Widget
         inBlock={!!props.inBlock}

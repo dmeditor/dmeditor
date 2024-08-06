@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 
 import { dmeConfig } from '../../config';
-import { Mode } from '../../enum';
+import { Mode } from '../../constants';
 import { AddingMessage, StyledAddWidgetButton } from '../../main/renderer/styled';
 import { useEditorStore, type AddBlockParameters } from '../../main/store';
-import type { DMEData } from '../../types/dmeditor';
+import type { DME, DMEData } from '../../types/dmeditor';
 import { canEditControl } from '../../utils/editControl';
 import BlockContainer, { type PositionType } from '../block-container';
 import { BlockRender } from '../block-render/BlockRender';
@@ -16,7 +16,7 @@ interface BlockListProps {
   allowedTypes?: string[] | string;
   isEmbed?: boolean;
   direction?: 'vertical' | 'horizontal';
-  mode: 'edit' | 'view';
+  mode: DME.Mode;
 }
 
 export const BlockListRender: React.FC<BlockListProps> = (props) => {
@@ -92,7 +92,7 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
 
   return (
     <>
-      {props.mode === Mode.Edit && props.blockData.length === 0 && (
+      {props.mode === Mode.edit && props.blockData.length === 0 && (
         <StyledAddWidgetButton>
           <Button onClick={(e) => handleAdding('after', 0)}>Add widget</Button>
         </StyledAddWidgetButton>
@@ -100,7 +100,7 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
       {props.blockData.map((blockData: DMEData.Block, index: number) => {
         let blockMode = props.mode;
         if (
-          blockMode == 'edit' &&
+          blockMode === Mode.view &&
           dmeConfig.editor.enableEditControl &&
           canEditControl(blockData) === false &&
           blockData.editControl === 0
@@ -138,53 +138,3 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
     </>
   );
 };
-
-// const BlockWithContainer: React.FC<BlockWithContainerProps> = (props) => {
-//   const { mode, isHovering, onAddClick, addingHorizontal } = props;
-
-//   if (mode === Mode.View) {
-//     return <StyledBlock {...containerAdditionalProps}>{props.children}</StyledBlock>;
-//   }
-
-//   const blockContainerRef = useRef<HTMLDivElement>(null);
-//   const addPosition = useMousePosition(blockContainerRef.current, addingHorizontal);
-//   console.log('wing pos', addPosition, addingHorizontal)
-
-//   const addButtonClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
-//     e.stopPropagation();
-//     if (addPosition) {
-//       onAddClick(addPosition);
-//     }
-//   };
-
-//   return (
-//     <StyledBlock
-//       ref={blockContainerRef}
-//       hovering={isHovering}
-//       editMode={mode === Mode.Edit}
-//       {...containerAdditionalProps}
-//     >
-//       {addPosition === 'before' && (
-//         <AddingTool position="before" horizontal={addingHorizontal}>
-//           <StyledButtonContainer>
-//             <Button onClick={addButtonClicked} sx={{ backgroundColor: '#fffff' }}>
-//               <AddOutlined />{' '}
-//             </Button>
-//           </StyledButtonContainer>
-//         </AddingTool>
-//       )}
-
-//       {props.children}
-
-//       {addPosition === 'after' && (
-//         <AddingTool position="after" horizontal={addingHorizontal}>
-//           <StyledButtonContainer>
-//             <Button onClick={addButtonClicked}>
-//               <AddOutlined />
-//             </Button>
-//           </StyledButtonContainer>
-//         </AddingTool>
-//       )}
-//     </StyledBlock>
-//   );
-// };
