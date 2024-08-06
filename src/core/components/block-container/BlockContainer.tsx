@@ -30,7 +30,6 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
     showPositionRange,
     // true,
   );
-  const containerAdditionalProps = { className: 'dme-block-container' };
 
   const addButtonClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -41,7 +40,7 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
 
   if (mode === Mode.view) {
     return (
-      <BlockContainerWrapper hovering={isHovering} editMode={false} {...containerAdditionalProps}>
+      <BlockContainerWrapper hovering={isHovering} editMode={false} className="dme-block-container">
         {children}
       </BlockContainerWrapper>
     );
@@ -52,7 +51,7 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
       ref={blockContainerRef}
       hovering={isHovering}
       editMode={mode === Mode.edit}
-      {...containerAdditionalProps}
+      className="dme-block-container"
     >
       <PositionRangeWrapper
         range={showPositionRange}
