@@ -1,5 +1,4 @@
-import type { DMEData } from '../..';
-import { registerWidget, registerWidgetStyle, registerWidgetVariant } from '../..';
+import { registerWidget } from '../..';
 import heroTextWidget from './definition';
 import { HeroText } from './HeroText';
 

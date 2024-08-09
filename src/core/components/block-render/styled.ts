@@ -71,17 +71,16 @@ export const BlockWrapper = styled.div<{
   editMode?: boolean;
 }>`
   ${(props) => (props.generalSettings ? getGeneralStyle(props.generalSettings) : {})}
-
-  ${(props) => {
-    if (props.editMode && props.active) {
+  ${({ editMode, active }) => {
+    if (editMode && active) {
       return `
-      outline: 2px solid var(--dmee-selected-border-color) !important;
-      border-radius: 4px;
-      z-index: var(--dmee-zindex);
+        outline: 2px solid var(--dmee-selected-border-color) !important;
+        // border-radius: 4px;
+        outline-offset: -1px;
+        z-index: var(--dmee-zindex);
       `;
     } else {
-      return `
-      `;
+      return '';
     }
   }}
 
@@ -90,7 +89,8 @@ export const BlockWrapper = styled.div<{
       props.editMode &&
       `
         outline: 2px dotted var(--dmee-selected-border-color);
-        border-radius: 4px;
+        // border-radius: 4px;
+        outline-offset: -1px;
         z-index: calc(var(--dmee-zindex) + 50);
     `}
   }

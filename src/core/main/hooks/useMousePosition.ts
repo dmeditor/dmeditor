@@ -1,65 +1,74 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 
 type PositionType = '' | 'before' | 'after';
 
-const useMousePosition = (element: HTMLDivElement | null, leftRight?: boolean) => {
+const useMousePosition = (
+  element: HTMLDivElement | null,
+  horizontal?: boolean,
+  shownPositionRange: number = 30,
+) => {
   const [position, setPosition] = useState<PositionType>('');
 
-  const height = element?.offsetHeight || 0;
-  const width = element?.offsetWidth || 0;
-  const elementY = element?.getBoundingClientRect().top || 0;
-  const elementX = element?.getBoundingClientRect().left || 0;
+  const calculatePosition = (e: MouseEvent): PositionType => {
+    if (!element) return '';
 
-  const shownPositionRange = 30; //30px
-  const mouseMove = (e: any) => {
-    let onFirstHalf = true;
+    const { offsetHeight: height, offsetWidth: width } = element;
+    const { top: elementY, left: elementX } = element.getBoundingClientRect();
     let result: PositionType = '';
-    if (leftRight) {
-      const halfWidth = width / 2;
-      const mouseX = e.x - elementX;
-      //when the element width is too low, use half
-      if (halfWidth < shownPositionRange) {
-        result = mouseX <= halfWidth ? 'before' : 'after';
+
+    if (horizontal) {
+      let mouseX = e.clientX - elementX;
+      if (mouseX < 0) mouseX = 0;
+      if (mouseX > width) mouseX = width;
+
+      if (mouseX <= shownPositionRange) {
+        result = 'before';
+      } else if (mouseX >= width - shownPositionRange) {
+        result = 'after';
       } else {
-        //otherwise use range
-        if (mouseX <= shownPositionRange) {
-          result = 'before';
-        } else if (mouseX >= width - shownPositionRange) {
-          result = 'after';
-        }
+        result = ''; // 不触发
       }
     } else {
-      const halfHeight = height / 2;
-      const mouseY = e.y - elementY;
-      onFirstHalf = mouseY < halfHeight;
-      if (halfHeight < shownPositionRange) {
-        result = mouseY <= halfHeight ? 'before' : 'after';
+      let mouseY = e.clientY - elementY;
+
+      if (mouseY < 0) mouseY = 0;
+      if (mouseY > height) mouseY = height;
+
+      if (mouseY <= shownPositionRange) {
+        result = 'before';
+      } else if (mouseY >= height - shownPositionRange) {
+        result = 'after';
       } else {
-        if (mouseY <= shownPositionRange) {
-          result = 'before';
-        } else if (mouseY >= height - shownPositionRange) {
-          result = 'after';
-        }
+        result = ''; // 不触发
       }
     }
-    setPosition(result);
+
+    return result;
   };
 
-  const mouseOut = () => {
+  const mouseMove = useCallback(
+    (e: MouseEvent) => {
+      const newPosition = calculatePosition(e);
+      setPosition(newPosition);
+    },
+    [element, horizontal],
+  );
+
+  const mouseOut = useCallback(() => {
     setPosition('');
-  };
+  }, []);
 
   useEffect(() => {
     if (element) {
       element.addEventListener('mousemove', mouseMove, false);
       element.addEventListener('mouseout', mouseOut, false);
       return () => {
-        element?.removeEventListener('mousemove', mouseMove);
-        element?.removeEventListener('mouseout', mouseOut);
+        element.removeEventListener('mousemove', mouseMove);
+        element.removeEventListener('mouseout', mouseOut);
       };
     }
-  });
+  }, [element, mouseMove, mouseOut]);
 
   return position;
 };

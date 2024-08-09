@@ -1,7 +1,8 @@
-export enum Mode {
-  Edit = 'edit',
-  View = 'view',
-}
+export const Mode = {
+  edit: 'edit',
+  view: 'view',
+};
+export type TMode = keyof typeof Mode;
 
 export enum Category {
   Widget = 'widget',

@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { dmeConfig, generalSettings } from '../..';
-import type { DME, DMEData } from '../..';
+import { DMEData, generalSettings, type DME } from '../..';
 import { arrayHasCommonElement } from '../../core/utils';
 import { EntityHeroText } from './entity';
 
@@ -35,7 +34,8 @@ const heroTextWidget: DME.Widget = {
             type: 'list',
             isEmbed: true,
             allowedTypes: ['heading', 'text', 'button', 'line'],
-            data: { settings: { general: { padding: 10 } } },
+            data: { settings: { padding: 10 }, general: { padding: 10 } },
+            // data: { settings: { general: { padding: 10 } } },
             children: [
               {
                 id: nanoid(),
