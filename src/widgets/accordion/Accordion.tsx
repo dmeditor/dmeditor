@@ -9,7 +9,6 @@ import { useAccordionStore } from './store';
 const Accordion = (props: DME.WidgetRenderProps<EntityAccordion>) => {
   const {
     blockNode: { children: accordionList = [], type },
-    rootClasses,
     styleClasses,
   } = props;
   const { activeKey, setActiveKey } = useAccordionStore();

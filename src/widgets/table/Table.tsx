@@ -5,7 +5,7 @@ import { useTableStore } from './store';
 import { StyledTable } from './styled';
 
 const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
-  const { blockNode, rootClasses, path } = props;
+  const { blockNode, path } = props;
   const {
     id,
     data: { value, settings },

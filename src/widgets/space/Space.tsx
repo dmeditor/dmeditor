@@ -7,7 +7,6 @@ const Space = (props: DME.WidgetRenderProps<EntitySpace>) => {
     blockNode: {
       data: { settings },
     },
-    rootClasses,
   } = props;
 
   return (

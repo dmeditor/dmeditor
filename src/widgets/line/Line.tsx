@@ -7,7 +7,6 @@ const Line = (props: DME.WidgetRenderProps<EntityLine>) => {
     blockNode: {
       data: { settings },
     },
-    rootClasses,
   } = props;
 
   return (

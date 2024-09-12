@@ -72,7 +72,7 @@ const ConfirmDialog = (props: {
 
 export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
   const { updateBlockByPath } = useEditorStore();
-  const { rootClasses, path } = props;
+  const { path } = props;
   const { data } = props.blockNode;
 
   const handleConfirm = (value: string) => {

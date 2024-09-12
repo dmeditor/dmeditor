@@ -23,7 +23,7 @@ const HeadingComponent: React.FC<HeadingComponentProps> = ({ level: number = 2, 
 
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
-  const { blockNode, rootClasses, styleClasses, path } = props;
+  const { blockNode, styleClasses, path } = props;
   const { updateBlockByPath } = useEditorStore();
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {

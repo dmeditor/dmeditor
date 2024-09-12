@@ -17,7 +17,6 @@ import { StyledCode } from './styled';
 
 export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   const {
-    rootClasses,
     blockNode: {
       data: { content },
     },

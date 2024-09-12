@@ -70,7 +70,7 @@ export const ImageDefinition: DME.Widget = {
 };
 
 export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
-  const { blockNode, rootClasses, styleClasses } = props;
+  const { blockNode, styleClasses } = props;
   const {
     data: { src, settings, description },
   } = blockNode;

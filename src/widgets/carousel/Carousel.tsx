@@ -51,7 +51,6 @@ const Carousel = (props) => {
       data: { items, animation, autoPlay },
     },
     children,
-    rootClasses,
     styleClasses,
   } = props;
   const carouselRef = useRef<HTMLDivElement>(null);

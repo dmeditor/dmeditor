@@ -44,7 +44,6 @@ interface EntityLayout2Columns {
 
 const Layout2Columns = (props: DME.WidgetRenderProps<EntityLayout2Columns>) => {
   const {
-    rootClasses,
     styleClasses,
     blockNode: {
       data: { columnWidth },
