@@ -97,6 +97,11 @@ type AddingToolProps = {
   horizontal: boolean;
 };
 
+export const DMEditorViewStyle = styled.div<{ projectStyle?: string; themeStyle?: string }>(
+  ({ projectStyle }) => projectStyle,
+  ({ themeStyle }) => themeStyle,
+);
+
 export const AddingTool = styled.div<AddingToolProps>`
   position: absolute;
   z-index: 1;
@@ -119,7 +124,7 @@ export const AddingTool = styled.div<AddingToolProps>`
     position: absolute;
     background: transparent;
     border-radius: 4px;
-    pointer-events: none; 
+    pointer-events: none;
 
     ${({ horizontal }) =>
       horizontal ? 'height: 100%; width: 10px;' : 'width: 100%; height: 10px;'}

@@ -69,6 +69,7 @@ export const BlockWrapper = styled.div<{
   generalSettings?: DMEData.GeneralSettingType;
   active?: boolean;
   editMode?: boolean;
+  widgetStyles?: string[];
 }>`
   ${(props) => (props.generalSettings ? getGeneralStyle(props.generalSettings) : {})}
   ${({ editMode, active }) => {
@@ -83,6 +84,8 @@ export const BlockWrapper = styled.div<{
       return '';
     }
   }}
+
+  ${({ widgetStyles }) => widgetStyles?.join()}
 
   &:hover {
     ${(props) =>

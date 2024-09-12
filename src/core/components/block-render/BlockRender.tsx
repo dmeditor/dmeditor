@@ -17,7 +17,7 @@ interface BlockRenderProps extends Pick<DME.WidgetRenderProps, 'mode' | 'path'> 
 export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
   const {
     path,
-    data: { id, style: styleData },
+    data: { id, style: styleObj },
     mode,
   } = props;
 
@@ -41,22 +41,22 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
   };
 
   const cssStyles = React.useMemo(() => {
-    let styleStr = '';
+    let styles = [];
     let styleClasses: { [key: string]: string } = {};
 
-    if (styleData) {
-      for (const styleIdentifier of Object.keys(styleData)) {
+    if (styleObj) {
+      for (const styleIdentifier of Object.keys(styleObj)) {
         const widgetStyle = getWidgetStyle(blockType, styleIdentifier);
         if (!widgetStyle) {
           console.warn(`Style ${styleIdentifier} not found on ${blockType}. Ignored.`);
           continue;
         }
         const styleOption = widgetStyle.options.find(
-          (item) => item.identifier === styleData[styleIdentifier],
+          (item) => item.identifier === styleObj[styleIdentifier],
         );
         if (styleOption) {
           if (styleOption.cssStyle) {
-            styleStr += css(styleOption.cssStyle) + ' ';
+            styles.push(styleOption.cssStyle);
           }
           const classes = styleOption.cssClasses;
           if (classes) {
@@ -72,20 +72,26 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
         builtinClasses += ' dme-blockvariant-' + widgetArr[1];
       }
 
-      let rootClasses = styleStr + builtinClasses;
+      let rootClasses = builtinClasses;
       if (Object.keys(styleClasses).length > 0) {
         if (styleClasses['root']) {
           rootClasses += ` ${styleClasses['root']}`;
         }
       }
-      return { rootClasses: rootClasses, styleClasses: styleClasses };
+      return { rootClasses: rootClasses, widgetStyles: styles, styleClasses: styleClasses };
     }
     return { rootClasses: '', styleClasses: {} };
-  }, [id, styleData]);
+  }, [id, styleObj]);
 
-  return Widget ? (
+  if (!Widget) {
+    console.warn(`Widget ${widgetArr} not found. Render empty.`);
+    return <></>;
+  }
+
+  return (
     <BlockWrapper
       className={'dme-block-wrapper ' + cssStyles.rootClasses}
+      widgetStyles={cssStyles.widgetStyles}
       onClick={onSelect}
       active={active}
       editMode={mode === 'edit'}
@@ -101,7 +107,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
         active={!!active}
       />
     </BlockWrapper>
-  ) : null;
+  );
 });
 
 export const RenderMenu = (props: {

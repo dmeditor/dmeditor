@@ -6,6 +6,7 @@ import { useDevice } from '../../..';
 import { BlockListRender } from '../../components/block-list-render/BlockListRender';
 import { getPageTheme } from '../../components/page';
 import { dmeConfig } from '../../config';
+import { DMEditorViewStyle } from './styled';
 
 export interface DMEditorViewProps {
   data: DMEData.BlockList;
@@ -17,7 +18,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
   const { data, theme, projectStyle } = props;
 
   const getProjectCss = () => {
-    return css(dmeConfig.general.projectStyles[props.projectStyle || 'default']);
+    return dmeConfig.general.projectStyles[props.projectStyle || 'default'];
   };
 
   const device = useDevice();
@@ -25,24 +26,20 @@ const DMEditorView = (props: DMEditorViewProps) => {
   const getThemeCss = () => {
     const pageTheme = getPageTheme(theme || 'default');
     if (pageTheme) {
-      return css(pageTheme.cssStyle);
+      return pageTheme.cssStyle;
     } else {
       return undefined;
     }
   };
 
   return (
-    <div
-      className={
-        'dmeditor-view ' +
-        (device != '' ? 'dme-viewmode-' + device + ' ' : '') +
-        getProjectCss() +
-        ' ' +
-        getThemeCss()
-      }
+    <DMEditorViewStyle
+      projectStyle={getProjectCss()}
+      themeStyle={getThemeCss()}
+      className={'dmeditor-view ' + (device != '' ? 'dme-viewmode-' + device + ' ' : '')}
     >
       <BlockListRender blockData={data || []} path={[]} mode="view" />
-    </div>
+    </DMEditorViewStyle>
   );
 };
 
