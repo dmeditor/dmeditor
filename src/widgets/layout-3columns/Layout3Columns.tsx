@@ -48,7 +48,6 @@ export interface EntityLayout3Columns {
 
 const Layout3Columns = (props: DME.WidgetRenderProps<EntityLayout3Columns>) => {
   const {
-    rootClasses,
     styleClasses,
     blockNode: {
       data: { column1Width, column2Width },
