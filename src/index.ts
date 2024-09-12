@@ -22,7 +22,7 @@ export {
   registerSettingComponent,
   registerWidgetProperty,
 } from './core/setting-panel/register';
-export { dmeServerSideLoad } from './core/ssr';
+export { dmeServerSideLoad, registerServerSideLoad } from './core/ssr';
 export { dmeConfig, setDMEditorConfig, setDMEditorCallback } from './core/config';
 export { DMEditorView, BlockRender, BlockListRender } from './core/main/renderer/index';
 // hooks
