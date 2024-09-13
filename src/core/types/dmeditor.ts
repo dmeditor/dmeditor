@@ -17,7 +17,7 @@ export namespace DME {
     display?: {
       upDown?: boolean;
     };
-    parameters?: Record<string, unknown>;
+    parameters?: { updateOnUnfocus?: boolean } & Record<string, unknown>;
   }
 
   export type Device = 'pc' | 'tablet' | 'mobile';
