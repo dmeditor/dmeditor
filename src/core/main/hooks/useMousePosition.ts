@@ -27,7 +27,7 @@ const useMousePosition = (
       } else if (mouseX >= width - shownPositionRange) {
         result = 'after';
       } else {
-        result = ''; // 不触发
+        result = '';
       }
     } else {
       let mouseY = e.clientY - elementY;
@@ -40,7 +40,7 @@ const useMousePosition = (
       } else if (mouseY >= height - shownPositionRange) {
         result = 'after';
       } else {
-        result = ''; // 不触发
+        result = '';
       }
     }
 

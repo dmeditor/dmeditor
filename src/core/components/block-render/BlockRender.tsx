@@ -100,7 +100,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
     >
       <Widget
         inBlock={!!props.inBlock}
-        {...cssStyles}
+        styleClasses={cssStyles.styleClasses}
         blockNode={props.data}
         path={props.path}
         mode={mode}

@@ -22,7 +22,7 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
   const { mode, isHovering, onAddClick, addingHorizontal = false, children } = props;
 
   const blockContainerRef = useRef<HTMLDivElement>(null);
-  const showPositionRange = 15; // unit px
+  const showPositionRange = 30; // unit px
 
   const addPosition = useMousePosition(
     blockContainerRef.current,

@@ -39,58 +39,6 @@ export const PositionRangeWrapper = styled.div<{
 
   ${({ editMode, range, showAfter, showBefore, horizontal }) =>
     editMode &&
-    `
-    z-index: calc(var(--dmee-zindex) + 50);
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      // border: 1px dashed var(--dmee-selected-border-color);
-      background-color: var(--dmee-selected-border-color);
-      opacity: 0.3;
-      pointer-events: none;
-      box-sizing: border-box;
-    }
-
-    &::before {
-      ${
-        horizontal
-          ? `
-          top: 0;
-          left: -${range}px;
-          bottom: 0;
-          width: ${range}px;
-          display: ${showBefore ? 'block' : 'none'};
-        `
-          : `
-          left: 0;
-          top: 0;
-          right: 0;
-          height: ${range}px;
-          display: ${showBefore ? 'block' : 'none'};
-        `
-      }
-    }
-
-    &::after {
-      ${
-        horizontal
-          ? `
-          top: 0;
-          right: -${range}px;
-          bottom: 0;
-          width: ${range}px;
-          display: ${showAfter ? 'block' : 'none'};
-        `
-          : `
-          left: 0;
-          bottom: 0;
-          right: 0;
-          height: ${range}px;
-          display: ${showAfter ? 'block' : 'none'};
-        `
-      }
-    }
+    `    
   `}
 `;

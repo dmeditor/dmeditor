@@ -104,14 +104,14 @@ export const DMEditorViewStyle = styled.div<{ projectStyle?: string; themeStyle?
 
 export const AddingTool = styled.div<AddingToolProps>`
   position: absolute;
-  z-index: 1;
+  /* z-index: 1; */
 
   ${({ position, horizontal }) => {
     if (horizontal) {
       // TODO:
       return position === 'before'
-        ? 'left: -10px; top: 50%; transform: translateY(-50%);'
-        : 'right: -10px; top: 50%; transform: translateY(-50%);';
+        ? 'left: -35px; top: 50%; transform: translateY(-50%);'
+        : 'right: -35px; top: 50%; transform: translateY(-50%);';
     } else {
       return position === 'before'
         ? 'top: -35px; left: 50%; transform: translateX(-50%);'
@@ -124,7 +124,6 @@ export const AddingTool = styled.div<AddingToolProps>`
     position: absolute;
     background: transparent;
     border-radius: 4px;
-    pointer-events: none;
 
     ${({ horizontal }) =>
       horizontal ? 'height: 100%; width: 10px;' : 'width: 100%; height: 10px;'}
