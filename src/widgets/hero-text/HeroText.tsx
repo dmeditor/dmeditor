@@ -1,9 +1,5 @@
-import { useMemo } from 'react';
-import { css } from '@emotion/css';
-
 import { BlockRender, useDevice } from '../..';
 import type { DME } from '../..';
-import { dmeFullWidthLeft, dmeFullWidthRight } from '../../core/config';
 import { EntityHeroText } from './entity';
 import { HeroImageDiv, HeroTextContainer } from './styled';
 
