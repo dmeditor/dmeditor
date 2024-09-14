@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { dmeFullWidthLeft, dmeFullWidthRight } from 'dmeditor/core/config';
 
 export const HeroTextContainer = styled.div<{ updown: boolean }>`
   ${(props) => {
@@ -17,3 +18,8 @@ export const HeroTextContainer = styled.div<{ updown: boolean }>`
     }
   }}
 `;
+
+export const HeroImageDiv = styled.div<{ heroPostion?: 'left' | 'right'; fullWidth?: boolean }>(
+  (props) =>
+    props.fullWidth ? (props.heroPostion === 'right' ? dmeFullWidthRight : dmeFullWidthLeft) : {},
+);

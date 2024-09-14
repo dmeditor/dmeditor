@@ -5,7 +5,7 @@ import { BlockRender, useDevice } from '../..';
 import type { DME } from '../..';
 import { dmeFullWidthLeft, dmeFullWidthRight } from '../../core/config';
 import { EntityHeroText } from './entity';
-import { HeroTextContainer } from './styled';
+import { HeroImageDiv, HeroTextContainer } from './styled';
 
 const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText>> = (props) => {
   const {
@@ -32,22 +32,14 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText>> = (props) => {
 
   const device = useDevice();
 
-  const fullWidthClass = useMemo(() => {
-    let result = '';
-    if (heroFullWidth) {
-      if (heroPosition === 'right') {
-        result = css(dmeFullWidthRight);
-      } else {
-        result = css(dmeFullWidthLeft);
-      }
-    }
-    return result;
-  }, [heroPosition, heroFullWidth]);
-
   const renderImage = () => (
-    <div className={getClass('hero') + ' dme-w-hero ' + fullWidthClass}>
+    <HeroImageDiv
+      heroPostion={heroPosition}
+      fullWidth={heroFullWidth}
+      className={getClass('hero') + ' dme-w-hero'}
+    >
       <BlockRender mode={mode} data={children[0]} path={[...path, 0]} />
-    </div>
+    </HeroImageDiv>
   );
   const renderList = () => (
     <div className={getClass('list') + ' dme-w-list'}>
