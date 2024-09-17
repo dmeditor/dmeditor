@@ -1,1 +1,39 @@
-{}
+{
+  "translation": {
+    "Edit": "编辑",
+    "Please choose a block type:": "请选择区块类型",
+    "Type to search": "输入并搜索",
+    "Blocks": "区块",
+    "Templates": "模板",
+    "Mobile": "手机",
+    "Tablet": "平板",
+    "Save": "保存",
+    "Close": "关闭",
+    "Common": "常用",
+    "Move down": "下移",
+    "Move up": "上移",
+    "Add above ": "向上添加",
+    "Add under ": "向下添加 "
+  },
+  "tool": {
+    "Save": "保存",
+    "Cancel": "取消"
+  },
+  "widget": {
+    "Image": "图片",
+    "Text": "文字",
+    "Heading": "标题",
+    "Table": "表格",
+    "Quote": "引用",
+    "Carousel": "轮播",
+    "Gallery": "图集",
+    "Feedback form": "反馈表单",
+    "Collapsable text": "可伸缩文本",
+    "Code": "代码",
+    "Image text": "图片文本",
+    "Tab": "Tab",
+    "List": "List",
+    "Accordion": "Accordion"
+  },
+  "category": {}
+}
