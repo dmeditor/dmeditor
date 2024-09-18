@@ -6,9 +6,8 @@ import Transition from '../../core/components/transition';
 import { dmeConfig } from '../../core/config';
 import { CarouselEntity } from './entity';
 import transitionEndListener from './helper';
-import useCommittedRef from './hooks/useCommittedRef';
+// import useCommittedRef from './hooks/useCommittedRef';
 import useEventCallback from './hooks/useEventCallback';
-// import useUpdateEffect from './hooks/useUpdateEffect';
 import {
   StyledCarouselCaption,
   StyledCarouselContainer,
@@ -19,224 +18,139 @@ import {
   StyledCarsouelIndicator,
 } from './styled';
 
-type Slide = CarouselEntity['items'][0];
-
-function isVisible(element: unknown | null) {
-  if (!element || !element.style || !element.parentNode || !element.parentNode.style) {
-    return false;
-  }
-
-  const elementStyle = getComputedStyle(element);
-
-  return (
-    elementStyle.display !== 'none' &&
-    elementStyle.visibility !== 'hidden' &&
-    getComputedStyle(element.parentNode).display !== 'none'
-  );
-}
-
-function forEach<P = any>(children: any, func: (el: React.ReactElement<P>, index: number) => void) {
-  let index = 0;
-  React.Children.forEach(children, (child) => {
-    if (React.isValidElement<P>(child)) func(child, index++);
-  });
-}
-
 const { useMemo, useEffect, useRef, useState, useCallback } = React;
-const interval = 5e3;
+const INTERVAL_TIME = 5000;
 
-const Carousel = (props) => {
-  const {
-    blockNode: {
-      data: { items, animation, autoPlay },
-    },
-    children,
-    styleClasses,
-  } = props;
+const Carousel = ({
+  blockNode: {
+    data: { items, animation, autoPlay },
+  },
+  styleClasses,
+}) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [isSliding, setIsSliding] = useState(false);
-  const [direction, setDirection] = useState('next');
+  const [direction, setDirection] = useState<'next' | 'prev'>('next');
 
-  const onSelect = (index: number, e: any) => {
-    setActiveIndex(index);
-  };
-  useEffect(() => {
-    // if (!shouldPlay) return undefined;
-    if (nextDirectionRef.current) {
-      setDirection(nextDirectionRef.current);
-    } else {
-    }
-    setActiveIndex(activeIndex || 0);
-  }, [activeIndex]);
-  useEffect(() => {
-    if (nextDirectionRef.current) {
-      nextDirectionRef.current = null;
-    }
-  });
-  const intervalHandleRef = useRef<number | null>();
+  const intervalHandleRef = useRef<number | null>(null);
   const nextDirectionRef = useRef<string | null>(null);
+  const numChildren = items.length;
 
-  const next = useEventCallback((event?) => {
-    if (isSliding) {
-      return;
-    }
-
-    let nextActiveIndex = activeIndex + 1;
-    if (nextActiveIndex >= numChildren) {
-      nextActiveIndex = 0;
-    }
-
-    nextDirectionRef.current = 'next';
-
-    onSelect?.(nextActiveIndex, event);
-  });
-  const nextWhenVisible = useEventCallback(() => {
-    if (!document.hidden && isVisible(carouselRef.current)) {
-      next();
-    }
-  });
-
-  let numChildren = items.length;
-  let activeChildInterval: number | undefined;
-  const activeChildIntervalRef = useCommittedRef(activeChildInterval);
-  useEffect(() => {
-    if (!autoPlay) {
-      return undefined;
-    }
-    const nextFunc = next;
-    intervalHandleRef.current = window.setInterval(
-      document.visibilityState ? nextWhenVisible : nextFunc,
-      activeChildIntervalRef.current ?? interval ?? undefined,
-    );
-
-    return () => {
-      if (intervalHandleRef.current !== null) {
-        clearInterval(intervalHandleRef.current);
-      }
-    };
-  }, [autoPlay, activeChildInterval]);
-
-  const Image = (slide: Slide, index: number) => (
-    <StyledCarouselImage
-      className={styleClasses['carousel-image'] || 'dme-carousel-image'}
-      src={dmeConfig.general.imagePath(slide.image)}
-    />
+  const onSelect = useCallback(
+    (index: number) => {
+      if (!isSliding) setActiveIndex(index);
+    },
+    [isSliding],
   );
 
-  const Content = (slide: Slide, index: number) => {
-    return slide.title ? (
-      <StyledCarouselCaption>
-        <h5>{index}slide</h5>
-        <p>{slide.title}</p>
-      </StyledCarouselCaption>
-    ) : (
-      <></>
-    );
-  };
+  const next = useEventCallback(() => {
+    if (isSliding) return;
 
-  const handleEnter = (ele: any) => {
-    console.log('handleEnter', ele);
-  };
-  const handleEntered = (ele: any) => {
-    console.log('handleEntered', ele);
-  };
-  const handleExit = (ele: any) => {
-    console.log('handleExit', ele);
-  };
-  const handleExited = (ele: any) => {
-    console.log('handleExited', ele);
-  };
-  const handleAddEndListener = (node, done) => {
-    transitionEndListener(node, done);
-  };
-  const carouselChildren = items.map((slide: Slide, index: number) => {
-    const isActive = index === activeIndex;
-    return (
-      <Transition
-        in={isActive}
-        timeout={6000}
-        classNames="carousel"
-        onEnter={isActive ? handleEnter : undefined}
-        onEntered={isActive ? handleEntered : undefined}
-        onExit={isActive ? handleExit : undefined}
-        onExited={isActive ? handleExited : undefined}
-        addEndListener={handleAddEndListener}
-      >
-        {(status: TransitionStatus, innerProps: any) => {
-          return React.cloneElement(
+    const nextActiveIndex = (activeIndex + 1) % numChildren;
+    nextDirectionRef.current = 'next';
+    onSelect(nextActiveIndex);
+  });
+
+  const nextWhenVisible = useEventCallback(() => {
+    if (!document.hidden && isVisible(carouselRef.current)) next();
+  });
+
+  useEffect(() => {
+    if (!autoPlay || paused) return;
+
+    const nextFunc = document.visibilityState ? nextWhenVisible : next;
+    intervalHandleRef.current = window.setInterval(nextFunc, INTERVAL_TIME);
+
+    return () => {
+      if (intervalHandleRef.current !== null) clearInterval(intervalHandleRef.current);
+    };
+  }, [autoPlay, paused, next, nextWhenVisible]);
+
+  const handleMouseEnter = useCallback(() => setPaused(true), []);
+  const handleMouseLeave = useCallback(() => setPaused(false), []);
+
+  const carouselChildren = useMemo(() => {
+    return items.map((slide: Slide, index: number) => {
+      const isActive = index === activeIndex;
+
+      return (
+        <Transition
+          key={index}
+          in={isActive}
+          timeout={600}
+          classNames="carousel"
+          addEndListener={transitionEndListener}
+        >
+          {(status: TransitionStatus) => (
             <StyledCarouselItem
               key={index}
               animation={animation}
               isActive={isActive}
               status={status}
-            >
-              {Image(slide, index)}
-              {Content(slide, index)}
-            </StyledCarouselItem>,
-            {
-              ...innerProps,
-              className: classNames(
+              className={classNames(
                 styleClasses['carousel-item'] || 'dme-carousel-item',
-                animation === 'slide'
-                  ? {
-                      'carousel-item-next': isActive && status !== 'entered',
-                      active: status === 'entered' || status === 'exiting',
-                      'carousel-item-start': status === 'entering' || status === 'exiting',
-                    }
-                  : {},
-              ),
-            },
-          );
-        }}
-      </Transition>
-    );
-  });
+                animation === 'slide' && {
+                  'carousel-item-next': isActive && status !== 'entered',
+                  active: status === 'entered' || status === 'exiting',
+                  'carousel-item-start': status === 'entering' || status === 'exiting',
+                },
+              )}
+            >
+              <StyledCarouselImage
+                className={styleClasses['carousel-image'] || 'dme-carousel-image'}
+                src={dmeConfig.general.imagePath(slide.image)}
+              />
+              {slide.title && (
+                <StyledCarouselCaption>
+                  <h5>{index} slide</h5>
+                  <p>{slide.title}</p>
+                </StyledCarouselCaption>
+              )}
+            </StyledCarouselItem>
+          )}
+        </Transition>
+      );
+    });
+  }, [items, activeIndex, animation, styleClasses]);
 
-  const getTransitionChildren = () => {
-    return (
-      <div className="dme-wrapper-carousel">
-        <div className={styleClasses['carousel-inner'] || 'dme-carousel-inner'}>
-          {carouselChildren}
-        </div>
-      </div>
-    );
-  };
-
-  const getTransitionIndicator = () => {
-    return <StyledCarsouelIndicator>{carouselIndicator}</StyledCarsouelIndicator>;
-  };
-  const indicatorOnClicks = useMemo(
-    () =>
-      Array.from({ length: numChildren }, (_, index) => (event) => {
-        onSelect?.(index, event);
-      }),
-    [numChildren, onSelect],
-  );
-
-  const carouselIndicator = items.map((slide: Slide, index: number) => {
-    const isActive = index === activeIndex;
-    return (
-      <StyledCarouselIndicatorItem active={isActive}>
-        <StyledCarouselIndicatorButton
-          active={isActive}
-          key={index}
-          // aria-label={indicatorLabels?.length ? indicatorLabels[index] : `Slide ${index + 1}`}
-          // className={isActive ? 'active' : undefined}
-          onClick={indicatorOnClicks ? indicatorOnClicks[index] : undefined}
-          aria-current={isActive}
-        />
-      </StyledCarouselIndicatorItem>
-    );
-  });
+  const carouselIndicators = useMemo(() => {
+    return items.map((_, index) => {
+      const isActive = index === activeIndex;
+      return (
+        <StyledCarouselIndicatorItem key={index} active={isActive}>
+          <StyledCarouselIndicatorButton
+            active={isActive}
+            onClick={() => onSelect(index)}
+            aria-current={isActive}
+          />
+        </StyledCarouselIndicatorItem>
+      );
+    });
+  }, [items, activeIndex, onSelect]);
 
   return (
-    <StyledCarouselContainer ref={carouselRef}>
-      {getTransitionIndicator()}
-      {getTransitionChildren()}
+    <StyledCarouselContainer
+      ref={carouselRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <StyledCarsouelIndicator>{carouselIndicators}</StyledCarsouelIndicator>
+      <div className={styleClasses['carousel-inner'] || 'dme-carousel-inner'}>
+        {carouselChildren}
+      </div>
     </StyledCarouselContainer>
   );
 };
+
+function isVisible(element: unknown | null) {
+  if (!element || !(element instanceof HTMLElement)) return false;
+  const elementStyle = getComputedStyle(element);
+  return (
+    elementStyle.display !== 'none' &&
+    elementStyle.visibility !== 'hidden' &&
+    getComputedStyle(element.parentNode as HTMLElement).display !== 'none'
+  );
+}
 
 export default Carousel;
