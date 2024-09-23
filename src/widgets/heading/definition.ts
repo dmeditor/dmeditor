@@ -53,7 +53,7 @@ const HeadingWidget: DME.Widget = {
       category: 'style',
       styleTags: ['core'],
     },
-    { name: '', settingComponent: 'heading', custom: true, property: '' },
+    { name: 'Anchor', settingComponent: 'heading', property: '.anchor' },
     ...generalSettings,
   ],
 };

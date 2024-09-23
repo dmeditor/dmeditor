@@ -1,62 +1,52 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { LoopOutlined } from '@mui/icons-material';
 import TextField from '@mui/material/TextField';
+import { useEditorStore } from 'dmeditor/core/main/store';
+import { DME } from 'dmeditor/core/types/dmeditor';
 
-import { PropertyButton, PropertyItem, Ranger, Util } from '../../../utils';
-import useHeadingStore from '../../store/heading';
+import { PropertyButton } from '../../../utils';
 
-const HeadingSetting = (props: unknown) => {
-  const { headingStateChange, id, level, value } = useHeadingStore((state) => state);
-  // const defaultValue: any = useRef(data);
+const HeadingSetting = (
+  props: { value?: string; property: string } & DME.SettingComponentProps,
+) => {
+  const { property, value, blockPath, parameters } = props;
+
+  const { getBlockByPath, updateBlockPropsByPath } = useEditorStore();
+
+  const [id, setId] = useState(value);
 
   const generateId = () => {
+    const data = getBlockByPath(blockPath).data as any;
+    const value = data.value;
     const newId = value
       .trim()
       .replace(/\s/g, '-')
       .replace(/[^\w\-]/g, '')
       .toLowerCase();
-    headingStateChange('id', newId);
+    setId(newId);
   };
 
-  const handleLevelChange = (value: number) => {
-    headingStateChange('level', value.toString());
-  };
-
-  const handleAnchorChange = (value: string) => {
-    headingStateChange('id', value);
-  };
+  useEffect(() => {
+    updateBlockPropsByPath(blockPath, property!, id);
+  }, [id]);
 
   return (
     <>
-      {/* <PropertyItem label="Level">
-          <Ranger
-            defaultValue={level}
-            min={1}
-            max={5}
-            step={1}
-            onChange={(value: number) => {
-              // setLevel(v);
-              // defaultValue.current = text;
-              handleLevelChange(value);
-            }}
-          />
-        </PropertyItem> */}
-      <PropertyItem label="Anchor">
-        <TextField
-          sx={{ width: 'calc(100% - 37px)' }}
-          placeholder="Please enter ID"
-          value={id}
-          size="small"
-          hiddenLabel
-          variant="outlined"
-          onChange={(e) => {
-            handleAnchorChange(e.target.value);
-          }}
-        />
-        <PropertyButton title="Auto generate Id" onClick={generateId}>
-          <LoopOutlined />
-        </PropertyButton>
-      </PropertyItem>
+      <TextField
+        sx={{ width: 'calc(100% - 37px)' }}
+        placeholder="Please enter ID"
+        value={id}
+        size="small"
+        hiddenLabel
+        variant="outlined"
+        onChange={(e) => {
+          setId(e.target.value);
+        }}
+      />
+      <PropertyButton title="Auto generate Id" onClick={generateId}>
+        <LoopOutlined />
+      </PropertyButton>
     </>
   );
 };

@@ -27,8 +27,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
   const { updateBlockByPath } = useEditorStore();
   // const [styleIdentifier, setStyleIdentifier] = useState(style);
   const {
-    id,
-    data: { level, value },
+    data: { level, value, anchor },
     data,
   } = blockNode;
 
@@ -44,7 +43,6 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
         // emitter.emit('change', e.target.innerText);
       }
     },
-    ...(id ? { id: id } : {}),
     // contentEditable: props.active,
   };
 
@@ -62,7 +60,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
           className={
             (styleClasses['h'] || '') + ' ' + styleClasses['h' + level] || '' + ' dme-w-heading-h'
           }
-          id={id}
+          id={anchor}
           {...common}
           contentEditable={props.mode === 'edit'}
           onBlur={(e) => handleChange((e.currentTarget as HTMLElement).innerText)}
