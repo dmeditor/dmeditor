@@ -8,13 +8,13 @@ const Grid = (props: DME.WidgetRenderProps<EntityGrid>) => {
   const {
     blockNode,
     blockNode: {
-      data: { columns },
+      data: { columns, gap },
       children,
     },
   } = props;
 
   return (
-    <StyledGrid columns={columns}>
+    <StyledGrid columns={columns} gap={gap}>
       <BlockListRender
         blockData={children || []}
         path={props.path}
