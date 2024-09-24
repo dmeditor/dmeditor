@@ -1,4 +1,5 @@
 import { ReactElement, useMemo } from 'react';
+import { dmeConfig } from 'dmeditor/core/config';
 
 import { PropertyTab, TabData } from '../../components/property-tab/Tab';
 import { DMEData } from '../../types';
@@ -57,6 +58,9 @@ export const BlockSettings = (props: {
               <ActionPanelButtonGroup>
                 <Move blockPath={blockPath} />
                 <CopyPaste />
+                {dmeConfig.plugins.blockSettingActions?.map((Item) => (
+                  <Item blockData={blockData} />
+                ))}
               </ActionPanelButtonGroup>
               {!(
                 editControlEnabled() &&

@@ -19,10 +19,13 @@ import { defaultStyles } from './defaultStyles';
 import { EditImage } from './EditImage';
 import { registerStyles } from './registerStyles';
 import registerSampleWidget from './SampleWidget';
+import { getSavedBlocks, SaveBlock } from './SaveBlock';
 
 registerDefaultWidgets();
 registerSampleWidget();
 registerStyles();
+
+// initLanguage('chi-CN');
 
 const defaultStyleConfig = {};
 for (const widget of Object.keys(defaultStyles)) {
@@ -101,6 +104,7 @@ setDMEditorConfig({
   },
   plugins: {
     imageHandlers: [EditImage],
+    blockSettingActions: [SaveBlock],
   },
 });
 
@@ -123,42 +127,7 @@ setDMEditorCallback({
   browseImage: BrowseImage,
   browseLink: BrowseLink,
   canEditControl: canEditControl,
-  getSavedBlocks: (widget: string) => {
-    switch (widget) {
-      case 'button':
-        return [
-          {
-            name: 'Hello',
-            savedData: {
-              id: nanoid(),
-              type: 'button',
-              style: { _: 'project-primary' },
-              data: { value: 'New button', link: '#' },
-            },
-          },
-        ];
-      case 'list':
-        return [
-          {
-            name: 'Button list',
-            savedData: {
-              id: nanoid(),
-              type: 'list:button',
-              allowedTypes: ['button'],
-              data: { direction: 'horizontal' },
-              children: [
-                {
-                  id: nanoid(),
-                  type: 'button',
-                  data: { value: 'Button', link: '#' },
-                },
-              ],
-            },
-          },
-        ];
-    }
-    return [];
-  },
+  getSavedBlocks: getSavedBlocks,
 });
 
 const { useRef, useEffect } = React;

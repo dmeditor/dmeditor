@@ -70,6 +70,7 @@ export interface DMEConfigType {
     imageHandlers?: Array<
       React.ComponentType<{ image: DME.ImageInfo; onChange: (imageInfo: DME.ImageInfo) => void }>
     >;
+    blockSettingActions?: Array<React.ComponentType<{ blockData: DMEData.Block }>>;
     [plugin: string]: any;
   };
 }
@@ -167,6 +168,7 @@ const defaultConfig = () => {
     },
     plugins: {
       imageHandlers: [],
+      blockSettingActions: [],
     },
     callbacks: {},
   };
@@ -211,6 +213,7 @@ const dmeConfig: {
         onChange: (imageInfo: DME.ImageInfo) => void;
       }>
     >;
+    blockSettingActions?: Array<React.ComponentType<{ blockData: DMEData.Block }>>;
     [plugin: string]: any;
   };
   callbacks: CallbackConfig;
