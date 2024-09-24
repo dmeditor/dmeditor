@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
+import { useDevice } from 'dmeditor/core/hooks/useDeivce';
 import _debounce from 'lodash/debounce';
 
 import { Mode } from '../../constants';
@@ -88,6 +89,14 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
     return <></>;
   }
 
+  const generalSettings = { ...props.data.data.settings?.general };
+  const device = useDevice();
+  if (device === 'mobile') {
+    if (generalSettings.width) {
+      generalSettings.width = undefined;
+    }
+  }
+
   return (
     <BlockWrapper
       className={'dme-block-wrapper ' + cssStyles.rootClasses}
@@ -95,7 +104,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
       onClick={onSelect}
       active={active}
       editMode={mode === 'edit'}
-      generalSettings={props.data.data.settings?.general}
+      generalSettings={generalSettings}
       {...(mode === Mode.edit && props.data.id && { id: props.data.id })}
     >
       <Widget
