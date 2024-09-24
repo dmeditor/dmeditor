@@ -1,4 +1,4 @@
-import type { DME } from '../..';
+import { useDevice, type DME } from '../..';
 import { BlockListRender } from '../../core/components/block-list-render';
 import { getAllowedTypes } from '../../core/utils/register';
 import { EntityGrid } from './entity';
@@ -13,8 +13,10 @@ const Grid = (props: DME.WidgetRenderProps<EntityGrid>) => {
     },
   } = props;
 
+  const device = useDevice();
+
   return (
-    <StyledGrid columns={columns} gap={gap}>
+    <StyledGrid columns={device !== 'mobile' ? columns : 2} gap={gap}>
       <BlockListRender
         blockData={children || []}
         path={props.path}
