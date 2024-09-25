@@ -38,6 +38,7 @@ export const Layout = {
   Edit: styled.div`
     margin-top: var(--dmee-topbar-height);
     overflow-y: auto;
+    padding-bottom: var(--dmee-bottom-height);
   `,
   View: styled.div`
     background: var(--dmee-bg-editarea);
