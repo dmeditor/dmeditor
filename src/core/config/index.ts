@@ -123,9 +123,9 @@ const defaultConfig = () => {
         ],
       },
       settingGroups: {
-        style_block: 'Block',
+        style_content: 'Content',
         style_text: 'Text',
-        style_block_container: 'Block container',
+        style_block: 'Block',
         style_border: 'Border',
       },
       categories: [
