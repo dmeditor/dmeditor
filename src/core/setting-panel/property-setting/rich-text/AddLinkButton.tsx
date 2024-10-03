@@ -22,10 +22,6 @@ const AddLinkButton = () => {
 
   const handleConfirm = (url: string) => {
     if (!url) return;
-    if (!isUrl(url)) {
-      showAlert('Invalid Url', 'warning');
-      return;
-    }
     insertLink(editor, url);
     setVisible(false);
   };
