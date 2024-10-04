@@ -78,7 +78,10 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock>> = (
                 activeKey={activeKey}
                 onTabClick={(key) => setActiveKey(key)}
                 tabKey={tabKey}
-                className={styleClasses['nav-item'] || 'dme-w-nav-item'}
+                className={
+                  (activeKey === tabKey ? styleClasses['active'] + ' ' : '') +
+                  (styleClasses['nav-item'] || 'dme-w-nav-item')
+                }
               >
                 <>{title ?? ''}</>
               </NavItem>
