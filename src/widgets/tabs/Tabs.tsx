@@ -101,7 +101,7 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock>> = (
             {tabList.map(({ meta: { tabKey, title }, children }, index) => {
               return (
                 <TabPane activeKey={activeKey} key={index} tabKey={tabKey} title={title}>
-                  <div>
+                  <div className={styleClasses['body'] || 'dme-w-body'}>
                     <BlockListRender
                       mode={props.mode}
                       blockData={children || []}
