@@ -37,7 +37,9 @@ const Button = (props: ButtonProps) => {
       className={styleClasses['button'] || '' + ' dme-w-button'}
       onClick={handleClick}
     >
+      {styleClasses['before-icon'] && <i className={styleClasses['before-icon']} />}
       {value}
+      {styleClasses['after-icon'] && <i className={styleClasses['after-icon']} />}
     </Component>
   );
 };
