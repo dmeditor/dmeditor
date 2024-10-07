@@ -33,7 +33,7 @@ const heroTextWidget: DME.Widget = {
             id: nanoid(),
             type: 'list',
             isEmbed: true,
-            allowedTypes: ['heading', 'text', 'button', 'line'],
+            allowedTypes: ['heading', 'text', 'button', 'line', 'list'],
             data: { settings: { padding: 10 }, general: { padding: 10 } },
             // data: { settings: { general: { padding: 10 } } },
             children: [
