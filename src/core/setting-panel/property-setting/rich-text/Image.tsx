@@ -160,10 +160,7 @@ const ViewImage = (props: ImageProps) => {
       {children}
       <img
         src={element.url}
-        className={css`
-          object-fit: contain;
-          ${imageStyleString(element, ['width', 'height'])}
-        `}
+        style={{ ...imageStyleObj(element, ['width', 'height']), objectFit: 'contain' }}
       />
     </div>
   );
