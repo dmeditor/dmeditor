@@ -95,7 +95,7 @@ export const TopBar = () => {
     <Container>
       <LogoContainer>
         <a href="https://dmeditor.io">
-          <Logo src={'https://dmeditor.io/_assets/images/logo2.png'} />
+          <Logo src="https://dmeditor.io/logo.png" />
         </a>{' '}
         {/* todo: import locally */}
       </LogoContainer>
