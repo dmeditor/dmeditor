@@ -76,5 +76,22 @@ export const defaultStyles = {
                 background: #f0f0f0;
             }
         `
+    },
+    'gallery':{
+        cssStyle:`           
+            .dme-w-pagination-item{
+              padding: 5px;
+            }
+
+            .dme-w-indicator{
+                font-size: 14px;
+                color: white;
+                text-shadow: 1px 1px 1px #333333;
+            }
+
+            .dme-w-pagination-item-current{
+              font-weight: bold;
+            }            
+        `
     }
     }
