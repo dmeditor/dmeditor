@@ -1,29 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AddLinkOutlined } from '@mui/icons-material';
+import { BrowseLinkCallbackParams } from 'dmeditor/core/config';
 import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
-import { isUrl } from '../../../../core/utils';
-import { useAlert } from '../../../hooks/useAlert';
-import { ConfirmDialog } from '../../../utility';
+import { LinkChooser, LinkRef } from '../../../utility';
 import { Button, getLink, isLinkActive, wrapLink } from './helper';
 
-const insertLink = (editor: Editor, url: string) => {
+const insertLink = (editor: Editor, url: string, openNew: boolean) => {
   if (editor.selection) {
-    wrapLink(editor, url);
+    wrapLink(editor, url, openNew);
   }
 };
 
 const AddLinkButton = () => {
   const editor = useSlate();
   const [visible, setVisible] = useState(false);
-  const link = getLink(editor);
-  const { showAlert, AlertComponent } = useAlert();
+  const { link, target } = getLink(editor);
+  const linkChooserRef = useRef<LinkRef>(null);
 
-  const handleConfirm = (url: string) => {
-    if (!url) return;
-    insertLink(editor, url);
-    setVisible(false);
+  const handleConfirm = (value: BrowseLinkCallbackParams) => {
+    if (!value.link) return;
+    insertLink(editor, value.link, value.openNew || false);
   };
 
   return (
@@ -34,20 +32,22 @@ const AddLinkButton = () => {
         onMouseDown={(event: MouseEvent) => {
           event.preventDefault();
           setVisible(true);
+          if (linkChooserRef.current) {
+            linkChooserRef.current.open();
+          }
         }}
       >
         <AddLinkOutlined />
       </Button>
       {visible ? (
-        <ConfirmDialog
-          visible={visible}
-          value={link}
-          label="Link url"
+        <LinkChooser
+          ref={linkChooserRef}
+          defaultVisible={visible}
+          showOpenNew={true}
+          value={{ link: link, openNew: target === '_blank' }}
           onConfirm={handleConfirm}
-          onCancel={() => setVisible(false)}
         />
       ) : null}
-      {AlertComponent}
     </>
   );
 };

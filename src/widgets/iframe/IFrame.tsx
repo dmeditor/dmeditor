@@ -98,6 +98,7 @@ export const iFrameDefinition: DME.Widget = {
       name: 'Url',
       property: '.value',
       settingComponent: 'link',
+      parameters: { urlOnly: true },
     },
     {
       name: 'Height',

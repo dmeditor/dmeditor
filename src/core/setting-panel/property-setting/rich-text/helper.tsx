@@ -387,6 +387,7 @@ const LinkComponent = ({ attributes, children, element }) => {
     <a
       {...attributes}
       href={element.url}
+      {...(element.target ? { target: element.target } : {})}
       className={
         selected
           ? css`
@@ -606,7 +607,7 @@ const insertImage = (editor: ReactEditor, url: string) => {
   });
 };
 
-type LinkElement = { type: 'link'; url: string; children: Descendant[] };
+type LinkElement = { type: 'link'; url: string; target?: string; children: Descendant[] };
 type LinkNode = Node & LinkElement;
 const isLinkActive = (editor: Editor) => {
   const [link] = Editor.nodes(editor, {
@@ -616,17 +617,17 @@ const isLinkActive = (editor: Editor) => {
   return !!link;
 };
 
-export const getLink = (editor: Editor): string => {
+export const getLink = (editor: Editor): { link: string; target?: string } => {
   const [link] = Editor.nodes(editor, {
     match: (node: Node) =>
       !Editor.isEditor(node) && SlateElement?.isElement(node) && (node as LinkNode).type === 'link',
   });
   if (link) {
     if ('url' in link[0]) {
-      return link[0].url as string;
+      return { link: link[0].url as string, target: (link[0] as any).target };
     }
   }
-  return '';
+  return { link: '' };
 };
 
 const unwrapLink = (editor: Editor) => {
@@ -635,7 +636,7 @@ const unwrapLink = (editor: Editor) => {
       !Editor.isEditor(node) && SlateElement.isElement(node) && (node as LinkNode).type === 'link',
   });
 };
-const wrapLink = (editor: Editor, url: string) => {
+const wrapLink = (editor: Editor, url: string, openNew: boolean) => {
   if (isLinkActive(editor)) {
     unwrapLink(editor);
   }
@@ -647,6 +648,10 @@ const wrapLink = (editor: Editor, url: string) => {
     url,
     children: isCollapsed ? [{ text: url }] : [],
   };
+  if (openNew) {
+    link.target = '_blank';
+  }
+  link.target = '_blank';
 
   if (isCollapsed) {
     Transforms.insertNodes(editor, link);

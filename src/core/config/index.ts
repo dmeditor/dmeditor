@@ -2,7 +2,7 @@ import { ComponentType } from 'react';
 
 import type { DME, DMEData } from '../types';
 
-export type BrowseLinkCallbackParams = string;
+export type BrowseLinkCallbackParams = { link: string; openNew?: boolean };
 
 export type BrowseImageCallbackParams = DME.ImageInfo[];
 

@@ -9,7 +9,12 @@ import type { DME } from '../../../types';
 import { LinkChooser, LinkRef } from '../../../utility';
 
 export const Link = (props: DME.SettingComponentProps) => {
-  const { property, value, blockPath } = props;
+  const {
+    property,
+    value,
+    blockPath,
+    parameters: { urlOnly },
+  } = props;
   const { updateBlockPropsByPath } = useEditorStore();
   const linkRef = useRef<LinkRef>(null);
 
@@ -19,7 +24,7 @@ export const Link = (props: DME.SettingComponentProps) => {
 
   const handleConfirm = (value: BrowseLinkCallbackParams) => {
     if (value) {
-      updateBlockPropsByPath(blockPath, property || '', value);
+      updateBlockPropsByPath(blockPath, property || '', value.link);
     }
   };
 
@@ -48,8 +53,9 @@ export const Link = (props: DME.SettingComponentProps) => {
       </div>
       <LinkChooser
         ref={linkRef}
+        urlOnly={urlOnly}
         defaultVisible={!value}
-        value={value as string}
+        value={{ link: value as string }}
         onConfirm={handleConfirm}
       />
     </>

@@ -29,57 +29,10 @@ const Container = styled.div<VideoEntity['settings']>((props) => {
   };
 });
 
-const ConfirmDialog = (props: {
-  value?: string;
-  onConfirm: (value: string) => void;
-  onCancel?: () => void;
-}) => {
-  const [visible, setVisible] = useState(true);
-  const [url, setUrl] = useState(props.value ?? '');
-
-  const handleConfirm = () => {
-    setVisible(false);
-    props.onConfirm(url);
-  };
-
-  const handleClose = () => {
-    setVisible(false);
-    props.onCancel?.();
-  };
-
-  return (
-    <Dialog open={visible} fullWidth>
-      <DialogContent>
-        <TextField
-          autoFocus
-          required
-          margin="dense"
-          name="url"
-          label="video url"
-          fullWidth
-          variant="standard"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleConfirm}>Confirm</Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
-
 export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
   const { updateBlockByPath } = useEditorStore();
   const { path } = props;
   const { data } = props.blockNode;
-
-  const handleConfirm = (value: string) => {
-    updateBlockByPath(path, (blockData) => {
-      blockData.value = value;
-    });
-  };
 
   if (!data) {
     return null;
@@ -89,7 +42,6 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
 
   return (
     <>
-      <ConfirmDialog onConfirm={handleConfirm} value={videoUrl} />
       <Container {...data.settings}>
         <video controls src={videoUrl}>
           <object width="100%" data={videoUrl}>
@@ -144,6 +96,7 @@ export const VideoDefinition: DME.Widget = {
       name: 'Url',
       settingComponent: 'link',
       property: '.value',
+      parameters: { urlOnly: true },
     },
     ...generalSettings,
   ],
