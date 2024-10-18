@@ -5,6 +5,7 @@ import {
   FormatAlignCenter,
   FormatAlignLeft,
   FormatAlignRight,
+  VerticalSplitOutlined,
 } from '@mui/icons-material';
 import { Transforms } from 'slate';
 import { ReactEditor, useFocused, useSelected, useSlateStatic } from 'slate-react';
@@ -50,6 +51,11 @@ const ResizableImage = (props: ImageProps) => {
     Transforms.setNodes(editor, setting, { at: path });
   };
 
+  const handleInline = () => {
+    const setting = { setting: {} };
+    Transforms.setNodes(editor, setting, { at: path });
+  };
+
   const { height, width, scale } = element.setting;
   return (
     <div className={StyledResizable} style={{ textAlign: element.setting.align ?? 'left' }}>
@@ -92,59 +98,73 @@ const ResizableImage = (props: ImageProps) => {
                 box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
               `}
             />
-            <Button
-              active
-              onClick={() => Transforms.removeNodes(editor, { at: path })}
+            <div
               className={css`
-                display: ${selected && focused ? 'inline' : 'none'};
                 position: absolute;
                 top: 0.5em;
-                left: 0.5em;
-                background-color: white;
+                left: 0px;
+                display: flex;
+                gap: 0.2em;
+                padding-left: 0.2em;
               `}
             >
-              <DeleteOutlined />
-            </Button>
-            <Button
-              active
-              // onClick={() => Transforms.removeNodes(editor, { at: path })}
-              onClick={() => handleImage('left')}
-              className={css`
-                display: ${selected && focused ? 'inline' : 'none'};
-                position: absolute;
-                top: 0.5em;
-                left: 3em;
-                background-color: white;
-              `}
-            >
-              <FormatAlignLeft />
-            </Button>
-            <Button
-              active
-              onClick={() => handleImage('center')}
-              className={css`
-                display: ${selected && focused ? 'inline' : 'none'};
-                position: absolute;
-                top: 0.5em;
-                left: 5.5em;
-                background-color: white;
-              `}
-            >
-              <FormatAlignCenter />
-            </Button>
-            <Button
-              active
-              onClick={() => handleImage('right')}
-              className={css`
-                display: ${selected && focused ? 'inline' : 'none'};
-                position: absolute;
-                top: 0.5em;
-                left: 8em;
-                background-color: white;
-              `}
-            >
-              <FormatAlignRight />
-            </Button>
+              <Button
+                title="Delete"
+                active
+                onClick={() => Transforms.removeNodes(editor, { at: path })}
+                className={css`
+                  display: ${selected && focused ? 'inline' : 'none'};
+                  background-color: white;
+                `}
+              >
+                <DeleteOutlined />
+              </Button>
+              <Button
+                active
+                title="Left"
+                // onClick={() => Transforms.removeNodes(editor, { at: path })}
+                onClick={() => handleImage('left')}
+                className={css`
+                  display: ${selected && focused ? 'inline' : 'none'};
+                  background-color: white;
+                `}
+              >
+                <FormatAlignLeft />
+              </Button>
+              <Button
+                title="Center"
+                active
+                onClick={() => handleImage('center')}
+                className={css`
+                  display: ${selected && focused ? 'inline' : 'none'};
+                  background-color: white;
+                `}
+              >
+                <FormatAlignCenter />
+              </Button>
+              <Button
+                title="Right"
+                active
+                onClick={() => handleImage('right')}
+                className={css`
+                  display: ${selected && focused ? 'inline' : 'none'};
+                  background-color: white;
+                `}
+              >
+                <FormatAlignRight />
+              </Button>
+              <Button
+                title="Inline / block"
+                active
+                onClick={() => handleInline()}
+                className={css`
+                  display: ${selected && focused ? 'inline' : 'none'};
+                  background-color: white;
+                `}
+              >
+                {/* <VerticalSplitOutlined /> */}
+              </Button>
+            </div>
           </div>
         </div>
       </Resizable>
