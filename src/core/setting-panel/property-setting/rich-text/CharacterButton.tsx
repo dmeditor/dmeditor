@@ -39,7 +39,7 @@ const CharacterButton = () => {
       <Button ref={buttonRef} title="Insert character" onClick={showPanel}>
         <EmojiEmotionsOutlined />
       </Button>
-      <Popper open={panelShown} anchorEl={buttonRef.current} transition>
+      <Popper open={panelShown} placement={'bottom-end'} anchorEl={buttonRef.current} transition>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps}>
             <div>
