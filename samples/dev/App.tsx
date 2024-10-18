@@ -2,6 +2,7 @@ import * as React from 'react';
 import { nanoid } from 'nanoid';
 
 import {
+  dmeConfig,
   DMEData,
   DMEditor,
   DMEditorView,
@@ -52,6 +53,7 @@ setDMEditorConfig({
         /*background: var(--project-main-bg-color);  */
     
         /*todo: use css variable*/
+       
       `,
       },
       {
@@ -94,6 +96,11 @@ setDMEditorConfig({
         { color: '#430318' },
         { color: '#432603' },
       ],
+    },
+    richText: {
+      fontFamily: dmeConfig.editor.richText.fontFamily,
+      fontSize: dmeConfig.editor.richText.fontSize,
+      characters: ['♠️', '❤️', '♣️', '♦️', '😃', '😁', '😆', '😅', '🙂', '😇'],
     },
     ui: {
       // 'bg-editarea': '#666666',

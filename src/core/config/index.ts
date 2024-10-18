@@ -64,6 +64,11 @@ export interface DMEConfigType {
     defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
     categories?: Array<DME.WidgetCategory>;
     ui: { [variable: string]: string };
+    richText?: {
+      fontFamily?: Array<{ value: string; label: string }>;
+      fontSize?: Array<{ value: string; label: string }>;
+      characters?: Array<string>;
+    };
   };
   widgets?: { [widget: string]: widgetConfig };
   plugins?: {
@@ -161,6 +166,7 @@ const defaultConfig = () => {
           { value: '48px', label: '48px' },
         ],
       },
+      characters: ['😃'],
       ui: {},
     },
     widgets: {
@@ -200,6 +206,7 @@ const dmeConfig: {
     richText: {
       fontFamily: Array<{ value: string; label: string }>;
       fontSize: Array<{ value: string; label: string }>;
+      characters: Array<string>;
     };
     zIndex: number;
     ui: { [variable: string]: string };
@@ -226,6 +233,7 @@ const setDMEditorConfig = (config: DMEConfigType) => {
         dmeConfig.editor.categories = [...dmeConfig.editor.categories, ...config.editor.categories];
         delete config.editor['categories'];
       }
+
       dmeConfig[key] = { ...dmeConfig[key], ...config[key] };
     }
   }

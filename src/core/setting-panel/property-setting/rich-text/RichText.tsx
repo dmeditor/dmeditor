@@ -8,6 +8,7 @@ import { Editable, Slate, withReact } from 'slate-react';
 import { useEditorStore, type DME } from '../../../..';
 import definition from '../../../../widgets/text/definition';
 import AddLinkButton from './AddLinkButton';
+import { CharacterButton } from './CharacterButton';
 import {
   BlockButton,
   Element,
@@ -106,6 +107,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
             <RemoveLinkButton />
           </ToolsGroup>
           <InsertImageButton value={value} />
+          <CharacterButton />
         </Toolbar>
         <Editable
           renderElement={renderElement}
