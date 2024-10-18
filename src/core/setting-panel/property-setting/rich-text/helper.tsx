@@ -487,9 +487,7 @@ interface MiniTextLeafProps extends RenderLeafProps {
 }
 const Leaf = ({ attributes, children, leaf }: MiniTextLeafProps) => {
   const fontStyles = {
-    fontFamily: dmeConfig.editor.richText.fontFamily
-      .map((i) => i.value)
-      .includes(leaf['font-family'])
+    fontFamily: dmeConfig.editor.fontFamily.map((i) => i.value).includes(leaf['font-family'])
       ? leaf['font-family']
       : undefined,
     fontSize: leaf['font-size'],

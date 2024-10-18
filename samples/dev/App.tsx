@@ -97,11 +97,7 @@ setDMEditorConfig({
         { color: '#432603' },
       ],
     },
-    richText: {
-      fontFamily: dmeConfig.editor.richText.fontFamily,
-      fontSize: dmeConfig.editor.richText.fontSize,
-      characters: ['♠️', '❤️', '♣️', '♦️', '😃', '😁', '😆', '😅', '🙂', '😇'],
-    },
+    characters: ['♠️', '❤️', '♣️', '♦️', '😃', '😁', '😆', '😅', '🙂', '😇'],
     ui: {
       // 'bg-editarea': '#666666',
     },

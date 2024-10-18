@@ -64,11 +64,9 @@ export interface DMEConfigType {
     defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
     categories?: Array<DME.WidgetCategory>;
     ui: { [variable: string]: string };
-    richText?: {
-      fontFamily?: Array<{ value: string; label: string }>;
-      fontSize?: Array<{ value: string; label: string }>;
-      characters?: Array<string>;
-    };
+    fontFamily?: Array<{ value: string; label: string }>;
+    fontSize?: Array<{ value: string; label: string }>;
+    characters?: Array<string>;
   };
   widgets?: { [widget: string]: widgetConfig };
   plugins?: {
@@ -139,33 +137,31 @@ const defaultConfig = () => {
         { identifier: 'media', name: 'Media' },
         { identifier: 'intractive', name: 'Intractive' },
       ],
-      richText: {
-        fontFamily: [
-          { value: '', label: 'Font' },
-          { value: 'Arial', label: 'Arial' },
-          { value: 'Times New Roman', label: 'Times New Roman' },
-          { value: 'Courier New', label: 'Courier New' },
-          { value: 'Tahoma', label: 'Tahoma' },
-          { value: 'Georgia', label: 'Georgia' },
-          { value: 'Verdana', label: 'Verdana' },
-        ],
-        fontSize: [
-          { value: '', label: 'Size' },
-          { value: '12px', label: '12px' },
-          { value: '14px', label: '14px' },
-          { value: '16px', label: '16px' },
-          { value: '18px', label: '18px' },
-          { value: '20px', label: '20px' },
-          { value: '22px', label: '22px' },
-          { value: '24px', label: '24px' },
-          { value: '28px', label: '28px' },
-          { value: '30px', label: '30px' },
-          { value: '32px', label: '32px' },
-          { value: '36px', label: '36px' },
-          { value: '40px', label: '40px' },
-          { value: '48px', label: '48px' },
-        ],
-      },
+      fontFamily: [
+        { value: '', label: 'Font' },
+        { value: 'Arial', label: 'Arial' },
+        { value: 'Times New Roman', label: 'Times New Roman' },
+        { value: 'Courier New', label: 'Courier New' },
+        { value: 'Tahoma', label: 'Tahoma' },
+        { value: 'Georgia', label: 'Georgia' },
+        { value: 'Verdana', label: 'Verdana' },
+      ],
+      fontSize: [
+        { value: '', label: 'Size' },
+        { value: '12px', label: '12px' },
+        { value: '14px', label: '14px' },
+        { value: '16px', label: '16px' },
+        { value: '18px', label: '18px' },
+        { value: '20px', label: '20px' },
+        { value: '22px', label: '22px' },
+        { value: '24px', label: '24px' },
+        { value: '28px', label: '28px' },
+        { value: '30px', label: '30px' },
+        { value: '32px', label: '32px' },
+        { value: '36px', label: '36px' },
+        { value: '40px', label: '40px' },
+        { value: '48px', label: '48px' },
+      ],
       characters: ['😃'],
       ui: {},
     },
@@ -203,11 +199,9 @@ const dmeConfig: {
     enableEditControl: boolean;
     categories: Array<DME.WidgetCategory>;
     settingGroups: { [key: string]: string };
-    richText: {
-      fontFamily: Array<{ value: string; label: string }>;
-      fontSize: Array<{ value: string; label: string }>;
-      characters: Array<string>;
-    };
+    fontFamily: Array<{ value: string; label: string }>;
+    fontSize: Array<{ value: string; label: string }>;
+    characters: Array<string>;
     zIndex: number;
     ui: { [variable: string]: string };
   };

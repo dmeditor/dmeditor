@@ -37,7 +37,7 @@ const CharacterButton = () => {
               grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
             `}
           >
-            {dmeConfig.editor.richText.characters.map((item) => (
+            {dmeConfig.editor.characters.map((item) => (
               <div
                 className={css`
                   cursor: pointer;
