@@ -119,8 +119,15 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
               editor.insertText('\n');
             }
           }}
-          style={{ padding: 10, minHeight: 100, height: 160, resize: 'vertical', overflow: 'auto' }}
-          placeholder="Enter some rich text…"
+          style={{
+            background: 'white',
+            padding: 10,
+            minHeight: 100,
+            height: 160,
+            resize: 'vertical',
+            overflow: 'auto',
+          }}
+          placeholder="Enter some text…"
           // spellCheck
           // autoFocus
           // onKeyDown={(event) => {
