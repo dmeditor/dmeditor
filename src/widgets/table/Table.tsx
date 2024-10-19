@@ -5,7 +5,7 @@ import { useTableStore } from './store';
 import { StyledTable } from './styled';
 
 const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
-  const { blockNode, path } = props;
+  const { blockNode, path, styleClasses } = props;
   const {
     id,
     data: { value, settings },
@@ -29,9 +29,9 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
     <StyledTable id={id} {...settings}>
       {settings['hasHeader'] && (
         <thead>
-          <tr className="dme-w-tr">
+          <tr className={styleClasses['tr-h'] || 'dme-w-tr-h'}>
             {value[0].map((cell, i) => (
-              <th className="dme-w-th" key={i}>
+              <th className={styleClasses['th'] || 'dme-w-th'} key={i}>
                 <MiniText
                   key={i}
                   mode={props.mode}
@@ -47,10 +47,10 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
       )}
       <tbody>
         {tableValue.map((row, idx) => (
-          <tr className="dme-w-tr">
+          <tr className={styleClasses['tr'] || 'dme-w-tr'}>
             {row.map((cell, jdx) => {
               return (
-                <td className="dm-w-td" key={jdx}>
+                <td className={styleClasses['td'] || 'dme-w-td'} key={jdx}>
                   <MiniText
                     key={idx + ',' + jdx}
                     mode={props.mode}
