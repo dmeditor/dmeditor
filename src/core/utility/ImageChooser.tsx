@@ -109,7 +109,7 @@ export const ImageChooser = (props: ImageChooserProps) => {
               <FormControlLabel
                 disabled={props.value?.length === 0}
                 control={<Checkbox onChange={(e) => setInline(e.target.checked)} />}
-                label="Insert inline"
+                label="Image is inline"
               />
             )}
           </div>
