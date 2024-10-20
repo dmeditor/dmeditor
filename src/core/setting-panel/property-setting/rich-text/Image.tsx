@@ -85,6 +85,7 @@ const ResizableImage = (props: ImageProps) => {
       }}
     >
       <Resizable
+        key={width + '' + height} // todo: fix main&setting panel sync in another way instead of key
         width={width}
         height={height}
         scale={scale}
