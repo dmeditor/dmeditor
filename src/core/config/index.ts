@@ -67,6 +67,7 @@ export interface DMEConfigType {
     fontFamily?: Array<{ value: string; label: string }>;
     fontSize?: Array<{ value: string; label: string }>;
     characters?: Array<string>;
+    settingPanelWidth?: number;
   };
   widgets?: { [widget: string]: widgetConfig };
   plugins?: {
@@ -163,6 +164,7 @@ const defaultConfig = () => {
         { value: '48px', label: '48px' },
       ],
       characters: ['😃'],
+      settingPanelWidth: 400,
       ui: {},
     },
     widgets: {
@@ -203,6 +205,7 @@ const dmeConfig: {
     fontSize: Array<{ value: string; label: string }>;
     characters: Array<string>;
     zIndex: number;
+    settingPanelWidth: number;
     ui: { [variable: string]: string };
   };
   widgets: { [widget: string]: widgetConfig };

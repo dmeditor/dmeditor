@@ -42,7 +42,7 @@ const Editor = (props: { projectStyle?: string }) => {
   } = useResizable({
     axis: 'x',
     reverse: true,
-    initial: 350,
+    initial: dmeConfig.editor.settingPanelWidth,
     min: 350,
     max: 600,
   });
