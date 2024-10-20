@@ -7,8 +7,8 @@ export const StyledResizable = css`
   }
   .react-resizable-handle {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     background-repeat: no-repeat;
     background-origin: content-box;
     box-sizing: border-box;

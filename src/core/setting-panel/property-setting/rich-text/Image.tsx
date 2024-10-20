@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { css } from '@emotion/css';
 import {
   AlignHorizontalLeftOutlined,
@@ -14,7 +14,7 @@ import { Transforms } from 'slate';
 import { ReactEditor, useFocused, useSelected, useSlateStatic } from 'slate-react';
 
 import { type DME } from '../../../../core/types';
-import { imageStyleObj, imageStyleString } from '../../../../core/utils';
+import { imageStyleObj } from '../../../../core/utils';
 import { Resizable } from '../../../components/resizable';
 import { Button, ToolsGroup } from './helper';
 import { StyledResizable } from './styled';
@@ -100,100 +100,85 @@ const ResizableImage = (props: ImageProps) => {
       >
         <div
           {...attributes}
+          contentEditable={false}
           className={css`
+            position: relative;
             width: 100%;
             height: 100%;
+            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
           `}
         >
           {children}
+          <ImageRender url={element.url} width={'100%'} height={'100%'} />
           <div
-            contentEditable={false}
             className={css`
-              position: relative;
-              width: 100%;
-              height: 100%;
+              position: absolute;
+              top: -46px;
+              left: 0px;
+              display: ${selected && focused ? 'flex' : 'none'};
+              gap: 0.2em;
+              padding: 0.2em;
+              background: white;
+              border: 1px solid #eeeeee;
             `}
           >
-            <img
-              src={element.url}
-              className={css`
-                display: block;
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-              `}
-            />
-            <div
-              className={css`
-                position: absolute;
-                top: -46px;
-                left: 0px;
-                display: ${selected && focused ? 'flex' : 'none'};
-                gap: 0.2em;
-                padding: 0.2em;
-                background: white;
-                border: 1px solid #eeeeee;
-              `}
+            <Button
+              title="Delete"
+              onClick={() => Transforms.removeNodes(editor, { at: path })}
+              {...buttonObj}
             >
-              <Button
-                title="Delete"
-                onClick={() => Transforms.removeNodes(editor, { at: path })}
-                {...buttonObj}
-              >
-                <DeleteOutlined />
-              </Button>
-              {!inline && (
-                <>
-                  <Button
-                    title="Float left"
-                    active={float && align === 'left'}
-                    onClick={() => handleFloat('left')}
-                    {...buttonObj}
-                  >
-                    <AlignHorizontalLeftOutlined />
-                  </Button>
-                  <Button
-                    title="Float right"
-                    active={float && align === 'right'}
-                    onClick={() => handleFloat('right')}
-                    {...buttonObj}
-                  >
-                    <AlignHorizontalRightOutlined />
-                  </Button>
+              <DeleteOutlined />
+            </Button>
+            {!inline && (
+              <>
+                <Button
+                  title="Float left"
+                  active={float && align === 'left'}
+                  onClick={() => handleFloat('left')}
+                  {...buttonObj}
+                >
+                  <AlignHorizontalLeftOutlined />
+                </Button>
+                <Button
+                  title="Float right"
+                  active={float && align === 'right'}
+                  onClick={() => handleFloat('right')}
+                  {...buttonObj}
+                >
+                  <AlignHorizontalRightOutlined />
+                </Button>
 
-                  {!float && (
-                    <>
-                      <Button
-                        active={align === 'left'}
-                        title="Left"
-                        onClick={() => handleAlign('left')}
-                        {...buttonObj}
-                      >
-                        <FormatAlignLeft />
-                      </Button>
+                {!float && (
+                  <>
+                    <Button
+                      active={align === 'left'}
+                      title="Left"
+                      onClick={() => handleAlign('left')}
+                      {...buttonObj}
+                    >
+                      <FormatAlignLeft />
+                    </Button>
 
-                      <Button
-                        title="Center"
-                        active={align === 'center'}
-                        onClick={() => handleAlign('center')}
-                        {...buttonObj}
-                      >
-                        <FormatAlignCenter />
-                      </Button>
-                      <Button
-                        title="Right"
-                        active={align === 'right'}
-                        onClick={() => handleAlign('right')}
-                        {...buttonObj}
-                      >
-                        <FormatAlignRight />
-                      </Button>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
+                    <Button
+                      title="Center"
+                      active={align === 'center'}
+                      onClick={() => handleAlign('center')}
+                      {...buttonObj}
+                    >
+                      <FormatAlignCenter />
+                    </Button>
+                    <Button
+                      title="Right"
+                      active={align === 'right'}
+                      onClick={() => handleAlign('right')}
+                      {...buttonObj}
+                    >
+                      <FormatAlignRight />
+                    </Button>
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
       </Resizable>
@@ -201,15 +186,45 @@ const ResizableImage = (props: ImageProps) => {
   );
 };
 
+const ImageRender = (props: { width: number | string; height: number | string; url: string }) => {
+  return (
+    <img
+      src={props.url}
+      style={{ width: props.width, height: props.height, objectFit: 'contain' }}
+    />
+  );
+};
+
 const ViewImage = (props: ImageProps) => {
-  const { attributes, children, element } = props;
+  const {
+    attributes,
+    children,
+    element,
+    element: { setting },
+  } = props;
+
+  const containerStyle = useMemo(() => {
+    const result: React.CSSProperties = {};
+    const { align, float, inline } = setting;
+    if (float) {
+      result.float = align === 'left' ? 'left' : 'right';
+    } else {
+      result.textAlign = align ? align : 'left';
+    }
+    if (inline) {
+      result.display = 'inline-block';
+      result.verticalAlign = 'middle';
+    }
+    return result;
+  }, [setting.align, setting.float]);
 
   return (
-    <div {...attributes} style={imageStyleObj(element, ['align', 'display'])}>
+    <div {...attributes} style={containerStyle}>
       {children}
-      <img
-        src={element.url}
-        style={{ ...imageStyleObj(element, ['width', 'height']), objectFit: 'contain' }}
+      <ImageRender
+        width={element.setting.width}
+        height={element.setting.height}
+        url={element.url}
       />
     </div>
   );
