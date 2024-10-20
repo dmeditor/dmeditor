@@ -28,6 +28,7 @@ const { useCallback, useMemo } = React;
 
 const RichText = (props: DME.SettingComponentProps & { property: string; value: any }) => {
   const { property, value = [], blockPath } = props;
+  const { initHeight } = props.parameters || {};
 
   const renderElement = useCallback(
     (props: {
@@ -121,7 +122,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
             background: 'white',
             padding: 10,
             minHeight: 100,
-            height: 160,
+            height: initHeight,
             resize: 'vertical',
             overflow: 'auto',
           }}

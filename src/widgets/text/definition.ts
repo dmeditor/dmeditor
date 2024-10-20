@@ -25,6 +25,7 @@ const TextWidget: DME.Widget = {
       name: '',
       property: '.value',
       settingComponent: 'rich-text',
+      parameters: { initHeight: 400 },
     },
     {
       name: 'Text color',
