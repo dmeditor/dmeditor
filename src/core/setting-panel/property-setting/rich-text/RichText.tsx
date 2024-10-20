@@ -12,7 +12,6 @@ import { CharacterButton } from './CharacterButton';
 import {
   BlockButton,
   Element,
-  formatImage,
   InsertImageButton,
   Leaf,
   MarkButton,
@@ -65,10 +64,9 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
     updateBlockPropsByPath(blockPath, property, newValue);
   };
 
-  // TODO:
-  editor.children = formatImage(value);
+  editor.children = value;
 
-  const initialValue = useMemo(() => formatImage(value), [value]);
+  const initialValue = value;
 
   return (
     <div

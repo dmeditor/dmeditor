@@ -9,5 +9,6 @@ export const TextContainer = styled.div((props: SettingsType) => {
     'p:first-child': { 'margin-top': 0 },
     'p:last-child': { 'margin-bottom': 0 },
     img: { 'max-width': '100%' },
+    '&::after': { content: '""', display: 'block', clear: 'both' },
   };
 });

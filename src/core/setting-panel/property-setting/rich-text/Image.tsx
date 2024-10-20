@@ -1,10 +1,13 @@
 import { ReactNode } from 'react';
 import { css } from '@emotion/css';
 import {
+  AlignHorizontalLeftOutlined,
+  AlignHorizontalRightOutlined,
   DeleteOutlined,
   FormatAlignCenter,
   FormatAlignLeft,
   FormatAlignRight,
+  FormatIndentIncreaseOutlined,
   VerticalSplitOutlined,
 } from '@mui/icons-material';
 import { Transforms } from 'slate';
@@ -13,14 +16,15 @@ import { ReactEditor, useFocused, useSelected, useSlateStatic } from 'slate-reac
 import { type DME } from '../../../../core/types';
 import { imageStyleObj, imageStyleString } from '../../../../core/utils';
 import { Resizable } from '../../../components/resizable';
-import { Button } from './helper';
+import { Button, ToolsGroup } from './helper';
 import { StyledResizable } from './styled';
 
-interface Size {
+interface ImageSettings {
   width: number;
   height: number;
   scale?: number;
   align?: 'left' | 'center' | 'right';
+  float?: boolean;
 }
 interface ImageProps {
   mode: DME.WidgetRenderProps['mode'];
@@ -29,7 +33,7 @@ interface ImageProps {
   element: {
     url: string;
     justifyContent?: string;
-    setting: Required<Size> & Partial<Node>;
+    setting: Required<ImageSettings> & Partial<Node>;
   } & Node;
 }
 
@@ -41,24 +45,43 @@ const ResizableImage = (props: ImageProps) => {
   const selected = useSelected();
   const focused = useFocused();
 
-  const handleChange = (size: Size) => {
-    let setting: Size = element.setting ? { ...element.setting, ...size } : { ...size };
-    Transforms.setNodes(editor, setting as ImageProps['element']['setting'], { at: path });
+  const handleChangeSize = (s: ImageSettings) => {
+    let setting = { setting: { ...element.setting, ...s } };
+    Transforms.setNodes(editor, setting as ImageProps['element'], { at: path });
   };
 
-  const handleImage = (align: Size['align']) => {
-    const setting = { setting: { align } } as ImageProps['element'];
+  const handleAlign = (align: ImageSettings['align']) => {
+    const setting = {
+      setting: { ...element.setting, align: element.setting.align === align ? undefined : align },
+    } as ImageProps['element'];
     Transforms.setNodes(editor, setting, { at: path });
   };
 
-  const handleInline = () => {
-    const setting = { setting: {} };
-    Transforms.setNodes(editor, setting, { at: path });
+  const handleFloat = (align: 'left' | 'right') => {
+    const setting = element.setting;
+    const newFloat = setting.align === align && setting.float ? false : true;
+    const newSetting = {
+      setting: { ...setting, float: newFloat, align: newFloat ? align : undefined },
+    };
+
+    Transforms.setNodes(editor, newSetting as ImageProps['element'], { at: path });
   };
 
-  const { height, width, scale } = element.setting;
+  const { height, width, align, scale, float } = element.setting;
+
+  const buttonObj = {
+    className: css``,
+  };
+
   return (
-    <div className={StyledResizable} style={{ textAlign: element.setting.align ?? 'left' }}>
+    <div
+      className={StyledResizable}
+      style={
+        float
+          ? { float: element.setting.align === 'right' ? 'right' : 'left' }
+          : { textAlign: element.setting.align ?? 'left' }
+      }
+    >
       <Resizable
         width={width}
         height={height}
@@ -69,7 +92,7 @@ const ResizableImage = (props: ImageProps) => {
           verticalAlign: 'top',
           border: '1px solid #ddd',
         }}
-        onChange={handleChange}
+        onChange={handleChangeSize}
         isActive={selected && focused}
       >
         <div
@@ -101,69 +124,68 @@ const ResizableImage = (props: ImageProps) => {
             <div
               className={css`
                 position: absolute;
-                top: 0.5em;
+                top: -46px;
                 left: 0px;
-                display: flex;
+                display: ${selected && focused ? 'flex' : 'none'};
                 gap: 0.2em;
-                padding-left: 0.2em;
+                padding: 0.2em;
+                background: white;
+                border: 1px solid #eeeeee;
               `}
             >
               <Button
                 title="Delete"
-                active
                 onClick={() => Transforms.removeNodes(editor, { at: path })}
-                className={css`
-                  display: ${selected && focused ? 'inline' : 'none'};
-                  background-color: white;
-                `}
+                {...buttonObj}
               >
                 <DeleteOutlined />
               </Button>
               <Button
-                active
-                title="Left"
-                // onClick={() => Transforms.removeNodes(editor, { at: path })}
-                onClick={() => handleImage('left')}
-                className={css`
-                  display: ${selected && focused ? 'inline' : 'none'};
-                  background-color: white;
-                `}
+                title="Float left"
+                active={float && align === 'left'}
+                onClick={() => handleFloat('left')}
+                {...buttonObj}
               >
-                <FormatAlignLeft />
+                <AlignHorizontalLeftOutlined />
               </Button>
               <Button
-                title="Center"
-                active
-                onClick={() => handleImage('center')}
-                className={css`
-                  display: ${selected && focused ? 'inline' : 'none'};
-                  background-color: white;
-                `}
+                title="Float right"
+                active={float && align === 'right'}
+                onClick={() => handleFloat('right')}
+                {...buttonObj}
               >
-                <FormatAlignCenter />
+                <AlignHorizontalRightOutlined />
               </Button>
-              <Button
-                title="Right"
-                active
-                onClick={() => handleImage('right')}
-                className={css`
-                  display: ${selected && focused ? 'inline' : 'none'};
-                  background-color: white;
-                `}
-              >
-                <FormatAlignRight />
-              </Button>
-              <Button
-                title="Inline / block"
-                active
-                onClick={() => handleInline()}
-                className={css`
-                  display: ${selected && focused ? 'inline' : 'none'};
-                  background-color: white;
-                `}
-              >
-                {/* <VerticalSplitOutlined /> */}
-              </Button>
+
+              {!float && (
+                <>
+                  <Button
+                    active={align === 'left'}
+                    title="Left"
+                    onClick={() => handleAlign('left')}
+                    {...buttonObj}
+                  >
+                    <FormatAlignLeft />
+                  </Button>
+
+                  <Button
+                    title="Center"
+                    active={align === 'center'}
+                    onClick={() => handleAlign('center')}
+                    {...buttonObj}
+                  >
+                    <FormatAlignCenter />
+                  </Button>
+                  <Button
+                    title="Right"
+                    active={align === 'right'}
+                    onClick={() => handleAlign('right')}
+                    {...buttonObj}
+                  >
+                    <FormatAlignRight />
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -176,7 +198,7 @@ const ViewImage = (props: ImageProps) => {
   const { attributes, children, element } = props;
 
   return (
-    <div {...attributes} style={imageStyleObj(element, ['text-align'])}>
+    <div {...attributes} style={imageStyleObj(element, ['align'])}>
       {children}
       <img
         src={element.url}

@@ -6,7 +6,6 @@ import { Editable, Slate, withReact } from 'slate-react';
 
 import {
   Element,
-  formatImage,
   HoveringToolbar,
   Leaf,
   withImages,
@@ -57,7 +56,7 @@ const MiniRichText = (props: MiniRichTextProps) => {
     onValueChange?.(newValue);
   };
   // TODO:
-  editor.children = formatImage(value);
+  editor.children = value;
 
   return (
     <div>

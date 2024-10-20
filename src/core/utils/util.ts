@@ -329,20 +329,12 @@ export const getEmbedConfigObject = (rootWidget: string) => {
 
 export const imageStyleObj = (
   element: SlateElement & {
-    width: number;
-    height: number;
-    align: string;
-    scale: number;
-    setting: { width: number; height: number; scale: number };
+    setting: { width: number; height: number; align: string; float?: boolean };
   },
   filters?: string[],
 ) => {
   const {
-    width,
-    height,
-    align,
-    scale,
-    setting: { width: settingWidth, height: settingHeight, scale: settingScale },
+    setting: { width, height, align, float },
   } = element;
 
   if (filters) {
@@ -352,36 +344,36 @@ export const imageStyleObj = (
           width?: number;
           height?: number;
           textAlign?: string;
+          float?: string;
           'object-fit'?: string;
         },
         key,
       ) => {
         if (key === 'width') {
-          acc.width = width ? width : settingWidth;
+          if (width) {
+            acc.width = width;
+          }
         } else if (key === 'height') {
-          acc.height = height ? height : settingHeight;
-        } else if (key === 'text-align') {
-          acc.textAlign = align ? align : 'left';
+          if (height) {
+            acc.height = height;
+          }
+        } else if (key === 'align') {
+          if (float) {
+            acc.float = align === 'left' ? 'left' : 'right';
+          } else {
+            acc.textAlign = align ? align : 'left';
+          }
         }
         return acc;
       },
       {},
     );
   }
-  return {
-    width: width ? `${width}px` : `${settingWidth}px`,
-    height: height ? `${height}px` : `${settingHeight}px`,
-    textAlign: align ? align : 'left',
-    'object-fit': 'contain',
-  };
+  return {};
 };
 
 export const imageStyleString = (
   element: SlateElement & {
-    width: number;
-    height: number;
-    align: string;
-    scale: number;
     setting: { width: number; height: number; scale: number };
   },
   filters?: string[],

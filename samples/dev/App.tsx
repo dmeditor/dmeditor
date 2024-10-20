@@ -177,8 +177,8 @@ const App = () => {
               },
             ],
             setting: {
-              width: 127,
-              height: 71,
+              width: 227,
+              height: 140,
               scale: 1.79,
             },
           },
