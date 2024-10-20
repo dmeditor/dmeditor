@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
-import { Button, Dialog, DialogActions, DialogContent, Tab, Tabs, TextField } from '@mui/material';
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  FormControlLabel,
+  Tab,
+  Tabs,
+  TextField,
+} from '@mui/material';
 
 import { dmeConfig, type BrowseImageCallbackParams } from '../config';
 
@@ -19,15 +29,17 @@ type ImageChooserProps = {
   visible: boolean;
   value?: BrowseImageCallbackParams;
   multiple?: boolean;
-  onConfirm?: (value: BrowseImageCallbackParams) => void;
+  options?: { showInline?: boolean };
+  onConfirm?: (value: BrowseImageCallbackParams, options?: { inline?: boolean }) => void;
   onCancel?: () => void;
 };
 
 export const ImageChooser = (props: ImageChooserProps) => {
-  const { visible, value, multiple = false } = props;
+  const { visible, value, multiple = false, options } = props;
   const BrowseImage = CheckImageBrowserValid();
   const [activeTab, setActiveTab] = useState<number>(0);
   const [localValue, setLocalValue] = useState<BrowseImageCallbackParams>(value ?? []);
+  const [inline, setInline] = useState(false);
 
   const ImageChooseElements: {
     label: string;
@@ -59,7 +71,7 @@ export const ImageChooser = (props: ImageChooserProps) => {
 
   const handleConfirm = () => {
     handleClose();
-    props.onConfirm?.(localValue);
+    props.onConfirm?.(localValue, { inline: inline });
   };
 
   useEffect(() => {
@@ -91,6 +103,17 @@ export const ImageChooser = (props: ImageChooserProps) => {
         </div>
       </DialogContent>
       <DialogActions>
+        {options && (
+          <div>
+            {!multiple && options.showInline && (
+              <FormControlLabel
+                disabled={props.value?.length === 0}
+                control={<Checkbox onChange={(e) => setInline(e.target.checked)} />}
+                label="Inline"
+              />
+            )}
+          </div>
+        )}
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleConfirm}>Confirm</Button>
       </DialogActions>

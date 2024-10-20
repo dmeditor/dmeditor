@@ -22,6 +22,7 @@ import { StyledResizable } from './styled';
 interface ImageSettings {
   width: number;
   height: number;
+  inline?: boolean;
   scale?: number;
   align?: 'left' | 'center' | 'right';
   float?: boolean;
@@ -67,7 +68,7 @@ const ResizableImage = (props: ImageProps) => {
     Transforms.setNodes(editor, newSetting as ImageProps['element'], { at: path });
   };
 
-  const { height, width, align, scale, float } = element.setting;
+  const { height, width, align, scale, float, inline } = element.setting;
 
   const buttonObj = {
     className: css``,
@@ -76,11 +77,12 @@ const ResizableImage = (props: ImageProps) => {
   return (
     <div
       className={StyledResizable}
-      style={
-        float
+      style={{
+        ...(float
           ? { float: element.setting.align === 'right' ? 'right' : 'left' }
-          : { textAlign: element.setting.align ?? 'left' }
-      }
+          : { textAlign: element.setting.align ?? 'left' }),
+        ...(inline ? { display: 'inline-block', verticalAlign: 'middle' } : {}),
+      }}
     >
       <Resizable
         width={width}
@@ -140,50 +142,54 @@ const ResizableImage = (props: ImageProps) => {
               >
                 <DeleteOutlined />
               </Button>
-              <Button
-                title="Float left"
-                active={float && align === 'left'}
-                onClick={() => handleFloat('left')}
-                {...buttonObj}
-              >
-                <AlignHorizontalLeftOutlined />
-              </Button>
-              <Button
-                title="Float right"
-                active={float && align === 'right'}
-                onClick={() => handleFloat('right')}
-                {...buttonObj}
-              >
-                <AlignHorizontalRightOutlined />
-              </Button>
-
-              {!float && (
+              {!inline && (
                 <>
                   <Button
-                    active={align === 'left'}
-                    title="Left"
-                    onClick={() => handleAlign('left')}
+                    title="Float left"
+                    active={float && align === 'left'}
+                    onClick={() => handleFloat('left')}
                     {...buttonObj}
                   >
-                    <FormatAlignLeft />
+                    <AlignHorizontalLeftOutlined />
+                  </Button>
+                  <Button
+                    title="Float right"
+                    active={float && align === 'right'}
+                    onClick={() => handleFloat('right')}
+                    {...buttonObj}
+                  >
+                    <AlignHorizontalRightOutlined />
                   </Button>
 
-                  <Button
-                    title="Center"
-                    active={align === 'center'}
-                    onClick={() => handleAlign('center')}
-                    {...buttonObj}
-                  >
-                    <FormatAlignCenter />
-                  </Button>
-                  <Button
-                    title="Right"
-                    active={align === 'right'}
-                    onClick={() => handleAlign('right')}
-                    {...buttonObj}
-                  >
-                    <FormatAlignRight />
-                  </Button>
+                  {!float && (
+                    <>
+                      <Button
+                        active={align === 'left'}
+                        title="Left"
+                        onClick={() => handleAlign('left')}
+                        {...buttonObj}
+                      >
+                        <FormatAlignLeft />
+                      </Button>
+
+                      <Button
+                        title="Center"
+                        active={align === 'center'}
+                        onClick={() => handleAlign('center')}
+                        {...buttonObj}
+                      >
+                        <FormatAlignCenter />
+                      </Button>
+                      <Button
+                        title="Right"
+                        active={align === 'right'}
+                        onClick={() => handleAlign('right')}
+                        {...buttonObj}
+                      >
+                        <FormatAlignRight />
+                      </Button>
+                    </>
+                  )}
                 </>
               )}
             </div>
@@ -198,7 +204,7 @@ const ViewImage = (props: ImageProps) => {
   const { attributes, children, element } = props;
 
   return (
-    <div {...attributes} style={imageStyleObj(element, ['align'])}>
+    <div {...attributes} style={imageStyleObj(element, ['align', 'display'])}>
       {children}
       <img
         src={element.url}

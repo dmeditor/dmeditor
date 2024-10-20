@@ -329,12 +329,12 @@ export const getEmbedConfigObject = (rootWidget: string) => {
 
 export const imageStyleObj = (
   element: SlateElement & {
-    setting: { width: number; height: number; align: string; float?: boolean };
+    setting: { width: number; height: number; align: string; float?: boolean; inline?: boolean };
   },
   filters?: string[],
 ) => {
   const {
-    setting: { width, height, align, float },
+    setting: { width, height, align, float, inline },
   } = element;
 
   if (filters) {
@@ -346,6 +346,8 @@ export const imageStyleObj = (
           textAlign?: string;
           float?: string;
           'object-fit'?: string;
+          display?: string;
+          verticalAlign?: string;
         },
         key,
       ) => {
@@ -362,6 +364,11 @@ export const imageStyleObj = (
             acc.float = align === 'left' ? 'left' : 'right';
           } else {
             acc.textAlign = align ? align : 'left';
+          }
+        } else if (key === 'display') {
+          if (inline) {
+            acc.display = 'inline-block';
+            acc.verticalAlign = 'middle';
           }
         }
         return acc;

@@ -40,7 +40,14 @@ import { ImageChooser } from '../../../utility/ImageChooser';
 import { imageExtensionIsValid, isNumber, isUrl } from '../../../utils';
 import AddLinkButton from './AddLinkButton';
 import Image from './Image';
-import { IMAGE_HEIGHT, IMAGE_WIDTH, LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
+import {
+  IMAGE_HEIGHT,
+  IMAGE_INLINE_HEIGHT,
+  IMAGE_INLINE_WIDTH,
+  IMAGE_WIDTH,
+  LIST_TYPES,
+  TEXT_ALIGN_TYPES,
+} from './options';
 import RemoveLinkButton from './RemoveLinkButton';
 
 export const getImageScale = (width: number, height: number) =>
@@ -523,13 +530,13 @@ const InsertImageButton = (props: { value: { id: string; src: string } | undefin
   const [src, setSrc] = useState('');
   const { value } = props;
 
-  const handleConfirm = (images: BrowseImageCallbackParams) => {
+  const handleConfirm = (images: BrowseImageCallbackParams, options) => {
     if (images.length > 0) {
       const id = images[0].id;
       // choosed from gallery
       if (isNumber(id)) {
         const url = images[0].src;
-        insertImage(editor, url);
+        insertImage(editor, url, { inline: options.inline });
         return;
       } else {
         const url = images[0].src;
@@ -537,7 +544,7 @@ const InsertImageButton = (props: { value: { id: string; src: string } | undefin
           alert('URL is not an image');
           return;
         }
-        url && insertImage(editor, url);
+        url && insertImage(editor, url, { inline: options.inline });
       }
     } else {
       console.error('No image data');
@@ -558,6 +565,7 @@ const InsertImageButton = (props: { value: { id: string; src: string } | undefin
         <ImageChooser
           value={[{ src: src || '', id: value?.id }]}
           visible={visible}
+          options={{ showInline: true }}
           multiple={false}
           onConfirm={handleConfirm}
           onCancel={() => setVisible(false)}
@@ -580,29 +588,36 @@ type ImageElement = {
     width: number;
     height: number;
     scale: number;
+    inline?: boolean;
   };
   type: 'image';
   url: string;
   children: EmptyText[];
 };
 
-const insertImage = (editor: ReactEditor, url: string) => {
+const insertImage = (editor: ReactEditor, url: string, options?: { inline?: boolean }) => {
   const text = { text: '' };
+
+  const defaultWidth = options?.inline ? IMAGE_INLINE_WIDTH : IMAGE_WIDTH;
+  const defaultHeight = options?.inline ? IMAGE_INLINE_HEIGHT : IMAGE_HEIGHT;
   const image: ImageElement = {
     type: 'image',
     url: dmeConfig.general.imagePath(url),
     children: [text],
     setting: {
-      width: IMAGE_WIDTH,
-      height: IMAGE_HEIGHT,
-      scale: getImageScale(IMAGE_WIDTH, IMAGE_HEIGHT),
+      width: defaultWidth,
+      height: defaultHeight,
+      scale: getImageScale(defaultWidth, defaultHeight),
+      inline: options?.inline,
     },
   };
   Transforms.insertNodes(editor, image);
-  Transforms.insertNodes(editor, {
-    type: 'paragraph',
-    children: [{ text: '' }],
-  });
+  if (!options?.inline) {
+    Transforms.insertNodes(editor, {
+      type: 'paragraph',
+      children: [{ text: '' }],
+    });
+  }
 };
 
 type LinkElement = { type: 'link'; url: string; target?: string; children: Descendant[] };
@@ -665,8 +680,12 @@ interface withInsertDataEdtior extends ReactEditor {
 const withInlines = (editor: withInsertDataEdtior) => {
   const { insertData, insertText, isInline, isElementReadOnly, isSelectable } = editor;
 
-  editor.isInline = (element) =>
-    ['link', 'button', 'badge'].includes(element.type) || isInline(element);
+  editor.isInline = (element) => {
+    if (element.type === 'image') {
+      return element.setting?.inline ? true : false;
+    }
+    return ['link', 'button', 'badge'].includes(element.type) || isInline(element);
+  };
 
   editor.isElementReadOnly = (element) => element.type === 'badge' || isElementReadOnly(element);
 
