@@ -73,8 +73,14 @@ const EditImage = (props: ImageProps) => {
     className: css``,
   };
 
-  if (!(selected && focused)) {
-    return <ViewImage {...props} />;
+  const isActive = selected && focused;
+
+  if (!isActive) {
+    return (
+      <div contentEditable={false}>
+        <ViewImage {...props} />
+      </div>
+    );
   }
 
   return (
