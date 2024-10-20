@@ -345,7 +345,6 @@ export const imageStyleObj = (
           height?: number;
           textAlign?: string;
           float?: string;
-          'object-fit'?: string;
           display?: string;
           verticalAlign?: string;
         },
