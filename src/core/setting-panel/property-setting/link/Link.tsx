@@ -9,12 +9,8 @@ import type { DME } from '../../../types';
 import { LinkChooser, LinkRef } from '../../../utility';
 
 export const Link = (props: DME.SettingComponentProps) => {
-  const {
-    property,
-    value,
-    blockPath,
-    parameters: { urlOnly },
-  } = props;
+  const { property, value, blockPath } = props;
+  const { urlOnly } = props.parameters || {};
   const { updateBlockPropsByPath } = useEditorStore();
   const linkRef = useRef<LinkRef>(null);
 
