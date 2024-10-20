@@ -1,3 +1,9 @@
+0.2.0-beta.4
+- 2024-10-20: added: float, inline for image
+- 2024-10-19: added: table style keys
+- 2024-10-18: added: characters for richtext
+- 2024-10-18: added: link open new window
+- 2024-10-18: update: only use LinkChooser for links
 
 
 0.2.0-beta.1
