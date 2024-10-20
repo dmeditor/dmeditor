@@ -14,9 +14,8 @@ import { Transforms } from 'slate';
 import { ReactEditor, useFocused, useSelected, useSlateStatic } from 'slate-react';
 
 import { type DME } from '../../../../core/types';
-import { imageStyleObj } from '../../../../core/utils';
 import { Resizable } from '../../../components/resizable';
-import { Button, ToolsGroup } from './helper';
+import { Button } from './helper';
 import { StyledResizable } from './styled';
 
 interface ImageSettings {
@@ -38,7 +37,7 @@ interface ImageProps {
   } & Node;
 }
 
-const ResizableImage = (props: ImageProps) => {
+const EditImage = (props: ImageProps) => {
   const { attributes, children, element } = props;
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor as ReactEditor, element);
@@ -74,6 +73,10 @@ const ResizableImage = (props: ImageProps) => {
     className: css``,
   };
 
+  if (!(selected && focused)) {
+    return <ViewImage {...props} />;
+  }
+
   return (
     <div
       className={StyledResizable}
@@ -85,18 +88,16 @@ const ResizableImage = (props: ImageProps) => {
       }}
     >
       <Resizable
-        key={width + '' + height} // todo: fix main&setting panel sync in another way instead of key
         width={width}
         height={height}
         scale={scale}
         style={{
           display: 'inline-block',
-          margin: '5px',
           verticalAlign: 'top',
-          border: '1px solid #ddd',
+          boxShadow: '0 0 0 2px #B4D5FF',
         }}
         onChange={handleChangeSize}
-        isActive={selected && focused}
+        isActive={true}
       >
         <div
           {...attributes}
@@ -105,7 +106,6 @@ const ResizableImage = (props: ImageProps) => {
             position: relative;
             width: 100%;
             height: 100%;
-            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
           `}
         >
           {children}
@@ -115,7 +115,7 @@ const ResizableImage = (props: ImageProps) => {
               position: absolute;
               top: -46px;
               left: 0px;
-              display: ${selected && focused ? 'flex' : 'none'};
+              display: flex;
               gap: 0.2em;
               padding: 0.2em;
               background: white;
@@ -232,7 +232,7 @@ const ViewImage = (props: ImageProps) => {
 
 const Image = (props: ImageProps) => {
   const { mode } = props;
-  return mode === 'view' ? <ViewImage {...props} /> : <ResizableImage {...props} />;
+  return mode === 'view' ? <ViewImage {...props} /> : <EditImage {...props} />;
 };
 
 export default Image;
