@@ -76,11 +76,7 @@ const EditImage = (props: ImageProps) => {
   const isActive = selected && focused;
 
   if (!isActive) {
-    return (
-      <div contentEditable={false}>
-        <ViewImage {...props} />
-      </div>
-    );
+    return <ViewImage {...props} inEdit={true} />;
   }
 
   return (
@@ -201,7 +197,7 @@ const ImageRender = (props: { width: number | string; height: number | string; u
   );
 };
 
-const ViewImage = (props: ImageProps) => {
+const ViewImage = (props: ImageProps & { inEdit?: boolean }) => {
   const {
     attributes,
     children,
@@ -225,7 +221,7 @@ const ViewImage = (props: ImageProps) => {
   }, [setting.align, setting.float]);
 
   return (
-    <div {...attributes} style={containerStyle}>
+    <div {...attributes} style={containerStyle} contentEditable={props.inEdit ? false : undefined}>
       {children}
       <ImageRender
         width={element.setting.width}
