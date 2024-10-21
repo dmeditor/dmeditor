@@ -479,7 +479,7 @@ const Element = (props: ElementProps) => {
   }
 };
 
-interface MiniTextLeafProps extends RenderLeafProps {
+interface MiniRichTextLeafProps extends RenderLeafProps {
   attributes: RenderLeafProps['attributes'];
   children: React.ReactNode;
   leaf: {
@@ -492,7 +492,7 @@ interface MiniTextLeafProps extends RenderLeafProps {
     color: string;
   } & Pick<BaseText, 'text'>;
 }
-const Leaf = ({ attributes, children, leaf }: MiniTextLeafProps) => {
+const Leaf = ({ attributes, children, leaf }: MiniRichTextLeafProps) => {
   const fontStyles = {
     fontFamily: dmeConfig.editor.fontFamily.map((i) => i.value).includes(leaf['font-family'])
       ? leaf['font-family']
@@ -765,4 +765,4 @@ export {
   withInlines,
 };
 
-export type { LinkElement, MiniTextLeafProps };
+export type { LinkElement, MiniRichTextLeafProps };

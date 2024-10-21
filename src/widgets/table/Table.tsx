@@ -1,4 +1,4 @@
-import { MiniText, useEditorStore } from '../..';
+import { MiniRichText, useEditorStore } from '../..';
 import type { DME } from '../..';
 import type { EntityTableBlock } from './entity';
 import { useTableStore } from './store';
@@ -32,7 +32,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
           <tr className={styleClasses['tr-h'] || 'dme-w-tr-h'}>
             {value[0].map((cell, i) => (
               <th className={styleClasses['th'] || 'dme-w-th'} key={i}>
-                <MiniText
+                <MiniRichText
                   key={i}
                   mode={props.mode}
                   value={cell}
@@ -51,7 +51,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
             {row.map((cell, jdx) => {
               return (
                 <td className={styleClasses['td'] || 'dme-w-td'} key={jdx}>
-                  <MiniText
+                  <MiniRichText
                     key={idx + ',' + jdx}
                     mode={props.mode}
                     placeHolder="Input"

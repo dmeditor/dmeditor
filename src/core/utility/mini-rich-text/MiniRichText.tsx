@@ -10,7 +10,7 @@ import {
   Leaf,
   withImages,
   withInlines,
-  type MiniTextLeafProps,
+  type MiniRichTextLeafProps,
 } from '../../setting-panel/property-setting/rich-text/helper';
 import { type DME } from '../../types';
 
@@ -45,12 +45,12 @@ const MiniRichText = (props: MiniRichTextProps) => {
     [],
   );
 
-  const renderLeaf = useCallback((props: MiniTextLeafProps) => <Leaf {...props} />, []);
+  const renderLeaf = useCallback((props: MiniRichTextLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
 
   const handleValueChange = (newValue: Descendant[]) => {
     if (!Array.isArray(newValue)) {
-      console.warn('MiniText: onChange: newValue is not an array', newValue);
+      console.warn('MiniRichText: onChange: newValue is not an array', newValue);
       return;
     }
     onValueChange?.(newValue);
@@ -88,4 +88,4 @@ const MiniRichText = (props: MiniRichTextProps) => {
   );
 };
 
-export default MiniRichText;
+export { MiniRichText };

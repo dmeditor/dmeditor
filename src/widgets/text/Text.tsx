@@ -1,4 +1,4 @@
-import { MiniText, useEditorStore, type DME } from '../..';
+import { MiniRichText, useEditorStore, type DME } from '../..';
 import { EntityText } from './entity';
 import { TextContainer } from './styled';
 
@@ -23,7 +23,7 @@ const Text = (props: RichTextProps) => {
   };
   return (
     <TextContainer {...data.settings}>
-      <MiniText mode={props.mode} value={value} onValueChange={handleValueChange} />
+      <MiniRichText mode={props.mode} value={value} onValueChange={handleValueChange} />
     </TextContainer>
   );
 };
