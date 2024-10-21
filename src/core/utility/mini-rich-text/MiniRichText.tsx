@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { FocusEventHandler, useEffect } from 'react';
-import { debounce } from 'lodash';
 import { createEditor, type Descendant, type Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react';
@@ -50,15 +49,13 @@ const MiniRichText = (props: MiniRichTextProps) => {
   const renderLeaf = useCallback((props: MiniRichTextLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
 
-  const debouncedValueChange = debounce(onValueChange, 100);
-
   const handleValueChange = (newValue: Descendant[]) => {
     if (!Array.isArray(newValue)) {
       console.warn('MiniRichText: onChange: newValue is not an array', newValue);
       return;
     }
 
-    debouncedValueChange(newValue);
+    onValueChange(newValue);
   };
 
   useEffect(() => {
