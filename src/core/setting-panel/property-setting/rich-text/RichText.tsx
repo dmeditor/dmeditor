@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
+import { debounce } from 'lodash';
 import { createEditor } from 'slate';
 import type { Descendant, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
@@ -65,6 +66,8 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
     updateBlockPropsByPath(blockPath, property, newValue);
   };
 
+  const debouncedValueChange = debounce(handleValueChange, 100);
+
   editor.children = value;
 
   const initialValue = value;
@@ -75,7 +78,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
         border: 1px solid #dddddd;
       `}
     >
-      <Slate editor={editor} initialValue={initialValue} onValueChange={handleValueChange}>
+      <Slate editor={editor} initialValue={initialValue} onValueChange={debouncedValueChange}>
         <Toolbar>
           <MarkSelector format="font-family" />
           <MarkSelector format="font-size" />

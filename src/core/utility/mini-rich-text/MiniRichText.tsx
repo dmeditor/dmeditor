@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FocusEventHandler } from 'react';
+import { debounce } from 'lodash';
 import { createEditor, type Descendant, type Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
@@ -21,7 +22,7 @@ export interface MiniRichTextProps {
   placeHolder?: string;
   mode?: DME.WidgetRenderProps['mode'];
   value?: Array<Descendant> | null;
-  onFocus?: FocusEventHandler | undefined;
+  onFocus?: FocusEventHandler; //Note: when onFocus is invoked if it rerender it can lose focus. Be careful using it.
   onValueChange: (value: Descendant[]) => void;
 }
 
@@ -48,12 +49,15 @@ const MiniRichText = (props: MiniRichTextProps) => {
   const renderLeaf = useCallback((props: MiniRichTextLeafProps) => <Leaf {...props} />, []);
   const editor = useMemo(() => withInlines(withImages(withHistory(withReact(createEditor())))), []);
 
+  const debouncedValueChange = debounce(onValueChange, 100);
+
   const handleValueChange = (newValue: Descendant[]) => {
     if (!Array.isArray(newValue)) {
       console.warn('MiniRichText: onChange: newValue is not an array', newValue);
       return;
     }
-    onValueChange?.(newValue);
+
+    debouncedValueChange(newValue);
   };
   // TODO:
   editor.children = value;
