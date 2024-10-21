@@ -75,6 +75,11 @@ const MiniRichText = (props: MiniRichTextProps) => {
                 editor.insertText('\n');
               }
             }}
+            renderPlaceholder={({ children, attributes }) => (
+              <span {...attributes}>
+                <span style={{ textWrap: 'nowrap', fontSize: '0.9rem' }}>{children}</span>
+              </span>
+            )}
             placeholder={mode === 'view' ? '' : props.placeHolder || 'Input your content here'} //fixed: readonly empty still show placeholder
           />
         </div>
