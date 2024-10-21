@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { css } from '@emotion/css';
 import { debounce } from 'lodash';
 import { createEditor } from 'slate';

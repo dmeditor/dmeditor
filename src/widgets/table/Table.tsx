@@ -31,12 +31,15 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
         <thead>
           <tr className={styleClasses['tr-h'] || 'dme-w-tr-h'}>
             {value[0].map((cell, i) => (
-              <th className={styleClasses['th'] || 'dme-w-th'} key={i}>
+              <th
+                className={styleClasses['th'] || 'dme-w-th'}
+                key={i}
+                onClick={() => handleActiveCellChange(0, i)}
+              >
                 <MiniRichText
                   mode={props.mode}
                   value={cell}
                   placeHolder="Input"
-                  onFocus={() => handleActiveCellChange(0, i)}
                   onValueChange={(newValue) => handleValueChange(0, i, newValue)}
                 />
               </th>
@@ -57,6 +60,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
                   <MiniRichText
                     mode={props.mode}
                     placeHolder="Input"
+                    useEffectToUpdate={true}
                     value={cell}
                     onValueChange={(newValue) => handleValueChange(idx, jdx, newValue)}
                   />
