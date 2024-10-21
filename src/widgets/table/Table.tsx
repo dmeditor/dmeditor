@@ -35,6 +35,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
                 className={styleClasses['th'] || 'dme-w-th'}
                 key={i}
                 onClick={() => handleActiveCellChange(0, i)}
+                style={props.mode === 'edit' && !cell ? { minWidth: 30 } : {}}
               >
                 <MiniRichText
                   mode={props.mode}
@@ -49,13 +50,13 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
       )}
       <tbody>
         {tableValue.map((row, idx) => (
-          <tr className={styleClasses['tr'] || 'dme-w-tr'}>
+          <tr className={styleClasses['tr'] || 'dme-w-tr'} key={idx}>
             {row.map((cell, jdx) => {
               return (
                 <td
                   className={styleClasses['td'] || 'dme-w-td'}
-                  key={idx + ',' + jdx}
                   onClick={() => handleActiveCellChange(idx, jdx)}
+                  style={props.mode === 'edit' && !cell ? { minWidth: 30 } : {}}
                 >
                   <MiniRichText
                     mode={props.mode}
