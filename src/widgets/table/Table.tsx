@@ -12,11 +12,11 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   } = blockNode;
 
   const { updateBlockByPath } = useEditorStore();
-  const { setActiveCellIndex: setActiveIndex } = useTableStore();
+  const { setActiveCellIndex: setActiveIndex, activeCellIndex } = useTableStore();
 
-  const handleValueChange = (col: number, row: number, value: any) => {
+  const handleValueChange = (row: number, col: number, value: any) => {
     updateBlockByPath(path, (data) => {
-      (data.value as any[])[col][row] = value;
+      (data.value as any[])[row][col] = value;
     });
   };
 
@@ -33,7 +33,6 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
             {value[0].map((cell, i) => (
               <th className={styleClasses['th'] || 'dme-w-th'} key={i}>
                 <MiniRichText
-                  key={i}
                   mode={props.mode}
                   value={cell}
                   placeHolder="Input"
@@ -50,13 +49,15 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
           <tr className={styleClasses['tr'] || 'dme-w-tr'}>
             {row.map((cell, jdx) => {
               return (
-                <td className={styleClasses['td'] || 'dme-w-td'} key={jdx}>
+                <td
+                  className={styleClasses['td'] || 'dme-w-td'}
+                  key={idx + ',' + jdx}
+                  onClick={() => handleActiveCellChange(idx, jdx)}
+                >
                   <MiniRichText
-                    key={idx + ',' + jdx}
                     mode={props.mode}
                     placeHolder="Input"
                     value={cell}
-                    onFocus={() => handleActiveCellChange(idx, jdx)}
                     onValueChange={(newValue) => handleValueChange(idx, jdx, newValue)}
                   />
                 </td>
