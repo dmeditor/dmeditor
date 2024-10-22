@@ -27,7 +27,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
 
   return (
     <StyledTable id={id} {...settings}>
-      {settings['hasHeader'] && (
+      {settings.hasHeader && (
         <thead>
           <tr className={styleClasses['tr-h'] || 'dme-w-tr-h'}>
             {value[0].map((cell, i) => (
@@ -63,7 +63,9 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
                     placeHolder="Input"
                     useEffectToUpdate={true}
                     value={cell}
-                    onValueChange={(newValue) => handleValueChange(idx, jdx, newValue)}
+                    onValueChange={(newValue) =>
+                      handleValueChange(settings.hasHeader ? idx + 1 : idx, jdx, newValue)
+                    }
                   />
                 </td>
               );
