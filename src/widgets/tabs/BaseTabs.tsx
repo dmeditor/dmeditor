@@ -56,7 +56,7 @@ const TabPane: React.FC<TabPaneProps> = (props) => {
   const isActive = activeKey === tabKey;
   return (
     <Transition in={isActive} timeout={300} appear={true} {...transitionEventsProps}>
-      <div hidden={!isActive} aria-hidden={!isActive} role="tabpanel">
+      <div style={{ display: isActive ? 'block' : 'none' }} aria-hidden={!isActive} role="tabpanel">
         {children}
       </div>
     </Transition>
