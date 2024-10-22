@@ -664,7 +664,6 @@ const wrapLink = (editor: Editor, url: string, openNew: boolean) => {
   if (openNew) {
     link.target = '_blank';
   }
-  link.target = '_blank';
 
   if (isCollapsed) {
     Transforms.insertNodes(editor, link);
@@ -692,18 +691,19 @@ const withInlines = (editor: withInsertDataEdtior) => {
   editor.isSelectable = (element) => element.type !== 'badge' && isSelectable(element);
 
   editor.insertText = (text) => {
-    if (text && isUrl(text)) {
-      wrapLink(editor, text);
-    } else {
-      insertText(text);
-    }
+    //issue when paste link
+    // if (text && isUrl(text)) {
+    //   wrapLink(editor, text, false);
+    // } else {
+    insertText(text);
+    // }
   };
 
   editor.insertData = (data) => {
     const text = data.getData('text/plain');
 
     if (text && isUrl(text)) {
-      wrapLink(editor, text);
+      wrapLink(editor, text, false);
     } else {
       insertData(data);
     }
