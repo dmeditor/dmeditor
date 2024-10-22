@@ -47,7 +47,7 @@ export const CollapsableTextDefiniation: DME.Widget = {
 };
 
 export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEntity>) => {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const {
     blockNode: { data, children = [] },
     path,
