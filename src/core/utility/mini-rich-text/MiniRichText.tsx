@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { FocusEventHandler, useEffect } from 'react';
-import { createEditor, type Descendant, type Element as SlateElement } from 'slate';
+import { FocusEventHandler, useEffect, useState } from 'react';
+import { createEditor, Transforms, type Descendant, type Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react';
 
@@ -29,7 +29,7 @@ export interface MiniRichTextProps {
 const emptyValue = [
   {
     type: 'paragraph',
-    children: [{ text: '' }],
+    children: [{ text: ' ' }],
   },
 ];
 
@@ -61,6 +61,10 @@ const MiniRichText = (props: MiniRichTextProps) => {
   useEffect(() => {
     if (props.useEffectToUpdate) {
       editor.children = value;
+      //fix new empty in table not updated issue.
+      if (!props.value) {
+        editor.select(editor.end([]));
+      }
     }
   }, [value]);
 
