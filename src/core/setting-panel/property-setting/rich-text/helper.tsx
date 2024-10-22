@@ -577,6 +577,9 @@ const InsertImageButton = (props: { value: { id: string; src: string } | undefin
 
 const isImageUrl = (url: string) => {
   if (!url) return false;
+  if (url.startsWith('data:')) {
+    return true;
+  }
   if (!isUrl(url)) return false;
   const ext = new URL(url).pathname.split('.').pop();
   // return imageExtensions.includes(ext);
