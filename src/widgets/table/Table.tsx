@@ -49,29 +49,33 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
         </thead>
       )}
       <tbody>
-        {tableValue.map((row, idx) => (
-          <tr className={styleClasses['tr'] || 'dme-w-tr'} key={idx}>
-            {row.map((cell, jdx) => {
-              return (
-                <td
-                  className={styleClasses['td'] || 'dme-w-td'}
-                  onClick={() => handleActiveCellChange(idx, jdx)}
-                  style={props.mode === 'edit' && !cell ? { minWidth: 50 } : {}}
-                >
-                  <MiniRichText
-                    mode={props.mode}
-                    placeHolder="Input"
-                    useEffectToUpdate={true}
-                    value={cell}
-                    onValueChange={(newValue) =>
-                      handleValueChange(settings.hasHeader ? idx + 1 : idx, jdx, newValue)
-                    }
-                  />
-                </td>
-              );
-            })}
-          </tr>
-        ))}
+        {tableValue.map((row, idx) =>
+          settings.hasHeader && idx == 0 ? (
+            <></>
+          ) : (
+            <tr className={styleClasses['tr'] || 'dme-w-tr'} key={idx}>
+              {row.map((cell, jdx) => {
+                return (
+                  <td
+                    className={styleClasses['td'] || 'dme-w-td'}
+                    onClick={() => handleActiveCellChange(idx, jdx)}
+                    style={props.mode === 'edit' && !cell ? { minWidth: 50 } : {}}
+                  >
+                    <MiniRichText
+                      mode={props.mode}
+                      placeHolder="Input"
+                      useEffectToUpdate={true}
+                      value={cell}
+                      onValueChange={(newValue) =>
+                        handleValueChange(settings.hasHeader ? idx + 1 : idx, jdx, newValue)
+                      }
+                    />
+                  </td>
+                );
+              })}
+            </tr>
+          ),
+        )}
       </tbody>
     </StyledTable>
   );
