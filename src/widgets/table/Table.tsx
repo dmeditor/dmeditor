@@ -12,7 +12,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   } = blockNode;
 
   const { updateBlockByPath } = useEditorStore();
-  const { setActiveCellIndex: setActiveIndex, activeCellIndex } = useTableStore();
+  const { setActiveCellIndex: setActiveIndex } = useTableStore();
 
   const handleValueChange = (row: number, col: number, value: any) => {
     updateBlockByPath(path, (data) => {
@@ -23,7 +23,6 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
   const handleActiveCellChange = (row: number, cell: number) => {
     setActiveIndex([row, cell]);
   };
-  const tableValue = settings['hasHeader'] ? value.slice(1) : value;
 
   return (
     <StyledTable id={id} {...settings}>
@@ -49,7 +48,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
         </thead>
       )}
       <tbody>
-        {tableValue.map((row, idx) =>
+        {value.map((row, idx) =>
           settings.hasHeader && idx == 0 ? (
             <></>
           ) : (
@@ -66,9 +65,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
                       placeHolder="Input"
                       useEffectToUpdate={true}
                       value={cell}
-                      onValueChange={(newValue) =>
-                        handleValueChange(settings.hasHeader ? idx + 1 : idx, jdx, newValue)
-                      }
+                      onValueChange={(newValue) => handleValueChange(idx, jdx, newValue)}
                     />
                   </td>
                 );
