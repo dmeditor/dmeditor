@@ -7,6 +7,7 @@ import type { DME, DMEData } from '../..';
 
 interface CollapsableTextEntity {
   text: string;
+  buttonAlign?: 'left' | 'center' | 'right';
   settings?: {
     general?: DMEData.GeneralSettingType;
   };
@@ -22,6 +23,12 @@ export const CollapsableTextDefiniation: DME.Widget = {
       name: 'Text',
       property: '.text',
       settingComponent: 'input',
+    },
+    {
+      name: 'Button align',
+      property: '.buttonAlign',
+      category: 'style',
+      settingComponent: 'align',
     },
     ...generalSettings,
   ],
@@ -57,15 +64,21 @@ export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEnti
   return (
     <div>
       <div className={styleClasses['button-container'] || '' + ' dme-w-button-container'}>
-        <button
-          className={styleClasses['button'] || '' + ' dme-w-button'}
-          onClick={() => setExpanded(!expanded)}
-        >
-          {data.text}
-          {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
-        </button>
+        <div style={data.buttonAlign ? { textAlign: data.buttonAlign } : {}}>
+          <button
+            className={styleClasses['button'] || '' + ' dme-w-button'}
+            onClick={() => setExpanded(!expanded)}
+          >
+            {data.text}
+            {expanded ? (
+              <ArrowDropUp style={{ verticalAlign: 'middle' }} />
+            ) : (
+              <ArrowDropDown style={{ verticalAlign: 'middle' }} />
+            )}
+          </button>
+        </div>
       </div>
-      <Collapse in={expanded} unmountOnExit>
+      <Collapse in={expanded}>
         <BlockListRender blockData={children} path={path} mode={props.mode} />
       </Collapse>
     </div>
