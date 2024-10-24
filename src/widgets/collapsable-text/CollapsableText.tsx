@@ -65,7 +65,7 @@ export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEnti
           {expanded ? <ArrowDropUp /> : <ArrowDropDown />}
         </button>
       </div>
-      <Collapse in={expanded}>
+      <Collapse in={expanded} unmountOnExit>
         <BlockListRender blockData={children} path={path} mode={props.mode} />
       </Collapse>
     </div>
