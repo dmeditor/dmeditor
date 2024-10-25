@@ -3,7 +3,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { Grid, Input, MenuItem, Select, styled, TextField } from '@mui/material';
 import { useEditorStore } from 'dmeditor/core/main/store';
 import { DME } from 'dmeditor/core/types';
-import { NumberInput } from 'dmeditor/core/utility/settings/number-input/NumberInput';
+import {
+  NumberInput,
+  TypeNumberInputValue,
+} from 'dmeditor/core/utility/settings/number-input/NumberInput';
 
 import { Ranger } from '../../../utils';
 
@@ -41,7 +44,7 @@ const Width = (
   const { updateBlockPropsByPath } = useEditorStore();
 
   const [inputType, setInputType] = useState(() => getInputType());
-  const [rangeValue, setRangeValue] = useState(() => {
+  const [rangeValue, setRangeValue] = useState<number | undefined>(() => {
     if (value === undefined) {
       return undefined;
     }
@@ -52,6 +55,14 @@ const Width = (
     }
   });
 
+  const convertRangeValueToInput = (v?: number) => {
+    return v === undefined ? '-' : v;
+  };
+
+  const [inputValue, setInputValue] = useState<TypeNumberInputValue>(() =>
+    convertRangeValueToInput(rangeValue),
+  );
+
   const changeUnit = (unit: unitType) => {
     setInputType(unit);
     if (unit === '%' && (rangeValue === undefined || rangeValue > 100)) {
@@ -61,6 +72,7 @@ const Width = (
 
   useEffect(() => {
     handleChange();
+    setInputValue(convertRangeValueToInput(rangeValue));
   }, [rangeValue, inputType]);
 
   const handleChange = () => {
@@ -68,6 +80,17 @@ const Width = (
       updateBlockPropsByPath(blockPath, property, rangeValue);
     } else if (inputType === '%') {
       updateBlockPropsByPath(blockPath, property, rangeValue + '%');
+    }
+  };
+
+  const inputHandler = (v: TypeNumberInputValue, change?: boolean) => {
+    setInputValue(v);
+    if (change) {
+      if (v === '-' || v === '') {
+        setRangeValue(undefined);
+      } else if (typeof v === 'number') {
+        setRangeValue(v);
+      }
     }
   };
 
@@ -87,7 +110,7 @@ const Width = (
         {inputType === '%' && (
           <Ranger
             disabled={disabled}
-            value={rangeValue > 100 ? 50 : rangeValue}
+            value={rangeValue && rangeValue > 100 ? 50 : rangeValue}
             min={0}
             max={100}
             step={1}
@@ -103,7 +126,7 @@ const Width = (
           inputProps={{ style: { paddingLeft: 5, paddingRight: 5 } }}
           size="small"
         /> */}
-        <NumberInput value={rangeValue} onChange={(v) => setRangeValue(v)} />
+        <NumberInput value={inputValue} onChange={(v, change) => inputHandler(v, change)} />
       </Grid>
       <Grid item xs={3}>
         <StyledSelect

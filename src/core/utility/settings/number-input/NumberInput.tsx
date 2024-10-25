@@ -5,6 +5,8 @@ import { createHandleInputChange, createHandleInputKeyDown, setChangingValue } f
 import { InputHandler } from './InputHandler';
 import { TYPE_UNDEFINED_VALUE, UNDEFINED_VALUE } from './types';
 
+export type TypeNumberInputValue = number | '' | '-';
+
 const StyledTextField = styled(TextField)({
   '& .MuiInputBase-input': {
     padding: '8px 5px',
@@ -14,26 +16,22 @@ const StyledTextField = styled(TextField)({
 
 export const NumberInput = (props: {
   disabled?: boolean;
-  value?: number;
+  value: TypeNumberInputValue;
   min?: number;
   max?: number;
-  onChange: (value?: number) => void;
+  onChange: (v: TypeNumberInputValue, change?: boolean) => void;
 }) => {
   const { value, min = 0, max = 2000, disabled } = props;
 
-  const onChangeHandle = (v: number | '' | '-') => {
-    if (v === '-') {
-      props.onChange?.(undefined);
-    } else if (typeof v === 'number') {
-      props.onChange(v);
-    }
+  const onChangeHandle = (v: TypeNumberInputValue, isBlur?: boolean) => {
+    props.onChange(v, isBlur);
   };
 
   const handleInputBlur = createHandleInputChange({
     min,
     max,
     onChange: (value, _) => {
-      onChangeHandle(value);
+      onChangeHandle(value, true);
     },
   });
 
@@ -42,14 +40,14 @@ export const NumberInput = (props: {
     max,
     onKeyDown: (value, _) => {
       //todo: debounce this
-      onChangeHandle(value);
+      // onChangeHandle(value);
     },
   });
 
   return (
     <StyledTextField
       disabled={disabled}
-      value={value === undefined ? '-' : value}
+      value={value}
       size="small"
       onBlur={handleInputBlur}
       onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
