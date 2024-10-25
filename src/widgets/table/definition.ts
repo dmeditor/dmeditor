@@ -19,7 +19,7 @@ const HeadingWidget: DME.Widget = {
             padding: 10,
             borderType: 'border',
             borderColor: '#ccc',
-            general: {},
+            general: { padding: 10, width: '100%' },
           },
         },
       };

@@ -1,42 +1,126 @@
 import * as React from 'react';
-import { MenuItem, Select } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
+import { Grid, Input, MenuItem, Select, styled, TextField } from '@mui/material';
+import { useEditorStore } from 'dmeditor/core/main/store';
+import { DME } from 'dmeditor/core/types';
+import { NumberInput } from 'dmeditor/core/utility/settings/number-input/NumberInput';
 
 import { Ranger } from '../../../utils';
 
-const Width = ({ value }: { value: string }) => {
-  const [widthType, setWidthType] = React.useState('auto');
+type unitType = 'px' | '%';
+
+const StyledSelect = styled(Select)({
+  '&': {
+    fontSize: '0.8rem',
+  },
+  '& .MuiInputBase-input': {
+    padding: '8px 8px',
+  },
+});
+
+const Width = (
+  props: DME.SettingComponentProps & {
+    property: string;
+    value?: number | string;
+    parameters: { min: number; max: number; step?: number };
+    disabled?: boolean;
+  },
+) => {
+  const { value, disabled, parameters, blockPath, property } = props;
+
+  const getInputType = () => {
+    if (typeof value === 'string' && value.endsWith('%')) {
+      return '%';
+    } else if (typeof value === 'number') {
+      return 'px';
+    } else {
+      return 'px';
+    }
+  };
+
+  const { updateBlockPropsByPath } = useEditorStore();
+
+  const [inputType, setInputType] = useState(() => getInputType());
+  const [rangeValue, setRangeValue] = useState(() => {
+    if (value === undefined) {
+      return undefined;
+    }
+    if (inputType === '%') {
+      return parseInt(value as string);
+    } else {
+      return value as number;
+    }
+  });
+
+  const changeUnit = (unit: unitType) => {
+    setInputType(unit);
+    if (unit === '%' && (rangeValue === undefined || rangeValue > 100)) {
+      setRangeValue(100);
+    }
+  };
+
+  useEffect(() => {
+    handleChange();
+  }, [rangeValue, inputType]);
+
+  const handleChange = () => {
+    if (inputType === 'px') {
+      updateBlockPropsByPath(blockPath, property, rangeValue);
+    } else if (inputType === '%') {
+      updateBlockPropsByPath(blockPath, property, rangeValue + '%');
+    }
+  };
 
   return (
-    <>
-      <Select
-        value={widthType}
-        onChange={(e) => {
-          const value = e.target.value;
-          // selectChange('width', value === 'custom' ? '150px' : value);
-        }}
-        displayEmpty
-        size="small"
-        inputProps={{ 'aria-label': 'Without label' }}
-      >
-        <MenuItem value="auto">
-          <em>auto</em>
-        </MenuItem>
-        <MenuItem value="100%">100%</MenuItem>
-        <MenuItem value="custom">custom</MenuItem>
-      </Select>
-
-      {widthType === 'custom' && (
-        <Ranger
-          min={50}
-          max={800}
-          step={5}
-          defaultValue={value ? parseFloat(value) : 150}
-          onChange={(value) => {
-            // rangeChange('width', `${value}px`);
+    <Grid container spacing={1} alignItems="center">
+      <Grid item xs>
+        {(inputType === 'px' || !inputType) && (
+          <Ranger
+            disabled={disabled}
+            value={rangeValue}
+            min={parameters.min === undefined ? 1 : parameters.min}
+            max={parameters?.max || 5}
+            step={parameters?.step || 1}
+            onChange={(v) => setRangeValue(v as number)}
+          ></Ranger>
+        )}
+        {inputType === '%' && (
+          <Ranger
+            disabled={disabled}
+            value={rangeValue > 100 ? 50 : rangeValue}
+            min={0}
+            max={100}
+            step={1}
+            onChange={(v) => setRangeValue(v as number)}
+          ></Ranger>
+        )}
+      </Grid>
+      <Grid item xs={2}>
+        {/* <TextField
+          fullWidth
+          type="text"
+          value={rangeValue}
+          inputProps={{ style: { paddingLeft: 5, paddingRight: 5 } }}
+          size="small"
+        /> */}
+        <NumberInput value={rangeValue} onChange={(v) => setRangeValue(v)} />
+      </Grid>
+      <Grid item xs={3}>
+        <StyledSelect
+          value={inputType}
+          fullWidth
+          onChange={(e) => {
+            const unit = e.target.value;
+            changeUnit(unit as unitType);
           }}
-        />
-      )}
-    </>
+          size="small"
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem value="%">%</MenuItem>
+          <MenuItem value="px">px</MenuItem>
+        </StyledSelect>
+      </Grid>
+    </Grid>
   );
 };
 
