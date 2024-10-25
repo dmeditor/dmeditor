@@ -82,9 +82,11 @@ const Width = (
   };
 
   const inputHandler = (v: TypeNumberInputValue, change?: boolean) => {
-    setInputValue(v);
-    if (change) {
+    if (!change) {
+      setInputValue(v);
+    } else {
       if (v === '-' || v === '') {
+        setInputValue('-');
         setRangeValue(undefined);
       } else if (typeof v === 'number') {
         setRangeValue(v);
