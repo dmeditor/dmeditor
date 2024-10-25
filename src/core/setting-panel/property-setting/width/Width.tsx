@@ -65,9 +65,7 @@ const Width = (
 
   const changeUnit = (unit: unitType) => {
     setInputType(unit);
-    if (unit === '%' && (rangeValue === undefined || rangeValue > 100)) {
-      setRangeValue(100);
-    }
+    setRangeValue(undefined);
   };
 
   useEffect(() => {
