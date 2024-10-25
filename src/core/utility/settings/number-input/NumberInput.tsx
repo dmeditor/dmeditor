@@ -47,6 +47,7 @@ export const NumberInput = (props: {
   return (
     <StyledTextField
       disabled={disabled}
+      title={value + ''}
       value={value}
       size="small"
       onBlur={handleInputBlur}

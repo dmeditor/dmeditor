@@ -98,6 +98,7 @@ export const StyledSettingItem = {
     ${(props) => (props.upDown ? 'padding: 10px 5px;' : '')}
     min-width: 180px;
     position: relative;
+    flex: 1;
   `,
 };
 

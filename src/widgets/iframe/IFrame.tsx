@@ -67,7 +67,11 @@ export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
   return (
     <>
       {!!data.value && (
-        <iframe src={data.value} style={{ height: data.settings.height, display: 'block' }} />
+        <iframe
+          src={data.value}
+          allowFullScreen
+          style={{ height: data.settings.height, display: 'block' }}
+        />
       )}
     </>
   );
@@ -105,7 +109,7 @@ export const iFrameDefinition: DME.Widget = {
       property: 'settings.height',
       settingComponent: 'range',
       category: 'style',
-      parameters: { min: 300, max: 1000 },
+      parameters: { min: 300, max: 2000, step: 5, showInput: true },
     },
     ...generalSettings,
   ],

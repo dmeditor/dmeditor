@@ -20,6 +20,7 @@ export const Ranger = (props: {
   min: number;
   max: number;
   step?: number;
+  hideValueLabel?: boolean;
   onChange?: (v: number | string, event: any) => void;
   onFinish?: (v: number) => void;
 }) => {
@@ -29,12 +30,11 @@ export const Ranger = (props: {
     onChange?.(value as number, e);
   };
 
-
   return (
     <CustomSlider
       disabled={disabled}
       defaultValue={props.defaultValue || 0}
-      valueLabelDisplay="auto"
+      valueLabelDisplay={props.hideValueLabel ? 'off' : 'auto'}
       step={props.step}
       marks
       value={value ? value : props.defaultValue || 0}
