@@ -56,7 +56,7 @@ const Width = (
   });
 
   const convertRangeValueToInput = (v?: number) => {
-    return v === undefined ? '-' : v;
+    return v ? v : '-'; // 0 is also to '-'
   };
 
   const [inputValue, setInputValue] = useState<TypeNumberInputValue>(() =>

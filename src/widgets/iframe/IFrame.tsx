@@ -86,7 +86,7 @@ export const iFrameDefinition: DME.Widget = {
           value: '',
           settings: {
             height: 300,
-            general: { align: 'center' },
+            general: { align: 'center', width: '80%' },
           },
         },
       };
