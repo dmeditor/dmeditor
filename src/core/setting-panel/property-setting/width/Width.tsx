@@ -79,7 +79,7 @@ const Width = (
     if (inputType === 'px') {
       updateBlockPropsByPath(blockPath, property, rangeValue);
     } else if (inputType === '%') {
-      updateBlockPropsByPath(blockPath, property, rangeValue + '%');
+      updateBlockPropsByPath(blockPath, property, rangeValue ? rangeValue + '%' : undefined);
     }
   };
 
@@ -119,13 +119,6 @@ const Width = (
         )}
       </Grid>
       <Grid item xs={2}>
-        {/* <TextField
-          fullWidth
-          type="text"
-          value={rangeValue}
-          inputProps={{ style: { paddingLeft: 5, paddingRight: 5 } }}
-          size="small"
-        /> */}
         <NumberInput value={inputValue} onChange={(v, change) => inputHandler(v, change)} />
       </Grid>
       <Grid item xs={3}>
