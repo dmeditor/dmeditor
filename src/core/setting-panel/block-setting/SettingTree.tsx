@@ -265,7 +265,7 @@ export const SettingTree = (props: {
             upDown={propertyProps.display?.upDown}
             label={setting.name}
             description={setting.description}
-            key={setting.property}
+            key={blockPath + (setting.property || '')}
           >
             <Property {...propertyProps} />
           </PropertyItem>
