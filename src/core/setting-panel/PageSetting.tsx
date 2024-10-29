@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
-import { Alert, Button, MenuItem, Select, TextField } from '@mui/material';
+import { Delete, DeleteOutline } from '@mui/icons-material';
+import { Alert, Button, Checkbox, MenuItem, Select, TextField } from '@mui/material';
 
 import { dmeConfig, ImageSetting } from '../..';
 import { getPageSettings } from '../components/page';
@@ -9,8 +10,8 @@ import { Required, SettingHeader, SettingItem } from './style';
 
 interface SettingTypeProps {
   type: string;
-  defaultValue: string;
-  onChange: (value: string) => void;
+  defaultValue: string | boolean;
+  onChange: (value: string | boolean) => void;
 }
 
 const SettingType = (props: SettingTypeProps) => {
@@ -34,9 +35,30 @@ const SettingType = (props: SettingTypeProps) => {
           />
         </div>
       );
+    case 'checkbox':
+      return (
+        <Checkbox
+          checked={currentValue ? true : false}
+          size="small"
+          onChange={(e) => setCurrentValue(e.target.checked)}
+        />
+      );
     case 'image':
-      return '';
-    // return <ImageSetting value={currentValue} onChange={(v) => setCurrentValue(v)} />;
+      return (
+        <div style={{ display: 'flex' }}>
+          <ImageSetting
+            value={{ src: currentValue as string }}
+            onChange={(v) => setCurrentValue(v.src)}
+          />
+          {currentValue && (
+            <div>
+              <Button size="small" title="Delete" onClick={() => setCurrentValue('')}>
+                <DeleteOutline />
+              </Button>
+            </div>
+          )}
+        </div>
+      );
     case 'multitext':
       return (
         <div>

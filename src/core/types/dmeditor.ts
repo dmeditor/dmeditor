@@ -166,7 +166,7 @@ export namespace DMEData {
   export interface Page {
     title: string;
     theme?: string;
-    [index: string]: string | undefined;
+    [index: string]: string | boolean | undefined;
   }
 
   export interface SavedData {

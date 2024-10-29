@@ -201,11 +201,12 @@ const App = () => {
       editor.setData(data);
       editor.setPageSettings([
         { identifier: 'cover_image', name: 'Cover image', type: 'image' },
+        { identifier: 'in_menu', name: 'In menu', type: 'checkbox' },
         { identifier: 'summary', name: 'Summary', type: 'richtext' },
         { identifier: 'meta_key', name: 'Meta key', type: 'text' },
         { identifier: 'meta_description', name: 'Meta description', type: 'multitext' },
       ]);
-      editor.setPageData({ title: 'New page', theme: 'red', meta_key: 'test key' });
+      editor.setPageData({ title: 'New page', in_menu: false, theme: 'red', meta_key: 'test key' });
     }
   }, []);
 
@@ -223,7 +224,7 @@ const App = () => {
         }}
         onChange={(data) => {
           console.log('changed');
-          console.log(data.data);
+          console.log(data.data, data.page);
         }}
         onCancel={() => {
           window.alert('Cancel');
