@@ -40,16 +40,17 @@ const CustomSlider = styled(Slider)(() => ({
 
 const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
   const { value, min, max, step, disabled, onChange, onChangePaddingType } = props;
+  const { top, bottom, left, right } = value;
   const [inputManager] = useState(() => new InputManager());
   const [paddingValues, setPaddingValues] = useState<PaddingSeparateValue>({
-    top: value,
-    bottom: value,
-    left: value,
-    right: value,
+    top,
+    bottom,
+    left,
+    right,
   });
 
-  const [isLinkedTB, setIsLinkedTB] = useState(true);
-  const [isLinkedLR, setIsLinkedLR] = useState(true);
+  const [isLinkedTB, setIsLinkedTB] = useState(paddingValues.top === paddingValues.bottom);
+  const [isLinkedLR, setIsLinkedLR] = useState(paddingValues.left === paddingValues.right);
 
   const handleTopChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {
@@ -150,10 +151,10 @@ const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
         });
       },
     });
-  const customSliderValue = (posPaddingValue: ValidInputValue) => {
-    const value = convertedPaddingValue(posPaddingValue, 'slider');
-    return value === UNDEFINED_VALUE ? 0 : value;
-  };
+  // const customSliderValue = (posPaddingValue: ValidInputValue) => {
+  //   const value = convertedPaddingValue(posPaddingValue, 'slider');
+  //   return value === UNDEFINED_VALUE ? 0 : value;
+  // };
 
   return (
     <Grid container spacing={2} alignItems="center">
@@ -164,7 +165,8 @@ const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
               <Grid item xs>
                 <CustomSlider
                   disabled={disabled}
-                  value={customSliderValue(paddingValues.top)}
+                  // value={customSliderValue(paddingValues.top)}
+                  value={paddingValues.top}
                   valueLabelDisplay="auto"
                   step={step}
                   marks
@@ -201,7 +203,8 @@ const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
               <Grid item xs>
                 <CustomSlider
                   disabled={disabled}
-                  value={customSliderValue(paddingValues.bottom)}
+                  // value={customSliderValue(paddingValues.bottom)}
+                  value={paddingValues.bottom}
                   valueLabelDisplay="auto"
                   step={step}
                   marks
@@ -234,7 +237,8 @@ const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
               <Grid item xs>
                 <CustomSlider
                   disabled={disabled}
-                  value={customSliderValue(paddingValues.left)}
+                  // value={customSliderValue(paddingValues.left)}
+                  value={paddingValues.left}
                   valueLabelDisplay="auto"
                   step={step}
                   marks
@@ -272,7 +276,8 @@ const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
               <Grid item xs>
                 <CustomSlider
                   disabled={disabled}
-                  value={customSliderValue(paddingValues.right)}
+                  // value={customSliderValue(paddingValues.right)}
+                  value={paddingValues.right}
                   valueLabelDisplay="auto"
                   step={step}
                   marks

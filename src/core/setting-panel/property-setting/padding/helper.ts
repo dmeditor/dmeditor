@@ -1,4 +1,4 @@
-import { UNDEFINED_VALUE, type TYPE_UNDEFINED_VALUE } from './types';
+import { UNDEFINED_VALUE, type PaddingSeparateProps, type TYPE_UNDEFINED_VALUE } from './types';
 
 export const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
   if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'].includes(event.key)) {
@@ -112,6 +112,13 @@ export const convertedPaddingValue = (
     return isNaN(num) ? (type === 'input' ? UNDEFINED_VALUE : undefined) : num;
   }
   return type === 'input' ? UNDEFINED_VALUE : undefined;
+};
+
+export const convertedPaddingSeparateValue = (values: PaddingSeparateProps['value']) => {
+  if (!values || !Array.isArray(values)) {
+    return [];
+  }
+  return values?.map((value) => convertedPaddingValue(value));
 };
 
 export function inputConverted(value: number | string | null): number | TYPE_UNDEFINED_VALUE {

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useEditorStore } from '../../../main/store';
 import { type DME } from '../../../types';
 import { isNumber } from '../../../utils';
-import { convertedPaddingValue } from './helper';
+import { convertedPaddingSeparateValue, convertedPaddingValue } from './helper';
 import PaddingSeparate from './PaddingSeparate';
 import PaddingStandard from './PaddingStandard';
 import { UNDEFINED_VALUE, type PaddingSeparateValue, type PaddingType } from './types';
@@ -20,7 +20,10 @@ const Padding: React.FC<
   const max = isNumber(parameters?.max) ? parameters?.max : 100;
   const step = isNumber(parameters?.step) ? parameters?.step : 1;
 
-  const currentValue = convertedPaddingValue(value);
+  const standardValue = convertedPaddingValue(value);
+  const separateValues = Array.isArray(value)
+    ? convertedPaddingSeparateValue(value)
+    : Array.from({ length: 4 }).fill(standardValue);
   const [paddingType, setPaddingType] = useState<PaddingType>('standard');
 
   const { updateBlockPropsByPath } = useEditorStore();
@@ -46,7 +49,7 @@ const Padding: React.FC<
       {paddingType === 'standard' && (
         <PaddingStandard
           disabled={disabled}
-          value={currentValue}
+          value={standardValue}
           min={min}
           max={max}
           step={step}
@@ -68,7 +71,12 @@ const Padding: React.FC<
       {paddingType === 'separate' && (
         <PaddingSeparate
           disabled={disabled}
-          value={currentValue}
+          value={{
+            ...['top', 'right', 'bottom', 'left'].reduce(
+              (acc, cur, idx) => ({ ...acc, [cur]: separateValues[idx] }),
+              {},
+            ),
+          }}
           min={min}
           max={max}
           step={step}
