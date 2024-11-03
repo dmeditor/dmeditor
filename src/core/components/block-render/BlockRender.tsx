@@ -45,6 +45,12 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
     let styles = [];
     let styleClasses: { [key: string]: string } = {};
 
+    let builtinClasses = ` dme-block dme-block-depth-${path.length} dme-blocktype-${widgetArr[0]}`;
+    if (widgetArr[1]) {
+      builtinClasses += ' dme-blockvariant-' + widgetArr[1];
+    }
+    let rootClasses = builtinClasses;
+
     if (styleObj) {
       for (const styleIdentifier of Object.keys(styleObj)) {
         const widgetStyle = getWidgetStyle(blockType, styleIdentifier);
@@ -68,12 +74,6 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
         }
       }
 
-      let builtinClasses = ` dme-block dme-blocktype-${widgetArr[0]}`;
-      if (widgetArr[1]) {
-        builtinClasses += ' dme-blockvariant-' + widgetArr[1];
-      }
-
-      let rootClasses = builtinClasses;
       if (Object.keys(styleClasses).length > 0) {
         if (styleClasses['root']) {
           rootClasses += ` ${styleClasses['root']}`;
@@ -81,8 +81,8 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
       }
       return { rootClasses: rootClasses, widgetStyles: styles, styleClasses: styleClasses };
     }
-    return { rootClasses: '', styleClasses: {} };
-  }, [id, styleObj]);
+    return { rootClasses: rootClasses, styleClasses: {} };
+  }, [id, path, styleObj]);
 
   if (!Widget) {
     console.warn(`Widget ${widgetArr} not found. Render empty.`);
@@ -99,7 +99,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
 
   return (
     <BlockWrapper
-      className={'dme-block-wrapper dme-block-depth-' + path.length + ' ' + cssStyles.rootClasses}
+      className={'dme-block-wrapper ' + cssStyles.rootClasses}
       widgetStyles={cssStyles.widgetStyles}
       onClick={onSelect}
       active={active}
