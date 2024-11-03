@@ -99,7 +99,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
 
   return (
     <BlockWrapper
-      className={'dme-block-wrapper ' + cssStyles.rootClasses}
+      className={'dme-block-wrapper dme-block-depth-' + path.length + ' ' + cssStyles.rootClasses}
       widgetStyles={cssStyles.widgetStyles}
       onClick={onSelect}
       active={active}
