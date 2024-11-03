@@ -59,14 +59,13 @@ export const defaultStyles = {
     'collapsable-text':{
         cssStyle:`
              .dme-w-button-container{
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                // display: flex;
+                // align-items: center;
+                // justify-content: center;
             }
 
             .dme-w-button{
                 padding: 10px 15px;
-                display:flex;
                 border: none;
                 cursor: pointer;
                 background: white;
