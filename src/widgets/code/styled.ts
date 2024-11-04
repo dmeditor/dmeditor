@@ -10,5 +10,5 @@ export const CodeMask = styled.div<{ height: number }>`
   left: 0px;
   top: 0px;
   height: ${(props) => props.height}px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.02);
 `;
