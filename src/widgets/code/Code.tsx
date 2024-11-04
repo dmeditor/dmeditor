@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { CloseOutlined } from '@mui/icons-material';
 import {
   Alert,
@@ -13,7 +13,7 @@ import {
 
 import { DME, useEditorStore } from '../..';
 import { CodeEntity } from './entity';
-import { StyledCode } from './styled';
+import { CodeMask, StyledCode } from './styled';
 
 export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   const {
@@ -26,6 +26,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   const { updateBlockByPath } = useEditorStore();
   const [open, setOpen] = useState(!content);
   const [value, setValue] = useState('');
+  const divRef = useRef<HTMLDivElement>(null);
   let mounted = false;
 
   const handleClose = () => {
@@ -43,7 +44,12 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   return (
     <StyledCode editMode={props.mode === 'edit'}>
       {content ? (
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <>
+          <div dangerouslySetInnerHTML={{ __html: content }} ref={divRef} />
+          {props.mode === 'edit' && !props.active && (
+            <CodeMask height={divRef?.current?.clientHeight || 0} />
+          )}
+        </>
       ) : (
         <div>Please Input Code Content</div>
       )}

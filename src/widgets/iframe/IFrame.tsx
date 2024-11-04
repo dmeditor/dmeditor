@@ -4,6 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/ma
 
 import { dmeConfig, generalSettings, useEditorStore } from '../..';
 import type { DME, DMEData } from '../..';
+import { IFrameMask } from './styled';
 
 export type IFrameEntity = {
   value: string;
@@ -67,11 +68,14 @@ export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
   return (
     <>
       {!!data.value && (
-        <iframe
-          src={data.value}
-          allowFullScreen
-          style={{ height: data.settings.height, display: 'block' }}
-        />
+        <>
+          <iframe
+            src={data.value}
+            allowFullScreen
+            style={{ height: data.settings.height, display: 'block' }}
+          />
+          {props.mode === 'edit' && !props.active && <IFrameMask height={data.settings.height} />}
+        </>
       )}
     </>
   );

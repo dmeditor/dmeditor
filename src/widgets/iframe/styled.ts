@@ -1,10 +1,6 @@
 import styled from '@emotion/styled';
 
-export const StyledCode = styled.div<{ editMode?: boolean }>`
-  min-height: 20px;
-`;
-
-export const CodeMask = styled.div<{ height: number }>`
+export const IFrameMask = styled.div<{ height: number }>`
   position: absolute;
   width: 100%;
   left: 0px;
