@@ -114,9 +114,9 @@ const getIcon = (format: string): ReactNode => {
       return <FormatItalic />;
     case 'underline':
       return <FormatUnderlined />;
-    case 'heading-one':
+    case 'h1':
       return <LooksOneOutlined />;
-    case 'heading-two':
+    case 'h2':
       return <LooksTwoOutlined />;
     default:
       return null;
@@ -177,12 +177,12 @@ const BlockButton = ({ format }) => {
   );
 };
 
-const isMarkActive = (editor, format) => {
+const isMarkActive = (editor: Editor, format) => {
   const marks = Editor.marks(editor);
   return marks ? marks[format] === true : false;
 };
 
-const isBlockActive = (editor, format, blockType = 'type') => {
+export const isBlockActive = (editor: Editor, format, blockType = 'type') => {
   const { selection } = editor;
   if (!selection) return false;
 
@@ -192,11 +192,10 @@ const isBlockActive = (editor, format, blockType = 'type') => {
       match: (n) => !Editor.isEditor(n) && SlateElement.isElement(n) && n[blockType] === format,
     }),
   );
-
   return !!match;
 };
 
-const toggleMark = (editor, format) => {
+const toggleMark = (editor: Editor, format) => {
   const isActive = isMarkActive(editor, format);
 
   if (isActive) {
@@ -206,7 +205,7 @@ const toggleMark = (editor, format) => {
   }
 };
 
-const toggleBlock = (editor, format) => {
+export const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(
     editor,
     format,
@@ -442,17 +441,35 @@ const Element = (props: ElementProps) => {
           {children}
         </ul>
       );
-    case 'heading-one':
+    case 'h1':
       return (
         <h1 style={style} {...attributes}>
           {children}
         </h1>
       );
-    case 'heading-two':
+    case 'h2':
       return (
         <h2 style={style} {...attributes}>
           {children}
         </h2>
+      );
+    case 'h3':
+      return (
+        <h3 style={style} {...attributes}>
+          {children}
+        </h3>
+      );
+    case 'h4':
+      return (
+        <h4 style={style} {...attributes}>
+          {children}
+        </h4>
+      );
+    case 'h5':
+      return (
+        <h5 style={style} {...attributes}>
+          {children}
+        </h5>
       );
     case 'list-item':
       return (

@@ -1,7 +1,6 @@
 'use strict';
 
-import { BaseNode, Descendant, Node, Element as SlateElement } from 'slate';
-
+import type { DMEConfigType } from '../config';
 import type { DMEData } from '../types';
 import { logger } from './log';
 import { getWidgetStyle, getWidgetWithVariant } from './register';
@@ -325,4 +324,10 @@ export const getEmbedConfigObject = (rootWidget: string) => {
     return def.events.embedConfig;
   }
   return null;
+};
+
+export const editorConfigConverted = (str: string): keyof DMEConfigType['editor'] => {
+  return str.replace(/-([a-z])/g, (_, letter) =>
+    letter.toUpperCase(),
+  ) as keyof DMEConfigType['editor'];
 };

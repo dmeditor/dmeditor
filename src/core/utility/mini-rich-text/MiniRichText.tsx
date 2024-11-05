@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { FocusEventHandler, useEffect, useState } from 'react';
-import { createEditor, Transforms, type Descendant, type Element as SlateElement } from 'slate';
+import { FocusEventHandler, useEffect } from 'react';
+import { createEditor, type Descendant, type Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
-import { Editable, ReactEditor, Slate, withReact } from 'slate-react';
+import { Editable, Slate, withReact } from 'slate-react';
 
 import {
   Element,

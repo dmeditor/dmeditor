@@ -66,6 +66,7 @@ export interface DMEConfigType {
     ui: { [variable: string]: string };
     fontFamily?: Array<{ value: string; label: string }>;
     fontSize?: Array<{ value: string; label: string }>;
+    heading?: Array<{ value: string; label: string }>;
     characters?: Array<string>;
     settingPanelWidth?: number;
   };
@@ -163,6 +164,12 @@ const defaultConfig = () => {
         { value: '40px', label: '40px' },
         { value: '48px', label: '48px' },
       ],
+      heading: [
+        { value: 'p', label: 'Heading' },
+        { value: 'h2', label: 'H2' },
+        { value: 'h3', label: 'H3' },
+        { value: 'h4', label: 'H4' },
+      ],
       characters: ['😃'],
       settingPanelWidth: 400,
       ui: {},
@@ -202,6 +209,7 @@ const dmeConfig: {
     categories: Array<DME.WidgetCategory>;
     settingGroups: { [key: string]: string };
     fontFamily: Array<{ value: string; label: string }>;
+    heading: Array<{ value: string; label: string }>;
     fontSize: Array<{ value: string; label: string }>;
     characters: Array<string>;
     zIndex: number;
