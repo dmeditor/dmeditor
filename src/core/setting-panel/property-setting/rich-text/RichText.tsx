@@ -79,7 +79,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
         <Toolbar>
           <MarkSelector format="font-family" />
           <MarkSelector format="font-size" />
-          <BlockSelector format="paragraph-styles" />
+          <BlockSelector format="heading" />
           <MarkColor format="color" />
           <ToolsGroup>
             <MarkButton format="bold" />

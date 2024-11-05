@@ -8,7 +8,7 @@ import { HeadingComponent } from '../../../../widgets/heading/Heading';
 import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
 
-type SelectorType = 'font-size' | 'font-family' | 'paragraph-styles';
+type SelectorType = 'font-size' | 'font-family' | 'heading';
 
 type MarksWithFontFamily = Omit<BaseText, 'text'> & { [key: string]: any };
 const { useState, useMemo } = React;
@@ -112,21 +112,24 @@ const MarkSelector = (props: { format: SelectorType }) => {
         },
       }}
     >
-      {types.map((font, index) => (
-        <MenuItem key={font.value} value={index}>
+      {types.map((item, index) => (
+        <MenuItem key={item.value} value={index}>
           {format === 'font-family' && (
-            <span style={index > 0 ? { fontFamily: `${font.value}` } : {}}>{font.label}</span>
+            <span style={index > 0 ? { fontFamily: `${item.value}` } : {}}>{item.label}</span>
           )}
-          {format === 'font-size' && <span>{font.label}</span>}
-          {format === 'paragraph-styles' && (
-            <HeadingComponent
-              style={{
-                margin: 0,
-              }}
-              level={font.value}
-              children={font.label}
-            />
-          )}
+          {format === 'font-size' && <span>{item.label}</span>}
+          {format === 'heading' &&
+            (item.value === 'p' ? (
+              item.label
+            ) : (
+              <HeadingComponent
+                style={{
+                  margin: 0,
+                }}
+                level={{ h1: 1, h2: 2, h3: 3, h4: 4, h5: 5 }[item.value]}
+                children={item.label}
+              />
+            ))}
         </MenuItem>
       ))}
     </Select>

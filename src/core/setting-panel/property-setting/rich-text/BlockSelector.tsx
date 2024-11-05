@@ -9,7 +9,7 @@ import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
 import { isBlockActive, toggleBlock } from './helper';
 
-type SelectorType = 'paragraph-styles';
+type SelectorType = 'heading';
 
 const { useState, useMemo } = React;
 
@@ -105,7 +105,7 @@ const BlockSelector = (props: { format: SelectorType }) => {
     >
       {types.map((font, index) => (
         <MenuItem key={font.value} value={index}>
-          {format === 'paragraph-styles' && (
+          {format === 'heading' && (
             <HeadingComponent
               style={{
                 margin: 0,
