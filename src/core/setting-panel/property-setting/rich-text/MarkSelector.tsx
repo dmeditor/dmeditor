@@ -6,6 +6,7 @@ import { useSlate } from 'slate-react';
 
 import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
+import { ToolbarSelect } from './styled';
 
 type SelectorType = 'font-size' | 'font-family';
 
@@ -93,13 +94,9 @@ const MarkSelector = (props: { format: SelectorType }) => {
   };
 
   return (
-    <Select
+    <ToolbarSelect
       sx={{
-        width: '100px',
-        height: '30px',
-        fontSize: '14px',
-        padding: '0px',
-        marginLeft: '4px',
+        width: { 'font-family': 80, 'font-size': 60 }[props.format] || 100,
       }}
       value={currentIndex()}
       onChange={handleChange}
@@ -119,7 +116,7 @@ const MarkSelector = (props: { format: SelectorType }) => {
           {format === 'font-size' && <span>{item.label}</span>}
         </MenuItem>
       ))}
-    </Select>
+    </ToolbarSelect>
   );
 };
 

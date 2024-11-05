@@ -1,5 +1,6 @@
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
+import { Select } from '@mui/material';
 
 export const StyledResizable = css`
   .react-resizable {
@@ -75,4 +76,17 @@ export const ImageWrapper = styled.div((props: { align: 'left' | 'center' | 'rig
   display: flex;
   justify-content: ${align};
   `;
+});
+
+export const ToolbarSelect = styled(Select)({
+  '& .MuiSelect-icon': {
+    right: '0px',
+  },
+  height: '30px',
+  fontSize: '14px',
+  marginLeft: '4px',
+  '& .MuiInputBase-input': {
+    paddingLeft: '8px',
+    paddingRight: '16px !important', //todo: this seems is a hack, better way?
+  },
 });

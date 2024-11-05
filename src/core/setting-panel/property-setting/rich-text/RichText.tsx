@@ -77,9 +77,9 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
     >
       <Slate editor={editor} initialValue={initialValue} onValueChange={handleValueChange}>
         <Toolbar>
+          <BlockSelector format="heading" />
           <MarkSelector format="font-family" />
           <MarkSelector format="font-size" />
-          <BlockSelector format="heading" />
           <MarkColor format="color" />
           <ToolsGroup>
             <MarkButton format="bold" />

@@ -8,6 +8,7 @@ import { useSlate } from 'slate-react';
 import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
 import { isBlockActive, toggleBlock } from './helper';
+import { ToolbarSelect } from './styled';
 
 type SelectorType = 'heading';
 
@@ -85,15 +86,9 @@ const BlockSelector = (props: { format: SelectorType }) => {
   };
 
   return (
-    <Select
-      sx={{
-        width: '100px',
-        height: '30px',
-        fontSize: '14px',
-        padding: '0px',
-        marginLeft: '4px',
-      }}
+    <ToolbarSelect
       value={currentIndex()}
+      sx={{ width: 85 }}
       onChange={handleChange}
       MenuProps={{
         PaperProps: {
@@ -126,7 +121,7 @@ const BlockSelector = (props: { format: SelectorType }) => {
           )}
         </MenuItem>
       ))}
-    </Select>
+    </ToolbarSelect>
   );
 };
 
