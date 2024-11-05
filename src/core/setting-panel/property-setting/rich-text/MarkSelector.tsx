@@ -4,7 +4,7 @@ import type { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
-import { HeadingComponent } from '../../../../widgets/heading/Heading';
+import { HeadingComponent } from '../../../../core/utility/HeadingComponent';
 import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
 

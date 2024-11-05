@@ -2,27 +2,9 @@ import * as React from 'react';
 
 import { useEditorStore } from '../..';
 import type { DME } from '../..';
+import { HeadingComponent } from '../../core/utility/HeadingComponent';
 import { isHTMLElement } from '../../core/utils';
 import { EntityHeadingBlock } from './entity';
-
-interface HeadingComponentProps extends React.HTMLAttributes<HTMLOrSVGElement> {
-  level?: number;
-}
-
-export const HeadingComponent: React.FC<HeadingComponentProps> = ({
-  level: number = 2,
-  ...restProps
-}) => {
-  return React.createElement(
-    `h${number}`,
-    {
-      ...restProps,
-      style: restProps.style,
-      suppressContentEditableWarning: true,
-    },
-    restProps.children,
-  );
-};
 
 // const Heading = ({ align, level }: { align: string; level: number }) => {
 const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
