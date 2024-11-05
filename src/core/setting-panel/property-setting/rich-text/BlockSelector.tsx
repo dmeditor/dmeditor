@@ -1,10 +1,10 @@
 import * as React from 'react';
+import { css } from '@emotion/css';
 import { MenuItem, Select } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
-import { HeadingComponent } from '../../../../core/utility/HeadingComponent';
 import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
 import { isBlockActive, toggleBlock } from './helper';
@@ -103,16 +103,26 @@ const BlockSelector = (props: { format: SelectorType }) => {
         },
       }}
     >
-      {types.map((font, index) => (
-        <MenuItem key={font.value} value={index}>
+      {types.map((item, index) => (
+        <MenuItem key={item.value} value={index}>
           {format === 'heading' && (
-            <HeadingComponent
-              style={{
-                margin: 0,
-              }}
-              level={Number(font.value.replace(/h/g, ''))}
-              children={font.label}
-            />
+            <span
+              className={css`
+                ${((props: { value: string }) => {
+                  if (props.value === 'p') {
+                    return {};
+                  }
+                  return {
+                    fontWeight: 'bold',
+                    fontSize: { h2: '1.4rem', h3: '1.1rem', h4: '0.9rem', h5: '0.85rem' }[
+                      props.value
+                    ],
+                  };
+                })({ value: item.value })}
+              `}
+            >
+              {item.label}
+            </span>
           )}
         </MenuItem>
       ))}

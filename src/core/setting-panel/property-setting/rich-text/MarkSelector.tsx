@@ -4,11 +4,10 @@ import type { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 import { BaseText, Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
-import { HeadingComponent } from '../../../../core/utility/HeadingComponent';
 import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
 
-type SelectorType = 'font-size' | 'font-family' | 'heading';
+type SelectorType = 'font-size' | 'font-family';
 
 type MarksWithFontFamily = Omit<BaseText, 'text'> & { [key: string]: any };
 const { useState, useMemo } = React;
@@ -118,18 +117,6 @@ const MarkSelector = (props: { format: SelectorType }) => {
             <span style={index > 0 ? { fontFamily: `${item.value}` } : {}}>{item.label}</span>
           )}
           {format === 'font-size' && <span>{item.label}</span>}
-          {format === 'heading' &&
-            (item.value === 'p' ? (
-              item.label
-            ) : (
-              <HeadingComponent
-                style={{
-                  margin: 0,
-                }}
-                level={{ h1: 1, h2: 2, h3: 3, h4: 4, h5: 5 }[item.value]}
-                children={item.label}
-              />
-            ))}
         </MenuItem>
       ))}
     </Select>
