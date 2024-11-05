@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { css } from '@emotion/css';
-import { debounce } from 'lodash';
 import { createEditor } from 'slate';
 import type { Descendant, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
 import { useEditorStore, type DME } from '../../../..';
-import definition from '../../../../widgets/text/definition';
 import AddLinkButton from './AddLinkButton';
+import BlockSelector from './BlockSelector';
 import { CharacterButton } from './CharacterButton';
 import {
   BlockButton,
@@ -81,6 +79,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
         <Toolbar>
           <MarkSelector format="font-family" />
           <MarkSelector format="font-size" />
+          <BlockSelector format="paragraph-styles" />
           <MarkColor format="color" />
           <ToolsGroup>
             <MarkButton format="bold" />
@@ -88,10 +87,10 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
             <MarkButton format="underline" />
           </ToolsGroup>
           {/* <MarkButton format="code" /> */}
-          <ToolsGroup>
-            <BlockButton format="heading-one" />
-            <BlockButton format="heading-two" />
-          </ToolsGroup>
+          {/* <ToolsGroup>
+            <BlockButton format="h1" />
+            <BlockButton format="h2" />
+          </ToolsGroup> */}
           {/* <BlockButton format="block-quote" /> */}
           <ToolsGroup>
             <BlockButton format="numbered-list" />

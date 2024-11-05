@@ -66,6 +66,7 @@ export interface DMEConfigType {
     ui: { [variable: string]: string };
     fontFamily?: Array<{ value: string; label: string }>;
     fontSize?: Array<{ value: string; label: string }>;
+    paragraphStyles?: Array<{ value: string; label: string }>;
     characters?: Array<string>;
     settingPanelWidth?: number;
   };
@@ -163,6 +164,14 @@ const defaultConfig = () => {
         { value: '40px', label: '40px' },
         { value: '48px', label: '48px' },
       ],
+      paragraphStyles: [
+        { value: 'p', label: 'Paragraph' },
+        { value: 'h1', label: 'H1' },
+        { value: 'h2', label: 'H2' },
+        { value: 'h3', label: 'H3' },
+        { value: 'h4', label: 'H4' },
+        { value: 'h5', label: 'H5' },
+      ],
       characters: ['😃'],
       settingPanelWidth: 400,
       ui: {},
@@ -202,6 +211,7 @@ const dmeConfig: {
     categories: Array<DME.WidgetCategory>;
     settingGroups: { [key: string]: string };
     fontFamily: Array<{ value: string; label: string }>;
+    paragraphStyles: Array<{ value: string; label: string }>;
     fontSize: Array<{ value: string; label: string }>;
     characters: Array<string>;
     zIndex: number;

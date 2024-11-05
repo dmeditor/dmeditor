@@ -7,32 +7,24 @@ import { useSlate } from 'slate-react';
 import { HeadingComponent } from '../../../../widgets/heading/Heading';
 import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
+import { isBlockActive, toggleBlock } from './helper';
 
-type SelectorType = 'font-size' | 'font-family' | 'paragraph-styles';
+type SelectorType = 'paragraph-styles';
 
-type MarksWithFontFamily = Omit<BaseText, 'text'> & { [key: string]: any };
 const { useState, useMemo } = React;
 
-const isMarkActive = (editor: Editor, format: SelectorType) => {
-  const marks = Editor.marks(editor) as MarksWithFontFamily;
-  if (!marks) {
-    return {
-      active: false,
-      [format]: '',
-    };
-  }
+const isSelectorBlockActive = (editor: Editor, format: SelectorType, index: number) => {
+  const value = getValue(index, format);
+  const active = isBlockActive(editor, value);
+
   return {
-    active: marks[format] ? true : false,
-    [format]: marks[format] || '',
+    active,
+    value,
   };
 };
 
-const toggleMark = (editor: Editor, format: SelectorType, value: string) => {
-  // const { active } = isMarkActive(editor, format);
-  Editor.removeMark(editor, format);
-  if (value) {
-    Editor.addMark(editor, format, value);
-  }
+const toggleSelectorBlock = (editor: Editor, value: string) => {
+  toggleBlock(editor, value);
 };
 
 const getEditorPropList = (type: SelectorType) => {
@@ -58,15 +50,14 @@ export const getValue = (index: number, type: SelectorType) => {
 const isSelected = (editor: Editor, format: SelectorType, selectedIndex: number) => {
   const { selection } = editor;
   if (!selection) return false;
-
   const value = getValue(selectedIndex, format);
-  toggleMark(editor, format, value);
+  toggleSelectorBlock(editor, value);
 };
 
-const MarkSelector = (props: { format: SelectorType }) => {
+const BlockSelector = (props: { format: SelectorType }) => {
   const { format } = props;
   const editor = useSlate();
-  const [_, setIndex] = useState(0);
+  const [index, setIndex] = useState(0);
 
   const types = useMemo(() => {
     return getEditorPropList(format);
@@ -81,7 +72,7 @@ const MarkSelector = (props: { format: SelectorType }) => {
   };
 
   const currentIndex = () => {
-    const { active, [format]: value } = isMarkActive(editor, format);
+    const { active, value } = isSelectorBlockActive(editor, format, index);
     if (active) {
       const index = types.findIndex((item) => item.value === value);
       if (index === -1) {
@@ -114,16 +105,12 @@ const MarkSelector = (props: { format: SelectorType }) => {
     >
       {types.map((font, index) => (
         <MenuItem key={font.value} value={index}>
-          {format === 'font-family' && (
-            <span style={index > 0 ? { fontFamily: `${font.value}` } : {}}>{font.label}</span>
-          )}
-          {format === 'font-size' && <span>{font.label}</span>}
           {format === 'paragraph-styles' && (
             <HeadingComponent
               style={{
                 margin: 0,
               }}
-              level={font.value}
+              level={Number(font.value.replace(/h/g, ''))}
               children={font.label}
             />
           )}
@@ -133,4 +120,4 @@ const MarkSelector = (props: { format: SelectorType }) => {
   );
 };
 
-export default MarkSelector;
+export default BlockSelector;
