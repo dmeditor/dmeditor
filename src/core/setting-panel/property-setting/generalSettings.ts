@@ -11,7 +11,7 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['block', 'list'],
   },
   {
-    name: 'Align',
+    name: 'Self align',
     settingComponent: 'align',
     property: 'settings.general.align',
     category: 'style',
@@ -45,6 +45,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.marginTop',
     parameters: { min: 0, max: 100 },
     category: 'style',
+    description: 'Distance to preivous block',
     group: 'style_block',
     styleTags: ['list'],
   },
