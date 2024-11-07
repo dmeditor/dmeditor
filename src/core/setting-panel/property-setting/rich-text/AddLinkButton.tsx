@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AddLinkOutlined } from '@mui/icons-material';
+import { LinkOutlined } from '@mui/icons-material';
 import { BrowseLinkCallbackParams } from 'dmeditor/core/config';
 import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
@@ -37,7 +37,7 @@ const AddLinkButton = () => {
           }
         }}
       >
-        <AddLinkOutlined />
+        <LinkOutlined />
       </Button>
       {visible ? (
         <LinkChooser
