@@ -1,12 +1,15 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
+import { DeleteOutline, MailOutline, PhoneOutlined } from '@mui/icons-material';
 import {
+  Box,
   Button,
   Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   FormControlLabel,
+  IconButton,
   Tab,
   Tabs,
   TextField,
@@ -68,6 +71,38 @@ export const LinkChooser = forwardRef<LinkRef, LinkChooserProps>((props, ref) =>
     );
   };
 
+  const linkTypes = { email: 'mailto:', phone: 'tel:', http: 'http://', https: 'https://' };
+  const currentLinkType = useMemo(() => {
+    const link = localValue.link;
+    let result = '';
+    for (const key of Object.keys(linkTypes)) {
+      const prefix = (linkTypes as any)[key];
+      if (link.startsWith(prefix)) {
+        result = key;
+        break;
+      }
+    }
+    return result;
+  }, [localValue.link]);
+
+  const addUpdatePrefix = (prefixType: 'email' | 'phone' | 'http' | 'https') => {
+    const prefix = linkTypes[prefixType];
+    if (localValue.link.startsWith(prefix)) {
+      setLocalValue({ ...localValue, link: localValue.link.substring(prefix.length) });
+    } else {
+      if (currentLinkType) {
+        const v = localValue.link.substring((linkTypes as any)[currentLinkType].length);
+        setLocalValue({ ...localValue, link: prefix + v });
+      } else {
+        setLocalValue({ ...localValue, link: prefix + localValue.link });
+      }
+    }
+  };
+
+  const empty = () => {
+    setLocalValue({ ...localValue, link: '' });
+  };
+
   const ChooseElements: {
     label: string;
     element: JSX.Element;
@@ -76,12 +111,56 @@ export const LinkChooser = forwardRef<LinkRef, LinkChooserProps>((props, ref) =>
       label: 'Link',
       element: (
         <div>
-          <TextField
-            label="Link"
-            value={localValue.link || ''}
-            onChange={handleTextChange}
-            fullWidth
-          />
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              size="small"
+              label="URL"
+              InputLabelProps={{ shrink: true }}
+              value={localValue.link || ''}
+              fullWidth
+              onChange={handleTextChange}
+            />
+            <IconButton size="small" title="Empty" onClick={() => empty()}>
+              <DeleteOutline />
+            </IconButton>
+          </Box>
+          <div>
+            <Box sx={{ mt: 2 }}>
+              <label>Link help: </label>
+              <Button
+                size="small"
+                title="Email"
+                color={currentLinkType === 'https' ? 'info' : 'inherit'}
+                onClick={() => addUpdatePrefix('https')}
+              >
+                https
+              </Button>
+              <Button
+                size="small"
+                title="Http"
+                color={currentLinkType === 'http' ? 'info' : 'inherit'}
+                onClick={() => addUpdatePrefix('http')}
+              >
+                http
+              </Button>
+              <Button
+                size="small"
+                title="Email"
+                color={currentLinkType === 'email' ? 'info' : 'inherit'}
+                onClick={() => addUpdatePrefix('email')}
+              >
+                <MailOutline />
+              </Button>
+              <Button
+                size="small"
+                title="Telephone"
+                color={currentLinkType === 'phone' ? 'info' : 'inherit'}
+                onClick={() => addUpdatePrefix('phone')}
+              >
+                <PhoneOutlined />
+              </Button>
+            </Box>
+          </div>
           {renderOpenNew()}
         </div>
       ),
