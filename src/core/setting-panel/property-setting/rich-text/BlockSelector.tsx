@@ -2,22 +2,24 @@ import * as React from 'react';
 import { css } from '@emotion/css';
 import { MenuItem, Select } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select/SelectInput';
-import { BaseText, Editor } from 'slate';
+import { BaseText, Editor, Element as SlateElement } from 'slate';
 import { useSlate } from 'slate-react';
 
 import { dmeConfig } from '../../../config';
 import { editorConfigConverted, isNumber } from '../../../utils';
-import { isBlockActive, toggleBlock } from './helper';
+import { getSelectedTextType, isBlockActive, toggleBlock } from './helper';
 import { ToolbarSelect } from './styled';
 
 type SelectorType = 'heading';
 
 const { useState, useMemo } = React;
 
-const isSelectorBlockActive = (editor: Editor, format: SelectorType, index: number) => {
-  const value = getValue(index, format);
+const isSelectorBlockActive = (editor: Editor) => {
+  // const value = getValue(index, format);
+  const value = getSelectedTextType(editor);
+  const { selection } = editor;
+  if (!selection) return false;
   const active = isBlockActive(editor, value);
-
   return {
     active,
     value,
@@ -73,7 +75,9 @@ const BlockSelector = (props: { format: SelectorType }) => {
   };
 
   const currentIndex = () => {
-    const { active, value } = isSelectorBlockActive(editor, format, index);
+    const blockStatus = isSelectorBlockActive(editor);
+    if (!blockStatus) return 0;
+    const { active, value } = blockStatus;
     if (active) {
       const index = types.findIndex((item) => item.value === value);
       if (index === -1) {

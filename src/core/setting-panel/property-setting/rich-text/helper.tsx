@@ -766,6 +766,22 @@ export const withImages = (editor: withInsertDataEdtior) => {
   return editor;
 };
 
+export const getSelectedTextType = (editor: Editor): string | null => {
+  if (editor.selection && Range.isCollapsed(editor.selection)) {
+    const [node] = Editor.nodes(editor, {
+      match: (n) => SlateElement.isElement(n) && n.type !== undefined,
+      mode: 'all',
+    });
+
+    if (node) {
+      const [element] = node as unknown as [SlateElement];
+      return element.type as string;
+    }
+  }
+
+  return null;
+};
+
 export {
   toggleMark,
   MarkButton,

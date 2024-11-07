@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { css } from '@emotion/css';
-import { createEditor } from 'slate';
-import type { Descendant, Element as SlateElement } from 'slate';
+import { createEditor, Descendant, Editor, Element as SlateElement, Transforms } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
 
@@ -12,7 +11,9 @@ import { CharacterButton } from './CharacterButton';
 import {
   BlockButton,
   Element,
+  getSelectedTextType,
   InsertImageButton,
+  isBlockActive,
   Leaf,
   MarkButton,
   Toolbar,
@@ -68,6 +69,23 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
   editor.children = value;
 
   const initialValue = value;
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      // if (event.key === 'Enter' && event.shiftKey) {
+      //   event.preventDefault();
+      //   editor.insertText('\n');
+      // }
+      const format = getSelectedTextType(editor);
+      if (event.key === 'Enter' && format) {
+        const match = isBlockActive(editor, format);
+        if (match) {
+          event.preventDefault();
+          Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] });
+        }
+      }
+    },
+    [editor],
+  );
 
   return (
     <div
@@ -112,13 +130,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          onKeyDown={(event: any) => {
-            //soft break
-            if (event.key === 'Enter' && event.shiftKey) {
-              event.preventDefault();
-              editor.insertText('\n');
-            }
-          }}
+          onKeyDown={handleKeyDown}
           style={{
             background: 'white',
             padding: 10,
