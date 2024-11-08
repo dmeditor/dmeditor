@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Tune } from '@mui/icons-material';
-import { Grid, InputAdornment, Slider, styled, TextField } from '@mui/material';
+import { Button, Grid, InputAdornment, Slider, styled, TextField } from '@mui/material';
 
 import { isNumber } from '../../../utils';
 import { InputHandler } from './handlers/InputHandler';
@@ -20,6 +20,23 @@ const CustomSlider = styled(Slider)(() => ({
     height: 2,
   },
 }));
+
+const StyledTextField = styled(TextField)({
+  '& .MuiInputBase-root': {
+    paddingRight: '5px',
+  },
+
+  '& .MuiInputBase-input': {
+    padding: '8px 6px',
+    fontSize: '0.8rem',
+  },
+  '& .MuiInputAdornment-root': {
+    marginLeft: '0px',
+  },
+  '& .MuiInputAdornment-root p': {
+    fontSize: '0.8rem',
+  },
+});
 
 const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
   const { value, onChange, min, max, step, disabled, onChangePaddingType } = props;
@@ -64,7 +81,7 @@ const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
   const customSliderValue =
     sliderValue === UNDEFINED_VALUE || sliderValue === undefined ? 0 : sliderValue;
   return (
-    <Grid container spacing={2} alignItems="center">
+    <Grid container spacing={1} alignItems="center">
       <Grid item xs>
         <CustomSlider
           disabled={disabled}
@@ -79,8 +96,8 @@ const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
           }}
         />
       </Grid>
-      <Grid item xs={5}>
-        <TextField
+      <Grid item xs={3}>
+        <StyledTextField
           disabled={disabled}
           value={currentValue}
           size="small"
@@ -100,7 +117,9 @@ const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
         />
       </Grid>
       <Grid item xs={2}>
-        <Tune style={{ cursor: 'pointer' }} onClick={onChangePaddingType} />
+        <Button size="small" title="Advanced mode" color="inherit" onClick={onChangePaddingType}>
+          <Tune />
+        </Button>
       </Grid>
     </Grid>
   );

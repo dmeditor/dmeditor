@@ -22,6 +22,12 @@ export interface PaddingStandardProps {
   onChangePaddingType: () => void;
 }
 
-export interface PaddingSeparateProps extends PaddingStandardProps {
+export interface PaddingSeparateProps extends Omit<PaddingStandardProps, 'value'> {
+  value?: {
+    top: number | undefined | TYPE_UNDEFINED_VALUE;
+    right: number | undefined | TYPE_UNDEFINED_VALUE;
+    bottom: number | undefined | TYPE_UNDEFINED_VALUE;
+    left: number | undefined | TYPE_UNDEFINED_VALUE;
+  };
   onChange?: (value: number | string | PaddingSeparateValue) => void;
 }
