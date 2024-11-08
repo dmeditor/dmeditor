@@ -31,5 +31,5 @@ export const colorList = css`
   padding: 0;
   margin: 0;
   list-style: none;
-  align-items: baseline;
+  align-items: center;
 `;
