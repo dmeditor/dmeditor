@@ -25,7 +25,7 @@ const Width = (
   props: DME.SettingComponentProps & {
     property: string;
     value?: number | string;
-    parameters: { min: number; max: number; step?: number };
+    parameters: { min: number; max: number; step?: number; defaultUnit?: '%' | 'px' };
     disabled?: boolean;
   },
 ) => {
@@ -36,6 +36,8 @@ const Width = (
       return '%';
     } else if (typeof value === 'number') {
       return 'px';
+    } else if (value === undefined && parameters.defaultUnit) {
+      return parameters.defaultUnit;
     } else {
       return 'px';
     }
