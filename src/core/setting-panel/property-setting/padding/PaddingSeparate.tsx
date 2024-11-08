@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { InsertLinkOutlined, LinkOffOutlined } from '@mui/icons-material';
+import { ExpandLessOutlined, InsertLinkOutlined, LinkOffOutlined } from '@mui/icons-material';
 import {
   Box,
   Divider,
@@ -157,159 +157,161 @@ const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
   // };
 
   return (
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs={10}>
-        <Box>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} container spacing={2} alignItems="center">
-              <Grid item xs>
-                <CustomSlider
-                  disabled={disabled}
-                  // value={customSliderValue(paddingValues.top)}
-                  value={paddingValues.top}
-                  valueLabelDisplay="auto"
-                  step={step}
-                  marks
-                  min={min}
-                  max={max}
-                  onChange={handleSliderChange('top')}
-                />
-              </Grid>
-              <Grid item xs={5}>
-                <TextField
-                  label="Top"
-                  disabled={disabled}
-                  value={paddingValues.top}
-                  size="small"
-                  onBlur={handleInputChange('top')}
-                  onChange={handleTopChange}
-                  fullWidth
-                  InputProps={{
-                    onKeyDown: handleKeyDown('top'),
-                    inputMode: 'numeric',
-                    endAdornment: <InputAdornment position="end">px</InputAdornment>,
-                  }}
-                />
-              </Grid>
-            </Grid>
-            <Grid item xs={12} container justifyContent="center">
-              <Divider style={{ width: '100%' }}>
-                <IconButton onClick={() => setIsLinkedTB(!isLinkedTB)}>
-                  {isLinkedTB ? <InsertLinkOutlined /> : <LinkOffOutlined />}
-                </IconButton>
-              </Divider>
-            </Grid>
-            <Grid item xs={12} container spacing={2} alignItems="center">
-              <Grid item xs>
-                <CustomSlider
-                  disabled={disabled}
-                  // value={customSliderValue(paddingValues.bottom)}
-                  value={paddingValues.bottom}
-                  valueLabelDisplay="auto"
-                  step={step}
-                  marks
-                  min={min}
-                  max={max}
-                  onChange={handleSliderChange('bottom')}
-                />
-              </Grid>
-              <Grid item xs={5}>
-                <TextField
-                  label="Bottom"
-                  disabled={disabled}
-                  value={paddingValues.bottom}
-                  size="small"
-                  onBlur={handleInputChange('bottom')}
-                  onChange={handleBottomChange}
-                  fullWidth
-                  InputProps={{
-                    inputMode: 'numeric',
-                    onKeyDown: handleKeyDown('bottom'),
-                    endAdornment: <InputAdornment position="end">px</InputAdornment>,
-                  }}
-                />
-              </Grid>
-            </Grid>
+    <Box sx={{ pb: 5 }}>
+      <Grid container justifyContent="flex-end" sx={{ mb: 2 }}>
+        <IconButton size="small" title="Simple mode" onClick={onChangePaddingType}>
+          <ExpandLessOutlined />
+        </IconButton>
+      </Grid>
+      <Grid container spacing={1} alignItems="center">
+        <Grid item xs={12} container spacing={2} alignItems="center">
+          <Grid item xs>
+            <CustomSlider
+              disabled={disabled}
+              // value={customSliderValue(paddingValues.top)}
+              value={paddingValues.top}
+              valueLabelDisplay="auto"
+              step={step}
+              marks
+              min={min}
+              max={max}
+              onChange={handleSliderChange('top')}
+            />
           </Grid>
+          <Grid item xs={4}>
+            <TextField
+              label="Top"
+              disabled={disabled}
+              value={paddingValues.top}
+              size="small"
+              onBlur={handleInputChange('top')}
+              onChange={handleTopChange}
+              fullWidth
+              InputProps={{
+                onKeyDown: handleKeyDown('top'),
+                inputMode: 'numeric',
+                endAdornment: <InputAdornment position="end">px</InputAdornment>,
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} container justifyContent="right">
+          <IconButton
+            size="small"
+            title="Connect top bottom"
+            onClick={() => setIsLinkedTB(!isLinkedTB)}
+          >
+            {isLinkedTB ? <InsertLinkOutlined /> : <LinkOffOutlined />}
+          </IconButton>
+        </Grid>
+        <Grid item xs={12} container spacing={2} alignItems="center">
+          <Grid item xs>
+            <CustomSlider
+              disabled={disabled}
+              // value={customSliderValue(paddingValues.bottom)}
+              value={paddingValues.bottom}
+              valueLabelDisplay="auto"
+              step={step}
+              marks
+              min={min}
+              max={max}
+              onChange={handleSliderChange('bottom')}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              label="Bottom"
+              disabled={disabled}
+              value={paddingValues.bottom}
+              size="small"
+              onBlur={handleInputChange('bottom')}
+              onChange={handleBottomChange}
+              fullWidth
+              InputProps={{
+                inputMode: 'numeric',
+                onKeyDown: handleKeyDown('bottom'),
+                endAdornment: <InputAdornment position="end">px</InputAdornment>,
+              }}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
 
-          <Grid container spacing={2} alignItems="center" mt={4}>
-            <Grid item xs={12} container spacing={2} alignItems="center">
-              <Grid item xs>
-                <CustomSlider
-                  disabled={disabled}
-                  // value={customSliderValue(paddingValues.left)}
-                  value={paddingValues.left}
-                  valueLabelDisplay="auto"
-                  step={step}
-                  marks
-                  min={min}
-                  max={max}
-                  onChange={handleSliderChange('left')}
-                  //   orientation="vertical"
-                />
-              </Grid>
-              <Grid item xs={5}>
-                <TextField
-                  label="Left"
-                  disabled={disabled}
-                  value={paddingValues.left}
-                  size="small"
-                  onBlur={handleInputChange('left')}
-                  onChange={handleLeftChange}
-                  fullWidth
-                  InputProps={{
-                    inputMode: 'numeric',
-                    onKeyDown: handleKeyDown('left'),
-                    endAdornment: <InputAdornment position="end">px</InputAdornment>,
-                  }}
-                />
-              </Grid>
-            </Grid>
-            <Grid item xs={12} container justifyContent="center">
-              <Divider style={{ width: '100%' }}>
-                <IconButton onClick={() => setIsLinkedLR(!isLinkedLR)}>
-                  {isLinkedLR ? <InsertLinkOutlined /> : <LinkOffOutlined />}
-                </IconButton>
-              </Divider>
-            </Grid>
-            <Grid item xs={12} container spacing={2} alignItems="center">
-              <Grid item xs>
-                <CustomSlider
-                  disabled={disabled}
-                  // value={customSliderValue(paddingValues.right)}
-                  value={paddingValues.right}
-                  valueLabelDisplay="auto"
-                  step={step}
-                  marks
-                  min={min}
-                  max={max}
-                  onChange={handleSliderChange('right')}
-                />
-              </Grid>
-              <Grid item xs={5}>
-                <TextField
-                  label="Right"
-                  disabled={disabled}
-                  value={paddingValues.right}
-                  size="small"
-                  onBlur={handleInputChange('right')}
-                  onChange={handleRightChange}
-                  fullWidth
-                  InputProps={{
-                    inputMode: 'numeric',
-                    onKeyDown: handleKeyDown('right'),
-                    endAdornment: <InputAdornment position="end">px</InputAdornment>,
-                  }}
-                />
-              </Grid>
-            </Grid>
+      <Grid container spacing={2} alignItems="center" mt={4}>
+        <Grid item xs={12} container spacing={2} alignItems="center">
+          <Grid item xs>
+            <CustomSlider
+              disabled={disabled}
+              // value={customSliderValue(paddingValues.left)}
+              value={paddingValues.left}
+              valueLabelDisplay="auto"
+              step={step}
+              marks
+              min={min}
+              max={max}
+              onChange={handleSliderChange('left')}
+              //   orientation="vertical"
+            />
           </Grid>
-        </Box>
+          <Grid item xs={4}>
+            <TextField
+              label="Left"
+              disabled={disabled}
+              value={paddingValues.left}
+              size="small"
+              onBlur={handleInputChange('left')}
+              onChange={handleLeftChange}
+              fullWidth
+              InputProps={{
+                inputMode: 'numeric',
+                onKeyDown: handleKeyDown('left'),
+                endAdornment: <InputAdornment position="end">px</InputAdornment>,
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} container justifyContent="right">
+          <IconButton
+            size="small"
+            title="Connect left right"
+            onClick={() => setIsLinkedLR(!isLinkedLR)}
+          >
+            {isLinkedLR ? <InsertLinkOutlined /> : <LinkOffOutlined />}
+          </IconButton>
+        </Grid>
+        <Grid item xs={12} container spacing={2} alignItems="center">
+          <Grid item xs>
+            <CustomSlider
+              disabled={disabled}
+              // value={customSliderValue(paddingValues.right)}
+              value={paddingValues.right}
+              valueLabelDisplay="auto"
+              step={step}
+              marks
+              min={min}
+              max={max}
+              onChange={handleSliderChange('right')}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              label="Right"
+              disabled={disabled}
+              value={paddingValues.right}
+              size="small"
+              onBlur={handleInputChange('right')}
+              onChange={handleRightChange}
+              fullWidth
+              InputProps={{
+                inputMode: 'numeric',
+                onKeyDown: handleKeyDown('right'),
+                endAdornment: <InputAdornment position="end">px</InputAdornment>,
+              }}
+            />
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item xs={2}>
-        <InsertLinkOutlined style={{ cursor: 'pointer' }} onClick={onChangePaddingType} />
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
 
