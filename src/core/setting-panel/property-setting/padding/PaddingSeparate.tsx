@@ -159,7 +159,7 @@ const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
   return (
     <Box sx={{ pb: 5 }}>
       <Grid container justifyContent="flex-end" sx={{ mb: 2 }}>
-        <IconButton size="small" title="Simple mode" onClick={onChangePaddingType}>
+        <IconButton size="small" title="Basic mode" onClick={onChangePaddingType}>
           <ExpandLessOutlined />
         </IconButton>
       </Grid>

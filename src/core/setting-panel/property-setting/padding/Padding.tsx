@@ -26,6 +26,8 @@ const Padding: React.FC<
     : Array.from({ length: 4 }).fill(standardValue);
   const [paddingType, setPaddingType] = useState<PaddingType>('standard');
 
+  const isAdvancedValue = Array.isArray(value);
+
   const { updateBlockPropsByPath } = useEditorStore();
   const onChange = (value: number | string | PaddingSeparateValue) => {
     if (!property) {
@@ -35,12 +37,16 @@ const Padding: React.FC<
       updateBlockPropsByPath(blockPath, property, value === UNDEFINED_VALUE ? undefined : value);
     } else {
       const { top, right, bottom, left } = value;
-      updateBlockPropsByPath(blockPath, property, [
-        top === UNDEFINED_VALUE ? undefined : top,
-        right === UNDEFINED_VALUE ? undefined : right,
-        bottom === UNDEFINED_VALUE ? undefined : bottom,
-        left === UNDEFINED_VALUE ? undefined : left,
-      ]);
+      if (top === bottom && top === right && top === left) {
+        updateBlockPropsByPath(blockPath, property, top === UNDEFINED_VALUE ? undefined : top);
+      } else {
+        updateBlockPropsByPath(blockPath, property, [
+          top === UNDEFINED_VALUE ? undefined : top,
+          right === UNDEFINED_VALUE ? undefined : right,
+          bottom === UNDEFINED_VALUE ? undefined : bottom,
+          left === UNDEFINED_VALUE ? undefined : left,
+        ]);
+      }
     }
   };
 
@@ -52,6 +58,7 @@ const Padding: React.FC<
           value={standardValue}
           min={min}
           max={max}
+          isAdvancedValue={isAdvancedValue}
           step={step}
           onChange={onChange}
           onChangePaddingType={() => setPaddingType('separate')}

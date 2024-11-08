@@ -17,6 +17,7 @@ export interface PaddingStandardProps {
   value?: number | undefined | TYPE_UNDEFINED_VALUE;
   min: number;
   max: number;
+  isAdvancedValue?: boolean;
   step?: number;
   onChange?: (value: number | string) => void;
   onChangePaddingType: () => void;

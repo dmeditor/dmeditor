@@ -117,7 +117,13 @@ const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
         />
       </Grid>
       <Grid item xs={2}>
-        <Button size="small" title="Advanced mode" color="inherit" onClick={onChangePaddingType}>
+        <Button
+          size="small"
+          variant={props.isAdvancedValue ? 'outlined' : 'text'}
+          title={props.isAdvancedValue ? 'Set diverse value. Click to see.' : 'Advanced mode'}
+          color="inherit"
+          onClick={onChangePaddingType}
+        >
           <Tune />
         </Button>
       </Grid>
