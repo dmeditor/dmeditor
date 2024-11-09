@@ -25,13 +25,24 @@ const Width = (
   props: DME.SettingComponentProps & {
     property: string;
     value?: number | string;
-    parameters: { min: number; max: number; step?: number; defaultUnit?: '%' | 'px' };
+    parameters: {
+      min: number;
+      max: number;
+      step?: number;
+      allowedUnit?: 'px' | '%';
+      defaultUnit?: '%' | 'px';
+    };
     disabled?: boolean;
   },
 ) => {
   const { value, disabled, parameters, blockPath, property } = props;
 
+  const canSelectUnit = !parameters.allowedUnit;
+
   const getInputType = () => {
+    if (!canSelectUnit) {
+      return parameters.allowedUnit;
+    }
     if (typeof value === 'string' && value.endsWith('%')) {
       return '%';
     } else if (typeof value === 'number') {
@@ -120,24 +131,30 @@ const Width = (
           ></Ranger>
         )}
       </Grid>
-      <Grid item xs={2}>
-        <NumberInput value={inputValue} onChange={(v, change) => inputHandler(v, change)} />
+      <Grid item xs={canSelectUnit ? 2 : 3}>
+        <NumberInput
+          value={inputValue}
+          endString={canSelectUnit ? undefined : 'px'}
+          onChange={(v, change) => inputHandler(v, change)}
+        />
       </Grid>
-      <Grid item xs={3}>
-        <StyledSelect
-          value={inputType}
-          fullWidth
-          onChange={(e) => {
-            const unit = e.target.value;
-            changeUnit(unit as unitType);
-          }}
-          size="small"
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value="%">%</MenuItem>
-          <MenuItem value="px">px</MenuItem>
-        </StyledSelect>
-      </Grid>
+      {canSelectUnit && (
+        <Grid item xs={3}>
+          <StyledSelect
+            value={inputType}
+            fullWidth
+            onChange={(e) => {
+              const unit = e.target.value;
+              changeUnit(unit as unitType);
+            }}
+            size="small"
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem value="%">%</MenuItem>
+            <MenuItem value="px">px</MenuItem>
+          </StyledSelect>
+        </Grid>
+      )}
     </Grid>
   );
 };

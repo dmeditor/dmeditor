@@ -3,7 +3,7 @@ import { DME, DMEData } from '../../../core/types';
 export const generalSettings: Array<DME.Setting> = [
   {
     name: 'Width',
-    settingComponent: 'width',
+    settingComponent: 'distance',
     property: 'settings.general.width',
     parameters: { min: 0, max: 700, step: 5 },
     category: 'style',
@@ -41,9 +41,9 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Top margin',
-    settingComponent: 'range',
+    settingComponent: 'distance',
     property: 'settings.general.marginTop',
-    parameters: { min: 0, max: 100 },
+    parameters: { min: 0, max: 100, allowedUnit: 'px' },
     category: 'style',
     description: 'Distance to preivous block',
     group: 'style_block',

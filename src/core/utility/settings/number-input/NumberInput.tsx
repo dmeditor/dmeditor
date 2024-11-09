@@ -8,8 +8,17 @@ import { TYPE_UNDEFINED_VALUE, UNDEFINED_VALUE } from './types';
 export type TypeNumberInputValue = number | '' | '-';
 
 const StyledTextField = styled(TextField)({
+  '& .MuiInputBase-root': {
+    paddingRight: '5px',
+  },
   '& .MuiInputBase-input': {
     padding: '8px 5px',
+    fontSize: '0.8rem',
+  },
+  '& .MuiInputAdornment-root': {
+    marginLeft: '0px',
+  },
+  '& .MuiInputAdornment-root p': {
     fontSize: '0.8rem',
   },
 });
@@ -19,6 +28,7 @@ export const NumberInput = (props: {
   value: TypeNumberInputValue;
   min?: number;
   max?: number;
+  endString?: string;
   onChange: (v: TypeNumberInputValue, change?: boolean) => void;
 }) => {
   const { value, min = 0, max = 2000, disabled } = props;
@@ -61,6 +71,9 @@ export const NumberInput = (props: {
       InputProps={{
         inputMode: 'numeric',
         onKeyDown: handleKeyDown,
+        endAdornment: props.endString ? (
+          <InputAdornment position="end">{props.endString}</InputAdornment>
+        ) : undefined,
       }}
     />
   );
