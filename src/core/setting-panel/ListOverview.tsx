@@ -84,19 +84,20 @@ export const ListOverview = (props: ListOverviewProps) => {
               </td>
               <td
                 className={css`
-                  cursor: default;
+                  cursor: pointer;
                 `}
+                onClick={() => jumpTo(index)}
               >
                 {getName(item.type)}
               </td>
               <td
                 className={css`
+                  cursor: pointer;
                   width: 40;
                 `}
+                onClick={() => jumpTo(index)}
               >
-                <Button onClick={() => jumpTo(index)}>
-                  <KeyboardArrowRight />
-                </Button>
+                <KeyboardArrowRight />
               </td>
             </tr>
           ))}
