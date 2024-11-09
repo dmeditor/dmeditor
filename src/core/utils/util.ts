@@ -288,9 +288,17 @@ export const getPropertyValue = (property: string, blockData: DMEData.Block) => 
 // scroll element to view
 export const scrollBlockToView = (id: string) => {
   const element = document.getElementById(id);
-  element?.scrollIntoView({
-    behavior: 'smooth',
-  });
+  if (element) {
+    let scrollTop = false;
+    //scrollTop only when it's too height
+    if (element.getBoundingClientRect().height >= window.innerHeight) {
+      scrollTop = true;
+    }
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: scrollTop ? 'start' : 'center',
+    });
+  }
 };
 
 export const arrayHasCommonElement = (a: Array<unknown>, b: Array<unknown>) => {
