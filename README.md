@@ -10,8 +10,6 @@ The idea behind is to have an editor which is easy to develop and style widget w
 
 - [Roadmap](https://github.com/orgs/dmeditor/projects/1)
 - [Discussions on Github](https://github.com/dmeditor/dmeditor/discussions)
-- [dmeditor.io](https://dmeditor.io)
-
 
 ## Installation
 
