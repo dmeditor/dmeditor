@@ -14,7 +14,7 @@ export const ColorPickerItem = styled.li<{ selected?: boolean; unset?: boolean }
   overflow: hidden;
   position: relative;
   display: inline-block;
-  margin-right: 8px;
+  margin-right: 6px;
   width: ${(props) => (props.selected ? '26px' : '20px')};
   height: ${(props) => (props.selected ? '26px' : '20px')};
   border-radius: 50%;
