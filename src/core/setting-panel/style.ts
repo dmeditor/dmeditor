@@ -72,6 +72,9 @@ export const ClickEditInput = styled.input`
   font-size: 18px;
   border: 0px;
   background: var(--dmee-bg-sidearea);
+  &:hover {
+    background: white;
+  }
 `;
 
 export const WidgetListContainer = styled.div``;
