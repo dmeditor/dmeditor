@@ -120,7 +120,8 @@ const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
         <Button
           size="small"
           variant={props.isAdvancedValue ? 'outlined' : 'text'}
-          title={props.isAdvancedValue ? 'Set diverse value. Click to see.' : 'Advanced mode'}
+          title={props.isAdvancedValue ? 'Diverse values set. Click to see.' : 'Advanced mode'}
+          sx={props.isAdvancedValue ? { background: 'white', borderColor: '#cccccc' } : {}}
           color="inherit"
           onClick={onChangePaddingType}
         >
