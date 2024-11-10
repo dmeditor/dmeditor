@@ -8,6 +8,7 @@ const gridWidget: DME.Widget = {
   icon: 'grid',
   name: 'Grid',
   type: 'grid',
+  widgetType: 'list',
   allowedTypes: '^(?!.*grid).*$',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityGrid> => {
