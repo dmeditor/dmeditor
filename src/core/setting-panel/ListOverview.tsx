@@ -21,7 +21,6 @@ const tableStyle = `
   border-spacing: 0px;
 
   td {
-    border-bottom: 1px solid #f0f0f0;
     padding: 5px;
   }
 `;
@@ -75,7 +74,7 @@ export const ListOverview = (props: ListOverviewProps) => {
             >
               <td
                 className={css`
-                  width: 40;
+                  width: 50px;
                 `}
               >
                 <Button sx={{ cursor: 'move' }}>
@@ -93,7 +92,8 @@ export const ListOverview = (props: ListOverviewProps) => {
               <td
                 className={css`
                   cursor: pointer;
-                  width: 40;
+                  text-align: right;
+                  padding-right: 20px !important;
                 `}
                 onClick={() => jumpTo(index)}
               >
