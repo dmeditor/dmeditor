@@ -1,7 +1,7 @@
 import { MenuItem, Select } from '@mui/material';
 
 import type { DME } from '../../types';
-import { InlineBlockItemStyle, InlineBlockStyle } from './style';
+import { IconDiv, IconImg, InlineBlockItemStyle, InlineBlockStyle } from './style';
 import { StyleSettingProps } from './StyleSettings';
 
 export const InlineBlock = (props: StyleSettingProps & { style: DME.WidgetStyle }) => {
@@ -25,7 +25,12 @@ export const InlineBlock = (props: StyleSettingProps & { style: DME.WidgetStyle 
           onClick={() => handleChange(option.identifier)}
           key={option.identifier}
         >
-          {option.name}
+          {option.icon && (
+            <IconDiv>
+              <IconImg src={option.icon} />
+            </IconDiv>
+          )}
+          <span>{option.name}</span>
         </InlineBlockItemStyle>
       ))}
     </InlineBlockStyle>
