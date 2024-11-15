@@ -28,12 +28,6 @@ const buttonWidget: DME.Widget = {
       property: '.link',
       settingComponent: 'link',
     },
-    {
-      name: 'Text align',
-      property: 'settings.textAlign',
-      settingComponent: 'align',
-      category: 'style',
-    },
     ...generalSettings,
   ],
 };
