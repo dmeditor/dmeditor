@@ -35,7 +35,10 @@ export const PropertyItem = (props: {
       <StyledSettingItem.Setting upDown={upDown}>{props.children}</StyledSettingItem.Setting>
       {props.description && (
         <Tooltip title={props.description}>
-          <InfoOutlined sx={{ verticalAlign: 'bottom' }} fontSize="small" />
+          <InfoOutlined
+            sx={{ cursor: 'pointer', marginLeft: '5px', verticalAlign: 'bottom' }}
+            fontSize="small"
+          />
         </Tooltip>
       )}
     </StyledSettingItem.Container>
