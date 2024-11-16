@@ -39,19 +39,9 @@ import { BrowseImageCallbackParams, dmeConfig } from '../../../config';
 import { ImageChooser } from '../../../utility/ImageChooser';
 import { imageExtensionIsValid, isNumber, isUrl } from '../../../utils';
 import AddLinkButton from './AddLinkButton';
-import Image from './Image';
-import {
-  IMAGE_HEIGHT,
-  IMAGE_INLINE_HEIGHT,
-  IMAGE_INLINE_WIDTH,
-  IMAGE_WIDTH,
-  LIST_TYPES,
-  TEXT_ALIGN_TYPES,
-} from './options';
+import ImageComponent from './Image';
+import { IMAGE_INLINE_WIDTH, IMAGE_WIDTH, LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
 import RemoveLinkButton from './RemoveLinkButton';
-
-export const getImageScale = (width: number, height: number) =>
-  Math.round((width / height) * 100) / 100;
 
 interface BaseProps {
   className: string;
@@ -484,7 +474,7 @@ const Element = (props: ElementProps) => {
         </ol>
       );
     case 'image':
-      return <Image {...props} />;
+      return <ImageComponent {...props} />;
     case 'link':
       return <LinkComponent {...props} />;
     default:
@@ -618,26 +608,38 @@ type ImageElement = {
 const insertImage = (editor: ReactEditor, url: string, options?: { inline?: boolean }) => {
   const text = { text: '' };
 
-  const defaultWidth = options?.inline ? IMAGE_INLINE_WIDTH : IMAGE_WIDTH;
-  const defaultHeight = options?.inline ? IMAGE_INLINE_HEIGHT : IMAGE_HEIGHT;
-  const image: ImageElement = {
-    type: 'image',
-    url: dmeConfig.general.imagePath(url),
-    children: [text],
-    setting: {
-      width: defaultWidth,
-      height: defaultHeight,
-      scale: getImageScale(defaultWidth, defaultHeight),
-      inline: options?.inline,
-    },
+  const thumbnailUrl = dmeConfig.general.imagePath(url, 'thumbnail');
+
+  const imageObj = new Image();
+  imageObj.src = thumbnailUrl;
+  imageObj.onload = () => {
+    const ratio = imageObj.naturalWidth / imageObj.naturalHeight;
+
+    const defaultWidth = options?.inline ? IMAGE_INLINE_WIDTH : IMAGE_WIDTH;
+    const defaultHeight = defaultWidth / ratio;
+    const image: ImageElement = {
+      type: 'image',
+      url: dmeConfig.general.imagePath(url),
+      children: [text],
+      setting: {
+        width: defaultWidth,
+        height: defaultHeight,
+        scale: ratio,
+        inline: options?.inline,
+      },
+    };
+    Transforms.insertNodes(editor, image);
+    if (!options?.inline) {
+      Transforms.insertNodes(editor, {
+        type: 'paragraph',
+        children: [{ text: '' }],
+      });
+    }
   };
-  Transforms.insertNodes(editor, image);
-  if (!options?.inline) {
-    Transforms.insertNodes(editor, {
-      type: 'paragraph',
-      children: [{ text: '' }],
-    });
-  }
+
+  imageObj.onerror = () => {
+    window.alert('Image not found');
+  };
 };
 
 type LinkElement = { type: 'link'; url: string; target?: string; children: Descendant[] };

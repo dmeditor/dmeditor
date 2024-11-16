@@ -7,7 +7,7 @@ const Resizable = (props: {
   height?: number;
   scale?: any;
   className?: string;
-  onChange?: (value: any) => void;
+  onChange?: (value: { width: number; height: number }) => void;
   style?: CSSProperties;
   isActive: boolean;
 }) => {

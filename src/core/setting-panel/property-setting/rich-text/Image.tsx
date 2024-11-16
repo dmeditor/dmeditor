@@ -45,7 +45,7 @@ const EditImage = (props: ImageProps) => {
   const selected = useSelected();
   const focused = useFocused();
 
-  const handleChangeSize = (s: ImageSettings) => {
+  const handleChangeSize = (s: { width: number; height: number }) => {
     let setting = { setting: { ...element.setting, ...s } };
     Transforms.setNodes(editor, setting as ImageProps['element'], { at: path });
   };
