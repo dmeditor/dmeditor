@@ -597,7 +597,6 @@ type ImageElement = {
   setting: {
     width: number;
     height: number;
-    scale: number;
     inline?: boolean;
   };
   type: 'image';
@@ -624,7 +623,6 @@ const insertImage = (editor: ReactEditor, url: string, options?: { inline?: bool
       setting: {
         width: defaultWidth,
         height: defaultHeight,
-        scale: ratio,
         inline: options?.inline,
       },
     };

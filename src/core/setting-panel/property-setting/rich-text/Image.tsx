@@ -67,7 +67,7 @@ const EditImage = (props: ImageProps) => {
     Transforms.setNodes(editor, newSetting as ImageProps['element'], { at: path });
   };
 
-  const { height, width, align, scale, float, inline } = element.setting;
+  const { height, width, align, float, inline } = element.setting;
 
   const buttonObj = {
     className: css``,
@@ -92,7 +92,6 @@ const EditImage = (props: ImageProps) => {
       <Resizable
         width={width}
         height={height}
-        scale={scale}
         style={{
           display: 'inline-block',
           verticalAlign: 'top',

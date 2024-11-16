@@ -3,27 +3,17 @@ import { ResizableBox } from 'react-resizable';
 
 const Resizable = (props: {
   children: React.ReactNode;
-  width?: number;
-  height?: number;
-  scale?: any;
+  width: number;
+  height: number;
   className?: string;
   onChange?: (value: { width: number; height: number }) => void;
   style?: CSSProperties;
   isActive: boolean;
 }) => {
-  const [width, setWidth] = useState(props?.width || 300);
-  const [height, setHeight] = useState(props?.height || 168);
-  const [imageScale, setImageScale] = useState(
-    props?.scale || Math.round((width / height) * 100) / 100,
-  );
+  const [width, setWidth] = useState(props.width);
+  const [height, setHeight] = useState(props.height);
 
   const [lockAspectRatio, setLockAspectRatio] = useState(true);
-
-  const onResizeStartFunc = (e: SyntheticEvent<Element, Event>, { element, size, handle }: any) => {
-    if (lockAspectRatio) {
-      setHeight(Math.round((width / imageScale) * 100) / 100);
-    }
-  };
 
   const onResizeStopFunc = (e: SyntheticEvent<Element, Event>, { element, size, handle }: any) => {
     setWidth(size.width);
@@ -59,7 +49,6 @@ const Resizable = (props: {
       style={props.style}
       width={width}
       height={height}
-      onResizeStart={onResizeStartFunc}
       onResizeStop={onResizeStopFunc}
       lockAspectRatio={lockAspectRatio}
       resizeHandles={['sw', 'se', 'nw', 'ne']}
