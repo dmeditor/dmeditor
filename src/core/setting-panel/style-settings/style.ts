@@ -29,7 +29,7 @@ export const InlineBlockItemStyle = styled.div<{ selected?: boolean }>`
 
 export const IconDiv = styled.div`
   display: inline-block;
-  width: 36px;
+  width: 1.5rem;
   text-align: center;
   margin-right: 6px;
 `;
