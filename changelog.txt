@@ -1,9 +1,42 @@
-0.2.0-beta.4
-- 2024-10-20: added: float, inline for image
-- 2024-10-19: added: table style keys
-- 2024-10-18: added: characters for richtext
-- 2024-10-18: added: link open new window
-- 2024-10-18: update: only use LinkChooser for links
+0.2.0
+- 2024-11-16 fix: text widget - use image ratio when insert to avoid blank space.
+- 2024-11-14 removed: text align on button
+- 2024-11-14 added: icon display for style 
+- 2024-11-10 updated: ListOverview style 
+- 2024-11-10 added: widgetType of grid as 'list' 
+- 2024-11-07 udpated: scroll to top only when it's too high 
+- 2024-11-07 fixed: color predefined should be align in middle 
+- 2024-11-07 updated: configured sample color palette 
+- 2024-11-07 added: link helper - https, http, email, phone & empty
+- 2024-11-05 updated: change 'align' name to be 'self align'
+- 2024-11-05 added: feat: Make text widget's heading dropdown 
+- 2024-11-05 added: feat: Make text widget's heading dropdown 
+- 2024-11-04 added: iframe & code a mask div to be able to activate in edit mode 
+- 2024-11-03 added: css class dme-block-depth-<number> starting from 1 
+- 2024-10-30 fixed: padding setting simple/advanced issue & enhaced
+- 2024-10-29 added: checkbox & display image in page settings 
+- 2024-10-25 fixed: width/padding setting does not refresh when switching block
+- 2024-10-25 added: support showInput parameter in range
+- 2024-10-25 udpated: iframe to use percentage by default
+- 2024-10-25 added: width setting component which supports percentage & input 
+- 2024-10-24 added: button align in collapsable text
+- 2024-10-24 added: plus button for accordion 
+- 2024-10-24 fixed: collspable text hidden content taking space 
+- 2024-10-22 updated: tabs using display to hide 
+- 2024-10-22 updated: [text]support base64 image
+- 2024-10-22 fixed: [text]issue pasting contains : or link 
+- 2024-10-22 udpated: close collapsable text by default
+- 2024-10-22 fixed: table udpate issue when has header
+- 2024-10-22 fixed: new empty doesn't rerender issue in table
+- 2024-10-21 fixed: table link issue - have to use useEffect to not losing selection
+- 2024-10-21 fixed: table needs 2 click to focus on editor
+- 2024-10-21 updated: table default size 
+- 2024-10-20 updated optimize image rendering 
+- 2024-10-20 added: float, inline for image
+- 2024-10-19 added: table style keys
+- 2024-10-18 added: characters for richtext
+- 2024-10-18 added: link open new window
+- 2024-10-18 update: only use LinkChooser for links
 
 
 0.2.0-beta.1
