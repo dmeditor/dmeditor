@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowDropDownOutlined,
   ArrowRightAltOutlined,
@@ -6,6 +6,7 @@ import {
   DeleteOutline,
 } from '@mui/icons-material';
 import { Button, Collapse } from '@mui/material';
+import { useWidgetSettingStore } from 'dmeditor/core/main/store';
 
 import { dmeConfig, useEditorStore } from '../../..';
 import { DME, DMEData } from '../../types';
@@ -274,6 +275,15 @@ export const SettingTree = (props: {
     });
   };
 
+  const { setMainLoaded } = useWidgetSettingStore();
+
+  useEffect(() => {
+    setMainLoaded(true);
+    return () => {
+      setMainLoaded(false);
+    };
+  }, []);
+
   const renderCurrentSettings = () => {
     return (
       <div>
@@ -285,6 +295,7 @@ export const SettingTree = (props: {
             onChange={switchStyleOption}
           />
         )}
+        <div id="dme-widget-setting-container" />
         {settingGroups.map((group) => (
           <div>
             {group && (
