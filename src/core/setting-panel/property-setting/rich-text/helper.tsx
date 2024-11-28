@@ -43,6 +43,7 @@ import ImageComponent from './Image';
 import { IMAGE_INLINE_WIDTH, IMAGE_WIDTH, LIST_TYPES, TEXT_ALIGN_TYPES } from './options';
 import RemoveLinkButton from './RemoveLinkButton';
 
+const urlRegex = /(https?:\/\/[^\s]+)/g;
 interface BaseProps {
   className: string;
   [key: string]: unknown;
@@ -377,7 +378,7 @@ const InlineChromiumBugfix = () => (
     {String.fromCodePoint(160) /* Non-breaking space */}
   </span>
 );
-const LinkComponent = ({ attributes, children, element }) => {
+export const LinkComponent = ({ attributes, children, element }) => {
   const selected = useSelected();
   return (
     <a
@@ -693,6 +694,19 @@ const wrapLink = (editor: Editor, url: string, openNew: boolean) => {
   }
 };
 
+export const insertBlankLink = (editor: Editor, url: string) => {
+  const linkNode = {
+    type: 'link',
+    url,
+    children: [{ text: url }],
+    target: '_blank',
+  };
+
+  Transforms.insertNodes(editor, linkNode);
+  Transforms.insertText(editor, ' ');
+  Transforms.move(editor, { distance: 1, unit: 'offset' });
+};
+
 interface withInsertDataEdtior extends ReactEditor {
   insertData: (data: any) => void;
 }
@@ -711,19 +725,21 @@ const withInlines = (editor: withInsertDataEdtior) => {
   editor.isSelectable = (element) => element.type !== 'badge' && isSelectable(element);
 
   editor.insertText = (text) => {
-    //issue when paste link
-    // if (text && isUrl(text)) {
-    //   wrapLink(editor, text, false);
-    // } else {
-    insertText(text);
-    // }
+    const parts = text.split(urlRegex);
+
+    parts.forEach((part) => {
+      if (urlRegex.test(part)) {
+        insertBlankLink(editor, part);
+      } else {
+        insertText(part);
+      }
+    });
   };
 
   editor.insertData = (data) => {
     const text = data.getData('text/plain');
-
     if (text && isUrl(text)) {
-      wrapLink(editor, text, false);
+      wrapLink(editor, text, true);
     } else {
       insertData(data);
     }
