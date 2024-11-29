@@ -378,6 +378,7 @@ const InlineChromiumBugfix = () => (
     {String.fromCodePoint(160) /* Non-breaking space */}
   </span>
 );
+
 export const LinkComponent = ({ attributes, children, element }) => {
   const selected = useSelected();
   return (
@@ -389,6 +390,7 @@ export const LinkComponent = ({ attributes, children, element }) => {
         selected
           ? css`
               box-shadow: 0 0 0 3px #ddd;
+              background-color: #b4d7ff;
             `
           : ''
       }
@@ -692,6 +694,33 @@ const wrapLink = (editor: Editor, url: string, openNew: boolean) => {
     Transforms.wrapNodes(editor, link, { split: true });
     Transforms.collapse(editor, { edge: 'end' });
   }
+};
+
+export const updatedLink = (editor: Editor, url: string) => {
+  if (isLinkActive(editor)) {
+    const [linkEntry] = Editor.nodes(editor, {
+      match: (node) =>
+        !Editor.isEditor(node) &&
+        SlateElement.isElement(node) &&
+        (node as LinkNode).type === 'link',
+    });
+
+    if (linkEntry) {
+      const [, linkPath] = linkEntry;
+      Transforms.select(editor, linkPath);
+      unwrapLink(editor);
+    }
+  }
+
+  const link: LinkElement = {
+    type: 'link',
+    url,
+    children: [{ text: url }],
+    target: '_blank',
+  };
+
+  Transforms.insertNodes(editor, link);
+  Transforms.collapse(editor, { edge: 'end' });
 };
 
 export const insertBlankLink = (editor: Editor, url: string) => {

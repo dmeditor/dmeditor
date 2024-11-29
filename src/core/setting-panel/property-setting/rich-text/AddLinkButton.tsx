@@ -1,15 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { LinkOutlined } from '@mui/icons-material';
 import { BrowseLinkCallbackParams } from 'dmeditor/core/config';
 import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
 
 import { LinkChooser, LinkRef } from '../../../utility';
-import { Button, getLink, isLinkActive, wrapLink } from './helper';
+import { Button, getLink, isLinkActive, updatedLink, wrapLink } from './helper';
 
 const insertLink = (editor: Editor, url: string, openNew: boolean) => {
   if (editor.selection) {
-    wrapLink(editor, url, openNew);
+    // wrapLink(editor, url, openNew);
+    updatedLink(editor, url);
   }
 };
 
