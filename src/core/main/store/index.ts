@@ -483,4 +483,18 @@ export const useEditorStore = create<Store & Actions>()(
     },
   })),
 );
+
+export const useWidgetSettingStore = create<
+  { mainLoaded: boolean } & { setMainLoaded: (loaded: boolean) => void }
+>()(
+  immer((set) => ({
+    mainLoaded: false,
+    setMainLoaded: (loaded: boolean) => {
+      set((state) => {
+        state.mainLoaded = loaded;
+      });
+    },
+  })),
+);
+
 export type { AddBlockParameters };

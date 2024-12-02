@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from '@emotion/css';
 import { Slider } from '@mui/material';
 
-import { DME, useEditorStore } from '../../../src';
+import { DME, RenderToSetting, useEditorStore } from '../../../src';
 import { EntitySampleWidget } from './entity';
 
 const { useState, useEffect } = React;
@@ -26,6 +26,7 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
 
   return (
     <div>
+      {props.active && <RenderToSetting>Simple setting</RenderToSetting>}
       <Slider
         aria-label="Width"
         valueLabelDisplay="auto"
