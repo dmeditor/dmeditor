@@ -9,7 +9,7 @@ export interface ImageEntity {
   externalId?: string | number;
   thumbnail?: string;
   description?: string;
-  settings: DMEData.GeneralSettingType & {
+  settings: {
     borderWidth?: number;
     borderColor?: string;
     general?: DMEData.GeneralSettingType;
@@ -62,7 +62,7 @@ export const ImageDefinition: DME.Widget = {
         data: {
           src: '',
           description: '',
-          settings: { align: 'center', borderWidth: 0, borderColor: '' },
+          settings: { general: { align: 'center' }, borderWidth: 0, borderColor: '' },
         },
       };
     },
@@ -74,7 +74,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const {
     data: { src, settings, description },
   } = blockNode;
-  const { borderWidth, borderColor, align } = settings;
+  const { borderWidth, borderColor } = settings;
 
   return (
     <div>
@@ -88,9 +88,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
         </div>
       )}
       {src && (
-        <div
-          className={(styleClasses['image'] || '') + ' dme-w-image ' + css({ textAlign: align })}
-        >
+        <div className={(styleClasses['image'] || '') + ' dme-w-image '}>
           <img
             src={dmeConfig.general.imagePath(src)}
             className={css({
