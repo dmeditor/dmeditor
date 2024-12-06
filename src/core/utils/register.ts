@@ -16,7 +16,7 @@ export const layoutDefinition: { [key: string]: DME.Widget } = {};
 export const customDefinition: { [key: string]: DME.Widget } = {};
 
 //get widget component for rendering
-export const getWidgetComponent = (type: string): DME.WidgetImplemenation => {
+export const getWidgetComponent = (type: string): DME.WidgetImplementation => {
   const component = components[type];
   return component ? component : null;
 };
@@ -88,7 +88,7 @@ export function addCustomDefinition(widget: DME.Widget) {
 
 export function registerWidgetComponent(
   widgetName: string,
-  widgetInstance: DME.WidgetImplemenation,
+  widgetInstance: DME.WidgetImplementation,
 ) {
   if (components[widgetName]) {
     console.warn(`Widget ${widgetName} is already registered.`);
@@ -97,7 +97,7 @@ export function registerWidgetComponent(
   components[widgetName] = widgetInstance;
 }
 
-export function registerWidget(definition: DME.Widget, implementation: DME.WidgetImplemenation) {
+export function registerWidget(definition: DME.Widget, implementation: DME.WidgetImplementation) {
   registerWidgetDefinition(definition);
   registerWidgetComponent(definition.type, implementation);
   if (implementation.onServerSideLoad) {
