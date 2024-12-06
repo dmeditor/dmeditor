@@ -9,7 +9,7 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, DMEData.DefaultBl
   const {
     blockNode: {
       children,
-      data: { heroPosition, heroFullWidth },
+      data: { heroPosition, heroFullWidth, gap },
     },
     path,
     mode,
@@ -53,7 +53,7 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, DMEData.DefaultBl
   };
 
   return (
-    <HeroTextContainer updown={device === 'mobile'}>
+    <HeroTextContainer updown={device === 'mobile'} gap={gap}>
       {imageLeft() && (
         <>
           {renderImage()}

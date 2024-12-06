@@ -18,7 +18,7 @@ const heroTextWidget: DME.Widget = {
     createBlock: (): DMEData.CreatedBlock<EntityHeroText, DMEData.DefaultBlockType, {}> => {
       return {
         type: 'hero-text',
-        data: {},
+        data: { gap: 10 },
         children: {
           image: {
             id: nanoid(),
@@ -99,6 +99,13 @@ const heroTextWidget: DME.Widget = {
           { text: 'Right', value: 'right' },
         ],
       },
+    },
+    {
+      name: 'Gap',
+      category: 'style',
+      property: '.gap',
+      settingComponent: 'range',
+      parameters: { min: 0, max: 50 },
     },
     {
       name: 'Full hero',
