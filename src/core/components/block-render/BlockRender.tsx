@@ -11,7 +11,7 @@ import { getWidgetComponent, getWidgetStyle } from '../../utils/register';
 import { BlockWrapper } from './styled';
 
 interface BlockRenderProps extends Pick<DME.WidgetRenderProps, 'mode' | 'path'> {
-  data: DMEData.Block<DMEData.DefaultBlockType>;
+  data: DMEData.Block;
   inBlock?: boolean;
 }
 

@@ -339,3 +339,18 @@ export const editorConfigConverted = (str: string): keyof DMEConfigType['editor'
     letter.toUpperCase(),
   ) as keyof DMEConfigType['editor'];
 };
+
+export const mapBlockList = (
+  children: DMEData.BlockList | DMEData.BlockMap,
+  fn: (item: DMEData.Block, index: number | string) => any,
+) => {
+  if (Array.isArray(children)) {
+    return children.map(fn);
+  } else {
+    const result: any[] = [];
+    Object.keys(children).map(function (key: string) {
+      result.push(fn(children[key], key));
+    });
+    return result;
+  }
+};

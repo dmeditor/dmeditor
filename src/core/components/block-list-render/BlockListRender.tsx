@@ -12,7 +12,7 @@ import { BlockRender } from '../block-render/BlockRender';
 
 interface BlockListProps {
   blockData: DMEData.BlockList;
-  path: Array<number>;
+  path: Array<number | string>;
   allowedTypes?: string[] | string;
   isEmbed?: boolean;
   direction?: 'vertical' | 'horizontal';
@@ -38,17 +38,6 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
     position: AddBlockParameters['position'];
     index: number;
   }>();
-
-  const isUnder = () => {
-    //check if props.path in selected context
-    let result = true;
-    currentListPath.forEach((item) => {
-      if (!props.path.includes(item)) {
-        result = false;
-      }
-    });
-    return result;
-  };
 
   //only changed when there is addParameters( add button is clicked )
   const depsAddingStatus = addParameters ? globalAddingStatus : '';

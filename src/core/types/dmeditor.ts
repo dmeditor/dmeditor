@@ -48,7 +48,7 @@ export namespace DME {
   };
 
   export interface EmbedChildContext {
-    relativePath: number[];
+    relativePath: (number | string)[];
     blockData: DMEData.Block;
   }
 
@@ -124,13 +124,17 @@ export namespace DME {
 
   // export interface Block extends Widget {}
 
-  export interface WidgetRenderProps<Type = DMEData.DefaultDataType, Node = unknown> {
-    blockNode: DMEData.Block<Type, Node>;
+  export interface WidgetRenderProps<
+    Type = DMEData.DefaultDataType,
+    Node = DMEData.DefaultBlockType,
+    ChildrenType = [],
+  > {
+    blockNode: DMEData.Block<Type, Node, ChildrenType>;
     rootClasses: string;
     styleClasses: Record<string, string>;
     active: boolean;
     mode: Mode;
-    path: number[];
+    path: (number | string)[];
   }
 
   export interface SettingComponentProps<T = unknown> extends Setting {
@@ -174,7 +178,7 @@ export namespace DMEData {
     page: Page;
   }
 
-  interface WidgetBlockProperties {
+  interface BlockBaseType {
     type: string;
     id?: string;
     style?: Record<string, string>;
@@ -184,28 +188,38 @@ export namespace DMEData {
     editControl?: number; // Edit control levels.
   }
 
-  export interface DefaultBlockType extends WidgetBlockProperties {
+  export interface DefaultBlockType extends BlockBaseType {
     id: string;
     data: DefaultDataType; // Entity data from widget.
     children?: DefaultBlockType[];
   }
 
-  export interface BlockNode {
+  export interface BlockWithChildren {
     children?: Block[];
   }
 
-  export interface CreatedBlock<Data = DefaultDataType, Child = DefaultBlockType>
-    extends WidgetBlockProperties {
+  //childrenType
+  export interface Block<
+    Data = DefaultDataType,
+    ChildDataType = DefaultBlockType,
+    ChildrenType = [],
+  > extends BlockBaseType {
     data: Data; // Entity data from widget.
-    children?: (BlockNode & Child)[];
-  }
-
-  export interface Block<Data = DefaultDataType, Child = DefaultBlockType>
-    extends CreatedBlock<Data, Child> {
+    children?: ChildrenType extends any[]
+      ? (BlockWithChildren & ChildDataType)[]
+      : Record<string, BlockWithChildren & ChildDataType>;
     id: string;
   }
 
+  export type CreatedBlock<
+    Data = DefaultDataType,
+    ChildDataType = DefaultBlockType,
+    ChildrenType = [],
+  > = Omit<Block<Data, ChildDataType, ChildrenType>, 'id'>;
+
   export type BlockList = Block[];
+
+  export type BlockMap = Record<string, Block>;
 
   export interface GeneralSettingType {
     width?: number | string;

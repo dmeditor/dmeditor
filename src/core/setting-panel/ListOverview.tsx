@@ -8,7 +8,7 @@ import { DMEData } from '../types/dmeditor';
 
 interface ListOverviewProps {
   data: DMEData.BlockList;
-  blockPath: Array<number>;
+  blockPath: Array<number | string>;
   selectedIndex: number;
 }
 

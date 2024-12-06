@@ -91,13 +91,18 @@ export const loadData = (data: string | DMEData.BlockList): DMEData.BlockList =>
 };
 
 export const iteratePath = (
-  pathArray: Array<number>,
+  pathArray: Array<number | string>,
   rootList: DMEData.BlockList,
-  callback: (item: DMEData.Block, path: Array<number>) => void,
+  callback: (item: DMEData.Block, path: Array<number | string>) => void,
 ): void => {
-  let temp = rootList;
+  let temp: DMEData.BlockList | DMEData.BlockMap = rootList;
   pathArray.forEach((v, index) => {
-    const block = temp[v];
+    let block: DMEData.Block;
+    if (Array.isArray(temp)) {
+      block = temp[v as number];
+    } else {
+      block = temp[v as string];
+    }
     const currentPath = pathArray.slice(0, index + 1);
     callback(block, currentPath);
     temp = block?.children || [];
@@ -105,13 +110,18 @@ export const iteratePath = (
 };
 
 export const getDataByPath = (
-  data: DMEData.BlockList,
-  path: Array<number>,
+  data: DMEData.BlockList | DMEData.BlockMap,
+  path: Array<number | string>,
 ): DMEData.Block | null => {
   let temp = data;
   let result = null;
   path.forEach((v, index) => {
-    const block = temp[v];
+    let block: DMEData.Block;
+    if (Array.isArray(temp)) {
+      block = temp[v as number];
+    } else {
+      block = temp[v as string];
+    }
     // find the deepest children ?
     // let targetIndex = index;
     // let targetList = listData;
@@ -132,7 +142,7 @@ export const getDataByPath = (
 
 export const getListByPath = (
   data: DMEData.BlockList,
-  path: Array<number>,
+  path: Array<number | string>,
 ): DMEData.BlockList | null => {
   if (path.length === 0) {
     return data;

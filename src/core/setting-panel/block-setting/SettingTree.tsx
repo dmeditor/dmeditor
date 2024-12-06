@@ -21,6 +21,7 @@ import {
   getWidgetStyleOption,
   getWidgetWithVariant,
   isKeyInObject,
+  mapBlockList,
   PropertyGroup,
   PropertyItem,
 } from '../../utils';
@@ -34,7 +35,7 @@ import { StyledSettingList, StyledSettingNoGroup } from './styled';
 export const SettingTree = (props: {
   rootWidget: string;
   blockData: DMEData.Block;
-  blockPath: Array<number>;
+  blockPath: Array<number | string>;
   selectedPath: Array<number>;
   category?: string;
   level?: number;
@@ -322,7 +323,7 @@ export const SettingTree = (props: {
   const renderChildrenSettings = () => {
     return (
       <div>
-        {blockData.children?.map((item, index) => {
+        {mapBlockList(blockData.children || [], (item, index) => {
           const newPath = [...blockPath, index];
           const isOwnView =
             item.isEmbed &&

@@ -16,7 +16,7 @@ export const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
     ...createDMEditor(),
     startAddBlock: (
-      context: Array<number>,
+      context: Array<number | string>,
       index: number,
       position: AddBlockParameters['position'],
       extraParams: { types?: Array<string> | string; isEmbed?: boolean },
@@ -51,7 +51,7 @@ export const useEditorStore = create<Store & Actions>()(
       });
     },
     executeAdding: (
-      context: Array<number>,
+      context: Array<number | string>,
       index: number,
       position: AddBlockParameters['position'],
       type: string,
@@ -158,7 +158,7 @@ export const useEditorStore = create<Store & Actions>()(
         state.storage = [];
       });
     },
-    updateHoverPath: (path: Array<number>) => {
+    updateHoverPath: (path: Array<number | string>) => {
       set((state) => {
         state.hoverPath = path;
       });
@@ -173,11 +173,13 @@ export const useEditorStore = create<Store & Actions>()(
       const list = state.getCurrentList();
       return list?.[state.selected.blockIndex] || null;
     },
-    getBlockByPath: (path: Array<number>): DMEData.Block => {
+    getBlockByPath: (path: Array<number | string>): DMEData.Block => {
       const state = get();
       return getDataByPath(state.storage, path) ?? { type: 'unknown', data: {} };
     },
-    getClosestBlock: (path: Array<number>): [DMEData.Block, Array<number>] | [] => {
+    getClosestBlock: (
+      path: Array<number | string>,
+    ): [DMEData.Block, Array<number | string>] | [] => {
       const state = get();
 
       if (path.length === 0) {
@@ -197,9 +199,11 @@ export const useEditorStore = create<Store & Actions>()(
       }
       return [];
     },
-    getParents: (path: Array<number>): Array<DMEData.Block & { path: Array<number> }> => {
+    getParents: (
+      path: Array<number | string>,
+    ): Array<DMEData.Block & { path: Array<number | string> }> => {
       const state = get();
-      const result: Array<DMEData.Block & { path: Array<number> }> = [];
+      const result: Array<DMEData.Block & { path: Array<number | string> }> = [];
       if (path.length === 0) {
         return [];
       }
@@ -258,7 +262,7 @@ export const useEditorStore = create<Store & Actions>()(
       }
       return state.storage[index] as DMEData.Block<T>;
     },
-    removeByPath: (path: Array<number>) => {
+    removeByPath: (path: Array<number | string>) => {
       set((state) => {
         if (path.length === 0) return;
         const parentPath = path.length <= 1 ? [] : path.slice(0, path.length - 1);
@@ -303,7 +307,7 @@ export const useEditorStore = create<Store & Actions>()(
         state.storage = blocks;
       });
     },
-    updateSelectedBlockIndex: (pathArray: Array<number>, id: string) => {
+    updateSelectedBlockIndex: (pathArray: Array<number | string>, id: string) => {
       set((state) => {
         const parentPath = pathArray.length <= 1 ? [] : pathArray.slice(0, pathArray.length - 1);
         const index = pathArray[pathArray.length - 1];
@@ -316,7 +320,7 @@ export const useEditorStore = create<Store & Actions>()(
       });
     },
     updateBlockByPath: <Type = DMEData.DefaultDataType>(
-      path: Array<number>,
+      path: Array<number | string>,
       callback: (blockData: Type, block: unknown) => void,
     ) => {
       set((state) => {
@@ -393,7 +397,11 @@ export const useEditorStore = create<Store & Actions>()(
       const state = get();
       state.updateSelectedBlockProps('.editControl', value);
     },
-    updateBlockStyleByPath: (value: string, styleIdentifier: string, path: Array<number>) => {
+    updateBlockStyleByPath: (
+      value: string,
+      styleIdentifier: string,
+      path: Array<number | string>,
+    ) => {
       const state = get();
 
       state.updateBlockByPath(path, (_, block) => {
@@ -428,7 +436,7 @@ export const useEditorStore = create<Store & Actions>()(
         state.page = data;
       });
     },
-    moveTo: (block: DMEData.Block, targetPath: Array<number>) => {
+    moveTo: (block: DMEData.Block, targetPath: Array<number | string>) => {
       set((state) => {
         // get latest parent
         const parentBlock = getListByPath(

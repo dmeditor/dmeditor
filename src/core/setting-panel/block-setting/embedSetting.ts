@@ -3,7 +3,7 @@ import { getEmbedConfigObject } from './../../utils/util';
 
 export const isEmbedOwnSetting = (
   childBlock: DMEData.Block,
-  relativePath: Array<number>,
+  relativePath: Array<number | string>,
   rootWidget: string,
 ) => {
   if (!childBlock.isEmbed) {

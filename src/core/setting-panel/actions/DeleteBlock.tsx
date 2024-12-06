@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { useEditorStore } from '../../..';
 import { PropertyButton } from '../Property';
 
-export const DeleteBlock = (props: { blockPath: Array<number> }) => {
+export const DeleteBlock = (props: { blockPath: Array<number | string> }) => {
   const { removeByPath } = useEditorStore();
 
   const handleDelete = () => {
