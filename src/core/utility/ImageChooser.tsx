@@ -25,7 +25,7 @@ function CheckImageBrowserValid() {
   return null;
 }
 
-type ImageChooserProps = {
+export type ImageChooserProps = {
   visible: boolean;
   value?: BrowseImageCallbackParams;
   multiple?: boolean;
