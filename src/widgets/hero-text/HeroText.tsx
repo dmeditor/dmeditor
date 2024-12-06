@@ -35,11 +35,7 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, DMEData.DefaultBl
       fullWidth={heroFullWidth}
       className={getClass('hero') + ' dme-w-hero'}
     >
-      <BlockRender
-        mode={mode}
-        data={children.image as DMEData.DefaultBlockType}
-        path={[...path, 'image']}
-      />
+      <BlockRender mode={mode} data={children.image} path={[...path, 'image']} />
     </HeroImageDiv>
   );
   const renderList = () => (

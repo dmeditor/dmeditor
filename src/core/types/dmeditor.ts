@@ -199,11 +199,8 @@ export namespace DMEData {
   }
 
   //childrenType
-  export interface Block<
-    Data = DefaultDataType,
-    ChildDataType = DefaultBlockType,
-    ChildrenType = [],
-  > extends BlockBaseType {
+  export interface Block<Data = DefaultDataType, ChildDataType = {}, ChildrenType = []>
+    extends BlockBaseType {
     data: Data; // Entity data from widget.
     children?: ChildrenType extends any[]
       ? (BlockWithChildren & ChildDataType)[]

@@ -273,7 +273,11 @@ export const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        list.splice(index, 1);
+        if (typeof index === 'number') {
+          list.splice(index, 1);
+        } else {
+          console.warn('Canot remove from object children');
+        }
       });
     },
     removeBlock: (block) =>

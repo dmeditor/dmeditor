@@ -47,10 +47,19 @@ export const iterateBlockTree = (
     return false;
   }
   if (block.children) {
-    for (const item of block.children) {
-      const itemResult = iterateBlockTree(item, callback);
-      if (itemResult === false) {
-        return false;
+    if (Array.isArray(block.children)) {
+      for (const item of block.children) {
+        const itemResult = iterateBlockTree(item, callback);
+        if (itemResult === false) {
+          return false;
+        }
+      }
+    } else if (typeof block.children === 'object') {
+      for (const key of Object.keys(block.children as DMEData.BlockMap)) {
+        const itemResult = iterateBlockTree(block.children[key], callback);
+        if (itemResult === false) {
+          return false;
+        }
       }
     }
   }
@@ -148,5 +157,5 @@ export const getListByPath = (
     return data;
   }
   let listData = getDataByPath(data, path);
-  return listData && listData.children ? listData.children : null;
+  return listData && listData.children ? (listData.children as DMEData.BlockList) : null;
 };
