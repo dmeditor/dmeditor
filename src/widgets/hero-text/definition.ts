@@ -15,12 +15,12 @@ const heroTextWidget: DME.Widget = {
   //childen :{hero: 'image', list: 'list:button'}
   //or {hero: 'image', list: {type: 'list', children:{'list:button', <variant definition>}}
   events: {
-    createBlock: (): DMEData.CreatedBlock<EntityHeroText> => {
+    createBlock: (): DMEData.CreatedBlock<EntityHeroText, DMEData.DefaultBlockType, {}> => {
       return {
         type: 'hero-text',
         data: {},
-        children: [
-          {
+        children: {
+          image: {
             id: nanoid(),
             type: 'image',
             isEmbed: true,
@@ -29,13 +29,12 @@ const heroTextWidget: DME.Widget = {
               settings: {},
             },
           },
-          {
+          list: {
             id: nanoid(),
             type: 'list',
             isEmbed: true,
             allowedTypes: ['heading', 'text', 'button', 'line', 'list'],
-            data: { settings: { padding: 10 }, general: { padding: 10 } },
-            // data: { settings: { general: { padding: 10 } } },
+            data: {},
             children: [
               {
                 id: nanoid(),
@@ -48,7 +47,7 @@ const heroTextWidget: DME.Widget = {
               },
             ],
           },
-        ],
+        },
       };
     },
     embedConfig: {
@@ -58,7 +57,7 @@ const heroTextWidget: DME.Widget = {
             return true;
           } else {
             if (context.relativePath.length === 1) {
-              if (context.relativePath[0] === 0) {
+              if (context.relativePath[0] === 'image') {
                 //image
                 if (!item.styleTags) {
                   return true;
@@ -74,13 +73,13 @@ const heroTextWidget: DME.Widget = {
         });
         let enabledStyles: any = {};
         //list elements
-        if (context.relativePath[0] === 1 && context.relativePath.length === 2) {
+        if (context.relativePath[0] === 'list' && context.relativePath.length === 2) {
           enabledStyles = undefined;
         }
         return { settings: settingResult, enabledStyles: enabledStyles };
       },
       hasOwnView: (context) => {
-        if (context.relativePath.length >= 2 && context.relativePath[0] === 1) {
+        if (context.relativePath.length >= 2 && context.relativePath[0] === 'list') {
           return true;
         }
         return false;

@@ -1,9 +1,11 @@
 import { BlockRender, useDevice } from '../..';
-import type { DME } from '../..';
+import type { DME, DMEData } from '../..';
 import { EntityHeroText } from './entity';
 import { HeroImageDiv, HeroTextContainer } from './styled';
 
-const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText>> = (props) => {
+const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, DMEData.DefaultBlockType, {}>> = (
+  props,
+) => {
   const {
     blockNode: {
       children,
@@ -14,9 +16,8 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText>> = (props) => {
     styleClasses,
   } = props;
 
-  if (children?.length !== 2) {
-    console.warn('Image text should be 2 children. Ignored.');
-    return null;
+  if (!children) {
+    return <></>;
   }
 
   const getClass = (type: string) => {
@@ -34,12 +35,16 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText>> = (props) => {
       fullWidth={heroFullWidth}
       className={getClass('hero') + ' dme-w-hero'}
     >
-      <BlockRender mode={mode} data={children[0]} path={[...path, 0]} />
+      <BlockRender
+        mode={mode}
+        data={children.image as DMEData.DefaultBlockType}
+        path={[...path, 'image']}
+      />
     </HeroImageDiv>
   );
   const renderList = () => (
     <div className={getClass('list') + ' dme-w-list'}>
-      <BlockRender data={children[1]} mode={mode} path={[...path, 1]} />
+      <BlockRender data={children.list} mode={mode} path={[...path, 'list']} />
     </div>
   );
 
