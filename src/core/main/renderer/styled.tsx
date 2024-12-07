@@ -104,7 +104,7 @@ export const DMEditorViewStyle = styled.div<{ projectStyle?: string; themeStyle?
 
 export const AddingTool = styled.div<AddingToolProps>`
   position: absolute;
-  /* z-index: 1; */
+  z-index: 1000;
 
   ${({ position, horizontal }) => {
     if (horizontal) {

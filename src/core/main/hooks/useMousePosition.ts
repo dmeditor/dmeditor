@@ -22,9 +22,11 @@ const useMousePosition = (
       if (mouseX < 0) mouseX = 0;
       if (mouseX > width) mouseX = width;
 
-      if (mouseX <= shownPositionRange) {
+      const judgeWidth = width / 2 > shownPositionRange ? shownPositionRange : width / 2;
+
+      if (mouseX <= judgeWidth) {
         result = 'before';
-      } else if (mouseX >= width - shownPositionRange) {
+      } else if (mouseX >= width - judgeWidth) {
         result = 'after';
       } else {
         result = '';
@@ -35,9 +37,10 @@ const useMousePosition = (
       if (mouseY < 0) mouseY = 0;
       if (mouseY > height) mouseY = height;
 
-      if (mouseY <= shownPositionRange) {
+      const judgeHeight = height / 2 > shownPositionRange ? shownPositionRange : height / 2;
+      if (mouseY <= judgeHeight) {
         result = 'before';
-      } else if (mouseY >= height - shownPositionRange) {
+      } else if (mouseY >= height - judgeHeight) {
         result = 'after';
       } else {
         result = '';
