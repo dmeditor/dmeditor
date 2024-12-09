@@ -4,18 +4,7 @@ import { Backdrop, Box, Button, Modal } from '@mui/material';
 
 import { BlockListRender, BlockRender, DME, DMEData } from '../../';
 import { EntityPopup } from './entity';
-
-const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  backgroundColor: '#ffffff',
-  border: '1px solid #333333',
-  boxShadow: '1px 2px 3px #666666',
-  padding: '10px',
-};
+import { PopupCloseButtonContainer, PopupRoot } from './style';
 
 export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
   const {
@@ -68,7 +57,7 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
             : {}
         }
       >
-        <div className={styleClasses['container']} style={modalStyle}>
+        <PopupRoot className={styleClasses['container']} size={data.modalSize}>
           <a
             href="#"
             className={styleClasses['close-icon']}
@@ -81,7 +70,7 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
             <CloseOutlined />
           </a>
           <BlockListRender blockData={children || []} path={path} mode={mode} />
-          <div>
+          <PopupCloseButtonContainer>
             <a
               href="#"
               className={styleClasses['close-button']}
@@ -95,8 +84,8 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
               )}
               Close
             </a>
-          </div>
-        </div>
+          </PopupCloseButtonContainer>
+        </PopupRoot>
       </Modal>
       <div></div>
     </div>

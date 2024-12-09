@@ -15,7 +15,8 @@ export const popupDefinition: DME.Widget = {
       return {
         data: {
           buttonText: 'Button',
-          settings: { general: { padding: 10 } },
+          modalSize: 'medium',
+          settings: { general: { align: 'center', padding: 10 } },
         },
         type: 'popup',
         children: [
