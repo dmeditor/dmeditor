@@ -64,7 +64,7 @@ export namespace DME {
     allowedTypes?: string[] | string; // Allowed types for direct children.
     events: {
       updateData?: (settings: Setting, data: DMEData.Block) => void;
-      createBlock: () => DMEData.CreatedBlock<any, any>;
+      createBlock: () => DMEData.CreatedBlock<any, any, any>;
       embedConfig?: {
         enabledSettings?: (
           settings: Setting[],
@@ -126,10 +126,9 @@ export namespace DME {
 
   export interface WidgetRenderProps<
     Type = DMEData.DefaultDataType,
-    Node = DMEData.DefaultBlockType,
-    ChildrenType = [],
+    ChildrenType = DMEData.DefaultBlockType[],
   > {
-    blockNode: DMEData.Block<Type, Node, ChildrenType>;
+    blockNode: DMEData.Block<Type, ChildrenType>;
     rootClasses: string;
     styleClasses: Record<string, string>;
     active: boolean;
@@ -198,21 +197,18 @@ export namespace DMEData {
     children?: Block[];
   }
 
-  //childrenType
-  export interface Block<Data = DefaultDataType, ChildDataType = {}, ChildrenType = []>
+  //childrenType: can be DefaultBlockType[] or BlockWithChildren[] or object eg.{hero: Block, text: BlockList}
+  export interface Block<Data = DefaultDataType, ChildrenType = DefaultBlockType[]>
     extends BlockBaseType {
     data: Data; // Entity data from widget.
-    children?: ChildrenType extends any[]
-      ? (BlockWithChildren & ChildDataType)[]
-      : Record<string, BlockWithChildren & ChildDataType>;
+    children?: ChildrenType;
     id: string;
   }
 
-  export type CreatedBlock<
-    Data = DefaultDataType,
-    ChildDataType = DefaultBlockType,
-    ChildrenType = [],
-  > = Omit<Block<Data, ChildDataType, ChildrenType>, 'id'>;
+  export type CreatedBlock<Data = DefaultDataType, ChildrenType = DefaultBlockType[]> = Omit<
+    Block<Data, ChildrenType>,
+    'id'
+  >;
 
   export type BlockList = Block[];
 

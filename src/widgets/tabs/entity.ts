@@ -6,6 +6,6 @@ export interface EntityTabsData {
   };
 }
 
-export interface EntityTabsBlock {
+export interface EntityTabsBlock extends DMEData.BlockWithChildren {
   meta: { tabKey: string | number; title: string };
 }

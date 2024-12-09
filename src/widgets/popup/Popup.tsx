@@ -17,7 +17,7 @@ const modalStyle = {
   padding: '10px',
 };
 
-export const Popup = (props: DME.WidgetRenderProps<EntityPopup, []>) => {
+export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
   const {
     blockNode: { data, children },
     styleClasses,

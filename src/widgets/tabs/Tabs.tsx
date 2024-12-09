@@ -10,7 +10,7 @@ import { logger } from '../../core/utils/log';
 import { BaseTabs, TabPane } from './BaseTabs';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
 
-const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock>> = (props) => {
+const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> = (props) => {
   const {
     blockNode: { children: tabList = [], type },
     styleClasses,

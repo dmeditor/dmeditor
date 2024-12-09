@@ -5,3 +5,7 @@ export interface EntityAccordion {
     general?: DMEData.GeneralSettingType;
   };
 }
+
+export interface AccordtionChildType extends DMEData.BlockWithChildren {
+  meta?: { tabKey: string | number; title: string };
+}

@@ -1,9 +1,9 @@
 import { BlockRender, useDevice } from '../..';
 import type { DME, DMEData } from '../..';
-import { EntityHeroText } from './entity';
+import { EntityHeroText, EntityHeroTextChildren } from './entity';
 import { HeroImageDiv, HeroTextContainer } from './styled';
 
-const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, DMEData.DefaultBlockType, {}>> = (
+const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, EntityHeroTextChildren>> = (
   props,
 ) => {
   const {
@@ -35,7 +35,7 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, DMEData.DefaultBl
       fullWidth={heroFullWidth}
       className={getClass('hero') + ' dme-w-hero'}
     >
-      <BlockRender mode={mode} data={children.image} path={[...path, 'image']} />
+      <BlockRender mode={mode} data={children.hero} path={[...path, 'hero']} />
     </HeroImageDiv>
   );
   const renderList = () => (

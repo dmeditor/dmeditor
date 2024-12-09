@@ -3,10 +3,10 @@ import { AccordionDetails, AccordionSummary, Accordion as MUIAccordion } from '@
 
 import { BlockListRender, DME } from '../..';
 import { getAllowedTypes, isNull } from '../../core/utils';
-import { EntityAccordion } from './entity';
+import { AccordtionChildType, EntityAccordion } from './entity';
 import { useAccordionStore } from './store';
 
-const Accordion = (props: DME.WidgetRenderProps<EntityAccordion>) => {
+const Accordion = (props: DME.WidgetRenderProps<EntityAccordion, AccordtionChildType[]>) => {
   const {
     blockNode: { children: accordionList = [], type },
     styleClasses,
@@ -18,7 +18,7 @@ const Accordion = (props: DME.WidgetRenderProps<EntityAccordion>) => {
   };
   return (
     <div>
-      {accordionList.map((accordion: any, index: number) => (
+      {accordionList.map((accordion, index: number) => (
         <MUIAccordion>
           <AccordionSummary
             expandIcon={<ExpandMoreOutlined />}

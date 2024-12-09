@@ -2,17 +2,16 @@ import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
 import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
-import { CreatedBlock } from './../../core/types/dmeditor';
-import { EntityPopup, PopupChildrenType } from './entity';
+import { EntityPopup } from './entity';
 
 export const popupDefinition: DME.Widget = {
-  category: 'design',
+  category: 'intractive',
   icon: 'popup',
   name: 'Popup',
   type: 'popup',
   widgetType: 'widget',
   events: {
-    createBlock: (): DMEData.CreatedBlock<EntityPopup, []> => {
+    createBlock: (): DMEData.CreatedBlock<EntityPopup> => {
       return {
         data: {
           buttonText: 'Button',

@@ -1,6 +1,6 @@
 import type { DME, DMEData } from '../..';
 import { generalSettings } from '../..';
-import type { EntityAccordion } from './entity';
+import type { AccordtionChildType, EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {
   category: 'intractive',
@@ -8,7 +8,7 @@ const AccordionWidget: DME.Widget = {
   name: 'Accordion',
   type: 'accordion',
   events: {
-    createBlock: (): DMEData.CreatedBlock<EntityAccordion> => {
+    createBlock: (): DMEData.CreatedBlock<EntityAccordion, AccordtionChildType[]> => {
       return {
         type: 'accordion',
         data: {},

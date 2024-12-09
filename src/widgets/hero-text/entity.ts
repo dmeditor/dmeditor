@@ -8,3 +8,8 @@ export interface EntityHeroText {
     general?: DMEData.GeneralSettingType;
   };
 }
+
+export interface EntityHeroTextChildren {
+  hero: DMEData.Block;
+  list: DMEData.Block;
+}

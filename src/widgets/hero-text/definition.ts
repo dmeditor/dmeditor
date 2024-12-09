@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { DMEData, generalSettings, type DME } from '../..';
 import { arrayHasCommonElement } from '../../core/utils';
-import { EntityHeroText } from './entity';
+import { EntityHeroText, EntityHeroTextChildren } from './entity';
 
 const heroTextWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
@@ -15,12 +15,12 @@ const heroTextWidget: DME.Widget = {
   //childen :{hero: 'image', list: 'list:button'}
   //or {hero: 'image', list: {type: 'list', children:{'list:button', <variant definition>}}
   events: {
-    createBlock: (): DMEData.CreatedBlock<EntityHeroText, DMEData.DefaultBlockType, {}> => {
+    createBlock: (): DMEData.CreatedBlock<EntityHeroText, EntityHeroTextChildren> => {
       return {
         type: 'hero-text',
         data: { gap: 10 },
         children: {
-          image: {
+          hero: {
             id: nanoid(),
             type: 'image',
             isEmbed: true,

@@ -8,7 +8,7 @@ const layout2ColumnsWidget: DME.Widget = {
   name: '2 Columns layout',
   type: 'layout-2columns',
   events: {
-    createBlock: (): DMEData.CreatedBlock<EntityLayout2Columns, {}> => {
+    createBlock: (): DMEData.CreatedBlock<EntityLayout2Columns, DMEData.BlockWithChildren[]> => {
       return {
         data: { columnWidth: 6 },
         type: 'layout-2columns',
