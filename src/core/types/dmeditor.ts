@@ -64,7 +64,7 @@ export namespace DME {
     allowedTypes?: string[] | string; // Allowed types for direct children.
     events: {
       updateData?: (settings: Setting, data: DMEData.Block) => void;
-      createBlock: () => DMEData.CreatedBlock<any, any, any>;
+      createBlock: () => DMEData.CreatedBlock<any, any>;
       embedConfig?: {
         enabledSettings?: (
           settings: Setting[],
