@@ -137,7 +137,7 @@ const defaultConfig = () => {
         { identifier: 'basic', name: 'Basic' },
         { identifier: 'design', name: 'Design' },
         { identifier: 'media', name: 'Media' },
-        { identifier: 'intractive', name: 'Intractive' },
+        { identifier: 'interactive', name: 'Interactive' },
       ],
       fontFamily: [
         { value: '', label: 'Font' },

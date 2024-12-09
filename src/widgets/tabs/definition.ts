@@ -5,7 +5,7 @@ import { generalSettings } from '../..';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
 
 const TabsWidget: DME.Widget = {
-  category: 'intractive',
+  category: 'interactive',
   icon: 'tabs',
   name: 'Tabs',
   type: 'tabs',

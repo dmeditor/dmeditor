@@ -5,7 +5,7 @@ import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
 import { EntityPopup } from './entity';
 
 export const popupDefinition: DME.Widget = {
-  category: 'intractive',
+  category: 'interactive',
   icon: 'popup',
   name: 'Popup',
   type: 'popup',

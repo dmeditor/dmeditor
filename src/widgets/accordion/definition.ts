@@ -3,7 +3,7 @@ import { generalSettings } from '../..';
 import type { AccordtionChildType, EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {
-  category: 'intractive',
+  category: 'interactive',
   icon: 'TextFormatOutlined',
   name: 'Accordion',
   type: 'accordion',
