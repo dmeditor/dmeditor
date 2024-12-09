@@ -141,7 +141,9 @@ export const useEditorStore = create<Store & Actions>()(
               return;
             }
             const parentIndex = context[context.length - 1];
-            list.splice(parentIndex, 1);
+            if (typeof parentIndex === 'number') {
+              list.splice(parentIndex, 1);
+            }
           }
           state.addBlockData.status = 'done';
         }
@@ -163,7 +165,7 @@ export const useEditorStore = create<Store & Actions>()(
         state.hoverPath = path;
       });
     },
-    getCurrentList: (): DMEData.BlockList | null => {
+    getCurrentList: (): DMEData.BlockList | DMEData.BlockMap | null => {
       const state = get();
       const currentPath = state.selected.currentListPath;
       return getListByPath(state.storage, currentPath);
@@ -173,9 +175,9 @@ export const useEditorStore = create<Store & Actions>()(
       const list = state.getCurrentList();
       return list?.[state.selected.blockIndex] || null;
     },
-    getBlockByPath: (path: Array<number | string>): DMEData.Block => {
+    getBlockByPath: (path: Array<number | string>): DMEData.Block | null => {
       const state = get();
-      return getDataByPath(state.storage, path) ?? { type: 'unknown', data: {} };
+      return getDataByPath(state.storage, path);
     },
     getClosestBlock: (
       path: Array<number | string>,
@@ -244,23 +246,6 @@ export const useEditorStore = create<Store & Actions>()(
       if (result) {
         return result as DMEData.Block<T>;
       }
-    },
-    getBlock: <T>(index: number) => {
-      const state = get();
-      const currentList = state.getCurrentList();
-      if (!currentList) {
-        state.clearSelected();
-        return;
-      }
-      if (isStrictlyInfinity(index) || index < 0 || currentList.length <= index) {
-        state.clearSelected();
-        return;
-      }
-      if (!currentList[index]) {
-        state.clearSelected();
-        return;
-      }
-      return state.storage[index] as DMEData.Block<T>;
     },
     removeByPath: (path: Array<number | string>) => {
       set((state) => {
@@ -453,6 +438,9 @@ export const useEditorStore = create<Store & Actions>()(
         }
 
         const targetIndex = targetPath[targetPath.length - 1];
+        if (typeof targetIndex !== 'number') {
+          return;
+        }
 
         if (targetIndex < 0 || targetIndex > parentBlock.length) {
           console.warn('Invalid target index', targetIndex);
@@ -460,7 +448,7 @@ export const useEditorStore = create<Store & Actions>()(
         }
 
         // insert block to target path
-        parentBlock.splice(targetPath[targetPath.length - 1], 0, block);
+        parentBlock.splice(targetPath[targetPath.length - 1] as number, 0, block);
       });
     },
     setCopyBlock: (block: DMEData.Block) => {

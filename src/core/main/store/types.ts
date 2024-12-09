@@ -52,17 +52,14 @@ export type Actions = {
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: DMEData.Block[] }) => void;
   getSelectedBlock: <T = DMEData.DefaultDataType>() => DMEData.Block<T> | undefined;
-  getBlock: <T = DMEData.Block<DMEData.DefaultDataType>>(
-    index: number,
-  ) => DMEData.Block<T> | undefined;
   removeBlock: (widget: DMEData.Block) => void;
   removeByPath: (path: Array<number | string>) => void;
   setSelected: (blockIndex?: number) => void;
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray: Array<number | string>, id: string) => void;
-  getCurrentList: () => DMEData.BlockList | null;
+  getCurrentList: () => DMEData.BlockList | DMEData.BlockMap | null;
   getCurrentBlock: () => DMEData.Block | null;
-  getBlockByPath: (path: Array<number | string>) => DMEData.Block;
+  getBlockByPath: (path: Array<number | string>) => DMEData.Block | null;
   getClosestBlock: (path: Array<number | string>) => [DMEData.Block, Array<number | string>] | [];
   getParents: (
     path: Array<number | string>,
