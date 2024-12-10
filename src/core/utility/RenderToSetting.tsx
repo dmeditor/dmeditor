@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 import { useWidgetSettingStore } from '../main/store';
 
-export const RenderToSetting = (props: { children: any }) => {
+export const RenderToSetting = (props: { children?: any }) => {
   const { mainLoaded } = useWidgetSettingStore();
 
   let container = null;

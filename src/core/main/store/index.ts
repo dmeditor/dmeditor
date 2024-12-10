@@ -11,6 +11,7 @@ import emitter from '../../utils/event';
 import { getWidgetWithVariant, properties } from '../../utils/register';
 import { getDataByPath, getListByPath, iteratePath } from './helper';
 import type { Actions, AddBlockParameters, Store } from './types';
+import { useLocationParams } from './useLocationParams';
 
 export const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
@@ -497,4 +498,5 @@ export const useWidgetSettingStore = create<
   })),
 );
 
+export { useLocationParams };
 export type { AddBlockParameters };
