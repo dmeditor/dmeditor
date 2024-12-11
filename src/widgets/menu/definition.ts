@@ -17,8 +17,8 @@ export const menuDefinition: DME.Widget = {
         data: {
           parameterKey: 'id',
           menuList: [
-            { text: 'Menu1', identifier: 'menu1' },
-            { text: 'Menu2', identifier: 'menu2' },
+            { text: 'Menu1', value: 'menu1' },
+            { text: 'Menu2', value: 'menu2' },
           ],
           settings: {},
         },
@@ -28,7 +28,7 @@ export const menuDefinition: DME.Widget = {
   settings: [
     {
       property: '.parameterKey',
-      name: 'Parameter to set',
+      name: 'Binding to parameter',
       settingComponent: 'input',
       description: 'The parameter key in location query. eg. in ?id=xxx where id is the key.',
     },

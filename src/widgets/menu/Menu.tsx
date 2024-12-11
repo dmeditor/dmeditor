@@ -3,7 +3,7 @@ import { BlockListRender } from 'dmeditor/core/components/block-list-render';
 import { BlockRender } from 'dmeditor/core/components/block-render';
 import ListWithTitle from 'dmeditor/core/components/reusable-setting/ListWithTitle';
 import { useEditorStore, useLocationParams } from 'dmeditor/core/main/store';
-import { DME } from 'dmeditor/core/types';
+import { DME, DMEData } from 'dmeditor/core/types';
 import { DataListSettings, RenderToSetting } from 'dmeditor/core/utility';
 
 import { EntityMenu } from './enitity';
@@ -18,7 +18,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
     active,
   } = props;
 
-  const [currentMenu, setCurrrentMenu] = useState(data.menuList[0].identifier);
+  const [currentMenu, setCurrrentMenu] = useState(data.menuList[0].value);
   const { parameters, setParameter } = useLocationParams();
 
   const { updateBlockByPath } = useEditorStore();
@@ -41,7 +41,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           <DataListSettings
             schema={[
               { name: 'Title', identifier: 'text', type: 'text' },
-              { name: 'Identifier', identifier: 'identifier', type: 'text' },
+              { name: 'Value', identifier: 'value', type: 'text' },
             ]}
             data={data.menuList}
             onChange={updateList}
@@ -61,10 +61,10 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           <MenuItem className={styleClasses['menuitem']}>
             <a
               href="#"
-              onClick={() => clickMenu(item.identifier)}
+              onClick={() => clickMenu(item.value)}
               className={
                 styleClasses['menuitem-link'] +
-                (item.identifier === currentMenu ? ' ' + styleClasses['current'] : '')
+                (item.value === currentMenu ? ' ' + styleClasses['current'] : '')
               }
             >
               {item.text}
@@ -74,4 +74,22 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
       </MenuContainer>
     </div>
   );
+};
+
+//validation
+export const serverSideLoad = async (block: DMEData.Block, { query }) => {
+  if (query) {
+    const value = query[block.data.parameterKey as string];
+    if (value) {
+      let hasValue = true;
+      for (const item of block.data.menuList as any) {
+        if (item.value === value) {
+          hasValue = false;
+        }
+      }
+      if (!hasValue) {
+        throw 404; //not found
+      }
+    }
+  }
 };
