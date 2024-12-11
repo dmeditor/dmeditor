@@ -176,6 +176,9 @@ const defaultConfig = () => {
     },
     widgets: {
       text: { fonts: ['Arial', 'Times new man'] },
+      'content-view': {
+        views: [{ label: 'Block', value: 'block' }], //render:(block, view:string)=>JSX.Element
+      },
     },
     plugins: {
       imageHandlers: [],

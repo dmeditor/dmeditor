@@ -1,17 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MenuItem, Select as MUISelect } from '@mui/material';
+import { getConfigByPath } from 'dmeditor/core/utils';
 
 import { useEditorStore } from '../../../..';
 import type { DME } from '../../../types';
 
 const Select = (props: DME.SettingComponentProps) => {
   const {
-    parameters: { options, defaultValue },
+    parameters: { options, defaultValue, optionsFrom },
     property,
     value,
     blockPath,
   } = props;
   const { updateBlockPropsByPath } = useEditorStore();
+
+  const validOptions = useMemo(() => {
+    if (optionsFrom) {
+      return getConfigByPath(optionsFrom);
+    } else {
+      return options;
+    }
+  }, [optionsFrom]);
 
   const handleChange = (value: string) => {
     updateBlockPropsByPath(blockPath, property || '', value);
@@ -30,7 +39,7 @@ const Select = (props: DME.SettingComponentProps) => {
       value={value}
       onChange={(e) => handleChange(e.target.value)}
     >
-      {options?.map((option) => (
+      {validOptions?.map((option) => (
         <MenuItem key={option.value} value={option.value}>
           {option.label}
         </MenuItem>

@@ -1,6 +1,6 @@
 'use strict';
 
-import type { DMEConfigType } from '../config';
+import { dmeConfig, type DMEConfigType } from '../config';
 import type { DMEData } from '../types';
 import { logger } from './log';
 import { getWidgetStyle, getWidgetWithVariant } from './register';
@@ -353,4 +353,13 @@ export const mapBlockList = (
     });
     return result;
   }
+};
+
+export const getConfigByPath = (path: string) => {
+  const arr = path.split('/');
+  let temp = dmeConfig as any;
+  for (const item of arr) {
+    temp = temp[item];
+  }
+  return temp;
 };

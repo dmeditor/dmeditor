@@ -1,3 +1,4 @@
+import { dmeConfig } from 'dmeditor/core/config';
 import { useLocationParams } from 'dmeditor/core/main/store';
 import { DME } from 'dmeditor/core/types';
 
@@ -7,22 +8,29 @@ import { Main } from './style';
 export const ContentView = (props: DME.WidgetRenderProps<EntityContentView>) => {
   const {
     blockNode: {
-      data: { parameterKey },
+      data: { parameterKey, view },
     },
   } = props;
 
   const { parameters } = useLocationParams();
 
+  const Render = dmeConfig.widgets['content-view'].render;
+
   return (
     <div>
-      <Main>
-        <div>Here will show dynamic content.</div>
-        {parameters[parameterKey] && (
+      {!Render && (
+        <Main>
           <div>
-            Content where {parameterKey} = {parameters[parameterKey]}
+            Here will show dynamic content where {parameterKey} is{' '}
+            {parameters[parameterKey] || '<not set>'}
           </div>
-        )}
-      </Main>
+        </Main>
+      )}
+      {Render && (
+        <>
+          <Render block={props.blockNode} view={view} />
+        </>
+      )}
     </div>
   );
 };
