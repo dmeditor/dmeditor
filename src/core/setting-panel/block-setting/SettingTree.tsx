@@ -390,7 +390,7 @@ export const SettingTree = (props: {
                   <StyledSettingList.Children level={level}>
                     {blockData.children ? (
                       <ListOverview
-                        data={blockData.children}
+                        data={Array.isArray(blockData.children) ? blockData.children : []}
                         blockPath={blockPath}
                         selectedIndex={-1}
                       />

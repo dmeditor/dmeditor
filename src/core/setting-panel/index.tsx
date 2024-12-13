@@ -173,7 +173,7 @@ const SettingPanel = (props) => {
             <>
               <Space />
               <ListOverview
-                data={currentList || []}
+                data={Array.isArray(currentList) ? currentList : []}
                 blockPath={[]}
                 selectedIndex={selectedBlockIndex}
               />
