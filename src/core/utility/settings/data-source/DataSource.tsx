@@ -77,7 +77,7 @@ export const DataSource = (props: {
                 widget={props.widget}
                 mutil={props.multi}
                 data={props.data}
-                onChange={props.onChange}
+                onChange={(d) => setData(d)}
               />
             )}
           </Box>

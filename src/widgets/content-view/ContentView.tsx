@@ -35,7 +35,8 @@ export const ContentView = (props: DME.WidgetRenderProps<EntityContentView>) => 
 
   return (
     <div>
-      {!currentContent && <Main>Please set data source.</Main>}
+      {!dataSource && <Main>Please set data source.</Main>}
+      {!currentContent && <Main>Not content found</Main>}
       {currentContent && (
         <>
           {!Render && (

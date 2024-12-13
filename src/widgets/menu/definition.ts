@@ -17,8 +17,8 @@ export const menuDefinition: DME.Widget = {
         data: {
           parameterKey: 'id',
           menuList: [
-            { text: 'Menu1', value: 'menu1' },
-            { text: 'Menu2', value: 'menu2' },
+            { text: 'Menu1', value: '1' },
+            { text: 'Menu2', value: '2' },
           ],
           settings: {},
         },
