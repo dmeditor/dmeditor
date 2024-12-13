@@ -1,4 +1,6 @@
-import { BlockListRender, dmeConfig, generalSettings } from '../..';
+import { nanoid } from 'nanoid';
+
+import { BlockListRender, BlockRender, dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { SyledLayout } from './styled';
 
@@ -8,21 +10,30 @@ const layout3ColumnsWidget: DME.Widget = {
   name: '3 Columns layout',
   type: 'layout-3columns',
   events: {
-    createBlock: (): DMEData.CreatedBlock<EntityLayout3Columns, DMEData.BlockWithChildren[]> => {
+    createBlock: (): DMEData.CreatedBlock<EntityLayout3Columns, EntityLayout3Children> => {
       return {
         data: { column1Width: 4, column2Width: 4 },
         type: 'layout-3columns',
-        children: [
-          {
+        children: {
+          column1: {
+            id: nanoid(),
+            data: {},
+            type: 'list',
             children: [],
           },
-          {
+          column2: {
+            id: nanoid(),
+            data: {},
+            type: 'list',
             children: [],
           },
-          {
+          column3: {
+            id: nanoid(),
+            data: {},
+            type: 'list',
             children: [],
           },
-        ],
+        },
       };
     },
     updateData: () => {},
@@ -46,7 +57,15 @@ export interface EntityLayout3Columns {
   };
 }
 
-const Layout3Columns = (props: DME.WidgetRenderProps<EntityLayout3Columns>) => {
+interface EntityLayout3Children {
+  column1: DMEData.Block;
+  column2: DMEData.Block;
+  column3: DMEData.Block;
+}
+
+const Layout3Columns = (
+  props: DME.WidgetRenderProps<EntityLayout3Columns, EntityLayout3Children>,
+) => {
   const {
     styleClasses,
     blockNode: {
@@ -55,28 +74,20 @@ const Layout3Columns = (props: DME.WidgetRenderProps<EntityLayout3Columns>) => {
     },
   } = props;
 
+  if (!children) {
+    return <></>;
+  }
+
   return (
     <SyledLayout column1Width={column1Width} column2Width={column2Width}>
       <div className={(styleClasses?.['column1'] || '') + ' dme-w-column1'}>
-        <BlockListRender
-          mode={props.mode}
-          blockData={children?.[0].children || []}
-          path={[...props.path, 0]}
-        />
+        <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column1']} />
       </div>
       <div className={(styleClasses?.['column2'] || '') + ' dme-w-column2'}>
-        <BlockListRender
-          mode={props.mode}
-          blockData={children?.[1].children || []}
-          path={[...props.path, 1]}
-        />
+        <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column2']} />
       </div>
       <div className={(styleClasses?.['column3'] || '') + ' dme-w-column3'}>
-        <BlockListRender
-          mode={props.mode}
-          blockData={children?.[2].children || []}
-          path={[...props.path, 2]}
-        />
+        <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column3']} />
       </div>
     </SyledLayout>
   );

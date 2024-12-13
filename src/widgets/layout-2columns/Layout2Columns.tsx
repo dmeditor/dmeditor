@@ -1,4 +1,7 @@
-import { BlockListRender, dmeConfig, generalSettings } from '../..';
+import { Block } from '@mui/icons-material';
+import { nanoid } from 'nanoid';
+
+import { BlockListRender, BlockRender, dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { SyledLayout } from './styled';
 
@@ -8,18 +11,24 @@ const layout2ColumnsWidget: DME.Widget = {
   name: '2 Columns layout',
   type: 'layout-2columns',
   events: {
-    createBlock: (): DMEData.CreatedBlock<EntityLayout2Columns, DMEData.BlockWithChildren[]> => {
+    createBlock: (): DMEData.CreatedBlock<EntityLayout2Columns, EntityLayout2Children> => {
       return {
         data: { columnWidth: 6 },
         type: 'layout-2columns',
-        children: [
-          {
+        children: {
+          column1: {
+            id: nanoid(),
+            data: {},
+            type: 'list',
             children: [],
           },
-          {
+          column2: {
+            id: nanoid(),
+            data: {},
+            type: 'list',
             children: [],
           },
-        ],
+        },
       };
     },
     updateData: () => {},
@@ -42,7 +51,14 @@ interface EntityLayout2Columns {
   };
 }
 
-const Layout2Columns = (props: DME.WidgetRenderProps<EntityLayout2Columns>) => {
+interface EntityLayout2Children {
+  column1: DMEData.Block;
+  column2: DMEData.Block;
+}
+
+const Layout2Columns = (
+  props: DME.WidgetRenderProps<EntityLayout2Columns, EntityLayout2Children>,
+) => {
   const {
     styleClasses,
     blockNode: {
@@ -51,21 +67,17 @@ const Layout2Columns = (props: DME.WidgetRenderProps<EntityLayout2Columns>) => {
     },
   } = props;
 
+  if (!children) {
+    return <></>;
+  }
+
   return (
     <SyledLayout columnWidth={columnWidth}>
       <div className={(styleClasses?.['column1'] || '') + ' dme-w-column1'}>
-        <BlockListRender
-          mode={props.mode}
-          blockData={children?.[0].children || []}
-          path={[...props.path, 0]}
-        />
+        <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column1']} />
       </div>
       <div className={(styleClasses?.['column2'] || '') + ' dme-w-column2'}>
-        <BlockListRender
-          mode={props.mode}
-          blockData={children?.[1].children || []}
-          path={[...props.path, 1]}
-        />
+        <BlockRender data={children.column2} mode={props.mode} path={[...props.path, 'column2']} />
       </div>
     </SyledLayout>
   );
