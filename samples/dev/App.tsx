@@ -424,7 +424,7 @@ setDMEditorConfig({
       render: (props: { data: any; view: string }) => {
         return (
           <div>
-            content: {props.data?.name}, View: {props.view}
+            Content: {props.data?.name}, View: {props.view}
           </div>
         );
       },

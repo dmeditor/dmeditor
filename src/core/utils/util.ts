@@ -363,3 +363,12 @@ export const getConfigByPath = (path: string) => {
   }
   return temp;
 };
+
+export const updateLocation = (vars: any) => {
+  let url = new URL(document.location.toString());
+  const params = url.searchParams;
+  for (const item of Object.keys(vars)) {
+    params.set(item, vars[item] + '');
+  }
+  history.pushState({}, null, url);
+};

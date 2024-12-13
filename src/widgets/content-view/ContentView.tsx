@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { dmeConfig } from 'dmeditor/core/config';
 import { useGlobalVars } from 'dmeditor/core/main/store';
 import { DME, DMEData, ServerSideLoadFunction } from 'dmeditor/core/types';
-import { DataSource, RenderToSetting } from 'dmeditor/core/utility';
 
 import { EntityContentView } from './entity';
 import { Main } from './style';
@@ -16,10 +15,12 @@ export const ContentView = (props: DME.WidgetRenderProps<EntityContentView>) => 
 
   const [currentContent, setCurrentContent] = useState(content);
 
+  const { vars } = useGlobalVars();
+
   const initClient = async () => {
     const clientFetch = dmeConfig.dataSource.fetchInClient;
     if (dataSource && Object.keys(dataSource).length > 0 && clientFetch) {
-      const content = await clientFetch('content-view', dataSource);
+      const content = await clientFetch('content-view', dataSource, vars);
       setCurrentContent(content);
     }
   };
@@ -28,11 +29,9 @@ export const ContentView = (props: DME.WidgetRenderProps<EntityContentView>) => 
     if (!props.blockNode.serverData) {
       initClient();
     }
-  }, [dataSource]);
+  }, [dataSource, vars]);
 
-  const { vars } = useGlobalVars();
-
-  const Render = dmeConfig.widgets['content-view'].render;
+  const Render = dmeConfig.widgets['content-view']?.render;
 
   return (
     <div>
@@ -62,9 +61,10 @@ export const onServerLoad: ServerSideLoadFunction = async (block, context) => {
     const content = await fetchInServer(
       'content-view',
       block.data.dataSource as DMEData.DataSourceData,
-      block.data,
+      context,
     );
     block.data.content = content;
+    block.data.dataSource = undefined; // do not set to client
   }
   block.serverData = true;
 };

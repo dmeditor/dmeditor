@@ -18,6 +18,7 @@ import { VariableTag } from './style';
 export const DataSource = (props: {
   widget: string;
   data: DMEData.DataSourceData;
+  multi: boolean;
   onChange: (data: DMEData.DataSourceData) => void;
 }) => {
   const [data, setData] = useState(props.data);
@@ -72,7 +73,12 @@ export const DataSource = (props: {
         <DialogContent>
           <Box>
             {DataSourceCom && (
-              <DataSourceCom widget={props.widget} data={props.data} onChange={props.onChange} />
+              <DataSourceCom
+                widget={props.widget}
+                mutil={props.multi}
+                data={props.data}
+                onChange={props.onChange}
+              />
             )}
           </Box>
           <Box>

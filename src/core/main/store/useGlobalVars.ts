@@ -1,3 +1,4 @@
+import { isServer, updateLocation } from 'dmeditor/core/utils';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -14,6 +15,9 @@ export const useGlobalVars = create<
     setVar: (key: string, v: string | number) => {
       set((state) => {
         state.vars[key] = v;
+        if (!isServer()) {
+          updateLocation(state.vars);
+        }
       });
     },
     removeVar: (key: string) => {

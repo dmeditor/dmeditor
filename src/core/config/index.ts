@@ -41,10 +41,20 @@ export interface DataSourceConfigType {
   edit: React.FC<{
     widget: string;
     data?: DMEData.DataSourceData;
+    mutil?: boolean;
+    view?: string; //eg. block
     onChange: (v: DMEData.DataSourceData) => void;
   }>;
-  fetchInServer?: (widget: string, data: DMEData.DataSourceData, blockData?: any) => Promise<any>;
-  fetchInClient?: (widget: string, data: DMEData.DataSourceData, blockData?: any) => Promise<any>;
+  fetchInServer?: (
+    widget: string,
+    data: DMEData.DataSourceData,
+    vars: Record<string, any>,
+  ) => Promise<any>;
+  fetchInClient?: (
+    widget: string,
+    data: DMEData.DataSourceData,
+    vars: Record<string, any>,
+  ) => Promise<any>;
 }
 
 export interface DMEConfigType {
