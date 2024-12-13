@@ -37,6 +37,19 @@ export const BlockSettings = (props: {
     return tabs;
   };
 
+  const blockInList = useMemo(() => {
+    if (blockPath.length === 0) {
+      return false;
+    } else {
+      const lastOne = blockPath[blockPath.length - 1];
+      if (typeof lastOne === 'number') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }, [blockPath]);
+
   const renderATab = (category: string): ReactElement => {
     return (
       <TabBodyContainer fullHeight={category === 'style'}>
@@ -54,26 +67,28 @@ export const BlockSettings = (props: {
             {editControlEnabled() && canEditControl(blockData) && (
               <SetEditControl key={blockData.id} blockData={blockData} />
             )}
-            <ActionPanel>
-              <ActionPanelButtonGroup>
-                <Move blockPath={blockPath} />
-                <CopyPaste />
-                {dmeConfig.plugins.blockSettingActions?.map((Item) => (
-                  <Item blockData={blockData} />
-                ))}
-              </ActionPanelButtonGroup>
-              {!(
-                editControlEnabled() &&
-                canEditControl(blockData) === false &&
-                blockData.editControl === 2
-              ) && (
+            {blockInList && (
+              <ActionPanel>
                 <ActionPanelButtonGroup>
-                  <RightElement>
-                    <DeleteBlock blockPath={selectedPath} />
-                  </RightElement>
+                  <Move blockPath={blockPath} />
+                  <CopyPaste />
+                  {dmeConfig.plugins.blockSettingActions?.map((Item) => (
+                    <Item blockData={blockData} />
+                  ))}
                 </ActionPanelButtonGroup>
-              )}
-            </ActionPanel>
+                {!(
+                  editControlEnabled() &&
+                  canEditControl(blockData) === false &&
+                  blockData.editControl === 2
+                ) && (
+                  <ActionPanelButtonGroup>
+                    <RightElement>
+                      <DeleteBlock blockPath={selectedPath} />
+                    </RightElement>
+                  </ActionPanelButtonGroup>
+                )}
+              </ActionPanel>
+            )}
           </>
         )}
       </TabBodyContainer>
