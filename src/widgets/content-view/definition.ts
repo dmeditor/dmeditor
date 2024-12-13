@@ -15,19 +15,19 @@ export const contentViewDefinition: DME.Widget = {
       return {
         type: 'content-view',
         data: {
-          parameterKey: 'id',
           view: 'block',
+          dataSource: {},
         },
       };
     },
   },
   settings: [
     {
-      name: 'Parameter to receive',
-      settingComponent: 'input',
-      property: '.parameterKey',
-      description: 'The parameter key to receive from address. eg. in ?id=xxx where id is the key.',
+      name: 'Data source',
+      settingComponent: 'data-source',
+      property: '.dataSource',
     },
+
     {
       name: 'View',
       settingComponent: 'select',

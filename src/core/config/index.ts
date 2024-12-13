@@ -37,6 +37,16 @@ export interface widgetConfig {
   [prop: string]: any;
 }
 
+export interface DataSourceConfigType {
+  edit: React.FC<{
+    widget: string;
+    data?: DMEData.DataSourceData;
+    onChange: (v: DMEData.DataSourceData) => void;
+  }>;
+  fetchInServer?: (widget: string, data: DMEData.DataSourceData, blockData?: any) => Promise<any>;
+  fetchInClient?: (widget: string, data: DMEData.DataSourceData, blockData?: any) => Promise<any>;
+}
+
 export interface DMEConfigType {
   general?: {
     projectStyles?: {
@@ -71,6 +81,7 @@ export interface DMEConfigType {
     settingPanelWidth?: number;
   };
   widgets?: { [widget: string]: widgetConfig };
+  dataSource?: DataSourceConfigType;
   plugins?: {
     imageHandlers?: Array<
       React.ComponentType<{ image: DME.ImageInfo; onChange: (imageInfo: DME.ImageInfo) => void }>
@@ -180,6 +191,7 @@ const defaultConfig = () => {
         views: [{ label: 'Block', value: 'block' }], //render:(block, view:string)=>JSX.Element
       },
     },
+    dataSource: {},
     plugins: {
       imageHandlers: [],
       blockSettingActions: [],
@@ -231,6 +243,7 @@ const dmeConfig: {
     blockSettingActions?: Array<React.ComponentType<{ blockData: DMEData.Block }>>;
     [plugin: string]: any;
   };
+  dataSource: DataSourceConfigType;
   callbacks: CallbackConfig;
 } = defaultConfig();
 

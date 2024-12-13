@@ -71,7 +71,7 @@ export type Actions = {
   updateBlockPropsByPath: (
     path: Array<number | string>,
     propName: string,
-    propValue: undefined | string | number | boolean | Array<unknown>,
+    propValue: undefined | string | number | boolean | Array<unknown> | any,
   ) => void;
   updateSelectedBlock: <Type = DMEData.DefaultDataType>(
     callback: (blockData: Type, block?: any) => void,

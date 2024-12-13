@@ -172,6 +172,11 @@ export namespace DMEData {
     [index: string]: string | boolean | undefined;
   }
 
+  export interface DataSourceData {
+    variables?: string[];
+    [index: string]: string | number | string[] | undefined;
+  }
+
   export interface SavedData {
     data: Block[];
     page: Page;

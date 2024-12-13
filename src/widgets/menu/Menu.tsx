@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { BlockListRender } from 'dmeditor/core/components/block-list-render';
-import { BlockRender } from 'dmeditor/core/components/block-render';
-import ListWithTitle from 'dmeditor/core/components/reusable-setting/ListWithTitle';
-import { useEditorStore, useLocationParams } from 'dmeditor/core/main/store';
+import { useEffect, useState } from 'react';
+import { useEditorStore, useGlobalVars } from 'dmeditor/core/main/store';
 import { DME, DMEData } from 'dmeditor/core/types';
 import { DataListSettings, RenderToSetting } from 'dmeditor/core/utility';
 
@@ -19,13 +16,13 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
   } = props;
 
   const [currentMenu, setCurrrentMenu] = useState(data.menuList[0].value);
-  const { parameters, setParameter } = useLocationParams();
+  const { vars, setVar } = useGlobalVars();
 
   const { updateBlockByPath } = useEditorStore();
 
   const clickMenu = (identifier: string) => {
     setCurrrentMenu(identifier);
-    setParameter(data.parameterKey, identifier);
+    setVar(data.parameterKey, identifier);
   };
 
   const updateList = (listData: EntityMenu['menuList']) => {
@@ -33,6 +30,10 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
       block.menuList = listData;
     });
   };
+
+  useEffect(() => {
+    setVar(data.parameterKey, currentMenu);
+  }, []);
 
   return (
     <div>
@@ -46,11 +47,11 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
             data={data.menuList}
             onChange={updateList}
           />
-          {parameters[data.parameterKey] && (
+          {vars[data.parameterKey] && (
             <div>
               <label>Selected value: </label>
               <span>
-                {data.parameterKey}={parameters[data.parameterKey]}
+                {data.parameterKey}={vars[data.parameterKey]}
               </span>
             </div>
           )}

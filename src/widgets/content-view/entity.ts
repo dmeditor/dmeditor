@@ -1,8 +1,9 @@
 import { DMEData } from '../../core/types/dmeditor';
 
 export interface EntityContentView {
-  parameterKey: string;
   view: string;
+  dataSource?: DMEData.DataSourceData;
+  content?: any;
   settings?: {
     general: DMEData.GeneralSettingType;
   };
