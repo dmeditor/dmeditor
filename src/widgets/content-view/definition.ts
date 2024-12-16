@@ -10,6 +10,7 @@ export const contentViewDefinition: DME.Widget = {
   name: 'Content view',
   type: 'content-view',
   widgetType: 'widget',
+  canDependentOn: ['menu'],
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityContentView> => {
       return {

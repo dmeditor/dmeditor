@@ -15,14 +15,16 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
     active,
   } = props;
 
-  const [currentMenu, setCurrrentMenu] = useState(data.menuList[0].value);
+  const [currentMenu, setCurrrentMenu] = useState(data.menuList[0].identifier);
   const { vars, setVar } = useGlobalVars();
 
   const { updateBlockByPath } = useEditorStore();
 
-  const clickMenu = (identifier: string) => {
-    setCurrrentMenu(identifier);
-    setVar(data.parameterKey, identifier);
+  const identifier = data.settings?.general?.identifier || '';
+
+  const clickMenu = (identifierValue: string) => {
+    setCurrrentMenu(identifierValue);
+    setVar(identifier, identifierValue);
   };
 
   const updateList = (listData: EntityMenu['menuList']) => {
@@ -32,7 +34,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
   };
 
   useEffect(() => {
-    setVar(data.parameterKey, currentMenu);
+    setVar(identifier, currentMenu);
   }, []);
 
   return (
@@ -41,17 +43,18 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
         <RenderToSetting>
           <DataListSettings
             schema={[
-              { name: 'Title', identifier: 'text', type: 'text' },
+              { name: 'Text', identifier: 'text', type: 'text' },
+              { name: 'Identifier', identifier: 'identifier', type: 'text' },
               { name: 'Value', identifier: 'value', type: 'text' },
             ]}
             data={data.menuList}
             onChange={updateList}
           />
-          {vars[data.parameterKey] && (
+          {vars[identifier] && (
             <div>
               <label>Selected value: </label>
               <span>
-                {data.parameterKey}={vars[data.parameterKey]}
+                {identifier}={vars[identifier]}
               </span>
             </div>
           )}
@@ -62,10 +65,10 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           <MenuItem className={styleClasses['menuitem']}>
             <a
               href="#"
-              onClick={() => clickMenu(item.value)}
+              onClick={() => clickMenu(item.identifier)}
               className={
                 styleClasses['menuitem-link'] +
-                (item.value === currentMenu ? ' ' + styleClasses['current'] : '')
+                (item.identifier === currentMenu ? ' ' + styleClasses['current'] : '')
               }
             >
               {item.text}

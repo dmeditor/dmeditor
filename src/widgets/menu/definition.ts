@@ -15,22 +15,26 @@ export const menuDefinition: DME.Widget = {
       return {
         type: 'menu',
         data: {
-          parameterKey: 'id',
           menuList: [
-            { text: 'Menu1', value: '1' },
-            { text: 'Menu2', value: '2' },
+            { text: 'Menu1', identifier: 'menu1', value: '1' },
+            { text: 'Menu2', identifier: 'menu2', value: '2' },
           ],
-          settings: {},
+          settings: {
+            general: { identifier: 'menu' },
+          },
         },
       };
     },
   },
   settings: [
     {
-      property: '.parameterKey',
-      name: 'Binding to parameter',
+      property: 'settings.general.identifier',
+      name: 'Block Identifier',
       settingComponent: 'input',
-      description: 'The parameter key in location query. eg. in ?id=xxx where id is the key.',
+      description: 'The parameter key in location query. eg. in ?menu=xxx where id is the key.',
+      parameters: {
+        updateOnUnfocus: true,
+      },
     },
     ...generalSettings,
   ],

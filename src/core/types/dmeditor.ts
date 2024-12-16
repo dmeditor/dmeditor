@@ -62,6 +62,7 @@ export namespace DME {
     enabledStyles?: string[];
     isBaseWidget?: boolean; // True if it's a base widget used for variants.
     allowedTypes?: string[] | string; // Allowed types for direct children.
+    canDependentOn?: string[];
     events: {
       updateData?: (settings: Setting, data: DMEData.Block) => void;
       createBlock: () => DMEData.CreatedBlock<any, any>;
@@ -103,6 +104,7 @@ export namespace DME {
     render: ComponentType<any>;
     preview?: ComponentType<{ blockData: any; mode?: 'list' }>;
     onServerSideLoad?: ServerSideLoadFunction;
+    onDependencyValueChange?: (value: any, from: { id: string; widget: string }) => void;
   }
 
   export type WidgetStyleClasses = Record<string, string>;
@@ -134,12 +136,13 @@ export namespace DME {
     active: boolean;
     mode: Mode;
     path: (number | string)[];
+    dependencyData?: any;
   }
 
   export interface SettingComponentProps<T = unknown> extends Setting {
     value?: unknown; // If custom is true, value will not be set.
     block: DMEData.Block<T>;
-    blockPath: number[];
+    blockPath: number[] | string[];
     disabled?: boolean;
   }
 
@@ -174,7 +177,8 @@ export namespace DMEData {
 
   export interface DataSourceData {
     variables?: string[];
-    [index: string]: string | number | string[] | undefined;
+    dependency?: { id: string; type: string };
+    [index: string]: string | number | string[] | undefined | any;
   }
 
   export interface SavedData {
@@ -190,6 +194,7 @@ export namespace DMEData {
     serverData?: boolean; // Only set by server.
     allowedTypes?: string[]; // Used for list/grid/mixed-widget.
     editControl?: number; // Edit control levels.
+    dependency?: { id: string; type: string }; //id of block which it depends on
   }
 
   export interface DefaultBlockType extends BlockBaseType {
@@ -220,6 +225,7 @@ export namespace DMEData {
   export type BlockMap = Record<string, Block>;
 
   export interface GeneralSettingType {
+    identifier?: string;
     width?: number | string;
     align?: 'left' | 'center' | 'right';
     marginTop?: number;

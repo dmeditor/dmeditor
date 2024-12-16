@@ -13,6 +13,9 @@ const DataSource = (props: DME.SettingComponentProps) => {
 
   const handleChange = (data?: DMEData.DataSourceData) => {
     updateBlockPropsByPath(blockPath, property || '', data);
+    if (block.dependency?.id !== data?.dependency?.id) {
+      updateBlockPropsByPath(blockPath, '/dependency', data?.dependency || undefined);
+    }
   };
 
   return (
