@@ -8,4 +8,12 @@ export const SyledLayout = styled.div<{ columnWidth: number }>`
   .dme-viewmode-mobile & {
     display: block;
   }
+
+  /** make full height */
+  & > div {
+    display: flex;
+  }
+  & > div > div {
+    flex: 1;
+  }
 `;

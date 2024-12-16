@@ -5,4 +5,12 @@ export const SyledLayout = styled.div<{ column1Width: number; column2Width: numb
   grid-template-columns: ${(props) => (props.column1Width / 12) * 100}% ${(props) =>
       (props.column2Width / 12) * 100}% ${(props) =>
       (1 - props.column1Width / 12 - props.column2Width / 12) * 100}%;
+
+  /** make full height */
+  & > div {
+    display: flex;
+  }
+  & > div > div {
+    flex: 1;
+  }
 `;
