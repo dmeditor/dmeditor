@@ -36,6 +36,15 @@ export const menuDefinition: DME.Widget = {
         updateOnUnfocus: true,
       },
     },
+    {
+      name: 'Text color',
+      property: 'settings.color',
+      settingComponent: 'color',
+      parameters: {
+        colorGroup: 'text',
+      },
+      category: 'style',
+    },
     ...generalSettings,
   ],
 };

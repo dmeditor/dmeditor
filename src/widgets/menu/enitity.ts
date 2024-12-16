@@ -4,6 +4,7 @@ export interface EntityMenu {
   defaultMenu?: string;
   menuList: Array<{ text: string; identifier: string; value: string }>;
   settings?: {
+    color?: string;
     general?: DMEData.GeneralSettingType;
   };
 }

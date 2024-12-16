@@ -72,7 +72,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           )}
         </RenderToSetting>
       )}
-      <MenuContainer className={styleClasses['container']}>
+      <MenuContainer className={styleClasses['container']} color={data.settings?.color}>
         {data.menuList.map((item) => (
           <MenuItem className={styleClasses['menuitem']}>
             <a
