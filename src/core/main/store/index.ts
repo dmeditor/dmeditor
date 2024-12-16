@@ -344,6 +344,8 @@ export const useEditorStore = create<Store & Actions>()(
           } else {
             console.warn('data is not an object');
           }
+        } else if (propKey === '/dependency') {
+          block['dependency'] = propValue;
         } else if (propKey === 'settings') {
           if (isPlainObject(block.data)) {
             if (isKeyInObject('settings', block.data)) {

@@ -5,7 +5,8 @@ import { immer } from 'zustand/middleware/immer';
 /** Global parameters to simulate location */
 export const useGlobalVars = create<
   { vars: Record<string, string | number> } & {
-    setVar: (key: string, v: string | number) => void;
+    //todo: dependency can be replace with global event?
+    setVar: (key: string, v: string | number) => void; //key can be external variable or _<block id> (used in dependency)
     removeVar: (key: string) => void;
     resetVar: () => void;
   }
@@ -15,7 +16,7 @@ export const useGlobalVars = create<
     setVar: (key: string, v: string | number) => {
       set((state) => {
         state.vars[key] = v;
-        if (!isServer()) {
+        if (!isServer() && !key.startsWith('_')) {
           updateLocation(state.vars);
         }
       });

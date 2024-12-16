@@ -40,10 +40,10 @@ export interface widgetConfig {
 export interface DataSourceConfigType {
   edit: React.FC<{
     widget: string;
-    data?: DMEData.DataSourceData;
+    data?: Record<string, string | number>;
     mutil?: boolean;
     view?: string; //eg. block
-    onChange: (v: DMEData.DataSourceData) => void;
+    onChange: (v: Record<string, string | number>) => void;
   }>;
   fetchInServer?: (
     widget: string,
@@ -53,7 +53,7 @@ export interface DataSourceConfigType {
   fetchInClient?: (
     widget: string,
     data: DMEData.DataSourceData,
-    vars: Record<string, any>,
+    values: { dependencyValue?: any },
   ) => Promise<any>;
 }
 

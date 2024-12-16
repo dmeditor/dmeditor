@@ -17,10 +17,17 @@ export const ContentView = (props: DME.WidgetRenderProps<EntityContentView>) => 
 
   const { vars } = useGlobalVars();
 
+  const dependency = dataSource?.sourceData;
+
   const initClient = async () => {
     const clientFetch = dmeConfig.dataSource.fetchInClient;
     if (dataSource && Object.keys(dataSource).length > 0 && clientFetch) {
-      const content = await clientFetch('content-view', dataSource, vars);
+      const dependencyValue = dataSource.sourceData
+        ? vars['_' + dataSource.sourceData.id]
+        : undefined;
+      const content = await clientFetch('content-view', dataSource, {
+        dependencyValue: dependencyValue,
+      });
       setCurrentContent(content);
     }
   };
@@ -29,7 +36,7 @@ export const ContentView = (props: DME.WidgetRenderProps<EntityContentView>) => 
     if (!props.blockNode.serverData) {
       initClient();
     }
-  }, [dataSource, vars]);
+  }, [dataSource, vars['_' + dependency?.id || '']]);
 
   const Render = dmeConfig.widgets['content-view']?.render;
 

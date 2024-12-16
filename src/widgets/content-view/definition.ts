@@ -17,7 +17,10 @@ export const contentViewDefinition: DME.Widget = {
         type: 'content-view',
         data: {
           view: 'block',
-          dataSource: {},
+          dataSource: {
+            type: 'fixed',
+            sourceData: {},
+          },
         },
       };
     },

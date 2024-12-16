@@ -175,10 +175,16 @@ export namespace DMEData {
     [index: string]: string | boolean | undefined;
   }
 
+  export interface DependencyData {
+    id: string;
+    type: string;
+  }
+
+  export type DataSourceFixedData = Record<string, string | number>;
+
   export interface DataSourceData {
-    variables?: string[];
-    dependency?: { id: string; type: string };
-    [index: string]: string | number | string[] | undefined | any;
+    type: 'fixed' | 'dependency' | 'variable';
+    sourceData: string[] | DependencyData | DataSourceFixedData;
   }
 
   export interface SavedData {

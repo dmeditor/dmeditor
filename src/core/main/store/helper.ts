@@ -1,5 +1,5 @@
 import type { DMEData } from '../../types/dmeditor';
-import { jsonParse } from '../../utils';
+import { getWidget, jsonParse } from '../../utils';
 
 //todo: can these operation be object-orented way(for blocklist and block)?
 
@@ -158,4 +158,19 @@ export const getListByPath = (
   }
   let listData = getDataByPath(data, path);
   return listData && listData.children ? (listData.children as DMEData.BlockList) : null;
+};
+
+export const getDependencyOptions = (widget: string, data: DMEData.BlockList) => {
+  const def = getWidget(widget);
+  const dependencyList = def.canDependentOn;
+  if (dependencyList) {
+    const result: DMEData.Block[] = [];
+    iterateBlockList(data, (item) => {
+      if (dependencyList.includes(item.type)) {
+        result.push(item);
+      }
+    });
+    return result;
+  }
+  return null;
 };
