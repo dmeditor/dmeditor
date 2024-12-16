@@ -16,7 +16,7 @@ export const useGlobalVars = create<
     setVar: (key: string, v: string | number) => {
       set((state) => {
         state.vars[key] = v;
-        if (!isServer() && !key.startsWith('_')) {
+        if (!isServer()) {
           updateLocation(state.vars);
         }
       });

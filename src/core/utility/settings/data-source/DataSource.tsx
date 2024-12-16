@@ -38,23 +38,6 @@ export const DataSource = (props: {
     setData({ type: 'variable', sourceData: list });
   };
 
-  const outputValue = (v) => {
-    if (!v) {
-      return '';
-    }
-    if (Array.isArray(v)) {
-      return v.join(',');
-    } else if (typeof v === 'object') {
-      let result = '';
-      for (const key of Object.keys(v)) {
-        result += key + ': ' + v[key] + '\n';
-      }
-      return result;
-    } else {
-      return v + '';
-    }
-  };
-
   const confirm = () => {
     props.onChange(data);
   };
@@ -81,9 +64,7 @@ export const DataSource = (props: {
               {Object.keys(props.data.sourceData).map((key) => (
                 <div>
                   <label>{key}: </label>
-                  <div style={{ whiteSpace: 'pre-line' }}>
-                    {outputValue(props.data.sourceData[key])}
-                  </div>
+                  <span>{props.data.sourceData[key]}</span>
                 </div>
               ))}
             </div>

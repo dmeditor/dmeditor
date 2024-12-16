@@ -368,7 +368,9 @@ export const updateLocation = (vars: any) => {
   let url = new URL(document.location.toString());
   const params = url.searchParams;
   for (const item of Object.keys(vars)) {
-    params.set(item, vars[item] + '');
+    if (!item.startsWith('_')) {
+      params.set(item, vars[item] + '');
+    }
   }
   history.pushState({}, null, url);
 };

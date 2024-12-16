@@ -24,7 +24,10 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
 
   const clickMenu = (identifierValue: string) => {
     setCurrrentMenu(identifierValue);
-    setVar(identifier, identifierValue);
+    setVariable(identifierValue);
+    if (identifier) {
+      setVar(identifier, identifierValue);
+    }
   };
 
   const updateList = (listData: EntityMenu['menuList']) => {
@@ -33,8 +36,17 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
     });
   };
 
+  const setVariable = (identifierValue: string) => {
+    setVar(
+      '_' + props.blockNode.id,
+      data.menuList.find((item) => item.identifier === identifierValue)?.value || '',
+    );
+  };
+
   useEffect(() => {
-    setVar(identifier, currentMenu);
+    if (data.menuList.length > 0) {
+      setVariable(data.menuList[0].identifier);
+    }
   }, []);
 
   return (

@@ -10,12 +10,8 @@ export const DataSource: DataSourceConfigType['edit'] = (props) => {
 export const fetchInClient: DataSourceConfigType['fetchInClient'] = async (
   widget,
   dataSource,
-  vars,
+  values,
 ) => {
-  const varConfig = dataSource.variables;
-  let v = '';
-  if (varConfig) {
-    v = vars[varConfig[0]] + '';
-  }
-  return { id: 'test', name: 'hello ' + v };
+  const v = values.dependencyValue;
+  return { id: v, name: 'hello' };
 };
