@@ -4,7 +4,7 @@ import { Display, Mode, PageSettingType } from '../constants';
 
 export namespace DME {
   //Note Returned value will be dependencyValue for other widgets.
-  export type ServerSideLoadFunction<T = DMEData.DefaultDataType> = (
+  export type ServerSideLoadFunction<T = any> = (
     data: DMEData.Block<T>,
     context: { query: Record<string, string | number>; dependencyValue?: any },
   ) => Promise<void | { value?: any }>;
