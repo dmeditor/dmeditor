@@ -14,14 +14,18 @@ const DataSource = (props: DME.SettingComponentProps) => {
   const handleChange = (data?: DMEData.DataSourceData) => {
     updateBlockPropsByPath(blockPath, property || '', data);
     let dependencyChanged = false;
-    if (data && data.type == 'dependency' && block.dependency?.id !== data.sourceData.id) {
-      dependencyChanged = true;
-    } else if (block.dependency && block.dependency.id !== data?.sourceData.id) {
-      dependencyChanged = true;
-    }
+    if (block.dependency && data?.type !== 'dependency') {
+      updateBlockPropsByPath(blockPath, '/dependency', undefined);
+    } else {
+      if (data && data.type == 'dependency' && block.dependency?.id !== data.sourceData.id) {
+        dependencyChanged = true;
+      } else if (block.dependency && block.dependency.id !== data?.sourceData.id) {
+        dependencyChanged = true;
+      }
 
-    if (dependencyChanged) {
-      updateBlockPropsByPath(blockPath, '/dependency', data?.sourceData || undefined);
+      if (dependencyChanged) {
+        updateBlockPropsByPath(blockPath, '/dependency', data?.sourceData || undefined);
+      }
     }
   };
 

@@ -75,7 +75,6 @@ export const onServerLoad: DME.ServerSideLoadFunction<EntityContentView> = async
       context,
     );
     block.data.content = content;
-    block.data.dataSource = undefined; // do not set to client
   }
   block.serverData = true;
 };

@@ -34,12 +34,14 @@ const DMEditorView = (props: DMEditorViewProps) => {
     }
   };
 
-  const { initVars } = useGlobalVars();
+  const { vars, initVars } = useGlobalVars();
 
   useEffect(() => {
-    const location = window.location.search;
-    const vars = queryFromLocaton(location);
-    initVars(vars);
+    if (Object.keys(vars).length === 0) {
+      const location = window.location.search;
+      const locationVars = queryFromLocaton(location);
+      initVars(locationVars);
+    }
   }, []);
 
   return (
