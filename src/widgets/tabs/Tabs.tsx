@@ -36,13 +36,13 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
         id: nanoid(),
         data: null,
         meta: {
-          tabKey: nanoid(),
+          tabKey: 't' + (block.children.length + 1),
           title: 'New Tab',
         },
         children: [
           {
             type: 'text',
-            id: '2',
+            id: nanoid(),
             data: {
               value: [
                 {
