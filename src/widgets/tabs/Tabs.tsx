@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import { orange } from '@mui/material/colors';
 import { useGlobalVars } from 'dmeditor/core/main/store';
@@ -19,7 +20,7 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
   } = props;
 
   const { updateBlockByPath } = useEditorStore();
-  const { setVar } = useGlobalVars();
+  const { vars, setVar } = useGlobalVars();
   const [activeKey, setActiveKey] = React.useState<string | number>(
     tabList.length > 0 ? tabList[0].meta.tabKey : '1',
   );
@@ -56,7 +57,12 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const identifier = data.settings?.general?.identifier;
+    if (identifier && vars[identifier]) {
+      setActiveKey(vars[identifier]);
+    }
+
     function handler(event: Event) {
       var elem = event.target as any;
       while (elem) {
