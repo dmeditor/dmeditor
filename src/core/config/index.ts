@@ -41,7 +41,7 @@ export interface DataSourceConfigType {
   edit: React.FC<{
     widget: string;
     data?: Record<string, string | number>;
-    mutil?: boolean;
+    isList?: boolean; //list or one
     view?: string; //eg. block
     onChange: (v: Record<string, string | number>) => void;
   }>;

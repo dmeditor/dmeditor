@@ -20,7 +20,7 @@ import { ChooseDependency } from './ChooseDependency';
 export const DataSource = (props: {
   widget: string;
   data: DMEData.DataSourceData;
-  multi: boolean;
+  isList: boolean;
   onChange: (data?: DMEData.DataSourceData) => void;
 }) => {
   const [data, setData] = useState<DMEData.DataSourceData>(props.data || {});
@@ -110,7 +110,7 @@ export const DataSource = (props: {
                 {DataSourceCom && (
                   <DataSourceCom
                     widget={props.widget}
-                    mutil={props.multi}
+                    isList={props.isList}
                     data={props.data.type === 'fixed' ? sourceData : undefined}
                     onChange={(d) => setData({ type: 'fixed', sourceData: d })}
                   />
