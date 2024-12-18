@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { css } from '@emotion/css';
+import { queryFromLocaton } from 'dmeditor/core/utils';
 
 import type { DMEData } from '../../..';
 import { useDevice } from '../../..';
 import { BlockListRender } from '../../components/block-list-render/BlockListRender';
 import { getPageTheme } from '../../components/page';
 import { dmeConfig } from '../../config';
+import { useGlobalVars } from '../store';
 import { DMEditorViewStyle } from './styled';
 
 export interface DMEditorViewProps {
@@ -31,6 +33,14 @@ const DMEditorView = (props: DMEditorViewProps) => {
       return undefined;
     }
   };
+
+  const { initVars } = useGlobalVars();
+
+  useEffect(() => {
+    const location = window.location.search;
+    const vars = queryFromLocaton(location);
+    initVars(vars);
+  }, []);
 
   return (
     <DMEditorViewStyle

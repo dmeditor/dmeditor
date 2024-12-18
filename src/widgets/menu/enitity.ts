@@ -1,7 +1,7 @@
 import { DMEData } from '../../core/types';
 
 export interface EntityMenu {
-  defaultMenu?: string;
+  loadedMenu?: string; //from server
   menuList: Array<{ text: string; identifier: string; value: string }>;
   settings?: {
     color?: string;

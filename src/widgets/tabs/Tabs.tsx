@@ -57,12 +57,14 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
     });
   };
 
+  const identifier = data.settings?.general?.identifier || '';
   useEffect(() => {
-    const identifier = data.settings?.general?.identifier;
     if (identifier && vars[identifier]) {
       setActiveKey(vars[identifier]);
     }
+  }, [vars[identifier]]);
 
+  useEffect(() => {
     function handler(event: Event) {
       var elem = event.target as any;
       while (elem) {

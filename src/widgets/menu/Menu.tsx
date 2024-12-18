@@ -22,12 +22,9 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
 
   const identifier = data.settings?.general?.identifier || '';
 
-  const clickMenu = (identifierValue: string) => {
+  const selectMenu = (identifierValue: string) => {
     setCurrrentMenu(identifierValue);
-    setVariable(identifierValue);
-    if (identifier) {
-      setVar(identifier, identifierValue);
-    }
+    setInternalVar(identifierValue);
   };
 
   const updateList = (listData: EntityMenu['menuList']) => {
@@ -36,7 +33,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
     });
   };
 
-  const setVariable = (identifierValue: string) => {
+  const setInternalVar = (identifierValue: string) => {
     setVar(
       '_' + props.blockNode.id,
       data.menuList.find((item) => item.identifier === identifierValue)?.value || '',
@@ -45,7 +42,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
 
   useEffect(() => {
     if (data.menuList.length > 0) {
-      setVariable(data.menuList[0].identifier);
+      selectMenu(data.loadedMenu || data.menuList[0].identifier);
     }
   }, []);
 
@@ -75,9 +72,15 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
       <MenuContainer className={styleClasses['container']} color={data.settings?.color}>
         {data.menuList.map((item) => (
           <MenuItem className={styleClasses['menuitem']}>
+            {/** todo use callback & fix preview - preview should use edit way */}
             <a
-              href="#"
-              onClick={() => clickMenu(item.identifier)}
+              href={'?' + identifier + '=' + item.identifier}
+              onClick={(e) => {
+                if (mode === 'edit') {
+                  e.preventDefault();
+                  selectMenu(item.identifier);
+                }
+              }}
               className={
                 styleClasses['menuitem-link'] +
                 (item.identifier === currentMenu ? ' ' + styleClasses['current'] : '')
@@ -101,6 +104,7 @@ export const serverSideLoad: DME.ServerSideLoadFunction<EntityMenu> = async (blo
       if (!menu) {
         throw 404; //not found
       }
+      block.data.loadedMenu = menu.identifier;
       return { value: menu.value };
     } else {
       const menu = block.data.menuList[0];

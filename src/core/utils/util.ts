@@ -374,3 +374,18 @@ export const updateLocation = (vars: any) => {
   }
   history.pushState({}, null, url);
 };
+
+export const queryFromLocaton = (location: string) => {
+  const result: Record<string, string> = {};
+  if (location.startsWith('?')) {
+    const str = location.substring(1);
+    const arr = str.split('&');
+    for (const item of arr) {
+      const params = item.split('=');
+      if (params.length === 2) {
+        result[params[0]] = params[1];
+      }
+    }
+  }
+  return result;
+};
