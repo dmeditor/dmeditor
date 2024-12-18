@@ -2,7 +2,10 @@ import { ComponentType } from 'react';
 
 import { Display, Mode, PageSettingType } from '../constants';
 
-export type ServerSideLoadFunction = (data: DMEData.Block, serverParameters: any) => Promise<void>;
+export type ServerSideLoadFunction = (
+  data: DMEData.Block,
+  serverParameters: any,
+) => Promise<void | { value?: any }>;
 
 export namespace DME {
   export interface Setting {

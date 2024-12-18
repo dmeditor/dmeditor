@@ -95,17 +95,17 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
 //validation
 export const serverSideLoad = async (block: DMEData.Block, { query }) => {
   if (query) {
-    const value = query[block.data.parameterKey as string];
-    if (value) {
-      let hasValue = true;
-      for (const item of block.data.menuList as any) {
-        if (item.value === value) {
-          hasValue = false;
-        }
-      }
-      if (!hasValue) {
+    const menuIdentifier = query[block.data.settings?.general?.identifier || ''];
+    if (menuIdentifier) {
+      const menu = block.data.menuList.find((item) => item.identifier === menuIdentifier);
+      if (!menu) {
         throw 404; //not found
       }
+      return { value: menu.value };
+    } else {
+      const menu = block.data.menuList[0];
+      return { value: menu.value };
     }
   }
+  return {};
 };

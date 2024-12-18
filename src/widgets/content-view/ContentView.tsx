@@ -63,7 +63,7 @@ export const ContentView = (props: DME.WidgetRenderProps<EntityContentView>) => 
   );
 };
 
-export const onServerLoad: ServerSideLoadFunction = async (block, context) => {
+export const onServerLoad: ServerSideLoadFunction = async (block: DMEData.Block, context) => {
   const fetchInServer = dmeConfig.dataSource.fetchInServer;
   if (fetchInServer && block.data.dataSource) {
     const content = await fetchInServer(
