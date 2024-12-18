@@ -5,8 +5,9 @@ export const Row = styled.div`
   display: flex;
 `;
 
-export const CellTitle = styled.div`
-  flex: 1;
+export const CellTitle = styled.div<{ width?: number }>`
+  ${(props) => (props.width ? { width: props.width + 'px' } : { flex: 1 })};
+  margin-right: 4px;
   padding: 8px;
   border: #ddd solid 1px;
 

@@ -31,7 +31,7 @@ export const menuDefinition: DME.Widget = {
       property: 'settings.general.identifier',
       name: 'Block Identifier',
       settingComponent: 'input',
-      description: 'The parameter key in location query. eg. in ?menu=xxx where id is the key.',
+      description: 'The key location query. eg. in ?menu=xxx where menu is the key.',
       parameters: {
         updateOnUnfocus: true,
       },

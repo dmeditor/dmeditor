@@ -34,7 +34,7 @@ export const PropertyItem = (props: {
       <StyledSettingItem.Label>{props.label}: </StyledSettingItem.Label>
       <StyledSettingItem.Setting upDown={upDown}>{props.children}</StyledSettingItem.Setting>
       {props.description && (
-        <Tooltip title={props.description}>
+        <Tooltip title={<div dangerouslySetInnerHTML={{ __html: props.description }} />}>
           <InfoOutlined
             sx={{ cursor: 'pointer', marginLeft: '5px', verticalAlign: 'bottom' }}
             fontSize="small"

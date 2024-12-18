@@ -70,7 +70,7 @@ const ListWithTitle = (props: DME.SettingComponentProps) => {
       }
       block.children.push({
         meta: {
-          tabKey: nanoid(),
+          tabKey: 't' + (block.children.length + 1),
           title: 'New',
         },
         children: [
@@ -103,6 +103,15 @@ const ListWithTitle = (props: DME.SettingComponentProps) => {
                 contentEditable={true}
               >
                 {item?.meta.title}
+              </CellTitle>
+              <CellTitle
+                width={50}
+                title="Tab key"
+                // onBlur={(e) => changeTitle(e, index)}
+                suppressContentEditableWarning
+                contentEditable={true}
+              >
+                {item?.meta.tabKey}
               </CellTitle>
               <CellOperation>
                 {index !== 0 && (

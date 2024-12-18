@@ -12,21 +12,19 @@ const TabsWidget: DME.Widget = {
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityTabsData, EntityTabsBlock[]> => {
       return {
-        data: {
-          settings: {},
-        },
+        data: {},
         type: 'tabs',
         children: [
           {
             meta: {
-              tabKey: '1',
+              tabKey: 't1',
               title: 'Tab1',
             },
             children: [
               { type: 'heading', id: nanoid(), data: { value: 'Tab1 Title', level: 2 } },
               {
                 type: 'text',
-                id: '2',
+                id: nanoid(),
                 data: {
                   value: [
                     {
@@ -40,14 +38,14 @@ const TabsWidget: DME.Widget = {
           },
           {
             meta: {
-              tabKey: '2',
+              tabKey: 't2',
               title: 'Tab2',
             },
             children: [
               { type: 'heading', id: nanoid(), data: { value: 'Tab2 Title', level: 2 } },
               {
                 type: 'text',
-                id: '2',
+                id: nanoid(),
                 data: {
                   value: [
                     {
@@ -70,6 +68,16 @@ const TabsWidget: DME.Widget = {
       property: '.children.meta',
       custom: true,
       settingComponent: 'tabs',
+    },
+    {
+      property: 'settings.general.identifier',
+      name: 'Block Identifier',
+      settingComponent: 'input',
+      description:
+        'Identifier in location query for direct access. eg. in ?tab=t1 where tab is the identifier. <br /><br /> Empty mean no need for direct access',
+      parameters: {
+        updateOnUnfocus: true,
+      },
     },
     ...generalSettings,
   ],

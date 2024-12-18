@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AddCircleOutlineOutlined } from '@mui/icons-material';
 import { orange } from '@mui/material/colors';
+import { useGlobalVars } from 'dmeditor/core/main/store';
 import { nanoid } from 'nanoid';
 
 import { BlockListRender, useEditorStore, type DME } from '../..';
@@ -12,12 +13,13 @@ import type { EntityTabsBlock, EntityTabsData } from './entity';
 
 const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> = (props) => {
   const {
-    blockNode: { children: tabList = [], type },
+    blockNode: { children: tabList = [], type, data },
     styleClasses,
     path,
   } = props;
 
   const { updateBlockByPath } = useEditorStore();
+  const { setVar } = useGlobalVars();
   const [activeKey, setActiveKey] = React.useState<string | number>(
     tabList.length > 0 ? tabList[0].meta.tabKey : '1',
   );
@@ -68,6 +70,14 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
     return () => window.removeEventListener('click', handler);
   }, []);
 
+  const tabChange = (key: string | number) => {
+    setActiveKey(key);
+    const identifier = data.settings?.general?.identifier;
+    if (identifier) {
+      setVar(identifier, key);
+    }
+  };
+
   return (
     <>
       <div>
@@ -76,7 +86,7 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
             {tabList.map(({ meta: { tabKey, title } }) => (
               <NavItem
                 activeKey={activeKey}
-                onTabClick={(key) => setActiveKey(key)}
+                onTabClick={tabChange}
                 tabKey={tabKey}
                 className={
                   (activeKey === tabKey ? styleClasses['active'] + ' ' : '') +
