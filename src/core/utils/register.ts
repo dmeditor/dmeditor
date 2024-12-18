@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react';
 import { AccessAlarm } from '@mui/icons-material';
 
-import { registerServerSideLoad, ServerSideLoadFunction } from '../ssr';
+import { registerServerSideLoad } from '../ssr';
 import type { DME, DMEData } from '../types';
 
 export const components: {

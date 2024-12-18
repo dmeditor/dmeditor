@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { dmeConfig } from 'dmeditor/core/config';
 import { useGlobalVars } from 'dmeditor/core/main/store';
-import { DME, DMEData, ServerSideLoadFunction } from 'dmeditor/core/types';
+import { DME, DMEData } from 'dmeditor/core/types';
 
 import { EntityContentView } from './entity';
 import { Main } from './style';
@@ -63,7 +63,10 @@ export const ContentView = (props: DME.WidgetRenderProps<EntityContentView>) => 
   );
 };
 
-export const onServerLoad: ServerSideLoadFunction = async (block: DMEData.Block, context) => {
+export const onServerLoad: DME.ServerSideLoadFunction<EntityContentView> = async (
+  block,
+  context,
+) => {
   const fetchInServer = dmeConfig.dataSource.fetchInServer;
   if (fetchInServer && block.data.dataSource) {
     const content = await fetchInServer(

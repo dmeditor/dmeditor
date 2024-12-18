@@ -1,10 +1,10 @@
 import { iterateBlockList } from '../main/store/helper';
-import { DMEData, ServerSideLoadFunction } from '../types/dmeditor';
+import { DME, DMEData } from '../types/dmeditor';
 
 //widget serverSideLoad map
-const serverSideLoadMap: { [widget: string]: ServerSideLoadFunction } = {};
+const serverSideLoadMap: { [widget: string]: DME.ServerSideLoadFunction } = {};
 
-function registerServerSideLoad(widgetName: string, serverLoad: ServerSideLoadFunction) {
+function registerServerSideLoad(widgetName: string, serverLoad: DME.ServerSideLoadFunction) {
   if (serverSideLoadMap[widgetName]) {
     console.warn(`Server load ${widgetName} is already registered.`);
     return;
@@ -16,9 +16,12 @@ function getWidgetServerSideLoad(widgetName: string) {
   return serverSideLoadMap[widgetName];
 }
 
-const dmeServerSideLoad = async (data: DMEData.BlockList, serverParameters: any) => {
+const dmeServerSideLoad = async (
+  data: DMEData.BlockList,
+  serverParameters: { query: Record<string, any> } & any,
+) => {
   let validBlocks: Array<{
-    func: any;
+    func: DME.ServerSideLoadFunction;
     id: string;
     block: DMEData.Block;
     type: string;

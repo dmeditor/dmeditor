@@ -2,12 +2,13 @@ import { ComponentType } from 'react';
 
 import { Display, Mode, PageSettingType } from '../constants';
 
-export type ServerSideLoadFunction = (
-  data: DMEData.Block,
-  serverParameters: any,
-) => Promise<void | { value?: any }>;
-
 export namespace DME {
+  //Note Returned value will be dependencyValue for other widgets.
+  export type ServerSideLoadFunction<T = DMEData.DefaultDataType> = (
+    data: DMEData.Block<T>,
+    context: { query: Record<string, string | number>; dependencyValue?: any },
+  ) => Promise<void | { value?: any }>;
+
   export interface Setting {
     property?: string;
     name: string;

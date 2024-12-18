@@ -93,7 +93,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
 };
 
 //validation
-export const serverSideLoad = async (block: DMEData.Block, { query }) => {
+export const serverSideLoad: DME.ServerSideLoadFunction<EntityMenu> = async (block, { query }) => {
   if (query) {
     const menuIdentifier = query[block.data.settings?.general?.identifier || ''];
     if (menuIdentifier) {
