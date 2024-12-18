@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
+import { nanoid } from 'nanoid';
 
 import { BlockListRender, dmeConfig, generalSettings } from '../..';
 import type { DME, DMEData } from '../..';
@@ -39,11 +40,15 @@ export const CollapsableTextDefiniation: DME.Widget = {
         type: 'collapsable-text',
         children: [
           {
-            type: 'heading',
+            type: 'text',
+            id: nanoid(),
             data: {
-              value: 'This is a new block',
-              level: 2,
-              settings: {},
+              value: [
+                {
+                  type: 'paragraph',
+                  children: [{ text: 'Sample text' }],
+                },
+              ],
             },
           },
         ],
@@ -79,7 +84,9 @@ export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEnti
         </div>
       </div>
       <Collapse in={expanded}>
-        <BlockListRender blockData={children} path={path} mode={props.mode} />
+        <div style={{ padding: '0px 5px 10px 5px' }}>
+          <BlockListRender blockData={children} path={path} mode={props.mode} />
+        </div>
       </Collapse>
     </div>
   );
