@@ -4,7 +4,7 @@ import type { AccordtionChildType, EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {
   category: 'interactive',
-  icon: 'TextFormatOutlined',
+  icon: 'accordion',
   name: 'Accordion',
   type: 'accordion',
   events: {
