@@ -49,6 +49,7 @@ export const Layout = {
     margin-top: var(--dmee-topbar-height);
     background-color: var(--dmee-bg-sidearea);
     position: relative;
+    overflow-y: auto;
   `,
 };
 
