@@ -112,7 +112,7 @@ setDMEditorConfig({
       render: (props: { data: any; view: string }) => {
         return (
           <div>
-            Content: {props.data?.name}, View: {props.view}
+            ID: {props.data?.id}, Name: {props.data?.name}, View: {props.view}
           </div>
         );
       },
@@ -154,8 +154,10 @@ const App = () => {
   // const [editor] = useEditor()
   const data = [
     {
-      id: `widget-${nanoid()}`,
-      style: { _: 'big-space' },
+      id: 'widget-KLBtVx4WEL3mYANB9r6EL',
+      style: {
+        _: 'big-space',
+      },
       data: {
         value: 'This is a heading',
         level: 2,
@@ -164,11 +166,58 @@ const App = () => {
           general: {
             padding: 80,
           },
-          // value: '',
         },
       },
       type: 'heading',
     },
+    {
+      type: 'content-view',
+      data: {
+        view: 'block',
+        dataSource: {
+          type: 'dependency',
+          sourceData: {
+            id: 'WIy_IFJ9F1YejbU4ej5bo',
+            type: 'menu',
+          },
+        },
+        settings: {
+          general: {},
+        },
+      },
+      id: 'RM65dm9WFxy7K-BXn7YY3',
+      dependency: {
+        id: 'WIy_IFJ9F1YejbU4ej5bo',
+        type: 'menu',
+      },
+    },
+    {
+      type: 'menu',
+      data: {
+        menuList: [
+          {
+            text: 'Menu1',
+            identifier: 'menu1',
+            value: '1',
+          },
+          {
+            text: 'Menu2',
+            identifier: 'menu2',
+            value: '2',
+          },
+        ],
+        settings: {
+          general: {
+            identifier: 'menu',
+          },
+        },
+      },
+      style: {
+        _: '_default',
+      },
+      id: 'WIy_IFJ9F1YejbU4ej5bo',
+    },
+
     {
       id: 'N-LAQWihvfZv1SmUAPoQx',
       type: 'text',
@@ -223,10 +272,6 @@ const App = () => {
       editor.setPageData({ title: 'New page', in_menu: false, theme: 'red', meta_key: 'test key' });
     }
   }, []);
-
-  dmeServerSideLoad(data, null).then((d) => {
-    console.log(d);
-  });
 
   return (
     <div>
