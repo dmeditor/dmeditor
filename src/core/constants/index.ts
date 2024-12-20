@@ -14,4 +14,4 @@ export enum Category {
 
 export type Display = 'dropdown' | 'button-group' | 'radio' | 'inline-block';
 
-export type PageSettingType = 'text' | 'multitext' | 'image' | 'richtext' | 'checkbox';
+export type PageSettingType = 'text' | 'multitext' | 'image' | 'richtext' | 'checkbox' | 'dropdown';

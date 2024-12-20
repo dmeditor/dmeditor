@@ -42,6 +42,7 @@ export namespace DME {
     identifier: string;
     name: string;
     type: PageSettingType;
+    parameters?: Record<string, any>;
   };
 
   export type PageTheme = {

@@ -10,6 +10,7 @@ import { Required, SettingHeader, SettingItem } from './style';
 
 interface SettingTypeProps {
   type: string;
+  parameters?: Record<string, any>;
   defaultValue: string | boolean;
   onChange: (value: string | boolean) => void;
 }
@@ -58,6 +59,21 @@ const SettingType = (props: SettingTypeProps) => {
             </div>
           )}
         </div>
+      );
+    case 'dropdown':
+      return (
+        <Select
+          size="small"
+          defaultValue={currentValue}
+          displayEmpty
+          fullWidth
+          onChange={(v) => setCurrentValue(v.target.value)}
+        >
+          <MenuItem value="">None</MenuItem>
+          {(props.parameters?.list || []).map((item) => (
+            <MenuItem value={item.value}>{item.text}</MenuItem>
+          ))}
+        </Select>
       );
     case 'multitext':
       return (
@@ -137,6 +153,7 @@ export const PageSetting = () => {
           <label>{setting.name}:</label>
           <SettingType
             type={setting.type}
+            parameters={setting.parameters}
             defaultValue={page[setting.identifier] || ''}
             onChange={(v) => updatePageValue(v, setting.identifier)}
           />
