@@ -8,7 +8,7 @@ const Grid = (props: DME.WidgetRenderProps<EntityGrid>) => {
   const {
     blockNode,
     blockNode: {
-      data: { columns, gap },
+      data: { columns, gap, settings },
       children,
     },
   } = props;
@@ -16,7 +16,11 @@ const Grid = (props: DME.WidgetRenderProps<EntityGrid>) => {
   const device = useDevice();
 
   return (
-    <StyledGrid columns={device !== 'mobile' ? columns : 2} gap={gap}>
+    <StyledGrid
+      columns={device !== 'mobile' ? columns : 2}
+      gap={gap}
+      itemPosition={settings?.itemPosition}
+    >
       <BlockListRender
         blockData={children || []}
         path={props.path}

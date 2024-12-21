@@ -35,6 +35,19 @@ const gridWidget: DME.Widget = {
       property: '.gap',
       parameters: { min: 1, max: 50 },
     },
+    {
+      name: 'Items position',
+      settingComponent: 'button-group',
+      property: 'settings.itemPosition',
+      parameters: {
+        options: [
+          { text: 'Top', value: 'top' },
+          { text: 'Middle', value: 'middle' },
+          { text: 'Bottom', value: 'bottom' },
+        ],
+      },
+      category: 'style',
+    },
     ...generalSettings,
   ],
 };
