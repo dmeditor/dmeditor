@@ -12,6 +12,7 @@ import { getWidgetWithVariant, properties } from '../../utils/register';
 import { getDataByPath, getListByPath, iteratePath } from './helper';
 import type { Actions, AddBlockParameters, Store } from './types';
 import { useGlobalVars } from './useGlobalVars';
+import { useSettingStatus } from './useSettingStatus';
 
 export const useEditorStore = create<Store & Actions>()(
   immer((set, get) => ({
@@ -500,5 +501,5 @@ export const useWidgetSettingStore = create<
   })),
 );
 
-export { useGlobalVars };
+export { useGlobalVars, useSettingStatus };
 export type { AddBlockParameters };

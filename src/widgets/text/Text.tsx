@@ -1,3 +1,5 @@
+import { useSettingStatus } from 'dmeditor/core/main/store';
+
 import { MiniRichText, useEditorStore, type DME } from '../..';
 import { EntityText } from './entity';
 import { TextContainer } from './styled';
@@ -21,9 +23,25 @@ const Text = (props: RichTextProps) => {
       });
     }
   };
+
+  const { isActive: isSettingActive, setIsActive: setIsSettingActive } = useSettingStatus();
+
+  const mode = props.active
+    ? props.mode === 'edit' && !isSettingActive
+      ? 'edit'
+      : 'view'
+    : props.mode;
+
   return (
-    <TextContainer {...data.settings}>
-      <MiniRichText mode={props.mode} value={value} onValueChange={handleValueChange} />
+    <TextContainer
+      {...data.settings}
+      onMouseEnter={() => {
+        if (isSettingActive) {
+          setIsSettingActive(false);
+        }
+      }}
+    >
+      <MiniRichText mode={mode} value={value} onValueChange={handleValueChange} />
     </TextContainer>
   );
 };

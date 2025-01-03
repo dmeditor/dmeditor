@@ -1,6 +1,9 @@
 import * as React from 'react';
+import { useRef, useState } from 'react';
 import { css } from '@emotion/css';
-import { createEditor } from 'slate';
+import { Button } from '@mui/material';
+import { useSettingStatus } from 'dmeditor/core/main/store';
+import { createEditor, Editor, Transforms } from 'slate';
 import type { Descendant, Element as SlateElement } from 'slate';
 import { withHistory } from 'slate-history';
 import { Editable, Slate, withReact } from 'slate-react';
@@ -69,11 +72,18 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
 
   const initialValue = value;
 
+  const { isActive: isSettingActive, setIsActive: setIsSettingActive } = useSettingStatus();
+
   return (
     <div
       className={css`
         border: 1px solid #dddddd;
       `}
+      onMouseEnter={() => {
+        if (!isSettingActive) {
+          setIsSettingActive(true);
+        }
+      }}
     >
       <Slate editor={editor} initialValue={initialValue} onValueChange={handleValueChange}>
         <Toolbar>
@@ -112,6 +122,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
+          readOnly={!isSettingActive}
           onKeyDown={(event: any) => {
             //soft break
             if (event.key === 'Enter' && event.shiftKey) {
