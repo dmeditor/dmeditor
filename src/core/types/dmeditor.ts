@@ -6,7 +6,10 @@ export namespace DME {
   //Note Returned value will be dependencyValue for other widgets.
   export type ServerSideLoadFunction<T = any> = (
     data: DMEData.Block<T>,
-    context: { query: Record<string, string | number>; dependencyValue?: any },
+    context: { query: Record<string, string | number>; dependencyValue?: any } & Record<
+      string,
+      any
+    >,
   ) => Promise<void | { value?: any }>;
 
   export interface Setting {
