@@ -40,6 +40,7 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
 
       <Modal
         open={shown}
+        disableEnforceFocus={true}
         container={containerRef.current}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
