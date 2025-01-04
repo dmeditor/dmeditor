@@ -78,7 +78,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
 
   return (
     <div>
-      {!src && (
+      {props.mode === 'edit' && !src && (
         <div
           className={css`
             padding: 20px 5px;
