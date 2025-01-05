@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Tune } from '@mui/icons-material';
 import { Button, Grid, InputAdornment, Slider, styled, TextField } from '@mui/material';
+import { i18n } from 'dmeditor/core/i18n';
 
 import { isNumber } from '../../../utils';
 import { InputHandler } from './handlers/InputHandler';
@@ -120,7 +121,11 @@ const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
         <Button
           size="small"
           variant={props.isAdvancedValue ? 'outlined' : 'text'}
-          title={props.isAdvancedValue ? 'Diverse values set. Click to see.' : 'Advanced mode'}
+          title={
+            props.isAdvancedValue
+              ? i18n('Diverse values set. Click to see.')
+              : i18n('Advanced mode')
+          }
           sx={props.isAdvancedValue ? { background: 'white', borderColor: '#cccccc' } : {}}
           color="inherit"
           onClick={onChangePaddingType}

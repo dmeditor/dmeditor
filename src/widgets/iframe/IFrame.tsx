@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 
-import { dmeConfig, generalSettings, useEditorStore } from '../..';
+import { dmeConfig, generalSettings, i18n, useEditorStore } from '../..';
 import type { DME, DMEData } from '../..';
 import { IFrameMask } from './styled';
 
@@ -44,8 +44,8 @@ const ConfirmDialog = (props: { onConfirm: (value: string) => void; onCancel?: (
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleConfirm}>Confirm</Button>
+        <Button onClick={handleClose}>{i18n('Cancel')}</Button>
+        <Button onClick={handleConfirm}>{i18n('Confirm')}</Button>
       </DialogActions>
     </Dialog>
   );

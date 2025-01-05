@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
+import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
 import { EntityContentView } from './entity';
 
 export const contentViewDefinition: DME.Widget = {
   category: 'design',
   icon: 'content-view',
-  name: 'Content view',
+  name: i18n('Content view', 'widget'),
   type: 'content-view',
   widgetType: 'widget',
   canDependentOn: ['menu'],

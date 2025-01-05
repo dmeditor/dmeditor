@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 import { Delete, DeleteOutline } from '@mui/icons-material';
 import { Alert, Button, Checkbox, MenuItem, Select, TextField } from '@mui/material';
 
-import { dmeConfig, ImageSetting } from '../..';
+import { dmeConfig, i18n, ImageSetting } from '../..';
 import { getPageSettings } from '../components/page';
 import { useEditorStore } from '../main/store';
 import { Required, SettingHeader, SettingItem } from './style';
@@ -129,7 +129,7 @@ export const PageSetting = () => {
 
   return (
     <div style={{ padding: '0px 10px' }}>
-      <SettingHeader>Page setting</SettingHeader>
+      <SettingHeader>{i18n('Page setting')}</SettingHeader>
       <SettingItem>
         <label>
           Title: <Required>*</Required>

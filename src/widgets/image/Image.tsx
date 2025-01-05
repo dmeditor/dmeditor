@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 
-import { dmeConfig, generalSettings } from '../..';
+import { dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 
 export interface ImageEntity {
@@ -19,7 +19,7 @@ export interface ImageEntity {
 export const ImageDefinition: DME.Widget = {
   type: 'image',
   icon: 'image',
-  name: 'Image',
+  name: i18n('Image', 'widget'),
   category: 'basic',
   settings: [
     {

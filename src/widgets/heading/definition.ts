@@ -1,5 +1,5 @@
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings } from '../..';
+import { dmeConfig, generalSettings, i18n } from '../..';
 import { EntityHeadingBlock } from './entity';
 
 //should be HeadingWidget, which is a definition object. This file should be called definitin.ts
@@ -8,9 +8,8 @@ const HeadingWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'basic',
   icon: 'ic-heading',
-  name: 'Heading',
+  name: i18n('Heading', 'widget'),
   type: 'heading',
-  themeStyles: 'Theme heading',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityHeadingBlock> => {
       return {

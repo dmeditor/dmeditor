@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 
 import type { DME, DMEData } from '../..';
-import { generalSettings, useEditorStore } from '../..';
+import { generalSettings, i18n, useEditorStore } from '../..';
 
 export type VideoEntity = {
   value: string;
@@ -56,7 +56,7 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
 export const VideoDefinition: DME.Widget = {
   category: 'basic',
   icon: 'video',
-  name: 'Video',
+  name: i18n('Video', 'widget'),
   type: 'video',
   events: {
     createBlock: (): DMEData.CreatedBlock<VideoEntity> => {

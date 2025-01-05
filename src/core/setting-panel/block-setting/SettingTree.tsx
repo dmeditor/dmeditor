@@ -8,7 +8,7 @@ import {
 import { Button, Collapse } from '@mui/material';
 import { useWidgetSettingStore } from 'dmeditor/core/main/store';
 
-import { dmeConfig, useEditorStore } from '../../..';
+import { dmeConfig, i18n, useEditorStore } from '../../..';
 import { DME, DMEData } from '../../types';
 import {
   arrayStarts,
@@ -300,7 +300,7 @@ export const SettingTree = (props: {
         {settingGroups.map((group) => (
           <div>
             {group && (
-              <PropertyGroup header={dmeConfig.editor.settingGroups[group]}>
+              <PropertyGroup header={i18n(dmeConfig.editor.settingGroups[group], 'property-group')}>
                 <div>
                   {renderSettingList(
                     settingConfigs?.settings.filter((item) => item.group === group),

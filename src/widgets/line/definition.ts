@@ -1,11 +1,11 @@
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
+import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
 import { EntityLine } from './entity';
 
 const lineWidget: DME.Widget = {
   category: 'design',
   icon: 'line',
-  name: 'Line',
+  name: i18n('Line', 'widget'),
   type: 'line',
   events: {
     createBlock: (variant?: string): DMEData.CreatedBlock<EntityLine> => {

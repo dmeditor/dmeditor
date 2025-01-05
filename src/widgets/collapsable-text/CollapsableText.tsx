@@ -3,7 +3,7 @@ import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, dmeConfig, generalSettings } from '../..';
+import { BlockListRender, dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 
 interface CollapsableTextEntity {
@@ -16,7 +16,7 @@ interface CollapsableTextEntity {
 
 export const CollapsableTextDefiniation: DME.Widget = {
   category: 'interactive',
-  name: 'Collapsable text',
+  name: i18n('Collapsable text', 'widget'),
   type: 'collapsable-text',
   icon: 'collapsable-text',
   settings: [

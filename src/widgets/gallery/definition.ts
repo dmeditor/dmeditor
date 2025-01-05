@@ -1,11 +1,11 @@
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings } from '../..';
+import { dmeConfig, generalSettings, i18n } from '../..';
 import { GalleryEntity, initGalleryEntity } from './entity';
 
 const definition: DME.Widget = {
   category: 'media',
   icon: 'gallery',
-  name: 'Gallery',
+  name: i18n('Gallery', 'widget'),
   type: 'gallery',
   events: {
     createBlock: (): DMEData.CreatedBlock<GalleryEntity> => {

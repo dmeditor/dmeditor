@@ -3,6 +3,7 @@ import { AddOutlined, DragIndicator, KeyboardArrowRight, PlusOne } from '@mui/ic
 import { Button, IconButton } from '@mui/material';
 
 import { getWidgetWithVariant, scrollBlockToView } from '../../core/utils';
+import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import { DMEData } from '../types/dmeditor';
 
@@ -108,7 +109,7 @@ export const ListOverview = (props: ListOverviewProps) => {
           text-align: center;
         `}
       >
-        <IconButton title="Add under" onClick={() => addUnder()}>
+        <IconButton title={i18n('Add under')} onClick={() => addUnder()}>
           <AddOutlined />
         </IconButton>
       </div>

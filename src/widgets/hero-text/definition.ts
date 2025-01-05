@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { DMEData, generalSettings, type DME } from '../..';
+import { DMEData, generalSettings, i18n, type DME } from '../..';
 import { arrayHasCommonElement } from '../../core/utils';
 import { EntityHeroText, EntityHeroTextChildren } from './entity';
 
@@ -8,7 +8,7 @@ const heroTextWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'media',
   icon: 'TextFormatOutlined',
-  name: 'Hero text',
+  name: i18n('Hero text', 'widget'),
   type: 'hero-text',
   widgetType: 'mixed',
   //todo: support children: Array or [prop: string]: object

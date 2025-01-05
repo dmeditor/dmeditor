@@ -3,7 +3,7 @@ import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/
 import { Button } from '@mui/material';
 import type { DME } from 'dmeditor/index';
 
-import { ImageChooser, ImageSetting, useEditorStore } from '../../..';
+import { i18n, ImageChooser, ImageSetting, useEditorStore } from '../../..';
 import { PropertyButton } from '../../../core/utils';
 import { GalleryEntity } from '../entity';
 
@@ -109,7 +109,7 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
           ))
         : null}
       <Button size="small" variant="outlined" onClick={() => setShowImageChooser(true)}>
-        Add
+        {i18n('Add')}
       </Button>
       <ImageChooser
         visible={showImageChooser || value.length === 0}

@@ -10,6 +10,7 @@ import {
   styled,
   TextField,
 } from '@mui/material';
+import { i18n } from 'dmeditor/core/i18n';
 
 import {
   convertedPaddingValue,
@@ -159,7 +160,7 @@ const PaddingSeparate: React.FC<PaddingSeparateProps> = (props) => {
   return (
     <Box sx={{ pb: 5 }}>
       <Grid container justifyContent="flex-end" sx={{ mb: 2 }}>
-        <IconButton size="small" title="Switch to basic mode" onClick={onChangePaddingType}>
+        <IconButton size="small" title={i18n('Switch to basic mode')} onClick={onChangePaddingType}>
           <ExpandLessOutlined />
         </IconButton>
       </Grid>

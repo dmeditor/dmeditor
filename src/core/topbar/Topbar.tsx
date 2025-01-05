@@ -101,13 +101,13 @@ export const TopBar = () => {
       </LogoContainer>
       <ToolsContainer>
         <ToolButton selected={mode === 'edit'} onClick={() => changeMode('edit')}>
-          <Tooltip title="Edit">
+          <Tooltip title={i18n('Edit')}>
             <EditOutlined />
           </Tooltip>
         </ToolButton>
         <span style={{ borderRight: '1px solid #cccccc', marginLeft: '4px' }}>&nbsp;</span>
         <ToolButton selected={mode === 'view'} onClick={() => changeMode('view')}>
-          <Tooltip title="Preview">
+          <Tooltip title={i18n('Preview')}>
             <VisibilityOutlined />
           </Tooltip>
         </ToolButton>

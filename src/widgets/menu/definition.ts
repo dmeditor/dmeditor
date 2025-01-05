@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
+import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
 import { EntityMenu } from './enitity';
 
 export const menuDefinition: DME.Widget = {
   category: 'design',
   icon: 'menu',
-  name: 'Menu',
+  name: i18n('Menu', 'widget'),
   type: 'menu',
   widgetType: 'widget',
   events: {

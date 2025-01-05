@@ -2,6 +2,7 @@ import { CancelOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 import { WidgetList } from '../components/widget-list';
+import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import {
   AddBlockContainer,
@@ -31,8 +32,8 @@ export const AddBlock = () => {
             <CancelOutlined />
           </Button>
         </RightElement>
-        <SettingHeader>Add block</SettingHeader>
-        <SettingDescription>Please choose a widget</SettingDescription>
+        <SettingHeader>{i18n('Add block')}</SettingHeader>
+        <SettingDescription>{i18n('Please choose a widget')}</SettingDescription>
       </AdddBlockHeader>
       <WidgetListContainer>
         <WidgetList filter={addBlockData?.types} onSelect={addBlockDone} />

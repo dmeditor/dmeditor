@@ -1,11 +1,11 @@
-import { dmeConfig, generalSettings } from '../..';
+import { dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 import { EntityTableBlock, initialTableEntity } from './entity';
 
 const HeadingWidget: DME.Widget = {
   category: 'basic',
   icon: 'table',
-  name: 'Table',
+  name: i18n('Table', 'widget'),
   type: 'table',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityTableBlock> => {

@@ -1,7 +1,7 @@
 import { DeleteOutline } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-import { useEditorStore } from '../../..';
+import { i18n, useEditorStore } from '../../..';
 import { PropertyButton } from '../Property';
 
 export const DeleteBlock = (props: { blockPath: Array<number | string> }) => {
@@ -22,7 +22,7 @@ export const DeleteBlock = (props: { blockPath: Array<number | string> }) => {
 
   return (
     <Button onClick={handleDelete} variant="outlined" color="warning" title="Delete">
-      <DeleteOutline /> Delete
+      <DeleteOutline /> {i18n('Delete')}
     </Button>
   );
 };

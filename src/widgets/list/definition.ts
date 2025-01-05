@@ -1,10 +1,10 @@
 import type { DME } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
+import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
 
 const listWidget: DME.Widget = {
   category: 'design',
   icon: 'list',
-  name: 'List container',
+  name: i18n('List container', 'widget'),
   type: 'list',
   widgetType: 'list',
   events: {

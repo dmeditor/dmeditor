@@ -1,14 +1,14 @@
 import { Block } from '@mui/icons-material';
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, BlockRender, dmeConfig, generalSettings } from '../..';
+import { BlockListRender, BlockRender, dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 import { SyledLayout } from './styled';
 
 const layout2ColumnsWidget: DME.Widget = {
   category: 'design',
   icon: 'layout-2columns',
-  name: '2 Columns layout',
+  name: i18n('2 Columns layout', 'widget'),
   type: 'layout-2columns',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityLayout2Columns, EntityLayout2Children> => {

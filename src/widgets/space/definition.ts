@@ -1,11 +1,11 @@
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant } from '../..';
+import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
 import { EntitySpace } from './entity';
 
 const spaceWidget: DME.Widget = {
   category: 'design',
   icon: 'button', //todo: change icon
-  name: 'Space',
+  name: i18n('Space', 'widget'),
   type: 'space',
   events: {
     createBlock: (variant?: string): DMEData.CreatedBlock<EntitySpace> => {

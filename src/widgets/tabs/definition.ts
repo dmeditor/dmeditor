@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { generalSettings } from '../..';
+import { generalSettings, i18n } from '../..';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
 
 const TabsWidget: DME.Widget = {
   category: 'interactive',
   icon: 'tabs',
-  name: 'Tabs',
+  name: i18n('Tabs', 'widget'),
   type: 'tabs',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityTabsData, EntityTabsBlock[]> => {

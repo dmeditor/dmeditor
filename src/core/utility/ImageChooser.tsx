@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 
 import { dmeConfig, type BrowseImageCallbackParams } from '../config';
+import { i18n } from '../i18n';
 
 function CheckImageBrowserValid() {
   const { callbacks } = dmeConfig;
@@ -60,7 +61,7 @@ export const ImageChooser = (props: ImageChooserProps) => {
 
   if (BrowseImage) {
     ImageChooseElements.splice(0, 0, {
-      label: 'Browse',
+      label: i18n('Browse'),
       element: <BrowseImage value={localValue} onChange={setLocalValue} multiple={multiple} />,
     });
   }
@@ -114,8 +115,8 @@ export const ImageChooser = (props: ImageChooserProps) => {
             )}
           </div>
         )}
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleConfirm}>Confirm</Button>
+        <Button onClick={handleClose}>{i18n('Cancel')}</Button>
+        <Button onClick={handleConfirm}>{i18n('Confirm')}</Button>
       </DialogActions>
     </Dialog>
   );

@@ -9,6 +9,7 @@ import {
 import { Button } from '@mui/material';
 
 import { getWidgetName } from '../../core/utils/register';
+import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
 import { BlockSettings } from './block-setting/BlockSettings';
@@ -83,7 +84,7 @@ const SettingPanel = (props) => {
   const currentList = getCurrentList();
 
   const updatePath = () => {
-    const pathArray: Array<PathItem> = [{ text: 'Page', id: 'page', dataPath: [] }];
+    const pathArray: Array<PathItem> = [{ text: i18n('Page'), id: 'page', dataPath: [] }];
     if (isSelected() && rootBlockPath) {
       //parents
       const parents = getParents(rootBlockPath);
@@ -157,7 +158,7 @@ const SettingPanel = (props) => {
       {mode !== 'adding' && (
         <>
           <RightElement>
-            <Button title="Page settings" onClick={setPageSettingMode}>
+            <Button title={i18n('Page settings')} onClick={setPageSettingMode}>
               <Settings />
             </Button>
           </RightElement>
@@ -221,8 +222,8 @@ const SettingPanel = (props) => {
           {mode === 'page-setting' && (
             <>
               <RightElement>
-                <Button onClick={() => setSettingMode()} title="Back">
-                  <ArrowBack /> back
+                <Button onClick={() => setSettingMode()} title={i18n('Back')}>
+                  <ArrowBack /> {i18n('back')}
                 </Button>
               </RightElement>
               <PageSetting />

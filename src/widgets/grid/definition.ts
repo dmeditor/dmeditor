@@ -1,4 +1,4 @@
-import { dmeConfig, generalSettings } from '../..';
+import { dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 import { EntityGrid } from './entity';
 
@@ -6,7 +6,7 @@ const gridWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'design',
   icon: 'grid',
-  name: 'Grid',
+  name: i18n('Grid', 'widget'),
   type: 'grid',
   widgetType: 'list',
   allowedTypes: '^(?!.*grid).*$',

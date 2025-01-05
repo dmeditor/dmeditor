@@ -1,11 +1,11 @@
 import type { DME, DMEData } from '../..';
-import { generalSettings } from '../..';
+import { generalSettings, i18n } from '../..';
 import type { AccordtionChildType, EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {
   category: 'interactive',
   icon: 'accordion',
-  name: 'Accordion',
+  name: i18n('Accordion', 'widget'),
   type: 'accordion',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityAccordion, AccordtionChildType[]> => {

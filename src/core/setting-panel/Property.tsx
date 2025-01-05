@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from '@mui/material';
 
+import { i18n } from '../i18n';
 import { StyledSettingGroup, StyledSettingItem } from './style';
 
 export const PropertyItem = (props: {
@@ -31,10 +32,16 @@ export const PropertyItem = (props: {
 
   return label ? (
     <StyledSettingItem.Container upDown={upDown} autoWidth={autoWidth}>
-      <StyledSettingItem.Label>{props.label}: </StyledSettingItem.Label>
+      <StyledSettingItem.Label>
+        {i18n(props.label || '', 'property-label')}:{' '}
+      </StyledSettingItem.Label>
       <StyledSettingItem.Setting upDown={upDown}>{props.children}</StyledSettingItem.Setting>
       {props.description && (
-        <Tooltip title={<div dangerouslySetInnerHTML={{ __html: props.description }} />}>
+        <Tooltip
+          title={
+            <div dangerouslySetInnerHTML={{ __html: i18n(props.description, 'property-label') }} />
+          }
+        >
           <InfoOutlined
             sx={{ cursor: 'pointer', marginLeft: '5px', verticalAlign: 'bottom' }}
             fontSize="small"

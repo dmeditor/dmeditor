@@ -11,7 +11,7 @@ import {
   TextField,
 } from '@mui/material';
 
-import { DME, useEditorStore } from '../..';
+import { DME, i18n, useEditorStore } from '../..';
 import { CodeEntity } from './entity';
 import { CodeMask, StyledCode } from './styled';
 
@@ -93,7 +93,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>{i18n('Cancel')}</Button>
             <Button onClick={handleOk}>OK</Button>
           </DialogActions>
         </Dialog>

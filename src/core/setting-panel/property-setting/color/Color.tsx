@@ -1,7 +1,7 @@
 import { ContrastOutlined, Delete, DeleteOutlined } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
 
-import { DME, dmeConfig, useEditorStore } from '../../../..';
+import { DME, dmeConfig, i18n, useEditorStore } from '../../../..';
 import { PickColor, useRecentColors } from '../../../utils/PickColor';
 import { colorList, ColorPickerItem } from './styled';
 
@@ -59,7 +59,7 @@ const ColorSetting = (props: { value?: string; property: string } & DME.SettingC
         );
       })}
       <PickColor
-        title="Color palette"
+        title={i18n('Color palette')}
         color={value}
         width={20}
         displaySelectedColor={false}

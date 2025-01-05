@@ -3,6 +3,7 @@ import { css } from '@emotion/css';
 import { Button } from '@mui/material';
 
 import { dmeConfig, type BrowseImageCallbackParams } from '../config';
+import { i18n } from '../i18n';
 import { DME } from '../types';
 import { ImageChooser } from './ImageChooser';
 
@@ -45,7 +46,7 @@ export const ImageSetting = (props: {
         )}
         <div>
           <Button color="info" onClick={handleOpen}>
-            Choose
+            {i18n('Choose')}
           </Button>
           {dmeConfig.plugins.imageHandlers.map((Item) => (
             <Item image={value} parameters={props.parameters} onChange={onChange} />

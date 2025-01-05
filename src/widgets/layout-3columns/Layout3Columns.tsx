@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, BlockRender, dmeConfig, generalSettings } from '../..';
+import { BlockListRender, BlockRender, dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 import { SyledLayout } from './styled';
 
 const layout3ColumnsWidget: DME.Widget = {
   category: 'design',
   icon: 'layout-3columns',
-  name: '3 Columns layout',
+  name: i18n('3 Columns layout', 'widget'),
   type: 'layout-3columns',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityLayout3Columns, EntityLayout3Children> => {
