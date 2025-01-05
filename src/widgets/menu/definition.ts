@@ -20,6 +20,7 @@ export const menuDefinition: DME.Widget = {
             { text: 'Menu2', identifier: 'menu2', value: '2' },
           ],
           settings: {
+            direction: 'horizontal',
             general: { identifier: 'menu' },
           },
         },
@@ -35,6 +36,18 @@ export const menuDefinition: DME.Widget = {
       parameters: {
         updateOnUnfocus: true,
       },
+    },
+    {
+      property: 'settings.direction',
+      name: 'Direction',
+      settingComponent: 'button-group',
+      parameters: {
+        options: [
+          { value: 'horizontal', text: 'Horizontal' },
+          { value: 'vertical', text: 'Vertical' },
+        ],
+      },
+      category: 'style',
     },
     {
       name: 'Text color',

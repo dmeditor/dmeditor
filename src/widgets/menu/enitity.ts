@@ -5,6 +5,7 @@ export interface EntityMenu {
   menuList: Array<{ text: string; identifier: string; value: string }>;
   settings?: {
     color?: string;
+    direction?: 'horizontal' | 'vertical';
     general?: DMEData.GeneralSettingType;
   };
 }

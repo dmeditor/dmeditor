@@ -10,4 +10,6 @@ export const MenuContainer = styled.ul<{ color?: string }>`
   }
 `;
 
-export const MenuItem = styled.li``;
+export const MenuItem = styled.li<{ direction?: 'horizontal' | 'vertical' }>`
+  display: ${(props) => (props.direction === 'vertical' ? 'block' : 'inline-block')};
+`;
