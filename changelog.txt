@@ -1,3 +1,5 @@
+0.2.2-beta.1
+
 0.2.1
 - 2025-01-03 fixed: [important]rich text text give error in list - happens between 2 richtext editor & introduced useSettingStatus store
 - 2024-12-21 added: item position in grid
