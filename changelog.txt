@@ -1,4 +1,20 @@
-0.2.1-beta.1
+0.2.1
+- 2025-01-03 fixed: [important]rich text text give error in list - happens between 2 richtext editor & introduced useSettingStatus store
+- 2024-12-21 added: item position in grid
+- 2024-12-20 added: dropdown support for page setting
+- 2024-12-19 updated: icons
+- 2024-12-18 added: identifier for tabs
+- 2024-12-16 fixed: have equal height in 2 or 3 columns layout
+- 2024-12-16 added: dependency so block can rely on other block (with api in client, server fetch)
+- 2024-12-13 [BC]udpated: layout-2columns & layout-3columns use object in children
+- 2024-12-13 added: data source, with edit callback, fetchInClient, fetchInServer and render in content-view
+- 2024-12-11 added: menu, content-view
+- 2024-12-08 fixed: doesn't show plus icon when height is too little (<30px)
+- 2024-12-07 added: popup widget
+- 2024-12-06 added: gap for hero text
+- 2024-12-05 updated: hero-text uses object instead array in children
+- 2024-12-04 added: object support in kernel for children
+- 2024-12-02 added: support <RenderToSetting /> to use createPortal to render setting to setting panel
 
 0.2.0
 - 2024-11-16 fix: text widget - use image ratio when insert to avoid blank space.
