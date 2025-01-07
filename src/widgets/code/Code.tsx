@@ -75,8 +75,8 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
                 Important: <br />
                 1. Code is used for case where there is no available widget, use widget if there is
                 insetad of Code. eg. Facebook page widget. <br />
-                2. Code doesn't support javascript tag for now. (Workaround: ask project dever to
-                add javascript if needed.)
+                2. Code doesn't support javascript tag for now but support css 'style' tag.
+                (Workaround for javascript support: ask project dever to add javascript if needed.)
               </Alert>
             </div>
             <TextField
@@ -86,7 +86,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
               rows={10}
               fullWidth
               value={value}
-              placeholder="Please Input Code Content"
+              placeholder="Please input html code"
               onChange={(e) => {
                 setValue(e.target.value);
               }}

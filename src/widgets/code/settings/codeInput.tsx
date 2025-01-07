@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Button, TextareaAutosize, TextField } from '@mui/material';
 
 import { DME, useEditorStore } from '../../..';
 import { PropertyItem } from '../../../core/utils';
@@ -15,7 +15,7 @@ export function CodeInput(props: DME.SettingComponentProps<CodeEntity>) {
   const [value, setValue] = useState(content || '');
   const { updateBlockByPath } = useEditorStore();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
   };
 
@@ -31,10 +31,19 @@ export function CodeInput(props: DME.SettingComponentProps<CodeEntity>) {
 
   return (
     <PropertyItem label={props.name}>
-      <TextField value={value} onChange={handleChange} multiline rows={6} />
-      <Button variant="text" onClick={handleUpdate}>
-        Update
-      </Button>
+      <div>
+        <TextareaAutosize
+          value={value}
+          style={{ width: '100%', resize: 'vertical' }}
+          onChange={handleChange}
+          minRows={8}
+        />
+      </div>
+      <div>
+        <Button variant="text" onClick={handleUpdate}>
+          Update
+        </Button>
+      </div>
     </PropertyItem>
   );
 }
