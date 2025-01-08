@@ -84,10 +84,10 @@ const Layout3Columns = (
         <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column1']} />
       </div>
       <div className={(styleClasses?.['column2'] || '') + ' dme-w-column2'}>
-        <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column2']} />
+        <BlockRender data={children.column2} mode={props.mode} path={[...props.path, 'column2']} />
       </div>
       <div className={(styleClasses?.['column3'] || '') + ' dme-w-column3'}>
-        <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column3']} />
+        <BlockRender data={children.column3} mode={props.mode} path={[...props.path, 'column3']} />
       </div>
     </SyledLayout>
   );
