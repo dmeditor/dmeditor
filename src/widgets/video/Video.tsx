@@ -96,7 +96,7 @@ export const VideoDefinition: DME.Widget = {
       name: 'Url',
       settingComponent: 'link',
       property: '.value',
-      parameters: { urlOnly: true },
+      parameters: { urlOnly: true, showDialogWhenEmpty: true },
     },
     ...generalSettings,
   ],
