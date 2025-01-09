@@ -9,7 +9,9 @@ export interface ImageEntity {
   externalId?: string | number;
   thumbnail?: string;
   description?: string;
+  link?: string;
   settings: {
+    linkNewTab?: boolean;
     borderWidth?: number;
     borderColor?: string;
     general?: DMEData.GeneralSettingType;
@@ -31,6 +33,16 @@ export const ImageDefinition: DME.Widget = {
       name: 'Description',
       settingComponent: 'input',
       property: '.description',
+    },
+    {
+      name: 'Link',
+      settingComponent: 'link',
+      property: '.link',
+    },
+    {
+      name: 'Open new tab',
+      settingComponent: 'checkbox',
+      property: 'settings.linkNewTab',
     },
     {
       name: 'Border Width',
@@ -72,9 +84,34 @@ export const ImageDefinition: DME.Widget = {
 export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const { blockNode, styleClasses } = props;
   const {
-    data: { src, settings, description },
+    data: { src, settings, description, link },
   } = blockNode;
-  const { borderWidth, borderColor } = settings;
+  const { borderWidth, borderColor, linkNewTab } = settings;
+
+  const renderImage = () => {
+    return (
+      <>
+        {src && (
+          <div className={(styleClasses['image'] || '') + ' dme-w-image '}>
+            <img
+              src={dmeConfig.general.imagePath(src)}
+              className={css({
+                maxWidth: '100%',
+                ...(settings.general?.width && { width: '100%' }),
+                ...(borderWidth ? { borderWidth: borderWidth, borderStyle: 'solid' } : {}),
+                ...(borderColor ? { borderColor: borderColor } : {}),
+              })}
+            />
+          </div>
+        )}
+        {description && (
+          <div className={(styleClasses['description'] || '') + ' dme-w-description'}>
+            {description}
+          </div>
+        )}
+      </>
+    );
+  };
 
   return (
     <div>
@@ -87,23 +124,12 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
           Please choose an image.
         </div>
       )}
-      {src && (
-        <div className={(styleClasses['image'] || '') + ' dme-w-image '}>
-          <img
-            src={dmeConfig.general.imagePath(src)}
-            className={css({
-              maxWidth: '100%',
-              ...(settings.general?.width && { width: '100%' }),
-              ...(borderWidth ? { borderWidth: borderWidth, borderStyle: 'solid' } : {}),
-              ...(borderColor ? { borderColor: borderColor } : {}),
-            })}
-          />
-        </div>
-      )}
-      {description && (
-        <div className={(styleClasses['description'] || '') + ' dme-w-description'}>
-          {description}
-        </div>
+      {link ? (
+        <a href={link} {...(linkNewTab ? { target: '_blank' } : {})}>
+          {renderImage()}
+        </a>
+      ) : (
+        renderImage()
       )}
     </div>
   );
