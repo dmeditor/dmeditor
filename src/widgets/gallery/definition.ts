@@ -11,7 +11,6 @@ const definition: DME.Widget = {
     createBlock: (): DMEData.CreatedBlock<GalleryEntity> => {
       return {
         type: 'gallery',
-        style: { _: 'default' },
         data: initGalleryEntity(),
       };
     },
