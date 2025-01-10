@@ -33,8 +33,9 @@ export const ImageSetting = (props: {
           <img
             onClick={handleOpen}
             className={css`
-              max-width: 80%;
-              max-height: 120px;
+              max-width: 100px;
+              max-height: 100px;
+              margin-right: 5px;
               cursor: pointer;
               border-radius: 5px;
               &:hover {

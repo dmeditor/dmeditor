@@ -18,6 +18,9 @@ export const muiTheme = createTheme({
               borderWidth: 1,
             },
           },
+          '& .MuiOutlinedInput-input': {
+            padding: '8px 6px',
+          },
         },
       },
     },

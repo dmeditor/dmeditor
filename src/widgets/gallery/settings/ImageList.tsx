@@ -1,6 +1,7 @@
 import { MouseEvent, useState } from 'react';
+import { css } from '@emotion/css';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import type { DME } from 'dmeditor/index';
 
 import { i18n, ImageChooser, ImageSetting, useEditorStore } from '../../..';
@@ -16,6 +17,7 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
   } = props;
 
   const [showImageChooser, setShowImageChooser] = useState(false);
+  const [addedFrom, setAddedFrom] = useState<'start' | 'end'>('end');
 
   const { updateBlockByPath } = useEditorStore();
 
@@ -59,25 +61,70 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
     });
   };
 
+  const updateTitle = (index: number, title: string) => {
+    updateBlockByPath<GalleryEntity>(blockPath, (data) => {
+      data.items[index] = { ...data.items[index], title: title };
+    });
+  };
+
   const addImage = (imageInfo: any) => {
     const imageList = imageInfo.map((item: any) => ({ image: item.src }));
 
     updateBlockByPath<GalleryEntity>(blockPath, (data) => {
-      data.items = [...data.items, ...imageList];
+      if (addedFrom === 'end') {
+        data.items = [...data.items, ...imageList];
+      } else if (addedFrom === 'start') {
+        data.items = [...imageList, ...data.items];
+      }
     });
   };
 
   return (
     <div>
+      {Array.isArray(value) && value.length > 0 && (
+        <div
+          className={css`
+            margin-bottom: 5px;
+          `}
+        >
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={() => {
+              setAddedFrom('start');
+              setShowImageChooser(true);
+            }}
+          >
+            {i18n('Add')}
+          </Button>
+        </div>
+      )}
       {Array.isArray(value)
         ? value.map((item, index) => (
-            <div className="flex justify-between">
+            <div
+              className={css`
+                display: flex;
+                gap: 5px;
+              `}
+            >
               <ImageSetting
                 value={{ src: item.image }}
                 onChange={(info) => {
                   updateImage(index, info.src);
                 }}
               />
+              <div
+                className={css`
+                  flex: 1;
+                `}
+              >
+                <TextField
+                  size="small"
+                  placeholder="Caption"
+                  value={item.title}
+                  onChange={(e) => updateTitle(index, e.target.value)}
+                />
+              </div>
               <div className="btn-groups">
                 {index !== 0 && (
                   <PropertyButton
@@ -99,7 +146,6 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
                 )}
                 <PropertyButton
                   color="warning"
-                  title="Delete"
                   onClick={(e: MouseEvent<HTMLButtonElement>) => handleDelete(e, index)}
                 >
                   <DeleteOutline />
@@ -108,9 +154,18 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
             </div>
           ))
         : null}
-      <Button size="small" variant="outlined" onClick={() => setShowImageChooser(true)}>
-        {i18n('Add')}
-      </Button>
+      <div>
+        <Button
+          size="small"
+          variant="outlined"
+          onClick={() => {
+            setAddedFrom('end');
+            setShowImageChooser(true);
+          }}
+        >
+          {i18n('Add')}
+        </Button>
+      </div>
       <ImageChooser
         visible={showImageChooser || value.length === 0}
         value={[]}

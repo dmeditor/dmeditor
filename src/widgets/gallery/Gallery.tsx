@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { CloseOutlined, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Dialog, DialogContent, IconButton } from '@mui/material';
 import { DME } from 'dmeditor/core/types';
@@ -7,6 +7,7 @@ import { partial } from 'lodash';
 import { dmeConfig } from '../../core/config';
 import { GalleryEntity } from './entity';
 import {
+  Caption,
   GalleryContainer,
   GalleryDialog,
   GalleryImage,
@@ -85,6 +86,11 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
                 src={dmeConfig.general.imagePath(item.image, 'thumbnail')}
                 alt={item.title}
               />
+              {item.title && (
+                <Caption className={styleClasses['caption'] || 'dme-w-caption'}>
+                  {item.title}
+                </Caption>
+              )}
             </GalleryItem>
           ))}
         </GalleryList>
@@ -145,6 +151,11 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
                   className={GalleryImage + ` ${galleryClassName('dialog-img')}`}
                   src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                 />
+                {items[selectedImageIndex].title && (
+                  <Caption className={styleClasses['popup-caption'] || 'dme-w-popup-caption'}>
+                    {items[selectedImageIndex].title}
+                  </Caption>
+                )}
                 <ImageIndicator
                   className={styleClasses['gallery-indicator'] || 'dme-w-gallery-indicator'}
                 >

@@ -96,14 +96,15 @@ export const PropertyGroup = (props: {
 export const PropertyButton = (props: ButtonProps & { title?: string; selected?: boolean }) => {
   let sx: any = {
     color: props.color ? props.color : '#999999',
+    padding: '3px',
     border: '1px solid transparent',
-    marginRight: '3px',
     ':hover': props.selected
-      ? { bgcolor: '#ffffff' }
+      ? { bgcolor: '#ffffff', borderRadius: '4px' }
       : {
           bgcolor: '#fcfcfc',
-          borderColor: '#999999',
+          borderColor: '#cccccc',
           color: '#999999',
+          borderRadius: '4px',
         },
   };
 
@@ -119,10 +120,10 @@ export const PropertyButton = (props: ButtonProps & { title?: string; selected?:
   if (props.title) {
     return (
       <Tooltip title={props.title}>
-        <Button sx={sx} {...buttonProps} />
+        <IconButton size="small" sx={sx} {...buttonProps} />
       </Tooltip>
     );
   } else {
-    return <Button sx={sx} {...props} />;
+    return <IconButton size="small" sx={sx} {...props} />;
   }
 };

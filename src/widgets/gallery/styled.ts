@@ -16,12 +16,21 @@ export const GalleryList = styled.div((props: { columns: number; gap: number }) 
 });
 
 export const GalleryItem = styled.div`
+  position: relative;
   img {
     cursor: pointer;
     width: 100%;
     object-fit: cover;
     height: 100%;
   }
+`;
+
+export const Caption = styled.div`
+  position: absolute;
+  bottom: 0px;
+  padding: 5px;
+  color: white;
+  text-shadow: 1px 1px 1px #333333;
 `;
 
 export const GalleryImage = css`
