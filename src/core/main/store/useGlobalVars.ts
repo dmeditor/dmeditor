@@ -15,7 +15,7 @@ export const useGlobalVars = create<
     vars: {},
     initVars: (vars: Record<string, string>) => {
       set((state) => {
-        state.vars = vars;
+        state.vars = { ...state.vars, ...vars };
       });
     },
     setVar: (key: string, v: string) => {

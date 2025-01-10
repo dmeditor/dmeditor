@@ -1,4 +1,4 @@
-export { useEditorStore } from './core/main/store';
+export * from './core/main/store';
 export * from './core/main/store/helper';
 
 // register widgets
