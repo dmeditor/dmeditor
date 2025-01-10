@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { css } from '@emotion/css';
 import { FormatAlignCenter, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 
 import { DME, useEditorStore } from '../../../..';
@@ -23,24 +24,33 @@ const Align = (props: DME.SettingComponentProps) => {
     updateBlockPropsByPath(blockPath, property!, value);
   };
 
-  return alignsList.map((format) => {
-    return (
-      <PropertyButton
-        title={format}
-        key={format}
-        onClick={() => {
-          if (value !== format) {
-            handleAlignChange(format);
-          } else {
-            handleAlignChange(undefined);
-          }
-        }}
-        selected={value === format}
-      >
-        <BlockButton formats={format} />
-      </PropertyButton>
-    );
-  });
+  return (
+    <div
+      className={css`
+        display: flex;
+        gap: 3px;
+      `}
+    >
+      {alignsList.map((format) => {
+        return (
+          <PropertyButton
+            title={format}
+            key={format}
+            onClick={() => {
+              if (value !== format) {
+                handleAlignChange(format);
+              } else {
+                handleAlignChange(undefined);
+              }
+            }}
+            selected={value === format}
+          >
+            <BlockButton formats={format} />
+          </PropertyButton>
+        );
+      })}
+    </div>
+  );
 };
 
 export default Align;
