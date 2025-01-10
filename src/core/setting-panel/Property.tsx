@@ -98,18 +98,23 @@ export const PropertyButton = (props: ButtonProps & { title?: string; selected?:
     color: props.color ? props.color : '#999999',
     padding: '3px',
     border: '1px solid transparent',
+    borderRadius: '4px',
     ':hover': props.selected
-      ? { bgcolor: '#ffffff', borderRadius: '4px' }
+      ? { bgcolor: '#ffffff' }
       : {
           bgcolor: '#fcfcfc',
           borderColor: '#cccccc',
           color: '#999999',
-          borderRadius: '4px',
         },
   };
 
   if (props.selected) {
-    sx = { ...sx, bgcolor: '#ffffff', borderColor: '#666666', color: '#666666' };
+    sx = {
+      ...sx,
+      bgcolor: '#ffffff',
+      borderColor: '#666666',
+      color: '#666666',
+    };
   }
 
   let buttonProps = { ...props };
