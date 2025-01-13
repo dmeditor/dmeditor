@@ -30,7 +30,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
 
   return (
     <div className={feedbackMessage ? styleClasses['error'] || 'dme-w-error' : ''}>
-      {mode === 'edit' && (
+      {mode === 'edit' && props.active && (
         <RenderToSetting>
           <FieldSettings key={data.type} data={data} path={path} />
         </RenderToSetting>
