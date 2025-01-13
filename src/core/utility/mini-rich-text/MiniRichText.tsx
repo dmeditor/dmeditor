@@ -23,7 +23,7 @@ export interface MiniRichTextProps {
   value?: Array<Descendant> | null;
   useEffectToUpdate?: boolean;
   onFocus?: FocusEventHandler; //Note: when onFocus is invoked if it rerender it can lose focus. Be careful using it.
-  onValueChange: (value: Descendant[]) => void;
+  onValueChange?: (value: Descendant[]) => void;
 }
 
 const emptyValue = [
@@ -55,7 +55,9 @@ const MiniRichText = (props: MiniRichTextProps) => {
       return;
     }
 
-    onValueChange(newValue);
+    if (onValueChange) {
+      onValueChange(newValue);
+    }
   };
 
   useEffect(() => {
