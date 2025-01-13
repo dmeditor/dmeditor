@@ -6,7 +6,7 @@ import {
   ArrowUpwardOutlined,
   DeleteOutline,
 } from '@mui/icons-material';
-import { IconButton, Input, TextField } from '@mui/material';
+import { IconButton, Input, Radio, TextField } from '@mui/material';
 
 import { PropertyButton } from '../utils';
 import { ImageSetting } from './ImageSetting';
@@ -28,9 +28,9 @@ export const CellOperation = styled.div`
 `;
 
 export type DataListSettingProps = {
-  data: Array<Record<string, string>>;
-  schema: Array<{ name: string; identifier: string; type: 'text' | 'image' | 'link' }>;
-  onChange: (newData: Array<Record<string, string>>) => void;
+  data: Array<Record<string, string | boolean>>;
+  schema: Array<{ name: string; identifier: string; type: 'text' | 'image' | 'link' | 'radio' }>;
+  onChange: (newData: Array<Record<string, string | boolean>>) => void;
 };
 
 export const DataListSettings = (props: DataListSettingProps) => {
@@ -55,6 +55,22 @@ export const DataListSettings = (props: DataListSettingProps) => {
     const newData = [...data];
     const item = { ...newData[row], [identifier]: value };
     newData[row] = item;
+    onChange(newData);
+  };
+
+  const updateRadio = (row: number, identifier: string) => {
+    const newData = [...data];
+    newData.forEach((item, index) => {
+      const newItem = { ...item };
+      if (index === row) {
+        newItem[identifier] = true;
+      } else {
+        if (newItem[identifier] !== undefined) {
+          delete newItem[identifier];
+        }
+      }
+      newData[index] = newItem;
+    });
     onChange(newData);
   };
 
@@ -102,6 +118,16 @@ export const DataListSettings = (props: DataListSettingProps) => {
                       value={{ src: row[item.identifier] }}
                       onChange={(info) => {
                         update(info.src, index, item.identifier);
+                      }}
+                    />
+                  )}
+                  {item.type === 'radio' && (
+                    <Radio
+                      checked={row[item.identifier] ? true : false}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          updateRadio(index, item.identifier);
+                        }
                       }}
                     />
                   )}
