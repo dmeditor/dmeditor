@@ -56,6 +56,13 @@ const formFieldWidget: DME.Widget = {
       settingComponent: 'input',
     },
     {
+      name: 'Label width',
+      property: 'settings.labelWidth',
+      settingComponent: 'distance',
+      parameters: { min: 0, max: 700, step: 5 },
+      category: 'style',
+    },
+    {
       name: 'Input shown as new line',
       property: '.newLine',
       settingComponent: 'checkbox',

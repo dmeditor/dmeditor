@@ -35,7 +35,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
           <FieldSettings key={data.type} data={data} path={path} />
         </RenderToSetting>
       )}
-      <FormRow newLine={data.newLine}>
+      <FormRow newLine={data.newLine} labelWidth={data.settings?.labelWidth}>
         <label>
           {data.label}
           {data.required && <span className={styleClasses['required'] || 'dme-w-required'}>*</span>}

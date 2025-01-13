@@ -11,6 +11,7 @@ export interface EntityFormField {
   newLine?: boolean;
   defaultValue?: string | number;
   settings?: {
+    labelWidth?: string | number;
     general?: DMEData.GeneralSettingType;
   };
 }
