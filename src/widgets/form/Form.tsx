@@ -83,7 +83,11 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
 
         {formConfig && formConfig.captcha && <div>{formConfig.captcha()}</div>}
 
-        {response && response.success === false && <div>{response.errorMessage}</div>}
+        {response && response.success === false && (
+          <div className={styleClasses['error-message'] || 'dme-w-error-message'}>
+            {response.errorMessage}
+          </div>
+        )}
 
         <div className={styleClasses['action'] || 'dme-w-action'}>
           <button className={styleClasses['submit'] || 'dme-w-submit'} type="submit">
