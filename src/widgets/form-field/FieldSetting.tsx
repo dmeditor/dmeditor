@@ -33,7 +33,7 @@ export const FieldSettings = (props: { data: EntityFormField; path: (string | nu
 
   const changeFileFormat = (v) => {
     updateBlockByPath(props.path, (blockData: EntityFormField) => {
-      blockData.params = { fileFormat: v, ...blockData.params };
+      blockData.params = { ...blockData.params, fileFormat: v };
     });
   };
 
@@ -92,7 +92,7 @@ export const FieldSettings = (props: { data: EntityFormField; path: (string | nu
             >
               <TextField
                 defaultValue={props.data.params?.fileFormat || '*'}
-                onChange={(e) => {
+                onBlur={(e) => {
                   changeFileFormat(e.target.value);
                 }}
               />
