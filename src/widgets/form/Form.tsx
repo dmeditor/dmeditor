@@ -26,9 +26,11 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
 
   const [loading, setLoading] = useState(false);
 
-  const { setVar } = useGlobalVars();
+  const { setVar, removeVar } = useGlobalVars();
 
   const formConfig = dmeConfig.widgets['form'];
+
+  const formVarName = '__formfield-feedback';
 
   const submit = (e) => {
     e.preventDefault();
@@ -47,12 +49,17 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
       const callback = formConfig.submit as FormCallBack;
       callback(obj, formData).then((resp) => {
         if (resp.fieldsMessage) {
-          setVar('__formfield-feedback', resp.fieldsMessage);
+          setVar(formVarName, resp.fieldsMessage);
         }
         setLoading(false);
         setResponse(resp);
       });
     }
+  };
+
+  const reset = () => {
+    setResponse(null);
+    removeVar(formVarName);
   };
 
   if (response && response.success === true) {
@@ -67,7 +74,7 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
         </div>
         {mode === 'edit' && (
           <div>
-            <Button onClick={() => setResponse(null)}>Reset</Button>
+            <Button onClick={reset}>Reset</Button>
           </div>
         )}
       </div>
