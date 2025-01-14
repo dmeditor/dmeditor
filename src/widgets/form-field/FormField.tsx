@@ -47,6 +47,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               className={styleClasses['input-text'] || 'dme-w-input-text'}
               placeholder={data.placeHolder}
               name={data.identifier}
+              required={data.required}
               defaultValue={data.defaultValue}
             />
           )}
@@ -102,6 +103,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               className={styleClasses['input-textarea'] || 'dme-w-input-textarea'}
               placeholder={data.placeHolder}
               name={data.identifier}
+              required={data.required}
               defaultValue={data.defaultValue}
             ></textarea>
           )}
