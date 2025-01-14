@@ -25,6 +25,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
       const defaultList = [{ text: 'Option', value: 'option', isDefault: true }];
       blockData.defaultValue = undefined;
       blockData.options = ['select', 'radio'].includes(data.type) ? defaultList : undefined;
+      blockData.rows = undefined;
     });
   }, [data.type]);
 
@@ -103,6 +104,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               className={styleClasses['input-textarea'] || 'dme-w-input-textarea'}
               placeholder={data.placeHolder}
               name={data.identifier}
+              rows={data.rows || 5}
               required={data.required}
               defaultValue={data.defaultValue}
             ></textarea>

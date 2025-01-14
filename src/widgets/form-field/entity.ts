@@ -7,6 +7,7 @@ export interface EntityFormField {
   required?: boolean;
   type: 'text' | 'checkbox' | 'select' | 'textarea' | 'number' | 'radio';
   options?: Array<Record<string, string | boolean>>;
+  rows?: number;
   placeHolder?: string;
   newLine?: boolean;
   defaultValue?: string | number;
