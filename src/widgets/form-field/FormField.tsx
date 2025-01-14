@@ -121,6 +121,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
             <input
               type="file"
               accept={data.params?.fileFormat || '*'}
+              required={data.required}
               className={styleClasses['input-file'] || 'dme-w-input-file'}
               key={data.defaultValue + ''}
               name={data.identifier}
