@@ -63,13 +63,6 @@ const formFieldWidget: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'Height',
-      property: 'settings.height',
-      settingComponent: 'range',
-      parameters: { min: 0, max: 600 },
-      category: 'style',
-    },
-    {
       name: 'Input shown as new line',
       property: '.newLine',
       settingComponent: 'checkbox',

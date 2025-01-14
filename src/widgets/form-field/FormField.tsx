@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useEditorStore, useGlobalVars } from 'dmeditor/core/main/store';
 import { RenderToSetting } from 'dmeditor/core/utility';
 
@@ -20,13 +20,19 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
 
   const feedbackMessage = feedbacks[data.identifier];
 
+  const previousType = useRef<string>(data.type);
+
   useEffect(() => {
-    updateBlockByPath(props.path, (blockData: EntityFormField) => {
-      const defaultList = [{ text: 'Option', value: 'option', isDefault: true }];
-      blockData.defaultValue = undefined;
-      blockData.options = ['select', 'radio'].includes(data.type) ? defaultList : undefined;
-      blockData.rows = undefined;
-    });
+    //when switching
+    if (data.type !== previousType.current) {
+      updateBlockByPath(props.path, (blockData: EntityFormField) => {
+        const defaultList = [{ text: 'Option', value: 'option', isDefault: true }];
+        blockData.defaultValue = undefined;
+        blockData.options = ['select', 'radio'].includes(data.type) ? defaultList : undefined;
+        blockData.rows = undefined;
+      });
+      previousType.current = data.type;
+    }
   }, [data.type]);
 
   return (
@@ -66,7 +72,9 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               {data.options && (
                 <>
                   {data.options.map((item) => (
-                    <label>
+                    <label
+                      className={styleClasses['input-radio-label'] || 'dme-w-input-radio-label'}
+                    >
                       <input
                         className={styleClasses['input-radio'] || 'dme-w-input-radio'}
                         type="radio"
