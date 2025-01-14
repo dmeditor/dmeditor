@@ -31,12 +31,19 @@ export const FieldSettings = (props: { data: EntityFormField; path: (string | nu
     });
   };
 
+  const changeFileFormat = (v) => {
+    updateBlockByPath(props.path, (blockData: EntityFormField) => {
+      blockData.params = { fileFormat: v, ...blockData.params };
+    });
+  };
+
   return (
     <div>
       <div>
         {(fieldType === 'text' || fieldType === 'textarea') && (
           <PropertyItem label="Default value">
             <TextField
+              defaultValue={props.data.defaultValue}
               onChange={(e) => {
                 changeDefaultValue(e.target.value);
               }}
@@ -75,6 +82,21 @@ export const FieldSettings = (props: { data: EntityFormField; path: (string | nu
                 updateOptions(data);
               }}
             />
+          </div>
+        )}
+        {fieldType === 'file' && (
+          <div>
+            <PropertyItem
+              label="Allowed formats"
+              description="Separated by comma(,) eg. image/*, .doc, .pdf"
+            >
+              <TextField
+                defaultValue={props.data.params?.fileFormat || '*'}
+                onChange={(e) => {
+                  changeFileFormat(e.target.value);
+                }}
+              />
+            </PropertyItem>
           </div>
         )}
       </div>

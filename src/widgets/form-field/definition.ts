@@ -28,10 +28,11 @@ const formFieldWidget: DME.Widget = {
       parameters: {
         options: [
           { label: 'Text input', value: 'text' },
-          { label: 'Checkbox', value: 'checkbox' },
           { label: 'Text area', value: 'textarea' },
+          { label: 'Checkbox', value: 'checkbox' },
           { label: 'Select', value: 'select' },
           { label: 'Radio', value: 'radio' },
+          { label: 'File', value: 'file' },
         ],
       },
     },
