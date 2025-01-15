@@ -129,7 +129,7 @@ export const LinkChooser = forwardRef<LinkRef, LinkChooserProps>((props, ref) =>
               <label>Link help: </label>
               <Button
                 size="small"
-                title="Email"
+                title="Https"
                 color={currentLinkType === 'https' ? 'info' : 'inherit'}
                 onClick={() => addUpdatePrefix('https')}
               >
