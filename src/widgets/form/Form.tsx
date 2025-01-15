@@ -153,7 +153,7 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
             )}
             {data.submitText || 'Submit'}
           </button>
-          <button type="reset" className={styleClasses['reset'] || 'dme-w-reset'}>
+          <button type="reset" className={styleClasses['reset'] || 'dme-w-reset'} onClick={reset}>
             {styleClasses['icon-before-reset'] && (
               <i className={styleClasses['icon-before-reset']} />
             )}
