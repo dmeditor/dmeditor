@@ -89,6 +89,8 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
     if (Object.keys(requiredFieldsResult).length > 0) {
       setVar(formVarName, requiredFieldsResult);
       return;
+    } else {
+      removeVar(formVarName);
     }
 
     setLoading(true);

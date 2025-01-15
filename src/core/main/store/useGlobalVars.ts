@@ -28,7 +28,9 @@ export const useGlobalVars = create<
     },
     removeVar: (key: string) => {
       set((state) => {
-        delete state.vars[key];
+        if (state.vars[key] !== undefined) {
+          delete state.vars[key];
+        }
       });
     },
     resetVar: () => {
