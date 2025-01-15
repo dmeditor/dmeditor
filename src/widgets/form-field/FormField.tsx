@@ -84,6 +84,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
                         type="radio"
                         key={item.isDefault}
                         name={data.identifier}
+                        value={item.value as string}
                         defaultChecked={item.isDefault ? true : false}
                       />
                       {item.text}
@@ -116,7 +117,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               className={styleClasses['input-textarea'] || 'dme-w-input-textarea'}
               placeholder={data.placeHolder}
               name={data.identifier}
-              rows={data.rows || 5}
+              rows={data.rows || 3}
               defaultValue={data.defaultValue}
             ></textarea>
           )}

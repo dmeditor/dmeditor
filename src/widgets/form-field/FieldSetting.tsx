@@ -53,7 +53,7 @@ export const FieldSettings = (props: { data: EntityFormField; path: (string | nu
         {fieldType === 'textarea' && (
           <PropertyItem label="Rows">
             <Ranger
-              min={5}
+              min={3}
               max={30}
               defaultValue={props.data.rows}
               onChange={(v) => updateRow(v)}
