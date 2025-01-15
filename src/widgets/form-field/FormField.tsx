@@ -36,13 +36,17 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
   }, [data.type]);
 
   return (
-    <div className={feedbackMessage ? styleClasses['error'] || 'dme-w-error' : ''}>
+    <div>
       {mode === 'edit' && props.active && (
         <RenderToSetting>
           <FieldSettings key={data.type} data={data} path={path} />
         </RenderToSetting>
       )}
-      <FormRow newLine={data.newLine} labelWidth={data.settings?.labelWidth}>
+      <FormRow
+        newLine={data.newLine}
+        labelWidth={data.settings?.labelWidth}
+        className={feedbackMessage !== undefined ? styleClasses['error'] || 'dme-w-error' : ''}
+      >
         <label>
           {data.label}
           {data.required && <span className={styleClasses['required'] || 'dme-w-required'}>*</span>}
@@ -54,7 +58,6 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               className={styleClasses['input-text'] || 'dme-w-input-text'}
               placeholder={data.placeHolder}
               name={data.identifier}
-              required={data.required}
               defaultValue={data.defaultValue}
             />
           )}
@@ -64,6 +67,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               className={styleClasses['input-checkbox'] || 'dme-w-input-checkbox'}
               key={data.defaultValue + ''}
               name={data.identifier}
+              value={'1'}
               defaultChecked={data.defaultValue ? true : false}
             />
           )}
@@ -113,7 +117,6 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               placeholder={data.placeHolder}
               name={data.identifier}
               rows={data.rows || 5}
-              required={data.required}
               defaultValue={data.defaultValue}
             ></textarea>
           )}
@@ -121,7 +124,6 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
             <input
               type="file"
               accept={data.params?.fileFormat || '*'}
-              required={data.required}
               className={styleClasses['input-file'] || 'dme-w-input-file'}
               key={data.defaultValue + ''}
               name={data.identifier}

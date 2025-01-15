@@ -4,9 +4,10 @@ import { Button } from '@mui/material';
 import { BlockListRender } from 'dmeditor/core/components/block-list-render';
 import { dmeConfig } from 'dmeditor/core/config';
 import { useGlobalVars } from 'dmeditor/core/main/store';
+import { iterateBlockTree } from 'dmeditor/core/main/store/helper';
 import { MiniRichText } from 'dmeditor/core/utility';
 
-import type { DME } from '../../core/types';
+import type { DME, DMEData } from '../../core/types';
 import { EntityForm } from './entity';
 
 export interface Response {
@@ -15,7 +16,10 @@ export interface Response {
   fieldsMessage?: Record<string, string>;
 }
 
-export type FormCallBack = (formObj: any, formData: any) => Promise<Response>;
+export type FormCallBack = (
+  formObj: any,
+  extra: { fields: Record<string, any>; formData: any },
+) => Promise<Response>;
 
 export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
   const { blockNode, path, mode, styleClasses } = props;
@@ -34,6 +38,18 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
 
   const submit = (e) => {
     e.preventDefault();
+    const fields: Record<string, any> = {};
+
+    iterateBlockTree(blockNode as any, (item) => {
+      if (item.type === 'form-field') {
+        const identifier = item.data['identifier'] as string;
+        if (mode === 'edit' && fields[identifier]) {
+          window.alert('Warning - duplicated identifier: ' + identifier);
+        }
+        fields[identifier] = item.data;
+      }
+    });
+
     const formData = new FormData(e.target);
 
     const obj: Record<string, any> = {};
@@ -43,11 +59,43 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
       });
     }
 
+    //validate required
+    const requiredFieldsResult: Record<string, string> = {};
+    for (const fieldIdentifier in fields) {
+      const field = fields[fieldIdentifier];
+      if (field.required) {
+        let valid = true;
+        const value = obj[fieldIdentifier];
+        if (value === undefined) {
+          valid = false;
+        } else {
+          switch (field.type) {
+            case 'text':
+            case 'textfield':
+            case 'select':
+              valid = value.trim() !== '';
+              break;
+            default:
+              valid = value ? true : false;
+          }
+        }
+
+        if (!valid) {
+          requiredFieldsResult[fieldIdentifier] = '';
+        }
+      }
+    }
+
+    if (Object.keys(requiredFieldsResult).length > 0) {
+      setVar(formVarName, requiredFieldsResult);
+      return;
+    }
+
     setLoading(true);
 
     if (formConfig && formConfig.submit) {
       const callback = formConfig.submit as FormCallBack;
-      callback(obj, formData).then((resp) => {
+      callback(obj, { formData, fields: fields }).then((resp) => {
         if (resp.fieldsMessage) {
           setVar(formVarName, resp.fieldsMessage);
         }
