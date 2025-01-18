@@ -1,4 +1,9 @@
 import * as React from 'react';
+import {
+  ArrowBackIosNewOutlined,
+  ArrowForwardIosOutlined,
+  ArrowLeftOutlined,
+} from '@mui/icons-material';
 import classNames from 'classnames';
 import { TransitionStatus } from 'react-transition-group';
 
@@ -9,6 +14,8 @@ import transitionEndListener from './helper';
 // import useCommittedRef from './hooks/useCommittedRef';
 import useEventCallback from './hooks/useEventCallback';
 import {
+  CarouselArrowButon,
+  CarouselArrowContainer,
   StyledCarouselCaption,
   StyledCarouselContainer,
   StyledCarouselImage,
@@ -49,6 +56,16 @@ const Carousel = ({
 
     const nextActiveIndex = (activeIndex + 1) % numChildren;
     nextDirectionRef.current = 'next';
+    onSelect(nextActiveIndex);
+  });
+
+  const nextClick = useEventCallback(() => {
+    const nextActiveIndex = (activeIndex + 1) % numChildren;
+    onSelect(nextActiveIndex);
+  });
+
+  const previousClick = useEventCallback(() => {
+    const nextActiveIndex = (activeIndex === 0 ? numChildren - 1 : activeIndex - 1) % numChildren;
     onSelect(nextActiveIndex);
   });
 
@@ -135,6 +152,34 @@ const Carousel = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      <CarouselArrowContainer
+        postion="left"
+        onClick={() => {
+          previousClick();
+        }}
+      >
+        <CarouselArrowButon className={styleClasses['arrow-button'] || 'dme-w-arrow-button'}>
+          {styleClasses['arrow-previous'] ? (
+            <i className={styleClasses['arrow-previous']} />
+          ) : (
+            <ArrowBackIosNewOutlined />
+          )}
+        </CarouselArrowButon>
+      </CarouselArrowContainer>
+      <CarouselArrowContainer
+        postion="right"
+        onClick={() => {
+          nextClick();
+        }}
+      >
+        <CarouselArrowButon className={styleClasses['arrow-button'] || 'dme-w-arrow-button'}>
+          {styleClasses['arrow-next'] ? (
+            <i className={styleClasses['arrow-next']} />
+          ) : (
+            <ArrowForwardIosOutlined />
+          )}
+        </CarouselArrowButon>
+      </CarouselArrowContainer>
       <StyledCarsouelIndicator>{carouselIndicators}</StyledCarsouelIndicator>
       <div className={styleClasses['carousel-inner'] || 'dme-carousel-inner'}>
         {carouselChildren}
