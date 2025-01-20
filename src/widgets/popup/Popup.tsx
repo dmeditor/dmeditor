@@ -30,9 +30,13 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
     <div>
       <div>
         <button className={styleClasses['button']} onClick={() => setShown(true)}>
-          {styleClasses['button-before-icon'] && <i className={styleClasses['before-icon']} />}
+          {styleClasses['button-before-icon'] && (
+            <i className={styleClasses['button-before-icon']} />
+          )}
           {data.buttonText}
-          {styleClasses['button-after-icon'] && <i className={styleClasses['before-icon']} />}
+          {styleClasses['button-after-icon'] && (
+            <i className={styleClasses['button-before-icon']} />
+          )}
         </button>
       </div>
 
@@ -62,7 +66,7 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
           <a
             href="#"
             className={styleClasses['close-icon']}
-            style={{ float: 'right' }}
+            style={{ float: 'right', position: 'relative', zIndex: 1000 }}
             onClick={(e) => {
               e.preventDefault();
               handleClose();
@@ -72,19 +76,21 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
           </a>
           <BlockListRender blockData={children || []} path={path} mode={mode} />
           <PopupCloseButtonContainer>
-            <a
-              href="#"
-              className={styleClasses['close-button']}
-              onClick={(e) => {
-                e.preventDefault();
-                handleClose();
-              }}
-            >
-              {styleClasses['close-button-before-icon'] && (
-                <i className={styleClasses['close-button-before-icon']} />
-              )}
-              Close
-            </a>
+            {data.closeButtonText && (
+              <a
+                href="#"
+                className={styleClasses['close-button']}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClose();
+                }}
+              >
+                {styleClasses['close-button-before-icon'] && (
+                  <i className={styleClasses['close-button-before-icon']} />
+                )}
+                {data.closeButtonText}
+              </a>
+            )}
           </PopupCloseButtonContainer>
         </PopupRoot>
       </Modal>

@@ -33,6 +33,13 @@ export const popupDefinition: DME.Widget = {
       settingComponent: 'input',
     },
     {
+      name: 'Close text',
+      property: '.closeButtonText',
+      styleTags: ['core'],
+      description: 'Empty means not shown',
+      settingComponent: 'input',
+    },
+    {
       name: 'Modal size',
       property: '.modalSize',
       styleTags: ['core'],
