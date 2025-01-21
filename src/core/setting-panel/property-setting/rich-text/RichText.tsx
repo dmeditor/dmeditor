@@ -30,8 +30,18 @@ import RemoveLinkButton from './RemoveLinkButton';
 const { useCallback, useMemo } = React;
 
 const RichText = (props: DME.SettingComponentProps & { property: string; value: any }) => {
-  const { property, value = [], blockPath } = props;
+  const { property, value, blockPath } = props;
   const { initHeight } = props.parameters || {};
+
+  let currentValue = value;
+  if (currentValue === null) {
+    currentValue = [
+      {
+        type: 'paragraph',
+        children: [{ text: '' }],
+      },
+    ];
+  }
 
   const renderElement = useCallback(
     (props: {
@@ -68,9 +78,9 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
     updateBlockPropsByPath(blockPath, property, newValue);
   };
 
-  editor.children = value;
+  editor.children = currentValue;
 
-  const initialValue = value;
+  const initialValue = currentValue;
 
   const { isActive: isSettingActive, setIsActive: setIsSettingActive } = useSettingStatus();
 
@@ -116,7 +126,7 @@ const RichText = (props: DME.SettingComponentProps & { property: string; value: 
             <AddLinkButton />
             <RemoveLinkButton />
           </ToolsGroup>
-          <InsertImageButton value={value} />
+          <InsertImageButton value={currentValue} />
           <CharacterButton />
         </Toolbar>
         <Editable
