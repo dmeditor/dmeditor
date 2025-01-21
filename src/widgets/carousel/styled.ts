@@ -122,7 +122,7 @@ export const StyledCarouselContainer = styled.div`
 export const CarouselArrowContainer = styled.div<{ postion: 'left' | 'right' }>`
   position: absolute;
   top: 45%;
-  z-index: 1000;
+  z-index: 200;
   ${(props) => (props.postion === 'right' ? { right: 0 } : { left: 0 })}
   cursor: pointer;
 `;
