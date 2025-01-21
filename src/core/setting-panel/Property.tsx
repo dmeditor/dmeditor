@@ -31,11 +31,13 @@ export const PropertyItem = (props: {
   const upDown = props.upDown ? true : false;
 
   return label ? (
-    <StyledSettingItem.Container upDown={upDown} autoWidth={autoWidth}>
-      <StyledSettingItem.Label>
+    <StyledSettingItem.Container upDown={upDown}>
+      <StyledSettingItem.Label autoWidth={autoWidth}>
         {i18n(props.label || '', 'property-label')}:{' '}
       </StyledSettingItem.Label>
-      <StyledSettingItem.Setting upDown={upDown}>{props.children}</StyledSettingItem.Setting>
+      <StyledSettingItem.Setting autoWidth={autoWidth} upDown={upDown}>
+        {props.children}
+      </StyledSettingItem.Setting>
       {props.description && (
         <Tooltip
           title={

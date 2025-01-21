@@ -52,12 +52,14 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
 
   if (settings.fullWidth) {
     containerStyle['marginLeft'] = 'calc((var(--dme-main-width) - var(--dme-container-width)) / 2)';
-    containerStyle['paddingLeft'] =
-      'calc((var(--dme-container-width) - var(--dme-main-width)) / 2)';
     containerStyle['marginRight'] =
       'calc((var(--dme-main-width) - var(--dme-container-width)) / 2)';
-    containerStyle['paddingRight'] =
-      'calc((var(--dme-container-width) - var(--dme-main-width)) / 2)';
+    if (!settings.fullWidthContent) {
+      containerStyle['paddingLeft'] =
+        'calc((var(--dme-container-width) - var(--dme-main-width)) / 2)';
+      containerStyle['paddingRight'] =
+        'calc((var(--dme-container-width) - var(--dme-main-width)) / 2)';
+    }
   }
   return {
     ...(Object.keys(containerStyle).length > 0 && { '&': containerStyle }),

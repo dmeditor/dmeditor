@@ -62,8 +62,22 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Full width',
-    settingComponent: 'switch', //todo: make a full width so it will change general.padding also.
+    settingComponent: 'switch',
     property: 'settings.general.fullWidth',
+    category: 'style',
+    description:
+      'If on by default content is still in normal width but background color will be full.',
+    group: 'style_block',
+    styleTags: ['root'],
+  },
+  {
+    name: 'Content following full width',
+    settingComponent: 'switch',
+    property: 'settings.general.fullWidthContent',
+    description: 'Only work when full width is on.',
+    display: {
+      labelFullWidth: true,
+    },
     category: 'style',
     group: 'style_block',
     styleTags: ['root'],

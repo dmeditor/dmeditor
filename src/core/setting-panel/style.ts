@@ -87,19 +87,19 @@ export const AdddBlockHeader = styled.div`
 `;
 
 export const StyledSettingItem = {
-  Container: styled.div<{ upDown?: boolean; autoWidth?: boolean }>`
+  Container: styled.div<{ upDown?: boolean }>`
     display: ${(props) => (props.upDown ? 'block' : 'flex')};
     padding: 4px 0px;
     align-items: center;
   `,
-  Label: styled.label`
+  Label: styled.label<{ autoWidth?: boolean }>`
     min-width: 100px;
     color: #333333;
     font-size: 14px;
   `,
-  Setting: styled.div<{ upDown?: boolean }>`
+  Setting: styled.div<{ upDown?: boolean; autoWidth?: boolean }>`
     ${(props) => (props.upDown ? 'padding: 10px 5px;' : '')}
-    min-width: 180px;
+    ${(props) => (props.autoWidth ? '' : 'min-width: 180px;')}
     position: relative;
     flex: 1;
   `,

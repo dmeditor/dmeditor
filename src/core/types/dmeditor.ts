@@ -22,6 +22,7 @@ export namespace DME {
     category?: string;
     group?: string;
     display?: {
+      labelFullWidth?: boolean;
       upDown?: boolean;
     };
     parameters?: { updateOnUnfocus?: boolean } & Record<string, unknown>;
@@ -245,6 +246,7 @@ export namespace DMEData {
     marginTop?: number;
     padding?: number | number[];
     fullWidth?: boolean;
+    fullWidthContent?: boolean;
     blockBackground?: string | { color?: string; image?: string; imagePosition?: string };
     background?: string | { color?: string; image?: string; imagePosition?: string };
   }
