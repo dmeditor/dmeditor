@@ -30,6 +30,7 @@ import {
   ReactEditor,
   RenderLeafProps,
   useFocused,
+  useReadOnly,
   useSelected,
   useSlate,
   useSlateStatic,
@@ -378,7 +379,7 @@ const InlineChromiumBugfix = () => (
   </span>
 );
 const LinkComponent = ({ attributes, children, element }) => {
-  const selected = useSelected();
+  const selected = !useReadOnly() && useSelected();
   return (
     <a
       {...attributes}
