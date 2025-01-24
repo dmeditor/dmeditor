@@ -57,12 +57,12 @@ const heroTextWidget: DME.Widget = {
             return true;
           } else {
             if (context.relativePath.length === 1) {
-              if (context.relativePath[0] === 'image') {
+              if (context.relativePath[0] === 'hero') {
                 //image
                 if (!item.styleTags) {
                   return true;
                 }
-                return arrayHasCommonElement(item.styleTags, ['container']);
+                return arrayHasCommonElement(item.styleTags, ['core', 'container']);
               } else {
                 //list
                 return item.styleTags?.includes('container');

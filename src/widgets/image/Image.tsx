@@ -98,7 +98,9 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
               className={css({
                 maxWidth: '100%',
                 ...(settings.general?.width && { width: '100%' }),
-                ...(borderWidth ? { borderWidth: borderWidth, borderStyle: 'solid' } : {}),
+                ...(borderWidth
+                  ? { borderWidth: borderWidth, borderStyle: 'solid', boxSizing: 'border-box' }
+                  : {}),
                 ...(borderColor ? { borderColor: borderColor } : {}),
               })}
             />
