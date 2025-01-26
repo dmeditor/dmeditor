@@ -245,6 +245,9 @@ export namespace DMEData {
     align?: 'left' | 'center' | 'right';
     marginTop?: number;
     padding?: number | number[];
+    borderWidth?: number;
+    borderColor?: string;
+    borderRadius?: number;
     fullWidth?: boolean;
     fullWidthContent?: boolean;
     blockBackground?: string | { color?: string; image?: string; imagePosition?: string };

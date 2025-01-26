@@ -13,6 +13,8 @@ export const Layout = {
     --dmee-edit-max-width: 1200px;
 
     --dmee-selected-border-color: #fc7e4b;
+    --dmee-text-hover-color: #1d4b64;
+
     --dmee-hover-font-color: red;
 
     --dmee-bg-sidearea: #f3f4f6;

@@ -100,11 +100,22 @@ export const SettingTree = (props: {
         let settingList = widgetDef?.settings;
 
         //filter from system
+
+        const disabledStyleSettings = dmeConfig.editor.disabledStyleSettings;
+
+        const disabledList = [
+          ...(disabledStyleSettings['*'] || []),
+          ...(disabledStyleSettings[widgetDef.type] || []),
+        ];
+
         settingList = settingList.filter((item) => {
           if (item.category === category) {
             if (item.category !== 'style') {
               return true;
             } else {
+              if (item.property && disabledList.includes(item.property)) {
+                return false;
+              }
               if (item.styleTags) {
                 //if not in root
                 if (blockPath.length > 1 && item.styleTags.includes('root')) {
@@ -301,7 +312,10 @@ export const SettingTree = (props: {
         {settingGroups.map((group) => (
           <div>
             {group && (
-              <PropertyGroup header={i18n(dmeConfig.editor.settingGroups[group], 'property-group')}>
+              <PropertyGroup
+                expandable={true}
+                header={i18n(dmeConfig.editor.settingGroups[group], 'property-group')}
+              >
                 <div>
                   {renderSettingList(
                     settingConfigs?.settings.filter((item) => item.group === group),

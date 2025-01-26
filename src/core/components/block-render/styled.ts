@@ -50,6 +50,16 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
     containerStyle['backgroundColor'] = settings.background?.color;
   }
 
+  if (settings.borderWidth) {
+    containerStyle['borderWidth'] = settings.borderWidth;
+    containerStyle['borderColor'] = settings.borderColor;
+    containerStyle['borderStyle'] = 'solid';
+  }
+
+  if (settings.borderRadius) {
+    containerStyle['borderRadius'] = settings.borderRadius;
+  }
+
   if (settings.fullWidth) {
     containerStyle['marginLeft'] = 'calc((var(--dme-main-width) - var(--dme-container-width)) / 2)';
     containerStyle['marginRight'] =

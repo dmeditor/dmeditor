@@ -66,21 +66,19 @@ export const PropertyGroup = (props: {
   const [open, setOpen] = useState(props.expandable && props.open ? true : false);
 
   return (
-    <StyledSettingGroup.Container
-      expandable={props.expandable}
-      open={open}
-      onClick={() => {
-        if (props.expandable) {
-          setOpen(!open);
-          if (props.onOpenClose) props.onOpenClose(!open);
-        }
-      }}
-    >
-      <StyledSettingGroup.Header>
+    <StyledSettingGroup.Container expandable={props.expandable} open={open}>
+      <StyledSettingGroup.Header
+        onClick={() => {
+          if (props.expandable) {
+            setOpen(!open);
+            if (props.onOpenClose) props.onOpenClose(!open);
+          }
+        }}
+      >
         {props.expandable && (
           <span>
-            {!open && <KeyboardArrowRight style={{ fontSize: 16 }} />}
-            {open && <KeyboardArrowDown style={{ fontSize: 16 }} />}
+            {!open && <KeyboardArrowRight style={{ fontSize: 18 }} />}
+            {open && <KeyboardArrowDown style={{ fontSize: 18 }} />}
           </span>
         )}
         {props.header}

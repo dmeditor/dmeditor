@@ -114,8 +114,13 @@ export const StyledSettingGroup = {
   `,
   Header: styled.legend`
     cursor: pointer;
+    display: flex;
+    align-items: center;
     padding-left: 5px;
     padding-right: 5px;
+    &:hover {
+      color: var(--dmee-text-hover-color);
+    }
   `,
   Body: styled.div``,
 };

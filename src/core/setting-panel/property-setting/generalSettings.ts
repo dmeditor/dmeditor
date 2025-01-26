@@ -18,17 +18,6 @@ export const generalSettings: Array<DME.Setting> = [
     group: 'style_content',
     styleTags: ['block', 'list'],
   },
-  // {
-  //   name: 'Background',
-  //   settingComponent: 'color',
-  //   property: 'settings.general.blockBackground',
-  //   category: 'style',
-  //   parameters: {
-  //     colorGroup: 'background',
-  //   },
-  //   group: 'style_content',
-  //   styleTags: ['block'],
-  // },
   {
     name: 'Padding',
     // settingComponent: 'range',
@@ -48,6 +37,35 @@ export const generalSettings: Array<DME.Setting> = [
     description: 'Distance to preivous block',
     group: 'style_block',
     styleTags: ['list'],
+  },
+  {
+    name: 'Border width',
+    settingComponent: 'distance',
+    property: 'settings.general.borderWidth',
+    parameters: { min: 0, max: 10, allowedUnit: 'px' },
+    category: 'style',
+    styleTags: ['container'],
+    group: 'style_block',
+  },
+  {
+    name: 'Border color',
+    settingComponent: 'color',
+    property: 'settings.general.borderColor',
+    parameters: {
+      colorGroup: 'border',
+    },
+    category: 'style',
+    styleTags: ['container'],
+    group: 'style_block',
+  },
+  {
+    name: 'Border radius',
+    settingComponent: 'distance',
+    property: 'settings.general.borderRadius',
+    parameters: { min: 0, max: 50, allowedUnit: 'px' },
+    category: 'style',
+    styleTags: ['container'],
+    group: 'style_block',
   },
   {
     name: 'Background',

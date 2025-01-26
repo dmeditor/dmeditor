@@ -81,6 +81,7 @@ export interface DMEConfigType {
       [colorGroup: string]: Array<DME.ColorConfig> | undefined;
     };
     enableEditControl?: boolean;
+    disabledStyleSettings?: { [widget: string]: Array<string> };
     defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
     categories?: Array<DME.WidgetCategory>;
     ui: { [variable: string]: string };
@@ -122,6 +123,7 @@ const defaultConfig = () => {
       favouriteWidgets: [],
       zIndex: 1000,
       enableEditControl: false,
+      disabledStyleSettings: {},
       defaultStyle: {},
       colors: {
         text: [
@@ -231,6 +233,7 @@ const dmeConfig: {
     colors: { [colorGroup: string]: Array<DME.ColorConfig> };
     defaultStyle: { [widget: string]: { [styleKey: string]: string } };
     enableEditControl: boolean;
+    disabledStyleSettings: { [widget: string]: Array<string> | string };
     categories: Array<DME.WidgetCategory>;
     settingGroups: { [key: string]: string };
     fontFamily: Array<{ value: string; label: string }>;
