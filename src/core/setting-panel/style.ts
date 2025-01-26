@@ -107,22 +107,26 @@ export const StyledSettingItem = {
 
 export const StyledSettingGroup = {
   Container: styled.fieldset<{ expandable?: boolean; open?: boolean }>`
-    margin-top: 15px;
-    ${(props) => (props.expandable && !props.open ? 'border: none;' : 'border: 1px solid #dddddd;')}
-    padding: 5px 10px;
+    margin-top: 5px;
+    padding: 5px 0px;
+    ${(props) =>
+      props.expandable && !props.open
+        ? 'border: none;'
+        : 'border: 1px solid #dddddd;background-color: rgba(255,255,255,0.5);'}
     border-radius: 4px;
   `,
   Header: styled.legend`
     cursor: pointer;
     display: flex;
     align-items: center;
-    padding-left: 5px;
-    padding-right: 5px;
+    margin-left: 5px;
     &:hover {
       color: var(--dmee-text-hover-color);
     }
   `,
-  Body: styled.div``,
+  Body: styled.div`
+    padding: 0px 15px;
+  `,
 };
 
 export const RightElement = styled.div`
