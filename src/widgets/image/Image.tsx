@@ -12,7 +12,7 @@ export interface ImageEntity {
   link?: string;
   settings: {
     linkNewTab?: boolean;
-    borderWidth?: number;
+    borderWidth?: number | string;
     borderColor?: string;
     borderRadius?: number;
     general?: DMEData.GeneralSettingType;
@@ -69,19 +69,12 @@ export const ImageDefinition: DME.Widget = {
       name: 'Border radius',
       settingComponent: 'distance',
       property: 'settings.borderRadius',
-      parameters: { min: 0, max: 50, allowedUnit: 'px' },
+      parameters: { min: 0, max: 50 },
       category: 'style',
       styleTags: ['core'],
       group: 'style_border',
     },
-    ...generalSettings.filter(
-      (item) =>
-        ![
-          'settings.general.borderWidth',
-          'settings.general.borderColor',
-          'settings.general.borderRadius',
-        ].includes(item.property || ''),
-    ),
+    ...generalSettings,
   ],
   events: {
     updateData: () => {},
