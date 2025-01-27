@@ -77,8 +77,8 @@ export const PropertyGroup = (props: {
       >
         {props.expandable && (
           <span>
-            {!open && <KeyboardArrowRight style={{ fontSize: 18 }} />}
-            {open && <KeyboardArrowDown style={{ fontSize: 18 }} />}
+            {!open && <KeyboardArrowRight style={{ fontSize: 22 }} />}
+            {open && <KeyboardArrowDown style={{ fontSize: 22 }} />}
           </span>
         )}
         {props.header}
