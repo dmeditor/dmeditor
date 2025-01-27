@@ -14,6 +14,7 @@ export interface ImageEntity {
     linkNewTab?: boolean;
     borderWidth?: number;
     borderColor?: string;
+    borderRadius?: number;
     general?: DMEData.GeneralSettingType;
   };
 }
@@ -64,7 +65,23 @@ export const ImageDefinition: DME.Widget = {
       styleTags: ['core'],
       group: 'style_border',
     },
-    ...generalSettings,
+    {
+      name: 'Border radius',
+      settingComponent: 'distance',
+      property: 'settings.borderRadius',
+      parameters: { min: 0, max: 50, allowedUnit: 'px' },
+      category: 'style',
+      styleTags: ['core'],
+      group: 'style_border',
+    },
+    ...generalSettings.filter(
+      (item) =>
+        ![
+          'settings.general.borderWidth',
+          'settings.general.borderColor',
+          'settings.general.borderRadius',
+        ].includes(item.property || ''),
+    ),
   ],
   events: {
     updateData: () => {},
@@ -86,7 +103,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
   const {
     data: { src, settings, description, link },
   } = blockNode;
-  const { borderWidth, borderColor, linkNewTab } = settings;
+  const { borderWidth, borderColor, linkNewTab, borderRadius } = settings;
 
   const renderImage = () => {
     return (
@@ -99,8 +116,13 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
                 maxWidth: '100%',
                 ...(settings.general?.width && { width: '100%' }),
                 ...(borderWidth
-                  ? { borderWidth: borderWidth, borderStyle: 'solid', boxSizing: 'border-box' }
+                  ? {
+                      borderWidth: borderWidth,
+                      borderStyle: 'solid',
+                      boxSizing: 'border-box',
+                    }
                   : {}),
+                ...(borderRadius ? { borderRadius: borderRadius } : {}),
                 ...(borderColor ? { borderColor: borderColor } : {}),
               })}
             />
