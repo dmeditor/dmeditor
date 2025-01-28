@@ -147,7 +147,11 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
         )}
 
         <div className={styleClasses['action'] || 'dme-w-action'}>
-          <button className={styleClasses['submit'] || 'dme-w-submit'} type="submit">
+          <button
+            disabled={loading}
+            className={styleClasses['submit'] || 'dme-w-submit'}
+            type="submit"
+          >
             {styleClasses['icon-before-submit'] && (
               <i className={styleClasses['icon-before-submit']} />
             )}
