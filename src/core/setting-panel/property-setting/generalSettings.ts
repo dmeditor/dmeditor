@@ -3,6 +3,7 @@ import { DME, DMEData } from '../../../core/types';
 export const generalSettings: Array<DME.Setting> = [
   {
     name: 'Width',
+    identifier: 'content-width',
     settingComponent: 'distance',
     property: 'settings.general.width',
     parameters: { min: 0, max: 700, step: 5 },
@@ -12,6 +13,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Self align',
+    identifier: 'content-self-align',
     settingComponent: 'align',
     property: 'settings.general.align',
     category: 'style',
@@ -20,6 +22,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Padding',
+    identifier: 'container-padding',
     // settingComponent: 'range',
     settingComponent: 'padding',
     property: 'settings.general.padding',
@@ -30,6 +33,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Top margin',
+    identifier: 'container-margin-top',
     settingComponent: 'distance',
     property: 'settings.general.marginTop',
     parameters: { min: 0, max: 100, allowedUnit: 'px' },
@@ -40,6 +44,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Border width',
+    identifier: 'container-border-width',
     settingComponent: 'distance',
     property: 'settings.general.borderWidth',
     parameters: { min: 0, max: 10, allowedUnit: 'px' },
@@ -49,6 +54,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Border color',
+    identifier: 'container-border-color',
     settingComponent: 'color',
     property: 'settings.general.borderColor',
     parameters: {
@@ -60,6 +66,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Border radius',
+    identifier: 'container-border-radius',
     settingComponent: 'distance',
     property: 'settings.general.borderRadius',
     parameters: { min: 0, max: 50, allowedUnit: 'px' },
@@ -69,6 +76,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Background',
+    identifier: 'container-background-color',
     settingComponent: 'color',
     property: 'settings.general.background',
     category: 'style',
@@ -80,6 +88,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Full width',
+    identifier: 'container-full-width',
     settingComponent: 'switch',
     property: 'settings.general.fullWidth',
     category: 'style',
@@ -90,6 +99,7 @@ export const generalSettings: Array<DME.Setting> = [
   },
   {
     name: 'Content following full width',
+    identifier: 'container-full-width-content',
     settingComponent: 'switch',
     property: 'settings.general.fullWidthContent',
     description: 'Only work when full width is on.',

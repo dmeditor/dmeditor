@@ -49,6 +49,10 @@ export const SettingTree = (props: {
     [index: string | symbol]: DME.WidgetStyleSettingStatus;
   }>({});
 
+  const [enabledStyleSettings, setEnableStyleSettings] = useState<undefined | Array<string>>(
+    undefined,
+  );
+
   //if selected path contains block path, it's selected (meaning parents are also selected)
   const isSelected = level > 0 && arrayStarts(selectedPath, blockPath);
 
@@ -186,9 +190,12 @@ export const SettingTree = (props: {
   //set settting status between style selection and settings
   const resetSettingStatus = (styleOption: string, style: string) => {
     let statusObj = { ...settingStatus };
+    // only support root style: "_"
+    let enabledSettings: typeof enabledStyleSettings = undefined;
 
     //when it's set to none
     if (styleOption === '') {
+      enabledSettings = undefined;
       if (style === '_') {
         statusObj = {};
       } else {
@@ -201,24 +208,28 @@ export const SettingTree = (props: {
       }
     } else {
       //when it's set to value
-      if (style === '_') {
-        statusObj = {};
-      }
       const optionDef = getWidgetStyleOption(blockData.type, styleOption, style);
       if (!optionDef) {
         return;
       }
-      if (!optionDef.settings) {
-        return;
+      if (style === '_') {
+        statusObj = {};
+        if (optionDef?.enabledStyleSettings) {
+          enabledSettings = optionDef.enabledStyleSettings;
+        }
       }
-      for (const key of Object.keys(optionDef.settings)) {
-        const setting = optionDef.settings[key];
-        if (setting.status) {
-          statusObj[key] = setting.status;
+
+      if (optionDef.settings) {
+        for (const key of Object.keys(optionDef.settings)) {
+          const setting = optionDef.settings[key];
+          if (setting.status) {
+            statusObj[key] = setting.status;
+          }
         }
       }
     }
     setSettingStatus(statusObj);
+    setEnableStyleSettings(enabledSettings);
   };
 
   const switchStyleOption = (styleOption: string, style: string) => {
@@ -258,7 +269,6 @@ export const SettingTree = (props: {
       if (setting.custom) {
         return <Property {...{ ...setting, block: blockData, blockPath: blockPath }} />;
       } else {
-        const settingComponent = setting.settingComponent;
         // const settings = getPropertyFromSettings(blockData);
         const { property } = setting;
         if (!property) {
@@ -273,7 +283,7 @@ export const SettingTree = (props: {
           disabled: settingStatus[property] === 'disabled',
         };
 
-        return settingComponent && settingStatus[property] !== 'hidden' ? (
+        return (
           <PropertyItem
             upDown={propertyProps.display?.upDown}
             label={setting.name}
@@ -283,7 +293,7 @@ export const SettingTree = (props: {
           >
             <Property {...propertyProps} />
           </PropertyItem>
-        ) : null;
+        );
       }
     });
   };
@@ -309,28 +319,52 @@ export const SettingTree = (props: {
           />
         )}
         <div id="dme-widget-setting-container" />
-        {settingGroups.map((group) => (
-          <div>
-            {group && (
-              <PropertyGroup
-                expandable={true}
-                header={i18n(dmeConfig.editor.settingGroups[group], 'property-group')}
-              >
-                <div>
-                  {renderSettingList(
-                    settingConfigs?.settings.filter((item) => item.group === group),
-                  )}
-                </div>
-              </PropertyGroup>
-            )}
+        {settingGroups.map((group) => {
+          let settingList = settingConfigs?.settings.filter((item) => item.group === group);
+          let validSettingList = settingList?.filter((setting) => {
+            if (!setting.settingComponent) {
+              return false;
+            }
 
-            {!group && (
-              <StyledSettingNoGroup>
-                {renderSettingList(settingConfigs?.settings.filter((item) => item.group === group))}
-              </StyledSettingNoGroup>
-            )}
-          </div>
-        ))}
+            if (setting.category === 'style') {
+              //if it's not enabled, ignore
+              if (
+                enabledStyleSettings &&
+                setting.identifier &&
+                !enabledStyleSettings.includes(setting.identifier)
+              ) {
+                return false;
+              }
+
+              if (setting.property && settingStatus[setting.property] === 'hidden') {
+                return false;
+              }
+            }
+
+            return true;
+          });
+
+          if (!validSettingList || validSettingList.length === 0) {
+            return <></>;
+          }
+
+          return (
+            <div>
+              {group && (
+                <PropertyGroup
+                  expandable={true}
+                  header={i18n(dmeConfig.editor.settingGroups[group], 'property-group')}
+                >
+                  <div>{renderSettingList(validSettingList)}</div>
+                </PropertyGroup>
+              )}
+
+              {!group && (
+                <StyledSettingNoGroup>{renderSettingList(validSettingList)}</StyledSettingNoGroup>
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   };

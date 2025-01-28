@@ -14,6 +14,7 @@ export namespace DME {
 
   export interface Setting {
     property?: string;
+    identifier?: string;
     name: string;
     custom?: boolean; // If true, it will not invoke directly but use name->value layout.
     settingComponent: string; // Registered setting component, e.g., 'color' or 'align'.
@@ -128,6 +129,7 @@ export namespace DME {
     identifier: string;
     name: string;
     icon?: string;
+    enabledStyleSettings?: []; //only for root style option
     cssClasses?: WidgetStyleClasses;
     cssStyle: string; // CSS style using CSS-in-JS.
     settings?: WidgetStyleOptionSettings;

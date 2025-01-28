@@ -89,7 +89,7 @@ export const AdddBlockHeader = styled.div`
 export const StyledSettingItem = {
   Container: styled.div<{ upDown?: boolean }>`
     display: ${(props) => (props.upDown ? 'block' : 'flex')};
-    padding: 4px 0px;
+    padding: 5px 0px;
     align-items: center;
   `,
   Label: styled.label<{ autoWidth?: boolean }>`
