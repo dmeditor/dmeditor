@@ -129,7 +129,7 @@ export namespace DME {
     identifier: string;
     name: string;
     icon?: string;
-    enabledStyleSettings?: []; //only for root style option
+    enabledStyleSettings?: []; //only for root style option, undefined means not set (allow all).
     cssClasses?: WidgetStyleClasses;
     cssStyle: string; // CSS style using CSS-in-JS.
     settings?: WidgetStyleOptionSettings;
