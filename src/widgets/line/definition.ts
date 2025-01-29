@@ -46,6 +46,7 @@ const lineWidget: DME.Widget = {
         'settings.general.marginTop',
         'settings.general.padding',
         'settings.general.fullWidth',
+        'settings.general.fullWidthContent',
       ].includes(item.property || ''),
     ),
   ],
