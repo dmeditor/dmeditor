@@ -1,4 +1,23 @@
+0.2.2
+
 0.2.2-beta.1
+- 2025-01-28 added: support for enabledStyleSettings in root style option & identifier in setting
+- 2025-01-26 added: image radius and disable container border in image
+- 2025-01-26 added: group make it expandable & borderWidth/Color/Radius & config.editor.disabledStyleSettings
+- 2025-01-24 added: image border setting in herotext
+- 2025-01-22 fixed: Text widget link shouldn't be selected in view mode
+- 2025-01-21 added: fullWidthContent setting
+- 2025-01-20 added: closebutton text & fix close in pop up
+- 2025-01-18 added: button in carousel
+- 2025-01-14 added: simple form design
+- 2025-01-13 updated: minirichtext onValueChange optional
+- 2025-01-13 updated: renamed menu to section menu (kept identifier)
+- 2025-01-10 updated: remove gallery default style to set in config
+- 2025-01-10 added: Gallery - can add from top & title data & use better button style
+- 2025-01-10 updated: expose useGlobalVars
+- 2025-01-09 added: link in image
+- 2025-01-05 added: direction in menu
+- 2025-01-04 fixed: popup can not input in setting panel
 
 0.2.1
 - 2025-01-03 fixed: [important]rich text text give error in list - happens between 2 richtext editor & introduced useSettingStatus store
