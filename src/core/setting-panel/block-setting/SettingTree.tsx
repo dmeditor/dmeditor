@@ -378,6 +378,9 @@ export const SettingTree = (props: {
             item.isEmbed &&
             isEmbedOwnSetting(item, newPath.slice(newPath.length - (level + 1)), rootWidget);
           if (isOwnView) {
+            if (category === 'style') {
+              return <></>;
+            }
             return (
               <div>
                 <span>{getWidgetName(item.type)}</span>

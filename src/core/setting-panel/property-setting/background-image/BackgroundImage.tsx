@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Checkbox } from '@mui/material';
+import { DeleteOutline } from '@mui/icons-material';
+import { Button, Checkbox } from '@mui/material';
 
 import { DME, dmeConfig, DMEData, i18n, ImageSetting, useEditorStore } from '../../../..';
 import { PickColor, useRecentColors } from '../../../utils/PickColor';
@@ -28,6 +29,11 @@ const BackgroundImage = (
           setCurrentValue({ ...currentValue, image: v.src });
         }}
       />
+      {currentValue && (
+        <Button onClick={() => setCurrentValue(undefined)}>
+          <DeleteOutline />
+        </Button>
+      )}
       <div>
         <label>
           <Checkbox
