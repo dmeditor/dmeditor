@@ -46,6 +46,15 @@ const listWidget: DME.Widget = {
       parameters: { min: 0, max: 100 },
     },
     ...generalSettings,
+    {
+      name: 'Background image',
+      property: 'settings.general.backgroundImage',
+      category: 'style',
+      styleTags: ['core'],
+      group: 'style_block',
+      settingComponent: 'background-image',
+      parameters: {},
+    },
   ],
 };
 

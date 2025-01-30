@@ -239,8 +239,12 @@ export namespace DMEData {
 
   export type BlockList = Block[];
 
-  export type BlockMap = Record<string, Block>;
+  export interface BackgroundImageType {
+    image: string;
+    fixed?: boolean;
+  }
 
+  export type BlockMap = Record<string, Block>;
   export interface GeneralSettingType {
     identifier?: string;
     width?: number | string;
@@ -254,5 +258,6 @@ export namespace DMEData {
     fullWidthContent?: boolean;
     blockBackground?: string | { color?: string; image?: string; imagePosition?: string };
     background?: string | { color?: string; image?: string; imagePosition?: string };
+    backgroundImage?: DMEData.BackgroundImageType;
   }
 }

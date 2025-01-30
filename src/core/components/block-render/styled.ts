@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { dmeConfig } from 'dmeditor/core/config';
 import { DMEData } from 'dmeditor/core/types';
 import { isObject } from 'lodash';
 
@@ -54,6 +55,17 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
     containerStyle['borderWidth'] = settings.borderWidth;
     containerStyle['borderColor'] = settings.borderColor;
     containerStyle['borderStyle'] = 'solid';
+  }
+
+  if (settings.backgroundImage && settings.backgroundImage.image) {
+    containerStyle['backgroundImage'] =
+      'url(' + dmeConfig.general.imagePath(settings.backgroundImage.image) + ')';
+    containerStyle['backgroundSize'] = '100% auto';
+    containerStyle['backgroundRepeat'] = 'no-repeat';
+
+    if (settings.backgroundImage.fixed) {
+      containerStyle['backgroundAttachment'] = 'fixed';
+    }
   }
 
   if (settings.borderRadius) {
