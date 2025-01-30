@@ -13,7 +13,7 @@ export {
   registerDefaultWidgets,
 } from './core/utils';
 export { getWidget, getWidgetVariant } from './core/utils';
-export { generalSettings } from './core/setting-panel/property-setting';
+export { getCommonSettings, generalSettings } from './core/setting-panel/property-setting';
 // register setting component
 export {
   registerCommonProperty,
