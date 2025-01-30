@@ -214,9 +214,10 @@ export const SettingTree = (props: {
       }
       if (style === '_') {
         statusObj = {};
-        if (optionDef?.enabledStyleSettings) {
-          enabledSettings = optionDef.enabledStyleSettings;
-        }
+      }
+
+      if (optionDef?.enabledStyleSettings) {
+        enabledSettings = optionDef.enabledStyleSettings;
       }
 
       if (optionDef.settings) {
