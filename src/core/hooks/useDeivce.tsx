@@ -5,7 +5,7 @@ import { dmeConfig } from '../config';
 let _device: DeviceType = '';
 export const setDevice = (d: DeviceType) => {
   _device = d;
-}
+};
 export type DeviceType = '' | 'mobile' | 'tablet';
 
 export const useDevice = (): DeviceType => {
@@ -13,11 +13,10 @@ export const useDevice = (): DeviceType => {
 
   const [device, setDevice] = useState('');
   const setCurrentDevice = () => {
-    const width = window.innerWidth;
-    let currentDevice = '';
-    if (width <= deviceWidth.mobile) {
+    let currentDevice = 'desktop';
+    if (window.matchMedia('(max-device-width: ' + deviceWidth.mobile + 'px)').matches) {
       currentDevice = 'mobile';
-    } else if (width <= deviceWidth.tablet) {
+    } else if (window.matchMedia('(max-device-width: ' + deviceWidth.tablet + 'px)').matches) {
       currentDevice = 'tablet';
     }
     setDevice(currentDevice);
