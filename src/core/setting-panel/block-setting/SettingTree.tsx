@@ -117,7 +117,7 @@ export const SettingTree = (props: {
             if (item.category !== 'style') {
               return true;
             } else {
-              if (item.property && disabledList.includes(item.property)) {
+              if (item.identifier && disabledList.includes(item.identifier)) {
                 return false;
               }
               if (item.styleTags) {
