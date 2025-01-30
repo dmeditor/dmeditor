@@ -1,7 +1,14 @@
 import { Block } from '@mui/icons-material';
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, BlockRender, dmeConfig, generalSettings, i18n } from '../..';
+import {
+  BlockListRender,
+  BlockRender,
+  dmeConfig,
+  generalSettings,
+  getCommonSettings,
+  i18n,
+} from '../..';
 import type { DME, DMEData } from '../..';
 import { SyledLayout } from './styled';
 
@@ -40,7 +47,7 @@ const layout2ColumnsWidget: DME.Widget = {
       settingComponent: 'range',
       parameters: { min: 1, max: 11 },
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

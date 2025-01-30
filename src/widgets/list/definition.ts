@@ -1,5 +1,5 @@
 import type { DME } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, getWidgetVariant, i18n } from '../..';
 
 const listWidget: DME.Widget = {
   category: 'design',
@@ -26,6 +26,7 @@ const listWidget: DME.Widget = {
   settings: [
     {
       name: 'Direction',
+      identifier: 'list-direction',
       property: '.direction',
       category: 'style',
       styleTags: ['core'],
@@ -39,22 +40,14 @@ const listWidget: DME.Widget = {
     },
     {
       name: 'Item gap',
+      identifier: 'list-item-gap',
       property: '.itemGap',
       category: 'style',
       styleTags: ['core'],
       settingComponent: 'range',
       parameters: { min: 0, max: 100 },
     },
-    ...generalSettings,
-    {
-      name: 'Background image',
-      property: 'settings.general.backgroundImage',
-      category: 'style',
-      styleTags: ['core'],
-      group: 'style_block',
-      settingComponent: 'background-image',
-      parameters: {},
-    },
+    ...getCommonSettings('default', ['container-background-image']),
   ],
 };
 

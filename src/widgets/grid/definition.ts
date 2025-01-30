@@ -1,4 +1,4 @@
-import { dmeConfig, generalSettings, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 import { EntityGrid } from './entity';
 
@@ -38,6 +38,7 @@ const gridWidget: DME.Widget = {
     {
       name: 'Items position',
       settingComponent: 'button-group',
+      identifier: 'grid-item-position',
       property: 'settings.itemPosition',
       parameters: {
         options: [
@@ -48,7 +49,7 @@ const gridWidget: DME.Widget = {
       },
       category: 'style',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

@@ -1,3 +1,5 @@
+import { getCommonSettings } from 'dmeditor/core/setting-panel/property-setting';
+
 import type { DME, DMEData } from '../..';
 import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
 import { EntityLine } from './entity';
@@ -25,6 +27,7 @@ const lineWidget: DME.Widget = {
   settings: [
     {
       name: 'Line color',
+      identifier: 'line-color',
       property: 'settings.color',
       settingComponent: 'color',
       parameters: {
@@ -33,6 +36,7 @@ const lineWidget: DME.Widget = {
     },
     {
       name: 'Line height',
+      identifier: 'line-height',
       property: 'settings.height',
       settingComponent: 'range',
       parameters: {
@@ -40,15 +44,13 @@ const lineWidget: DME.Widget = {
         max: 100,
       },
     },
-    ...generalSettings.filter((item) =>
-      [
-        'settings.general.background',
-        'settings.general.marginTop',
-        'settings.general.padding',
-        'settings.general.fullWidth',
-        'settings.general.fullWidthContent',
-      ].includes(item.property || ''),
-    ),
+    ...getCommonSettings('none', [
+      'container-padding',
+      'container-margin-top',
+      'container-background-color',
+      'container-full-width',
+      'container-full-width-content',
+    ]),
   ],
 };
 

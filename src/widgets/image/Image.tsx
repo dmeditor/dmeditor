@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+import { getCommonSettings } from 'dmeditor/core/setting-panel/property-setting';
 
 import { dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
@@ -50,12 +51,14 @@ export const ImageDefinition: DME.Widget = {
       settingComponent: 'range',
       property: 'settings.borderWidth',
       parameters: { min: 0, max: 40 },
+      identifier: 'image-border-width',
       category: 'style',
       styleTags: ['core'],
       group: 'style_border',
     },
     {
       name: 'Border Color',
+      identifier: 'image-border-color',
       settingComponent: 'color',
       property: 'settings.borderColor',
       parameters: {
@@ -67,6 +70,7 @@ export const ImageDefinition: DME.Widget = {
     },
     {
       name: 'Border radius',
+      identifier: 'image-border-radius',
       settingComponent: 'distance',
       property: 'settings.borderRadius',
       parameters: { min: 0, max: 50 },
@@ -74,7 +78,7 @@ export const ImageDefinition: DME.Widget = {
       styleTags: ['core'],
       group: 'style_border',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
   events: {
     updateData: () => {},

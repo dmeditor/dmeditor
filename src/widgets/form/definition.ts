@@ -1,4 +1,4 @@
-import { generalSettings, i18n, type DME, type DMEData } from '../..';
+import { generalSettings, getCommonSettings, i18n, type DME, type DMEData } from '../..';
 import { EntityForm } from './entity';
 
 const formWidget: DME.Widget = {
@@ -42,7 +42,7 @@ const formWidget: DME.Widget = {
       settingComponent: 'input',
       parameters: { multiline: true },
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

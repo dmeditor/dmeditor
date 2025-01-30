@@ -1,5 +1,5 @@
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, i18n } from '../..';
 import { CarouselEntity, initCarouselEntity } from './entity';
 
 const definition: DME.Widget = {
@@ -51,7 +51,8 @@ const definition: DME.Widget = {
     //   custom: true,
     //   settingComponent: 'carousel',
     // },
-    ...generalSettings,
+
+    ...getCommonSettings(),
   ],
 };
 

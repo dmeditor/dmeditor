@@ -1,4 +1,4 @@
-import { generalSettings, i18n, type DME, type DMEData } from '../..';
+import { generalSettings, getCommonSettings, i18n, type DME, type DMEData } from '../..';
 import { EntityFormField } from './entity';
 
 const formFieldWidget: DME.Widget = {
@@ -58,6 +58,7 @@ const formFieldWidget: DME.Widget = {
     },
     {
       name: 'Label width',
+      identifier: 'form-field-label-width',
       property: 'settings.labelWidth',
       settingComponent: 'distance',
       parameters: { min: 0, max: 700, step: 5 },
@@ -65,11 +66,12 @@ const formFieldWidget: DME.Widget = {
     },
     {
       name: 'Input shown as new line',
+      identifier: 'form-field-new-line',
       property: '.newLine',
       settingComponent: 'checkbox',
       category: 'style',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

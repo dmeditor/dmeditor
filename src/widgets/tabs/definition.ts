@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { generalSettings, i18n } from '../..';
+import { generalSettings, getCommonSettings, i18n } from '../..';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
 
 const TabsWidget: DME.Widget = {
@@ -79,7 +79,7 @@ const TabsWidget: DME.Widget = {
         updateOnUnfocus: true,
       },
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

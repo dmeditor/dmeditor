@@ -3,7 +3,7 @@ import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { Collapse } from '@mui/material';
 import { nanoid } from 'nanoid';
 
-import { BlockListRender, dmeConfig, generalSettings, i18n } from '../..';
+import { BlockListRender, dmeConfig, generalSettings, getCommonSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 
 interface CollapsableTextEntity {
@@ -28,10 +28,12 @@ export const CollapsableTextDefiniation: DME.Widget = {
     {
       name: 'Button align',
       property: '.buttonAlign',
+      identifier: 'collapsable-text-button-align',
       category: 'style',
       settingComponent: 'align',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
+    ,
   ],
   events: {
     createBlock: () => {

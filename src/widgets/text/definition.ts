@@ -1,4 +1,4 @@
-import { dmeConfig, generalSettings } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings } from '../..';
 import type { DME, DMEData } from '../..';
 import { i18n } from '../../core/i18n';
 import { initialTextEntity } from './entity';
@@ -29,6 +29,7 @@ const TextWidget: DME.Widget = {
     },
     {
       name: 'Text color',
+      identifier: 'text-color',
       property: 'settings.color',
       settingComponent: 'color',
       parameters: {
@@ -36,7 +37,7 @@ const TextWidget: DME.Widget = {
       },
       category: 'style',
     },
-    ...generalSettings,
+    ...getCommonSettings('default', ['container-background-image']),
   ],
 };
 

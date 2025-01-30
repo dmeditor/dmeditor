@@ -1,5 +1,5 @@
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, getWidgetVariant, i18n } from '../..';
 import { EntitySpace } from './entity';
 
 const spaceWidget: DME.Widget = {
@@ -27,19 +27,19 @@ const spaceWidget: DME.Widget = {
     {
       name: 'Height',
       property: 'settings.height',
-      settingComponent: 'range',
+      settingComponent: 'distance',
       parameters: {
         min: 1,
-        max: 100,
+        max: 200,
+        allowedUnit: 'px',
       },
     },
-    ...generalSettings.filter((item) =>
-      [
-        'settings.general.background',
-        'settings.general.marginTop',
-        'settings.general.fullWidth',
-      ].includes(item.property),
-    ),
+    ...getCommonSettings('none', [
+      'container-background-color',
+      'container-background-image',
+      'container-margin-top',
+      'container-full-width',
+    ]),
   ],
 };
 

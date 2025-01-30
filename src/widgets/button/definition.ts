@@ -1,4 +1,4 @@
-import { generalSettings, i18n, type DME, type DMEData } from '../..';
+import { generalSettings, getCommonSettings, i18n, type DME, type DMEData } from '../..';
 
 const buttonWidget: DME.Widget = {
   category: 'basic',
@@ -28,7 +28,7 @@ const buttonWidget: DME.Widget = {
       property: '.link',
       settingComponent: 'link',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

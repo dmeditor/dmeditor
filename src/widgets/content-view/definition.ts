@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, getWidgetVariant, i18n } from '../..';
 import { EntityContentView } from './entity';
 
 export const contentViewDefinition: DME.Widget = {
@@ -40,6 +40,7 @@ export const contentViewDefinition: DME.Widget = {
         optionsFrom: 'widgets/content-view/views',
       },
     },
-    ...generalSettings,
+    ...getCommonSettings(),
+    ,
   ],
 };

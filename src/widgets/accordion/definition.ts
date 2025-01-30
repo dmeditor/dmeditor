@@ -1,5 +1,5 @@
 import type { DME, DMEData } from '../..';
-import { generalSettings, i18n } from '../..';
+import { generalSettings, getCommonSettings, i18n } from '../..';
 import type { AccordtionChildType, EntityAccordion } from './entity';
 
 const AccordionWidget: DME.Widget = {
@@ -64,7 +64,7 @@ const AccordionWidget: DME.Widget = {
       custom: true,
       settingComponent: 'accordion',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

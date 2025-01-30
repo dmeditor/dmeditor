@@ -1,5 +1,31 @@
 import { DME, DMEData } from '../../../core/types';
 
+const generalTypes = {
+  default: [
+    'content-width',
+    'content-self-align',
+    'container-padding',
+    'container-margin-top',
+    'container-border-width',
+    'container-border-color',
+    'container-border-radius',
+    'container-background-color',
+    'container-full-width',
+    'container-full-width-content',
+  ],
+  none: [],
+  container: [
+    'container-padding',
+    'container-margin-top',
+    'container-border-width',
+    'container-border-color',
+    'container-border-radius',
+    'container-background-color',
+    'container-full-width',
+    'container-full-width-content',
+  ],
+};
+
 export const generalSettings: Array<DME.Setting> = [
   {
     name: 'Width',
@@ -9,7 +35,7 @@ export const generalSettings: Array<DME.Setting> = [
     parameters: { min: 0, max: 700, step: 5 },
     category: 'style',
     group: 'style_content',
-    styleTags: ['block', 'list'],
+    styleTags: ['block', 'list', 'general'],
   },
   {
     name: 'Self align',
@@ -18,7 +44,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.align',
     category: 'style',
     group: 'style_content',
-    styleTags: ['block', 'list'],
+    styleTags: ['block', 'list', 'general'],
   },
   {
     name: 'Padding',
@@ -28,7 +54,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.padding',
     parameters: { min: 0, max: 100 },
     category: 'style',
-    styleTags: ['container'],
+    styleTags: ['container', 'general'],
     group: 'style_block',
   },
   {
@@ -40,7 +66,7 @@ export const generalSettings: Array<DME.Setting> = [
     category: 'style',
     description: 'Distance to preivous block',
     group: 'style_block',
-    styleTags: ['list'],
+    styleTags: ['list', 'general'],
   },
   {
     name: 'Border width',
@@ -49,7 +75,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.borderWidth',
     parameters: { min: 0, max: 10, allowedUnit: 'px' },
     category: 'style',
-    styleTags: ['container'],
+    styleTags: ['container', 'general'],
     group: 'style_block',
   },
   {
@@ -61,7 +87,7 @@ export const generalSettings: Array<DME.Setting> = [
       colorGroup: 'border',
     },
     category: 'style',
-    styleTags: ['container'],
+    styleTags: ['container', 'general'],
     group: 'style_block',
   },
   {
@@ -71,7 +97,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.borderRadius',
     parameters: { min: 0, max: 50, allowedUnit: 'px' },
     category: 'style',
-    styleTags: ['container'],
+    styleTags: ['container', 'general'],
     group: 'style_block',
   },
   {
@@ -84,7 +110,16 @@ export const generalSettings: Array<DME.Setting> = [
       colorGroup: 'background',
     },
     group: 'style_block',
-    styleTags: ['container'],
+    styleTags: ['container', 'general'],
+  },
+  {
+    name: 'Background image',
+    identifier: 'container-background-image',
+    property: 'settings.general.backgroundImage',
+    category: 'style',
+    styleTags: ['container', 'general'],
+    group: 'style_block',
+    settingComponent: 'background-image',
   },
   {
     name: 'Full width',
@@ -95,7 +130,7 @@ export const generalSettings: Array<DME.Setting> = [
     description:
       'If on by default content is still in normal width but background color will be full.',
     group: 'style_block',
-    styleTags: ['root'],
+    styleTags: ['root', 'general'],
   },
   {
     name: 'Content following full width',
@@ -108,6 +143,20 @@ export const generalSettings: Array<DME.Setting> = [
     },
     category: 'style',
     group: 'style_block',
-    styleTags: ['root'],
+    styleTags: ['root', 'general'],
   },
 ];
+
+export const getCommonSettings = (
+  settingType: 'default' | 'none' | 'container' = 'default',
+  extra?: Array<string>,
+): Array<DME.Setting> => {
+  const list = [...(generalTypes[settingType] || []), ...(extra || [])];
+  const result: Array<DME.Setting> = [];
+  for (const item of generalSettings) {
+    if (list.includes(item.identifier || '')) {
+      result.push(item);
+    }
+  }
+  return result;
+};

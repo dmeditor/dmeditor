@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { BlockListRender, BlockRender, dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
+import { getCommonSettings } from '../../';
 import { SyledLayout } from './styled';
 
 const layout3ColumnsWidget: DME.Widget = {
@@ -45,7 +46,7 @@ const layout3ColumnsWidget: DME.Widget = {
       name: '',
       settingComponent: 'layout-3columns/setting',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

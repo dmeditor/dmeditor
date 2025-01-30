@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
+import { getCommonSettings } from 'dmeditor/core/setting-panel/property-setting';
 
 import { dmeConfig, generalSettings, i18n, useEditorStore } from '../..';
 import type { DME, DMEData } from '../..';
@@ -110,11 +111,12 @@ export const iFrameDefinition: DME.Widget = {
     },
     {
       name: 'Height',
+      identifier: 'iframe-height',
       property: 'settings.height',
       settingComponent: 'range',
       category: 'style',
       parameters: { min: 300, max: 2000, step: 5, showInput: true },
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };

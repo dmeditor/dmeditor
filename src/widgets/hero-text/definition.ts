@@ -1,3 +1,4 @@
+import { getCommonSettings } from 'dmeditor/core/setting-panel/property-setting';
 import { nanoid } from 'nanoid';
 
 import { DMEData, generalSettings, i18n, type DME } from '../..';
@@ -92,6 +93,7 @@ const heroTextWidget: DME.Widget = {
       name: 'Hero position',
       property: '.heroPosition',
       settingComponent: 'button-group',
+      identifier: 'hero-text-hero-position',
       category: 'style',
       parameters: {
         options: [
@@ -102,6 +104,7 @@ const heroTextWidget: DME.Widget = {
     },
     {
       name: 'Gap',
+      identifier: 'hero-text-gap',
       category: 'style',
       property: '.gap',
       settingComponent: 'range',
@@ -109,11 +112,12 @@ const heroTextWidget: DME.Widget = {
     },
     {
       name: 'Full hero',
+      identifier: 'full-hero',
       category: 'style',
       property: '.heroFullWidth',
       settingComponent: 'switch',
     },
-    ...generalSettings.filter((item) => !item.styleTags?.includes('block')),
+    ...getCommonSettings('container'),
   ],
 };
 

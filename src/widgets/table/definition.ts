@@ -1,4 +1,4 @@
-import { dmeConfig, generalSettings, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
 import { EntityTableBlock, initialTableEntity } from './entity';
 
@@ -39,6 +39,7 @@ const HeadingWidget: DME.Widget = {
     },
     {
       name: 'Cell padding',
+      identifier: 'table-cell-padding',
       settingComponent: 'range',
       property: 'settings.padding',
       parameters: { min: 0, max: 40 },
@@ -46,6 +47,7 @@ const HeadingWidget: DME.Widget = {
     },
     {
       name: 'Text color',
+      identifier: 'table-text-color',
       settingComponent: 'color',
       parameters: {
         colorGroup: 'text',
@@ -55,6 +57,7 @@ const HeadingWidget: DME.Widget = {
     },
     {
       name: 'Border type',
+      identifier: 'table-border-type',
       settingComponent: 'table-border-type',
       group: 'style_border',
       property: 'settings.borderType',
@@ -62,6 +65,7 @@ const HeadingWidget: DME.Widget = {
     },
     {
       name: 'Border Color',
+      identifier: 'table-border-color',
       settingComponent: 'color',
       group: 'style_border',
       property: 'settings.borderColor',
@@ -72,6 +76,7 @@ const HeadingWidget: DME.Widget = {
     },
     {
       name: 'Odd row background',
+      identifier: 'table-odd-row-background',
       settingComponent: 'color',
       parameters: {
         colorGroup: 'background',
@@ -81,11 +86,12 @@ const HeadingWidget: DME.Widget = {
     },
     {
       name: 'Table Header',
+      identifier: 'table-header',
       settingComponent: 'table-header',
       custom: true,
       category: 'style',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
 

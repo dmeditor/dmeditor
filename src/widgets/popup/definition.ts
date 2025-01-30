@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, getWidgetVariant, i18n } from '../..';
 import { EntityPopup } from './entity';
 
 export const popupDefinition: DME.Widget = {
@@ -52,7 +52,6 @@ export const popupDefinition: DME.Widget = {
         ],
       },
     },
-
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };

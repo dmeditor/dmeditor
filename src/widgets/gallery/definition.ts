@@ -1,5 +1,5 @@
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, i18n } from '../..';
 import { GalleryEntity, initGalleryEntity } from './entity';
 
 const definition: DME.Widget = {
@@ -40,7 +40,8 @@ const definition: DME.Widget = {
       custom: true,
       settingComponent: 'image-list',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
+    ,
   ],
 };
 

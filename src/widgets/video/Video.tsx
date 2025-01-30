@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 
 import type { DME, DMEData } from '../..';
-import { generalSettings, i18n, useEditorStore } from '../..';
+import { generalSettings, getCommonSettings, i18n, useEditorStore } from '../..';
 
 export type VideoEntity = {
   value: string;
@@ -98,6 +98,6 @@ export const VideoDefinition: DME.Widget = {
       property: '.value',
       parameters: { urlOnly: true, showDialogWhenEmpty: true },
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };

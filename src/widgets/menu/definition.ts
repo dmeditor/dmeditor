@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import type { DME, DMEData } from '../..';
-import { dmeConfig, generalSettings, getWidgetVariant, i18n } from '../..';
+import { dmeConfig, generalSettings, getCommonSettings, getWidgetVariant, i18n } from '../..';
 import { EntityMenu } from './enitity';
 
 export const menuDefinition: DME.Widget = {
@@ -40,6 +40,7 @@ export const menuDefinition: DME.Widget = {
     {
       property: 'settings.direction',
       name: 'Direction',
+      identifier: 'menu-direction',
       settingComponent: 'button-group',
       parameters: {
         options: [
@@ -51,6 +52,7 @@ export const menuDefinition: DME.Widget = {
     },
     {
       name: 'Text color',
+      identifier: 'menu-text-color',
       property: 'settings.color',
       settingComponent: 'color',
       parameters: {
@@ -58,6 +60,6 @@ export const menuDefinition: DME.Widget = {
       },
       category: 'style',
     },
-    ...generalSettings,
+    ...getCommonSettings(),
   ],
 };
