@@ -3,7 +3,7 @@ import { dmeConfig } from 'dmeditor/core/config';
 import { DMEData } from 'dmeditor/core/types';
 import { isObject } from 'lodash';
 
-const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
+const getGeneralStyle = (settings: DMEData.GeneralSettingType, device: string) => {
   const elementStyle: any = {};
   const containerStyle: any = {};
   if (settings.width) {
@@ -60,11 +60,18 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType) => {
   if (settings.backgroundImage && settings.backgroundImage.image) {
     containerStyle['backgroundImage'] =
       'url(' + dmeConfig.general.imagePath(settings.backgroundImage.image) + ')';
-    containerStyle['backgroundSize'] = '100% auto';
+    if (device !== 'mobile') {
+      containerStyle['backgroundSize'] = '100% auto';
+    } else {
+      containerStyle['backgroundSize'] = 'cover';
+    }
+
     containerStyle['backgroundRepeat'] = 'no-repeat';
 
     if (settings.backgroundImage.fixed) {
       containerStyle['backgroundAttachment'] = 'fixed';
+    } else {
+      containerStyle['backgroundPosition'] = 'center center';
     }
   }
 
@@ -94,8 +101,9 @@ export const BlockWrapper = styled.div<{
   active?: boolean;
   editMode?: boolean;
   widgetStyles?: string[];
+  device: string;
 }>`
-  ${(props) => (props.generalSettings ? getGeneralStyle(props.generalSettings) : {})}
+  ${(props) => (props.generalSettings ? getGeneralStyle(props.generalSettings, props.device) : {})}
   ${({ editMode, active }) => {
     if (editMode && active) {
       return `

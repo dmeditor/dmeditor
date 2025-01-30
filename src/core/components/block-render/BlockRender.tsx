@@ -103,6 +103,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
       widgetStyles={cssStyles.widgetStyles}
       onClick={onSelect}
       active={active}
+      device={device}
       editMode={mode === 'edit'}
       generalSettings={generalSettings}
       {...(mode === Mode.edit && props.data.id && { id: props.data.id })}
