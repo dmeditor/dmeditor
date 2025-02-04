@@ -40,44 +40,44 @@ const Accordion = (props: DME.WidgetRenderProps<EntityAccordion, AccordtionChild
   };
 
   return (
-    <div>
-      <AccordionStyle.Container className={styleClasses['container'] + ' dme-w-container'}>
-        {accordionList.map((accordion, index: number) => {
-          const isOpen = activeList.includes(index);
+    <AccordionStyle.Container className={styleClasses['container'] + ' dme-w-container'}>
+      {accordionList.map((accordion, index: number) => {
+        const isOpen = activeList.includes(index);
 
-          return (
-            <AccordionStyle.Item className={styleClasses['item'] + ' dme-w-item'}>
-              <AccordionStyle.Summary
+        return (
+          <AccordionStyle.Item
+            className={styleClasses['item'] + ' dme-w-item' + (isOpen ? ' dme-w-open' : '')}
+          >
+            <AccordionStyle.Summary
+              open={isOpen}
+              className={styleClasses['summary'] + ' dme-w-summary'}
+              onClick={() => openClose(index)}
+              iconPosition={data.settings?.iconOnLeft}
+            >
+              <AccordionStyle.Title className={styleClasses['title'] + ' dme-w-title'}>
+                {accordion?.meta?.title || ''}
+              </AccordionStyle.Title>
+              <AccordionStyle.Icon
                 open={isOpen}
-                className={styleClasses['summary'] + ' dme-w-summary'}
-                onClick={() => openClose(index)}
-                iconPosition={data.settings?.iconOnLeft}
+                className={styleClasses['icon-container'] + ' dme-w-icon-container'}
               >
-                <AccordionStyle.Title className={styleClasses['title'] + ' dme-w-title'}>
-                  {accordion?.meta?.title || ''}
-                </AccordionStyle.Title>
-                <AccordionStyle.Icon
-                  open={isOpen}
-                  className={styleClasses['icon-container'] + ' dme-w-icon-container'}
-                >
-                  {styleClasses['icon'] || <ExpandMoreOutlined />}
-                </AccordionStyle.Icon>
-              </AccordionStyle.Summary>
-              <Collapse in={isOpen}>
-                <AccordionStyle.Body className={styleClasses['body'] + ' dme-w-body'}>
-                  <BlockListRender
-                    mode={props.mode}
-                    blockData={accordion.children || []}
-                    path={props.path.concat(index)}
-                    allowedTypes={props.blockNode.allowedTypes}
-                  />
-                </AccordionStyle.Body>
-              </Collapse>
-            </AccordionStyle.Item>
-          );
-        })}
-      </AccordionStyle.Container>
-    </div>
+                {styleClasses['icon'] || <ExpandMoreOutlined />}
+              </AccordionStyle.Icon>
+            </AccordionStyle.Summary>
+            <Collapse in={isOpen}>
+              <AccordionStyle.Body className={styleClasses['body'] + ' dme-w-body'}>
+                <BlockListRender
+                  mode={props.mode}
+                  blockData={accordion.children || []}
+                  path={props.path.concat(index)}
+                  allowedTypes={props.blockNode.allowedTypes}
+                />
+              </AccordionStyle.Body>
+            </Collapse>
+          </AccordionStyle.Item>
+        );
+      })}
+    </AccordionStyle.Container>
   );
 };
 

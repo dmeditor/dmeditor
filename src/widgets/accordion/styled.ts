@@ -8,10 +8,6 @@ export const Accordion = {
     display: flex;
     align-items: center;
     ${(props) => (props.iconPosition === 'left' ? { flexDirection: 'row-reverse' } : {})}
-    border-top: 1px solid #cccccc;
-    &:hover {
-      background: #f0f0f0;
-    }
     transition: all 0.3s ease-out;
   `,
   Title: styled.div`
