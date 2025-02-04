@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
 import { useDevice } from 'dmeditor/core/hooks/useDeivce';
@@ -7,8 +8,8 @@ import _debounce from 'lodash/debounce';
 import { Mode } from '../../constants';
 import { useEditorStore } from '../../main/store';
 import type { DME, DMEData } from '../../types';
-import { getWidgetComponent, getWidgetStyle } from '../../utils/register';
-import { BlockWrapper } from './styled';
+import { getWidget, getWidgetComponent, getWidgetStyle } from '../../utils/register';
+import { BlockMask, BlockWrapper } from './styled';
 
 interface BlockRenderProps extends Pick<DME.WidgetRenderProps, 'mode' | 'path'> {
   data: DMEData.Block;
@@ -97,11 +98,18 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
     }
   }
 
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const def = useMemo(() => {
+    return getWidget(widgetArr[0]);
+  }, [widgetArr[0]]);
+
   return (
     <BlockWrapper
       className={'dme-block-wrapper ' + cssStyles.rootClasses}
       widgetStyles={cssStyles.widgetStyles}
       onClick={onSelect}
+      ref={divRef}
       active={active}
       device={device}
       editMode={mode === 'edit'}
@@ -116,6 +124,9 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
         mode={mode}
         active={!!active}
       />
+      {def.editMask && mode === 'edit' && !active && (
+        <BlockMask height={divRef?.current?.clientHeight || 0} />
+      )}
     </BlockWrapper>
   );
 });

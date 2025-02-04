@@ -44,12 +44,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   return (
     <StyledCode editMode={props.mode === 'edit'}>
       {content ? (
-        <>
-          <div dangerouslySetInnerHTML={{ __html: content }} ref={divRef} />
-          {props.mode === 'edit' && !props.active && (
-            <CodeMask height={divRef?.current?.clientHeight || 0} />
-          )}
-        </>
+        <div dangerouslySetInnerHTML={{ __html: content }} ref={divRef} />
       ) : (
         <div>Please Input Code Content</div>
       )}

@@ -7,6 +7,7 @@ const AccordionWidget: DME.Widget = {
   icon: 'accordion',
   name: i18n('Accordion', 'widget'),
   type: 'accordion',
+  editMask: true,
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityAccordion, AccordtionChildType[]> => {
       return {

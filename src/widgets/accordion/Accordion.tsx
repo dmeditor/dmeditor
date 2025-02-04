@@ -40,32 +40,32 @@ const Accordion = (props: DME.WidgetRenderProps<EntityAccordion, AccordtionChild
   };
 
   return (
-    <AccordionStyle.Container className={styleClasses['container'] + ' dme-w-container'}>
+    <AccordionStyle.Container className={(styleClasses['container'] || '') + ' dme-w-container'}>
       {accordionList.map((accordion, index: number) => {
         const isOpen = activeList.includes(index);
 
         return (
           <AccordionStyle.Item
-            className={styleClasses['item'] + ' dme-w-item' + (isOpen ? ' dme-w-open' : '')}
+            className={(styleClasses['item'] || '') + ' dme-w-item' + (isOpen ? ' dme-w-open' : '')}
           >
             <AccordionStyle.Summary
               open={isOpen}
-              className={styleClasses['summary'] + ' dme-w-summary'}
+              className={(styleClasses['summary'] || '') + ' dme-w-summary'}
               onClick={() => openClose(index)}
               iconPosition={data.settings?.iconOnLeft}
             >
-              <AccordionStyle.Title className={styleClasses['title'] + ' dme-w-title'}>
+              <AccordionStyle.Title className={(styleClasses['title'] || '') + ' dme-w-title'}>
                 {accordion?.meta?.title || ''}
               </AccordionStyle.Title>
               <AccordionStyle.Icon
                 open={isOpen}
-                className={styleClasses['icon-container'] + ' dme-w-icon-container'}
+                className={(styleClasses['icon-container'] || '') + ' dme-w-icon-container'}
               >
                 {styleClasses['icon'] || <ExpandMoreOutlined />}
               </AccordionStyle.Icon>
             </AccordionStyle.Summary>
             <Collapse in={isOpen}>
-              <AccordionStyle.Body className={styleClasses['body'] + ' dme-w-body'}>
+              <AccordionStyle.Body className={(styleClasses['body'] || '') + ' dme-w-body'}>
                 <BlockListRender
                   mode={props.mode}
                   blockData={accordion.children || []}

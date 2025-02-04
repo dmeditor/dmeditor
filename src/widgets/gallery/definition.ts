@@ -7,6 +7,7 @@ const definition: DME.Widget = {
   icon: 'gallery',
   name: i18n('Gallery', 'widget'),
   type: 'gallery',
+  editMask: true,
   events: {
     createBlock: (): DMEData.CreatedBlock<GalleryEntity> => {
       return {

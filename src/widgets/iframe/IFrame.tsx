@@ -5,7 +5,6 @@ import { getCommonSettings } from 'dmeditor/core/setting-panel/property-setting'
 
 import { dmeConfig, generalSettings, i18n, useEditorStore } from '../..';
 import type { DME, DMEData } from '../..';
-import { IFrameMask } from './styled';
 
 export type IFrameEntity = {
   value: string;
@@ -75,7 +74,6 @@ export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
             allowFullScreen
             style={{ height: data.settings.height, display: 'block' }}
           />
-          {props.mode === 'edit' && !props.active && <IFrameMask height={data.settings.height} />}
         </>
       )}
     </>
@@ -87,6 +85,7 @@ export const iFrameDefinition: DME.Widget = {
   icon: 'iframe',
   name: 'IFrame',
   type: 'iframe',
+  editMask: true,
   events: {
     createBlock: (): DMEData.CreatedBlock<IFrameEntity> => {
       return {
