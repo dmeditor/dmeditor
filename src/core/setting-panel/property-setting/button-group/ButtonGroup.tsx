@@ -6,11 +6,13 @@ const ButtonGroup = (
   props: DME.SettingComponentProps & {
     property: string;
     value: string;
-    parameters: { options: Array<{ text: string; value: string }> };
+    parameters: { defaultSelected?: string; options: Array<{ text: string; value: string }> };
   },
 ) => {
   const { property, parameters, value, blockPath } = props;
   const { updateBlockPropsByPath } = useEditorStore();
+
+  const currentSelected = props.value || parameters.defaultSelected;
 
   const handleChange = (value: string) => {
     updateBlockPropsByPath(blockPath, property, value);
@@ -20,7 +22,7 @@ const ButtonGroup = (
     <MUIButtonGroup variant="outlined" size="small">
       {parameters.options.map((item) => (
         <Button
-          variant={props.value === item.value ? 'contained' : 'outlined'}
+          variant={currentSelected === item.value ? 'contained' : 'outlined'}
           onClick={() => handleChange(item.value)}
         >
           {item.text}

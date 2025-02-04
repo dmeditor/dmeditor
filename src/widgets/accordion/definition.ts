@@ -64,6 +64,24 @@ const AccordionWidget: DME.Widget = {
       custom: true,
       settingComponent: 'accordion',
     },
+    {
+      name: 'Allow multile open',
+      property: '.multiOpen',
+      settingComponent: 'switch',
+    },
+    {
+      name: 'Icon on left',
+      property: 'settings.iconOnLeft',
+      settingComponent: 'button-group',
+      parameters: {
+        defaultSelected: 'right',
+        options: [
+          { text: 'left', value: 'left' },
+          { text: 'right', value: 'right' },
+        ],
+      },
+      category: 'style',
+    },
     ...getCommonSettings(),
   ],
 };
