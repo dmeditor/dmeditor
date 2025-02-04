@@ -10,6 +10,11 @@ export const SyledLayout = styled.div<{ column1Width: number; column2Width: numb
   & > div {
     display: flex;
   }
+
+  .dme-viewmode-mobile & {
+    display: block;
+  }
+
   & > div > div {
     flex: 1;
   }
