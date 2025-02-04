@@ -42,6 +42,10 @@ export const TableHeader = (props: DME.SettingComponentProps) => {
     updateBlockPropsByPath(blockPath, 'settings.headerBackground', value);
   };
 
+  const handleColorChange = (value?: string) => {
+    updateBlockPropsByPath(blockPath, 'settings.headerColor', value);
+  };
+
   return (
     <>
       <PropertyItem label="Has header">
@@ -65,6 +69,12 @@ export const TableHeader = (props: DME.SettingComponentProps) => {
           </PropertyItem>
           <PropertyItem label="Is Bold">
             <Checkbox checked={!!data.settings?.['headerIsBold']} onChange={toggleIsBold} />
+          </PropertyItem>
+          <PropertyItem label="Text color">
+            <PickColor
+              color={data.settings?.['headerColor'] as string}
+              onChange={handleColorChange}
+            />
           </PropertyItem>
           <PropertyItem label="Background">
             <PickColor

@@ -13,6 +13,7 @@ export interface EntityTableBlock {
     oddRowBackground?: string;
     hasHeader?: boolean;
     headerIsBold?: boolean;
+    headerColor?: string;
     headerAlign?: 'left' | 'center' | 'right';
     headerBackground?: string;
     general?: DMEData.GeneralSettingType;

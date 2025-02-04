@@ -11,6 +11,7 @@ export const StyledTable = styled.table<EntityTableBlock['settings']>((props) =>
     headerIsBold,
     headerAlign,
     headerBackground,
+    headerColor,
     padding,
     color,
   } = props;
@@ -36,6 +37,7 @@ export const StyledTable = styled.table<EntityTableBlock['settings']>((props) =>
     th: {
       fontWeight: headerIsBold ? 'bold' : 'normal',
       textAlign: headerAlign,
+      color: headerColor,
       backgroundColor: headerBackground,
     },
     'tr:nth-of-type(odd)': {
