@@ -137,5 +137,5 @@ export const BlockMask = styled.div<{ height: number }>`
   left: 0px;
   top: 0px;
   height: ${(props) => props.height}px;
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(255, 255, 255, 0.01);
 `;

@@ -71,7 +71,7 @@ const AccordionWidget: DME.Widget = {
       settingComponent: 'switch',
     },
     {
-      name: 'Icon on left',
+      name: 'Icon position',
       property: 'settings.iconOnLeft',
       settingComponent: 'button-group',
       parameters: {
