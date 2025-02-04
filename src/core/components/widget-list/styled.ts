@@ -60,9 +60,6 @@ export const StyleWidgetStyleItem = {
   `,
   Image: styled.div`
     padding-bottom: 10px;
-    & > img {
-      max-height: 30px;
-    }
   `,
   Name: styled.div`
     font-size: 0.95rem;
