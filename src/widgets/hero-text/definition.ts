@@ -68,6 +68,17 @@ const heroTextWidget: DME.Widget = {
                 //list
                 return item.styleTags?.includes('container');
               }
+            } else if (context.relativePath.length === 2 && context.relativePath[0] === 'list') {
+              return (
+                !item.styleTags ||
+                item.styleTags?.includes('core') ||
+                [
+                  'container-padding',
+                  'container-margin-top',
+                  'content-self-align',
+                  'container-background-color',
+                ].includes(item.identifier || '')
+              );
             }
             return true;
           }
