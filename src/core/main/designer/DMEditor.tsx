@@ -160,6 +160,10 @@ const Editor = (props: { projectStyle?: string }) => {
             <EmtpyBlock />
             <div
               style={variables}
+              className={
+                'dmeditor-view ' +
+                (currentDevice != '' ? 'dme-viewmode-' + currentDevice + ' ' : '')
+              }
               onClick={(e) => {
                 e.stopPropagation();
               }}
