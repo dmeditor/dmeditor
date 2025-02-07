@@ -3,13 +3,14 @@ import styled from '@emotion/styled';
 import { Button, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
 import { getCommonSettings } from 'dmeditor/core/setting-panel/property-setting';
 
-import { dmeConfig, generalSettings, i18n, useEditorStore } from '../..';
+import { dmeConfig, generalSettings, i18n, useDevice, useEditorStore } from '../..';
 import type { DME, DMEData } from '../..';
 
 export type IFrameEntity = {
   value: string;
   settings: {
     height: number;
+    heightMobile?: number;
     general?: DMEData.GeneralSettingType;
   };
 };
@@ -65,6 +66,8 @@ export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
     return null;
   }
 
+  const device = useDevice();
+
   return (
     <>
       {!!data.value && (
@@ -72,7 +75,14 @@ export const IFrame = (props: DME.WidgetRenderProps<IFrameEntity>) => {
           <iframe
             src={data.value}
             allowFullScreen
-            style={{ height: data.settings.height, display: 'block' }}
+            style={{
+              border: 'none',
+              height:
+                device === 'mobile'
+                  ? data.settings.heightMobile || data.settings.height
+                  : data.settings.height,
+              display: 'block',
+            }}
           />
         </>
       )}
@@ -115,6 +125,15 @@ export const iFrameDefinition: DME.Widget = {
       settingComponent: 'range',
       category: 'style',
       parameters: { min: 300, max: 2000, step: 5, showInput: true },
+    },
+    {
+      name: 'Height mobile',
+      identifier: 'iframe-height-mobile',
+      property: 'settings.heightMobile',
+      appliedDevices: ['mobile'],
+      settingComponent: 'range',
+      category: 'style',
+      parameters: { min: 300, max: 3000, step: 5, showInput: true },
     },
     ...getCommonSettings(),
   ],

@@ -107,9 +107,25 @@ const heroTextWidget: DME.Widget = {
       identifier: 'hero-text-hero-position',
       category: 'style',
       parameters: {
+        defaultSelected: 'left',
         options: [
           { text: 'Left', value: 'left' },
           { text: 'Right', value: 'right' },
+        ],
+      },
+    },
+    {
+      name: 'Hero position mobile',
+      property: '.heroPositionMobile',
+      settingComponent: 'button-group',
+      identifier: 'hero-text-hero-position-mobile',
+      appliedDevices: ['mobile'],
+      category: 'style',
+      parameters: {
+        defaultSelected: 'up',
+        options: [
+          { text: 'Up', value: 'up' },
+          { text: 'Down', value: 'down' },
         ],
       },
     },

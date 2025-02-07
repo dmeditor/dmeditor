@@ -9,7 +9,7 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, EntityHeroTextChi
   const {
     blockNode: {
       children,
-      data: { heroPosition, heroFullWidth, gap },
+      data: { heroPosition, heroPositionMobile, heroFullWidth, gap },
     },
     path,
     mode,
@@ -29,9 +29,18 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, EntityHeroTextChi
 
   const device = useDevice();
 
+  const calculatedHeroPosition =
+    device === 'mobile'
+      ? heroPositionMobile === 'down'
+        ? 'end'
+        : 'start'
+      : heroPosition === 'right'
+        ? 'end'
+        : 'start';
+
   const renderImage = () => (
     <HeroImageDiv
-      heroPostion={heroPosition}
+      heroPostion={calculatedHeroPosition}
       fullWidth={heroFullWidth}
       className={getClass('hero') + ' dme-w-hero'}
     >
@@ -44,19 +53,15 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, EntityHeroTextChi
     </div>
   );
 
-  const imageLeft = () => {
-    return heroPosition !== 'right' || device === 'mobile';
-  };
-
   return (
     <HeroTextContainer updown={device === 'mobile'} gap={gap}>
-      {imageLeft() && (
+      {calculatedHeroPosition === 'start' && (
         <>
           {renderImage()}
           {renderList()}
         </>
       )}
-      {!imageLeft() && (
+      {calculatedHeroPosition === 'end' && (
         <>
           {renderList()}
           {renderImage()}

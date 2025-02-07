@@ -20,7 +20,7 @@ export const HeroTextContainer = styled.div<{ updown: boolean; gap?: number }>`
   }}
 `;
 
-export const HeroImageDiv = styled.div<{ heroPostion?: 'left' | 'right'; fullWidth?: boolean }>(
+export const HeroImageDiv = styled.div<{ heroPostion?: 'start' | 'end'; fullWidth?: boolean }>(
   (props) =>
-    props.fullWidth ? (props.heroPostion === 'right' ? dmeFullWidthRight : dmeFullWidthLeft) : {},
+    props.fullWidth ? (props.heroPostion === 'end' ? dmeFullWidthRight : dmeFullWidthLeft) : {},
 );
