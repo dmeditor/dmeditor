@@ -40,7 +40,17 @@ export const Layout = {
   Edit: styled.div`
     margin-top: var(--dmee-topbar-height);
     overflow-y: auto;
+    position: relative;
     padding-bottom: var(--dmee-bottom-height);
+  `,
+  EditModeBar: styled.div`
+    position: absolute;
+    background: #666666;
+    border: 1px solid rgb(91, 91, 91);
+    border-radius: 5px;
+    padding: 2px;
+    top: 5px;
+    right: 2px;
   `,
   View: styled.div`
     background: var(--dmee-bg-editarea);
@@ -94,20 +104,20 @@ export const EmtpyBlock = styled.div`
   margin-top: -1px;
 `;
 
-export const EditContainer = styled.div`
+export const EditContainer = styled.div<{ width?: string }>`
   min-height: 100%;
   margin: 0px auto;
-  width: 90%;
+  width: ${(props) => props.width || '90%'};
   max-width: var(--dmee-edit-max-width);
   background-color: white;
   border: 1px solid #cccccc;
 `;
 
-export const EditArea = styled.div`
+export const EditArea = styled.div<{ maxWidth?: string; hideEditBorder?: boolean }>`
   margin: auto;
   min-height: calc(100vh - var(--dmee-topbar-height));
-  max-width: 90%;
-  border: 1px dashed #999999;
+  max-width: ${(props) => props.maxWidth || '90%'};
+  ${(props) => (props.hideEditBorder ? {} : { border: '1px dashed #999999' })}
 `;
 
 export const SideTool = {

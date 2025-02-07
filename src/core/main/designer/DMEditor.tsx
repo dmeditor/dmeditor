@@ -2,13 +2,15 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { css } from '@emotion/css';
-import { ThemeProvider } from '@mui/material';
+import { DesktopMacOutlined, PhoneIphoneOutlined } from '@mui/icons-material';
+import { Button, ThemeProvider, Tooltip } from '@mui/material';
 import useResizeObserver from '@react-hook/resize-observer';
+import { i18n } from 'dmeditor/core/i18n';
 import { useResizable } from 'react-resizable-layout';
 
 import { getPageTheme, setPageSettings } from '../../components/page';
 import { dmeConfig } from '../../config';
-import { DeviceType, setDevice } from '../../hooks/useDeivce';
+import { DeviceType, setDevice, useDevice } from '../../hooks/useDeivce';
 import { BlockListRender, DMEditorView } from '../../main/renderer';
 import SettingPanel from '../../setting-panel';
 import { TopBar } from '../../topbar/Topbar';
@@ -33,6 +35,27 @@ export interface DMEditorRefType {
   setPageSettings: (settings: Array<DME.PageSetting>) => void;
   setPageData: (data: DMEData.Page) => void;
 }
+
+const previewDeviceWidths = {
+  pc: [1200, 1000],
+  tablet: [810, 800],
+  mobile: [400, 400],
+};
+
+export const ToolButton = (props) => (
+  <Button
+    sx={{
+      width: 32,
+      textTransform: 'none',
+      color: props.selected ? '#ffffff' : '#999',
+      ':hover': {
+        color: '#f0f0f0',
+      },
+      marginLeft: '5px',
+    }}
+    {...props}
+  ></Button>
+);
 
 const Editor = (props: { projectStyle?: string }) => {
   const {
@@ -84,6 +107,13 @@ const Editor = (props: { projectStyle?: string }) => {
 
   useResizeObserver(containerRef, setVariables);
 
+  const currentDevice = useDevice();
+
+  const switchEditDevice = (device: 'desktop' | 'mobile') => {
+    setDevice(device === 'mobile' ? device : '');
+    setVariables();
+  };
+
   return (
     <Layout.Main
       config={{ zIndex: dmeConfig.editor.zIndex }}
@@ -91,9 +121,39 @@ const Editor = (props: { projectStyle?: string }) => {
       resizing={resizing}
     >
       <Layout.Edit onClick={resetStatus}>
-        <EditContainer ref={containerRef}>
+        <Layout.EditModeBar>
+          <ToolButton
+            selected={currentDevice === ('desktop' as DeviceType)}
+            onClick={(e) => {
+              e.stopPropagation();
+              switchEditDevice('desktop');
+            }}
+          >
+            <Tooltip title={i18n('Desktop')}>
+              <DesktopMacOutlined />
+            </Tooltip>
+          </ToolButton>
+          <span style={{ borderRight: '1px solid #888', marginLeft: '4px' }}>&nbsp;</span>
+          <ToolButton
+            selected={currentDevice === 'mobile'}
+            onClick={(e) => {
+              e.stopPropagation();
+              switchEditDevice('mobile');
+            }}
+          >
+            <Tooltip title={i18n('Mobile')}>
+              <PhoneIphoneOutlined />
+            </Tooltip>
+          </ToolButton>
+        </Layout.EditModeBar>
+        <EditContainer
+          ref={containerRef}
+          width={currentDevice === 'mobile' ? previewDeviceWidths.mobile[0] + 'px' : undefined}
+        >
           <EditArea
             ref={editRef}
+            maxWidth={currentDevice === 'mobile' ? previewDeviceWidths.mobile[1] + 'px' : undefined}
+            hideEditBorder={currentDevice === 'mobile'}
             className={
               css(dmeConfig.general.projectStyles[projectStyle || 'default']) + ' ' + getThemeCss
             }
@@ -212,12 +272,6 @@ export const DMEditor = React.forwardRef(
       } else {
         setDevice(device as DeviceType);
       }
-    };
-
-    const previewDeviceWidths = {
-      pc: [1200, 1000],
-      tablet: [810, 800],
-      mobile: [400, 400],
     };
 
     const renderView = () => {

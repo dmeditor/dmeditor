@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { css } from '@emotion/css';
 import {
   ArrowDropDownOutlined,
   ArrowRightAltOutlined,
@@ -39,6 +40,7 @@ export const SettingTree = (props: {
   selectedPath: Array<number>;
   category?: string;
   level?: number;
+  options: { mobileOnly?: boolean };
   canDelete?: boolean;
 }) => {
   const { blockData, selectedPath, level = 0, category, blockPath, rootWidget } = props;
@@ -337,6 +339,13 @@ export const SettingTree = (props: {
                 return false;
               }
 
+              if (
+                props.options.mobileOnly &&
+                (!setting.appliedDevices || !setting.appliedDevices.includes('mobile'))
+              ) {
+                return false;
+              }
+
               if (setting.property && settingStatus[setting.property] === 'hidden') {
                 return false;
               }
@@ -398,6 +407,7 @@ export const SettingTree = (props: {
                   blockData={item}
                   category={category}
                   blockPath={newPath}
+                  options={props.options}
                   selectedPath={selectedPath}
                   level={level + 1}
                   canDelete={widgetDef.widgetType === 'list'}
@@ -415,7 +425,13 @@ export const SettingTree = (props: {
   }, [isSelected]);
 
   return (
-    <div>
+    <div
+      className={css`
+        :not(:has(.dmee-setting-property)) {
+          display: none;
+        }
+      `}
+    >
       {level > 0 && (
         <div>
           <Button

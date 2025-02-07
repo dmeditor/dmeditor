@@ -31,7 +31,7 @@ export const PropertyItem = (props: {
   const upDown = props.upDown ? true : false;
 
   return label ? (
-    <StyledSettingItem.Container upDown={upDown}>
+    <StyledSettingItem.Container upDown={upDown} className="dmee-setting-property">
       <StyledSettingItem.Label autoWidth={autoWidth}>
         {i18n(props.label || '', 'property-label')}:{' '}
       </StyledSettingItem.Label>

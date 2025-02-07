@@ -1,5 +1,8 @@
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo, useState } from 'react';
+import { css } from '@emotion/css';
+import { FormControlLabel, Switch } from '@mui/material';
 import { dmeConfig } from 'dmeditor/core/config';
+import { useDevice } from 'dmeditor/core/hooks/useDeivce';
 
 import { PropertyTab, TabData } from '../../components/property-tab/Tab';
 import { DMEData } from '../../types';
@@ -37,6 +40,16 @@ export const BlockSettings = (props: {
     return tabs;
   };
 
+  const currentDevice = useDevice();
+
+  const [mobileSettingOnly, setMobileSettingOnly] = useState(
+    currentDevice === 'mobile' ? true : false,
+  );
+
+  useEffect(() => {
+    setMobileSettingOnly(currentDevice === 'mobile');
+  }, [currentDevice]);
+
   const blockInList = useMemo(() => {
     if (blockPath.length === 0) {
       return false;
@@ -57,6 +70,7 @@ export const BlockSettings = (props: {
           blockData={blockData}
           blockPath={blockPath}
           selectedPath={selectedPath}
+          options={{ mobileOnly: mobileSettingOnly }}
           category={category === 'widget' ? undefined : 'style'}
           level={embedLevel === undefined ? 0 : embedLevel}
           rootWidget={rootWidget}
@@ -90,6 +104,27 @@ export const BlockSettings = (props: {
               </ActionPanel>
             )}
           </>
+        )}
+        {category == 'style' && (
+          <div
+            className={css`
+              position: absolute;
+              bottom: 10px;
+            `}
+          >
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={mobileSettingOnly}
+                  onChange={(e) => {
+                    setMobileSettingOnly(e.target.checked);
+                  }}
+                />
+              }
+              labelPlacement="start"
+              label={'Mobile settings'}
+            />
+          </div>
         )}
       </TabBodyContainer>
     );
