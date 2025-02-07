@@ -45,6 +45,8 @@ export const Layout = {
   `,
   EditModeBar: styled.div`
     position: fixed;
+    z-index: 1000;
+    background: var(--dmee-bg-editarea);
     border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: 1px -1px -1px #333;
     border-radius: 5px;
