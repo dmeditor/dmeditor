@@ -426,11 +426,15 @@ export const SettingTree = (props: {
 
   return (
     <div
-      className={css`
-        :not(:has(.dmee-setting-property)) {
-          display: none;
-        }
-      `}
+      className={
+        props.category === 'style'
+          ? css`
+              :not(:has(.dmee-setting-property)) {
+                display: none;
+              }
+            `
+          : ''
+      }
     >
       {level > 0 && (
         <div>

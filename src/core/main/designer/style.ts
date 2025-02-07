@@ -50,7 +50,7 @@ export const Layout = {
     flex-direction: column;
     gap: 5px;
     top: calc(var(--dmee-topbar-height) + 5px);
-    right: calc(var(--dmee-layout-property-width) + 25px);
+    right: calc(var(--dmee-layout-property-width) + 20px);
   `,
   View: styled.div`
     background: var(--dmee-bg-editarea);

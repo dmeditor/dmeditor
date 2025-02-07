@@ -106,12 +106,7 @@ export const BlockSettings = (props: {
           </>
         )}
         {category == 'style' && (
-          <div
-            className={css`
-              position: absolute;
-              bottom: 10px;
-            `}
-          >
+          <ActionPanel>
             <FormControlLabel
               control={
                 <Switch
@@ -124,7 +119,7 @@ export const BlockSettings = (props: {
               labelPlacement="start"
               label={'Mobile settings'}
             />
-          </div>
+          </ActionPanel>
         )}
       </TabBodyContainer>
     );

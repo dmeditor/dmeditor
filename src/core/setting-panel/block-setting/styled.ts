@@ -8,11 +8,12 @@ export const TabBodyContainer = styled.div<{ fullHeight?: boolean }>`
 
 export const ActionPanel = styled.div`
   border-top: 1px solid #cccccc;
+  background: var(--dmee-bg-sidearea);
   position: absolute;
   bottom: 0px;
   right: 0px;
   width: 100%;
-  padding: 20px 0px;
+  padding: 10px 0px;
 `;
 
 export const ActionPanelButtonGroup = styled.span`
