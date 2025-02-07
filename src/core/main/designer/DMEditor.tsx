@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { css } from '@emotion/css';
-import { DesktopMacOutlined, PhoneIphoneOutlined } from '@mui/icons-material';
+import { LaptopMacOutlined, PhoneIphoneOutlined } from '@mui/icons-material';
 import { Button, ThemeProvider, Tooltip } from '@mui/material';
 import useResizeObserver from '@react-hook/resize-observer';
 import { i18n } from 'dmeditor/core/i18n';
@@ -45,13 +45,12 @@ const previewDeviceWidths = {
 export const ToolButton = (props) => (
   <Button
     sx={{
-      width: 32,
       textTransform: 'none',
       color: props.selected ? '#ffffff' : '#999',
+      background: props.selected ? '#494d4f' : '',
       ':hover': {
-        color: '#f0f0f0',
+        background: '#494d4f',
       },
-      marginLeft: '5px',
     }}
     {...props}
   ></Button>
@@ -129,11 +128,10 @@ const Editor = (props: { projectStyle?: string }) => {
               switchEditDevice('desktop');
             }}
           >
-            <Tooltip title={i18n('Default')}>
-              <DesktopMacOutlined />
+            <Tooltip title={i18n('Default mode')}>
+              <LaptopMacOutlined />
             </Tooltip>
           </ToolButton>
-          <span style={{ borderRight: '1px solid #888', marginLeft: '6px' }}></span>
           <ToolButton
             selected={currentDevice === 'mobile'}
             onClick={(e) => {
@@ -141,7 +139,7 @@ const Editor = (props: { projectStyle?: string }) => {
               switchEditDevice('mobile');
             }}
           >
-            <Tooltip title={i18n('Mobile')}>
+            <Tooltip title={i18n('Mobile mode')}>
               <PhoneIphoneOutlined />
             </Tooltip>
           </ToolButton>
