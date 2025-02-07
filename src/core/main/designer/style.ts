@@ -44,13 +44,13 @@ export const Layout = {
     padding-bottom: var(--dmee-bottom-height);
   `,
   EditModeBar: styled.div`
-    position: absolute;
-    background: #666666;
-    border: 1px solid rgb(91, 91, 91);
+    position: fixed;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 1px -1px -1px #333;
     border-radius: 5px;
     padding: 2px;
-    top: 5px;
-    right: 2px;
+    top: calc(var(--dmee-topbar-height) + 5px);
+    right: calc(var(--dmee-layout-property-width) + 25px);
   `,
   View: styled.div`
     background: var(--dmee-bg-editarea);

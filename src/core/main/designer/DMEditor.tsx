@@ -129,11 +129,11 @@ const Editor = (props: { projectStyle?: string }) => {
               switchEditDevice('desktop');
             }}
           >
-            <Tooltip title={i18n('Desktop')}>
+            <Tooltip title={i18n('Default')}>
               <DesktopMacOutlined />
             </Tooltip>
           </ToolButton>
-          <span style={{ borderRight: '1px solid #888', marginLeft: '4px' }}>&nbsp;</span>
+          <span style={{ borderRight: '1px solid #888', marginLeft: '6px' }}></span>
           <ToolButton
             selected={currentDevice === 'mobile'}
             onClick={(e) => {
