@@ -40,7 +40,7 @@ const Range = (
         ></Ranger>
       </Grid>
       {parameters.showInput && (
-        <Grid item xs={2}>
+        <Grid item width={60}>
           <NumberInput
             value={inputValue}
             min={parameters.min}

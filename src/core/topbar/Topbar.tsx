@@ -50,10 +50,12 @@ export const TopBar = () => {
   const { storage, page, mode, setMode } = useEditorStore();
 
   const save = () => {
+    setDevice('');
     emitter.emit('save', { data: storage, page: page });
   };
 
   const cancel = () => {
+    setDevice('');
     emitter.emit('cancel', { data: storage, page: page });
   };
 
