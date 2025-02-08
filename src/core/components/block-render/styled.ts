@@ -11,6 +11,9 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType, device: string) =
   } else {
     if (settings.align) {
       elementStyle['width'] = 'fit-content';
+      if (device === 'mobile') {
+        elementStyle['maxWidth'] = '100%';
+      }
     }
   }
 
