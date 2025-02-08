@@ -128,7 +128,12 @@ const Editor = (props: { projectStyle?: string }) => {
               switchEditDevice('desktop');
             }}
           >
-            <Tooltip title={i18n('Default mode')}>
+            <Tooltip
+              title={i18n('Default mode')}
+              placement="left"
+              enterDelay={800}
+              enterNextDelay={800}
+            >
               <LaptopMacOutlined />
             </Tooltip>
           </ToolButton>
@@ -139,7 +144,12 @@ const Editor = (props: { projectStyle?: string }) => {
               switchEditDevice('mobile');
             }}
           >
-            <Tooltip title={i18n('Mobile mode')}>
+            <Tooltip
+              title={i18n('Mobile mode')}
+              placement="left"
+              enterDelay={800}
+              enterNextDelay={800}
+            >
               <PhoneIphoneOutlined />
             </Tooltip>
           </ToolButton>
