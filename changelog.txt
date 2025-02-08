@@ -1,4 +1,13 @@
 0.2.2
+- 2025-02-07 added: iframe mobile height setting
+- 2025-02-07 added: mobile hero-text mobile setting for hero
+- 2025-02-07 added: support mobile in edit mode
+- 2025-02-04 added: support editMask in definition for all widget
+- 2025-02-04 udpate: rewrite Accordion for better customization
+- 2025-02-04 added: table head text color support
+- 2025-01-30 udpated: removed container width & algin in heading
+- 2025-01-30 udpated: disabled style uses identifier
+- 2025-01-30 fixed: issue on sumsang android devices
 
 0.2.2-beta.1
 - 2025-01-28 added: support for enabledStyleSettings in root style option & identifier in setting
