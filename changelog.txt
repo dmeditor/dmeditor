@@ -1,3 +1,6 @@
+0.2.3-beta.1
+
+
 0.2.2
 - 2025-02-07 added: iframe mobile height setting
 - 2025-02-07 added: mobile hero-text mobile setting for hero
