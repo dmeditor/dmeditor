@@ -30,6 +30,10 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
 
   const active = path.join(',') === [...currentListPath, selectedBlockIndex].join(',');
 
+  const childrenOrSelfActive = [...currentListPath, selectedBlockIndex]
+    .join(',')
+    .startsWith(path.join(','));
+
   const blockType = props.data.type;
 
   const widgetArr = blockType.split(':');
@@ -124,7 +128,7 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
         mode={mode}
         active={!!active}
       />
-      {def.editMask && mode === 'edit' && !active && (
+      {def.editMask && mode === 'edit' && !childrenOrSelfActive && (
         <BlockMask height={divRef?.current?.clientHeight || 0} />
       )}
     </BlockWrapper>
