@@ -99,11 +99,9 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
         return (
           <React.Fragment key={blockData.id}>
             {addParameters &&
-              isInSelectedContext &&
               addParameters.index === index &&
               addParameters.position === 'before' &&
               renderAddingMessage}
-
             <BlockContainer
               mode={blockMode}
               isHovering={isHovering(index)}
@@ -115,9 +113,7 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
             >
               <BlockRender mode={blockMode} path={[...props.path, index]} data={blockData} />
             </BlockContainer>
-
             {addParameters &&
-              isInSelectedContext &&
               addParameters.index === index &&
               addParameters.position === 'after' &&
               renderAddingMessage}
