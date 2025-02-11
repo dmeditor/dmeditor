@@ -65,7 +65,7 @@ export const BlockSettings = (props: {
 
   const renderATab = (category: string): ReactElement => {
     return (
-      <TabBodyContainer fullHeight={category === 'style'}>
+      <TabBodyContainer fullHeight={false}>
         <SettingTree
           blockData={blockData}
           blockPath={blockPath}
