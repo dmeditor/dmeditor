@@ -120,7 +120,7 @@ setDMEditorConfig({
       }
       return { allowedTypes: allowedTypes };
     },
-    getAvailableStyleSettings: (current, context, parentIsList): StyleSettingsType => {
+    configStyleSettings: (current, context, parentIsList): StyleSettingsType => {
       return getStyleConfig({ current, context, parentIsList }, styleSettings);
     },
   },
