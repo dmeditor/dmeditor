@@ -37,6 +37,7 @@ export const styleSettings: {
     },
     underList: {
       settings: [
+        'content-width',
         'container-margin-top',
         'content-self-align',
         'container-padding',

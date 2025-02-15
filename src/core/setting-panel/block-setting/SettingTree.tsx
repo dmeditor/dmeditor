@@ -124,7 +124,7 @@ export const SettingTree = (props: {
         if (category === 'style') {
           const { root: mixedRoot, path: pathParams } = getContextInMixed(blockPath, storage);
 
-          const callbackGetStyleSettings = dmeConfig.editor.getAvailableStyleSettings;
+          const callbackGetStyleSettings = dmeConfig.editor.configStyleSettings;
           if (callbackGetStyleSettings && pathParams.length > 0) {
             const current = pathParams[pathParams.length - 1];
             let parentIsList = false;

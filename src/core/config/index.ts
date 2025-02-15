@@ -114,7 +114,7 @@ export interface DMEConfigType {
     //context is from closed list (not including) to self list. eg. hero-text/list
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
     //context is from closest mixed to itself. eg. hero-text/list/heading, tabs/0/heading
-    getAvailableStyleSettings?: (
+    configStyleSettings?: (
       current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
       context: ContextWithStyleType,
       parentIsList: boolean,
@@ -273,7 +273,7 @@ const dmeConfig: {
     settingPanelWidth: number;
     ui: { [variable: string]: string };
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
-    getAvailableStyleSettings?: (
+    configStyleSettings?: (
       current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
       context: ContextWithStyleType,
       parentIsList: boolean,
