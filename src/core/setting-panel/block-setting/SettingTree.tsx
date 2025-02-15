@@ -532,7 +532,7 @@ export const SettingTree = (props: {
                     )}
                   </StyledSettingList.Children>
                 );
-              } else if (typeof blockData.children === 'string') {
+              } else if (typeof blockData.children === 'object') {
                 return (
                   <StyledSettingList.Children level={level}>
                     {renderChildrenSettings()}
