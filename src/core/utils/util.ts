@@ -1,6 +1,6 @@
 'use strict';
 
-import { dmeConfig, type DMEConfigType } from '../config';
+import { ContextWithStyleType, dmeConfig, type DMEConfigType } from '../config';
 import type { DMEData } from '../types';
 import { logger } from './log';
 import { getWidgetStyle, getWidgetWithVariant } from './register';
@@ -385,6 +385,22 @@ export const queryFromLocaton = (location: string) => {
       if (params.length === 2) {
         result[params[0]] = params[1];
       }
+    }
+  }
+  return result;
+};
+
+// path: 'hero-text:_:default/list[list]:_:default/'
+export const matchContext = (context: ContextWithStyleType, path: string) => {
+  return true;
+};
+
+export const convertStyleDataToArray = (styles?: Record<string, string>) => {
+  const result: Array<string> = [];
+  if (styles) {
+    for (const key of Object.keys(styles)) {
+      const value = styles[key];
+      result.push(key + ':' + value);
     }
   }
   return result;
