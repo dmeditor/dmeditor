@@ -5,7 +5,9 @@ import { dmeConfig } from '../../config';
 import { Mode } from '../../constants';
 import { AddingMessage, StyledAddWidgetButton } from '../../main/renderer/styled';
 import { useEditorStore, type AddBlockParameters } from '../../main/store';
+import { getContextInMixed } from '../../main/store/helper';
 import type { DME, DMEData } from '../../types/dmeditor';
+import { convertStyleDataToArray } from '../../utils';
 import { canEditControl } from '../../utils/editControl';
 import BlockContainer, { type PositionType } from '../block-container';
 import { BlockRender } from '../block-render/BlockRender';
@@ -13,7 +15,7 @@ import { BlockRender } from '../block-render/BlockRender';
 interface BlockListProps {
   blockData: DMEData.BlockList;
   path: Array<number | string>;
-  allowedTypes?: string[] | string;
+  allowedTypes?: string[];
   isEmbed?: boolean;
   direction?: 'vertical' | 'horizontal';
   mode: DME.Mode;
@@ -27,6 +29,7 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
     startAddBlock,
     clearAdding,
     hoverPath,
+    storage,
     executeAdding,
   } = useEditorStore();
   const { direction } = props;
@@ -52,14 +55,20 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
   }, [depsAddingStatus]);
 
   const handleAdding = (position: Exclude<PositionType, ''>, index: number) => {
-    if (props.allowedTypes?.length === 1) {
-      executeAdding(
-        props.path,
-        index,
-        position,
-        props.allowedTypes[0],
-        props.isEmbed ? true : false,
-      );
+    const { root, path } = getContextInMixed(props.path, storage);
+    let allowedTypes: Array<string> | undefined = props.allowedTypes;
+    if (dmeConfig.editor.getAddingSettings) {
+      const addedSettings = dmeConfig.editor.getAddingSettings({
+        root: root ? { type: root.type, styles: convertStyleDataToArray(root.style) } : undefined,
+        path: path,
+      });
+      if (addedSettings.allowedTypes) {
+        allowedTypes = addedSettings.allowedTypes;
+      }
+    }
+
+    if (allowedTypes?.length === 1) {
+      executeAdding(props.path, index, position, allowedTypes[0], props.isEmbed ? true : false);
     } else {
       setAddParameters({
         index: index,
@@ -67,7 +76,7 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
       });
 
       startAddBlock(props.path, index, position, {
-        types: props.allowedTypes,
+        types: allowedTypes,
         isEmbed: props.isEmbed,
       });
     }

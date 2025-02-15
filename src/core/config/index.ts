@@ -58,8 +58,8 @@ export interface DataSourceConfigType {
 }
 
 export type AddingSettingsType = {
-  allowedTypes: Array<string>;
-  defaultStyle: { [widget: string]: { [styleKey: string]: string } };
+  allowedTypes?: Array<string>;
+  defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
 };
 
 export type StyleSettingsType = {
