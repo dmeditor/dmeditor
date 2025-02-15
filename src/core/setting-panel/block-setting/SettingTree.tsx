@@ -162,10 +162,13 @@ export const SettingTree = (props: {
                   item.category === 'style' &&
                   (!availableStyleSettings.builtInSettings ||
                     !item.identifier ||
-                    (item.identifier &&
-                      availableStyleSettings.builtInSettings.includes(item.identifier || '')))
+                    (availableStyleSettings.builtInSettings &&
+                      item.identifier &&
+                      availableStyleSettings.builtInSettings.includes(item.identifier)))
                 ) {
                   return true;
+                } else {
+                  return false;
                 }
               });
               settingList = [...settingList, ...availableGeneralSettings];

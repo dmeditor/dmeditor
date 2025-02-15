@@ -2,16 +2,14 @@ import { StyleSettingsType } from '../../src';
 
 export const styleSettings: {
   default: { root: StyleSettingsType; list: StyleSettingsType; underList: StyleSettingsType };
-  block: Record<
-    string,
-    Array<{
-      path?: string;
-      level?: number;
-      blockType?: string;
-      rootStyle?: string;
-      config: StyleSettingsType;
-    }>
-  >;
+  block: Array<{
+    path?: string;
+    level?: number;
+    blockType?: string;
+    rootType?: string;
+    rootStyle?: string;
+    config: StyleSettingsType;
+  }>;
 } = {
   default: {
     root: {
@@ -41,53 +39,56 @@ export const styleSettings: {
       settings: ['container-margin-top'],
     },
   },
-
   //for individual block
-  block: {
-    'hero-text': [
-      {
-        path: 'hero',
-        config: {
-          settings: ['container-padding'],
-        },
+  block: [
+    //root
+    {
+      rootType: '_',
+      level: 1,
+      config: {
+        settings: [
+          'content-width',
+          'content-self-align',
+          'container-padding',
+          'container-margin-top',
+          'container-border-width',
+          'container-border-color',
+          'container-border-radius',
+          'container-background-color',
+          'container-full-width',
+          'container-full-width-content',
+        ],
       },
-      {
-        path: 'list',
-        config: {
-          settings: [
-            'container-padding',
-            'container-border-width',
-            'container-border-color',
-            'container-border-radius',
-            'container-background-color',
-          ],
-        },
+    },
+
+    //hero-text
+    {
+      path: 'hero',
+      rootType: 'hero-text',
+      config: {
+        settings: ['container-padding'],
       },
-      {
-        path: 'list/heading',
-        config: {
-          settings: [
-            'container-padding',
-            'container-border-width',
-            'container-border-color',
-            'container-border-radius',
-            'container-background-color',
-          ],
-        },
+    },
+    {
+      path: 'list',
+      rootType: 'hero-text',
+      config: {
+        settings: ['container-padding', 'container-background-color'],
+        builtInSettings: ['list-item-gap'],
       },
-      {
-        level: 2,
-        config: {
-          settings: [
-            'container-padding',
-            'container-border-width',
-            'container-border-color',
-            'container-border-radius',
-            'container-background-color',
-          ],
-          styles: { margin: ['big-margin'] },
-        },
+    },
+    {
+      level: 2,
+      rootType: 'hero-text',
+      config: {
+        settings: ['container-padding', 'container-margin-top', 'container-background-color'],
       },
-    ],
-  },
+    },
+    {
+      blockType: 'iframe',
+      config: {
+        settings: ['container-padding'],
+      },
+    },
+  ],
 };

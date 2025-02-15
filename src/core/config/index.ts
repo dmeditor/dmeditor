@@ -320,27 +320,21 @@ const getStyleConfig = (
   },
   configFile: {
     default: { root: StyleSettingsType; list: StyleSettingsType; underList: StyleSettingsType };
-    block: Record<
-      string,
-      Array<{
-        path?: string;
-        level?: number;
-        blockType?: string;
-        rootStyle?: string;
-        config: StyleSettingsType;
-      }>
-    >;
+    block: Array<{
+      path?: string;
+      level?: number;
+      blockType?: string;
+      rootType?: string;
+      rootStyle?: string;
+      config: StyleSettingsType;
+    }>;
   },
 ): StyleSettingsType => {
   const context = params.context;
   const current = params.current;
   const parentIsList = params.parentIsList;
 
-  if (!context.root) {
-    return configFile.default.root;
-  }
-
-  const rootType = context.root.type;
+  const rootType = context.root?.type || '_';
   const pathArr: Array<string | number> = [];
   for (const item of context.path) {
     pathArr.push(item.pathKey);
@@ -349,25 +343,27 @@ const getStyleConfig = (
   const path = pathArr.join('/');
   const level = pathArr.length;
 
+  const rootStyles = context.root?.styles || [];
+
   console.debug('current: ', current, context, 'is list', parentIsList);
 
   let result: any = null;
-  if (configFile.block[rootType]) {
-    for (const item of configFile.block[rootType]) {
-      let match = true;
-      if (item.level != undefined && item.level != level) {
-        match = false;
-      } else if (item.path && item.path !== path) {
-        match = false;
-      } else if (item.blockType && current.block?.type !== item.blockType) {
-        match = false;
-      } else if (item.rootStyle && !context.root.styles.includes(item.rootStyle)) {
-        match = false;
-      }
-      if (match) {
-        result = item.config;
-        break;
-      }
+  for (const item of configFile.block) {
+    let match = true;
+    if (item.rootType && item.rootType !== rootType) {
+      match = false;
+    } else if (item.level != undefined && item.level !== level) {
+      match = false;
+    } else if (item.path && item.path !== path) {
+      match = false;
+    } else if (item.blockType && current.block?.type !== item.blockType) {
+      match = false;
+    } else if (item.rootStyle && !rootStyles.includes(item.rootStyle)) {
+      match = false;
+    }
+    if (match) {
+      result = item.config;
+      break;
     }
   }
   if (!result) {
