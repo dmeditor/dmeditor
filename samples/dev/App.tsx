@@ -7,6 +7,7 @@ import {
   DMEditor,
   DMEditorView,
   dmeServerSideLoad,
+  getStyleConfig,
   initLanguage,
   iterateBlockList,
   registerDefaultWidgets,
@@ -14,6 +15,7 @@ import {
   // registerTheme,
   setDMEditorCallback,
   setDMEditorConfig,
+  StyleSettingsType,
 } from '../../src';
 import { DMEditorRefType } from '../../src/core/main/designer/DMEditor';
 import { BrowseImage, BrowseLink } from './callbacks';
@@ -23,12 +25,11 @@ import { EditImage } from './EditImage';
 import { registerStyles } from './registerStyles';
 import registerSampleWidget from './SampleWidget';
 import { getSavedBlocks, SaveBlock } from './SaveBlock';
+import { styleSettings } from './styleSettings';
 
 registerDefaultWidgets();
 registerSampleWidget();
 registerStyles();
-
-// initLanguage('chi-CN');
 
 const defaultStyleConfig = {};
 for (const widget of Object.keys(defaultStyles)) {
@@ -42,6 +43,7 @@ setDMEditorConfig({
   general: {
     projectStyles: {
       default: `background: white;
+      
       `,
     },
     themes: [
@@ -72,6 +74,9 @@ setDMEditorConfig({
   editor: {
     favouriteWidgets: ['text', 'button', 'hero-text:image'],
     enableEditControl: true,
+    // disabledStyleSettings: {
+    //   '*': ['container-border-width', 'container-border-color', 'container-border-radius'],
+    // },
     zIndex: 100,
     defaultStyle: {
       ...defaultStyleConfig,
@@ -104,6 +109,20 @@ setDMEditorConfig({
     ui: {
       // 'bg-editarea': '#666666',
     },
+    getAddingSettings: (context) => {
+      console.log('adding context', context);
+      const rootBlock = context.root;
+      let allowedTypes: Array<string> | undefined;
+      if (rootBlock) {
+        if (rootBlock.type === 'hero-text') {
+          allowedTypes = ['heading', 'text', 'button'];
+        }
+      }
+      return { allowedTypes: allowedTypes };
+    },
+    getAvailableStyleSettings: (current, context, parentIsList): StyleSettingsType => {
+      return getStyleConfig({ current, context, parentIsList }, styleSettings);
+    },
   },
   widgets: {
     heading: { defaultStyle: { _: 'big-space' } },
@@ -115,6 +134,13 @@ setDMEditorConfig({
             ID: {props.data?.id}, Name: {props.data?.name}, View: {props.view}
           </div>
         );
+      },
+    },
+    form: {
+      submit: async (data, extra) => {
+        console.log(data);
+        console.log(extra);
+        return { success: true };
       },
     },
   },
@@ -266,6 +292,12 @@ const App = () => {
         { identifier: 'cover_image', name: 'Cover image', type: 'image' },
         { identifier: 'in_menu', name: 'In menu', type: 'checkbox' },
         { identifier: 'summary', name: 'Summary', type: 'richtext' },
+        {
+          identifier: 'dropdown_test',
+          name: 'Dropdown',
+          type: 'dropdown',
+          parameters: { list: [{ text: 'test', value: 'test1' }] },
+        },
         { identifier: 'meta_key', name: 'Meta key', type: 'text' },
         { identifier: 'meta_description', name: 'Meta description', type: 'multitext' },
       ]);
