@@ -78,7 +78,6 @@ export const ImageDefinition: DME.Widget = {
       styleTags: ['core'],
       group: 'style_border',
     },
-    ...getCommonSettings(),
   ],
   events: {
     updateData: () => {},

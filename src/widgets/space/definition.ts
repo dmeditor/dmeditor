@@ -34,12 +34,6 @@ const spaceWidget: DME.Widget = {
         allowedUnit: 'px',
       },
     },
-    ...getCommonSettings('none', [
-      'container-background-color',
-      'container-background-image',
-      'container-margin-top',
-      'container-full-width',
-    ]),
   ],
 };
 

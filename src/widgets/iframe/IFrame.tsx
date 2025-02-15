@@ -135,6 +135,5 @@ export const iFrameDefinition: DME.Widget = {
       category: 'style',
       parameters: { min: 300, max: 3000, step: 5, showInput: true },
     },
-    ...getCommonSettings(),
   ],
 };

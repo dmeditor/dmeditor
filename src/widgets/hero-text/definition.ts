@@ -144,7 +144,6 @@ const heroTextWidget: DME.Widget = {
       property: '.heroFullWidth',
       settingComponent: 'switch',
     },
-    ...getCommonSettings('container'),
   ],
 };
 

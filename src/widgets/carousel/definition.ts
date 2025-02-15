@@ -51,8 +51,6 @@ const definition: DME.Widget = {
     //   custom: true,
     //   settingComponent: 'carousel',
     // },
-
-    ...getCommonSettings(),
   ],
 };
 

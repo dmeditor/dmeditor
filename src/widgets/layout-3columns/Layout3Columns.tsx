@@ -10,6 +10,7 @@ const layout3ColumnsWidget: DME.Widget = {
   icon: 'layout-3columns',
   name: i18n('3 Columns layout', 'widget'),
   type: 'layout-3columns',
+  widgetType: 'mixed',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityLayout3Columns, EntityLayout3Children> => {
       return {
@@ -46,7 +47,6 @@ const layout3ColumnsWidget: DME.Widget = {
       name: '',
       settingComponent: 'layout-3columns/setting',
     },
-    ...getCommonSettings(),
   ],
 };
 

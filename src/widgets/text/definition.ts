@@ -37,7 +37,6 @@ const TextWidget: DME.Widget = {
       },
       category: 'style',
     },
-    ...getCommonSettings('default', ['container-background-image']),
   ],
 };
 

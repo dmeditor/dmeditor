@@ -28,7 +28,6 @@ const buttonWidget: DME.Widget = {
       property: '.link',
       settingComponent: 'link',
     },
-    ...getCommonSettings(),
   ],
 };
 

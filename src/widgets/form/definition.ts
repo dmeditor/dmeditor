@@ -42,7 +42,6 @@ const formWidget: DME.Widget = {
       settingComponent: 'input',
       parameters: { multiline: true },
     },
-    ...getCommonSettings(),
   ],
 };
 

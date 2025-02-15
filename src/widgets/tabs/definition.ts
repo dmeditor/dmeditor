@@ -8,6 +8,7 @@ const TabsWidget: DME.Widget = {
   category: 'interactive',
   icon: 'tabs',
   name: i18n('Tabs', 'widget'),
+  widgetType: 'mixed',
   type: 'tabs',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityTabsData, EntityTabsBlock[]> => {
@@ -79,7 +80,6 @@ const TabsWidget: DME.Widget = {
         updateOnUnfocus: true,
       },
     },
-    ...getCommonSettings(),
   ],
 };
 

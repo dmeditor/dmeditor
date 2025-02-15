@@ -91,7 +91,6 @@ const HeadingWidget: DME.Widget = {
       custom: true,
       category: 'style',
     },
-    ...getCommonSettings(),
   ],
 };
 

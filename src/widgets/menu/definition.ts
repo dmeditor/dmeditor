@@ -60,6 +60,5 @@ export const menuDefinition: DME.Widget = {
       },
       category: 'style',
     },
-    ...getCommonSettings(),
   ],
 };

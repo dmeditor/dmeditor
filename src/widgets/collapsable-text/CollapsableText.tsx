@@ -19,6 +19,7 @@ export const CollapsableTextDefiniation: DME.Widget = {
   name: i18n('Collapsable text', 'widget'),
   type: 'collapsable-text',
   icon: 'collapsable-text',
+  widgetType: 'mixed',
   settings: [
     {
       name: 'Text',
@@ -32,8 +33,6 @@ export const CollapsableTextDefiniation: DME.Widget = {
       category: 'style',
       settingComponent: 'align',
     },
-    ...getCommonSettings(),
-    ,
   ],
   events: {
     createBlock: () => {

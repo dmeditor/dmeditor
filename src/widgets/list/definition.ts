@@ -47,7 +47,6 @@ const listWidget: DME.Widget = {
       settingComponent: 'range',
       parameters: { min: 0, max: 100 },
     },
-    ...getCommonSettings('default', ['container-background-image']),
   ],
 };
 

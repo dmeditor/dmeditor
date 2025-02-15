@@ -7,6 +7,7 @@ const AccordionWidget: DME.Widget = {
   icon: 'accordion',
   name: i18n('Accordion', 'widget'),
   type: 'accordion',
+  widgetType: 'mixed',
   editMask: true,
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityAccordion, AccordtionChildType[]> => {
@@ -83,7 +84,6 @@ const AccordionWidget: DME.Widget = {
       },
       category: 'style',
     },
-    ...getCommonSettings(),
   ],
 };
 

@@ -98,6 +98,5 @@ export const VideoDefinition: DME.Widget = {
       property: '.value',
       parameters: { urlOnly: true, showDialogWhenEmpty: true },
     },
-    ...getCommonSettings(),
   ],
 };

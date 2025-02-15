@@ -44,13 +44,6 @@ const lineWidget: DME.Widget = {
         max: 100,
       },
     },
-    ...getCommonSettings('none', [
-      'container-padding',
-      'container-margin-top',
-      'container-background-color',
-      'container-full-width',
-      'container-full-width-content',
-    ]),
   ],
 };
 

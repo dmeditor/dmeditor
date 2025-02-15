@@ -71,7 +71,6 @@ const formFieldWidget: DME.Widget = {
       settingComponent: 'checkbox',
       category: 'style',
     },
-    ...getCommonSettings(),
   ],
 };
 

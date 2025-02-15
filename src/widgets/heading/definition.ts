@@ -55,13 +55,6 @@ const HeadingWidget: DME.Widget = {
       styleTags: ['core'],
     },
     { name: 'Anchor', settingComponent: 'heading', property: '.anchor' },
-    ...getCommonSettings('none', [
-      'container-padding',
-      'container-margin-top',
-      'container-background-color',
-      'container-full-width',
-      'container-full-width-content',
-    ]),
   ],
 };
 

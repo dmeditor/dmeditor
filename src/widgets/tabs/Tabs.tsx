@@ -32,8 +32,6 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
         return;
       }
       block.children.push({
-        type: 'list',
-        id: nanoid(),
         data: null,
         meta: {
           tabKey: 't' + (block.children.length + 1),

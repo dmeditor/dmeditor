@@ -16,6 +16,7 @@ const layout2ColumnsWidget: DME.Widget = {
   category: 'design',
   icon: 'layout-2columns',
   name: i18n('2 Columns layout', 'widget'),
+  widgetType: 'mixed',
   type: 'layout-2columns',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityLayout2Columns, EntityLayout2Children> => {
@@ -47,7 +48,6 @@ const layout2ColumnsWidget: DME.Widget = {
       settingComponent: 'range',
       parameters: { min: 1, max: 11 },
     },
-    ...getCommonSettings(),
   ],
 };
 

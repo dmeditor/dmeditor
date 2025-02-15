@@ -49,7 +49,6 @@ const gridWidget: DME.Widget = {
       },
       category: 'style',
     },
-    ...getCommonSettings(),
   ],
 };
 

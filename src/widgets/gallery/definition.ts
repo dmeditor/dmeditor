@@ -41,8 +41,6 @@ const definition: DME.Widget = {
       custom: true,
       settingComponent: 'image-list',
     },
-    ...getCommonSettings(),
-    ,
   ],
 };
 

@@ -9,7 +9,7 @@ export const popupDefinition: DME.Widget = {
   icon: 'popup',
   name: i18n('Pop up', 'widget'),
   type: 'popup',
-  widgetType: 'widget',
+  widgetType: 'mixed',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityPopup> => {
       return {
@@ -52,6 +52,5 @@ export const popupDefinition: DME.Widget = {
         ],
       },
     },
-    ...getCommonSettings(),
   ],
 };

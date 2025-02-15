@@ -40,7 +40,5 @@ export const contentViewDefinition: DME.Widget = {
         optionsFrom: 'widgets/content-view/views',
       },
     },
-    ...getCommonSettings(),
-    ,
   ],
 };
