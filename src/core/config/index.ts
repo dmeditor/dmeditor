@@ -319,11 +319,11 @@ const getStyleConfig = (
     parentIsList: boolean;
   },
   configFile: {
-    default: { root: StyleSettingsType; list: StyleSettingsType; underList: StyleSettingsType };
+    default: { list: StyleSettingsType; underList: StyleSettingsType };
     block: Array<{
       path?: string;
       level?: number;
-      blockType?: string;
+      blockType?: string | string[];
       rootType?: string;
       rootStyle?: string;
       config: StyleSettingsType;
@@ -356,7 +356,11 @@ const getStyleConfig = (
       match = false;
     } else if (item.path && item.path !== path) {
       match = false;
-    } else if (item.blockType && current.block?.type !== item.blockType) {
+    } else if (
+      item.blockType &&
+      ((typeof item.blockType === 'string' && current.block?.type !== item.blockType) ||
+        (Array.isArray(item.blockType) && !item.blockType.includes(current.block?.type || '')))
+    ) {
       match = false;
     } else if (item.rootStyle && !rootStyles.includes(item.rootStyle)) {
       match = false;
