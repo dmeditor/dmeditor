@@ -361,6 +361,7 @@ const getStyleConfig = (
       }
       if (match) {
         result = item.config;
+        break;
       }
     }
   }
