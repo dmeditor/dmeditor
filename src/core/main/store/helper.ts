@@ -185,7 +185,7 @@ export const getContextInMixed = (
   const mixedBlocks: Array<DMEData.Block> = [];
   const paths: Array<Array<string | number>> = [];
   //get all mixed widget blocks
-  iteratePath(blockPath, storage, (item, path) => {
+  iteratePath(blockPath.slice(0, blockPath.length - 1), storage, (item, path) => {
     if (!item.type) {
       return;
     }
@@ -201,7 +201,7 @@ export const getContextInMixed = (
   const mixedRoot = mixedBlocks.length > 0 ? mixedBlocks[mixedBlocks.length - 1] : null;
 
   const result: ContextPathType = [];
-  if (mixedBlocks.length > 0 && mixedRoot) {
+  if (mixedRoot) {
     const last = mixedBlocks.length - 1;
     const path = paths[last];
     const relativePath = blockPath.slice(path.length);

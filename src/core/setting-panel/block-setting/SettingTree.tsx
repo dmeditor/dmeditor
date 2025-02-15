@@ -125,6 +125,7 @@ export const SettingTree = (props: {
           const { root: mixedRoot, path: pathParams } = getContextInMixed(blockPath, storage);
 
           const callbackGetStyleSettings = dmeConfig.editor.configStyleSettings;
+          console.log(blockPath, pathParams);
           if (callbackGetStyleSettings && pathParams.length > 0) {
             const current = pathParams[pathParams.length - 1];
             let parentIsList = false;
@@ -497,7 +498,7 @@ export const SettingTree = (props: {
                     )}
                   </StyledSettingList.Children>
                 );
-              } else if (typeof blockData.children === 'object') {
+              } else if ((level === 0 && !Array.isArray(blockData.children)) || level > 0) {
                 return (
                   <StyledSettingList.Children level={level}>
                     {renderChildrenSettings()}
