@@ -68,9 +68,14 @@ export type StyleSettingsType = {
   builtInSettings?: Array<string>;
 };
 
+export type ContextPathType = Array<{
+  pathKey: string | number;
+  block?: { type: string; styles: Array<string> };
+}>;
+
 export type ContextWithStyleType = {
   root?: { type: string; styles: Array<string> };
-  path: Array<{ pathKey: string | number; block?: { type: string; styles: Array<string> } }>;
+  path: ContextPathType;
 };
 
 export interface DMEConfigType {

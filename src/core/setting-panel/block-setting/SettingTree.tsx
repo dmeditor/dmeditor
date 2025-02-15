@@ -13,6 +13,7 @@ import {
   ContextWithStyleType,
   dmeConfig,
   generalSettings,
+  getContextInMixed,
   i18n,
   iteratePath,
   useEditorStore,
@@ -121,46 +122,7 @@ export const SettingTree = (props: {
         let enabledStyles: Record<string, Array<string>> | undefined;
 
         if (category === 'style') {
-          const mixedBlocks: Array<DMEData.Block> = [];
-          const paths: Array<Array<string | number>> = [];
-          iteratePath(blockPath, storage, (item, path) => {
-            if (!item.type) {
-              return;
-            }
-            const widget = item.type;
-            const widgetType = getWidget(widget).widgetType;
-            if (widgetType === 'mixed') {
-              mixedBlocks.push(item);
-              paths.push(path);
-            }
-          });
-
-          const pathParams: Array<any> = [];
-          const mixedRoot = mixedBlocks.length > 0 ? mixedBlocks[mixedBlocks.length - 1] : null;
-          if (mixedBlocks.length > 0 && mixedRoot) {
-            const last = mixedBlocks.length - 1;
-            const path = paths[last];
-            const relativePath = blockPath.slice(path.length);
-            iteratePath([0, ...relativePath], [mixedRoot], (item, path) => {
-              if (path.length > 1) {
-                //ignore root
-                pathParams.push({
-                  pathKey: path[path.length - 1],
-                  block: item.type
-                    ? { type: item.type, styles: convertStyleDataToArray(item.style) }
-                    : undefined,
-                });
-              }
-            });
-          } else {
-            iteratePath(blockPath, storage, (item, path) => {
-              //ignore root
-              pathParams.push({
-                pathKey: path[path.length - 1],
-                block: { type: item.type, styles: convertStyleDataToArray(item.style) },
-              });
-            });
-          }
+          const { root: mixedRoot, path: pathParams } = getContextInMixed(blockPath, storage);
 
           const callbackGetStyleSettings = dmeConfig.editor.getAvailableStyleSettings;
           if (callbackGetStyleSettings && pathParams.length > 0) {

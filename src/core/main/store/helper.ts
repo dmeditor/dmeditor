@@ -1,5 +1,7 @@
+import { ContextPathType } from 'dmeditor/core/config';
+
 import type { DMEData } from '../../types/dmeditor';
-import { getWidget, jsonParse } from '../../utils';
+import { convertStyleDataToArray, getWidget, jsonParse } from '../../utils';
 
 //todo: can these operation be object-orented way(for blocklist and block)?
 
@@ -173,4 +175,56 @@ export const getDependencyOptions = (widget: string, data: DMEData.BlockList) =>
     return result;
   }
   return null;
+};
+
+//get path under mixed, with styles, if no mixed, the root is empty
+export const getContextInMixed = (
+  blockPath: Array<string | number>,
+  storage: Array<DMEData.Block>,
+) => {
+  const mixedBlocks: Array<DMEData.Block> = [];
+  const paths: Array<Array<string | number>> = [];
+  //get all mixed widget blocks
+  iteratePath(blockPath, storage, (item, path) => {
+    if (!item.type) {
+      return;
+    }
+    const widget = item.type;
+    const widgetType = getWidget(widget).widgetType;
+    if (widgetType === 'mixed') {
+      mixedBlocks.push(item);
+      paths.push(path);
+    }
+  });
+
+  //get last mixed or null
+  const mixedRoot = mixedBlocks.length > 0 ? mixedBlocks[mixedBlocks.length - 1] : null;
+
+  const result: ContextPathType = [];
+  if (mixedBlocks.length > 0 && mixedRoot) {
+    const last = mixedBlocks.length - 1;
+    const path = paths[last];
+    const relativePath = blockPath.slice(path.length);
+    iteratePath([0, ...relativePath], [mixedRoot], (item, path) => {
+      if (path.length > 1) {
+        //ignore root
+        result.push({
+          pathKey: path[path.length - 1],
+          block: item.type
+            ? { type: item.type, styles: convertStyleDataToArray(item.style) }
+            : undefined,
+        });
+      }
+    });
+  } else {
+    iteratePath(blockPath, storage, (item, path) => {
+      //ignore root
+      result.push({
+        pathKey: path[path.length - 1],
+        block: { type: item.type, styles: convertStyleDataToArray(item.style) },
+      });
+    });
+  }
+
+  return { root: mixedRoot, path: result };
 };
