@@ -57,6 +57,22 @@ export interface DataSourceConfigType {
   ) => Promise<any>;
 }
 
+export type AddingSettingsType = {
+  allowedTypes: Array<string>;
+  defaultStyle: { [widget: string]: { [styleKey: string]: string } };
+};
+
+export type StyleSettingsType = {
+  styles?: Record<string, Array<string>>;
+  settings: Array<string>;
+  builtInSettings?: Array<string>;
+};
+
+export type ContextWithStyleType = {
+  root?: { type: string; styles: Array<string> };
+  path: Array<{ pathKey: string | number; block?: { type: string; styles: Array<string> } }>;
+};
+
 export interface DMEConfigType {
   general?: {
     projectStyles?: {
@@ -90,6 +106,14 @@ export interface DMEConfigType {
     heading?: Array<{ value: string; label: string }>;
     characters?: Array<string>;
     settingPanelWidth?: number;
+    //context is from closed list (not including) to self list. eg. hero-text/list
+    getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
+    //context is from closest mixed to itself. eg. hero-text/list/heading, tabs/0/heading
+    getAvailableStyleSettings?: (
+      current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
+      context: ContextWithStyleType,
+      parentIsList: boolean,
+    ) => StyleSettingsType;
   };
   widgets?: { [widget: string]: widgetConfig };
   dataSource?: DataSourceConfigType;
@@ -243,6 +267,12 @@ const dmeConfig: {
     zIndex: number;
     settingPanelWidth: number;
     ui: { [variable: string]: string };
+    getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
+    getAvailableStyleSettings?: (
+      current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
+      context: ContextWithStyleType,
+      parentIsList: boolean,
+    ) => StyleSettingsType;
   };
   widgets: { [widget: string]: widgetConfig };
   plugins: {
@@ -277,5 +307,76 @@ const setDMEditorCallback = (config: CallbackConfig) => {
   dmeConfig.callbacks = { ...dmeConfig.callbacks, ...config };
 };
 
+const getStyleConfig = (
+  params: {
+    current: { pathKey: string | number; block?: { type: string; styles: Array<string> } };
+    context: ContextWithStyleType;
+    parentIsList: boolean;
+  },
+  configFile: {
+    default: { root: StyleSettingsType; list: StyleSettingsType; underList: StyleSettingsType };
+    block: Record<
+      string,
+      Array<{
+        path?: string;
+        level?: number;
+        blockType?: string;
+        rootStyle?: string;
+        config: StyleSettingsType;
+      }>
+    >;
+  },
+): StyleSettingsType => {
+  const context = params.context;
+  const current = params.current;
+  const parentIsList = params.parentIsList;
+
+  if (!context.root) {
+    return configFile.default.root;
+  }
+
+  const rootType = context.root.type;
+  const pathArr: Array<string | number> = [];
+  for (const item of context.path) {
+    pathArr.push(item.pathKey);
+  }
+
+  const path = pathArr.join('/');
+  const level = pathArr.length;
+
+  console.debug('current: ', current, context, 'is list', parentIsList);
+
+  let result: any = null;
+  if (configFile.block[rootType]) {
+    for (const item of configFile.block[rootType]) {
+      let match = true;
+      if (item.level != undefined && item.level != level) {
+        match = false;
+      } else if (item.path && item.path !== path) {
+        match = false;
+      } else if (item.blockType && current.block?.type !== item.blockType) {
+        match = false;
+      } else if (item.rootStyle && !context.root.styles.includes(item.rootStyle)) {
+        match = false;
+      }
+      if (match) {
+        result = item.config;
+      }
+    }
+  }
+  if (!result) {
+    if (current.block?.type === 'list') {
+      result = configFile.default.list;
+    } else if (parentIsList) {
+      result = configFile.default.underList;
+    } else {
+      result = { settings: [], styles: {} };
+    }
+  }
+
+  console.debug(result);
+  return result;
+};
+
 export * from './style';
-export { dmeConfig, setDMEditorConfig, setDMEditorCallback };
+export { dmeConfig, setDMEditorConfig, getStyleConfig, setDMEditorCallback };

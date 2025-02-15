@@ -187,7 +187,8 @@ const SettingPanel = (props) => {
             rootBlock &&
             selectedBlock && (
               <>
-                {isEmbedOwnSetting(
+                {selectedPath.slice(rootBlockPath.length).length > 0 &&
+                isEmbedOwnSetting(
                   selectedBlock,
                   selectedPath.slice(rootBlockPath.length),
                   rootBlock.type,

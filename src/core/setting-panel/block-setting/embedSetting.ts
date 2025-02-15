@@ -6,9 +6,9 @@ export const isEmbedOwnSetting = (
   relativePath: Array<number | string>,
   rootWidget: string,
 ) => {
-  if (!childBlock.isEmbed) {
-    return false;
-  }
+  // if (!childBlock.isEmbed) {
+  //   return false;
+  // }
 
   const configObject = getEmbedConfigObject(rootWidget);
   if (!configObject || !configObject.hasOwnView) {

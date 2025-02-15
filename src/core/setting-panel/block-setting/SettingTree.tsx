@@ -9,10 +9,18 @@ import {
 import { Button, Collapse } from '@mui/material';
 import { useWidgetSettingStore } from 'dmeditor/core/main/store';
 
-import { dmeConfig, i18n, useEditorStore } from '../../..';
+import {
+  ContextWithStyleType,
+  dmeConfig,
+  generalSettings,
+  i18n,
+  iteratePath,
+  useEditorStore,
+} from '../../..';
 import { DME, DMEData } from '../../types';
 import {
   arrayStarts,
+  convertStyleDataToArray,
   getEmbedConfigObject,
   getPropertyValue,
   getValidStyles,
@@ -44,8 +52,13 @@ export const SettingTree = (props: {
   canDelete?: boolean;
 }) => {
   const { blockData, selectedPath, level = 0, category, blockPath, rootWidget } = props;
-  const { updateBlockStyleByPath, updateBlockPropsByPath, updateSelectedBlockIndex, removeByPath } =
-    useEditorStore();
+  const {
+    updateBlockStyleByPath,
+    updateBlockPropsByPath,
+    updateSelectedBlockIndex,
+    removeByPath,
+    storage,
+  } = useEditorStore();
 
   const [settingStatus, setSettingStatus] = useState<{
     [index: string | symbol]: DME.WidgetStyleSettingStatus;
@@ -103,64 +116,106 @@ export const SettingTree = (props: {
           );
         });
       } else {
-        let settingList = widgetDef?.settings;
+        let settingList = widgetDef?.settings.filter((item) => item.category === category);
 
-        //filter from system
+        let enabledStyles: Record<string, Array<string>> | undefined;
 
-        const disabledStyleSettings = dmeConfig.editor.disabledStyleSettings;
-
-        const disabledList = [
-          ...(disabledStyleSettings['*'] || []),
-          ...(disabledStyleSettings[widgetDef.type] || []),
-        ];
-
-        settingList = settingList.filter((item) => {
-          if (item.category === category) {
-            if (item.category !== 'style') {
-              return true;
-            } else {
-              if (item.identifier && disabledList.includes(item.identifier)) {
-                return false;
-              }
-              if (item.styleTags) {
-                //if not in root
-                if (blockPath.length > 1 && item.styleTags.includes('root')) {
-                  return false;
-                }
-              }
-              return true;
+        if (category === 'style') {
+          const mixedBlocks: Array<DMEData.Block> = [];
+          const paths: Array<Array<string | number>> = [];
+          iteratePath(blockPath, storage, (item, path) => {
+            if (!item.type) {
+              return;
             }
+            const widget = item.type;
+            const widgetType = getWidget(widget).widgetType;
+            if (widgetType === 'mixed') {
+              mixedBlocks.push(item);
+              paths.push(path);
+            }
+          });
+
+          const pathParams: Array<any> = [];
+          const mixedRoot = mixedBlocks.length > 0 ? mixedBlocks[mixedBlocks.length - 1] : null;
+          if (mixedBlocks.length > 0 && mixedRoot) {
+            const last = mixedBlocks.length - 1;
+            const path = paths[last];
+            const relativePath = blockPath.slice(path.length);
+            iteratePath([0, ...relativePath], [mixedRoot], (item, path) => {
+              if (path.length > 1) {
+                //ignore root
+                pathParams.push({
+                  pathKey: path[path.length - 1],
+                  block: item.type
+                    ? { type: item.type, styles: convertStyleDataToArray(item.style) }
+                    : undefined,
+                });
+              }
+            });
           } else {
-            return false;
-          }
-        });
-
-        //style keys
-        const styleKeys: { [key: string]: Array<string> } = {};
-        for (const style of Object.values(validStyles)) {
-          const optionKeys = [];
-          for (const option of style.options) {
-            optionKeys.push(option.identifier);
-          }
-          styleKeys[style.identifier] = optionKeys;
-        }
-        result = { settings: settingList };
-
-        //filter from mixed-widget root
-        if (blockData.isEmbed) {
-          const configObject = getEmbedConfigObject(rootWidget);
-
-          if (configObject?.enabledSettings) {
-            result = configObject.enabledSettings(settingList, styleKeys, {
-              relativePath: blockPath.slice(blockPath.length - level),
-              blockData: blockData,
+            iteratePath(blockPath, storage, (item, path) => {
+              //ignore root
+              pathParams.push({
+                pathKey: path[path.length - 1],
+                block: { type: item.type, styles: convertStyleDataToArray(item.style) },
+              });
             });
           }
+
+          const callbackGetStyleSettings = dmeConfig.editor.getAvailableStyleSettings;
+          if (callbackGetStyleSettings && pathParams.length > 0) {
+            const current = pathParams[pathParams.length - 1];
+            let parentIsList = false;
+            if (pathParams.length >= 2) {
+              const parent = pathParams[pathParams.length - 2];
+              if (
+                typeof parent.pathKey === 'number' ||
+                (parent.block && getWidget(parent.block.type).widgetType === 'list')
+              ) {
+                parentIsList = true;
+              }
+            }
+
+            const context: ContextWithStyleType = { path: pathParams };
+            if (mixedRoot) {
+              context['root'] = {
+                type: mixedRoot.type,
+                styles: convertStyleDataToArray(mixedRoot.style),
+              };
+            }
+            const availableStyleSettings = callbackGetStyleSettings(current, context, parentIsList);
+            if (availableStyleSettings) {
+              const availableGeneralSettings = generalSettings.filter(
+                (item) =>
+                  item.category === 'style' &&
+                  availableStyleSettings.settings.includes(item.identifier || ''),
+              );
+
+              if (availableStyleSettings.styles) {
+                enabledStyles = availableStyleSettings.styles;
+              }
+
+              settingList = settingList.filter((item) => {
+                if (
+                  item.category === 'style' &&
+                  (!availableStyleSettings.builtInSettings ||
+                    !item.identifier ||
+                    (item.identifier &&
+                      availableStyleSettings.builtInSettings.includes(item.identifier || '')))
+                ) {
+                  return true;
+                }
+              });
+              settingList = [...settingList, ...availableGeneralSettings];
+            }
+          }
         }
+
+        result = { settings: settingList, enabledStyles: enabledStyles };
       }
       return result;
     }
-  }, [blockData.id, category]);
+  }, [blockData.id, category, blockData.style]);
 
   const settingGroups = useMemo(() => {
     const groups: Array<string | undefined> = [];
@@ -383,10 +438,15 @@ export const SettingTree = (props: {
     return (
       <div>
         {mapBlockList(blockData.children || [], (item, index) => {
+          if (!item.type) {
+            return <></>;
+          }
           const newPath = [...blockPath, index];
-          const isOwnView =
-            item.isEmbed &&
-            isEmbedOwnSetting(item, newPath.slice(newPath.length - (level + 1)), rootWidget);
+          const isOwnView = isEmbedOwnSetting(
+            item,
+            newPath.slice(newPath.length - (level + 1)),
+            rootWidget,
+          );
           if (isOwnView) {
             if (category === 'style') {
               return <></>;
