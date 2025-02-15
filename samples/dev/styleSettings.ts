@@ -1,33 +1,33 @@
 import { StyleSettingsType } from '../../src';
 
+const defaultRootList = [
+  'content-width',
+  'content-self-align',
+  'container-padding',
+  'container-margin-top',
+  'container-border-width',
+  'container-border-color',
+  'container-border-radius',
+  'container-background-color',
+  'container-full-width',
+  'container-full-width-content',
+];
+
 export const styleSettings: {
-  default: { root: StyleSettingsType; list: StyleSettingsType; underList: StyleSettingsType };
+  default: { list: StyleSettingsType; underList: StyleSettingsType };
   block: Array<{
     path?: string;
     level?: number;
-    blockType?: string;
+    blockType?: string | string[];
     rootType?: string;
     rootStyle?: string;
     config: StyleSettingsType;
   }>;
 } = {
   default: {
-    root: {
-      settings: [
-        'content-width',
-        'content-self-align',
-        'container-padding',
-        'container-margin-top',
-        'container-border-width',
-        'container-border-color',
-        'container-border-radius',
-        'container-background-color',
-        'container-full-width',
-        'container-full-width-content',
-      ],
-    },
     list: {
       settings: [
+        'content-self-align',
         'container-padding',
         'container-border-width',
         'container-border-color',
@@ -36,7 +36,15 @@ export const styleSettings: {
       ],
     },
     underList: {
-      settings: ['container-margin-top'],
+      settings: [
+        'container-margin-top',
+        'content-self-align',
+        'container-padding',
+        'container-border-width',
+        'container-border-color',
+        'container-border-radius',
+        'container-background-color',
+      ],
     },
   },
   //for individual block
@@ -45,19 +53,16 @@ export const styleSettings: {
     {
       rootType: '_',
       level: 1,
+      blockType: ['space', 'text', 'list'],
       config: {
-        settings: [
-          'content-width',
-          'content-self-align',
-          'container-padding',
-          'container-margin-top',
-          'container-border-width',
-          'container-border-color',
-          'container-border-radius',
-          'container-background-color',
-          'container-full-width',
-          'container-full-width-content',
-        ],
+        settings: [...defaultRootList, 'container-background-image'],
+      },
+    },
+    {
+      rootType: '_',
+      level: 1,
+      config: {
+        settings: defaultRootList,
       },
     },
 
@@ -66,7 +71,7 @@ export const styleSettings: {
       path: 'hero',
       rootType: 'hero-text',
       config: {
-        settings: ['container-padding'],
+        settings: ['container-padding', 'container-background-color'],
       },
     },
     {
