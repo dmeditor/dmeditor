@@ -14,6 +14,7 @@ import {
   dmeConfig,
   generalSettings,
   getContextInMixed,
+  getStyleConfig,
   i18n,
   iteratePath,
   useEditorStore,
@@ -125,7 +126,6 @@ export const SettingTree = (props: {
           const { root: mixedRoot, path: pathParams } = getContextInMixed(blockPath, storage);
 
           const callbackGetStyleSettings = dmeConfig.editor.configStyleSettings;
-          console.log(blockPath, pathParams);
           if (callbackGetStyleSettings && pathParams.length > 0) {
             const current = pathParams[pathParams.length - 1];
             let parentIsList = false;
@@ -146,7 +146,7 @@ export const SettingTree = (props: {
                 styles: convertStyleDataToArray(mixedRoot.style),
               };
             }
-            const availableStyleSettings = callbackGetStyleSettings(current, context, parentIsList);
+            const availableStyleSettings = getStyleConfig(current, context, parentIsList);
             if (availableStyleSettings) {
               const availableGeneralSettings = generalSettings.filter(
                 (item) =>

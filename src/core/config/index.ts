@@ -57,6 +57,18 @@ export interface DataSourceConfigType {
   ) => Promise<any>;
 }
 
+export interface StyleSettingConfigType {
+  default: { list: StyleSettingsType; underList: StyleSettingsType };
+  block: Array<{
+    path?: string;
+    level?: number;
+    blockType?: string | string[];
+    rootType?: string;
+    rootStyle?: string;
+    config: StyleSettingsType;
+  }>;
+}
+
 export type AddingSettingsType = {
   allowedTypes?: Array<string>;
   defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
@@ -114,11 +126,13 @@ export interface DMEConfigType {
     //context is from closed list (not including) to self list. eg. hero-text/list
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
     //context is from closest mixed to itself. eg. hero-text/list/heading, tabs/0/heading
-    configStyleSettings?: (
-      current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
-      context: ContextWithStyleType,
-      parentIsList: boolean,
-    ) => StyleSettingsType;
+    configStyleSettings?:
+      | ((
+          current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
+          context: ContextWithStyleType,
+          parentIsList: boolean,
+        ) => StyleSettingsType)
+      | StyleSettingConfigType;
   };
   widgets?: { [widget: string]: widgetConfig };
   dataSource?: DataSourceConfigType;
@@ -273,11 +287,13 @@ const dmeConfig: {
     settingPanelWidth: number;
     ui: { [variable: string]: string };
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
-    configStyleSettings?: (
-      current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
-      context: ContextWithStyleType,
-      parentIsList: boolean,
-    ) => StyleSettingsType;
+    configStyleSettings?:
+      | ((
+          current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
+          context: ContextWithStyleType,
+          parentIsList: boolean,
+        ) => StyleSettingsType)
+      | StyleSettingConfigType;
   };
   widgets: { [widget: string]: widgetConfig };
   plugins: {
@@ -313,26 +329,20 @@ const setDMEditorCallback = (config: CallbackConfig) => {
 };
 
 const getStyleConfig = (
-  params: {
-    current: { pathKey: string | number; block?: { type: string; styles: Array<string> } };
-    context: ContextWithStyleType;
-    parentIsList: boolean;
-  },
-  configFile: {
-    default: { list: StyleSettingsType; underList: StyleSettingsType };
-    block: Array<{
-      path?: string;
-      level?: number;
-      blockType?: string | string[];
-      rootType?: string;
-      rootStyle?: string;
-      config: StyleSettingsType;
-    }>;
-  },
+  current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },
+  context: ContextWithStyleType,
+  parentIsList: boolean,
 ): StyleSettingsType => {
-  const context = params.context;
-  const current = params.current;
-  const parentIsList = params.parentIsList;
+  const configStyleSettings = dmeConfig.editor.configStyleSettings;
+  if (!configStyleSettings) {
+    return { settings: [], styles: {} };
+  }
+
+  if (typeof configStyleSettings === 'function') {
+    return configStyleSettings(current, context, parentIsList);
+  }
+
+  const configFile = configStyleSettings;
 
   const rootType = context.root?.type || '_';
   const pathArr: Array<string | number> = [];

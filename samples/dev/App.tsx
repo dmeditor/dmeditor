@@ -120,9 +120,7 @@ setDMEditorConfig({
       }
       return { allowedTypes: allowedTypes };
     },
-    configStyleSettings: (current, context, parentIsList): StyleSettingsType => {
-      return getStyleConfig({ current, context, parentIsList }, styleSettings);
-    },
+    configStyleSettings: styleSettings,
   },
   widgets: {
     heading: { defaultStyle: { _: 'big-space' } },
