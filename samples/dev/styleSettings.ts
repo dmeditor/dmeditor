@@ -81,6 +81,7 @@ export const styleSettings: {
       config: {
         settings: ['container-padding', 'container-background-color'],
         builtInSettings: ['list-item-gap'],
+        styles: {},
       },
     },
     {

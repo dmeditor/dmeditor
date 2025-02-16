@@ -5,52 +5,24 @@ import { BrowseImageCallbackParams } from '../../../src/core/config';
 
 const itemData = [
   {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
+    img: 'https://dmeditor.c.digimaker.com/var/images/full/images/u/uqq/upload-3380612112-img_1671.jpg',
+    title: 'Pic 1',
   },
   {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
+    img: 'https://dmeditor.c.digimaker.com/var/images/full/images/q/qhf/upload-235630515-img_1681.jpg',
+    title: 'Pic 2',
   },
   {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
+    img: 'https://dmeditor.c.digimaker.com/var/images/full/images/z/zse/upload-3512075529-bg.jpg',
+    title: 'Pic 3',
   },
   {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
+    img: 'https://dmeditor.c.digimaker.com/var/images/full/images/t/tio/upload-21715531-powerpoint.jpg',
+    title: 'Pic 4',
   },
   {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
+    img: 'https://dmeditor.c.digimaker.com/var/images/full/images/n/ndy/upload-3100060534-enterprise.jpg',
+    title: 'Pic 5',
   },
 ];
 
@@ -70,7 +42,7 @@ export const BrowseImage: React.FC<{
         {
           src: itemData[index].img,
           id: index,
-          thumbnail: `${itemData[index].img}?w=164&h=164&fit=crop&auto=format`,
+          thumbnail: `${itemData[index].img}`,
         },
       ];
       setLocalValue(selectedList);
@@ -86,7 +58,7 @@ export const BrowseImage: React.FC<{
         {
           src: itemData[index].img,
           id: index,
-          thumbnail: `${itemData[index].img}?w=164&h=164&fit=crop&auto=format`,
+          thumbnail: `${itemData[index].img}`,
         },
       ];
     }
