@@ -5,13 +5,13 @@ import {
   ArrowUpwardOutlined,
   DeleteOutline,
 } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import { nanoid } from 'nanoid';
 
 import { useEditorStore } from '../../..';
 import type { DME } from '../../types';
 import { PropertyButton } from '../../utils';
-import { CellOperation, CellTitle, Row } from './styled';
+import { CellOperation, Row } from './styled';
 
 const ListWithTitle = (props: DME.SettingComponentProps) => {
   const {
@@ -43,13 +43,17 @@ const ListWithTitle = (props: DME.SettingComponentProps) => {
     });
   };
 
-  const changeTitle = (e: MouseEvent, index: number) => {
+  const changeItemValue = (value: string, index: number, type: 'title' | 'tabKey') => {
     updateBlockByPath(blockPath, (_, block) => {
       if (!block.children) {
         console.error('Tabs children not found!');
         return;
       }
-      block.children[index].meta.title = e.target?.innerText;
+      if (type === 'title') {
+        block.children[index].meta.title = value;
+      } else {
+        block.children[index].meta.tabKey = value;
+      }
     });
   };
 
@@ -96,23 +100,17 @@ const ListWithTitle = (props: DME.SettingComponentProps) => {
       {Array.isArray(value) && (
         <div>
           {value.map((item, index) => (
-            <Row>
-              <CellTitle
-                onBlur={(e) => changeTitle(e, index)}
-                suppressContentEditableWarning
-                contentEditable={true}
-              >
-                {item?.meta.title}
-              </CellTitle>
-              <CellTitle
-                width={50}
-                title="Tab key"
-                // onBlur={(e) => changeTitle(e, index)}
-                suppressContentEditableWarning
-                contentEditable={true}
-              >
-                {item?.meta.tabKey}
-              </CellTitle>
+            <Row key={item?.meta?.tabKey || ''}>
+              <TextField
+                defaultValue={item?.meta.title}
+                onBlur={(e) => changeItemValue(e.target.value, index, 'title')}
+              />
+              <TextField
+                defaultValue={item?.meta.tabKey}
+                style={{ width: 50 }}
+                title="Key"
+                onBlur={(e) => changeItemValue(e.target.value, index, 'tabKey')}
+              />
               <CellOperation>
                 {index !== 0 && (
                   <PropertyButton
