@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { AddCircleOutlineOutlined } from '@mui/icons-material';
+import { AddCircleOutlineOutlined, AddOutlined } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
 import { orange } from '@mui/material/colors';
 import { useGlobalVars } from 'dmeditor/core/main/store';
 import { nanoid } from 'nanoid';
@@ -103,13 +104,9 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
               </NavItem>
             ))}
             {props.mode === 'edit' && (
-              <span className="flex items-center">
-                <AddCircleOutlineOutlined
-                  style={{ cursor: 'pointer' }}
-                  onClick={addTab}
-                  sx={{ color: orange[500] }}
-                />
-              </span>
+              <IconButton onClick={addTab} color="warning" size="small">
+                <AddOutlined />
+              </IconButton>
             )}
           </Nav>
 
