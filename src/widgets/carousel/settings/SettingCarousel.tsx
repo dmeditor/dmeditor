@@ -1,6 +1,6 @@
 import { MouseEvent, useState } from 'react';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Button, Input, TextField } from '@mui/material';
 
 import { ImageChooser, ImageSetting, useEditorStore } from '../../..';
 import type { DME } from '../../..';
@@ -59,6 +59,12 @@ const Carousel = (props: DME.SettingComponentProps) => {
     });
   };
 
+  const updateProperty = (index: number, name: string, value: string) => {
+    updateBlockByPath<CarouselEntity>(blockPath, (data) => {
+      data.items[index] = { ...data.items[index], [name]: value };
+    });
+  };
+
   const addImage = (imageInfo: any) => {
     updateBlockByPath<CarouselEntity>(blockPath, (data) => {
       data.items = [...data.items, { image: imageInfo[0].src, link: '' }];
@@ -76,6 +82,30 @@ const Carousel = (props: DME.SettingComponentProps) => {
                   updateImage(index, info.src);
                 }}
               />
+              <div>
+                <TextField
+                  title={item.link}
+                  sx={{ width: 120 }}
+                  placeholder="Link"
+                  size="small"
+                  defaultValue={item.link}
+                  onBlur={(e) => {
+                    updateProperty(index, 'link', e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <TextField
+                  title={item.title}
+                  placeholder="Title"
+                  sx={{ width: 50 }}
+                  size="small"
+                  defaultValue={item.title}
+                  onBlur={(e) => {
+                    updateProperty(index, 'title', e.target.value);
+                  }}
+                />
+              </div>
               <div className="btn-groups">
                 {index !== 0 && (
                   <PropertyButton

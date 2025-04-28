@@ -5,6 +5,7 @@ import {
   ArrowLeftOutlined,
 } from '@mui/icons-material';
 import classNames from 'classnames';
+import { DME } from 'dmeditor/core/types';
 import { TransitionStatus } from 'react-transition-group';
 
 import Transition from '../../core/components/transition';
@@ -32,8 +33,9 @@ const Carousel = ({
   blockNode: {
     data: { items, animation, autoPlay },
   },
+  mode,
   styleClasses,
-}) => {
+}: DME.WidgetRenderProps<CarouselEntity>) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -88,45 +90,70 @@ const Carousel = ({
   const handleMouseLeave = useCallback(() => setPaused(false), []);
 
   const carouselChildren = useMemo(() => {
+    let touchStart = 0;
     return items.map((slide: Slide, index: number) => {
       const isActive = index === activeIndex;
 
       return (
-        <Transition
-          key={index}
-          in={isActive}
-          timeout={600}
-          classNames="carousel"
-          addEndListener={transitionEndListener}
+        <div
+          onTouchStart={(e) => {
+            touchStart = e.touches[0].clientX;
+          }}
+          onTouchEnd={(e) => {
+            const touchEnd = e.changedTouches[0].clientX;
+            if (touchEnd > touchStart + 5) {
+              nextClick();
+            } else if (touchEnd < touchStart - 5) {
+              previousClick();
+            }
+          }}
         >
-          {(status: TransitionStatus) => (
-            <StyledCarouselItem
-              key={index}
-              animation={animation}
-              isActive={isActive}
-              status={status}
-              className={classNames(
-                styleClasses['carousel-item'] || 'dme-carousel-item',
-                animation === 'slide' && {
-                  'carousel-item-next': isActive && status !== 'entered',
-                  active: status === 'entered' || status === 'exiting',
-                  'carousel-item-start': status === 'entering' || status === 'exiting',
-                },
-              )}
-            >
-              <StyledCarouselImage
-                className={styleClasses['carousel-image'] || 'dme-carousel-image'}
-                src={dmeConfig.general.imagePath(slide.image)}
-              />
-              {slide.title && (
-                <StyledCarouselCaption>
-                  <h5>{index} slide</h5>
-                  <p>{slide.title}</p>
-                </StyledCarouselCaption>
-              )}
-            </StyledCarouselItem>
-          )}
-        </Transition>
+          <Transition
+            key={index}
+            in={isActive}
+            timeout={600}
+            classNames="carousel"
+            addEndListener={transitionEndListener}
+          >
+            {(status: TransitionStatus) => (
+              <StyledCarouselItem
+                key={index}
+                animation={animation}
+                isActive={isActive}
+                status={status}
+                className={classNames(
+                  styleClasses['carousel-item'] || 'dme-carousel-item',
+                  animation === 'slide' && {
+                    'carousel-item-next': isActive && status !== 'entered',
+                    active: status === 'entered' || status === 'exiting',
+                    'carousel-item-start': status === 'entering' || status === 'exiting',
+                  },
+                )}
+              >
+                <StyledCarouselImage
+                  className={styleClasses['carousel-image'] || 'dme-carousel-image'}
+                  src={dmeConfig.general.imagePath(slide.image)}
+                />
+                {slide.title && (
+                  <StyledCarouselCaption
+                    className={styleClasses['carousel-title'] || 'dme-carousel-title'}
+                  >
+                    {slide.link ? (
+                      <a
+                        href={slide.link}
+                        className={styleClasses['carousel-title-link'] || 'dme-carousel-title-link'}
+                      >
+                        {slide.title}
+                      </a>
+                    ) : (
+                      slide.title
+                    )}
+                  </StyledCarouselCaption>
+                )}
+              </StyledCarouselItem>
+            )}
+          </Transition>
+        </div>
       );
     });
   }, [items, activeIndex, animation, styleClasses]);

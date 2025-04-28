@@ -42,14 +42,11 @@ export const StyledCarouselImage = styled.img({
 });
 
 export const StyledCarouselCaption = styled.div({
-  top: '1.25rem',
-  color: '#fff',
-  left: '15%',
-  'padding-bottom': '1.25rem',
-  'padding-top': '1.25rem',
+  left: 0,
+  bottom: 0,
+  width: '100%',
+  zIndex: 10,
   position: 'absolute',
-  right: '15%',
-  'text-align': 'center',
 });
 
 export const StyledCarsouelIndicator = styled.ul({
