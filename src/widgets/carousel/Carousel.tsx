@@ -102,9 +102,9 @@ const Carousel = ({
           onTouchEnd={(e) => {
             const touchEnd = e.changedTouches[0].clientX;
             if (touchEnd > touchStart + 5) {
-              nextClick();
-            } else if (touchEnd < touchStart - 5) {
               previousClick();
+            } else if (touchEnd < touchStart - 5) {
+              nextClick();
             }
           }}
         >
