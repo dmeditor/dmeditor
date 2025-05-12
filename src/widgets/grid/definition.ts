@@ -16,6 +16,7 @@ const gridWidget: DME.Widget = {
         type: 'grid',
         data: {
           columns: 3,
+          mobileColumns: 2,
         },
         children: [],
       };
@@ -28,6 +29,13 @@ const gridWidget: DME.Widget = {
       settingComponent: 'range',
       property: '.columns',
       parameters: { min: 1, max: 10 },
+    },
+    {
+      name: 'Mobile columns',
+      settingComponent: 'range',
+      property: '.mobileColumns',
+      appliedDevices: ['mobile'],
+      parameters: { min: 1, max: 3 },
     },
     {
       name: 'Gap',

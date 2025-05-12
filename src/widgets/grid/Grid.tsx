@@ -8,7 +8,7 @@ const Grid = (props: DME.WidgetRenderProps<EntityGrid>) => {
   const {
     blockNode,
     blockNode: {
-      data: { columns, gap, settings },
+      data: { columns, gap, settings, mobileColumns },
       children,
     },
   } = props;
@@ -17,7 +17,7 @@ const Grid = (props: DME.WidgetRenderProps<EntityGrid>) => {
 
   return (
     <StyledGrid
-      columns={device !== 'mobile' ? columns : 2}
+      columns={device !== 'mobile' ? columns : mobileColumns || 2}
       gap={gap}
       itemPosition={settings?.itemPosition}
     >
