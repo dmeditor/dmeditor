@@ -157,10 +157,10 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
             onTouchEnd={(e) => {
               const touchEnd = e.changedTouches[0].clientX;
               if (touchEnd > touchStart + 5) {
-                handlePrev();
+                handleNext();
                 setTouchMoveX(0);
               } else if (touchEnd < touchStart - 5) {
-                handleNext();
+                handlePrev();
                 setTouchMoveX(0);
               }
               touchStart = 0;

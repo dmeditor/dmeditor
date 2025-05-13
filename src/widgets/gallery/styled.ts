@@ -50,6 +50,7 @@ export const IconWrapper = styled.div<{ isRight?: boolean }>`
   width: 50%;
   height: 100%;
   top: 0px;
+  z-index: 15;
   display: flex;
   align-items: center;
   ${(props) =>
