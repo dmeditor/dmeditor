@@ -71,6 +71,9 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
     }
   };
 
+  let touchStart = 0;
+  const [touchMoveX, setTouchMoveX] = useState(0);
+
   return (
     <>
       <GalleryContainer>
@@ -141,13 +144,41 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
           <CloseOutlined fontSize="large" style={{ color: '#cccccc' }} />
         </IconButton>
         <DialogContent sx={{ padding: 0 }}>
-          <GalleryDialog className={galleryClassName('dialog-content')}>
+          <GalleryDialog
+            onTouchStart={(e) => {
+              touchStart = e.touches[0].clientX;
+            }}
+            onTouchMove={(e) => {
+              if (touchStart) {
+                const moveX = e.touches[0].clientX - touchStart;
+                setTouchMoveX(moveX);
+              }
+            }}
+            onTouchEnd={(e) => {
+              const touchEnd = e.changedTouches[0].clientX;
+              if (touchEnd > touchStart + 5) {
+                handlePrev();
+                setTouchMoveX(0);
+              } else if (touchEnd < touchStart - 5) {
+                handleNext();
+                setTouchMoveX(0);
+              }
+              touchStart = 0;
+            }}
+            className={galleryClassName('dialog-content')}
+          >
             <IconWrapper onClick={handlePrev}>
               <KeyboardArrowLeft fontSize="large" style={{ color: '#cccccc' }} />
             </IconWrapper>
             {selectedImageIndex !== -1 && (
-              <div>
+              <div style={{ overflow: 'hidden' }}>
                 <img
+                  style={{
+                    transform:
+                      'scale(' +
+                      (touchMoveX && touchMoveX < 100 ? 1 + Math.abs(touchMoveX) / 100 : 1) +
+                      ')',
+                  }}
                   className={GalleryImage + ` ${galleryClassName('dialog-img')}`}
                   src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                 />
