@@ -22,6 +22,7 @@ export const DeleteBlock = (props: { blockPath: Array<number | string>; block: D
         removeByPath(parentPath);
       }
     }
+    setShowConfirmation(false);
   };
 
   return (
