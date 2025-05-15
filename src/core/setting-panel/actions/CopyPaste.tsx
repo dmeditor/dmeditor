@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ContentCopy, ContentPaste } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
@@ -9,10 +10,12 @@ export const CopyPaste = () => {
     setCopyBlock,
     getCurrentBlock,
     getCopyBlock,
-    copyBlock: copiedBlock,
     selected: { currentListPath, blockIndex },
+    setSelected,
     insertBlock,
   } = useEditorStore();
+
+  const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
     const currentBlock = getCurrentBlock();
@@ -20,16 +23,20 @@ export const CopyPaste = () => {
       return;
     }
     setCopyBlock(currentBlock);
+    setCopied(true);
   };
 
   const handlePaste = () => {
     const copyBlock = getCopyBlock();
 
-    if (!copyBlock) {
+    if (!copyBlock || typeof blockIndex !== 'number') {
       return;
     }
 
-    insertBlock(copyBlock, [...currentListPath, blockIndex + 1]);
+    const newIndex = blockIndex + 1;
+
+    insertBlock(copyBlock, [...currentListPath, newIndex]);
+    setSelected(newIndex);
   };
 
   return (
@@ -37,7 +44,7 @@ export const CopyPaste = () => {
       <Button color="warning" title="Copy" onClick={handleCopy}>
         <ContentCopy />
       </Button>
-      {copiedBlock && (
+      {copied && (
         <Button color="warning" title="Paste under" onClick={handlePaste}>
           <ContentPaste />
         </Button>

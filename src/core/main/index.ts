@@ -35,7 +35,6 @@ function createDMEditor() {
     storage: [] as DMEData.BlockList,
     page: { title: 'New page' },
     mode: 'edit' as DME.Mode,
-    copyBlock: undefined,
     hoverPath: undefined,
     addBlockData: undefined,
     recentColors,

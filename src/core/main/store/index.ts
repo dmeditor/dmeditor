@@ -460,13 +460,11 @@ export const useEditorStore = create<Store & Actions>()(
     },
     setCopyBlock: (block: DMEData.Block) => {
       set((state) => {
-        state.copyBlock = block;
         localStorage.setItem(dmeConfig.editor.clipboardKey, JSON.stringify(block));
       });
     },
     clearCopyBlock: () => {
       set((state) => {
-        state.copyBlock = undefined;
         localStorage.removeItem(dmeConfig.editor.clipboardKey);
       });
     },

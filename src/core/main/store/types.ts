@@ -20,7 +20,6 @@ export type Store = {
     currentListPath: Array<number | string>;
   };
   mode: DME.Mode;
-  copyBlock?: DMEData.Block;
   hoverPath?: Array<number | string>;
   addBlockData?: AddBlockParameters;
   storage: DMEData.BlockList; //data layer

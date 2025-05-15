@@ -43,7 +43,7 @@ export const DeleteBlock = (props: { blockPath: Array<number | string>; block: D
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setShowConfirmation(false)}> {i18n('Cancel')}</Button>
-            <Button>
+            <Button onClick={handleDelete}>
               <DeleteOutline />
               {i18n('Confirm')}
             </Button>

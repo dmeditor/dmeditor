@@ -3,6 +3,7 @@ import { CancelOutlined, ContentPaste, DeleteOutline } from '@mui/icons-material
 import { Button, IconButton } from '@mui/material';
 
 import { WidgetList } from '../components/widget-list';
+import { dmeConfig } from '../config';
 import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import { getListByPath } from '../main/store/helper';
@@ -22,7 +23,6 @@ export const AddBlock = () => {
     getCopyBlock,
     insertBlock,
     addBlockData,
-    copyBlock: copiedBlock,
     clearCopyBlock,
     setSelected,
     storage,
@@ -63,6 +63,8 @@ export const AddBlock = () => {
     setSelected(newIndex, addBlockData.context);
   };
 
+  const hasCopy = localStorage.getItem(dmeConfig.editor.clipboardKey);
+
   return (
     <AddBlockContainer>
       <AdddBlockHeader>
@@ -75,7 +77,7 @@ export const AddBlock = () => {
         <SettingDescription>{i18n('Please choose a widget')}</SettingDescription>
       </AdddBlockHeader>
       <WidgetListContainer>
-        {copiedBlock && (
+        {hasCopy && (
           <div
             className={css`
               margin-top: 10;
