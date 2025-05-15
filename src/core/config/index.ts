@@ -194,7 +194,7 @@ const defaultConfig = () => {
         ],
       },
       settingGroups: {
-        style_content: 'Content',
+        style_element: 'Element',
         style_text: 'Text',
         style_block: 'Block',
         style_border: 'Border',

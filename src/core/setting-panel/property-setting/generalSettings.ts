@@ -32,9 +32,9 @@ export const generalSettings: Array<DME.Setting> = [
     identifier: 'content-width',
     settingComponent: 'distance',
     property: 'settings.general.width',
-    parameters: { min: 0, max: 700, step: 5 },
+    parameters: { min: 0, max: 700, step: 5, defaultUnit: '%' },
     category: 'style',
-    group: 'style_content',
+    group: 'style_element',
     styleTags: ['block', 'list', 'general'],
   },
   {
@@ -43,7 +43,7 @@ export const generalSettings: Array<DME.Setting> = [
     settingComponent: 'align',
     property: 'settings.general.align',
     category: 'style',
-    group: 'style_content',
+    group: 'style_element',
     styleTags: ['block', 'list', 'general'],
   },
   {
