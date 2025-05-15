@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { css } from '@emotion/css';
 import { CancelOutlined, ContentPaste, DeleteOutline } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
@@ -63,7 +64,9 @@ export const AddBlock = () => {
     setSelected(newIndex, addBlockData.context);
   };
 
-  const hasCopy = localStorage.getItem(dmeConfig.editor.clipboardKey);
+  const [hasCopy, setHasCopy] = useState(
+    localStorage.getItem(dmeConfig.editor.clipboardKey) ? true : false,
+  );
 
   return (
     <AddBlockContainer>
@@ -80,31 +83,42 @@ export const AddBlock = () => {
         {hasCopy && (
           <div
             className={css`
-              margin-top: 10;
-              padding: 5px 10px;
-              display: flex;
-              align-items: center;
-              gap: 4px;
-              color: '#666666';
+              margin: 10px 10px 0px 10px;
+              border: 1px solid #f0f0f0;
+              border-radius: 5px;
+              padding: 8px 5px;
+              color: #666666;
               cursor: pointer;
+              position: relative;
 
               &:hover {
                 background-color: white;
               }
             `}
-            onClick={handlePaste}
           >
-            <ContentPaste style={{ color: '#333' }} />
-            <span>{i18n('Paste from clipboard')}</span>
             <IconButton
               title={i18n('Clear clipboard')}
+              disableRipple
+              size="small"
               onClick={(e) => {
-                e.stopPropagation();
                 clearCopyBlock();
+                setHasCopy(false);
               }}
+              style={{ position: 'absolute', right: 0, top: 0 }}
             >
               <DeleteOutline />
             </IconButton>
+            <div
+              className={css`
+                display: flex;
+                align-items: center;
+                gap: 4px;
+              `}
+              onClick={handlePaste}
+            >
+              <ContentPaste style={{ color: '#333', fontSize: 20 }} />
+              <span>{i18n('Paste from clipboard')}</span>
+            </div>
           </div>
         )}
         <WidgetList filter={addBlockData?.types} onSelect={addBlockDone} />
