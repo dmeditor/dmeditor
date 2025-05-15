@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { DeleteOutline } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
-import { i18n, useEditorStore } from '../../..';
+import { DMEData, i18n, useEditorStore } from '../../..';
+import { getWidgetName } from '../../utils';
 import { PropertyButton } from '../Property';
 
-export const DeleteBlock = (props: { blockPath: Array<number | string> }) => {
+export const DeleteBlock = (props: { blockPath: Array<number | string>; block: DMEData.Block }) => {
   const { removeByPath } = useEditorStore();
+
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleDelete = () => {
     const length = props.blockPath.length;
@@ -21,8 +25,31 @@ export const DeleteBlock = (props: { blockPath: Array<number | string> }) => {
   };
 
   return (
-    <Button onClick={handleDelete} variant="outlined" color="warning" title="Delete">
-      <DeleteOutline /> {i18n('Delete')}
-    </Button>
+    <>
+      <Button
+        onClick={() => setShowConfirmation(true)}
+        variant="outlined"
+        color="warning"
+        title="Delete"
+      >
+        <DeleteOutline /> {i18n('Delete')}
+      </Button>
+
+      {showConfirmation && (
+        <Dialog open={true} onClose={() => setShowConfirmation(false)}>
+          <DialogTitle>{i18n('Delete confirmation')}</DialogTitle>
+          <DialogContent>
+            {i18n('Are you sure to delete')} <b>{getWidgetName(props.block.type)}</b>?
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowConfirmation(false)}> {i18n('Cancel')}</Button>
+            <Button>
+              <DeleteOutline />
+              {i18n('Confirm')}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
+    </>
   );
 };

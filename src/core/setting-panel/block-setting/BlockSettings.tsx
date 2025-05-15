@@ -97,7 +97,7 @@ export const BlockSettings = (props: {
                 ) && (
                   <ActionPanelButtonGroup>
                     <RightElement>
-                      <DeleteBlock blockPath={selectedPath} />
+                      <DeleteBlock blockPath={selectedPath} block={blockData} />
                     </RightElement>
                   </ActionPanelButtonGroup>
                 )}

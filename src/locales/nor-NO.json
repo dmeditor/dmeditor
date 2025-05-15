@@ -30,7 +30,9 @@
     "Confirm": "Bekrefte",
     "Cancel": "Avbryt",
     "Browse": "Browse",
-    "Choose": "Velg"
+    "Choose": "Velg",
+    "Delete confirmation": "Slettingsbekreftelse",
+    "Are you sure to delete": "Er du sikker på at du vil slette"
   },
   "tool": {
     "Save": "Lagre",
