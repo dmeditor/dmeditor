@@ -2,13 +2,13 @@ import styled from '@emotion/styled';
 
 export const InlineBlockStyle = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 5px;
   grid-row-gap: 5px;
 `;
 
 export const InlineBlockItemStyle = styled.div<{ selected?: boolean }>`
-  padding: 10px;
+  padding: 6px;
   border: 1px solid #f0f0f0;
   background-color: #efefef;
   cursor: pointer;
