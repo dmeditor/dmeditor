@@ -478,7 +478,6 @@ export const useEditorStore = create<Store & Actions>()(
         iterateBlockTree(clipboard, (item) => {
           item.id = nanoid();
         });
-        console.log('after id change:', clipboard);
         return clipboard as any;
       } catch (ex) {
         console.error('Not an object in clipboard. ref: ' + clipboardStr);
