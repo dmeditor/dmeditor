@@ -9,7 +9,7 @@ import type { DME, DMEData } from '../../types/dmeditor';
 import { isEmptyString, isKeyInObject, isStrictlyInfinity } from '../../utils';
 import emitter from '../../utils/event';
 import { getWidgetWithVariant, properties } from '../../utils/register';
-import { getDataByPath, getListByPath, iteratePath } from './helper';
+import { getDataByPath, getListByPath, iterateBlockTree, iteratePath } from './helper';
 import type { Actions, AddBlockParameters, Store } from './types';
 import { useGlobalVars } from './useGlobalVars';
 import { useSettingStatus } from './useSettingStatus';
@@ -475,7 +475,11 @@ export const useEditorStore = create<Store & Actions>()(
       }
       try {
         const clipboard = JSON.parse(clipboardStr);
-        return { ...clipboard, id: `widget-${nanoid()}` } as any;
+        iterateBlockTree(clipboard, (item) => {
+          item.id = nanoid();
+        });
+        console.log('after id change:', clipboard);
+        return clipboard as any;
       } catch (ex) {
         console.error('Not an object in clipboard. ref: ' + clipboardStr);
         return false;
