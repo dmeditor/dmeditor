@@ -271,7 +271,7 @@ export const useEditorStore = create<Store & Actions>()(
       set((state) => {
         state.storage = state.storage.filter((w) => w !== block);
       }),
-    setSelected: (blockIndex?: number) => {
+    setSelected: (blockIndex?: number, context?: (string | number)[]) => {
       set((state) => {
         if (blockIndex === undefined) {
           state.clearSelected();
@@ -279,6 +279,9 @@ export const useEditorStore = create<Store & Actions>()(
         }
 
         state.selected.blockIndex = blockIndex;
+        if (context) {
+          state.selected.currentListPath = context;
+        }
         // state.designer.selectedBlockIndex = selected;
         //state.designer.selectedBlock = block;
       });
@@ -429,7 +432,7 @@ export const useEditorStore = create<Store & Actions>()(
         state.page = data;
       });
     },
-    moveTo: (block: DMEData.Block, targetPath: Array<number | string>) => {
+    insertBlock: (block: DMEData.Block, targetPath: Array<number | string>) => {
       set((state) => {
         // get latest parent
         const parentBlock = getListByPath(
@@ -452,17 +455,33 @@ export const useEditorStore = create<Store & Actions>()(
         }
 
         // insert block to target path
-        parentBlock.splice(targetPath[targetPath.length - 1] as number, 0, block);
+        parentBlock.splice(targetIndex as number, 0, block);
       });
     },
     setCopyBlock: (block: DMEData.Block) => {
       set((state) => {
         state.copyBlock = block;
+        localStorage.setItem(dmeConfig.editor.clipboardKey, JSON.stringify(block));
+      });
+    },
+    clearCopyBlock: () => {
+      set((state) => {
+        state.copyBlock = undefined;
+        localStorage.removeItem(dmeConfig.editor.clipboardKey);
       });
     },
     getCopyBlock: () => {
-      const state = get();
-      return { ...state.copyBlock, id: `widget-${nanoid()}` } as any;
+      const clipboardStr = localStorage.getItem(dmeConfig.editor.clipboardKey);
+      if (!clipboardStr) {
+        return false;
+      }
+      try {
+        const clipboard = JSON.parse(clipboardStr);
+        return { ...clipboard, id: `widget-${nanoid()}` } as any;
+      } catch (ex) {
+        console.error('Not an object in clipboard. ref: ' + clipboardStr);
+        return false;
+      }
     },
     reset: () => {
       set(() => createDMEditor());

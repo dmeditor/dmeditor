@@ -7,7 +7,7 @@ import { PropertyButton } from '../Property';
 export const Move = (props: { blockPath: Array<number> }) => {
   const { blockPath } = props;
 
-  const { removeByPath, setSelected, moveTo, getBlockByPath, storage } = useEditorStore();
+  const { removeByPath, setSelected, insertBlock, getBlockByPath, storage } = useEditorStore();
 
   const handleMoveUp = () => {
     if (blockPath.length === 0) {
@@ -22,7 +22,7 @@ export const Move = (props: { blockPath: Array<number> }) => {
 
     //todo: put these 3 into state
     removeByPath(blockPath);
-    moveTo(currentBlock, [...blockPath.slice(0, blockPath.length - 1), targetIndex]);
+    insertBlock(currentBlock, [...blockPath.slice(0, blockPath.length - 1), targetIndex]);
     setSelected(targetIndex);
   };
   const handleMoveDown = () => {
@@ -45,7 +45,7 @@ export const Move = (props: { blockPath: Array<number> }) => {
     }
 
     removeByPath(blockPath);
-    moveTo(currentBlock, [...blockPath.splice(0, blockPath.length - 1), targetIndex]);
+    insertBlock(currentBlock, [...blockPath.splice(0, blockPath.length - 1), targetIndex]);
     setSelected(targetIndex);
   };
 

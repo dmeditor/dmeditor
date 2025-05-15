@@ -123,6 +123,7 @@ export interface DMEConfigType {
     heading?: Array<{ value: string; label: string }>;
     characters?: Array<string>;
     settingPanelWidth?: number;
+    clipboardKey?: string;
     //context is from closed list (not including) to self list. eg. hero-text/list
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
     //context is from closest mixed to itself. eg. hero-text/list/heading, tabs/0/heading
@@ -168,6 +169,7 @@ const defaultConfig = () => {
       enableEditControl: false,
       disabledStyleSettings: {},
       defaultStyle: {},
+      clipboardKey: 'dme-clipboard',
       colors: {
         text: [
           { color: '#000000', name: 'Black' },
@@ -287,6 +289,7 @@ const dmeConfig: {
     settingPanelWidth: number;
     ui: { [variable: string]: string };
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
+    clipboardKey: string;
     configStyleSettings?:
       | ((
           current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },

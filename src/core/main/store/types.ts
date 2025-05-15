@@ -35,6 +35,7 @@ export type Actions = {
     position: AddBlockPosition,
     extraParams: { types?: Array<string> | string; isEmbed?: boolean },
   ) => void;
+  //cancel adding dialog
   cancelAdding: () => void;
   updateHoverPath: (path: Array<number | string>) => void;
   clearAdding: () => void;
@@ -54,7 +55,7 @@ export type Actions = {
   getSelectedBlock: <T = DMEData.DefaultDataType>() => DMEData.Block<T> | undefined;
   removeBlock: (widget: DMEData.Block) => void;
   removeByPath: (path: Array<number | string>) => void;
-  setSelected: (blockIndex?: number) => void;
+  setSelected: (blockIndex?: number, context?: (string | number)[]) => void;
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray: Array<number | string>, id: string) => void;
   getCurrentList: () => DMEData.BlockList | DMEData.BlockMap | null;
@@ -87,9 +88,10 @@ export type Actions = {
   isSelected: () => boolean;
   updatePage: (value: string, key: string) => void;
   setPageData: (data: DMEData.Page) => void;
-  moveTo: (block: DMEData.Block, targetPath: Array<number | string>) => void;
+  insertBlock: (block: DMEData.Block, targetPath: Array<number | string>) => void;
   setCopyBlock: (block: DMEData.Block) => void;
   getCopyBlock: () => DMEData.Block | undefined;
+  clearCopyBlock: () => void; //remove clipboard
   reset: () => void;
   getRecentColors: () => Array<string>;
   updateRecentColors: (color: string) => void;

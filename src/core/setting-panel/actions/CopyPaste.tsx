@@ -11,7 +11,7 @@ export const CopyPaste = () => {
     getCopyBlock,
     copyBlock: copiedBlock,
     selected: { currentListPath, blockIndex },
-    moveTo,
+    insertBlock,
   } = useEditorStore();
 
   const handleCopy = () => {
@@ -29,7 +29,7 @@ export const CopyPaste = () => {
       return;
     }
 
-    moveTo(copyBlock, [...currentListPath, blockIndex + 1]);
+    insertBlock(copyBlock, [...currentListPath, blockIndex + 1]);
   };
 
   return (
