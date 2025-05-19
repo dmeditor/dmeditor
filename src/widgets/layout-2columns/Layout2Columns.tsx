@@ -46,6 +46,7 @@ const layout2ColumnsWidget: DME.Widget = {
       property: '.columnWidth',
       name: 'Column width',
       settingComponent: 'range',
+      display: { marginTop: 20 },
       parameters: { min: 1, max: 11 },
     },
   ],

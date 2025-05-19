@@ -38,7 +38,7 @@ export const Layout3ColumnsSetting = (props: DME.SettingComponentProps) => {
   }, [column1Width, column2Width]);
 
   return (
-    <>
+    <div style={{ marginTop: 20 }}>
       <PropertyItem label="Column1 width">
         {/* todo: support showing disabled area where you can't slide to */}
         <Ranger
@@ -59,6 +59,6 @@ export const Layout3ColumnsSetting = (props: DME.SettingComponentProps) => {
           onChange={handleChange2}
         ></Ranger>
       </PropertyItem>
-    </>
+    </div>
   );
 };

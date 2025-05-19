@@ -312,6 +312,7 @@ export const SettingTree = (props: {
             upDown={propertyProps.display?.upDown}
             label={setting.name}
             autoWidth={setting.display?.labelFullWidth}
+            marginTop={setting.display?.marginTop}
             description={setting.description}
             key={blockPath + (setting.property || '')}
           >
