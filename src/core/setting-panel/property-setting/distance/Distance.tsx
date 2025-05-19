@@ -57,7 +57,8 @@ const Width = (
   const { updateBlockPropsByPath } = useEditorStore();
 
   const [inputType, setInputType] = useState(() => getInputType());
-  const [rangeValue, setRangeValue] = useState<number | undefined>(() => {
+
+  const convertPropsValue = (v: string | number | undefined) => {
     if (value === undefined) {
       return undefined;
     }
@@ -66,7 +67,17 @@ const Width = (
     } else {
       return value as number;
     }
+  };
+
+  const [rangeValue, setRangeValue] = useState<number | undefined>(() => {
+    return convertPropsValue(value);
   });
+
+  useEffect(() => {
+    const rangeValue = convertPropsValue(props.value);
+    setRangeValue(rangeValue);
+    setInputValue(convertRangeValueToInput(rangeValue));
+  }, [props.value]);
 
   const convertRangeValueToInput = (v?: number) => {
     return v ? v : '-'; // 0 is also to '-'

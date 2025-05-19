@@ -405,3 +405,45 @@ export const convertStyleDataToArray = (styles?: Record<string, string>) => {
   }
   return result;
 };
+
+export const setBlockValueByPath = (block: any, propName: string, propValue: any) => {
+  const [propKey, realPropsName, realPropsName2] = propName.split('.');
+  if (isEmptyString(propKey)) {
+    if (isPlainObject(block.data)) {
+      block['data'][realPropsName] = propValue;
+    } else {
+      console.warn('data is not an object');
+    }
+  } else if (propKey === '/dependency') {
+    block['dependency'] = propValue;
+  } else if (propKey === 'settings') {
+    if (isPlainObject(block.data)) {
+      if (isKeyInObject('settings', block.data)) {
+        if (realPropsName === 'general') {
+          console.log(realPropsName, realPropsName2);
+          if (isKeyInObject('general', block.data.settings)) {
+            block.data.settings.general[realPropsName2] = propValue;
+          } else {
+            console.log(realPropsName, realPropsName2, 22);
+            block.data[propKey][realPropsName] = { [realPropsName2]: propValue };
+          }
+        } else {
+          block.data[propKey][realPropsName] = propValue;
+        }
+      } else {
+        if (realPropsName === 'general') {
+          block.data[propKey] = { general: { [realPropsName2]: propValue } };
+        } else {
+          const settings = { [realPropsName]: propValue };
+          block.data[propKey] = settings;
+        }
+      }
+    } else {
+      console.warn('settings is not an object');
+    }
+  } else {
+    console.error(
+      `Invalid propName: ${propName}, it should be "settings.${propName}" or ".${propName}"`,
+    );
+  }
+};

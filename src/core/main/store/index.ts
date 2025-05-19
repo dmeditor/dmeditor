@@ -6,9 +6,9 @@ import { immer } from 'zustand/middleware/immer';
 import { createDMEditor } from '..';
 import { dmeConfig } from '../../../core/config';
 import type { DME, DMEData } from '../../types/dmeditor';
-import { isEmptyString, isKeyInObject, isStrictlyInfinity } from '../../utils';
+import { isEmptyString, isKeyInObject, isStrictlyInfinity, setBlockValueByPath } from '../../utils';
 import emitter from '../../utils/event';
-import { getWidgetWithVariant, properties } from '../../utils/register';
+import { getWidgetStyleOption, getWidgetWithVariant, properties } from '../../utils/register';
 import { getDataByPath, getListByPath, iterateBlockTree, iteratePath } from './helper';
 import type { Actions, AddBlockParameters, Store } from './types';
 import { useGlobalVars } from './useGlobalVars';
@@ -95,6 +95,26 @@ export const useEditorStore = create<Store & Actions>()(
 
         if (!blockData) {
           return;
+        }
+
+        //update data(settings) from style
+        const blockStyle = blockData.style;
+        if (blockStyle) {
+          for (const style of Object.keys(blockStyle)) {
+            const option = blockStyle[style];
+            const optionDef = getWidgetStyleOption(blockData.type, option, style);
+            if (!optionDef) {
+              continue;
+            }
+
+            const styleSettings = optionDef.settings;
+            if (styleSettings) {
+              for (const property of Object.keys(styleSettings)) {
+                const value = styleSettings[property].value;
+                setBlockValueByPath(blockData, property, value);
+              }
+            }
+          }
         }
 
         if (isEmbed) {
@@ -341,45 +361,7 @@ export const useEditorStore = create<Store & Actions>()(
           block.data = {};
         }
 
-        const [propKey, realPropsName, realPropsName2] = propName.split('.');
-        if (isEmptyString(propKey)) {
-          if (isPlainObject(block.data)) {
-            block['data'][realPropsName] = propValue;
-          } else {
-            console.warn('data is not an object');
-          }
-        } else if (propKey === '/dependency') {
-          block['dependency'] = propValue;
-        } else if (propKey === 'settings') {
-          if (isPlainObject(block.data)) {
-            if (isKeyInObject('settings', block.data)) {
-              if (realPropsName === 'general') {
-                console.log(realPropsName, realPropsName2);
-                if (isKeyInObject('general', block.data.settings)) {
-                  block.data.settings.general[realPropsName2] = propValue;
-                } else {
-                  console.log(realPropsName, realPropsName2, 22);
-                  block.data[propKey][realPropsName] = { [realPropsName2]: propValue };
-                }
-              } else {
-                block.data[propKey][realPropsName] = propValue;
-              }
-            } else {
-              if (realPropsName === 'general') {
-                block.data[propKey] = { general: { [realPropsName2]: propValue } };
-              } else {
-                const settings = { [realPropsName]: propValue };
-                block.data[propKey] = settings;
-              }
-            }
-          } else {
-            console.warn('settings is not an object');
-          }
-        } else {
-          console.error(
-            `Invalid propName: ${propName}, it should be "settings.${propName}" or ".${propName}"`,
-          );
-        }
+        setBlockValueByPath(block, propName, propValue);
       });
     },
     updateSelectedBlock: <Type = DMEData.DefaultDataType>(

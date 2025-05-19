@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tune } from '@mui/icons-material';
 import { Button, Grid, InputAdornment, Slider, styled, TextField } from '@mui/material';
 import { i18n } from 'dmeditor/core/i18n';
@@ -46,6 +46,11 @@ const PaddingStandard: React.FC<PaddingStandardProps> = (props) => {
 
   const [sliderValue, setSliderValue] = useState(value);
   const [currentValue, setCurrentValue] = useState(value);
+
+  useEffect(() => {
+    setSliderValue(value);
+    setCurrentValue(value);
+  }, [value]);
 
   const handleSliderChange = (_: Event, value: number | number[]) => {
     if (isNumber(value)) {
