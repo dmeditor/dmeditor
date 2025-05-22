@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 
 export const SyledLayout = styled.div<{ columnWidth: number }>`
   display: grid;
-  width: 100%;
-  grid-template-columns: ${(props) => props.columnWidth / 12}fr ${(props) =>
-      1 - props.columnWidth / 12}fr;
+  grid-template-columns: minmax(0, 1fr) minmax(
+      0,
+      ${(props) => (12 - props.columnWidth) / props.columnWidth}fr
+    );
 
   .dme-viewmode-mobile & {
     display: block;
