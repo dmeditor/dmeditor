@@ -96,11 +96,6 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
 
   const generalSettings = { ...props.data.data.settings?.general };
   const device = useDevice();
-  if (device === 'mobile') {
-    if (generalSettings.width) {
-      generalSettings.width = undefined;
-    }
-  }
 
   const divRef = useRef<HTMLDivElement>(null);
 
