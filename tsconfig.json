@@ -25,6 +25,6 @@
     },
     "listEmittedFiles": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "./index.d.ts", "test/**/*.ts", "test/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "./index.d.ts", "test/**/*.ts"],
   "exclude": ["node_modules", "src/locales/**/*"]
 }
