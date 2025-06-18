@@ -25,6 +25,7 @@ export namespace DME {
     group?: string;
     display?: {
       labelFullWidth?: boolean;
+      marginTop?: number;
       upDown?: boolean;
     };
     parameters?: { updateOnUnfocus?: boolean } & Record<string, unknown>;
