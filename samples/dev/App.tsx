@@ -80,7 +80,7 @@ setDMEditorConfig({
     zIndex: 100,
     defaultStyle: {
       ...defaultStyleConfig,
-      heading: { _: 'theme' },
+      heading: { margin: 'big-margin' },
       button: { _: 'project-primary' },
     },
     colors: {
@@ -188,7 +188,7 @@ const App = () => {
         settings: {
           align: 'left',
           general: {
-            padding: 80,
+            // padding: 80,
           },
         },
       },

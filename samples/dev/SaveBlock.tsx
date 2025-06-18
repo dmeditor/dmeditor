@@ -17,8 +17,6 @@ const list: Array<SavedBlockData & { id: string; widget: string }> = [];
 
 export const getSavedBlocks = (widget: string) => {
   const result = list.filter((item) => item.widget === widget);
-  console.log(widget);
-  console.log(result);
   return result;
 };
 
