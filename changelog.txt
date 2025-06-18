@@ -1,5 +1,20 @@
-0.2.3-beta.1
-
+0.2.3
+- 2025-06-17 updated: allow percentage width in mobile
+- 2025-06-13 fixed: [carousel]don't show button when there is only 1 item
+- 2025-06-03 fixed: 2 column/3columns not full width
+- 2025-05-19 fixed: setting not loading value set by style (special default style)
+- 2025-05-15 fixed: copying should replace all ids (including children)
+- 2025-05-15 added: paster while adding & use local storage for copy so it cross tabs/pages
+- 2025-05-15 added: delete confirmation
+- 2025-05-15 updated: change style_content to be style_element and name
+- 2025-05-13 added: gallery supporting touch when pop up
+- 2025-05-12 added: mobile column for grid
+- 2025-04-28 added: touch & title & link in carousel
+- 2025-02-17 updated: tabs clean style to use custom style
+- 2025-02-15 added: configStyleSettings in config/editor (both for variable and callback) to control setting based on context
+- 2025-02-11 fixed: style tab's scrollbar issue
+- 2025-02-10 fixed: show adding message shouldn't need selection
+- 2025-02-10 fixed: edit mask clicking multi times in accordion
 
 0.2.2
 - 2025-02-07 added: iframe mobile height setting
