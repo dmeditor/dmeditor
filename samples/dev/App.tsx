@@ -134,6 +134,15 @@ setDMEditorConfig({
         );
       },
     },
+    module: {
+      modules: [
+        {
+          identifier: 'application',
+          name: 'Application',
+          render: () => <div>View in frontend</div>,
+        },
+      ],
+    },
     form: {
       submit: async (data, extra) => {
         console.log(data);
