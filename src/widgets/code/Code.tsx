@@ -64,10 +64,15 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
             <div>
               <Alert severity="warning">
                 Note: <br />
-                1. The Code supports inline css and javascript(inline or external, but script should
-                be under root level not inside a tag). <br />
-                2. It gives a better editorial experience and flexibility to develop widget instead
-                of using Code. eg. Facebook page widget. <br />
+                1. It supports inline css and javascript(inline or external, but script should be
+                under root level not inside a tag). <br />
+                <br />
+                2. Many javascripts only work on first load (eg. when refreshing the page) - means
+                it works well in frontend but maybe not in backend if it's loaded serveral times.{' '}
+                <br />
+                <br />
+                3. If possible, develop a separate widget other than using Code.
+                <br />
               </Alert>
             </div>
             <TextField
