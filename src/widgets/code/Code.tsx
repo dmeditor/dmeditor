@@ -13,6 +13,7 @@ import {
 
 import { DME, i18n, useEditorStore } from '../..';
 import { CodeEntity } from './entity';
+import { HtmlWithScript } from './HtmlWithScript';
 import { CodeMask, StyledCode } from './styled';
 
 export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
@@ -26,7 +27,6 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   const { updateBlockByPath } = useEditorStore();
   const [open, setOpen] = useState(!content);
   const [value, setValue] = useState('');
-  const divRef = useRef<HTMLDivElement>(null);
   let mounted = false;
 
   const handleClose = () => {
@@ -43,11 +43,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
 
   return (
     <StyledCode editMode={props.mode === 'edit'}>
-      {content ? (
-        <div dangerouslySetInnerHTML={{ __html: content }} ref={divRef} />
-      ) : (
-        <div>Please Input Code Content</div>
-      )}
+      {content ? <HtmlWithScript html={content} /> : <div>Please Input Code Content</div>}
       {!mounted && (
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>
@@ -67,11 +63,11 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
           <DialogContent sx={{ width: 500 }}>
             <div>
               <Alert severity="warning">
-                Important: <br />
-                1. Code is used for case where there is no available widget, use widget if there is
-                insetad of Code. eg. Facebook page widget. <br />
-                2. Code doesn't support javascript tag for now but support css 'style' tag.
-                (Workaround for javascript support: ask project dever to add javascript if needed.)
+                Note: <br />
+                1. The Code supports inline css and javascript(inline or external, but script should
+                be under root level not inside a tag). <br />
+                2. It gives a better editorial experience and flexibility to develop widget instead
+                of using Code. eg. Facebook page widget. <br />
               </Alert>
             </div>
             <TextField
