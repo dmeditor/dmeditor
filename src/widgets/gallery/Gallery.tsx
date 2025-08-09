@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CloseOutlined, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Dialog, DialogContent, IconButton } from '@mui/material';
 import { DME } from 'dmeditor/core/types';
@@ -39,8 +39,29 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
 
   const totalPage = itemsPerPage ? Math.ceil(items.length / itemsPerPage) : 1;
 
+  const handleNext = useCallback(() => {
+    setSelectedImageIndex((index) => (index + 1) % items.length);
+  }, [items.length]);
+
+  const handlePrev = useCallback(() => {
+    setSelectedImageIndex((index) => (index - 1 + items.length) % items.length);
+  }, [items.length]);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      console.log('hello');
+      if (e.key === 'ArrowLeft') {
+        handlePrev();
+      } else if (e.key === 'ArrowRight') {
+        handleNext();
+      }
+    },
+    [handlePrev, handleNext],
+  );
+
   const handleClick = (index: number) => {
     setOpen(true);
+
     if (!itemsPerPage) {
       setSelectedImageIndex(index);
     } else {
@@ -48,18 +69,19 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
     }
   };
 
+  useEffect(() => {
+    if (open) {
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      console.log('remove keydown');
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [open]);
+
   const handleClose = (_evt: React.SyntheticEvent, reason: string) => {
     if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
       setOpen(false);
     }
-  };
-
-  const handleNext = () => {
-    setSelectedImageIndex((index) => (index + 1) % items.length);
-  };
-
-  const handlePrev = () => {
-    setSelectedImageIndex((index) => (index - 1 + items.length) % items.length);
   };
 
   const getCurrentItems = () => {
