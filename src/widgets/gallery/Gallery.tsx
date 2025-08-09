@@ -49,7 +49,6 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      console.log('hello');
       if (e.key === 'ArrowLeft') {
         handlePrev();
       } else if (e.key === 'ArrowRight') {
@@ -73,7 +72,6 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
     if (open) {
       window.addEventListener('keydown', handleKeyDown);
     } else {
-      console.log('remove keydown');
       window.removeEventListener('keydown', handleKeyDown);
     }
   }, [open]);
