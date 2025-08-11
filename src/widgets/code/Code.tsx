@@ -104,7 +104,7 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
               onChange={setRenderAsIframe}
               label="Render as iframe (more javascript friendly)"
             />
-            <div style={{ color: '#666666' }}>
+            <div style={{ color: '#666666', fontSize: 12 }}>
               Note: If unchecked, &lt;script&gt; should be under root if there is.
             </div>
           </DialogContent>
