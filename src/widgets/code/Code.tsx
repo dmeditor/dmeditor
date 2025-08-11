@@ -1,12 +1,14 @@
-import { useRef, useState } from 'react';
-import { CloseOutlined } from '@mui/icons-material';
+import { useEffect, useRef, useState } from 'react';
+import { CheckBox, CloseOutlined } from '@mui/icons-material';
 import {
   Alert,
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
   IconButton,
   TextField,
 } from '@mui/material';
@@ -14,12 +16,12 @@ import {
 import { DME, i18n, useEditorStore } from '../..';
 import { CodeEntity } from './entity';
 import { HtmlWithScript } from './HtmlWithScript';
-import { CodeMask, StyledCode } from './styled';
+import { StyledCode } from './styled';
 
 export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   const {
     blockNode: {
-      data: { content },
+      data: { content, renderAsIframe },
     },
     path,
   } = props;
@@ -27,6 +29,8 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
   const { updateBlockByPath } = useEditorStore();
   const [open, setOpen] = useState(!content);
   const [value, setValue] = useState('');
+  const [createdRenderAsIframe, setCreatedRenderAsIframe] = useState(false);
+
   let mounted = false;
 
   const handleClose = () => {
@@ -38,12 +42,21 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
     handleClose();
     updateBlockByPath(path, (data) => {
       data.content = value;
+      data.renderAsIframe = createdRenderAsIframe;
     });
+  };
+
+  const setRenderAsIframe = (e: any) => {
+    setCreatedRenderAsIframe(e.target.checked);
   };
 
   return (
     <StyledCode editMode={props.mode === 'edit'}>
-      {content ? <HtmlWithScript html={content} /> : <div>Please Input Code Content</div>}
+      {content ? (
+        <HtmlWithScript html={content} renderAsIframe={renderAsIframe} />
+      ) : (
+        <div>Please Input Code Content</div>
+      )}
       {!mounted && (
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>
@@ -64,19 +77,18 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
             <div>
               <Alert severity="warning">
                 Note: <br />
-                1. It supports inline css and javascript(inline or external, but script should be
-                under root level not inside a tag). <br />
-                <br />
-                2. Many javascripts only work on first load (eg. when refreshing the page) - means
-                it works well in frontend but maybe not in backend if it's loaded serveral times.{' '}
-                <br />
-                <br />
-                3. If possible, develop a separate widget other than using Code.
+                1. It supports inline css and javascript. <br />
+                2. If possible, develop a separate widget other than using Code.
                 <br />
               </Alert>
             </div>
             <TextField
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                '& .MuiInputBase-root': { padding: '5px' },
+                fontSize: '12px',
+                lineHeight: 1.2,
+              }}
               autoFocus
               multiline
               rows={10}
@@ -87,6 +99,14 @@ export function Code(props: DME.WidgetRenderProps<CodeEntity>) {
                 setValue(e.target.value);
               }}
             />
+            <FormControlLabel
+              control={<Checkbox />}
+              onChange={setRenderAsIframe}
+              label="Render as iframe (more javascript friendly)"
+            />
+            <div style={{ color: '#666666' }}>
+              Note: If unchecked, &lt;script&gt; should be under root if there is.
+            </div>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>{i18n('Cancel')}</Button>

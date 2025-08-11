@@ -24,6 +24,12 @@ const definition: DME.Widget = {
       custom: true,
       settingComponent: 'codeInput',
     },
+    {
+      name: 'Render as iframe',
+      property: '.renderAsIframe',
+      description: i18n('If your code includes javascript, check this', 'widget'),
+      settingComponent: 'checkbox',
+    },
   ],
 };
 

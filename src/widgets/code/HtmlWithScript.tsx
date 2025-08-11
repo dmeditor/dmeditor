@@ -1,6 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export const HtmlWithScript = ({ html }: { html: string }) => {
+export const HtmlWithScript = ({
+  html,
+  renderAsIframe,
+}: {
+  html: string;
+  renderAsIframe?: boolean;
+}) => {
+  if (!renderAsIframe) {
+    return <HtmlDiv html={html} />;
+  } else {
+    return <HtmlIframe html={html} />;
+  }
+};
+
+const HtmlDiv = ({ html }: { html: string }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -37,4 +51,53 @@ export const HtmlWithScript = ({ html }: { html: string }) => {
   }, [html]);
 
   return <div ref={containerRef} />;
+};
+
+const HtmlIframe = ({ html }: { html: string }) => {
+  const [height, setHeight] = useState(100);
+  const [htmlIframe, setHtmlIframe] = useState('');
+
+  const setHeightWaitingTime = 1000; //ms
+
+  useEffect(() => {
+    const htmlIframe = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title></title>
+      <script>
+      function sendHeight() {
+            const body = document.body;
+            const height = body.scrollHeight;
+            body.style.visibility = 'visible';
+            parent.postMessage({ type: 'setHeight', height }, '*');
+          }
+          window.addEventListener('load', ()=>{
+            setTimeout(sendHeight, ${setHeightWaitingTime});
+          });
+          // window.addEventListener('resize', sendHeight);
+      </script>
+    </head>
+    <body style="margin:0;padding:0;visibility:hidden;">
+     ${html}
+    </body>
+    </html>
+  `;
+    setHtmlIframe(htmlIframe);
+  }, [html]);
+
+  useEffect(() => {
+    const handleMessage = (event: any) => {
+      if (event.data?.type === 'setHeight' && typeof event.data.height === 'number') {
+        setHeight(event.data.height);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
+  return <iframe srcDoc={htmlIframe} style={{ border: 'none', width: '100%', height: height }} />;
 };

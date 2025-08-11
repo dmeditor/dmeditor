@@ -2,6 +2,7 @@ import { DMEData } from '../../core/types';
 
 interface CodeEntity {
   content: string;
+  renderAsIframe?: boolean;
   settings?: {
     general?: DMEData.GeneralSettingType;
   };
