@@ -70,7 +70,6 @@ const HtmlIframe = ({ html }: { html: string }) => {
       function sendHeight() {
             const body = document.body;
             const height = body.scrollHeight;
-            body.style.visibility = 'visible';
             parent.postMessage({ type: 'setHeight', height }, '*');
           }
           window.addEventListener('load', ()=>{
@@ -79,7 +78,7 @@ const HtmlIframe = ({ html }: { html: string }) => {
           // window.addEventListener('resize', sendHeight);
       </script>
     </head>
-    <body style="margin:0;padding:0;visibility:hidden;">
+    <body style="margin:0;padding:0;">
      ${html}
     </body>
     </html>
