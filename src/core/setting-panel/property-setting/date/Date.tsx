@@ -35,7 +35,7 @@ const Date = (
   return (
     <div>
       <input
-        style={{ padding: 5, fontFamily: 'Arial', fontSize: 15 }}
+        style={{ padding: 5, fontFamily: 'Arial', fontSize: 15, border: '1px solid #cccccc' }}
         type="date"
         onChange={onDateChange}
         defaultValue={dateValue}
@@ -43,7 +43,13 @@ const Date = (
       />
       {parameters.withTime && (
         <input
-          style={{ marginLeft: 5, padding: 5, fontFamily: 'Arial', fontSize: 15 }}
+          style={{
+            marginLeft: 5,
+            padding: 5,
+            fontFamily: 'Arial',
+            fontSize: 15,
+            border: '1px solid #cccccc',
+          }}
           type="time"
           onChange={onTimeChange}
           defaultValue={timeValue}
