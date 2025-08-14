@@ -4,6 +4,7 @@ import { DMEData } from '../../../src';
 export interface EntitySampleWidget {
   text: string;
   settings: {
+    date: string;
     width: number;
     insideBackground?: string;
     general?: DMEData.GeneralSettingType;

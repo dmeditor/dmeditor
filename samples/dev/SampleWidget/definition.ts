@@ -20,6 +20,14 @@ export const sampleWidgetDef = {
       property: 'settings.insideBackground',
     },
     {
+      name: 'From date',
+      settingComponent: 'date',
+      property: 'settings.date',
+      parameters: {
+        withTime: true,
+      },
+    },
+    {
       name: 'Width',
       settingComponent: 'setting_input',
       category: 'block',
