@@ -151,6 +151,7 @@ export const getDataByPath = (
   return result;
 };
 
+// return a block node's children or node array if it's
 export const getListByPath = (
   data: DMEData.BlockList,
   path: Array<number | string>,
@@ -159,7 +160,19 @@ export const getListByPath = (
     return data;
   }
   let listData = getDataByPath(data, path);
-  return listData && listData.children ? (listData.children as DMEData.BlockList) : null;
+  const lastIndex = path[path.length - 1];
+  if (listData) {
+    if (typeof lastIndex === 'number' && typeof listData === 'object' && listData.children) {
+      return listData.children as DMEData.BlockList;
+    } else if (typeof lastIndex === 'string' && Array.isArray(listData)) {
+      return listData as DMEData.BlockList;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+  // return listData && listData.children ? (listData.children as DMEData.BlockList) : null;
 };
 
 export const getDependencyOptions = (widget: string, data: DMEData.BlockList) => {
