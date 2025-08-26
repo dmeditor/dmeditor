@@ -74,8 +74,12 @@ export const SettingTree = (props: {
   const isSelected = level > 0 && arrayStarts(selectedPath, blockPath);
 
   const widgetDef = useMemo(() => {
-    const def = getWidget(blockData.type);
-    return def;
+    if (blockData.type) {
+      const def = getWidget(blockData.type);
+      return def;
+    } else {
+      return undefined;
+    }
   }, [blockData.type]);
 
   const [expanded, setExpanded] = useState(isSelected);
@@ -133,7 +137,9 @@ export const SettingTree = (props: {
               const parent = pathParams[pathParams.length - 2];
               if (
                 typeof parent.pathKey === 'number' ||
-                (parent.block && getWidget(parent.block.type).widgetType === 'list')
+                (parent.block &&
+                  parent.block.type &&
+                  getWidget(parent.block.type).widgetType === 'list')
               ) {
                 parentIsList = true;
               }
