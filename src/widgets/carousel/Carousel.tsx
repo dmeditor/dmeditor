@@ -31,7 +31,7 @@ const INTERVAL_TIME = 5000;
 
 const Carousel = ({
   blockNode: {
-    data: { items, animation, autoPlay },
+    data: { items, animation, autoPlay, linkOnImage },
   },
   mode,
   styleClasses,
@@ -130,10 +130,19 @@ const Carousel = ({
                   },
                 )}
               >
-                <StyledCarouselImage
-                  className={styleClasses['carousel-image'] || 'dme-carousel-image'}
-                  src={dmeConfig.general.imagePath(slide.image)}
-                />
+                {linkOnImage ? (
+                  <a href={slide.link}>
+                    <StyledCarouselImage
+                      className={styleClasses['carousel-image'] || 'dme-carousel-image'}
+                      src={dmeConfig.general.imagePath(slide.image)}
+                    />
+                  </a>
+                ) : (
+                  <StyledCarouselImage
+                    className={styleClasses['carousel-image'] || 'dme-carousel-image'}
+                    src={dmeConfig.general.imagePath(slide.image)}
+                  />
+                )}
                 {slide.title && (
                   <StyledCarouselCaption
                     className={styleClasses['carousel-title'] || 'dme-carousel-title'}

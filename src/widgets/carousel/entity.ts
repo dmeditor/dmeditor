@@ -4,6 +4,7 @@ interface CarouselEntity {
   animation: 'default' | 'fade';
   autoPlay: boolean;
   items: Array<{ link: string; image: string; title?: string }>;
+  linkOnImage?: boolean;
   settings: {
     general?: DMEData.GeneralSettingType;
   };

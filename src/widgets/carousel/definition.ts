@@ -45,6 +45,12 @@ const definition: DME.Widget = {
       custom: true,
       settingComponent: 'carousel',
     },
+    {
+      name: 'Link on Image',
+      property: '.linkOnImage',
+      settingComponent: 'checkbox',
+      description: 'Default is link on title.',
+    },
     // {
     //   name: '',
     //   property: '.children.meta',
