@@ -17,12 +17,15 @@ export const StyledCarouselItem = styled.div(
           width: '100%',
         };
       default:
-        const transitionStyles: Record<TransitionStatus, { opacity: number }> = {
-          entering: { opacity: 1 },
-          entered: { opacity: 1 },
-          exiting: { opacity: 0 },
-          exited: { opacity: 0 },
-          unmounted: { opacity: 0 },
+        const transitionStyles: Record<
+          TransitionStatus,
+          { opacity: number; 'pointer-events': string }
+        > = {
+          entering: { opacity: 1, 'pointer-events': 'auto' },
+          entered: { opacity: 1, 'pointer-events': 'auto' },
+          exiting: { opacity: 0, 'pointer-events': 'none' },
+          exited: { opacity: 0, 'pointer-events': 'none' },
+          unmounted: { opacity: 0, 'pointer-events': 'none' },
         };
         return {
           'backface-visibility': 'hidden',
@@ -30,7 +33,7 @@ export const StyledCarouselItem = styled.div(
           'margin-right': '-100%',
           position: 'relative',
           transition: `opacity 300ms ease-in-out`,
-          opacity: transitionStyles[status].opacity,
+          ...transitionStyles[status],
           width: '100%',
         };
     }

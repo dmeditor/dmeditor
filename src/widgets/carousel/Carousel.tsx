@@ -130,7 +130,7 @@ const Carousel = ({
                   },
                 )}
               >
-                {linkOnImage ? (
+                {linkOnImage && slide.link ? (
                   <a href={slide.link}>
                     <StyledCarouselImage
                       className={styleClasses['carousel-image'] || 'dme-carousel-image'}
@@ -166,7 +166,7 @@ const Carousel = ({
         </div>
       );
     });
-  }, [items, activeIndex, animation, styleClasses]);
+  }, [items, linkOnImage, activeIndex, animation, styleClasses]);
 
   const carouselIndicators = useMemo(() => {
     return items.map((_, index) => {
