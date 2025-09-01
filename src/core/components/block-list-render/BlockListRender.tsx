@@ -3,6 +3,7 @@ import { Button } from '@mui/material';
 
 import { dmeConfig } from '../../config';
 import { Mode } from '../../constants';
+import { i18n } from '../../i18n';
 import { AddingMessage, StyledAddWidgetButton } from '../../main/renderer/styled';
 import { useEditorStore, type AddBlockParameters } from '../../main/store';
 import { getContextInMixed } from '../../main/store/helper';
@@ -82,7 +83,9 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
     }
   };
 
-  const renderAddingMessage = <AddingMessage>Please choose widget.</AddingMessage>;
+  const renderAddingMessage = (
+    <AddingMessage>{i18n('Please choose widget from right menu')}</AddingMessage>
+  );
 
   const isHovering = (index: number) => {
     return isInSelectedContext && hoverPath?.join(',') === [...props.path, index].join(',');
