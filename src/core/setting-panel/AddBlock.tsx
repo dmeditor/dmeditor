@@ -77,7 +77,7 @@ export const AddBlock = () => {
           </Button>
         </RightElement>
         <SettingHeader>{i18n('Add block')}</SettingHeader>
-        <SettingDescription>{i18n('Please choose a widget')}</SettingDescription>
+        <SettingDescription>{i18n('Please choose a widget from right menu')}</SettingDescription>
       </AdddBlockHeader>
       <WidgetListContainer>
         {hasCopy && (
