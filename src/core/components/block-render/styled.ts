@@ -4,17 +4,21 @@ import { DMEData } from 'dmeditor/core/types';
 import { isObject } from 'lodash';
 
 const getMobileSettings = (settings: DMEData.GeneralSettingType) => {
-  const result = {} as DMEData.GeneralSettingType;
+  const result = { ...settings };
+  const mobileKeys: string[] = [];
+
   for (const setting in settings) {
-    if (setting.includes('Mobile')) {
-      continue;
+    if (setting.endsWith('Mobile')) {
+      const validSetting = setting.substring(0, setting.length - 6);
+      mobileKeys.push(validSetting);
     }
+  }
+
+  for (const setting of mobileKeys) {
     const settingMobile = setting + 'Mobile';
     const settingValue = settings[settingMobile];
     if (settingValue !== undefined) {
       result[setting] = settingValue;
-    } else {
-      result[setting] = settings[setting];
     }
   }
   return result;
