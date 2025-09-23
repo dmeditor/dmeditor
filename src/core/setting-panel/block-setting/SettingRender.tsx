@@ -29,16 +29,16 @@ export const SettingRender = (props: {
       return undefined;
     }
 
-    const mobileProperty = property + 'Mobile';
+    const mobileProperty = property + 'Mobile'; //only for style settings
     const mobileValue = getPropertyValue(mobileProperty, blockData);
 
     const [useMobileSetting, setUseMobileSetting] = useState(
-      isMobileSetting && mobileValue !== undefined,
+      isMobileSetting && mobileValue !== undefined && setting.category === 'style',
     );
 
     useEffect(() => {
       if (isMobileSetting) {
-        if (mobileValue !== undefined) {
+        if (mobileValue !== undefined && setting.category === 'style') {
           setUseMobileSetting(true);
         }
       } else {
@@ -69,7 +69,8 @@ export const SettingRender = (props: {
     };
 
     const enabled =
-      !propertyProps.disabled && (!isMobileSetting || (isMobileSetting && useMobileSetting));
+      !propertyProps.disabled &&
+      (setting.category !== 'style' || !isMobileSetting || (isMobileSetting && useMobileSetting));
 
     return (
       <div style={{ position: 'relative' }}>
@@ -89,7 +90,7 @@ export const SettingRender = (props: {
           />
         </PropertyItem>
 
-        {isMobileSetting && (
+        {isMobileSetting && setting.category === 'style' && (
           <div
             style={{
               position: 'absolute',
