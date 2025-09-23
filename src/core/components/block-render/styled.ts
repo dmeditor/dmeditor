@@ -3,9 +3,30 @@ import { dmeConfig } from 'dmeditor/core/config';
 import { DMEData } from 'dmeditor/core/types';
 import { isObject } from 'lodash';
 
+const getMobileSettings = (settings: DMEData.GeneralSettingType) => {
+  const result = {} as DMEData.GeneralSettingType;
+  for (const setting in settings) {
+    if (setting.includes('Mobile')) {
+      continue;
+    }
+    const settingMobile = setting + 'Mobile';
+    const settingValue = settings[settingMobile];
+    if (settingValue !== undefined) {
+      result[setting] = settingValue;
+    } else {
+      result[setting] = settings[setting];
+    }
+  }
+  return result;
+};
+
 const getGeneralStyle = (settings: DMEData.GeneralSettingType, device: string) => {
+  if (device === 'mobile') {
+    settings = getMobileSettings(settings);
+  }
   const elementStyle: any = {};
   const containerStyle: any = {};
+  //todo: can be deleted since it's covered by mobile settings
   if (settings.width) {
     if (device === 'mobile' && typeof settings.width === 'number') {
     } else {

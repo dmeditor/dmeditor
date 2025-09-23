@@ -35,6 +35,7 @@ export const generalSettings: Array<DME.Setting> = [
     parameters: { min: 0, max: 700, step: 5, defaultUnit: '%' },
     category: 'style',
     group: 'style_element',
+    appliedDevices: ['desktop', 'mobile'],
     styleTags: ['block', 'list', 'general'],
   },
   {
@@ -54,6 +55,7 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.padding',
     parameters: { min: 0, max: 100 },
     category: 'style',
+    appliedDevices: ['desktop', 'mobile'],
     styleTags: ['container', 'general'],
     group: 'style_block',
   },
@@ -66,6 +68,7 @@ export const generalSettings: Array<DME.Setting> = [
     category: 'style',
     description: 'Distance to preivous block',
     group: 'style_block',
+    appliedDevices: ['desktop', 'mobile'],
     styleTags: ['list', 'general'],
   },
   {

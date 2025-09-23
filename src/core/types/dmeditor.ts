@@ -262,5 +262,6 @@ export namespace DMEData {
     blockBackground?: string | { color?: string; image?: string; imagePosition?: string };
     background?: string | { color?: string; image?: string; imagePosition?: string };
     backgroundImage?: DMEData.BackgroundImageType;
+    [key: string]: any;
   }
 }

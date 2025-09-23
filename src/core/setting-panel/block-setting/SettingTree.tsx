@@ -4,9 +4,10 @@ import {
   ArrowDropDownOutlined,
   ArrowRightAltOutlined,
   ArrowRightOutlined,
+  CheckOutlined,
   DeleteOutline,
 } from '@mui/icons-material';
-import { Button, Collapse } from '@mui/material';
+import { Button, Collapse, IconButton } from '@mui/material';
 import { useWidgetSettingStore } from 'dmeditor/core/main/store';
 
 import {
@@ -40,6 +41,7 @@ import { ListOverview } from '../ListOverview';
 import Property from '../property-setting/property-item';
 import { StyleSettings } from '../style-settings/StyleSettings';
 import { isEmbedOwnSetting } from './embedSetting';
+import { SettingRender } from './SettingRender';
 import { StyledSettingList, StyledSettingNoGroup } from './styled';
 
 //Show settings of a widget, recurisively when there is embed
@@ -296,36 +298,15 @@ export const SettingTree = (props: {
       return <></>;
     }
     return list.map((setting) => {
-      if (setting.custom) {
-        return <Property {...{ ...setting, block: blockData, blockPath: blockPath }} />;
-      } else {
-        // const settings = getPropertyFromSettings(blockData);
-        const { property } = setting;
-        if (!property) {
-          return undefined;
-        }
-        const value = getPropertyValue(property, blockData);
-        const propertyProps = {
-          ...setting,
-          block: blockData,
-          value,
-          blockPath,
-          disabled: settingStatus[property] === 'disabled',
-        };
-
-        return (
-          <PropertyItem
-            upDown={propertyProps.display?.upDown}
-            label={setting.name}
-            autoWidth={setting.display?.labelFullWidth}
-            marginTop={setting.display?.marginTop}
-            description={setting.description}
-            key={blockPath + (setting.property || '')}
-          >
-            <Property {...propertyProps} />
-          </PropertyItem>
-        );
-      }
+      return (
+        <SettingRender
+          setting={setting}
+          blockData={blockData}
+          blockPath={blockPath}
+          isMobileSetting={props.options.mobileOnly}
+          settingStatus={settingStatus}
+        />
+      );
     });
   };
 
