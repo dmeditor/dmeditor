@@ -24,7 +24,11 @@ const getMobileSettings = (settings: DMEData.GeneralSettingType) => {
   return result;
 };
 
-const getGeneralStyle = (settings: DMEData.GeneralSettingType, device: string) => {
+const getGeneralStyle = (
+  settings: DMEData.GeneralSettingType,
+  device: string,
+  editMode: boolean,
+) => {
   if (device === 'mobile') {
     settings = getMobileSettings(settings);
   }
@@ -43,6 +47,14 @@ const getGeneralStyle = (settings: DMEData.GeneralSettingType, device: string) =
       } else {
         elementStyle['width'] = 'fit-content';
       }
+    }
+  }
+
+  if (settings.hidden) {
+    if (editMode) {
+      elementStyle['opacity'] = '30%';
+    } else {
+      elementStyle['display'] = 'none';
     }
   }
 
@@ -135,7 +147,10 @@ export const BlockWrapper = styled.div<{
   widgetStyles?: string[];
   device: string;
 }>`
-  ${(props) => (props.generalSettings ? getGeneralStyle(props.generalSettings, props.device) : {})}
+  ${(props) =>
+    props.generalSettings
+      ? getGeneralStyle(props.generalSettings, props.device, props.editMode)
+      : {}}
   ${({ editMode, active }) => {
     if (editMode && active) {
       return `

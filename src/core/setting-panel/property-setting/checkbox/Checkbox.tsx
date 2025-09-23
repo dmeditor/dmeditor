@@ -12,7 +12,11 @@ const Checkbox = (props: DME.SettingComponentProps) => {
   };
 
   return (
-    <MUICheckbox checked={value ? true : false} onChange={(e) => handleChange(e.target.checked)} />
+    <MUICheckbox
+      disabled={props.disabled}
+      checked={value ? true : false}
+      onChange={(e) => handleChange(e.target.checked)}
+    />
   );
 };
 

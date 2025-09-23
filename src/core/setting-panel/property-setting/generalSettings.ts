@@ -12,6 +12,7 @@ const generalTypes = {
     'container-background-color',
     'container-full-width',
     'container-full-width-content',
+    'hidden',
   ],
   none: [],
   container: [
@@ -23,6 +24,7 @@ const generalTypes = {
     'container-background-color',
     'container-full-width',
     'container-full-width-content',
+    'hidden',
   ],
 };
 
@@ -45,6 +47,16 @@ export const generalSettings: Array<DME.Setting> = [
     property: 'settings.general.align',
     category: 'style',
     group: 'style_element',
+    styleTags: ['block', 'list', 'general'],
+  },
+  {
+    name: 'Hidden',
+    identifier: 'hidden',
+    settingComponent: 'checkbox',
+    property: 'settings.general.hidden',
+    category: 'style',
+    group: 'style_block',
+    appliedDevices: ['mobile'],
     styleTags: ['block', 'list', 'general'],
   },
   {
