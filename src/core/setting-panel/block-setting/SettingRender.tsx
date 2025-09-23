@@ -37,8 +37,10 @@ export const SettingRender = (props: {
     );
 
     useEffect(() => {
-      if (isMobileSetting && mobileValue !== undefined) {
-        setUseMobileSetting(true);
+      if (isMobileSetting) {
+        if (mobileValue !== undefined) {
+          setUseMobileSetting(true);
+        }
       } else {
         setUseMobileSetting(false);
       }
