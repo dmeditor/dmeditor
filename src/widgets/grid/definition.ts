@@ -34,7 +34,6 @@ const gridWidget: DME.Widget = {
       name: 'Mobile columns',
       settingComponent: 'range',
       property: '.mobileColumns',
-      appliedDevices: ['mobile'],
       parameters: { min: 1, max: 3 },
     },
     {

@@ -130,7 +130,6 @@ export const iFrameDefinition: DME.Widget = {
       name: 'Height mobile',
       identifier: 'iframe-height-mobile',
       property: 'settings.heightMobile',
-      appliedDevices: ['mobile'],
       settingComponent: 'range',
       category: 'style',
       parameters: { min: 300, max: 3000, step: 5, showInput: true },

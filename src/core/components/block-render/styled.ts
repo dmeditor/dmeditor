@@ -149,7 +149,7 @@ export const BlockWrapper = styled.div<{
 }>`
   ${(props) =>
     props.generalSettings
-      ? getGeneralStyle(props.generalSettings, props.device, props.editMode)
+      ? getGeneralStyle(props.generalSettings, props.device, props.editMode || false)
       : {}}
   ${({ editMode, active }) => {
     if (editMode && active) {

@@ -119,7 +119,6 @@ const heroTextWidget: DME.Widget = {
       property: '.heroPositionMobile',
       settingComponent: 'button-group',
       identifier: 'hero-text-hero-position-mobile',
-      appliedDevices: ['mobile'],
       category: 'style',
       parameters: {
         defaultSelected: 'up',
