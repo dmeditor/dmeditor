@@ -10,6 +10,7 @@ const defaultRootList = [
   'container-border-radius',
   'container-background-color',
   'container-full-width',
+  'hidden',
   'container-full-width-content',
 ];
 
@@ -31,6 +32,7 @@ export const styleSettings: {
         'container-padding',
         'container-border-width',
         'container-border-color',
+        'hidden',
         'container-border-radius',
         'container-background-color',
       ],
@@ -45,6 +47,7 @@ export const styleSettings: {
         'container-border-color',
         'container-border-radius',
         'container-background-color',
+        'hidden',
       ],
     },
   },
