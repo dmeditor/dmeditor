@@ -1,6 +1,6 @@
 {
   "name": "dmeditor",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "dmeditor is a block-style visual editor. Data is in json format.",
   "keywords": [
     "online editor",
@@ -22,8 +22,6 @@
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
-    "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.8.4",
     "@react-hook/resize-observer": "^2.0.1",
     "@types/is-url": "^1.2.30",
     "@types/react-color": "^3.0.6",
@@ -73,6 +71,10 @@
     ]
   },
   "types": "./index.d.ts",
+  "peerDependencies": {
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.8.4"
+  },
   "devDependencies": {
     "@babel/core": "^7.23.6",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
