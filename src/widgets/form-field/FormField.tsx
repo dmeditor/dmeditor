@@ -100,10 +100,14 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               {data.options && (
                 <select
                   name={data.identifier}
+                  defaultValue={data.defaultValue}
                   className={styleClasses['input-select'] || 'dme-w-input-select'}
                 >
                   {data.options.map((item) => (
-                    <option selected={item.isDefault ? true : false} value={item.value}>
+                    <option
+                      selected={!data.defaultValue && item.isDefault ? true : undefined}
+                      value={item.value}
+                    >
                       {item.text}
                     </option>
                   ))}
