@@ -12,7 +12,7 @@ const formFieldWidget: DME.Widget = {
         type: 'form-field',
         data: {
           label: 'Name',
-          identifier: 'name',
+          identifier: 'name' + Date.now(),
           type: 'text',
           settings: { general: { padding: 10 } },
         },
