@@ -263,10 +263,15 @@ export const registerIcon = (icon: Icon) => {
   }
 };
 
-export const registerDefaultWidgets = () => {
+export const registerDefaultWidgets = (defaultWidgets?: string[]) => {
   try {
     const modules = require.context('../../widgets/', true, /index.ts$/);
     modules.keys().forEach((path: string) => {
+      const arr = path.split('/');
+      const widget = arr[arr.length - 2];
+      if (defaultWidgets && !defaultWidgets.includes(widget)) {
+        return;
+      }
       const register = modules(path).default;
       if (typeof register === 'function') {
         register();
@@ -274,5 +279,15 @@ export const registerDefaultWidgets = () => {
     });
   } catch (e) {
     console.error(e);
+  }
+};
+
+export const resetWidgets = () => {
+  for (const key in widgetDefinition) {
+    delete widgetDefinition[key];
+  }
+
+  for (const key in widgetStyles) {
+    delete widgetStyles[key];
   }
 };
