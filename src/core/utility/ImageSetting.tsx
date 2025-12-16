@@ -49,8 +49,8 @@ export const ImageSetting = (props: {
           <Button color="info" onClick={handleOpen}>
             {i18n('Choose')}
           </Button>
-          {dmeConfig.plugins.imageHandlers.map((Item) => (
-            <Item image={value} parameters={props.parameters} onChange={onChange} />
+          {dmeConfig.plugins.imageHandlers.map((Item, index) => (
+            <Item key={index} image={value} parameters={props.parameters} onChange={onChange} />
           ))}
         </div>
       </div>

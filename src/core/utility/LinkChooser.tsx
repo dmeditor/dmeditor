@@ -199,7 +199,7 @@ export const LinkChooser = forwardRef<LinkRef, LinkChooserProps>((props, ref) =>
   }, [value]);
 
   return (
-    <Dialog open={visible} onClose={handleClose} fullWidth>
+    <Dialog open={!!visible} onClose={handleClose} fullWidth>
       <DialogContent>
         <div>
           {ChooseElements.length === 1 ? (

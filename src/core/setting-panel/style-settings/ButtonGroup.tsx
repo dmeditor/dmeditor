@@ -19,7 +19,7 @@ export const ButtonGroup = (props: StyleSettingProps & { style: DME.WidgetStyle 
     >
       <ToggleButton value="">None</ToggleButton>
       {style.options.map((option) => (
-        <ToggleButton value={option.identifier}>
+        <ToggleButton key={option.identifier} value={option.identifier}>
           {option.icon && (
             <IconDiv>
               <IconImg src={option.icon} />

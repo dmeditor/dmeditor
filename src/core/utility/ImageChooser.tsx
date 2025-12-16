@@ -80,7 +80,7 @@ export const ImageChooser = (props: ImageChooserProps) => {
   }, [value]);
 
   return (
-    <Dialog open={visible} onClose={handleClose} fullWidth maxWidth="md">
+    <Dialog open={!!visible} onClose={handleClose} fullWidth maxWidth="md">
       <DialogContent>
         <div>
           {ImageChooseElements.length === 1 ? (

@@ -301,6 +301,7 @@ export const SettingTree = (props: {
       return (
         <SettingRender
           setting={setting}
+          key={setting.property + (setting.name || '')}
           blockData={blockData}
           blockPath={blockPath}
           isMobileSetting={props.options.mobileOnly}
@@ -331,7 +332,7 @@ export const SettingTree = (props: {
           />
         )}
         <div id="dme-widget-setting-container" />
-        {settingGroups.map((group) => {
+        {settingGroups.map((group, index) => {
           let settingList = settingConfigs?.settings.filter((item) => item.group === group);
           let validSettingList = settingList?.filter((setting) => {
             if (!setting.settingComponent) {
@@ -368,7 +369,7 @@ export const SettingTree = (props: {
           }
 
           return (
-            <div>
+            <div key={index + (group || '')}>
               {group && (
                 <PropertyGroup
                   expandable={true}

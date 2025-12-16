@@ -86,8 +86,8 @@ export const BlockSettings = (props: {
                 <ActionPanelButtonGroup>
                   <Move blockPath={blockPath} />
                   <CopyPaste />
-                  {dmeConfig.plugins.blockSettingActions?.map((Item) => (
-                    <Item blockData={blockData} />
+                  {dmeConfig.plugins.blockSettingActions?.map((Item, index) => (
+                    <Item key={index} blockData={blockData} />
                   ))}
                 </ActionPanelButtonGroup>
                 {!(

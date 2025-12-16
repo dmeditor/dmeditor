@@ -97,15 +97,15 @@ export const DataListSettings = (props: DataListSettingProps) => {
       {Array.isArray(data) && (
         <div>
           <Row header={true}>
-            {schema.map((item) => (
-              <Cell>{item.name}</Cell>
+            {schema.map((item, index) => (
+              <Cell key={index}>{item.name}</Cell>
             ))}
             <Cell></Cell>
           </Row>
           {data.map((row, index) => (
-            <Row>
+            <Row key={index}>
               {schema.map((item) => (
-                <Cell>
+                <Cell key={item.identifier}>
                   {item.type === 'text' && (
                     <TextField
                       size="small"

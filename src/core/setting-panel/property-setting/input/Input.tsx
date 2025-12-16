@@ -14,7 +14,7 @@ const Input = (props: DME.SettingComponentProps) => {
     updateBlockPropsByPath(blockPath, property!, v);
   };
 
-  const updateOnUnfocus = parameters?.updateOnUnfocus;
+  const { updateOnUnfocus, ...fieldAttributes } = parameters || {};
   useEffect(() => {
     if (!updateOnUnfocus) {
       handleChange();
@@ -24,7 +24,7 @@ const Input = (props: DME.SettingComponentProps) => {
   return (
     <TextField
       size="small"
-      {...parameters}
+      {...fieldAttributes}
       value={v}
       onChange={(e) => setV(e.target.value)}
       onBlur={() => {

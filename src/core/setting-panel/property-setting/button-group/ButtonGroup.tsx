@@ -22,6 +22,7 @@ const ButtonGroup = (
     <MUIButtonGroup variant="outlined" size="small">
       {parameters.options.map((item) => (
         <Button
+          key={item.value}
           variant={currentSelected === item.value ? 'contained' : 'outlined'}
           onClick={() => handleChange(item.value)}
         >
