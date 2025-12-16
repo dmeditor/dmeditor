@@ -74,11 +74,14 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           <MenuItem className={styleClasses['menuitem']} direction={data.settings?.direction}>
             {/** todo use callback & fix preview - preview should use edit way */}
             <a
-              href={'?' + identifier + '=' + item.identifier}
+              href={'./?' + identifier + '=' + item.identifier}
               onClick={(e) => {
                 if (mode === 'edit') {
                   e.preventDefault();
                   selectMenu(item.identifier);
+                } else {
+                  location.search = '?' + identifier + '=' + item.identifier;
+                  return false;
                 }
               }}
               className={
