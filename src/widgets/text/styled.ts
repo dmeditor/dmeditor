@@ -6,9 +6,9 @@ type SettingsType = EntityText['settings'];
 export const TextContainer = styled.div((props: SettingsType) => {
   return {
     ...(props?.color && { color: props.color }),
-    'p:first-child': { 'margin-top': 0 },
-    'p:last-child': { 'margin-bottom': 0 },
-    img: { 'max-width': '100%' },
+    'p:first-of-type': { marginTop: 0 },
+    'p:last-of-type': { marginBottom: 0 },
+    img: { maxWidth: '100%' },
     '&::after': { content: '""', display: 'block', clear: 'both' },
   };
 });

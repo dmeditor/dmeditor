@@ -77,7 +77,11 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
       )}
       <MenuContainer className={styleClasses['container']} color={data.settings?.color}>
         {data.menuList.map((item) => (
-          <MenuItem className={styleClasses['menuitem']} direction={data.settings?.direction}>
+          <MenuItem
+            key={item.identifier}
+            className={styleClasses['menuitem']}
+            direction={data.settings?.direction}
+          >
             {/** todo use callback & fix preview - preview should use edit way */}
             <a
               href={locationFileName + '?' + identifier + '=' + item.identifier}

@@ -177,7 +177,12 @@ export const WidgetList = (props: WidgetListProps) => {
             <AccordionDetails>
               <StyleWidgetList>
                 {widgets.map((widget, index) => (
-                  <WidgetItem widget={widget} onSelect={props.onSelect} index={index} />
+                  <WidgetItem
+                    key={widget.type}
+                    widget={widget}
+                    onSelect={props.onSelect}
+                    index={index}
+                  />
                 ))}
               </StyleWidgetList>
             </AccordionDetails>
