@@ -40,6 +40,12 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
     );
   };
 
+  const [locationFileName, setLocationFileName] = useState('./');
+
+  useEffect(() => {
+    setLocationFileName(window.location.pathname);
+  }, []);
+
   useEffect(() => {
     if (data.menuList.length > 0) {
       selectMenu(data.loadedMenu || data.menuList[0].identifier);
@@ -74,14 +80,11 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           <MenuItem className={styleClasses['menuitem']} direction={data.settings?.direction}>
             {/** todo use callback & fix preview - preview should use edit way */}
             <a
-              href={'./?' + identifier + '=' + item.identifier}
+              href={locationFileName + '?' + identifier + '=' + item.identifier}
               onClick={(e) => {
                 if (mode === 'edit') {
                   e.preventDefault();
                   selectMenu(item.identifier);
-                } else {
-                  location.search = '?' + identifier + '=' + item.identifier;
-                  return false;
                 }
               }}
               className={
