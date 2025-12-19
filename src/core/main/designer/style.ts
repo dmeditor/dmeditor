@@ -115,7 +115,7 @@ export const EditContainer = styled.div<{ width?: string }>`
   border: 1px solid #cccccc;
 `;
 
-export const EditArea = styled.div<{ maxWidth?: string; hideEditBorder?: boolean }>`
+export const EditContentArea = styled.div<{ maxWidth?: string; hideEditBorder?: boolean }>`
   margin: auto;
   min-height: calc(100vh - var(--dmee-topbar-height));
   max-width: ${(props) => props.maxWidth || 'var(--dmee-edit-content-width)'};

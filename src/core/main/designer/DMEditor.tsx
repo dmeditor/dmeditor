@@ -21,7 +21,15 @@ import { loadData } from '../store/helper';
 import { EditSideTools } from './EditSideTools';
 import { LayoutRender } from './LayoutRender';
 import { muiTheme } from './muiTheme';
-import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer, View } from './style';
+import {
+  EditContainer,
+  EditContentArea,
+  EmtpyBlock,
+  Layout,
+  Root,
+  SettingContainer,
+  View,
+} from './style';
 import { ViewDevices } from './ViewDevices';
 
 export interface DMEditorProps {
@@ -157,14 +165,19 @@ const Editor = (props: { projectStyle?: string }) => {
         </Layout.EditModeBar>
         <EditContainer
           ref={containerRef}
+          className={dmeConfig.editor.panelClassNames['edit-container']}
           width={currentDevice === 'mobile' ? previewDeviceWidths.mobile[0] + 'px' : undefined}
         >
-          <EditArea
+          <EditContentArea
             ref={editRef}
             maxWidth={currentDevice === 'mobile' ? previewDeviceWidths.mobile[1] + 'px' : undefined}
             hideEditBorder={currentDevice === 'mobile'}
             className={
-              css(dmeConfig.general.projectStyles[projectStyle || 'default']) + ' ' + getThemeCss
+              dmeConfig.editor.panelClassNames['edit-content'] ||
+              '' +
+                css(dmeConfig.general.projectStyles[projectStyle || 'default']) +
+                ' ' +
+                getThemeCss
             }
           >
             {/* need EmptyBlock otherwise first block's margin-top is based on body */}
@@ -181,7 +194,7 @@ const Editor = (props: { projectStyle?: string }) => {
             >
               <LayoutRender list={storage} mode="edit" />
             </div>
-          </EditArea>
+          </EditContentArea>
         </EditContainer>
         <EditSideTools />
       </Layout.Edit>
