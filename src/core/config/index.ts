@@ -127,6 +127,7 @@ export interface DMEConfigType {
     heading?: Array<{ value: string; label: string }>;
     characters?: Array<string>;
     settingPanelWidth?: number;
+    minSettingPanelWidth?: number;
     clipboardKey?: string;
     //context is from closed list (not including) to self list. eg. hero-text/list
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
@@ -293,6 +294,7 @@ const dmeConfig: {
     characters: Array<string>;
     zIndex: number;
     settingPanelWidth: number;
+    minSettingPanelWidth: number;
     ui: { [variable: string]: string };
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
     clipboardKey: string;

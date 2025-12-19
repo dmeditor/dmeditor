@@ -74,7 +74,7 @@ const Editor = (props: { projectStyle?: string }) => {
     axis: 'x',
     reverse: true,
     initial: dmeConfig.editor.settingPanelWidth,
-    min: 350,
+    min: dmeConfig.editor.minSettingPanelWidth || 350,
     max: 600,
   });
   const { projectStyle } = props;
