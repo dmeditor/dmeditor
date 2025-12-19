@@ -82,8 +82,10 @@ export const BlockSettings = (props: {
               <SetEditControl key={blockData.id} blockData={blockData} />
             )}
             {blockInList && (
-              <ActionPanel>
-                <ActionPanelButtonGroup>
+              <ActionPanel className={dmeConfig.editor.panelClassNames['settings-actions']}>
+                <ActionPanelButtonGroup
+                  className={dmeConfig.editor.panelClassNames['settings-actions-buttons']}
+                >
                   <Move blockPath={blockPath} />
                   <CopyPaste />
                   {dmeConfig.plugins.blockSettingActions?.map((Item, index) => (
@@ -95,7 +97,9 @@ export const BlockSettings = (props: {
                   canEditControl(blockData) === false &&
                   blockData.editControl === 2
                 ) && (
-                  <ActionPanelButtonGroup>
+                  <ActionPanelButtonGroup
+                    className={dmeConfig.editor.panelClassNames['settings-action-delete']}
+                  >
                     <RightElement>
                       <DeleteBlock blockPath={selectedPath} block={blockData} />
                     </RightElement>

@@ -28,8 +28,11 @@ export interface CallbackConfig {
     value: BrowseLinkCallbackParams;
     onChange: (value: BrowseLinkCallbackParams) => void;
   }>;
+  layoutRender?: ComponentType<{ list: DMEData.Block[]; mode: 'edit' | 'view' }>;
   canEditControl?: (block: DMEData.Block) => boolean;
   getSavedBlocks?: (widget: string) => Array<SavedBlockData>;
+  topBarLeftRender?: ComponentType<{}>;
+  topBarRightRender?: ComponentType<{}>;
 }
 
 export interface widgetConfig {
@@ -117,7 +120,8 @@ export interface DMEConfigType {
     disabledStyleSettings?: { [widget: string]: Array<string> };
     defaultStyle?: { [widget: string]: { [styleKey: string]: string } };
     categories?: Array<DME.WidgetCategory>;
-    ui: { [variable: string]: string };
+    panelClassNames?: Record<string, string>; // devices, navigator, settings-action, settings-delete
+    ui?: { [variable: string]: string };
     fontFamily?: Array<{ value: string; label: string }>;
     fontSize?: Array<{ value: string; label: string }>;
     heading?: Array<{ value: string; label: string }>;
@@ -240,6 +244,7 @@ const defaultConfig = () => {
       ],
       characters: ['😃'],
       settingPanelWidth: 400,
+      panelClassNames: {},
       ui: {},
     },
     widgets: {
@@ -273,6 +278,7 @@ const dmeConfig: {
     [prop: string]: string | number | boolean | Record<string, any>;
   };
   editor: {
+    panelClassNames: Record<string, string>; // devices, navigator, settings-action, settings-delete
     defaultTheme: string;
     favouriteWidgets: Array<string>;
     colors: { [colorGroup: string]: Array<DME.ColorConfig> };

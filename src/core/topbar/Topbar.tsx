@@ -22,6 +22,7 @@ import {
 import { Button, Divider, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 
 import emitter from '../../core/utils/event';
+import { dmeConfig } from '../config';
 import { setDevice } from '../hooks/useDeivce';
 import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
@@ -101,7 +102,8 @@ export const TopBar = () => {
         </a>{' '}
         {/* todo: import locally */}
       </LogoContainer>
-      <ToolsContainer>
+      {dmeConfig.callbacks.topBarLeftRender && <dmeConfig.callbacks.topBarLeftRender />}
+      <ToolsContainer className={dmeConfig.editor.panelClassNames['top-bar-tools']}>
         <ToolButton selected={mode === 'edit'} onClick={() => changeMode('edit')}>
           <Tooltip title={i18n('Edit')}>
             <EditOutlined />
@@ -114,6 +116,7 @@ export const TopBar = () => {
           </Tooltip>
         </ToolButton>
       </ToolsContainer>
+      {dmeConfig.callbacks.topBarRightRender && <dmeConfig.callbacks.topBarRightRender />}
       <ActionsContainer>
         <ToolButton onClick={save}>
           {i18n('Save', 'tool')}&nbsp;

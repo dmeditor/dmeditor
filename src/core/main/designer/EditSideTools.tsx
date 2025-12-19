@@ -9,6 +9,7 @@ import {
   KeyboardArrowUpOutlined,
 } from '@mui/icons-material';
 import { Button } from '@mui/material';
+import { dmeConfig } from 'dmeditor/core/config';
 
 import { scrollBlockToView } from '../../../core/utils';
 import { useEditorStore } from '../store';
@@ -89,7 +90,7 @@ export const EditSideTools = () => {
   };
 
   return (
-    <SideTool.Container>
+    <SideTool.Container className={dmeConfig.editor.panelClassNames['navigator']}>
       <SideTool.Item>
         <Button variant="outlined" sx={buttonStyle} title="Previous block" onClick={previous}>
           <KeyboardArrowUpOutlined />

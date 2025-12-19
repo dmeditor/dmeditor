@@ -24,6 +24,7 @@ import { defaultStyles } from './defaultStyles';
 import { EditImage } from './EditImage';
 import { registerStyles } from './registerStyles';
 import registerSampleWidget from './SampleWidget';
+import { LayoutRender } from './SampleWidget/LayoutRender';
 import { getSavedBlocks, SaveBlock } from './SaveBlock';
 import { styleSettings } from './styleSettings';
 
@@ -74,6 +75,16 @@ setDMEditorConfig({
   editor: {
     favouriteWidgets: ['text', 'button', 'hero-text:image'],
     enableEditControl: true,
+    panelClassNames: {
+      devices: '!hidden',
+      navigator: '!hidden',
+      'settings-actions-buttons': '!hidden',
+    },
+    ui: {
+      'edit-container-max-width': '800px',
+      'edit-container-default-width': '100%',
+      'edit-content-width': '90%',
+    },
     // disabledStyleSettings: {
     //   '*': ['container-border-width', 'container-border-color', 'container-border-radius'],
     // },
@@ -106,9 +117,6 @@ setDMEditorConfig({
       ],
     },
     characters: ['♠️', '❤️', '♣️', '♦️', '😃', '😁', '😆', '😅', '🙂', '😇'],
-    ui: {
-      // 'bg-editarea': '#666666',
-    },
     getAddingSettings: (context) => {
       console.log('adding context', context);
       const rootBlock = context.root;
@@ -176,8 +184,11 @@ const canEditControl = (blockData) => {
 setDMEditorCallback({
   browseImage: BrowseImage,
   browseLink: BrowseLink,
+  layoutRender: LayoutRender,
   canEditControl: canEditControl,
   getSavedBlocks: getSavedBlocks,
+  topBarLeftRender: () => <div>Left</div>,
+  topBarRightRender: () => <div>Right</div>,
 });
 
 const { useRef, useEffect } = React;
@@ -202,6 +213,25 @@ const App = () => {
         },
       },
       type: 'heading',
+    },
+    {
+      type: 'image',
+      data: {
+        src: 'https://dmeditor.c.digimaker.com/var/images/full/images/q/qhf/upload-235630515-img_1681.jpg',
+        description: '',
+        settings: {
+          general: {
+            align: 'center',
+            widthMobile: '52%',
+          },
+          borderWidth: 0,
+          borderColor: '',
+        },
+        externalId: 1,
+        thumbnail:
+          'https://dmeditor.c.digimaker.com/var/images/full/images/q/qhf/upload-235630515-img_1681.jpg',
+      },
+      id: 'QuH7Np98ya7RLynQOLDUd',
     },
     {
       type: 'content-view',

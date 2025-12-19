@@ -4,13 +4,17 @@ export const Root = styled.div<{ uiConfig: { [props: string]: string } }>`
   --dmee-bg-color: ${(props) => props.uiConfig['bg-color'] || '#1d4b64'};
   --dmee-topbar-height: 40px;
   --dmee-bg-editarea: ${(props) => props.uiConfig['bg-editarea'] || '#646c71'};
+  --dmee-edit-container-max-width: ${(props) =>
+    props.uiConfig['edit-container-max-width'] || '1200px'};
+  --dmee-edit-container-default-width: ${(props) =>
+    props.uiConfig['edit-container-max-width'] || '90%'};
+  --dmee-edit-content-width: ${(props) => props.uiConfig['edit-content-width'] || '90%'};
 `;
 
 export const Layout = {
   Main: styled.div<{ config: { zIndex: number }; settingWidth: number; resizing?: boolean }>`
     ${(props) => (props.resizing ? 'user-select: none;' : '')}
     --dmee-layout-property-width: ${(props) => props.settingWidth}px;
-    --dmee-edit-max-width: 1200px;
 
     --dmee-selected-border-color: #fc7e4b;
     --dmee-text-hover-color: #1d4b64;
@@ -20,11 +24,11 @@ export const Layout = {
     --dmee-bg-sidearea: #f3f4f6;
 
     --dmee-zindex: ${(props) => props.config.zIndex};
-    height: 100vh;
+    height: calc(100vh - var(--dmee-topbar-height));
+    margin-top: var(--dmee-topbar-height);
     display: grid;
     grid-template-columns: 1fr 5px var(--dmee-layout-property-width);
     color: #333333;
-    margin: 0px auto;
     background-color: var(--dmee-bg-editarea);
   `,
   Separator: styled.div<{ resizing?: boolean }>`
@@ -38,7 +42,6 @@ export const Layout = {
     }
   `,
   Edit: styled.div`
-    margin-top: var(--dmee-topbar-height);
     overflow-y: auto;
     position: relative;
     padding-bottom: var(--dmee-bottom-height);
@@ -58,7 +61,6 @@ export const Layout = {
     height: calc(100vh - var(--dmee-topbar-height));
   `,
   SettingPanel: styled.div`
-    margin-top: var(--dmee-topbar-height);
     background-color: var(--dmee-bg-sidearea);
     position: relative;
     overflow-y: auto;
@@ -107,8 +109,8 @@ export const EmtpyBlock = styled.div`
 export const EditContainer = styled.div<{ width?: string }>`
   min-height: 100%;
   margin: 0px auto;
-  width: ${(props) => props.width || '90%'};
-  max-width: var(--dmee-edit-max-width);
+  width: ${(props) => props.width || 'var(--dmee-edit-container-default-width)'};
+  max-width: var(--dmee-edit-container-max-width);
   background-color: white;
   border: 1px solid #cccccc;
 `;
@@ -116,7 +118,7 @@ export const EditContainer = styled.div<{ width?: string }>`
 export const EditArea = styled.div<{ maxWidth?: string; hideEditBorder?: boolean }>`
   margin: auto;
   min-height: calc(100vh - var(--dmee-topbar-height));
-  max-width: ${(props) => props.maxWidth || '90%'};
+  max-width: ${(props) => props.maxWidth || 'var(--dmee-edit-content-width)'};
   ${(props) => (props.hideEditBorder ? {} : { border: '1px dashed #999999' })}
 `;
 

@@ -3,6 +3,7 @@ import { LaptopMacOutlined, PhoneIphoneOutlined, TabletMacOutlined } from '@mui/
 import { IconButton } from '@mui/material';
 import { DME } from 'dmeditor/core/types';
 
+import { dmeConfig } from '../../config';
 import { useEditorStore } from '../store';
 import { View, ViewDevicesContainer } from './style';
 

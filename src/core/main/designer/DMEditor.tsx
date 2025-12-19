@@ -19,6 +19,7 @@ import emitter from '../../utils/event';
 import { useEditorStore } from '../store';
 import { loadData } from '../store/helper';
 import { EditSideTools } from './EditSideTools';
+import { LayoutRender } from './LayoutRender';
 import { muiTheme } from './muiTheme';
 import { EditArea, EditContainer, EmtpyBlock, Layout, Root, SettingContainer, View } from './style';
 import { ViewDevices } from './ViewDevices';
@@ -120,7 +121,7 @@ const Editor = (props: { projectStyle?: string }) => {
       resizing={resizing}
     >
       <Layout.Edit onClick={resetStatus}>
-        <Layout.EditModeBar>
+        <Layout.EditModeBar className={dmeConfig.editor.panelClassNames['devices']}>
           <ToolButton
             selected={currentDevice === ('desktop' as DeviceType)}
             onClick={(e) => {
@@ -178,7 +179,7 @@ const Editor = (props: { projectStyle?: string }) => {
                 e.stopPropagation();
               }}
             >
-              <BlockListRender blockData={storage} path={[]} mode="edit" />
+              <LayoutRender list={storage} mode="edit" />
             </div>
           </EditArea>
         </EditContainer>
