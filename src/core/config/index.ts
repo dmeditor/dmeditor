@@ -28,7 +28,11 @@ export interface CallbackConfig {
     value: BrowseLinkCallbackParams;
     onChange: (value: BrowseLinkCallbackParams) => void;
   }>;
-  layoutRender?: ComponentType<{ list: DMEData.Block[]; mode: 'edit' | 'view' }>;
+  layoutRender?: ComponentType<{
+    list: DMEData.Block[];
+    mode: 'edit' | 'view';
+    pageData?: unknown;
+  }>;
   canEditControl?: (block: DMEData.Block) => boolean;
   getSavedBlocks?: (widget: string) => Array<SavedBlockData>;
   topBarLeftRender?: ComponentType<{}>;
@@ -110,6 +114,7 @@ export interface DMEConfigType {
     defaultTheme?: string;
     favouriteWidgets?: Array<string>;
     zIndex?: number;
+    disableClickTitleChange?: boolean;
     colors?: {
       text?: Array<DME.ColorConfig>;
       border?: Array<DME.ColorConfig>;
@@ -172,6 +177,7 @@ const defaultConfig = () => {
       favouriteWidgets: [],
       zIndex: 1000,
       enableEditControl: false,
+      disableClickTitleChange: false,
       disabledStyleSettings: {},
       defaultStyle: {},
       clipboardKey: 'dme-clipboard',
@@ -279,6 +285,7 @@ const dmeConfig: {
     [prop: string]: string | number | boolean | Record<string, any>;
   };
   editor: {
+    disableClickTitleChange: boolean;
     panelClassNames: Record<string, string>; // devices, navigator, settings-action, settings-delete
     defaultTheme: string;
     favouriteWidgets: Array<string>;

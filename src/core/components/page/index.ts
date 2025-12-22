@@ -1,13 +1,15 @@
+import { ComponentType } from 'react';
+
 import { dmeConfig } from '../../config';
 import type { DME } from '../../types/dmeditor';
 
-let pageSettings: Array<DME.PageSetting> = [];
+let pageSettings: Array<DME.PageSetting | ComponentType> = [];
 
-const setPageSettings = (settings: Array<DME.PageSetting>) => {
+const setPageSettings = (settings: Array<DME.PageSetting | ComponentType>) => {
   pageSettings = settings;
 };
 
-const getPageSettings = (): Array<DME.PageSetting> => {
+const getPageSettings = (): Array<DME.PageSetting | ComponentType> => {
   return pageSettings;
 };
 

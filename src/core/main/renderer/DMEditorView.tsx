@@ -4,20 +4,21 @@ import { queryFromLocaton } from 'dmeditor/core/utils';
 
 import type { DMEData } from '../../..';
 import { useDevice } from '../../..';
-import { BlockListRender } from '../../components/block-list-render/BlockListRender';
 import { getPageTheme } from '../../components/page';
 import { dmeConfig } from '../../config';
+import { LayoutRender } from '../designer/LayoutRender';
 import { useGlobalVars } from '../store';
 import { DMEditorViewStyle } from './styled';
 
 export interface DMEditorViewProps {
   data: DMEData.BlockList;
+  layoutData?: unknown;
   theme?: string;
   projectStyle?: string;
 }
 
 const DMEditorView = (props: DMEditorViewProps) => {
-  const { data, theme, projectStyle } = props;
+  const { data, theme, projectStyle, layoutData } = props;
 
   const getProjectCss = () => {
     return dmeConfig.general.projectStyles[props.projectStyle || 'default'];
@@ -50,7 +51,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
       themeStyle={getThemeCss()}
       className={'dmeditor-view ' + (device != '' ? 'dme-viewmode-' + device + ' ' : '')}
     >
-      <BlockListRender blockData={data || []} path={[]} mode="view" />
+      <LayoutRender list={data || []} mode="view" layoutData={layoutData} />
     </DMEditorViewStyle>
   );
 };

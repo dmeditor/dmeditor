@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { ComponentType, useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
 import { Delete, DeleteOutline } from '@mui/icons-material';
 import { Alert, Button, Checkbox, MenuItem, Select, TextField } from '@mui/material';
@@ -119,9 +119,7 @@ const SelectTheme = (props: { value: string; onChange: (value: string) => void }
 export const PageSetting = () => {
   const { page, updatePage } = useEditorStore();
 
-  const settings = useMemo(() => {
-    return getPageSettings();
-  }, []);
+  const settings = getPageSettings();
 
   const updatePageValue = (v: string, key: string) => {
     updatePage(v, key);
@@ -148,17 +146,32 @@ export const PageSetting = () => {
         </SettingItem>
       )}
 
-      {settings.map((setting) => (
-        <SettingItem>
-          <label>{setting.name}:</label>
-          <SettingType
-            type={setting.type}
-            parameters={setting.parameters}
-            defaultValue={page[setting.identifier] || ''}
-            onChange={(v) => updatePageValue(v, setting.identifier)}
-          />
-        </SettingItem>
-      ))}
+      {settings.map((setting, index) => {
+        //component
+        if (typeof setting === 'function') {
+          const Com = setting as ComponentType;
+          return (
+            <SettingItem key={index}>
+              <Com />
+            </SettingItem>
+          );
+        } else if (typeof setting === 'object') {
+          //setting object
+
+          return (
+            <SettingItem key={setting.identifier}>
+              <label>{setting.name}:</label>
+              <SettingType
+                type={setting.type}
+                parameters={setting.parameters}
+                defaultValue={page[setting.identifier] || ''}
+                onChange={(v) => updatePageValue(v, setting.identifier)}
+              />
+            </SettingItem>
+          );
+        }
+        return null;
+      })}
     </div>
   );
 };

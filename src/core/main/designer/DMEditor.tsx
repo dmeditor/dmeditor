@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useMemo } from 'react';
+import { ComponentType, useMemo } from 'react';
 import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { css } from '@emotion/css';
 import { LaptopMacOutlined, PhoneIphoneOutlined } from '@mui/icons-material';
@@ -41,7 +41,7 @@ export interface DMEditorProps {
 
 export interface DMEditorRefType {
   setData: (data: string | Array<DMEData.Block>) => void;
-  setPageSettings: (settings: Array<DME.PageSetting>) => void;
+  setPageSettings: (settings: Array<DME.PageSetting | ComponentType>) => void;
   setPageData: (data: DMEData.Page) => void;
 }
 
@@ -217,7 +217,7 @@ export const DMEditor = React.forwardRef(
           const list = loadData(data);
           emitter.emit('setStorage', list);
         },
-        setPageSettings: (settings: Array<DME.PageSetting>) => {
+        setPageSettings: (settings: Array<DME.PageSetting | ComponentType>) => {
           setPageSettings(settings);
         },
         setPageData: (data: DMEData.Page) => {
