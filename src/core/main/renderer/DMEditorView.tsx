@@ -12,13 +12,13 @@ import { DMEditorViewStyle } from './styled';
 
 export interface DMEditorViewProps {
   data: DMEData.BlockList;
-  layoutData?: unknown;
+  pageData?: unknown;
   theme?: string;
   projectStyle?: string;
 }
 
 const DMEditorView = (props: DMEditorViewProps) => {
-  const { data, theme, projectStyle, layoutData } = props;
+  const { data, theme, projectStyle, pageData } = props;
 
   const getProjectCss = () => {
     return dmeConfig.general.projectStyles[props.projectStyle || 'default'];
@@ -51,7 +51,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
       themeStyle={getThemeCss()}
       className={'dmeditor-view ' + (device != '' ? 'dme-viewmode-' + device + ' ' : '')}
     >
-      <LayoutRender list={data || []} mode="view" layoutData={layoutData} />
+      <LayoutRender list={data || []} mode="view" pageData={pageData} />
     </DMEditorViewStyle>
   );
 };
