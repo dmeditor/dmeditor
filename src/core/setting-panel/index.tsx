@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useMemo } from 'react';
+import { css } from '@emotion/css';
 import {
   ArrowBack,
   ArrowBackIosOutlined,
@@ -9,6 +10,7 @@ import {
 import { Button } from '@mui/material';
 
 import { getWidgetName } from '../../core/utils/register';
+import { dmeConfig } from '../config';
 import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import { AddBlock } from './AddBlock';
@@ -21,7 +23,11 @@ import { AlignRight, ClickEditInput, PageTitle, RightElement, SettingHeader, Spa
 
 const { useEffect, useState } = React;
 
-const ClickToEdit = (props: { value: string; onChange: (value: string) => void }) => {
+const ClickToEdit = (props: {
+  canEdit: boolean;
+  value: string;
+  onChange: (value: string) => void;
+}) => {
   const [editMode, setEditMode] = useState(false);
 
   const [value, setValue] = useState(props.value);
@@ -38,6 +44,10 @@ const ClickToEdit = (props: { value: string; onChange: (value: string) => void }
   useEffect(() => {
     setValue(props.value);
   }, [props.value]);
+
+  if (!props.canEdit) {
+    return <div>{value}</div>;
+  }
 
   return (
     <div onClick={() => setEditMode(true)}>
@@ -157,14 +167,26 @@ const SettingPanel = (props) => {
       {mode === 'adding' && <AddBlock />}
       {mode !== 'adding' && (
         <>
-          <RightElement>
-            <Button title={i18n('Page settings')} onClick={setPageSettingMode}>
-              <Settings />
-            </Button>
-          </RightElement>
-          <PageTitle>
-            <ClickToEdit value={page.title} onChange={(v) => updatePage(v, 'title')} />
-          </PageTitle>
+          <div
+            className={css({
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            })}
+          >
+            <PageTitle canEdit={!dmeConfig.editor.disableClickTitleChange}>
+              <ClickToEdit
+                canEdit={!dmeConfig.editor.disableClickTitleChange}
+                value={page.title}
+                onChange={(v) => updatePage(v, 'title')}
+              />
+            </PageTitle>
+            <div>
+              <Button title={i18n('Page settings')} onClick={setPageSettingMode}>
+                <Settings />
+              </Button>
+            </div>
+          </div>
           <Space />
           {['list-overview', 'block-setting'].includes(mode) && (
             <Path pathArray={pathArray} onSelect={selectPathItem} />

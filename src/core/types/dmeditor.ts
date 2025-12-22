@@ -186,7 +186,7 @@ export namespace DMEData {
   export interface Page {
     title: string;
     theme?: string;
-    [index: string]: string | boolean | undefined;
+    [index: string]: string | boolean | unknown | undefined;
   }
 
   export interface DependencyData {

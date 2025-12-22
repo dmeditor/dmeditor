@@ -12,13 +12,18 @@ export const SettingDescription = styled.div`
   font-style: italic;
 `;
 
-export const PageTitle = styled.div`
-  padding: 5px;
+export const PageTitle = styled.div<{ canEdit: boolean }>`
+  padding: 5px 5px;
   font-size: 18px;
   white-space: nowrap;
   overflow-x: hidden;
+  width: 100%;
   &:hover {
-    outline: 1px dashed #333333;
+    ${(props) =>
+      props.canEdit &&
+      `
+      outline: 1px dashed #333333;
+    `}
   }
 `;
 
