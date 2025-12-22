@@ -92,6 +92,7 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
           <Nav className={styleClasses['nav']}>
             {tabList.map(({ meta: { tabKey, title } }) => (
               <NavItem
+                key={tabKey}
                 activeKey={activeKey}
                 onTabClick={tabChange}
                 tabKey={tabKey}
