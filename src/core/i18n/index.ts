@@ -10,20 +10,22 @@ const resources = {
   'chi-CN': chiCN,
 };
 
-const initLanguage = (language: string) => {
-  i18nCore.init({
-    resources,
-    lng: language,
-    interpolation: {
-      escapeValue: false,
-    },
-  });
-};
+const dmeI18n = i18nCore.createInstance();
 
-initLanguage('eng-GB');
+dmeI18n.init({
+  resources,
+  lng: 'eng-GB',
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+const initLanguage = (language: string) => {
+  dmeI18n.changeLanguage(language);
+};
 
 const i18n = (text: string, ns?: string) => {
-  return i18nCore.t(text, ns ? { ns: ns } : {});
+  return dmeI18n.t(text, ns ? { ns: ns } : {});
 };
 
-export { initLanguage, i18n };
+export { initLanguage, i18n, dmeI18n };
