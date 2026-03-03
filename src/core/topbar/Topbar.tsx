@@ -117,7 +117,7 @@ export const TopBar = () => {
         </ToolButton>
       </ToolsContainer>
       {dmeConfig.callbacks.topBarRightRender && <dmeConfig.callbacks.topBarRightRender />}
-      <ActionsContainer>
+      <ActionsContainer className={dmeConfig.editor.panelClassNames['top-bar-actions']}>
         <ToolButton onClick={save}>
           {i18n('Save', 'tool')}&nbsp;
           <Save />
