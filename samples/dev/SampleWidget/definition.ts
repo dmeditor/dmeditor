@@ -20,6 +20,17 @@ export const sampleWidgetDef = {
       property: 'settings.insideBackground',
     },
     {
+      name: '',
+      settingComponent: 'setting-render-container',
+      custom: true,
+      display: {
+        labelFullWidth: true,
+      },
+      parameters: {
+        id: 'hello',
+      },
+    },
+    {
       name: 'From date',
       settingComponent: 'date',
       property: 'settings.date',

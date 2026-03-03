@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from '@emotion/css';
 import { Slider } from '@mui/material';
 
-import { DME, RenderToSetting, useEditorStore } from '../../../src';
+import { BlockRender, DME, RenderToSetting, useEditorStore } from '../../../src';
 import { EntitySampleWidget } from './entity';
 
 const { useState, useEffect } = React;
@@ -15,7 +15,7 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
     path,
   } = props;
 
-  const { updateBlockByPath } = useEditorStore();
+  const { updateBlockByPath, executeAdding, selected } = useEditorStore();
 
   const updateWidth = (e, v) => {
     //update data with entity
@@ -26,7 +26,7 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
 
   return (
     <div>
-      {props.active && <RenderToSetting>Simple setting</RenderToSetting>}
+      {props.active && <RenderToSetting containerId="hello">Simple setting</RenderToSetting>}
       <Slider
         aria-label="Width"
         valueLabelDisplay="auto"
@@ -35,7 +35,6 @@ export const SampleWidget = (props: DME.WidgetRenderProps<EntitySampleWidget>) =
         max={800}
         onChange={updateWidth}
       />
-
       <div
         style={{ width: settings.width }}
         className={css`
