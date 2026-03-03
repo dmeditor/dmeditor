@@ -56,7 +56,9 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
 export const VideoDefinition: DME.Widget = {
   category: 'basic',
   icon: 'video',
-  name: i18n('Video', 'widget'),
+  get name() {
+    return i18n('Video', 'widget');
+  },
   type: 'video',
   events: {
     createBlock: (): DMEData.CreatedBlock<VideoEntity> => {
