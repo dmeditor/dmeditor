@@ -7,7 +7,9 @@ import { EntityPopup } from './entity';
 export const popupDefinition: DME.Widget = {
   category: 'interactive',
   icon: 'popup',
-  name: i18n('Pop up', 'widget'),
+  get name() {
+    return i18n('Pop up', 'widget');
+  },
   type: 'popup',
   widgetType: 'mixed',
   events: {

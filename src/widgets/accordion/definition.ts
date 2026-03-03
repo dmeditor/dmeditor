@@ -5,7 +5,9 @@ import type { AccordtionChildType, EntityAccordion } from './entity';
 const AccordionWidget: DME.Widget = {
   category: 'interactive',
   icon: 'accordion',
-  name: i18n('Accordion', 'widget'),
+  get name() {
+    return i18n('Accordion', 'widget');
+  },
   type: 'accordion',
   widgetType: 'mixed',
   editMask: true,

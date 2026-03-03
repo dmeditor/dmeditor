@@ -7,7 +7,9 @@ import type { EntityText } from './entity';
 const TextWidget: DME.Widget = {
   category: 'basic',
   icon: 'text',
-  name: i18n('Text', 'widget'),
+  get name() {
+    return i18n('Text', 'widget');
+  },
   type: 'text',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityText> => {

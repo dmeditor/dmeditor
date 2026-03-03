@@ -9,7 +9,9 @@ const heroTextWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'media',
   icon: 'TextFormatOutlined',
-  name: i18n('Hero text', 'widget'),
+  get name() {
+    return i18n('Hero text', 'widget');
+  },
   type: 'hero-text',
   widgetType: 'mixed',
   //todo: support children: Array or [prop: string]: object

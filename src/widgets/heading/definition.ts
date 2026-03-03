@@ -8,7 +8,9 @@ const HeadingWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'basic',
   icon: 'ic-heading',
-  name: i18n('Heading', 'widget'),
+  get name() {
+    return i18n('Heading', 'widget');
+  },
   type: 'heading',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityHeadingBlock> => {

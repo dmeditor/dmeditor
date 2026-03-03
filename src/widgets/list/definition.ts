@@ -4,7 +4,9 @@ import { dmeConfig, generalSettings, getCommonSettings, getWidgetVariant, i18n }
 const listWidget: DME.Widget = {
   category: 'design',
   icon: 'list',
-  name: i18n('List container', 'widget'),
+  get name() {
+    return i18n('List container', 'widget');
+  },
   type: 'list',
   widgetType: 'list',
   events: {

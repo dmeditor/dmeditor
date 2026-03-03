@@ -7,7 +7,9 @@ import { EntityMenu } from './enitity';
 export const menuDefinition: DME.Widget = {
   category: 'design',
   icon: 'menu',
-  name: i18n('Section menu', 'widget'),
+  get name() {
+    return i18n('Section menu', 'widget');
+  },
   type: 'menu',
   widgetType: 'widget',
   events: {

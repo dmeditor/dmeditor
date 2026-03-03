@@ -7,7 +7,9 @@ import type { EntityTabsBlock, EntityTabsData } from './entity';
 const TabsWidget: DME.Widget = {
   category: 'interactive',
   icon: 'tabs',
-  name: i18n('Tabs', 'widget'),
+  get name() {
+    return i18n('Tabs', 'widget');
+  },
   widgetType: 'mixed',
   type: 'tabs',
   events: {

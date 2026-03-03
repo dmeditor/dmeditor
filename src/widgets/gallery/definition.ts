@@ -5,7 +5,9 @@ import { GalleryEntity, initGalleryEntity } from './entity';
 const definition: DME.Widget = {
   category: 'media',
   icon: 'gallery',
-  name: i18n('Gallery', 'widget'),
+  get name() {
+    return i18n('Gallery', 'widget');
+  },
   type: 'gallery',
   editMask: true,
   events: {

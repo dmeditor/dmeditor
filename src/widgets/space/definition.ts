@@ -5,7 +5,9 @@ import { EntitySpace } from './entity';
 const spaceWidget: DME.Widget = {
   category: 'design',
   icon: 'button', //todo: change icon
-  name: i18n('Space', 'widget'),
+  get name() {
+    return i18n('Space', 'widget');
+  },
   type: 'space',
   events: {
     createBlock: (variant?: string): DMEData.CreatedBlock<EntitySpace> => {

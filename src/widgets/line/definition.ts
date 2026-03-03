@@ -7,7 +7,9 @@ import { EntityLine } from './entity';
 const lineWidget: DME.Widget = {
   category: 'design',
   icon: 'line',
-  name: i18n('Line', 'widget'),
+  get name() {
+    return i18n('Line', 'widget');
+  },
   type: 'line',
   events: {
     createBlock: (variant?: string): DMEData.CreatedBlock<EntityLine> => {

@@ -7,7 +7,9 @@ import { EntityModule } from './EntityModule';
 export const moduleDefinition: DME.Widget = {
   category: 'interactive',
   icon: 'module',
-  name: i18n('Module', 'widget'),
+  get name() {
+    return i18n('Module', 'widget');
+  },
   type: 'module',
   widgetType: 'widget',
   events: {

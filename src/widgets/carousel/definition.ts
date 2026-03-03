@@ -5,7 +5,9 @@ import { CarouselEntity, initCarouselEntity } from './entity';
 const definition: DME.Widget = {
   category: 'media',
   icon: 'carousel',
-  name: i18n('Carousel', 'widget'),
+  get name() {
+    return i18n('Carousel', 'widget');
+  },
   type: 'carousel',
   events: {
     createBlock: (): DMEData.CreatedBlock<CarouselEntity> => {

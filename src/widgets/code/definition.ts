@@ -6,7 +6,9 @@ import { CodeEntity, initCodeEntity } from './entity';
 const definition: DME.Widget = {
   category: 'basic',
   icon: 'code',
-  name: i18n('Code', 'widget'),
+  get name() {
+    return i18n('Code', 'widget');
+  },
   type: 'code',
   editMask: true,
   events: {

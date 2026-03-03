@@ -6,7 +6,9 @@ const gridWidget: DME.Widget = {
   // ?category options: widget, layout, form, chart, advanced
   category: 'design',
   icon: 'grid',
-  name: i18n('Grid', 'widget'),
+  get name() {
+    return i18n('Grid', 'widget');
+  },
   type: 'grid',
   widgetType: 'list',
   allowedTypes: '^(?!.*grid).*$',

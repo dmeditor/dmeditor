@@ -5,7 +5,9 @@ import { EntityTableBlock, initialTableEntity } from './entity';
 const HeadingWidget: DME.Widget = {
   category: 'basic',
   icon: 'table',
-  name: i18n('Table', 'widget'),
+  get name() {
+    return i18n('Table', 'widget');
+  },
   type: 'table',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityTableBlock> => {

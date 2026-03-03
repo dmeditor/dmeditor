@@ -4,7 +4,9 @@ import { EntityFormField } from './entity';
 const formFieldWidget: DME.Widget = {
   category: 'design',
   icon: 'form-field',
-  name: i18n('Form field', 'widget'),
+  get name() {
+    return i18n('Form field', 'widget');
+  },
   type: 'form-field',
   events: {
     createBlock: (): DMEData.CreatedBlock<EntityFormField> => {

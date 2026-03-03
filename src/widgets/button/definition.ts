@@ -3,7 +3,9 @@ import { generalSettings, getCommonSettings, i18n, type DME, type DMEData } from
 const buttonWidget: DME.Widget = {
   category: 'basic',
   icon: 'button',
-  name: i18n('Button', 'widget'),
+  get name() {
+    return i18n('Button', 'widget');
+  },
   type: 'button',
   events: {
     createBlock: (): DMEData.CreatedBlock => {
