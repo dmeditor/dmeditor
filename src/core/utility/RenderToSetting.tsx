@@ -4,14 +4,14 @@ import { createPortal } from 'react-dom';
 import { useWidgetSettingStore } from '../main/store';
 
 export const RenderToSetting = (props: { containerId?: string; children?: any }) => {
-  const { mainLoaded } = useWidgetSettingStore();
+  const { mainLoaded, containerLoaded } = useWidgetSettingStore();
 
   let container = null;
-  if (mainLoaded) {
-    const id = props.containerId
-      ? 'dme-setting-render-container-' + props.containerId
-      : 'dme-widget-setting-container';
-    container = document.getElementById(id);
+  const id = props.containerId;
+  if (!id && mainLoaded) {
+    container = document.getElementById('dme-widget-setting-container');
+  } else if (id && containerLoaded[id]) {
+    container = document.getElementById('dme-setting-render-container-' + id);
   }
 
   return <>{mainLoaded && container && createPortal(props.children, container)}</>;

@@ -58,7 +58,7 @@ export const useEditorStore = create<Store & Actions>()(
       position: AddBlockParameters['position'],
       type: string,
       isEmbed: boolean,
-      addData?: { style?: string; savedBlock?: any },
+      addData?: { style?: string; savedBlock?: any; id?: string },
     ) =>
       set((state) => {
         if (index == -Infinity) {
@@ -77,6 +77,9 @@ export const useEditorStore = create<Store & Actions>()(
             blockData = variant.getDefaultData?.() as any;
           } else {
             const createdBlock = widget.events.createBlock();
+            if (addData && addData.id) {
+              createdBlock.id = addData.id;
+            }
             const defaultStyle = dmeConfig.editor.defaultStyle[type];
             if (!createdBlock.style && defaultStyle) {
               createdBlock.style = defaultStyle;
@@ -491,13 +494,22 @@ export const useEditorStore = create<Store & Actions>()(
 );
 
 export const useWidgetSettingStore = create<
-  { mainLoaded: boolean } & { setMainLoaded: (loaded: boolean) => void }
+  { mainLoaded: boolean; containerLoaded: Record<string, boolean> } & {
+    setMainLoaded: (loaded: boolean) => void;
+    setContainerLoaded: (containerId: string, loaded: boolean) => void;
+  }
 >()(
   immer((set) => ({
     mainLoaded: false,
+    containerLoaded: {},
     setMainLoaded: (loaded: boolean) => {
       set((state) => {
         state.mainLoaded = loaded;
+      });
+    },
+    setContainerLoaded: (containerId: string, loaded: boolean) => {
+      set((state) => {
+        state.containerLoaded[containerId] = loaded;
       });
     },
   })),
