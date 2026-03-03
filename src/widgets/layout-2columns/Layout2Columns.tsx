@@ -15,7 +15,9 @@ import { SyledLayout } from './styled';
 const layout2ColumnsWidget: DME.Widget = {
   category: 'design',
   icon: 'layout-2columns',
-  name: i18n('2 Columns layout', 'widget'),
+  get name() {
+    return i18n('2 Columns layout', 'widget');
+  },
   widgetType: 'mixed',
   type: 'layout-2columns',
   events: {

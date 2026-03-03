@@ -8,7 +8,9 @@ import { SyledLayout } from './styled';
 const layout3ColumnsWidget: DME.Widget = {
   category: 'design',
   icon: 'layout-3columns',
-  name: i18n('3 Columns layout', 'widget'),
+  get name() {
+    return i18n('3 Columns layout', 'widget');
+  },
   type: 'layout-3columns',
   widgetType: 'mixed',
   events: {

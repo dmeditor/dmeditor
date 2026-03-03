@@ -23,7 +23,9 @@ export interface ImageEntity {
 export const ImageDefinition: DME.Widget = {
   type: 'image',
   icon: 'image',
-  name: i18n('Image', 'widget'),
+  get name() {
+    return i18n('Image', 'widget');
+  },
   category: 'basic',
   settings: [
     {
