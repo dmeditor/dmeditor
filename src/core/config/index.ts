@@ -133,6 +133,7 @@ export interface DMEConfigType {
     characters?: Array<string>;
     settingPanelWidth?: number;
     minSettingPanelWidth?: number;
+    enableMobileSetting?: boolean;
     clipboardKey?: string;
     //context is from closed list (not including) to self list. eg. hero-text/list
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
@@ -253,6 +254,7 @@ const defaultConfig = () => {
       settingPanelWidth: 400,
       panelClassNames: {},
       ui: {},
+      enableMobileSetting: true,
     },
     widgets: {
       text: { fonts: ['Arial', 'Times new man'] },
@@ -305,6 +307,7 @@ const dmeConfig: {
     ui: { [variable: string]: string };
     getAddingSettings?: (context: ContextWithStyleType) => AddingSettingsType;
     clipboardKey: string;
+    enableMobileSetting: boolean;
     configStyleSettings?:
       | ((
           current: { pathKey: string | number; block?: { type: string; styles: Array<string> } },

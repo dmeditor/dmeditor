@@ -110,20 +110,24 @@ export const BlockSettings = (props: {
           </>
         )}
         {category == 'style' && (
-          <ActionPanel>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={mobileSettingOnly}
-                  onChange={(e) => {
-                    setMobileSettingOnly(e.target.checked);
-                  }}
+          <>
+            {dmeConfig.editor.enableMobileSetting && (
+              <ActionPanel>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={mobileSettingOnly}
+                      onChange={(e) => {
+                        setMobileSettingOnly(e.target.checked);
+                      }}
+                    />
+                  }
+                  labelPlacement="start"
+                  label={'Mobile settings'}
                 />
-              }
-              labelPlacement="start"
-              label={'Mobile settings'}
-            />
-          </ActionPanel>
+              </ActionPanel>
+            )}
+          </>
         )}
       </TabBodyContainer>
     );
