@@ -287,6 +287,10 @@ export const resetWidgets = () => {
     delete widgetDefinition[key];
   }
 
+  for (const key in components) {
+    delete components[key];
+  }
+
   for (const key in widgetStyles) {
     delete widgetStyles[key];
   }
