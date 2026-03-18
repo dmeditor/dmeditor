@@ -25,6 +25,7 @@ export type Store = {
   storage: DMEData.BlockList; //data layer
   page: DMEData.Page;
   recentColors: Array<string>;
+  eventListeners: Record<string, Array<(params?: any) => void>>; //event listeners
 };
 
 export type Actions = {
@@ -46,14 +47,14 @@ export type Actions = {
     type: string,
     isEmbed: boolean,
     addData?: { style?: string; savedBlock?: any },
-  ) => void;
+  ) => undefined | DMEData.Block;
   setMode: (mode: DME.Mode) => void;
   clearWidgets: () => void;
   clearSelected: () => void;
   loadJsonSchema: (jsonSchema: { widgets: DMEData.Block[] }) => void;
   getSelectedBlock: <T = DMEData.DefaultDataType>() => DMEData.Block<T> | undefined;
   removeBlock: (widget: DMEData.Block) => void;
-  removeByPath: (path: Array<number | string>) => void;
+  removeByPath: (path: Array<number | string>) => undefined | string;
   setSelected: (blockIndex?: number, context?: (string | number)[]) => void;
   setStorage: (data: DMEData.Block[]) => void;
   updateSelectedBlockIndex: (pathArray: Array<number | string>, id: string) => void;
@@ -94,4 +95,8 @@ export type Actions = {
   reset: () => void;
   getRecentColors: () => Array<string>;
   updateRecentColors: (color: string) => void;
+  subscribeEvent: (event: string, listener: (params?: any) => void) => void;
+  unsubscribeEvent: (event: string, listener: (params?: any) => void) => void;
+  clearEventListeners: () => void;
+  emitEvent: (event: string, params?: any) => void;
 };

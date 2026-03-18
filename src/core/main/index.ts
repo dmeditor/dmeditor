@@ -38,6 +38,7 @@ function createDMEditor() {
     hoverPath: undefined,
     addBlockData: undefined,
     recentColors,
+    eventListeners: {},
   };
 }
 

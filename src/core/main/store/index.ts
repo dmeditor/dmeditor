@@ -59,7 +59,8 @@ export const useEditorStore = create<Store & Actions>()(
       type: string,
       isEmbed: boolean,
       addData?: { style?: string; savedBlock?: any; id?: string },
-    ) =>
+    ) => {
+      let result: DMEData.Block | undefined;
       set((state) => {
         if (index == -Infinity) {
           return;
@@ -148,9 +149,13 @@ export const useEditorStore = create<Store & Actions>()(
         }
 
         //update to new block
+        result = blockData;
         state.selected.blockIndex = newPosition;
         state.selected.currentListPath = context;
-      }),
+      });
+      get().emitEvent('added', { block: result });
+      return result;
+    },
     cancelAdding: () =>
       set((state) => {
         if (state.addBlockData) {
@@ -273,6 +278,7 @@ export const useEditorStore = create<Store & Actions>()(
       }
     },
     removeByPath: (path: Array<number | string>) => {
+      let resultId: string | undefined;
       set((state) => {
         if (path.length === 0) return;
         const parentPath = path.length <= 1 ? [] : path.slice(0, path.length - 1);
@@ -285,15 +291,20 @@ export const useEditorStore = create<Store & Actions>()(
 
         if (typeof index === 'number') {
           list.splice(index, 1);
+          resultId = list[index].id;
         } else {
           console.warn('Canot remove from object children');
         }
       });
+      get().emitEvent('removed', { id: resultId });
+      return resultId;
     },
-    removeBlock: (block) =>
+    removeBlock: (block) => {
       set((state) => {
         state.storage = state.storage.filter((w) => w !== block);
-      }),
+      });
+      get().emitEvent('removed', { id: block.id });
+    },
     setSelected: (blockIndex?: number, context?: (string | number)[]) => {
       set((state) => {
         if (blockIndex === undefined) {
@@ -487,6 +498,30 @@ export const useEditorStore = create<Store & Actions>()(
         }
         if (window && window.localStorage) {
           window.localStorage.setItem('recentColors', JSON.stringify(state.recentColors));
+        }
+      });
+    },
+    subscribeEvent: (event: string, listener: (params?: any) => void) => {
+      set((state) => {
+        state.eventListeners[event] = [...(state.eventListeners[event] || []), listener];
+      });
+    },
+    unsubscribeEvent: (event: string, listener: (params?: any) => void) => {
+      set((state) => {
+        state.eventListeners[event] = state.eventListeners[event]?.filter((l) => l !== listener);
+      });
+    },
+    clearEventListeners: () => {
+      set((state) => {
+        state.eventListeners = {};
+      });
+    },
+    emitEvent: (event: string, params?: any) => {
+      set((state) => {
+        if (state.eventListeners[event]) {
+          state.eventListeners[event].forEach((listener) =>
+            Promise.resolve().then(() => listener(params)),
+          );
         }
       });
     },
