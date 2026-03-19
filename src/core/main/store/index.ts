@@ -290,8 +290,8 @@ export const useEditorStore = create<Store & Actions>()(
         }
 
         if (typeof index === 'number') {
-          list.splice(index, 1);
           resultId = list[index].id;
+          list.splice(index, 1);
         } else {
           console.warn('Canot remove from object children');
         }
