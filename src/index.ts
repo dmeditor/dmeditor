@@ -34,3 +34,4 @@ export * from './core/utility';
 export * from './core/types/dmeditor';
 export * from './core/main/designer/DMEditor';
 export * from './core/utils';
+export * from './core/main/designer/DMBlockEditor';

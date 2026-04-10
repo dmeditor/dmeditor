@@ -28,13 +28,13 @@ export const PropertyTab = (props: { tabs: Array<TabData>; active?: number }) =>
         `}
       >
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            variant="fullWidth"
-            value={active}
-            onChange={(e: any, newValue: number) => setActive(newValue)}
-          >
+          <Tabs value={active} onChange={(e: any, newValue: number) => setActive(newValue)}>
             {props.tabs.map((tab: TabData, index: number) => (
-              <Tab key={tab.title} sx={{ textTransform: 'none' }} label={tab.title} />
+              <Tab
+                key={tab.title}
+                sx={{ textTransform: 'none', padding: '0 40px' }}
+                label={tab.title}
+              />
             ))}
           </Tabs>
         </Box>
