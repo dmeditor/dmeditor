@@ -21,6 +21,7 @@ export const BlockSettings = (props: {
   blockData: DMEData.Block;
   rootWidget: string;
   embedLevel?: number;
+  hideStyle?: boolean;
 }) => {
   const { selectedPath, blockPath, blockData, rootWidget, embedLevel } = props;
 
@@ -35,6 +36,9 @@ export const BlockSettings = (props: {
   const getTabData = () => {
     const tabs: Array<TabData> = [];
     Object.keys(settingCategory).map((identifier) => {
+      if (identifier === 'style' && props.hideStyle) {
+        return;
+      }
       tabs.push({ title: settingCategory[identifier], element: renderATab(identifier) });
     });
     return tabs;

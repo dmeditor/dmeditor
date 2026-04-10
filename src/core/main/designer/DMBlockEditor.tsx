@@ -58,14 +58,13 @@ export const DMBlockEditor = (props: {
   mainViewMode?: boolean;
   mainRef: HTMLDivElement | null;
   settingsRef: HTMLDivElement | null;
+  hideStyle?: boolean;
 }) =>
   // props: DMBlockEditorProps,
   // currentRef: React.ForwardedRef<DMBlockEditorRefType>,
   {
-    const { mainViewMode = false } = props;
+    const { mainViewMode = false, hideStyle = false } = props;
     const { storage, setStorage, setSelected } = useEditorStore();
-
-    console.log('storage', storage);
 
     useEffect(() => {
       if (props.data) {
@@ -93,6 +92,7 @@ export const DMBlockEditor = (props: {
           )}
           {createPortal(
             <BlockSettings
+              hideStyle={hideStyle}
               blockPath={[0]}
               blockData={storage[0]}
               selectedPath={[0]}
