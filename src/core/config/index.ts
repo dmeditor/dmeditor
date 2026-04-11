@@ -376,8 +376,6 @@ const getStyleConfig = (
 
   const rootStyles = context.root?.styles || [];
 
-  console.debug('current: ', current, context, 'is list', parentIsList);
-
   let result: any = null;
   for (const item of configFile.block) {
     let match = true;
@@ -411,7 +409,6 @@ const getStyleConfig = (
     }
   }
 
-  console.debug(result);
   return result;
 };
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 type PositionType = '' | 'before' | 'after';
 

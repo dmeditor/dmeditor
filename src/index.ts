@@ -27,7 +27,7 @@ export { dmeServerSideLoad, registerServerSideLoad } from './core/ssr';
 export * from './core/config';
 export { DMEditorView, BlockRender, BlockListRender } from './core/main/renderer/index';
 // hooks
-export { useDevice } from './core/hooks/useDeivce';
+export { useDevice } from './core/hooks/useDevice';
 
 export * from './core/i18n';
 export * from './core/utility';

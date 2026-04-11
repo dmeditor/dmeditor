@@ -426,11 +426,9 @@ export const setBlockValueByPath = (block: any, propName: string, propValue: any
     if (isPlainObject(block.data)) {
       if (isKeyInObject('settings', block.data)) {
         if (realPropsName === 'general') {
-          console.log(realPropsName, realPropsName2);
           if (isKeyInObject('general', block.data.settings)) {
             block.data.settings.general[realPropsName2] = propValue;
           } else {
-            console.log(realPropsName, realPropsName2, 22);
             block.data[propKey][realPropsName] = { [realPropsName2]: propValue };
           }
         } else {

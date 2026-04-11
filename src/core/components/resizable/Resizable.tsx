@@ -23,23 +23,20 @@ const Resizable = (props: {
     }
   };
 
-  const onKeyDown = (e: any) => {
-    switch (e.keyCode) {
-      case 16:
-        if (lockAspectRatio != false) {
-          setLockAspectRatio(false);
-        }
-        break;
-    }
-  };
-  const onKeyUP = () => {
-    setLockAspectRatio(true);
-  };
-  window.addEventListener('keydown', onKeyDown);
-  window.addEventListener('keyup', onKeyUP);
   useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.keyCode === 16) {
+        setLockAspectRatio(false);
+      }
+    };
+    const onKeyUp = () => {
+      setLockAspectRatio(true);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
     return () => {
       window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
     };
   }, []);
 

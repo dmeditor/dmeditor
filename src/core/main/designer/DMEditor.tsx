@@ -10,7 +10,7 @@ import { useResizable } from 'react-resizable-layout';
 
 import { getPageTheme, setPageSettings } from '../../components/page';
 import { dmeConfig } from '../../config';
-import { DeviceType, setDevice, useDevice } from '../../hooks/useDeivce';
+import { DeviceType, setDevice, useDevice } from '../../hooks/useDevice';
 import { BlockListRender, DMEditorView } from '../../main/renderer';
 import SettingPanel from '../../setting-panel';
 import { TopBar } from '../../topbar/Topbar';

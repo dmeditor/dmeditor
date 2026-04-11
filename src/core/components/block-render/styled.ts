@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { dmeConfig } from 'dmeditor/core/config';
 import { DMEData } from 'dmeditor/core/types';
-import { isObject } from 'lodash';
+import isObject from 'lodash/isObject';
 
 const getMobileSettings = (settings: DMEData.GeneralSettingType) => {
   const result = { ...settings };

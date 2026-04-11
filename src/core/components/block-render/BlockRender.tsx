@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useMemo, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { css } from '@emotion/css';
-import { useDevice } from 'dmeditor/core/hooks/useDeivce';
+import { useDevice } from 'dmeditor/core/hooks/useDevice';
 import _debounce from 'lodash/debounce';
 
 import { Mode } from '../../constants';

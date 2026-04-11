@@ -38,8 +38,6 @@ export const Move = (props: { blockPath: Array<number> }) => {
         ? storage
         : getBlockByPath(blockPath.slice(0, blockPath.length - 1)).children;
 
-    console.log(targetIndex);
-    console.log(currentList);
     if (!currentBlock || !currentList || targetIndex >= currentList.length) {
       return;
     }

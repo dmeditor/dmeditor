@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/css';
 import { FormControlLabel, Switch } from '@mui/material';
 import { dmeConfig } from 'dmeditor/core/config';
-import { useDevice } from 'dmeditor/core/hooks/useDeivce';
+import { useDevice } from 'dmeditor/core/hooks/useDevice';
 
 import { PropertyTab, TabData } from '../../components/property-tab/Tab';
 import { DMEData } from '../../types';

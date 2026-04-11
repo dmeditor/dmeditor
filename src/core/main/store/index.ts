@@ -1,4 +1,3 @@
-import { isPlainObject } from 'lodash';
 import { nanoid } from 'nanoid';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
@@ -6,9 +5,9 @@ import { immer } from 'zustand/middleware/immer';
 import { createDMEditor } from '..';
 import { dmeConfig } from '../../../core/config';
 import type { DME, DMEData } from '../../types/dmeditor';
-import { isEmptyString, isKeyInObject, isStrictlyInfinity, setBlockValueByPath } from '../../utils';
+import { setBlockValueByPath } from '../../utils';
 import emitter from '../../utils/event';
-import { getWidgetStyleOption, getWidgetWithVariant, properties } from '../../utils/register';
+import { getWidgetStyleOption, getWidgetWithVariant } from '../../utils/register';
 import { getDataByPath, getListByPath, iterateBlockTree, iteratePath } from './helper';
 import type { Actions, AddBlockParameters, Store } from './types';
 import { useGlobalVars } from './useGlobalVars';
@@ -33,7 +32,7 @@ export const useEditorStore = create<Store & Actions>()(
           isEmbed: extraParams.isEmbed,
         };
       }),
-    addBlock: (type: string, addData?: { style?: string; savedBlock?: any }) => {
+    addBlock: (type: string, addData?: { style?: string; savedBlock?: DMEData.Block }) => {
       const state = get();
       if (!state.addBlockData) {
         return;
@@ -58,7 +57,7 @@ export const useEditorStore = create<Store & Actions>()(
       position: AddBlockParameters['position'],
       type: string,
       isEmbed: boolean,
-      addData?: { style?: string; savedBlock?: any; id?: string },
+      addData?: { style?: string; savedBlock?: DMEData.Block; id?: string },
     ) => {
       let result: DMEData.Block | undefined;
       set((state) => {
@@ -75,7 +74,7 @@ export const useEditorStore = create<Store & Actions>()(
           blockData = addData.savedBlock;
         } else {
           if (variant) {
-            blockData = variant.getDefaultData?.() as any;
+            blockData = variant.getDefaultData?.() as DMEData.Block;
           } else {
             const createdBlock = widget.events.createBlock();
             if (addData && addData.id) {
@@ -101,7 +100,6 @@ export const useEditorStore = create<Store & Actions>()(
           return;
         }
 
-        //update data(settings) from style
         const blockStyle = blockData.style;
         if (blockStyle) {
           for (const style of Object.keys(blockStyle)) {
@@ -148,7 +146,6 @@ export const useEditorStore = create<Store & Actions>()(
           }
         }
 
-        //update to new block
         result = blockData;
         state.selected.blockIndex = newPosition;
         state.selected.currentListPath = context;
@@ -162,9 +159,6 @@ export const useEditorStore = create<Store & Actions>()(
           const context = state.addBlockData.context;
           const parentList = getListByPath(state.storage, context);
           if (context.length > 0 && parentList && parentList.length === 0) {
-            //todo: remove
-            //  state.removeByPath(context);
-
             const parentContext = context.slice(0, context.length - 1);
             const list = getListByPath(state.storage, parentContext);
             if (!list) {
@@ -185,7 +179,6 @@ export const useEditorStore = create<Store & Actions>()(
     },
     clearWidgets: () => {
       set((state) => {
-        // state.designer.selectedBlockIndex = -1;
         state.selected.blockIndex = -Infinity;
         state.storage = [];
       });
@@ -197,8 +190,7 @@ export const useEditorStore = create<Store & Actions>()(
     },
     getCurrentList: (): DMEData.BlockList | DMEData.BlockMap | null => {
       const state = get();
-      const currentPath = state.selected.currentListPath;
-      return getListByPath(state.storage, currentPath);
+      return getListByPath(state.storage, state.selected.currentListPath);
     },
     getCurrentBlock: (): DMEData.Block | null => {
       const state = get();
@@ -206,28 +198,22 @@ export const useEditorStore = create<Store & Actions>()(
       return list?.[state.selected.blockIndex] || null;
     },
     getBlockByPath: (path: Array<number | string>): DMEData.Block | null => {
-      const state = get();
-      return getDataByPath(state.storage, path);
+      return getDataByPath(get().storage, path);
     },
     getClosestBlock: (
       path: Array<number | string>,
     ): [DMEData.Block, Array<number | string>] | [] => {
       const state = get();
+      if (path.length === 0) return [];
 
-      if (path.length === 0) {
-        return [];
-      }
-
-      const parents: Array<any> = [];
+      const parents: Array<[DMEData.Block, Array<number | string>]> = [];
       iteratePath(path, state.storage, (item, path) => {
         parents.push([item, path]);
       });
       parents.reverse();
 
       for (const item of parents) {
-        if (!item[0].isEmbed) {
-          return item;
-        }
+        if (!item[0].isEmbed) return item;
       }
       return [];
     },
@@ -236,9 +222,7 @@ export const useEditorStore = create<Store & Actions>()(
     ): Array<DMEData.Block & { path: Array<number | string> }> => {
       const state = get();
       const result: Array<DMEData.Block & { path: Array<number | string> }> = [];
-      if (path.length === 0) {
-        return [];
-      }
+      if (path.length === 0) return [];
       iteratePath(path.slice(0, path.length - 1), state.storage, (item, path) => {
         result.push({ ...item, path: path });
       });
@@ -250,8 +234,7 @@ export const useEditorStore = create<Store & Actions>()(
       });
     },
     isSelected: (): boolean => {
-      const state = get();
-      return state.selected.blockIndex !== -Infinity;
+      return get().selected.blockIndex !== -Infinity;
     },
     loadJsonSchema: (jsonSchema) => {
       set((state) => {
@@ -269,13 +252,9 @@ export const useEditorStore = create<Store & Actions>()(
     getSelectedBlock: <T>() => {
       const state = get();
       const selected = state.selected;
-      if (selected.blockIndex === -Infinity) {
-        return;
-      }
+      if (selected.blockIndex === -Infinity) return;
       const result = state.getBlockByPath([...selected.currentListPath, selected.blockIndex]);
-      if (result) {
-        return result as DMEData.Block<T>;
-      }
+      if (result) return result as DMEData.Block<T>;
     },
     removeByPath: (path: Array<number | string>) => {
       let resultId: string | undefined;
@@ -288,7 +267,6 @@ export const useEditorStore = create<Store & Actions>()(
           console.warn('Parent data not found in path', parentPath);
           return;
         }
-
         if (typeof index === 'number') {
           resultId = list[index].id;
           list.splice(index, 1);
@@ -308,30 +286,17 @@ export const useEditorStore = create<Store & Actions>()(
     setSelected: (blockIndex?: number, context?: (string | number)[]) => {
       set((state) => {
         if (blockIndex === undefined) {
-          state.clearSelected();
+          state.selected.blockIndex = -Infinity;
           return;
         }
-
         state.selected.blockIndex = blockIndex;
         if (context) {
           state.selected.currentListPath = context;
         }
-        // state.designer.selectedBlockIndex = selected;
-        //state.designer.selectedBlock = block;
       });
     },
     setStorage: (blocks: DMEData.Block[]) => {
       set((state) => {
-        const propertiesMap: {
-          [index: string]: DMEData.Block;
-        } = properties.reduce((acc, cur) => {
-          if (!cur || !cur.type) {
-            return acc;
-          }
-          acc[cur.type] = cur;
-          return acc;
-        }, {});
-
         state.storage = blocks;
       });
     },
@@ -341,7 +306,6 @@ export const useEditorStore = create<Store & Actions>()(
         const index = pathArray[pathArray.length - 1];
         state.selected.blockIndex = index;
         if (state.selected.currentListPath.join() !== parentPath.join()) {
-          // switch list context
           state.selected.currentListPath = parentPath;
         }
         state.selected.blockId = id;
@@ -349,7 +313,7 @@ export const useEditorStore = create<Store & Actions>()(
     },
     updateBlockByPath: <Type = DMEData.DefaultDataType>(
       path: Array<number | string>,
-      callback: (blockData: Type, block: unknown) => void,
+      callback: (blockData: Type, block?: any) => void,
     ) => {
       set((state) => {
         const block = getDataByPath(state.storage, path);
@@ -367,45 +331,31 @@ export const useEditorStore = create<Store & Actions>()(
           console.error('Invalid propName', propName);
           return;
         }
-
-        if (!block) {
-          return;
-        }
-        if (!block.data) {
-          block.data = {};
-        }
-
+        if (!block) return;
+        if (!block.data) block.data = {};
         setBlockValueByPath(block, propName, propValue);
       });
     },
     updateSelectedBlock: <Type = DMEData.DefaultDataType>(
-      callback: (blockData: Type, block: unknown) => void,
+      callback: (blockData: Type, block?: any) => void,
     ) => {
       const state = get();
       const path = [...state.selected.currentListPath, state.selected.blockIndex];
       state.updateBlockByPath(path, callback);
     },
     updateSelectedBlockEditControl: (value: number) => {
-      const state = get();
-      state.updateSelectedBlockProps('.editControl', value);
+      get().updateSelectedBlockProps('.editControl', value);
     },
     updateBlockStyleByPath: (
       value: string,
       styleIdentifier: string,
       path: Array<number | string>,
     ) => {
-      const state = get();
-
-      state.updateBlockByPath(path, (_, block) => {
-        if (!block.style) {
-          block.style = {};
-        }
+      get().updateBlockByPath(path, (_, block) => {
+        if (!block) return;
+        if (!block.style) block.style = {};
         if (styleIdentifier === '_') {
-          if (!value) {
-            block.style = {};
-          } else {
-            block.style = { _: value };
-          }
+          block.style = !value ? {} : { _: value };
         } else {
           block.style[styleIdentifier] = value;
         }
@@ -414,7 +364,6 @@ export const useEditorStore = create<Store & Actions>()(
     updateSelectedBlockProps: (propName, propValue) => {
       const state = get();
       const path = [...state.selected.currentListPath, state.selected.blockIndex];
-
       state.updateBlockPropsByPath(path, propName, propValue);
     },
     toggleProperty: (status) => set(() => ({ status })),
@@ -430,7 +379,6 @@ export const useEditorStore = create<Store & Actions>()(
     },
     insertBlock: (block: DMEData.Block, targetPath: Array<number | string>) => {
       set((state) => {
-        // get latest parent
         const parentBlock = getListByPath(
           state.storage,
           targetPath.slice(0, targetPath.length - 1),
@@ -439,59 +387,46 @@ export const useEditorStore = create<Store & Actions>()(
           console.error('Parent block not found');
           return;
         }
-
         const targetIndex = targetPath[targetPath.length - 1];
-        if (typeof targetIndex !== 'number') {
-          return;
-        }
-
+        if (typeof targetIndex !== 'number') return;
         if (targetIndex < 0 || targetIndex > parentBlock.length) {
           console.warn('Invalid target index', targetIndex);
           return;
         }
-
-        // insert block to target path
         parentBlock.splice(targetIndex as number, 0, block);
       });
     },
     setCopyBlock: (block: DMEData.Block) => {
-      set((state) => {
+      set(() => {
         localStorage.setItem(dmeConfig.editor.clipboardKey, JSON.stringify(block));
       });
     },
     clearCopyBlock: () => {
-      set((state) => {
+      set(() => {
         localStorage.removeItem(dmeConfig.editor.clipboardKey);
       });
     },
     getCopyBlock: () => {
       const clipboardStr = localStorage.getItem(dmeConfig.editor.clipboardKey);
-      if (!clipboardStr) {
-        return false;
-      }
+      if (!clipboardStr) return undefined;
       try {
         const clipboard = JSON.parse(clipboardStr);
         iterateBlockTree(clipboard, (item) => {
           item.id = nanoid();
         });
-        return clipboard as any;
+        return clipboard as DMEData.Block;
       } catch (ex) {
         console.error('Not an object in clipboard. ref: ' + clipboardStr);
-        return false;
+        return undefined;
       }
     },
     reset: () => {
       set(() => createDMEditor());
     },
-    getRecentColors: () => {
-      const state = get();
-      return state.recentColors;
-    },
+    getRecentColors: () => get().recentColors,
     updateRecentColors: (color: string) => {
       set((state) => {
-        if (state.recentColors.includes(color)) {
-          return;
-        }
+        if (state.recentColors.includes(color)) return;
         state.recentColors.unshift(color);
         if (state.recentColors.length > 10) {
           state.recentColors = state.recentColors.slice(0, 10);
@@ -501,12 +436,12 @@ export const useEditorStore = create<Store & Actions>()(
         }
       });
     },
-    subscribeEvent: (event: string, listener: (params?: any) => void) => {
+    subscribeEvent: (event: string, listener: (params?: unknown) => void) => {
       set((state) => {
         state.eventListeners[event] = [...(state.eventListeners[event] || []), listener];
       });
     },
-    unsubscribeEvent: (event: string, listener: (params?: any) => void) => {
+    unsubscribeEvent: (event: string, listener: (params?: unknown) => void) => {
       set((state) => {
         state.eventListeners[event] = state.eventListeners[event]?.filter((l) => l !== listener);
       });
@@ -516,7 +451,7 @@ export const useEditorStore = create<Store & Actions>()(
         state.eventListeners = {};
       });
     },
-    emitEvent: (event: string, params?: any) => {
+    emitEvent: (event: string, params?: unknown) => {
       set((state) => {
         if (state.eventListeners[event]) {
           state.eventListeners[event].forEach((listener) =>
@@ -551,4 +486,8 @@ export const useWidgetSettingStore = create<
 );
 
 export { useGlobalVars, useSettingStatus };
+export { useBlockOperationsStore } from './useBlockOperationsStore';
+export { useColorStore } from './useColorStore';
+export { usePageStore } from './usePageStore';
+export { useSelectionStore } from './useSelectionStore';
 export type { AddBlockParameters };

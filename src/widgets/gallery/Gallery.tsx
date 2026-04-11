@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CloseOutlined, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { Dialog, DialogContent, IconButton } from '@mui/material';
 import { DME } from 'dmeditor/core/types';
-import { partial } from 'lodash';
+import partial from 'lodash/partial';
 
 import { dmeConfig } from '../../core/config';
 import { GalleryEntity } from './entity';

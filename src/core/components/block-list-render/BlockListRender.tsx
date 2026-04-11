@@ -22,7 +22,7 @@ interface BlockListProps {
   mode: DME.Mode;
 }
 
-export const BlockListRender: React.FC<BlockListProps> = (props) => {
+export const BlockListRender: React.FC<BlockListProps> = React.memo((props) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData,
@@ -134,4 +134,4 @@ export const BlockListRender: React.FC<BlockListProps> = (props) => {
       })}
     </>
   );
-};
+});

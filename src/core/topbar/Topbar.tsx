@@ -23,7 +23,7 @@ import { Button, Divider, IconButton, Menu, MenuItem, Tooltip } from '@mui/mater
 
 import emitter from '../../core/utils/event';
 import { dmeConfig } from '../config';
-import { setDevice } from '../hooks/useDeivce';
+import { setDevice } from '../hooks/useDevice';
 import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import { DME } from '../types';
@@ -85,13 +85,13 @@ export const TopBar = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('fullscreenchange', (event) => {
-      if (document.fullscreenElement) {
-        setIsFullScreen(true);
-      } else {
-        setIsFullScreen(false);
-      }
-    });
+    const handleFullscreenChange = () => {
+      setIsFullScreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
   }, []);
 
   return (

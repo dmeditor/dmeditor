@@ -1,4 +1,4 @@
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 import { TYPE_UNDEFINED_VALUE, UNDEFINED_VALUE } from './types';
 

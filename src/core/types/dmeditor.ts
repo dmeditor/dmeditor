@@ -6,11 +6,11 @@ export namespace DME {
   //Note Returned value will be dependencyValue for other widgets.
   export type ServerSideLoadFunction<T = any> = (
     data: DMEData.Block<T>,
-    context: { query: Record<string, string | number>; dependencyValue?: any } & Record<
+    context: { query: Record<string, string | number>; dependencyValue?: unknown } & Record<
       string,
-      any
+      unknown
     >,
-  ) => Promise<void | { value?: any }>;
+  ) => Promise<void | { value?: unknown }>;
 
   export interface Setting {
     property?: string;
@@ -49,7 +49,7 @@ export namespace DME {
     identifier: string;
     name: string;
     type: PageSettingType;
-    parameters?: Record<string, any>;
+    parameters?: Record<string, unknown>;
   };
 
   export type PageTheme = {
@@ -88,7 +88,7 @@ export namespace DME {
         hasOwnView?: (context: EmbedChildContext) => boolean;
       };
       defaultBlock?: () => DMEData.Block<any>;
-      validate?: (data: any) => boolean;
+      validate?: (data: unknown) => boolean;
     };
     settings: Setting[];
   }
@@ -117,7 +117,7 @@ export namespace DME {
     render: ComponentType<any>;
     preview?: ComponentType<{ blockData: any; mode?: 'list' }>;
     onServerSideLoad?: ServerSideLoadFunction;
-    onDependencyValueChange?: (value: any, from: { id: string; widget: string }) => void;
+    onDependencyValueChange?: (value: unknown, from: { id: string; widget: string }) => void;
   }
 
   export type WidgetStyleClasses = Record<string, string>;
@@ -125,7 +125,7 @@ export namespace DME {
   export type WidgetStyleSettingStatus = 'valid' | 'disabled' | 'hidden';
 
   export interface WidgetStyleOptionSettings {
-    [key: string]: { value: any; status?: WidgetStyleSettingStatus };
+    [key: string]: { value: unknown; status?: WidgetStyleSettingStatus };
   }
 
   export interface WidgetStyleOption {
@@ -150,7 +150,7 @@ export namespace DME {
     active: boolean;
     mode: Mode;
     path: (number | string)[];
-    dependencyData?: any;
+    dependencyData?: unknown;
   }
 
   export interface SettingComponentProps<T = unknown> extends Setting {

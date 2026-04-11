@@ -14,41 +14,7 @@ module.exports = merge(baseConfig, {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        use: [
-          'thread-loader',
-          {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: 'cache',
-              babelrc: false,
-              presets: [
-                ['@babel/preset-env', { targets: 'maintained node versions' }],
-                '@babel/preset-typescript',
-              ],
-              plugins: [
-                // ['@babel/plugin-proposal-class-properties', { loose: true }],
-                // ['@babel/plugin-proposal-nullish-coalescing-operator'],
-              ],
-            },
-          },
-        ],
-      },
-      {
         test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: 'cache',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.js?$/,
         exclude: /node_modules/,
         use: [
           'thread-loader',

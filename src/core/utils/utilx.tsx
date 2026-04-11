@@ -15,24 +15,24 @@ import { nanoid } from 'nanoid';
 import { dmeConfig } from '../..';
 
 export interface BrowseProps {
-  type?: any;
+  type?: string;
   adding?: boolean;
-  onConfirm?: any;
+  onConfirm?: (value: unknown, source?: string) => void;
   onCancel?: () => void;
-  defalutValue?: any;
+  defalutValue?: Record<string, unknown>;
   hovering?: boolean;
 }
 
 export const Util = {
-  BrowseImage: null as any,
-  BrowseLink: null as any,
-  CustomProperty: null as any,
-  PreBlock: null as any,
-  pageTab: null as any,
+  BrowseImage: null as ((props: BrowseProps) => JSX.Element) | null,
+  BrowseLink: null as ((props: BrowseProps) => JSX.Element) | null,
+  CustomProperty: null as ((props: Record<string, unknown>) => JSX.Element) | null,
+  PreBlock: null as ((props: { blockData: unknown }) => JSX.Element) | null,
+  pageTab: null as (() => JSX.Element) | null,
   pageTabActiveIndex: 0,
-  toast: null as any,
-  fileUrl: '' as any,
-  imageUrl: '' as any,
+  toast: null as { error: (msg: string, option?: Record<string, unknown>) => void; success: (msg: string, option?: Record<string, unknown>) => void } | null,
+  fileUrl: null as ((path: string) => string) | null,
+  imageUrl: null as ((path: string) => string) | null,
   renderBroseURL: (props: BrowseProps) => {
     if (props.type === 'Image' && Util.BrowseImage) {
       let A = Util.BrowseImage as (props: BrowseProps) => JSX.Element;
@@ -58,17 +58,17 @@ export const Util = {
       );
     }
   },
-  renderCustomProperty: (props: any) => {
+  renderCustomProperty: (props: Record<string, unknown>) => {
     if (Util.CustomProperty) {
-      let A = Util.CustomProperty as (props: any) => JSX.Element;
+      let A = Util.CustomProperty as (props: Record<string, unknown>) => JSX.Element;
       return <A data={props} />;
     } else {
       return null;
     }
   },
-  renderPreBlock: (props: { blockData: any }) => {
+  renderPreBlock: (props: { blockData: unknown }) => {
     if (Util.PreBlock) {
-      let A = Util.PreBlock as (props: any) => JSX.Element;
+      let A = Util.PreBlock as (props: { blockData: unknown }) => JSX.Element;
       return <A blockData={props.blockData} />;
     } else {
       return null;
@@ -82,40 +82,42 @@ export const Util = {
       return null;
     }
   },
-  getFileUrl: (path: any) => {
+  getFileUrl: (path: string) => {
     if (Util.fileUrl) {
       return Util.fileUrl(path);
     } else {
       return path;
     }
   },
-  getImageUrl: (path: any) => {
+  getImageUrl: (path: string) => {
     if (Util.imageUrl) {
       return Util.imageUrl(path);
     } else {
       return path;
     }
   },
-  poLastDiv: (obj: any) => {
+  poLastDiv: (obj: HTMLElement) => {
     obj.focus();
     // move caret to end
     const textLength = obj.innerText.length;
     const range = document.createRange();
-    const sel: any = window.getSelection();
+    const sel = window.getSelection();
 
     range.setStart(obj.childNodes[0], textLength);
     range.collapse(true);
 
-    sel.removeAllRanges();
-    sel.addRange(range);
+    sel?.removeAllRanges();
+    sel?.addRange(range);
   },
-  changrootValue: (newRoot: any) => {
-    let root: any = document.querySelector(':root');
-    Object.entries(newRoot).forEach((v) => root.style.setProperty(v[0], v[1]));
+  changrootValue: (newRoot: Record<string, string>) => {
+    let root = document.querySelector(':root') as HTMLElement | null;
+    if (root) {
+      Object.entries(newRoot).forEach((v) => root!.style.setProperty(v[0], v[1]));
+    }
   },
-  imgReady: (url: any, ready?: any, load?: any, error?: any) => {
-    var list: any = [],
-      intervalId: any = null,
+  imgReady: (url: string, ready?: (img: HTMLImageElement) => void, load?: (img: HTMLImageElement) => void, error?: (img: HTMLImageElement) => void) => {
+    var list: Array<{ (): void; end?: boolean }> = [],
+      intervalId: ReturnType<typeof setInterval> | null = null,
       // Used to execute the queue
       tick = () => {
         var i = 0;
@@ -126,20 +128,20 @@ export const Util = {
       },
       // Stop all timer queues
       stop = () => {
-        clearInterval(intervalId);
+        clearInterval(intervalId!);
         intervalId = null;
       };
     return () => {
-      var onready: any,
-        width: any,
-        height: any,
-        newWidth: any,
-        newHeight: any,
+      var onready: { (): void; end?: boolean },
+        width: number,
+        height: number,
+        newWidth: number,
+        newHeight: number,
         img: any = new Image();
       img.src = url;
       // If the image is cached, the cached data is returned directly
       if (img.complete) {
-        ready(img);
+        ready?.(img);
         load && load(img);
         // ready.call(img);
         // load && load.call(img);
@@ -163,7 +165,7 @@ export const Util = {
         newHeight = img.height;
         if (newWidth !== width || newHeight !== height || newWidth * newHeight > 1024) {
           // If the image has been loaded elsewhere, the usable area is detected
-          ready(img);
+          ready?.(img);
           // ready.call(img);
           onready.end = true;
         }
@@ -190,14 +192,14 @@ export const Util = {
       }
     };
   },
-  error: (msg: any, option?: any) => {
+  error: (msg: string, option?: Record<string, unknown>) => {
     if (Util.toast) {
       Util.toast.error(msg, option);
     } else {
       window.alert(msg);
     }
   },
-  message: (msg: any, option?: any) => {
+  message: (msg: string, option?: Record<string, unknown>) => {
     if (Util.toast) {
       Util.toast.success(msg, option);
     } else {
@@ -211,11 +213,11 @@ export const isServer = () => {
 };
 
 const DefaultBrowseUrl = (props: {
-  type?: any;
-  onConfirm?: any;
-  onCancel?: any;
+  type?: string;
+  onConfirm?: (value: unknown, source?: string) => void;
+  onCancel?: () => void;
   adding?: boolean;
-  defalutValue?: any;
+  defalutValue?: Record<string, unknown>;
 }) => {
   const [adding, setAdding] = React.useState(props.adding ? true : false);
   const [inputUrl, setInputUrl] = React.useState(props.defalutValue ? props.defalutValue.url : '');
@@ -226,9 +228,9 @@ const DefaultBrowseUrl = (props: {
       return;
     }
     setAdding(false);
-    props.onConfirm(inputUrl, 'input');
+    props.onConfirm?.(inputUrl, 'input');
   };
-  const handleClose = (event?: any, reason?: any) => {
+  const handleClose = (event?: unknown, reason?: string) => {
     if (reason && reason === 'backdropClick') return;
     setAdding(false);
   };
@@ -278,7 +280,7 @@ const DefaultBrowseUrl = (props: {
 
 //set device manually, for simulation purpose
 
-export const sanitizeBlockData = (data: any) => {
+export const sanitizeBlockData = (data: Record<string, unknown>) => {
   if (!data.style && data['style'] !== undefined) {
     delete data['style'];
   }
@@ -289,13 +291,13 @@ export const generateCommonBlockData = (type: string) => {
   return { id: `a_${nanoid()}`, type: type };
 };
 
-export const getValueByPath = (path: string, blockData) => {
+export const getValueByPath = (path: string, blockData: Record<string, unknown>) => {
   const arr = path.split('.');
   if (arr.length === 1) {
     return blockData[arr[0]];
   } else if (arr.length === 2) {
     //only support settings for now
-    return blockData['settings'][arr[1]];
+    return (blockData['settings'] as Record<string, unknown>)?.[arr[1]];
   }
   return null;
 };

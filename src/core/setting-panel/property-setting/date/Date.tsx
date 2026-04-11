@@ -20,8 +20,6 @@ const Date = (
   const dateValue = value?.date || '';
   const timeValue = value?.time || '';
 
-  console.log(value);
-
   const onDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const date = e.target.value;
     updateBlockPropsByPath(blockPath, property || '', { date, time: timeValue });
