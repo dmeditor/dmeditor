@@ -1,5 +1,7 @@
 'use strict';
 
+import { nanoid } from 'nanoid';
+
 import { ContextWithStyleType, dmeConfig, type DMEConfigType } from '../config';
 import type { DMEData } from '../types';
 import { logger } from './log';
@@ -179,6 +181,10 @@ export function isString(value: unknown): Boolean {
     value instanceof String ||
     Object.prototype.toString.call(value) === '[object String]'
   );
+}
+
+export function generateID() {
+  return nanoid();
 }
 
 function getCssValue(cssStyle: string, attribute: string): string | null {

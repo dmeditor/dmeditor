@@ -65,7 +65,7 @@ const ClickToEdit = (props: {
 type SettingPanelMode = 'block-setting' | 'list-overview' | 'page-setting' | 'adding';
 
 // const SettingPanel = ({ selectedWidget }: { selectedWidget: string }) => {
-const SettingPanel = (props) => {
+const SettingPanel = (props: {}) => {
   const {
     selected: { blockIndex: selectedBlockIndex, currentListPath },
     addBlockData,
