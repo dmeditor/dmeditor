@@ -121,6 +121,7 @@ const getGeneralStyle = (
 
   if (settings.borderRadius) {
     containerStyle['borderRadius'] = settings.borderRadius;
+    containerStyle['overflow'] = 'hidden';
   }
 
   if (settings.fullWidth) {
