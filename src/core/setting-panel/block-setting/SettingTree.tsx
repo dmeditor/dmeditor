@@ -331,67 +331,78 @@ export const SettingTree = (props: {
             onChange={switchStyleOption}
           />
         )}
-        <div id="dme-widget-setting-container" />
-        {settingGroups.map((group, index) => {
-          let settingList = settingConfigs?.settings.filter((item) => item.group === group);
-          let validSettingList = settingList?.filter((setting) => {
-            if (!setting.settingComponent) {
-              return false;
+        <div
+          id={'dme-widget-setting-container-' + blockData.id}
+          className="dmee-setting-container"
+        />
+        <div className="dmee-setting-list">
+          {settingGroups.map((group, index) => {
+            let settingList = settingConfigs?.settings.filter((item) => item.group === group);
+            let validSettingList = settingList?.filter((setting) => {
+              if (!setting.settingComponent) {
+                return false;
+              }
+
+              if (setting.category === 'style') {
+                //if it's not enabled, ignore
+                if (
+                  enabledStyleSettings &&
+                  setting.identifier &&
+                  !enabledStyleSettings.includes(setting.identifier)
+                ) {
+                  return false;
+                }
+
+                if (
+                  props.options.mobileOnly &&
+                  (!setting.appliedDevices || !setting.appliedDevices.includes('mobile'))
+                ) {
+                  return false;
+                }
+
+                if (setting.property && settingStatus[setting.property] === 'hidden') {
+                  return false;
+                }
+              }
+
+              return true;
+            });
+
+            if (!validSettingList || validSettingList.length === 0) {
+              return <></>;
             }
 
-            if (setting.category === 'style') {
-              //if it's not enabled, ignore
-              if (
-                enabledStyleSettings &&
-                setting.identifier &&
-                !enabledStyleSettings.includes(setting.identifier)
-              ) {
-                return false;
-              }
+            return (
+              <div key={index + (group || '')}>
+                {group && (
+                  <PropertyGroup
+                    expandable={true}
+                    header={i18n(dmeConfig.editor.settingGroups[group], 'property-group')}
+                  >
+                    <div>{renderSettingList(validSettingList)}</div>
+                  </PropertyGroup>
+                )}
 
-              if (
-                props.options.mobileOnly &&
-                (!setting.appliedDevices || !setting.appliedDevices.includes('mobile'))
-              ) {
-                return false;
-              }
-
-              if (setting.property && settingStatus[setting.property] === 'hidden') {
-                return false;
-              }
-            }
-
-            return true;
-          });
-
-          if (!validSettingList || validSettingList.length === 0) {
-            return <></>;
-          }
-
-          return (
-            <div key={index + (group || '')}>
-              {group && (
-                <PropertyGroup
-                  expandable={true}
-                  header={i18n(dmeConfig.editor.settingGroups[group], 'property-group')}
-                >
-                  <div>{renderSettingList(validSettingList)}</div>
-                </PropertyGroup>
-              )}
-
-              {!group && (
-                <StyledSettingNoGroup>{renderSettingList(validSettingList)}</StyledSettingNoGroup>
-              )}
-            </div>
-          );
-        })}
+                {!group && (
+                  <StyledSettingNoGroup>{renderSettingList(validSettingList)}</StyledSettingNoGroup>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   };
 
   const renderChildrenSettings = () => {
     return (
-      <div>
+      <div
+        className={
+          mapBlockList(blockData.children || [], () => true).length > 0
+            ? 'dmee-setting-children-has-elements'
+            : ''
+        }
+      >
         {mapBlockList(blockData.children || [], (item, index) => {
           if (!item.type) {
             return <></>;
@@ -441,15 +452,13 @@ export const SettingTree = (props: {
 
   return (
     <div
-      className={
-        props.category === 'style'
-          ? css`
-              :not(:has(.dmee-setting-property)) {
-                display: none;
-              }
-            `
-          : ''
-      }
+      className={css`
+        &:not(:has(.dmee-setting-children-has-elements)):has(.dmee-setting-list:empty):has(
+            .dmee-setting-container:empty
+          ) {
+          display: none;
+        }
+      `}
     >
       {level > 0 && (
         <div>
