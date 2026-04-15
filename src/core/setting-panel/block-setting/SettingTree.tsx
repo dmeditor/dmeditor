@@ -333,7 +333,7 @@ export const SettingTree = (props: {
         )}
         <div
           id={'dme-widget-setting-container-' + blockData.id}
-          className="dmee-setting-container"
+          className="dmee-widget-setting-container"
         />
         <div className="dmee-setting-list">
           {settingGroups.map((group, index) => {
@@ -454,7 +454,7 @@ export const SettingTree = (props: {
     <div
       className={css`
         &:not(:has(.dmee-setting-children-has-elements)):has(.dmee-setting-list:empty):has(
-            .dmee-setting-container:empty
+            .dmee-widget-setting-container:empty
           ) {
           display: none;
         }
