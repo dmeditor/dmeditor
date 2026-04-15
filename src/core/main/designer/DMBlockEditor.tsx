@@ -14,7 +14,7 @@ export interface DMBlockEditorProps {
   mainRef: React.RefObject<HTMLDivElement | null>;
   settingsRef: React.RefObject<HTMLDivElement | null>;
   settingOnly?: boolean;
-  onDataChange?: (data: DMEData.Block) => void;
+  onDataChange?: (data: DMEData.Block | null) => void;
 }
 
 export const DMBlockEditor = (props: DMBlockEditorProps) => {
@@ -24,15 +24,15 @@ export const DMBlockEditor = (props: DMBlockEditorProps) => {
   useEffect(() => {
     if (props.initialData) {
       setStorage([props.initialData]);
-      setSelected(0);
+      setSelected(0, []);
     }
   }, []);
 
   useEffect(() => {
-    if (props.onDataChange && storage.length > 0) {
-      props.onDataChange(storage[0]);
+    if (props.onDataChange) {
+      props.onDataChange(storage.length > 0 ? storage[0] : null);
     }
-  }, [storage, props.onDataChange]);
+  }, [storage]);
 
   if (storage.length === 0) {
     return <div>No data</div>;

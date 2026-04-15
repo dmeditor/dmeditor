@@ -5,12 +5,13 @@ import { DMEData } from '../../types/dmeditor';
 export const LayoutRender = (props: {
   list: DMEData.Block[];
   mode: 'edit' | 'view';
+  ignoreLayoutRender?: boolean;
   pageData?: unknown;
 }) => {
-  const { list, mode, pageData } = props;
+  const { list, mode, pageData, ignoreLayoutRender } = props;
 
   const LayoutRenderComponent = dmeConfig.callbacks.layoutRender;
-  if (LayoutRenderComponent) {
+  if (LayoutRenderComponent && !ignoreLayoutRender) {
     return <LayoutRenderComponent list={list} mode={mode} pageData={pageData} />;
   }
   return <BlockListRender blockData={list} path={[]} mode={mode} />;
