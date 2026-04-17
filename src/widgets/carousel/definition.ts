@@ -19,7 +19,9 @@ const definition: DME.Widget = {
   },
   settings: [
     {
-      name: 'Animation',
+      get name() {
+        return i18n('Animation', 'property-label');
+      },
       property: '.animation',
       settingComponent: 'select',
       parameters: {
@@ -31,7 +33,9 @@ const definition: DME.Widget = {
       },
     },
     {
-      name: 'Auto Play',
+      get name() {
+        return i18n('Auto Play', 'property-label');
+      },
       property: '.autoPlay',
       settingComponent: 'button-group',
       parameters: {
@@ -48,7 +52,9 @@ const definition: DME.Widget = {
       settingComponent: 'carousel',
     },
     {
-      name: 'Link on Image',
+      get name() {
+        return i18n('Link on image', 'property-label');
+      },
       property: '.linkOnImage',
       settingComponent: 'checkbox',
       description: 'Default is link on title.',

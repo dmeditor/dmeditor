@@ -1,4 +1,4 @@
-import { DME, ImageSetting, useEditorStore } from '../../..';
+import { DME, i18n, ImageSetting, useEditorStore } from '../../..';
 import { PropertyItem } from '../../../core/utils';
 import { ImageEntity } from '../Image';
 
@@ -19,7 +19,7 @@ export const Source = (props: DME.SettingComponentProps<ImageEntity>) => {
   };
 
   return (
-    <PropertyItem label="Source">
+    <PropertyItem label={i18n('Source', 'property-label')}>
       <ImageSetting
         value={{ src: src || '', id: data?.externalId }}
         defaultVisible={!src}

@@ -27,18 +27,24 @@ const HeadingWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Text',
+      get name() {
+        return i18n('Text', 'property-label');
+      },
       property: '.value',
       settingComponent: 'input',
     },
     {
-      name: 'Level',
+      get name() {
+        return i18n('Level', 'property-label');
+      },
       settingComponent: 'range',
       property: '.level',
       parameters: { min: 1, max: 5 },
     },
     {
-      name: 'Text align',
+      get name() {
+        return i18n('Text align', 'property-label');
+      },
       settingComponent: 'align',
       property: 'settings.align',
       identifier: 'heading-align',
@@ -46,7 +52,9 @@ const HeadingWidget: DME.Widget = {
       styleTags: ['core'],
     },
     {
-      name: 'Text color',
+      get name() {
+        return i18n('Text color', 'property-label');
+      },
       identifier: 'heading-text-color',
       settingComponent: 'color',
       property: 'settings.color',
@@ -56,7 +64,13 @@ const HeadingWidget: DME.Widget = {
       category: 'style',
       styleTags: ['core'],
     },
-    { name: 'Anchor', settingComponent: 'heading', property: '.anchor' },
+    {
+      get name() {
+        return i18n('Anchor', 'property-label');
+      },
+      settingComponent: 'heading',
+      property: '.anchor',
+    },
   ],
 };
 

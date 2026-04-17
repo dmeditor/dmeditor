@@ -103,7 +103,7 @@ const heroTextWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Hero position',
+      get name() { return i18n('Hero position', 'property-label'); },
       property: '.heroPosition',
       settingComponent: 'button-group',
       identifier: 'hero-text-hero-position',
@@ -117,7 +117,7 @@ const heroTextWidget: DME.Widget = {
       },
     },
     {
-      name: 'Hero position mobile',
+      get name() { return i18n('Hero position mobile', 'property-label'); },
       property: '.heroPositionMobile',
       settingComponent: 'button-group',
       identifier: 'hero-text-hero-position-mobile',
@@ -131,7 +131,7 @@ const heroTextWidget: DME.Widget = {
       },
     },
     {
-      name: 'Gap',
+      get name() { return i18n('Gap', 'property-label'); },
       identifier: 'hero-text-gap',
       category: 'style',
       property: '.gap',
@@ -139,7 +139,7 @@ const heroTextWidget: DME.Widget = {
       parameters: { min: 0, max: 50 },
     },
     {
-      name: 'Full hero',
+      get name() { return i18n('Full hero', 'property-label'); },
       identifier: 'full-hero',
       category: 'style',
       property: '.heroFullWidth',

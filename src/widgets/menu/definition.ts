@@ -32,7 +32,7 @@ export const menuDefinition: DME.Widget = {
   settings: [
     {
       property: 'settings.general.identifier',
-      name: 'Block Identifier',
+      get name() { return i18n('Block identifier', 'property-label'); },
       settingComponent: 'input',
       description: 'The key location query. eg. in ?menu=xxx where menu is the key.',
       parameters: {
@@ -41,7 +41,7 @@ export const menuDefinition: DME.Widget = {
     },
     {
       property: 'settings.direction',
-      name: 'Direction',
+      get name() { return i18n('Direction', 'property-label'); },
       identifier: 'menu-direction',
       settingComponent: 'button-group',
       parameters: {
@@ -53,7 +53,7 @@ export const menuDefinition: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'Text color',
+      get name() { return i18n('Text color', 'property-label'); },
       identifier: 'menu-text-color',
       property: 'settings.color',
       settingComponent: 'color',

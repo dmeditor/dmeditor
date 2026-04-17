@@ -27,7 +27,7 @@ const listWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Direction',
+      get name() { return i18n('Direction', 'property-label'); },
       identifier: 'list-direction',
       property: '.direction',
       category: 'style',
@@ -41,7 +41,7 @@ const listWidget: DME.Widget = {
       },
     },
     {
-      name: 'Item gap',
+      get name() { return i18n('Item gap', 'property-label'); },
       identifier: 'list-item-gap',
       property: '.itemGap',
       category: 'style',

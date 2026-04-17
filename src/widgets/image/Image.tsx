@@ -29,27 +29,27 @@ export const ImageDefinition: DME.Widget = {
   category: 'basic',
   settings: [
     {
-      name: 'Source',
+      get name() { return i18n('Source', 'property-label'); },
       settingComponent: 'image-source',
       custom: true,
     },
     {
-      name: 'Description',
+      get name() { return i18n('Description', 'property-label'); },
       settingComponent: 'input',
       property: '.description',
     },
     {
-      name: 'Link',
+      get name() { return i18n('Link', 'property-label'); },
       settingComponent: 'link',
       property: '.link',
     },
     {
-      name: 'Open new tab',
+      get name() { return i18n('Open new tab', 'property-label'); },
       settingComponent: 'checkbox',
       property: 'settings.linkNewTab',
     },
     {
-      name: 'Border Width',
+      get name() { return i18n('Border width', 'property-label'); },
       settingComponent: 'range',
       property: 'settings.borderWidth',
       parameters: { min: 0, max: 40 },
@@ -59,7 +59,7 @@ export const ImageDefinition: DME.Widget = {
       group: 'style_border',
     },
     {
-      name: 'Border Color',
+      get name() { return i18n('Border color', 'property-label'); },
       identifier: 'image-border-color',
       settingComponent: 'color',
       property: 'settings.borderColor',
@@ -71,7 +71,7 @@ export const ImageDefinition: DME.Widget = {
       group: 'style_border',
     },
     {
-      name: 'Border radius',
+      get name() { return i18n('Border radius', 'property-label'); },
       identifier: 'image-border-radius',
       settingComponent: 'distance',
       property: 'settings.borderRadius',

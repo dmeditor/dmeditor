@@ -7,7 +7,9 @@ import { EntityContentView } from './entity';
 export const contentViewDefinition: DME.Widget = {
   category: 'design',
   icon: 'content-view',
-  name: i18n('Content view', 'widget'),
+  get name() {
+    return i18n('Content view', 'widget');
+  },
   type: 'content-view',
   widgetType: 'widget',
   canDependentOn: ['menu'],
@@ -27,13 +29,17 @@ export const contentViewDefinition: DME.Widget = {
   },
   settings: [
     {
-      name: 'Data source',
+      get name() {
+        return i18n('Data source', 'property-label');
+      },
       settingComponent: 'data-source',
       property: '.dataSource',
     },
 
     {
-      name: 'View',
+      get name() {
+        return i18n('View', 'property-label');
+      },
       settingComponent: 'select',
       property: '.view',
       parameters: {

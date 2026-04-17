@@ -27,7 +27,7 @@ const spaceWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Height',
+      get name() { return i18n('Height', 'property-label'); },
       property: 'settings.height',
       settingComponent: 'distance',
       parameters: {

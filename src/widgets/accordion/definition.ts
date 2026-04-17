@@ -69,12 +69,16 @@ const AccordionWidget: DME.Widget = {
       settingComponent: 'accordion',
     },
     {
-      name: 'Allow multile open',
+      get name() {
+        return i18n('Allow multiple open', 'property-label');
+      },
       property: '.multiOpen',
       settingComponent: 'switch',
     },
     {
-      name: 'Icon position',
+      get name() {
+        return i18n('Icon position', 'property-label');
+      },
       property: 'settings.iconOnLeft',
       settingComponent: 'button-group',
       parameters: {

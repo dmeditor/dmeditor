@@ -74,7 +74,9 @@ const TabsWidget: DME.Widget = {
     },
     {
       property: 'settings.general.identifier',
-      name: 'Block Identifier',
+      get name() {
+        return i18n('Block identifier', 'property-label');
+      },
       settingComponent: 'input',
       description:
         'Identifier in location query for direct access. eg. in ?tab=t1 where tab is the identifier. <br /><br /> Empty mean no need for direct access',

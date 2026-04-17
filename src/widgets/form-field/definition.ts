@@ -24,7 +24,9 @@ const formFieldWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Type',
+      get name() {
+        return i18n('Type', 'property-label');
+      },
       property: '.type',
       settingComponent: 'select',
       parameters: {
@@ -39,27 +41,37 @@ const formFieldWidget: DME.Widget = {
       },
     },
     {
-      name: 'Label',
+      get name() {
+        return i18n('Label', 'property-label');
+      },
       property: '.label',
       settingComponent: 'input',
     },
     {
-      name: 'Required',
+      get name() {
+        return i18n('Required', 'property-label');
+      },
       property: '.required',
       settingComponent: 'checkbox',
     },
     {
-      name: 'Identifier',
+      get name() {
+        return i18n('Identifier', 'property-label');
+      },
       property: '.identifier',
       settingComponent: 'input',
     },
     {
-      name: 'Placeholder',
+      get name() {
+        return i18n('Placeholder', 'property-label');
+      },
       property: '.placeHolder',
       settingComponent: 'input',
     },
     {
-      name: 'Label width',
+      get name() {
+        return i18n('Label width', 'property-label');
+      },
       identifier: 'form-field-label-width',
       property: 'settings.labelWidth',
       settingComponent: 'distance',
@@ -67,7 +79,9 @@ const formFieldWidget: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'Input shown as new line',
+      get name() {
+        return i18n('Input shown as new line', 'property-label');
+      },
       identifier: 'form-field-new-line',
       property: '.newLine',
       settingComponent: 'checkbox',

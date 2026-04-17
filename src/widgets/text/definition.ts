@@ -30,7 +30,9 @@ const TextWidget: DME.Widget = {
       parameters: { initHeight: 400 },
     },
     {
-      name: 'Text color',
+      get name() {
+        return i18n('Text color', 'property-label');
+      },
       identifier: 'text-color',
       property: 'settings.color',
       settingComponent: 'color',

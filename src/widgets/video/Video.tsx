@@ -85,35 +85,47 @@ export const VideoDefinition: DME.Widget = {
   },
   settings: [
     {
-      name: 'Width',
+      get name() {
+        return i18n('Width', 'property-label');
+      },
       property: 'settings.width',
       settingComponent: 'range',
       parameters: { min: 50, max: 800 },
     },
     {
-      name: 'Height',
+      get name() {
+        return i18n('Height', 'property-label');
+      },
       property: 'settings.height',
       settingComponent: 'range',
       parameters: { min: 50, max: 800 },
     },
     {
-      name: 'Align',
+      get name() {
+        return i18n('Align', 'property-label');
+      },
       property: 'settings.align',
       settingComponent: 'align',
     },
     {
-      name: 'Url',
+      get name() {
+        return i18n('Url', 'property-label');
+      },
       settingComponent: 'link',
       property: '.value',
       parameters: { urlOnly: true, showDialogWhenEmpty: true },
     },
     {
-      name: 'Mute',
+      get name() {
+        return i18n('Mute', 'property-label');
+      },
       property: 'settings.mute',
       settingComponent: 'checkbox',
     },
     {
-      name: 'Auto start',
+      get name() {
+        return i18n('Auto start', 'property-label');
+      },
       property: 'settings.autoStart',
       settingComponent: 'checkbox',
     },

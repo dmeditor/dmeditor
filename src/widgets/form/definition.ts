@@ -23,23 +23,31 @@ const formWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Form type',
+      get name() {
+        return i18n('Form type', 'property-label');
+      },
       property: '.formType',
       settingComponent: 'input',
       description: 'Eg. cotact_form/feedback_form',
     },
     {
-      name: 'Submit text',
+      get name() {
+        return i18n('Submit text', 'property-label');
+      },
       property: '.submitText',
       settingComponent: 'input',
     },
     {
-      name: 'Reset text',
+      get name() {
+        return i18n('Reset text', 'property-label');
+      },
       property: '.resetText',
       settingComponent: 'input',
     },
     {
-      name: 'Success message',
+      get name() {
+        return i18n('Success message', 'property-label');
+      },
       property: '.successMessage',
       settingComponent: 'input',
       parameters: { multiline: true },

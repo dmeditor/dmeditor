@@ -28,7 +28,7 @@ const lineWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Line color',
+      get name() { return i18n('Line color', 'property-label'); },
       identifier: 'line-color',
       property: 'settings.color',
       settingComponent: 'color',
@@ -37,7 +37,7 @@ const lineWidget: DME.Widget = {
       },
     },
     {
-      name: 'Line height',
+      get name() { return i18n('Line height', 'property-label'); },
       identifier: 'line-height',
       property: 'settings.height',
       settingComponent: 'range',

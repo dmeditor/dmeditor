@@ -20,19 +20,19 @@ const definition: DME.Widget = {
   },
   settings: [
     {
-      name: 'Columns per row',
+      get name() { return i18n('Columns per row', 'property-label'); },
       property: '.columns',
       settingComponent: 'range',
       parameters: { min: 1, max: 5 },
     },
     {
-      name: 'Items per page',
+      get name() { return i18n('Items per page', 'property-label'); },
       property: '.itemsPerPage',
       settingComponent: 'number',
       description: 'Empty/0 mean no paginzation',
     },
     {
-      name: 'Image gap',
+      get name() { return i18n('Image gap', 'property-label'); },
       property: '.gap',
       settingComponent: 'range',
       parameters: { min: 0, max: 100 },

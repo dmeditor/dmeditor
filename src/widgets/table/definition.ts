@@ -30,17 +30,17 @@ const HeadingWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Row',
+      get name() { return i18n('Row', 'property-label'); },
       settingComponent: 'table-row',
       custom: true,
     },
     {
-      name: 'Column',
+      get name() { return i18n('Column', 'property-label'); },
       settingComponent: 'table-column',
       custom: true,
     },
     {
-      name: 'Cell padding',
+      get name() { return i18n('Cell padding', 'property-label'); },
       identifier: 'table-cell-padding',
       settingComponent: 'range',
       property: 'settings.padding',
@@ -48,7 +48,7 @@ const HeadingWidget: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'Text color',
+      get name() { return i18n('Text color', 'property-label'); },
       identifier: 'table-text-color',
       settingComponent: 'color',
       parameters: {
@@ -58,7 +58,7 @@ const HeadingWidget: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'Border type',
+      get name() { return i18n('Border type', 'property-label'); },
       identifier: 'table-border-type',
       settingComponent: 'table-border-type',
       group: 'style_border',
@@ -66,7 +66,7 @@ const HeadingWidget: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'Border Color',
+      get name() { return i18n('Border color', 'property-label'); },
       identifier: 'table-border-color',
       settingComponent: 'color',
       group: 'style_border',
@@ -77,7 +77,7 @@ const HeadingWidget: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'Odd row background',
+      get name() { return i18n('Odd row background', 'property-label'); },
       identifier: 'table-odd-row-background',
       settingComponent: 'color',
       parameters: {
@@ -87,7 +87,7 @@ const HeadingWidget: DME.Widget = {
       category: 'style',
     },
     {
-      name: 'Table Header',
+      get name() { return i18n('Table header', 'property-label'); },
       identifier: 'table-header',
       settingComponent: 'table-header',
       custom: true,

@@ -27,25 +27,25 @@ const gridWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Columns',
+      get name() { return i18n('Columns', 'property-label'); },
       settingComponent: 'range',
       property: '.columns',
       parameters: { min: 1, max: 10 },
     },
     {
-      name: 'Mobile columns',
+      get name() { return i18n('Mobile columns', 'property-label'); },
       settingComponent: 'range',
       property: '.mobileColumns',
       parameters: { min: 1, max: 3 },
     },
     {
-      name: 'Gap',
+      get name() { return i18n('Gap', 'property-label'); },
       settingComponent: 'range',
       property: '.gap',
       parameters: { min: 1, max: 50 },
     },
     {
-      name: 'Items position',
+      get name() { return i18n('Items position', 'property-label'); },
       settingComponent: 'button-group',
       identifier: 'grid-item-position',
       property: 'settings.itemPosition',

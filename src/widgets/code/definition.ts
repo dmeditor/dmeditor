@@ -21,13 +21,17 @@ const definition: DME.Widget = {
   },
   settings: [
     {
-      name: 'Code',
+      get name() {
+        return i18n('Code', 'property-label');
+      },
       property: '',
       custom: true,
       settingComponent: 'codeInput',
     },
     {
-      name: 'Render as iframe',
+      get name() {
+        return i18n('Render as iframe', 'property-label');
+      },
       property: '.renderAsIframe',
       description: i18n('If your code includes javascript, check this', 'widget'),
       settingComponent: 'checkbox',

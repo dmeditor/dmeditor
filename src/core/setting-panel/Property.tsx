@@ -37,18 +37,12 @@ export const PropertyItem = (props: {
       upDown={upDown}
       className="dmee-setting-property"
     >
-      <StyledSettingItem.Label autoWidth={autoWidth}>
-        {i18n(props.label || '', 'property-label')}:{' '}
-      </StyledSettingItem.Label>
+      <StyledSettingItem.Label autoWidth={autoWidth}>{props.label}</StyledSettingItem.Label>
       <StyledSettingItem.Setting autoWidth={autoWidth} upDown={upDown}>
         {props.children}
       </StyledSettingItem.Setting>
       {props.description && (
-        <Tooltip
-          title={
-            <div dangerouslySetInnerHTML={{ __html: i18n(props.description, 'property-label') }} />
-          }
-        >
+        <Tooltip title={<div dangerouslySetInnerHTML={{ __html: props.description }} />}>
           <InfoOutlined
             sx={{ cursor: 'pointer', marginLeft: '5px', verticalAlign: 'bottom' }}
             fontSize="small"

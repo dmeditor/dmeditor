@@ -29,20 +29,20 @@ export const popupDefinition: DME.Widget = {
   },
   settings: [
     {
-      name: 'Button text',
+      get name() { return i18n('Button text', 'property-label'); },
       property: '.buttonText',
       styleTags: ['core'],
       settingComponent: 'input',
     },
     {
-      name: 'Close text',
+      get name() { return i18n('Close text', 'property-label'); },
       property: '.closeButtonText',
       styleTags: ['core'],
       description: 'Empty means not shown',
       settingComponent: 'input',
     },
     {
-      name: 'Modal size',
+      get name() { return i18n('Modal size', 'property-label'); },
       property: '.modalSize',
       styleTags: ['core'],
       settingComponent: 'button-group',

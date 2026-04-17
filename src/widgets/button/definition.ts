@@ -21,12 +21,16 @@ const buttonWidget: DME.Widget = {
   },
   settings: [
     {
-      name: 'Text',
+      get name() {
+        return i18n('Text', 'property-label');
+      },
       property: '.value',
       settingComponent: 'input',
     },
     {
-      name: 'Link',
+      get name() {
+        return i18n('Link', 'property-label');
+      },
       property: '.link',
       settingComponent: 'link',
     },

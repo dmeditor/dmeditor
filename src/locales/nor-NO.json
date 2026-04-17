@@ -142,7 +142,10 @@
     "Auto start": "Autostart",
     "Height mobile": "Høyde mobil",
     "Column width": "Kolonnebredde",
-    "Add": "Legg til"
+    "Add": "Legg til",
+    "Distance to preivous block": "Avstand til forrige blokk",
+    "If on by default content is still in normal width but background color will be full.": "Hvis på er innholdet fortsatt i normal bredde, men bakgrunnsfargen vil være full.",
+    "Only work when full width is on.": "Fungerer kun når full bredde er aktivert."
   },
   "property-group": {
     "Element": "Element",

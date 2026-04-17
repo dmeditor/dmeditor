@@ -22,12 +22,16 @@ export const CollapsableTextDefiniation: DME.Widget = {
   widgetType: 'mixed',
   settings: [
     {
-      name: 'Text',
+      get name() {
+        return i18n('Text', 'property-label');
+      },
       property: '.text',
       settingComponent: 'input',
     },
     {
-      name: 'Button align',
+      get name() {
+        return i18n('Button align', 'property-label');
+      },
       property: '.buttonAlign',
       identifier: 'collapsable-text-button-align',
       category: 'style',

@@ -142,7 +142,10 @@
     "Auto start": "自动播放",
     "Height mobile": "移动端高度",
     "Column width": "列宽",
-    "Add": "添加"
+    "Add": "添加",
+    "Distance to preivous block": "与上一个区块的距离",
+    "If on by default content is still in normal width but background color will be full.": "开启后内容仍保持正常宽度，但背景色将延伸至全宽。",
+    "Only work when full width is on.": "仅在全宽开启时有效。"
   },
   "property-group": {
     "Element": "元素",

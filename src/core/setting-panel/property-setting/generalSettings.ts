@@ -1,3 +1,4 @@
+import { i18n } from '../../../core/i18n';
 import { DME, DMEData } from '../../../core/types';
 
 const generalTypes = {
@@ -30,7 +31,9 @@ const generalTypes = {
 
 export const generalSettings: Array<DME.Setting> = [
   {
-    name: 'Width',
+    get name() {
+      return i18n('Width', 'property-label');
+    },
     identifier: 'content-width',
     settingComponent: 'distance',
     property: 'settings.general.width',
@@ -41,7 +44,9 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['block', 'list', 'general'],
   },
   {
-    name: 'Self align',
+    get name() {
+      return i18n('Self align', 'property-label');
+    },
     identifier: 'content-self-align',
     settingComponent: 'align',
     property: 'settings.general.align',
@@ -50,7 +55,9 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['block', 'list', 'general'],
   },
   {
-    name: 'Hidden',
+    get name() {
+      return i18n('Hidden', 'property-label');
+    },
     identifier: 'hidden',
     settingComponent: 'checkbox',
     property: 'settings.general.hidden',
@@ -60,7 +67,9 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['block', 'list', 'general'],
   },
   {
-    name: 'Padding',
+    get name() {
+      return i18n('Padding', 'property-label');
+    },
     identifier: 'container-padding',
     // settingComponent: 'range',
     settingComponent: 'padding',
@@ -72,7 +81,9 @@ export const generalSettings: Array<DME.Setting> = [
     group: 'style_block',
   },
   {
-    name: 'Top margin',
+    get name() {
+      return i18n('Top margin', 'property-label');
+    },
     identifier: 'container-margin-top',
     settingComponent: 'distance',
     property: 'settings.general.marginTop',
@@ -84,7 +95,9 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['list', 'general'],
   },
   {
-    name: 'Border width',
+    get name() {
+      return i18n('Border width', 'property-label');
+    },
     identifier: 'container-border-width',
     settingComponent: 'distance',
     property: 'settings.general.borderWidth',
@@ -94,7 +107,9 @@ export const generalSettings: Array<DME.Setting> = [
     group: 'style_block',
   },
   {
-    name: 'Border color',
+    get name() {
+      return i18n('Border color', 'property-label');
+    },
     identifier: 'container-border-color',
     settingComponent: 'color',
     property: 'settings.general.borderColor',
@@ -106,7 +121,9 @@ export const generalSettings: Array<DME.Setting> = [
     group: 'style_block',
   },
   {
-    name: 'Border radius',
+    get name() {
+      return i18n('Border radius', 'property-label');
+    },
     identifier: 'container-border-radius',
     settingComponent: 'distance',
     property: 'settings.general.borderRadius',
@@ -116,7 +133,9 @@ export const generalSettings: Array<DME.Setting> = [
     group: 'style_block',
   },
   {
-    name: 'Background',
+    get name() {
+      return i18n('Background', 'property-label');
+    },
     identifier: 'container-background-color',
     settingComponent: 'color',
     property: 'settings.general.background',
@@ -128,7 +147,9 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['container', 'general'],
   },
   {
-    name: 'Background image',
+    get name() {
+      return i18n('Background image', 'property-label');
+    },
     identifier: 'container-background-image',
     property: 'settings.general.backgroundImage',
     category: 'style',
@@ -137,7 +158,9 @@ export const generalSettings: Array<DME.Setting> = [
     settingComponent: 'background-image',
   },
   {
-    name: 'Full width',
+    get name() {
+      return i18n('Full width', 'property-label');
+    },
     identifier: 'container-full-width',
     settingComponent: 'switch',
     property: 'settings.general.fullWidth',
@@ -148,7 +171,9 @@ export const generalSettings: Array<DME.Setting> = [
     styleTags: ['root', 'general'],
   },
   {
-    name: 'Content following full width',
+    get name() {
+      return i18n('Content following full width', 'property-label');
+    },
     identifier: 'container-full-width-content',
     settingComponent: 'switch',
     property: 'settings.general.fullWidthContent',

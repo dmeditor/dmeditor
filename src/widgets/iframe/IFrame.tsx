@@ -113,13 +113,13 @@ export const iFrameDefinition: DME.Widget = {
   },
   settings: [
     {
-      name: 'Url',
+      get name() { return i18n('Url', 'property-label'); },
       property: '.value',
       settingComponent: 'link',
       parameters: { urlOnly: true, showDialogWhenEmpty: true },
     },
     {
-      name: 'Height',
+      get name() { return i18n('Height', 'property-label'); },
       identifier: 'iframe-height',
       property: 'settings.height',
       settingComponent: 'range',
@@ -127,7 +127,7 @@ export const iFrameDefinition: DME.Widget = {
       parameters: { min: 300, max: 2000, step: 5, showInput: true },
     },
     {
-      name: 'Height mobile',
+      get name() { return i18n('Height mobile', 'property-label'); },
       identifier: 'iframe-height-mobile',
       property: 'settings.heightMobile',
       settingComponent: 'range',
