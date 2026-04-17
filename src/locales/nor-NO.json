@@ -148,6 +148,7 @@
     "Only work when full width is on.": "Fungerer kun når full bredde er aktivert."
   },
   "property-group": {
+    "Border": "Kantlinje",
     "Element": "Element",
     "Block": "Blokk",
     "Styles": "Stiler"
