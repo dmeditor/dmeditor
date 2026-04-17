@@ -11,6 +11,8 @@ export type VideoEntity = {
     width: number;
     height: number;
     align: 'left' | 'center' | 'right';
+    mute?: boolean;
+    autoStart?: boolean;
     general?: DMEData.GeneralSettingType;
   };
 };
@@ -43,7 +45,7 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
   return (
     <>
       <Container {...data.settings}>
-        <video controls src={videoUrl}>
+        <video controls src={videoUrl} muted={data.settings.mute} autoPlay={data.settings.autoStart}>
           <object width="100%" data={videoUrl}>
             <embed width="100%" src={videoUrl} />
           </object>
@@ -93,6 +95,16 @@ export const VideoDefinition: DME.Widget = {
       name: 'Align',
       property: 'settings.align',
       settingComponent: 'align',
+    },
+    {
+      name: 'Mute',
+      property: 'settings.mute',
+      settingComponent: 'checkbox',
+    },
+    {
+      name: 'Auto start',
+      property: 'settings.autoStart',
+      settingComponent: 'checkbox',
     },
     {
       name: 'Url',
