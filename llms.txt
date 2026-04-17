@@ -8,7 +8,7 @@ Note:
 - Extending DMEditor can be done via make Widget, or Style.
 
 ## Documentation
-https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/README.md
+[Quick start & Documentation Structure](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/README.md)
 [Concept](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/concepts.md): A brief product concept
 [Use DMEditor](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/use-dmeditor.md): Use dmeditor
 [Development Widget](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-make-widget.md): Develop widget
@@ -16,7 +16,6 @@ https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/dmeditor
 https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/ssr.md
 https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/integration.md
 https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-configure-style-settings.md
-https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-make-widget.md
 https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-make-mixed-widget.md
 https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/How-to-make-a-widget-style.md
 
