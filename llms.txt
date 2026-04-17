@@ -21,25 +21,25 @@ https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-m
 https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/How-to-make-a-widget-style.md
 
 ## API Reference
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/dmeditor.md]: Use DMEditor
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/configuration.md]: Configuration of using DMEditor
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/setting-components.md]: Available setting components
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/callbacks.md]: Callback for configuration
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/widget.md]: Register a widget
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/block-render.md]: BlockRender for developing widget
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/hooks.md]: Hooks for developing wiget and use
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/widget-render-props.md]: Widget render properties
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/styles.md]: Register style and options
-[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/utility.md]: Utility api
+[Use DMEditor](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/dmeditor.md)
+[Configuration of using DMEditor](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/configuration.md)
+[Available setting components](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/setting-components.md)
+[Callback for configuration](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/callbacks.md)
+[Register a widget](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/widget.md)
+[BlockRender for developing widget](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/block-render.md)
+[Hooks for developing wiget and use](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/hooks.md)
+[Widget render properties](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/widget-render-props.md)
+[Register style and options](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/styles.md)
+[Utility api](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/utility.md)
 
 ## Examples
-[https://github.com/dmeditor/dmeditor-sample/blob/main/src/App.tsx]: An example of using DMEditor for editing
-[https://github.com/dmeditor/dmeditor-sample/blob/main/src/dme-config/dmeditorInit.ts]: Initialize DM Editor
-[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/index.ts]: An example of making a dmeditor widget
-[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/definition.ts]: Defintiion of a widget
-[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/entity.ts]: Entity definition of a widget
-[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/SampleWidget.tsx]: Render of a widget
-[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/setting-input/SettingInput.tsx]: Custom setting component
+[An example of using DMEditor for editing]:(https://github.com/dmeditor/dmeditor-sample/blob/main/src/App.tsx)
+[Initialize DM Editor](https://github.com/dmeditor/dmeditor-sample/blob/main/src/dme-config/dmeditorInit.ts)
+[An example of making a dmeditor widget](https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/index.ts)
+[Defintion of a widget](https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/definition.ts)
+[Entity definition of a widget](https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/entity.ts)
+[Render of a widget](https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/SampleWidget.tsx)
+[Custom setting component](https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/setting-input/SettingInput.tsx)
 
 
 
