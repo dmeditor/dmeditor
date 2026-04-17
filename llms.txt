@@ -1,0 +1,45 @@
+# DMEditor
+
+> A block based visual editor which aims for easy to use and extend widget.
+
+Note: 
+- DMEditor is used by developer and extended by developer.
+- Using DMEditor can be done via <DMEditor or <DMEditorView, etc
+- Extending DMEditor can be done via make Widget, or Style.
+
+## Documentation
+https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/README.md
+[Concept](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/concepts.md): A brief product concept
+[Use DMEditor](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/use-dmeditor.md): Use dmeditor
+[Development Widget](https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-make-widget.md): Develop widget
+https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/dmeditor-configuration.md
+https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/ssr.md
+https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/integration.md
+https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-configure-style-settings.md
+https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-make-widget.md
+https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/how-to-make-mixed-widget.md
+https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/tutorial/How-to-make-a-widget-style.md
+
+## API Reference
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/dmeditor.md]: Use DMEditor
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/configuration.md]: Configuration of using DMEditor
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/setting-components.md]: Available setting components
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/callbacks.md]: Callback for configuration
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/widget.md]: Register a widget
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/block-render.md]: BlockRender for developing widget
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/hooks.md]: Hooks for developing wiget and use
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/widget-render-props.md]: Widget render properties
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/styles.md]: Register style and options
+[https://raw.githubusercontent.com/dmeditor/doc/refs/heads/main/reference/utility.md]: Utility api
+
+## Examples
+[https://github.com/dmeditor/dmeditor-sample/blob/main/src/App.tsx]: An example of using DMEditor for editing
+[https://github.com/dmeditor/dmeditor-sample/blob/main/src/dme-config/dmeditorInit.ts]: Initialize DM Editor
+[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/index.ts]: An example of making a dmeditor widget
+[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/definition.ts]: Defintiion of a widget
+[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/entity.ts]: Entity definition of a widget
+[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/SampleWidget.tsx]: Render of a widget
+[https://github.com/dmeditor/dmeditor-sample/blob/main/src/widgets/sample-widget/setting-input/SettingInput.tsx]: Custom setting component
+
+
+
