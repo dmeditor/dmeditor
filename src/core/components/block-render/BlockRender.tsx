@@ -6,6 +6,7 @@ import { useDevice } from 'dmeditor/core/hooks/useDeivce';
 import _debounce from 'lodash/debounce';
 
 import { Mode } from '../../constants';
+import { i18n } from '../../i18n';
 import { useEditorStore } from '../../main/store';
 import type { DME, DMEData } from '../../types';
 import { getWidget, getWidgetComponent, getWidgetStyle } from '../../utils/register';
@@ -37,7 +38,25 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
   const blockType = props.data.type;
 
   const widgetArr = blockType.split(':');
-  const Widget = getWidgetComponent(widgetArr[0]).render;
+  const widgetIdentifier = widgetArr[0];
+  const windgetExists = getWidget(widgetIdentifier);
+  if (!windgetExists) {
+    return (
+      <div
+        className={
+          css`
+            background-color: #f0f0f0;
+            color: #666666;
+            font-size: 90%;
+            padding: 10px;
+          ` + ' dme-widget-not-found'
+        }
+      >
+        {i18n('Widget not found')}: {widgetIdentifier}
+      </div>
+    );
+  }
+  const Widget = getWidgetComponent(widgetIdentifier).render;
 
   const onSelect = (e: React.MouseEvent) => {
     if (props.mode === Mode.edit) {

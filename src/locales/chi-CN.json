@@ -36,7 +36,8 @@
     "Are you sure to delete": "确定要删除吗",
     "Paste from clipboard": "从剪贴板粘贴",
     "Clear clipboard": "清空剪贴板",
-    "Style": "样式"
+    "Style": "样式",
+    "Widget not found": "区块类型未找到"
   },
   "tool": {
     "Save": "保存",
