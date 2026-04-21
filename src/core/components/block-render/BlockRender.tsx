@@ -40,23 +40,6 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
   const widgetArr = blockType.split(':');
   const widgetIdentifier = widgetArr[0];
   const windgetExists = getWidget(widgetIdentifier);
-  if (!windgetExists) {
-    return (
-      <div
-        className={
-          css`
-            background-color: #f0f0f0;
-            color: #666666;
-            font-size: 90%;
-            padding: 10px;
-          ` + ' dme-widget-not-found'
-        }
-      >
-        {i18n('Widget not found')}: {widgetIdentifier}
-      </div>
-    );
-  }
-  const Widget = getWidgetComponent(widgetIdentifier).render;
 
   const onSelect = (e: React.MouseEvent) => {
     if (props.mode === Mode.edit) {
@@ -64,6 +47,35 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
       updateSelectedBlockIndex(props.path, props.data.id || '');
     }
   };
+
+  const device = useDevice();
+
+  if (!windgetExists) {
+    return (
+      <BlockWrapper
+        className={'dme-block-wrapper'}
+        onClick={onSelect}
+        active={active}
+        device={device}
+        editMode={mode === 'edit'}
+        {...(mode === Mode.edit && props.data.id && { id: props.data.id })}
+      >
+        <div
+          className={
+            css`
+              background-color: #f0f0f0;
+              color: #666666;
+              font-size: 90%;
+              padding: 10px;
+            ` + ' dme-widget-not-found'
+          }
+        >
+          {i18n('Widget not found')}: {widgetIdentifier}
+        </div>
+      </BlockWrapper>
+    );
+  }
+  const Widget = getWidgetComponent(widgetIdentifier).render;
 
   const cssStyles = React.useMemo(() => {
     let styles = [];
@@ -114,8 +126,6 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
   }
 
   const generalSettings = { ...props.data.data.settings?.general };
-  const device = useDevice();
-
   const divRef = useRef<HTMLDivElement>(null);
 
   const def = useMemo(() => {
