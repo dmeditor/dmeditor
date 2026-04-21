@@ -77,6 +77,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
                 <>
                   {data.options.map((item) => (
                     <label
+                      key={item.value as string}
                       className={styleClasses['input-radio-label'] || 'dme-w-input-radio-label'}
                     >
                       <input
@@ -105,6 +106,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
                 >
                   {data.options.map((item) => (
                     <option
+                      key={item.value as string}
                       selected={!data.defaultValue && item.isDefault ? true : undefined}
                       value={item.value}
                     >

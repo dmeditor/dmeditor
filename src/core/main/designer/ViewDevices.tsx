@@ -37,6 +37,7 @@ export const ViewDevices = (props: { onChange: (device: string) => void }) => {
     <ViewDevicesContainer>
       {devices.map((item) => (
         <View.DeviceItem
+          key={item.identifier}
           selected={device === item.identifier}
           onClick={() => select(item.identifier)}
         >

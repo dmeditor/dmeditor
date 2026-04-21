@@ -56,6 +56,7 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
               {row.map((cell, jdx) => {
                 return (
                   <td
+                    key={jdx}
                     className={styleClasses['td'] || 'dme-w-td'}
                     onClick={() => handleActiveCellChange(idx, jdx)}
                     style={props.mode === 'edit' && !cell ? { minWidth: 50 } : {}}

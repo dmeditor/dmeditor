@@ -75,7 +75,7 @@ const Carousel = (props: DME.SettingComponentProps) => {
     <div>
       {Array.isArray(value)
         ? value.map((item, index) => (
-            <div className="flex justify-between">
+            <div key={index} className="flex justify-between">
               <ImageSetting
                 value={{ src: item.image }}
                 onChange={(info) => {

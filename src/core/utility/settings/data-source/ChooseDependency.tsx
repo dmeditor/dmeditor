@@ -47,7 +47,7 @@ export const ChooseDependency = (props: {
           >
             <MenuItem value={''}>None</MenuItem>
             {dependencyList.map((item) => (
-              <MenuItem value={item.id} title={item.id}>
+              <MenuItem key={item.id} value={item.id} title={item.id}>
                 {getWidget(item.type).name}
               </MenuItem>
             ))}

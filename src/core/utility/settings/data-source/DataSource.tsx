@@ -62,7 +62,7 @@ export const DataSource = (props: {
             <label>Content:</label>
             <div>
               {Object.keys(props.data.sourceData).map((key) => (
-                <div>
+                <div key={key}>
                   <label>{key}: </label>
                   <span>{props.data.sourceData[key]}</span>
                 </div>

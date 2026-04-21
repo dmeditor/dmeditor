@@ -46,6 +46,7 @@ const Accordion = (props: DME.WidgetRenderProps<EntityAccordion, AccordtionChild
 
         return (
           <AccordionStyle.Item
+            key={accordion.id || index}
             className={(styleClasses['item'] || '') + ' dme-w-item' + (isOpen ? ' dme-w-open' : '')}
           >
             <AccordionStyle.Summary

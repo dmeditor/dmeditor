@@ -102,6 +102,7 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
       {Array.isArray(value)
         ? value.map((item, index) => (
             <div
+              key={index}
               className={css`
                 display: flex;
                 gap: 5px;
