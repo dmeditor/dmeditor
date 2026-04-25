@@ -378,7 +378,7 @@ export const updateLocation = (vars: any) => {
       params.set(item, vars[item] + '');
     }
   }
-  history.pushState({}, null, url);
+  history.replaceState({}, '', url);
 };
 
 export const queryFromLocaton = (location: string) => {
