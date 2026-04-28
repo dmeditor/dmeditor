@@ -8,6 +8,7 @@ const generalTypes = {
     'container-padding',
     'container-margin-top',
     'container-border-width',
+    'container-border-position',
     'container-border-color',
     'container-border-radius',
     'container-background-color',
@@ -20,6 +21,7 @@ const generalTypes = {
     'container-padding',
     'container-margin-top',
     'container-border-width',
+    'container-border-position',
     'container-border-color',
     'container-border-radius',
     'container-background-color',
@@ -102,6 +104,17 @@ export const generalSettings: Array<DME.Setting> = [
     settingComponent: 'distance',
     property: 'settings.general.borderWidth',
     parameters: { min: 0, max: 10, allowedUnit: 'px' },
+    category: 'style',
+    styleTags: ['container', 'general'],
+    group: 'style_block',
+  },
+  {
+    get name() {
+      return i18n('Border position', 'property-label');
+    },
+    identifier: 'container-border-position',
+    settingComponent: 'border-position',
+    property: 'settings.general.borderPosition',
     category: 'style',
     styleTags: ['container', 'general'],
     group: 'style_block',

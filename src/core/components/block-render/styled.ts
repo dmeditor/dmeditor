@@ -96,9 +96,23 @@ const getGeneralStyle = (
   }
 
   if (settings.borderWidth) {
-    containerStyle['borderWidth'] = settings.borderWidth;
+    const borderWidth = settings.borderWidth;
+    containerStyle['borderWidth'] = borderWidth;
     containerStyle['borderColor'] = settings.borderColor;
     containerStyle['borderStyle'] = 'solid';
+
+    if (settings.borderPosition) {
+      containerStyle['borderTopWidth'] = settings.borderPosition.includes('top') ? borderWidth : 0;
+      containerStyle['borderRightWidth'] = settings.borderPosition.includes('right')
+        ? borderWidth
+        : 0;
+      containerStyle['borderBottomWidth'] = settings.borderPosition.includes('bottom')
+        ? borderWidth
+        : 0;
+      containerStyle['borderLeftWidth'] = settings.borderPosition.includes('left')
+        ? borderWidth
+        : 0;
+    }
   }
 
   if (settings.backgroundImage && settings.backgroundImage.image) {
