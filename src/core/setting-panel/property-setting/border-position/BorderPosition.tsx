@@ -52,8 +52,13 @@ const BorderPosition = (
   const selected: Position[] = Array.isArray(value) ? value : POSITIONS.slice();
 
   const toggle = (pos: Position) => {
-    const next = selected.includes(pos) ? selected.filter((p) => p !== pos) : [...selected, pos];
-    console.log('next', next);
+    const allSelected = POSITIONS.every((p) => selected.includes(p));
+    const next =
+      allSelected && selected.includes(pos)
+        ? [pos]
+        : selected.includes(pos)
+          ? selected.filter((p) => p !== pos)
+          : [...selected, pos];
     updateBlockPropsByPath(blockPath, property, next);
   };
 
