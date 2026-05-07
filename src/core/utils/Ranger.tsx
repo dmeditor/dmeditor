@@ -21,23 +21,36 @@ export const Ranger = (props: {
   max: number;
   step?: number;
   hideValueLabel?: boolean;
+  reverse?: boolean;
+  labelFormat?: string;
   onChange?: (v: number | string, event: any) => void;
   onFinish?: (v: number) => void;
 }) => {
-  const { value, onChange, min, max, defaultValue, disabled } = props;
+  const { value, onChange, min, max, defaultValue, disabled, reverse, labelFormat } = props;
 
-  const handleChange = (e: Event, value: number | number[]) => {
-    onChange?.(value as number, e);
+  const formatLabel = (v: number) =>
+    labelFormat ? labelFormat.replace('{value}', String(v)) : String(v);
+
+  // When reversed, flip the value so right = smaller number (e.g. h1)
+  const toSlider = (v: number) => (reverse ? max + min - v : v);
+  const fromSlider = (v: number) => (reverse ? max + min - v : v);
+
+  const handleChange = (e: Event, sliderValue: number | number[]) => {
+    onChange?.(fromSlider(sliderValue as number), e);
   };
+
+  const sliderValue = value != null ? toSlider(value) : toSlider(defaultValue ?? 0);
+  const sliderDefault = toSlider(defaultValue ?? 0);
 
   return (
     <CustomSlider
       disabled={disabled}
-      defaultValue={props.defaultValue || 0}
+      defaultValue={sliderDefault}
       valueLabelDisplay={props.hideValueLabel ? 'off' : 'auto'}
+      valueLabelFormat={(v) => formatLabel(fromSlider(v))}
       step={props.step}
       marks
-      value={value ? value : props.defaultValue || 0}
+      value={sliderValue}
       min={min}
       max={max}
       onChange={(e: Event, v: number | Array<number>) => {
@@ -45,7 +58,7 @@ export const Ranger = (props: {
       }}
       onChangeCommitted={(e: any, v: number | Array<number>) => {
         if (props.onFinish) {
-          props.onFinish(v as number);
+          props.onFinish(fromSlider(v as number));
         }
       }}
     />

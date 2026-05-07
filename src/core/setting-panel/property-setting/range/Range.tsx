@@ -12,7 +12,7 @@ const Range = (
   props: DME.SettingComponentProps & {
     property: string;
     value: number;
-    parameters: { min: number; max: number; step?: number; showInput?: boolean };
+    parameters: { min: number; max: number; step?: number; showInput?: boolean; reverse?: boolean; labelFormat?: string };
     disabled?: boolean;
   },
 ) => {
@@ -36,6 +36,8 @@ const Range = (
           min={parameters.min === undefined ? 1 : parameters.min}
           max={parameters?.max || 5}
           step={parameters?.step || 1}
+          reverse={parameters?.reverse}
+          labelFormat={parameters?.labelFormat}
           onChange={handleChange}
         ></Ranger>
       </Grid>

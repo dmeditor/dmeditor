@@ -39,7 +39,7 @@ const HeadingWidget: DME.Widget = {
       },
       settingComponent: 'range',
       property: '.level',
-      parameters: { min: 1, max: 5 },
+      parameters: { min: 1, max: 5, reverse: true, labelFormat: 'H{value}' },
     },
     {
       get name() {
