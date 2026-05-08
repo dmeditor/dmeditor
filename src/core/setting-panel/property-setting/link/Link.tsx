@@ -10,7 +10,7 @@ import { LinkChooser, LinkRef } from '../../../utility';
 
 export const Link = (props: DME.SettingComponentProps) => {
   const { property, value, blockPath } = props;
-  const { urlOnly, showDialogWhenEmpty } = props.parameters || {};
+  const { urlOnly, showDialogWhenEmpty, context } = props.parameters || {};
   const { updateBlockPropsByPath } = useEditorStore();
   const linkRef = useRef<LinkRef>(null);
 
@@ -52,6 +52,7 @@ export const Link = (props: DME.SettingComponentProps) => {
         urlOnly={urlOnly}
         defaultVisible={showDialogWhenEmpty && !value}
         value={{ link: (value || '') as string }}
+        context={context}
         onConfirm={handleConfirm}
       />
     </>

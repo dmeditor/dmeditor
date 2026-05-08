@@ -36,11 +36,12 @@ interface LinkChooserProps {
   value?: BrowseLinkCallbackParams;
   onConfirm?: (value: BrowseLinkCallbackParams) => void;
   showOpenNew?: boolean;
+  context?: string;
   urlOnly?: boolean; //show only url tab or all tabs
 }
 
 export const LinkChooser = forwardRef<LinkRef, LinkChooserProps>((props, ref) => {
-  const { defaultVisible, value, showOpenNew, urlOnly } = props;
+  const { defaultVisible, value, showOpenNew, urlOnly, context } = props;
   const BrowseLink = CheckBrowserValid();
   const [visible, setVisible] = useState(defaultVisible);
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -167,12 +168,12 @@ export const LinkChooser = forwardRef<LinkRef, LinkChooserProps>((props, ref) =>
     },
   ];
 
-  if (BrowseLink && !urlOnly) {
+  if (BrowseLink && !urlOnly && context) {
     ChooseElements.splice(0, 0, {
       label: 'Browse',
       element: (
         <>
-          <BrowseLink value={localValue} onChange={setLocalValue} />
+          <BrowseLink value={localValue} context={context} onChange={setLocalValue} />
           {renderOpenNew()}
         </>
       ),

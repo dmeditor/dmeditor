@@ -113,7 +113,7 @@ export const VideoDefinition: DME.Widget = {
       },
       settingComponent: 'link',
       property: '.value',
-      parameters: { urlOnly: true, showDialogWhenEmpty: true },
+      parameters: { urlOnly: false, context: 'video', showDialogWhenEmpty: true },
     },
     {
       get name() {

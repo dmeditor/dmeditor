@@ -27,6 +27,7 @@ export interface CallbackConfig {
   browseLink?: ComponentType<{
     value: BrowseLinkCallbackParams;
     onChange: (value: BrowseLinkCallbackParams) => void;
+    context?: string;
   }>;
   layoutRender?: ComponentType<{
     list: DMEData.Block[];
