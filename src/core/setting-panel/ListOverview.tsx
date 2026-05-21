@@ -2,7 +2,8 @@ import { css } from '@emotion/css';
 import { AddOutlined, DragIndicator, KeyboardArrowRight, PlusOne } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 
-import { getWidgetWithVariant, scrollBlockToView } from '../../core/utils';
+import { WidgetIcon } from '../../core/components/icon';
+import { getWidget, getWidgetWithVariant, scrollBlockToView } from '../../core/utils';
 import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import { DMEData } from '../types/dmeditor';
@@ -75,20 +76,31 @@ export const ListOverview = (props: ListOverviewProps) => {
             >
               <td
                 className={css`
-                  width: 50px;
-                `}
-              >
-                <Button sx={{ cursor: 'move' }}>
-                  <DragIndicator />
-                </Button>
-              </td>
-              <td
-                className={css`
+                  height: 32px;
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
                   cursor: pointer;
                 `}
-                onClick={() => jumpTo(index)}
               >
-                {getName(item.type)}
+                {/* <Button sx={{ cursor: 'move' }}>
+                  <DragIndicator />
+                </Button> */}
+                <div
+                  className={css`
+                    width: 24px;
+                  `}
+                >
+                  <WidgetIcon name={(getWidget(item.type)?.icon as string) || ''} size={24} />
+                </div>
+                <div
+                  className={css`
+                    cursor: pointer;
+                  `}
+                  onClick={() => jumpTo(index)}
+                >
+                  {getName(item.type)}
+                </div>
               </td>
               <td
                 className={css`
