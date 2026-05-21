@@ -79,7 +79,7 @@ export const ListOverview = (props: ListOverviewProps) => {
             <tr
               key={item.id}
               className={css(trStyle) + ' ' + (props.selectedIndex === index ? css(activeRow) : '')}
-              onMouseEnter={() => hover(index)}
+              onMouseOver={() => hover(index)}
               onMouseOut={() => hover(-1)}
             >
               <td
