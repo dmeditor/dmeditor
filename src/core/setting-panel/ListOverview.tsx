@@ -21,13 +21,17 @@ const activeRow = `
 const tableStyle = `
   width: 100%;
   border-spacing: 0px;
-
   td {
-    padding: 5px;
   }
 `;
 
 const trStyle = `
+  & > td{
+   border-top: 1px solid #ddd;
+  }
+  &:last-child >td {
+    border-bottom: 1px solid #ddd;
+  }
   &:hover{
     outline: 1px solid #ffb8b8;
   }
@@ -64,7 +68,11 @@ export const ListOverview = (props: ListOverviewProps) => {
   };
 
   return (
-    <div>
+    <div
+      className={css`
+        padding: 0px 10px;
+      `}
+    >
       <table className={css(tableStyle)}>
         <tbody>
           {props.data.map((item, index) => (
@@ -76,7 +84,7 @@ export const ListOverview = (props: ListOverviewProps) => {
             >
               <td
                 className={css`
-                  height: 32px;
+                  height: 38px;
                   display: flex;
                   align-items: center;
                   gap: 10px;
