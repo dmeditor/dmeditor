@@ -108,7 +108,6 @@ export const AddingTool = styled.div<AddingToolProps>`
 
   ${({ position, horizontal }) => {
     if (horizontal) {
-      // TODO:
       return position === 'before'
         ? 'left: -35px; top: 50%; transform: translateY(-50%);'
         : 'right: -35px; top: 50%; transform: translateY(-50%);';
@@ -119,13 +118,21 @@ export const AddingTool = styled.div<AddingToolProps>`
     }
   }}
 
-  &::before {
+  /* Invisible bridge covering the gap between the offset button and the block
+     edge, so the pointer never leaves the hover target on the way to the button. */
+  &::after {
     content: '';
     position: absolute;
-    background: transparent;
-    border-radius: 4px;
 
-    ${({ horizontal }) =>
-      horizontal ? 'height: 100%; width: 10px;' : 'width: 100%; height: 10px;'}
+    ${({ position, horizontal }) => {
+      if (horizontal) {
+        return position === 'before'
+          ? 'left: 100%; top: 50%; transform: translateY(-50%); width: 35px; height: 40px;'
+          : 'right: 100%; top: 50%; transform: translateY(-50%); width: 35px; height: 40px;';
+      }
+      return position === 'before'
+        ? 'top: 100%; left: 50%; transform: translateX(-50%); height: 35px; width: 40px;'
+        : 'bottom: 100%; left: 50%; transform: translateX(-50%); height: 35px; width: 40px;';
+    }}
   }
 `;

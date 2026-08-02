@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { AddOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
@@ -21,15 +21,11 @@ interface BlockContainerProps {
 const BlockContainer: React.FC<BlockContainerProps> = (props) => {
   const { mode, isHovering, onAddClick, addingHorizontal = false, children } = props;
 
-  const blockContainerRef = useRef<HTMLDivElement>(null);
+  // State ref so useMousePosition re-binds when the element mounts
+  const [blockContainerEl, setBlockContainerEl] = useState<HTMLDivElement | null>(null);
   const showPositionRange = 30; // unit px
 
-  const addPosition = useMousePosition(
-    blockContainerRef.current,
-    addingHorizontal,
-    showPositionRange,
-    // true,
-  );
+  const addPosition = useMousePosition(blockContainerEl, addingHorizontal, showPositionRange);
 
   const addButtonClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -48,7 +44,7 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
 
   return (
     <BlockContainerWrapper
-      ref={blockContainerRef}
+      ref={setBlockContainerEl}
       hovering={isHovering}
       editMode={mode === Mode.edit}
       className="dme-block-container"
@@ -61,7 +57,11 @@ const BlockContainer: React.FC<BlockContainerProps> = (props) => {
         horizontal={addingHorizontal}
       >
         {addPosition && (
-          <AddingTool position={addPosition} horizontal={addingHorizontal}>
+          <AddingTool
+            className="dme-adding-tool"
+            position={addPosition}
+            horizontal={addingHorizontal}
+          >
             <StyledButtonContainer>
               <Button onClick={addButtonClicked}>
                 <AddOutlined />
