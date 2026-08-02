@@ -81,6 +81,7 @@ export const ListOverview = (props: ListOverviewProps) => {
               className={css(trStyle) + ' ' + (props.selectedIndex === index ? css(activeRow) : '')}
               onMouseOver={() => hover(index)}
               onMouseOut={() => hover(-1)}
+              onClick={() => jumpTo(index)}
             >
               <td
                 className={css`
@@ -105,7 +106,6 @@ export const ListOverview = (props: ListOverviewProps) => {
                   className={css`
                     cursor: pointer;
                   `}
-                  onClick={() => jumpTo(index)}
                 >
                   {getName(item.type)}
                 </div>
