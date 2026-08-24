@@ -8,6 +8,7 @@ import { generalSettings, getCommonSettings, i18n, useEditorStore } from '../..'
 export type VideoEntity = {
   value: string;
   settings: {
+    loop?: boolean;
     width: number;
     height: number;
     align: 'left' | 'center' | 'right';
@@ -50,6 +51,7 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
           src={videoUrl}
           muted={data.settings.mute}
           autoPlay={data.settings.autoStart}
+          loop={data.settings.loop ?? false}
         >
           <object width="100%" data={videoUrl}>
             <embed width="100%" src={videoUrl} />
@@ -127,6 +129,13 @@ export const VideoDefinition: DME.Widget = {
         return i18n('Auto start', 'property-label');
       },
       property: 'settings.autoStart',
+      settingComponent: 'checkbox',
+    },
+    {
+      get name() {
+        return i18n('Loop', 'property-label');
+      },
+      property: 'settings.loop',
       settingComponent: 'checkbox',
     },
   ],
