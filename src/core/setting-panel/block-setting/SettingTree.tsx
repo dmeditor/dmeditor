@@ -476,7 +476,7 @@ export const SettingTree = (props: {
               setExpanded(!expanded);
             }}
           >
-            {expanded ? <ArrowDropDownOutlined /> : <ArrowRightOutlined />}
+            {expanded || isMixedWidgetExpanded ? <ArrowDropDownOutlined /> : <ArrowRightOutlined />}
             <span>{widgetDef.name}</span>
           </Button>
           {props.canDelete && (
