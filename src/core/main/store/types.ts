@@ -60,6 +60,7 @@ export type Actions = {
   updateSelectedBlockIndex: (pathArray: Array<number | string>, id: string) => void;
   getCurrentList: () => DMEData.BlockList | DMEData.BlockMap | null;
   getCurrentBlock: () => DMEData.Block | null;
+  isSelfOrChildActive: (parentPath: Array<number | string>) => boolean;
   getBlockByPath: (path: Array<number | string>) => DMEData.Block | null;
   getClosestBlock: (path: Array<number | string>) => [DMEData.Block, Array<number | string>] | [];
   getParents: (

@@ -156,6 +156,13 @@ export const useEditorStore = create<Store & Actions>()(
       get().emitEvent('added', { block: result });
       return result;
     },
+    isSelfOrChildActive: (parentPath: Array<number | string>) => {
+      const state = get();
+      const activePath = [...state.selected.currentListPath, state.selected.blockIndex];
+      const activePathString = activePath.join('/');
+      const parentPathString = parentPath.join('/');
+      return activePathString.startsWith(parentPathString);
+    },
     cancelAdding: () =>
       set((state) => {
         if (state.addBlockData) {
