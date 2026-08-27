@@ -75,6 +75,9 @@ export namespace DME {
     isBaseWidget?: boolean; // True if it's a base widget used for variants.
     allowedTypes?: string[] | string; // Allowed types for direct children.
     canDependentOn?: string[];
+    mixedWidgetOptions?: {
+      expanded?: string[];
+    };
     editMask?: boolean; //if editMask is on, there will be a mask to prevent click if it's not active
     events: {
       updateData?: (settings: Setting, data: DMEData.Block) => void;

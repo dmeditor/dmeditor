@@ -450,6 +450,15 @@ export const SettingTree = (props: {
     setExpanded(isSelected);
   }, [isSelected]);
 
+  const isMixedWidgetExpanded = useMemo(() => {
+    const rootWidgetDef = getWidget(rootWidget);
+    const key = blockPath[blockPath.length - 1];
+    if ((rootWidgetDef?.widgetType === 'mixed', typeof key === 'string')) {
+      return rootWidgetDef?.mixedWidgetOptions?.expanded?.includes(key);
+    }
+    return false;
+  }, [rootWidget, blockPath]);
+
   return (
     <div
       className={css`
@@ -477,7 +486,7 @@ export const SettingTree = (props: {
           )}
         </div>
       )}
-      <Collapse in={level === 0 || expanded}>
+      <Collapse in={level === 0 || expanded || isMixedWidgetExpanded}>
         <StyledSettingList.Group level={level}>{renderCurrentSettings()}</StyledSettingList.Group>
         {widgetDef?.widgetType && ['list', 'mixed'].includes(widgetDef.widgetType) && (
           <div>
