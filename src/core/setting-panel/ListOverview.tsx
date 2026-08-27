@@ -4,6 +4,7 @@ import { Button, IconButton } from '@mui/material';
 
 import { WidgetIcon } from '../../core/components/icon';
 import { getWidget, getWidgetWithVariant, scrollBlockToView } from '../../core/utils';
+import { dmeConfig } from '../config';
 import { i18n } from '../i18n';
 import { useEditorStore } from '../main/store';
 import { DMEData } from '../types/dmeditor';
@@ -125,9 +126,13 @@ export const ListOverview = (props: ListOverviewProps) => {
         </tbody>
       </table>
       <div
-        className={css`
-          text-align: center;
-        `}
+        className={
+          css`
+            text-align: center;
+          ` +
+            ' ' +
+            dmeConfig.editor.panelClassNames['list-overview-actions-add'] || ''
+        }
       >
         <IconButton title={i18n('Add under')} onClick={() => addUnder()}>
           <AddOutlined />
