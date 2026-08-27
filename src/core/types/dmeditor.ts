@@ -16,7 +16,7 @@ export namespace DME {
     property?: string;
     identifier?: string;
     appliedDevices?: Array<string>; //'mobile'
-    name?: string;
+    name: string;
     custom?: boolean; // If true, it will not invoke directly but use name->value layout.
     settingComponent: string; // Registered setting component, e.g., 'color' or 'align'.
     description?: string;

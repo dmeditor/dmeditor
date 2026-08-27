@@ -4,9 +4,9 @@ import { useWidgetSettingStore } from '../../../main/store';
 import type { DME } from '../../../types';
 
 const SettingRenderContainer = (props: DME.SettingComponentProps) => {
-  const { parameters, block } = props;
+  const { parameters } = props;
 
-  const id = (parameters?.id as string) || (block?.id as string) || '';
+  const id = parameters?.id as string;
   const { setContainerLoaded } = useWidgetSettingStore();
 
   useEffect(() => {
@@ -17,12 +17,7 @@ const SettingRenderContainer = (props: DME.SettingComponentProps) => {
     };
   }, [id]);
 
-  return (
-    <>
-      <div id={'dme-setting-render-container-' + id}></div>
-      {block?.id && <div id={'dme-setting-render-container-' + id + '-' + block.id}></div>}
-    </>
-  );
+  return <div id={'dme-setting-render-container-' + id}></div>;
 };
 
 export default SettingRenderContainer;
