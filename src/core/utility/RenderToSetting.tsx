@@ -12,8 +12,8 @@ export const RenderToSetting = (props: {
 
   let container = null;
   const containerId = props.containerId;
+  const blockId = props.blockId;
   if (!containerId && mainLoaded) {
-    const blockId = props.blockId;
     if (blockId) {
       container = document.getElementById('dme-widget-setting-container-' + blockId);
     } else {
@@ -23,7 +23,13 @@ export const RenderToSetting = (props: {
       }
     }
   } else if (containerId && containerLoaded[containerId]) {
-    container = document.getElementById('dme-setting-render-container-' + containerId);
+    if (blockId) {
+      container = document.getElementById(
+        'dme-setting-render-container-' + containerId + '-' + blockId,
+      );
+    } else {
+      container = document.getElementById('dme-setting-render-container-' + containerId);
+    }
   }
 
   return <>{mainLoaded && container && createPortal(props.children, container)}</>;
