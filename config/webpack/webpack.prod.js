@@ -80,6 +80,13 @@ const commonConfig = {
         { from: 'package.json', to: resolve('./dist') },
         { from: 'LICENSE', to: resolve('./dist') },
         { from: 'changelog.txt', to: resolve('./dist') },
+        {
+          from: 'doc',
+          to: resolve('./dist/doc'),
+          globOptions: {
+            ignore: ['**/.git/**'],
+          },
+        },
       ],
     }),
   ],
