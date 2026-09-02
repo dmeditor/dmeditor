@@ -77,6 +77,8 @@ const commonConfig = {
     new CopyPlugin({
       patterns: [
         { from: 'README.md', to: resolve('./dist') },
+        { from: 'AGENTS.md', to: resolve('./dist') },
+        { from: 'CLAUDE.md', to: resolve('./dist') },
         { from: 'package.json', to: resolve('./dist') },
         { from: 'LICENSE', to: resolve('./dist') },
         { from: 'changelog.txt', to: resolve('./dist') },
