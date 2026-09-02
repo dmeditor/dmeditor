@@ -60,8 +60,6 @@ Full documentation lives in [`doc/`](./doc/). Start at [`doc/README.md`](./doc/R
 > **Note:** `doc/` is a [git submodule](https://github.com/dmeditor/doc). After cloning, run:
 > `git submodule update --init --recursive`
 
-After `npm run build`, the same docs are also shipped in the npm package under `doc/`.
-
 ### Concepts
 
 - [Concepts and principles](./doc/tutorial/concepts.md)
