@@ -34,10 +34,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
   };
 
   const setInternalVar = (identifierValue: string) => {
-    setVar(
-      '_' + props.blockNode.id,
-      data.menuList.find((item) => item.identifier === identifierValue)?.value || '',
-    );
+    setVar('_' + props.blockNode.id, identifierValue);
   };
 
   const [locationFileName, setLocationFileName] = useState('./');
@@ -50,6 +47,10 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
     if (data.menuList.length > 0) {
       selectMenu(data.loadedMenu || data.menuList[0].identifier);
     }
+
+    return () => {
+      selectMenu('');
+    };
   }, []);
 
   return (
@@ -59,15 +60,14 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           <DataListSettings
             schema={[
               { name: 'Text', identifier: 'text', type: 'text' },
-              { name: 'Identifier', identifier: 'identifier', type: 'text' },
-              { name: 'Value', identifier: 'value', type: 'text' },
+              { name: 'Identifier/Value', identifier: 'identifier', type: 'text' },
             ]}
             data={data.menuList}
             onChange={updateList}
           />
           {vars[identifier] && (
             <div>
-              <label>Selected value: </label>
+              <label>Selected identifier: </label>
               <span>
                 {identifier}={vars[identifier]}
               </span>
@@ -78,26 +78,29 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
       <MenuContainer className={styleClasses['container']} color={data.settings?.color}>
         {data.menuList.map((item, index) => (
           <MenuItem
-            key={item.identifier}
+            key={item.identifier || index}
             className={styleClasses['menuitem']}
             direction={data.settings?.direction}
           >
-            {/** todo use callback & fix preview - preview should use edit way */}
-            <a
-              href={locationFileName + '?' + identifier + '=' + item.identifier}
-              onClick={(e) => {
-                if (mode === 'edit') {
-                  e.preventDefault();
-                  selectMenu(item.identifier);
+            {item.identifier ? (
+              <a
+                href={locationFileName + '?' + identifier + '=' + item.identifier}
+                onClick={(e) => {
+                  if (mode === 'edit') {
+                    e.preventDefault();
+                    selectMenu(item.identifier);
+                  }
+                }}
+                className={
+                  styleClasses['menuitem-link'] +
+                  (item.identifier === currentMenu ? ' ' + styleClasses['current'] : '')
                 }
-              }}
-              className={
-                styleClasses['menuitem-link'] +
-                (item.identifier === currentMenu ? ' ' + styleClasses['current'] : '')
-              }
-            >
-              {item.text}
-            </a>
+              >
+                {item.text}
+              </a>
+            ) : (
+              <span>{item.text}</span>
+            )}
           </MenuItem>
         ))}
       </MenuContainer>
@@ -115,10 +118,10 @@ export const serverSideLoad: DME.ServerSideLoadFunction<EntityMenu> = async (blo
         throw 404; //not found
       }
       block.data.loadedMenu = menu.identifier;
-      return { value: menu.value };
+      return { value: menu.identifier };
     } else {
       const menu = block.data.menuList[0];
-      return { value: menu.value };
+      return { value: menu.identifier };
     }
   }
   return {};

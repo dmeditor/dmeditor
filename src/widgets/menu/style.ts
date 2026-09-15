@@ -5,7 +5,8 @@ export const MenuContainer = styled.ul<{ color?: string }>`
   margin: 0px;
   padding: 0px;
   a,
-  a:hover {
+  a:hover,
+  span {
     ${(props) => (props.color ? { color: props.color } : {})}
   }
 `;

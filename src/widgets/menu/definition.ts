@@ -18,8 +18,8 @@ export const menuDefinition: DME.Widget = {
         type: 'menu',
         data: {
           menuList: [
-            { text: 'Menu1', identifier: 'menu1', value: '1' },
-            { text: 'Menu2', identifier: 'menu2', value: '2' },
+            { text: 'Menu1', identifier: 'menu1' },
+            { text: 'Menu2', identifier: 'menu2' },
           ],
           settings: {
             direction: 'horizontal',
