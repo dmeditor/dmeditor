@@ -52,9 +52,9 @@ const getGeneralStyle = (
 
   if (settings.hidden) {
     if (editMode) {
-      elementStyle['opacity'] = '30%';
+      containerStyle['opacity'] = '30%';
     } else {
-      elementStyle['display'] = 'none';
+      containerStyle['display'] = 'none';
     }
   }
 
