@@ -1,5 +1,6 @@
 import { BlockRender, useDevice } from '../..';
 import type { DME, DMEData } from '../..';
+import { getWidgetStyleClass } from '../../core/utils';
 import { EntityHeroText, EntityHeroTextChildren } from './entity';
 import { HeroImageDiv, HeroTextContainer } from './styled';
 
@@ -20,13 +21,6 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, EntityHeroTextChi
     return <></>;
   }
 
-  const getClass = (type: string) => {
-    if (!styleClasses || !styleClasses[type]) {
-      return '';
-    }
-    return styleClasses[type].join(' ');
-  };
-
   const device = useDevice();
 
   const calculatedHeroPosition =
@@ -42,13 +36,13 @@ const HeroText: React.FC<DME.WidgetRenderProps<EntityHeroText, EntityHeroTextChi
     <HeroImageDiv
       heroPostion={calculatedHeroPosition}
       fullWidth={heroFullWidth}
-      className={getClass('hero') + ' dme-w-hero'}
+      className={getWidgetStyleClass(styleClasses, 'hero')}
     >
       <BlockRender mode={mode} data={children.hero} path={[...path, 'hero']} />
     </HeroImageDiv>
   );
   const renderList = () => (
-    <div className={getClass('list') + ' dme-w-list'}>
+    <div className={getWidgetStyleClass(styleClasses, 'list')}>
       <BlockRender data={children.list} mode={mode} path={[...path, 'list']} />
     </div>
   );

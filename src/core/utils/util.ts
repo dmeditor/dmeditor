@@ -39,6 +39,32 @@ export function isStrictlyInfinity(value: number): value is typeof Infinity {
   return value === Infinity || value === -Infinity;
 }
 
+/** Built-in class for a widget style key, e.g. `dme-w-tr`. Always applied so cssStyle can target `.dme-w-{key}`. */
+export const widgetStyleKeyClass = (key: string) => `dme-w-${key}`;
+
+/**
+ * Combine style-option classes with `dme-w-{key}`.
+ * `dme-w-{key}` is always present so `.dme-w-{key}` works in cssStyle even when cssClasses is set.
+ */
+export function getWidgetStyleClass(
+  styleClasses: Record<string, string> | undefined,
+  key: string,
+  extra?: string,
+): string {
+  return [styleClasses?.[key], widgetStyleKeyClass(key), extra].filter(Boolean).join(' ');
+}
+
+/** Same as getWidgetStyleClass for several keys on one element (e.g. heading `h` + `h2`). */
+export function getWidgetStyleClasses(
+  styleClasses: Record<string, string> | undefined,
+  keys: string[],
+  extra?: string,
+): string {
+  return [...keys.map((key) => getWidgetStyleClass(styleClasses, key)), extra]
+    .filter(Boolean)
+    .join(' ');
+}
+
 /**
  * @method isNull
  * @param value

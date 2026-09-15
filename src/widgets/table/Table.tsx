@@ -1,5 +1,6 @@
 import { MiniRichText, useEditorStore } from '../..';
 import type { DME } from '../..';
+import { getWidgetStyleClass } from '../../core/utils';
 import type { EntityTableBlock } from './entity';
 import { useTableStore } from './store';
 import { StyledTable } from './styled';
@@ -28,10 +29,10 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
     <StyledTable id={id} {...settings}>
       {settings.hasHeader && (
         <thead>
-          <tr className={styleClasses['tr-h'] || 'dme-w-tr-h'}>
+          <tr className={getWidgetStyleClass(styleClasses, 'tr-h')}>
             {value[0].map((cell, i) => (
               <th
-                className={styleClasses['th'] || 'dme-w-th'}
+                className={getWidgetStyleClass(styleClasses, 'th')}
                 key={i}
                 onClick={() => handleActiveCellChange(0, i)}
                 style={props.mode === 'edit' && !cell ? { minWidth: 50 } : {}}
@@ -52,12 +53,12 @@ const Table = (props: DME.WidgetRenderProps<EntityTableBlock>) => {
           settings.hasHeader && idx == 0 ? (
             <></>
           ) : (
-            <tr className={styleClasses['tr'] || 'dme-w-tr'} key={idx}>
+            <tr className={getWidgetStyleClass(styleClasses, 'tr')} key={idx}>
               {row.map((cell, jdx) => {
                 return (
                   <td
                     key={jdx}
-                    className={styleClasses['td'] || 'dme-w-td'}
+                    className={getWidgetStyleClass(styleClasses, 'td')}
                     onClick={() => handleActiveCellChange(idx, jdx)}
                     style={props.mode === 'edit' && !cell ? { minWidth: 50 } : {}}
                   >

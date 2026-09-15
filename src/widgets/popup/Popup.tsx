@@ -3,6 +3,7 @@ import { CloseOutlined } from '@mui/icons-material';
 import { Backdrop, Box, Button, Modal } from '@mui/material';
 
 import { BlockListRender, BlockRender, DME, DMEData } from '../../';
+import { getWidgetStyleClass } from '../../core/utils';
 import { EntityPopup } from './entity';
 import { PopupCloseButtonContainer, PopupRoot } from './style';
 
@@ -29,13 +30,13 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
   return (
     <div>
       <div>
-        <button className={styleClasses['button']} onClick={() => setShown(true)}>
+        <button className={getWidgetStyleClass(styleClasses, 'button')} onClick={() => setShown(true)}>
           {styleClasses['button-before-icon'] && (
-            <i className={styleClasses['button-before-icon']} />
+            <i className={getWidgetStyleClass(styleClasses, 'button-before-icon')} />
           )}
           {data.buttonText}
           {styleClasses['button-after-icon'] && (
-            <i className={styleClasses['button-before-icon']} />
+            <i className={getWidgetStyleClass(styleClasses, 'button-after-icon')} />
           )}
         </button>
       </div>
@@ -62,10 +63,10 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
             : {}
         }
       >
-        <PopupRoot className={styleClasses['container']} size={data.modalSize}>
+        <PopupRoot className={getWidgetStyleClass(styleClasses, 'container')} size={data.modalSize}>
           <a
             href="#"
-            className={styleClasses['close-icon']}
+            className={getWidgetStyleClass(styleClasses, 'close-icon')}
             style={{ float: 'right', position: 'relative', zIndex: 1000 }}
             onClick={(e) => {
               e.preventDefault();
@@ -79,14 +80,14 @@ export const Popup = (props: DME.WidgetRenderProps<EntityPopup>) => {
             {data.closeButtonText && (
               <a
                 href="#"
-                className={styleClasses['close-button']}
+                className={getWidgetStyleClass(styleClasses, 'close-button')}
                 onClick={(e) => {
                   e.preventDefault();
                   handleClose();
                 }}
               >
                 {styleClasses['close-button-before-icon'] && (
-                  <i className={styleClasses['close-button-before-icon']} />
+                  <i className={getWidgetStyleClass(styleClasses, 'close-button-before-icon')} />
                 )}
                 {data.closeButtonText}
               </a>

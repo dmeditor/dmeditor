@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { BlockListRender, BlockRender, dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
-import { getCommonSettings } from '../../';
+import { getCommonSettings, getWidgetStyleClass } from '../../';
 import { SyledLayout } from './styled';
 
 const layout3ColumnsWidget: DME.Widget = {
@@ -83,13 +83,13 @@ const Layout3Columns = (
 
   return (
     <SyledLayout column1Width={column1Width} column2Width={column2Width}>
-      <div className={(styleClasses?.['column1'] || '') + ' dme-w-column1'}>
+      <div className={getWidgetStyleClass(styleClasses, 'column1')}>
         <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column1']} />
       </div>
-      <div className={(styleClasses?.['column2'] || '') + ' dme-w-column2'}>
+      <div className={getWidgetStyleClass(styleClasses, 'column2')}>
         <BlockRender data={children.column2} mode={props.mode} path={[...props.path, 'column2']} />
       </div>
-      <div className={(styleClasses?.['column3'] || '') + ' dme-w-column3'}>
+      <div className={getWidgetStyleClass(styleClasses, 'column3')}>
         <BlockRender data={children.column3} mode={props.mode} path={[...props.path, 'column3']} />
       </div>
     </SyledLayout>

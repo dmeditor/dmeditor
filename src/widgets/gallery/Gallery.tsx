@@ -5,6 +5,7 @@ import { DME } from 'dmeditor/core/types';
 import { partial } from 'lodash';
 
 import { dmeConfig } from '../../core/config';
+import { getWidgetStyleClass, getWidgetStyleClasses } from '../../core/utils';
 import { GalleryEntity } from './entity';
 import {
   Caption,
@@ -110,7 +111,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
                 alt={item.title}
               />
               {item.title && (
-                <Caption className={styleClasses['caption'] || 'dme-w-caption'}>
+                <Caption className={getWidgetStyleClass(styleClasses, 'caption')}>
                   {item.title}
                 </Caption>
               )}
@@ -121,7 +122,7 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
 
       {totalPage > 1 && (
         <PaginationContainer
-          className={styleClasses['pagination-container'] || 'dme-w-pagination-container'}
+          className={getWidgetStyleClass(styleClasses, 'pagination-container')}
         >
           {(() => {
             const result = [];
@@ -129,13 +130,12 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
               result.push(
                 <a
                   href="#"
-                  className={
-                    (styleClasses['pagination-item'] || 'dme-w-pagination-item') +
-                    ' ' +
-                    (i === currentPage
-                      ? styleClasses['pagination-item-current'] || 'dme-w-pagination-item-current'
-                      : '')
-                  }
+                  className={getWidgetStyleClasses(
+                    styleClasses,
+                    i === currentPage
+                      ? ['pagination-item', 'pagination-item-current']
+                      : ['pagination-item'],
+                  )}
                   onClick={(e) => {
                     e.preventDefault();
                     setCurrentPage(i);
@@ -203,12 +203,12 @@ export function Gallery(props: DME.WidgetRenderProps<GalleryEntity>) {
                   src={dmeConfig.general.imagePath(items[selectedImageIndex]?.image)}
                 />
                 {items[selectedImageIndex].title && (
-                  <Caption className={styleClasses['popup-caption'] || 'dme-w-popup-caption'}>
+                  <Caption className={getWidgetStyleClass(styleClasses, 'popup-caption')}>
                     {items[selectedImageIndex].title}
                   </Caption>
                 )}
                 <ImageIndicator
-                  className={styleClasses['gallery-indicator'] || 'dme-w-gallery-indicator'}
+                  className={getWidgetStyleClass(styleClasses, 'gallery-indicator')}
                 >
                   <span>{selectedImageIndex + 1}</span>
                   <span> / </span>

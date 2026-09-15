@@ -10,6 +10,7 @@ import {
   i18n,
 } from '../..';
 import type { DME, DMEData } from '../..';
+import { getWidgetStyleClass } from '../../core/utils';
 import { SyledLayout } from './styled';
 
 const layout2ColumnsWidget: DME.Widget = {
@@ -83,10 +84,10 @@ const Layout2Columns = (
 
   return (
     <SyledLayout columnWidth={columnWidth}>
-      <div className={(styleClasses?.['column1'] || '') + ' dme-w-column1'}>
+      <div className={getWidgetStyleClass(styleClasses, 'column1')}>
         <BlockRender data={children.column1} mode={props.mode} path={[...props.path, 'column1']} />
       </div>
-      <div className={(styleClasses?.['column2'] || '') + ' dme-w-column2'}>
+      <div className={getWidgetStyleClass(styleClasses, 'column2')}>
         <BlockRender data={children.column2} mode={props.mode} path={[...props.path, 'column2']} />
       </div>
     </SyledLayout>

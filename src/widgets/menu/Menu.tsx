@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useEditorStore, useGlobalVars } from 'dmeditor/core/main/store';
 import { DME, DMEData } from 'dmeditor/core/types';
 import { DataListSettings, RenderToSetting } from 'dmeditor/core/utility';
+import { getWidgetStyleClass, getWidgetStyleClasses } from 'dmeditor/core/utils';
 
 import { EntityMenu } from './enitity';
 import { MenuContainer, MenuItem } from './style';
@@ -75,11 +76,11 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           )}
         </RenderToSetting>
       )}
-      <MenuContainer className={styleClasses['container']} color={data.settings?.color}>
+      <MenuContainer className={getWidgetStyleClass(styleClasses, 'container')} color={data.settings?.color}>
         {data.menuList.map((item, index) => (
           <MenuItem
             key={item.identifier || index}
-            className={styleClasses['menuitem']}
+            className={getWidgetStyleClass(styleClasses, 'menuitem')}
             direction={data.settings?.direction}
           >
             {item.identifier ? (
@@ -91,10 +92,10 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
                     selectMenu(item.identifier);
                   }
                 }}
-                className={
-                  styleClasses['menuitem-link'] +
-                  (item.identifier === currentMenu ? ' ' + styleClasses['current'] : '')
-                }
+                className={getWidgetStyleClasses(
+                  styleClasses,
+                  item.identifier === currentMenu ? ['menuitem-link', 'current'] : ['menuitem-link'],
+                )}
               >
                 {item.text}
               </a>

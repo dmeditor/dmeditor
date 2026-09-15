@@ -3,6 +3,7 @@ import { getCommonSettings } from 'dmeditor/core/setting-panel/property-setting'
 
 import { dmeConfig, generalSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
+import { getWidgetStyleClass } from '../../core/utils';
 
 export interface ImageEntity {
   src: string;
@@ -107,7 +108,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
     return (
       <>
         {src && (
-          <div className={(styleClasses['image'] || '') + ' dme-w-image '}>
+          <div className={getWidgetStyleClass(styleClasses, 'image')}>
             <img
               src={dmeConfig.general.imagePath(src)}
               className={css({
@@ -127,7 +128,7 @@ export const Image = (props: DME.WidgetRenderProps<ImageEntity>) => {
           </div>
         )}
         {description && (
-          <div className={(styleClasses['description'] || '') + ' dme-w-description'}>
+          <div className={getWidgetStyleClass(styleClasses, 'description')}>
             {description}
           </div>
         )}

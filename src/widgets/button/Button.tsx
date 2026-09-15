@@ -1,4 +1,5 @@
 import type { DME } from '../../core/types';
+import { getWidgetStyleClass } from '../../core/utils';
 import { EntityButton } from './entity';
 import { getStyledButton } from './styled';
 
@@ -34,12 +35,16 @@ const Button = (props: ButtonProps) => {
       {...restProps}
       {...buttonProps}
       disabled={mode === 'edit'}
-      className={styleClasses['button'] || '' + ' dme-w-button'}
+      className={getWidgetStyleClass(styleClasses, 'button')}
       onClick={handleClick}
     >
-      {styleClasses['before-icon'] && <i className={styleClasses['before-icon']} />}
+      {styleClasses['before-icon'] && (
+        <i className={getWidgetStyleClass(styleClasses, 'before-icon')} />
+      )}
       {value}
-      {styleClasses['after-icon'] && <i className={styleClasses['after-icon']} />}
+      {styleClasses['after-icon'] && (
+        <i className={getWidgetStyleClass(styleClasses, 'after-icon')} />
+      )}
     </Component>
   );
 };

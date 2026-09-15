@@ -8,6 +8,7 @@ import { iterateBlockTree } from 'dmeditor/core/main/store/helper';
 import { MiniRichText } from 'dmeditor/core/utility';
 
 import type { DME, DMEData } from '../../core/types';
+import { getWidgetStyleClass } from '../../core/utils';
 import { EntityForm } from './entity';
 
 export interface Response {
@@ -114,7 +115,7 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
 
   if (response && response.success === true) {
     return (
-      <div className={styleClasses['success-message'] || 'dme-w-success-message'}>
+      <div className={getWidgetStyleClass(styleClasses, 'success-message')}>
         <div
           className={css`
             white-space: pre-line;
@@ -141,31 +142,31 @@ export const Form = (props: DME.WidgetRenderProps<EntityForm>) => {
         {formConfig && formConfig.captcha && <div>{formConfig.captcha()}</div>}
 
         {response && response.success === false && (
-          <div className={styleClasses['error-message'] || 'dme-w-error-message'}>
+          <div className={getWidgetStyleClass(styleClasses, 'error-message')}>
             {response.errorMessage}
           </div>
         )}
 
-        <div className={styleClasses['action'] || 'dme-w-action'}>
+        <div className={getWidgetStyleClass(styleClasses, 'action')}>
           <button
             disabled={loading}
-            className={styleClasses['submit'] || 'dme-w-submit'}
+            className={getWidgetStyleClass(styleClasses, 'submit')}
             type="submit"
           >
             {styleClasses['icon-before-submit'] && (
-              <i className={styleClasses['icon-before-submit']} />
+              <i className={getWidgetStyleClass(styleClasses, 'icon-before-submit')} />
             )}
             {data.submitText || 'Submit'}
           </button>
-          <button type="reset" className={styleClasses['reset'] || 'dme-w-reset'} onClick={reset}>
+          <button type="reset" className={getWidgetStyleClass(styleClasses, 'reset')} onClick={reset}>
             {styleClasses['icon-before-reset'] && (
-              <i className={styleClasses['icon-before-reset']} />
+              <i className={getWidgetStyleClass(styleClasses, 'icon-before-reset')} />
             )}
             {data.resetText || 'Reset'}
           </button>
         </div>
 
-        {loading && <div className={styleClasses['loading'] || 'dme-w-loading'}></div>}
+        {loading && <div className={getWidgetStyleClass(styleClasses, 'loading')}></div>}
       </form>
     </div>
   );

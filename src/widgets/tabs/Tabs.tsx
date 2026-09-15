@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 
 import { BlockListRender, useEditorStore, type DME } from '../..';
 import { Nav, NavItem } from '../../core/components/nav';
-import { getAllowedTypes } from '../../core/utils';
+import { getAllowedTypes, getWidgetStyleClass, getWidgetStyleClasses } from '../../core/utils';
 import { logger } from '../../core/utils/log';
 import { BaseTabs, TabPane } from './BaseTabs';
 import type { EntityTabsBlock, EntityTabsData } from './entity';
@@ -89,17 +89,17 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
     <>
       <div>
         <BaseTabs activeKey={activeKey}>
-          <Nav className={styleClasses['nav']}>
+          <Nav className={getWidgetStyleClass(styleClasses, 'nav')}>
             {tabList.map(({ meta: { tabKey, title } }) => (
               <NavItem
                 key={tabKey}
                 activeKey={activeKey}
                 onTabClick={tabChange}
                 tabKey={tabKey}
-                className={
-                  (activeKey === tabKey ? styleClasses['active'] + ' ' : '') +
-                  (styleClasses['nav-item'] || 'dme-w-nav-item')
-                }
+                className={getWidgetStyleClasses(
+                  styleClasses,
+                  activeKey === tabKey ? ['nav-item', 'active'] : ['nav-item'],
+                )}
               >
                 <>{title ?? ''}</>
               </NavItem>
@@ -115,7 +115,7 @@ const Tabs: React.FC<DME.WidgetRenderProps<EntityTabsData, EntityTabsBlock[]>> =
             {tabList.map(({ meta: { tabKey, title }, children }, index) => {
               return (
                 <TabPane activeKey={activeKey} key={index} tabKey={tabKey} title={title}>
-                  <div className={styleClasses['body'] || 'dme-w-body'}>
+                  <div className={getWidgetStyleClass(styleClasses, 'body')}>
                     <BlockListRender
                       mode={props.mode}
                       blockData={children || []}

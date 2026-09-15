@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useEditorStore } from '../..';
 import type { DME } from '../..';
 import { HeadingComponent } from '../../core/utility/HeadingComponent';
-import { isHTMLElement } from '../../core/utils';
+import { getWidgetStyleClasses, isHTMLElement } from '../../core/utils';
 import { EntityHeadingBlock } from './entity';
 
 // const Heading = ({ align, level }: { align: string; level: number }) => {
@@ -42,9 +42,7 @@ const Heading = (props: DME.WidgetRenderProps<EntityHeadingBlock>) => {
       <div>
         <HeadingComponent
           level={level}
-          className={
-            (styleClasses['h'] || '') + ' ' + styleClasses['h' + level] || '' + ' dme-w-heading-h'
-          }
+          className={getWidgetStyleClasses(styleClasses, ['h', 'h' + level])}
           id={anchor}
           {...common}
           contentEditable={props.mode === 'edit'}

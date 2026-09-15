@@ -3,6 +3,7 @@ import { useEditorStore, useGlobalVars } from 'dmeditor/core/main/store';
 import { RenderToSetting } from 'dmeditor/core/utility';
 
 import type { DME } from '../../core/types';
+import { getWidgetStyleClass } from '../../core/utils';
 import { EntityFormField } from './entity';
 import { FieldSettings } from './FieldSetting';
 import { FormRow } from './styled';
@@ -45,17 +46,17 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
       <FormRow
         newLine={data.newLine}
         labelWidth={data.settings?.labelWidth}
-        className={feedbackMessage !== undefined ? styleClasses['error'] || 'dme-w-error' : ''}
+        className={feedbackMessage !== undefined ? getWidgetStyleClass(styleClasses, 'error') : ''}
       >
         <label>
           {data.label}
-          {data.required && <span className={styleClasses['required'] || 'dme-w-required'}>*</span>}
+          {data.required && <span className={getWidgetStyleClass(styleClasses, 'required')}>*</span>}
           :{' '}
         </label>
         <div>
           {data.type === 'text' && (
             <input
-              className={styleClasses['input-text'] || 'dme-w-input-text'}
+              className={getWidgetStyleClass(styleClasses, 'input-text')}
               placeholder={data.placeHolder}
               name={data.identifier}
               defaultValue={data.defaultValue}
@@ -64,7 +65,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
           {data.type === 'checkbox' && (
             <input
               type="checkbox"
-              className={styleClasses['input-checkbox'] || 'dme-w-input-checkbox'}
+              className={getWidgetStyleClass(styleClasses, 'input-checkbox')}
               key={data.defaultValue + ''}
               name={data.identifier}
               value={'1'}
@@ -78,10 +79,10 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
                   {data.options.map((item) => (
                     <label
                       key={item.value as string}
-                      className={styleClasses['input-radio-label'] || 'dme-w-input-radio-label'}
+                      className={getWidgetStyleClass(styleClasses, 'input-radio-label')}
                     >
                       <input
-                        className={styleClasses['input-radio'] || 'dme-w-input-radio'}
+                        className={getWidgetStyleClass(styleClasses, 'input-radio')}
                         type="radio"
                         key={item.isDefault}
                         name={data.identifier}
@@ -102,7 +103,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
                 <select
                   name={data.identifier}
                   defaultValue={data.defaultValue}
-                  className={styleClasses['input-select'] || 'dme-w-input-select'}
+                  className={getWidgetStyleClass(styleClasses, 'input-select')}
                 >
                   {data.options.map((item) => (
                     <option
@@ -120,7 +121,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
           )}
           {data.type === 'textarea' && (
             <textarea
-              className={styleClasses['input-textarea'] || 'dme-w-input-textarea'}
+              className={getWidgetStyleClass(styleClasses, 'input-textarea')}
               placeholder={data.placeHolder}
               name={data.identifier}
               rows={data.rows || 3}
@@ -131,7 +132,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
             <input
               type="file"
               accept={data.params?.fileFormat || '*'}
-              className={styleClasses['input-file'] || 'dme-w-input-file'}
+              className={getWidgetStyleClass(styleClasses, 'input-file')}
               key={data.defaultValue + ''}
               name={data.identifier}
             />
@@ -139,7 +140,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
         </div>
       </FormRow>
       {feedbackMessage && (
-        <div className={styleClasses['error-message'] || 'dme-w-error-message'}>
+        <div className={getWidgetStyleClass(styleClasses, 'error-message')}>
           {feedbackMessage}
         </div>
       )}

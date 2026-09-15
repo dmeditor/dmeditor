@@ -10,6 +10,7 @@ import { TransitionStatus } from 'react-transition-group';
 
 import Transition from '../../core/components/transition';
 import { dmeConfig } from '../../core/config';
+import { getWidgetStyleClass } from '../../core/utils';
 import { CarouselEntity } from './entity';
 import transitionEndListener from './helper';
 // import useCommittedRef from './hooks/useCommittedRef';
@@ -122,7 +123,7 @@ const Carousel = ({
                 isActive={isActive}
                 status={status}
                 className={classNames(
-                  styleClasses['carousel-item'] || 'dme-carousel-item',
+                  getWidgetStyleClass(styleClasses, 'carousel-item'),
                   animation === 'slide' && {
                     'carousel-item-next': isActive && status !== 'entered',
                     active: status === 'entered' || status === 'exiting',
@@ -133,25 +134,25 @@ const Carousel = ({
                 {linkOnImage && slide.link ? (
                   <a href={slide.link}>
                     <StyledCarouselImage
-                      className={styleClasses['carousel-image'] || 'dme-carousel-image'}
+                      className={getWidgetStyleClass(styleClasses, 'carousel-image')}
                       src={dmeConfig.general.imagePath(slide.image)}
                     />
                   </a>
                 ) : (
                   <StyledCarouselImage
-                    className={styleClasses['carousel-image'] || 'dme-carousel-image'}
+                    className={getWidgetStyleClass(styleClasses, 'carousel-image')}
                     src={dmeConfig.general.imagePath(slide.image)}
                   />
                 )}
                 {slide.title && (
                   <StyledCarouselCaption
-                    className={styleClasses['carousel-title'] || 'dme-carousel-title'}
+                    className={getWidgetStyleClass(styleClasses, 'carousel-title')}
                   >
                     {slide.link ? (
                       <a
                         href={slide.link}
                         {...(dmeConfig.widgets.carousel?.newLink ? { target: '_blank' } : {})}
-                        className={styleClasses['carousel-title-link'] || 'dme-carousel-title-link'}
+                        className={getWidgetStyleClass(styleClasses, 'carousel-title-link')}
                       >
                         {slide.title}
                       </a>
@@ -197,11 +198,11 @@ const Carousel = ({
               previousClick();
             }}
           >
-            <CarouselArrowButon className={styleClasses['arrow-button'] || 'dme-w-arrow-button'}>
+            <CarouselArrowButon className={getWidgetStyleClass(styleClasses, 'arrow-button')}>
               {styleClasses['arrow-previous'] ? (
-                <i className={styleClasses['arrow-previous']} />
+                <i className={getWidgetStyleClass(styleClasses, 'arrow-previous')} />
               ) : (
-                <ArrowBackIosNewOutlined />
+                <ArrowBackIosNewOutlined className="dme-w-arrow-previous" />
               )}
             </CarouselArrowButon>
           </CarouselArrowContainer>
@@ -211,18 +212,18 @@ const Carousel = ({
               nextClick();
             }}
           >
-            <CarouselArrowButon className={styleClasses['arrow-button'] || 'dme-w-arrow-button'}>
+            <CarouselArrowButon className={getWidgetStyleClass(styleClasses, 'arrow-button')}>
               {styleClasses['arrow-next'] ? (
-                <i className={styleClasses['arrow-next']} />
+                <i className={getWidgetStyleClass(styleClasses, 'arrow-next')} />
               ) : (
-                <ArrowForwardIosOutlined />
+                <ArrowForwardIosOutlined className="dme-w-arrow-next" />
               )}
             </CarouselArrowButon>
           </CarouselArrowContainer>
           <StyledCarsouelIndicator>{carouselIndicators}</StyledCarsouelIndicator>
         </>
       )}
-      <div className={styleClasses['carousel-inner'] || 'dme-carousel-inner'}>
+      <div className={getWidgetStyleClass(styleClasses, 'carousel-inner')}>
         {carouselChildren}
       </div>
     </StyledCarouselContainer>

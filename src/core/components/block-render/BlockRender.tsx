@@ -9,6 +9,7 @@ import { Mode } from '../../constants';
 import { i18n } from '../../i18n';
 import { useEditorStore } from '../../main/store';
 import type { DME, DMEData } from '../../types';
+import { getWidgetStyleClass } from '../../utils/util';
 import { getWidget, getWidgetComponent, getWidgetStyle } from '../../utils/register';
 import { BlockMask, BlockWrapper } from './styled';
 
@@ -109,15 +110,10 @@ export const BlockRender: React.FC<BlockRenderProps> = React.memo((props) => {
           }
         }
       }
-
-      if (Object.keys(styleClasses).length > 0) {
-        if (styleClasses['root']) {
-          rootClasses += ` ${styleClasses['root']}`;
-        }
-      }
-      return { rootClasses: rootClasses, widgetStyles: styles, styleClasses: styleClasses };
     }
-    return { rootClasses: rootClasses, styleClasses: {} };
+
+    rootClasses += ' ' + getWidgetStyleClass(styleClasses, 'root');
+    return { rootClasses: rootClasses, widgetStyles: styles, styleClasses: styleClasses };
   }, [id, path, styleObj]);
 
   if (!Widget) {

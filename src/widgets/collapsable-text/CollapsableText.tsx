@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 
 import { BlockListRender, dmeConfig, generalSettings, getCommonSettings, i18n } from '../..';
 import type { DME, DMEData } from '../..';
+import { getWidgetStyleClass } from '../../core/utils';
 
 interface CollapsableTextEntity {
   text: string;
@@ -73,10 +74,10 @@ export const CollapsableText = (props: DME.WidgetRenderProps<CollapsableTextEnti
 
   return (
     <div>
-      <div className={styleClasses['button-container'] || '' + ' dme-w-button-container'}>
+      <div className={getWidgetStyleClass(styleClasses, 'button-container')}>
         <div style={data.buttonAlign ? { textAlign: data.buttonAlign } : {}}>
           <button
-            className={styleClasses['button'] || '' + ' dme-w-button'}
+            className={getWidgetStyleClass(styleClasses, 'button')}
             onClick={() => setExpanded(!expanded)}
           >
             {data.text}

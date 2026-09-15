@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 
 import { BlockListRender, DME } from '../..';
-import { getAllowedTypes, isNull } from '../../core/utils';
+import { getAllowedTypes, getWidgetStyleClass, isNull } from '../../core/utils';
 import { AccordtionChildType, EntityAccordion } from './entity';
 import { Accordion as AccordionStyle } from './styled';
 
@@ -40,33 +40,37 @@ const Accordion = (props: DME.WidgetRenderProps<EntityAccordion, AccordtionChild
   };
 
   return (
-    <AccordionStyle.Container className={(styleClasses['container'] || '') + ' dme-w-container'}>
+    <AccordionStyle.Container className={getWidgetStyleClass(styleClasses, 'container')}>
       {accordionList.map((accordion, index: number) => {
         const isOpen = activeList.includes(index);
 
         return (
           <AccordionStyle.Item
             key={accordion.id || index}
-            className={(styleClasses['item'] || '') + ' dme-w-item' + (isOpen ? ' dme-w-open' : '')}
+            className={getWidgetStyleClass(styleClasses, 'item', isOpen ? 'dme-w-open' : '')}
           >
             <AccordionStyle.Summary
               open={isOpen}
-              className={(styleClasses['summary'] || '') + ' dme-w-summary'}
+              className={getWidgetStyleClass(styleClasses, 'summary')}
               onClick={() => openClose(index)}
               iconPosition={data.settings?.iconOnLeft}
             >
-              <AccordionStyle.Title className={(styleClasses['title'] || '') + ' dme-w-title'}>
+              <AccordionStyle.Title className={getWidgetStyleClass(styleClasses, 'title')}>
                 {accordion?.meta?.title || ''}
               </AccordionStyle.Title>
               <AccordionStyle.Icon
                 open={isOpen}
-                className={(styleClasses['icon-container'] || '') + ' dme-w-icon-container'}
+                className={getWidgetStyleClass(styleClasses, 'icon-container')}
               >
-                {styleClasses['icon'] || <ExpandMoreOutlined />}
+                {styleClasses['icon'] ? (
+                  <i className={getWidgetStyleClass(styleClasses, 'icon')} />
+                ) : (
+                  <ExpandMoreOutlined className="dme-w-icon" />
+                )}
               </AccordionStyle.Icon>
             </AccordionStyle.Summary>
             <Collapse in={isOpen}>
-              <AccordionStyle.Body className={(styleClasses['body'] || '') + ' dme-w-body'}>
+              <AccordionStyle.Body className={getWidgetStyleClass(styleClasses, 'body')}>
                 <BlockListRender
                   mode={props.mode}
                   blockData={accordion.children || []}
