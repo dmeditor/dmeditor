@@ -35,7 +35,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
     }
   };
 
-  const { vars, initVars } = useGlobalVars();
+  const { vars, initVars, resetVar } = useGlobalVars();
 
   useEffect(() => {
     if (Object.keys(vars).length === 0) {
@@ -43,6 +43,9 @@ const DMEditorView = (props: DMEditorViewProps) => {
       const locationVars = queryFromLocaton(location);
       initVars(locationVars);
     }
+    return () => {
+      resetVar();
+    };
   }, []);
 
   return (
