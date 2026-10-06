@@ -14,6 +14,7 @@ export type VideoEntity = {
     align: 'left' | 'center' | 'right';
     mute?: boolean;
     autoStart?: boolean;
+    showControls?: boolean;
     general?: DMEData.GeneralSettingType;
   };
 };
@@ -47,7 +48,7 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
     <>
       <Container {...data.settings}>
         <video
-          controls
+          controls={data.settings.showControls !== false}
           src={videoUrl}
           muted={data.settings.mute}
           autoPlay={data.settings.autoStart}
@@ -80,6 +81,7 @@ export const VideoDefinition: DME.Widget = {
             width: 300,
             height: 240,
             align: 'center',
+            showControls: true,
           },
         },
       };
@@ -138,6 +140,14 @@ export const VideoDefinition: DME.Widget = {
       },
       property: 'settings.loop',
       settingComponent: 'checkbox',
+    },
+    {
+      get name() {
+        return i18n('Show controls', 'property-label');
+      },
+      property: 'settings.showControls',
+      settingComponent: 'checkbox',
+      parameters: { defaultValue: true },
     },
   ],
 };

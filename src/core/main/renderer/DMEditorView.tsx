@@ -43,9 +43,7 @@ const DMEditorView = (props: DMEditorViewProps) => {
       const locationVars = queryFromLocaton(location);
       initVars(locationVars);
     }
-    return () => {
-      resetVar();
-    };
+    return () => {};
   }, []);
 
   return (

@@ -17,7 +17,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
   } = props;
 
   const [currentMenu, setCurrrentMenu] = useState(data.menuList[0].identifier);
-  const { vars, setVar } = useGlobalVars();
+  const { vars, setVar, removeVar } = useGlobalVars();
 
   const { updateBlockByPath } = useEditorStore();
 
@@ -51,6 +51,7 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
 
     return () => {
       selectMenu('');
+      setVar(identifier, '');
     };
   }, []);
 
@@ -76,7 +77,10 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
           )}
         </RenderToSetting>
       )}
-      <MenuContainer className={getWidgetStyleClass(styleClasses, 'container')} color={data.settings?.color}>
+      <MenuContainer
+        className={getWidgetStyleClass(styleClasses, 'container')}
+        color={data.settings?.color}
+      >
         {data.menuList.map((item, index) => (
           <MenuItem
             key={item.identifier || index}
@@ -94,7 +98,9 @@ export const Menu = (props: DME.WidgetRenderProps<EntityMenu>) => {
                 }}
                 className={getWidgetStyleClasses(
                   styleClasses,
-                  item.identifier === currentMenu ? ['menuitem-link', 'current'] : ['menuitem-link'],
+                  item.identifier === currentMenu
+                    ? ['menuitem-link', 'current']
+                    : ['menuitem-link'],
                 )}
               >
                 {item.text}

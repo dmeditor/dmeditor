@@ -401,7 +401,13 @@ export const updateLocation = (vars: any) => {
   const params = url.searchParams;
   for (const item of Object.keys(vars)) {
     if (!item.startsWith('_')) {
-      params.set(item, vars[item] + '');
+      if (vars[item]) {
+        params.set(item, vars[item] + '');
+      } else {
+        if (params.has(item)) {
+          params.delete(item);
+        }
+      }
     }
   }
   history.replaceState({}, '', url);

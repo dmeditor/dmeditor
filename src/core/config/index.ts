@@ -46,7 +46,7 @@ export interface widgetConfig {
 }
 
 export interface DataSourceConfigType {
-  edit: React.FC<{
+  edit?: React.FC<{
     widget: string;
     data?: Record<string, string | number>;
     isList?: boolean; //list or one
