@@ -11,10 +11,13 @@ const Checkbox = (props: DME.SettingComponentProps) => {
     updateBlockPropsByPath(blockPath, property || '', v);
   };
 
+  const checked =
+    value === undefined ? Boolean(props.parameters?.defaultValue) : Boolean(value);
+
   return (
     <MUICheckbox
       disabled={props.disabled}
-      checked={value ? true : false}
+      checked={checked}
       onChange={(e) => handleChange(e.target.checked)}
     />
   );
