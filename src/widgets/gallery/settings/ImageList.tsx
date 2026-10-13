@@ -111,7 +111,7 @@ const ImageList = (props: DME.SettingComponentProps<GalleryEntity>) => {
               <ImageSetting
                 value={{ src: item.image }}
                 onChange={(info) => {
-                  updateImage(index, info.src);
+                  updateImage(index, info?.src || '');
                 }}
               />
               <div

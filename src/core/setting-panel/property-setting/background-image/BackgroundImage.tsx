@@ -26,14 +26,9 @@ const BackgroundImage = (
       <ImageSetting
         value={{ src: currentValue?.image || '' }}
         onChange={(v) => {
-          setCurrentValue({ ...currentValue, image: v.src });
+          setCurrentValue(v ? { ...currentValue, image: v.src } : undefined);
         }}
       />
-      {currentValue && (
-        <Button onClick={() => setCurrentValue(undefined)}>
-          <DeleteOutline />
-        </Button>
-      )}
       <div>
         <label>
           <Checkbox

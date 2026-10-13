@@ -10,7 +10,7 @@ export const Source = (props: DME.SettingComponentProps<ImageEntity>) => {
   const { updateBlockByPath } = useEditorStore();
   const { src } = data || {};
 
-  const handleChange = (value: DME.ImageInfo) => {
+  const handleChange = (value?: DME.ImageInfo) => {
     updateBlockByPath<ImageEntity>(blockPath, (blockData) => {
       blockData.src = value?.src;
       blockData.externalId = value?.id;

@@ -79,7 +79,7 @@ const Carousel = (props: DME.SettingComponentProps) => {
               <ImageSetting
                 value={{ src: item.image }}
                 onChange={(info) => {
-                  updateImage(index, info.src);
+                  updateImage(index, info?.src || '');
                 }}
               />
               <div>

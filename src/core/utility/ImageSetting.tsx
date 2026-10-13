@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { css } from '@emotion/css';
-import { Button } from '@mui/material';
+import { DeleteOutline } from '@mui/icons-material';
+import { Button, IconButton } from '@mui/material';
 
 import { dmeConfig, type BrowseImageCallbackParams } from '../config';
 import { i18n } from '../i18n';
@@ -11,7 +12,7 @@ export const ImageSetting = (props: {
   defaultVisible?: boolean;
   value: DME.ImageInfo;
   parameters?: { [key: string]: unknown };
-  onChange: (value: DMEImageInfo) => void;
+  onChange: (value?: DME.ImageInfo) => void;
 }) => {
   const { value, onChange, defaultVisible = false } = props;
   const { src } = value;
@@ -26,24 +27,38 @@ export const ImageSetting = (props: {
     setVisible(true);
   };
 
+  const handleClear = () => {
+    onChange(undefined);
+  };
+
   return (
     <>
       <div className="dme-utility-imageSetting">
         {src && (
-          <img
-            onClick={handleOpen}
+          <span
             className={css`
-              max-width: 100px;
-              max-height: 100px;
-              margin-right: 5px;
-              cursor: pointer;
-              border-radius: 5px;
-              &:hover {
-                opacity: 0.8;
-              }
+              display: inline-flex;
+              align-items: center;
             `}
-            src={dmeConfig.general.imagePath(src, 'thumbnail')}
-          />
+          >
+            <img
+              onClick={handleOpen}
+              className={css`
+                max-width: 100px;
+                max-height: 100px;
+                margin-right: 5px;
+                cursor: pointer;
+                border-radius: 5px;
+                &:hover {
+                  opacity: 0.8;
+                }
+              `}
+              src={dmeConfig.general.imagePath(src, 'thumbnail')}
+            />
+            <IconButton size="small" color="error" title={i18n('Delete')} onClick={handleClear}>
+              <DeleteOutline fontSize="small" />
+            </IconButton>
+          </span>
         )}
         <div>
           <Button color="info" onClick={handleOpen}>

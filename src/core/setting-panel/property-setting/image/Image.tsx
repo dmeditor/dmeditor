@@ -4,7 +4,7 @@ const Image = (props: { value?: string; property: string } & DME.SettingComponen
   const { property, value, blockPath } = props;
   const { updateBlockPropsByPath } = useEditorStore();
 
-  const handleChange = (value: DME.ImageInfo) => {
+  const handleChange = (value?: DME.ImageInfo) => {
     updateBlockPropsByPath(blockPath, property, value?.src);
   };
 

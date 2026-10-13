@@ -117,7 +117,7 @@ export const DataListSettings = (props: DataListSettingProps) => {
                     <ImageSetting
                       value={{ src: row[item.identifier] }}
                       onChange={(info) => {
-                        update(info.src, index, item.identifier);
+                        update(info?.src || '', index, item.identifier);
                       }}
                     />
                   )}
