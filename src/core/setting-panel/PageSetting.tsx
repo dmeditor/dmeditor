@@ -49,7 +49,7 @@ const SettingType = (props: SettingTypeProps) => {
         <div style={{ display: 'flex' }}>
           <ImageSetting
             value={{ src: currentValue as string }}
-            onChange={(v) => setCurrentValue(v.src)}
+            onChange={(v) => setCurrentValue(v?.src || '')}
           />
           {currentValue && (
             <div>
