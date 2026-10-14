@@ -12,9 +12,10 @@ export const ImageSetting = (props: {
   defaultVisible?: boolean;
   value: DME.ImageInfo;
   parameters?: { [key: string]: unknown };
+  previewMaxSize?: number;
   onChange: (value?: DME.ImageInfo) => void;
 }) => {
-  const { value, onChange, defaultVisible = false } = props;
+  const { value, onChange, defaultVisible = false, previewMaxSize = 100 } = props;
   const { src } = value;
   const [visible, setVisible] = useState(defaultVisible ?? false);
 
@@ -44,8 +45,8 @@ export const ImageSetting = (props: {
             <img
               onClick={handleOpen}
               className={css`
-                max-width: 100px;
-                max-height: 100px;
+                max-width: ${previewMaxSize}px;
+                max-height: ${previewMaxSize}px;
                 margin-right: 5px;
                 cursor: pointer;
                 border-radius: 5px;
