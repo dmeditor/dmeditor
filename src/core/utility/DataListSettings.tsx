@@ -233,7 +233,12 @@ export const DataListSettings = (props: DataListSettingProps) => {
 
   return (
     <div>
-      {Array.isArray(data) && (
+      {Array.isArray(data) && data.length === 0 && (
+        <div style={{ padding: '8px 0', color: '#666', fontSize: '0.9rem', textAlign: 'center' }}>
+          {i18n('No items')}
+        </div>
+      )}
+      {Array.isArray(data) && data.length > 0 && (
         <TableScroll>
           <Table style={columnSize(width)}>
             <thead>
