@@ -41,10 +41,10 @@ export const StyleSettings = (props: StyleSettingProps) => {
 
   return (
     <PropertyGroup header="Styles">
-      {styles.map((style) => {
-        let styleObj = getWidgetStyle(blockType, style);
+      {styles.map((currentStyle) => {
+        let styleObj = getWidgetStyle(blockType, currentStyle);
 
-        if (isCustomStyle && style !== '_') {
+        if (isCustomStyle && currentStyle !== '_') {
           return <React.Fragment key={styleObj.identifier}></React.Fragment>;
         }
 
@@ -58,6 +58,11 @@ export const StyleSettings = (props: StyleSettingProps) => {
           } else {
             return <React.Fragment key={styleObj.identifier}></React.Fragment>;
           }
+        }
+
+        //hide if it starts with _
+        if (currentStyle !== '_' && currentStyle.startsWith('_')) {
+          return <React.Fragment key={styleObj.identifier}></React.Fragment>;
         }
 
         return (
