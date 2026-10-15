@@ -113,6 +113,7 @@ export namespace DME {
     identifier: string; // '_' for root.
     display?: Display; // Dropdown is default if not set.
     name: string; // 'Style' if not set.
+    noEmptyOption?: boolean; // If true, None will not be shown as an option.
     options: WidgetStyleOption[];
   }
 

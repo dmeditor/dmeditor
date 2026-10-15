@@ -16,9 +16,11 @@ export const InlineBlock = (props: StyleSettingProps & { style: DME.WidgetStyle 
 
   return (
     <InlineBlockStyle>
-      <InlineBlockItemStyle selected={!value} onClick={() => handleChange('')}>
-        None
-      </InlineBlockItemStyle>
+      {!style.noEmptyOption && (
+        <InlineBlockItemStyle selected={!value} onClick={() => handleChange('')}>
+          None
+        </InlineBlockItemStyle>
+      )}
       {style.options.map((option) => (
         <InlineBlockItemStyle
           selected={values[style.identifier] === option.identifier}

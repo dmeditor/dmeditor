@@ -15,7 +15,7 @@ export const DropDown = (props: StyleSettingProps & { style: DME.WidgetStyle }) 
       onChange={(e) => props.onChange(e.target.value, style.identifier)}
       displayEmpty
     >
-      <MenuItem value="">None</MenuItem>
+      {!style.noEmptyOption && <MenuItem value="">None</MenuItem>}
       {style.options.map((option) => (
         <MenuItem key={option.identifier} value={option.identifier}>
           {option.icon && (
