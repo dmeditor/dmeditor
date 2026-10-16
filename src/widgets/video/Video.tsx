@@ -55,9 +55,6 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
           loop={data.settings.loop ?? false}
           playsInline
         >
-          <object width="100%" data={videoUrl}>
-            <embed width="100%" src={videoUrl} />
-          </object>
         </video>
       </Container>
     </>
