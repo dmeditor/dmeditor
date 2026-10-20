@@ -67,6 +67,7 @@ export namespace DME {
   export interface Widget {
     type: string;
     name: string;
+    description?: string; // Shown as tooltip when hovering the widget tool in the add panel.
     icon: string | (() => unknown); // Base64 (e.g., png/svg), URL, or component.
     category: string;
     alias?: string;

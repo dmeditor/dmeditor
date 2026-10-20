@@ -203,7 +203,7 @@ const WidgetItem = (props: {
   const COLUMN_COUNT = 2;
   const { widget, onSelect, index } = props;
   const row = Math.floor(index / COLUMN_COUNT);
-  const { name, icon } = widget;
+  const { name, description, icon } = widget;
   const styles = getWidgetStyle(widget.type);
   const styleOptions = styles.options.filter((option) => !option.identifier.startsWith('_'));
   const savedBlockData = useMemo(() => {
@@ -231,9 +231,9 @@ const WidgetItem = (props: {
 
   return (
     <>
-      <StyleWidgetItem active={open} onClick={handleWidgetSelect}>
+      <StyleWidgetItem active={open} onClick={handleWidgetSelect} title={description}>
         <div>{icon && SvgIcon({ name: icon as string, size: 20 })}</div>
-        <div title={name} className={StyleWidgetItemText} style={{ flexGrow: 1 }}>
+        <div className={StyleWidgetItemText} style={{ flexGrow: 1 }}>
           {name}
         </div>
         {multipleStyles && (
