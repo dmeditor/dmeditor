@@ -9,6 +9,8 @@ export interface EntityFormField {
   rows?: number;
   placeHolder?: string;
   newLine?: boolean;
+  /** Custom label for the file control. When set, the field renders its own button and file name. */
+  fileButtonText?: string;
   params: {
     fileFormat?: string;
   };

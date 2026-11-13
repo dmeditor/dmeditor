@@ -41,6 +41,13 @@ const formFieldWidget: DME.Widget = {
       },
     },
     {
+      custom: true,
+      settingComponent: 'setting-render-container',
+      parameters: {
+        id: 'form-field-type',
+      },
+    },
+    {
       get name() {
         return i18n('Label', 'property-label');
       },

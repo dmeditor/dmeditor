@@ -37,6 +37,12 @@ export const FieldSettings = (props: { data: EntityFormField; path: (string | nu
     });
   };
 
+  const changeFileButtonText = (v: string) => {
+    updateBlockByPath(props.path, (blockData: EntityFormField) => {
+      blockData.fileButtonText = v;
+    });
+  };
+
   return (
     <div>
       <div>
@@ -94,6 +100,17 @@ export const FieldSettings = (props: { data: EntityFormField; path: (string | nu
                 defaultValue={props.data.params?.fileFormat || '*'}
                 onBlur={(e) => {
                   changeFileFormat(e.target.value);
+                }}
+              />
+            </PropertyItem>
+            <PropertyItem
+              label="Button text"
+              description="Replaces the browser file button. The selected file name is shown beside it."
+            >
+              <TextField
+                defaultValue={props.data.fileButtonText || ''}
+                onChange={(e) => {
+                  changeFileButtonText(e.target.value);
                 }}
               />
             </PropertyItem>

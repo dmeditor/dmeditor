@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useEditorStore, useGlobalVars } from 'dmeditor/core/main/store';
 import { RenderToSetting } from 'dmeditor/core/utility';
 
@@ -6,7 +6,7 @@ import type { DME } from '../../core/types';
 import { getWidgetStyleClass } from '../../core/utils';
 import { EntityFormField } from './entity';
 import { FieldSettings } from './FieldSetting';
-import { FormRow } from './styled';
+import { FileControl, FormRow } from './styled';
 
 export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
   const { blockNode, styleClasses, mode, path } = props;
@@ -22,6 +22,18 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
   const feedbackMessage = feedbacks[data.identifier];
 
   const previousType = useRef<string>(data.type);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedFileName, setSelectedFileName] = useState('');
+
+  useEffect(() => {
+    const form = fileInputRef.current?.form;
+    if (!form) {
+      return;
+    }
+    const clearFileName = () => setSelectedFileName('');
+    form.addEventListener('reset', clearFileName);
+    return () => form.removeEventListener('reset', clearFileName);
+  }, [data.fileButtonText]);
 
   useEffect(() => {
     //when switching
@@ -39,7 +51,7 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
   return (
     <div>
       {mode === 'edit' && props.active && (
-        <RenderToSetting>
+        <RenderToSetting containerId="form-field-type" blockId={blockNode.id}>
           <FieldSettings key={data.type} data={data} path={path} />
         </RenderToSetting>
       )}
@@ -128,15 +140,36 @@ export const FormField = (props: DME.WidgetRenderProps<EntityFormField>) => {
               defaultValue={data.defaultValue}
             ></textarea>
           )}
-          {data.type === 'file' && (
-            <input
-              type="file"
-              accept={data.params?.fileFormat || '*'}
-              className={getWidgetStyleClass(styleClasses, 'input-file')}
-              key={data.defaultValue + ''}
-              name={data.identifier}
-            />
-          )}
+          {data.type === 'file' &&
+            (data.fileButtonText ? (
+              <FileControl>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept={data.params?.fileFormat || '*'}
+                  className={getWidgetStyleClass(styleClasses, 'input-file')}
+                  name={data.identifier}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    setSelectedFileName(file?.name || '');
+                  }}
+                />
+                <span className={getWidgetStyleClass(styleClasses, 'input-file-button')}>
+                  {data.fileButtonText}
+                </span>
+                <span className={getWidgetStyleClass(styleClasses, 'input-file-text')}>
+                  {selectedFileName}
+                </span>
+              </FileControl>
+            ) : (
+              <input
+                type="file"
+                accept={data.params?.fileFormat || '*'}
+                className={getWidgetStyleClass(styleClasses, 'input-file')}
+                key={data.defaultValue + ''}
+                name={data.identifier}
+              />
+            ))}
         </div>
       </FormRow>
       {feedbackMessage && (
