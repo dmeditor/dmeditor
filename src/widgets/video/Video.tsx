@@ -54,8 +54,7 @@ export const Video = (props: DME.WidgetRenderProps<VideoEntity>) => {
           autoPlay={data.settings.autoStart}
           loop={data.settings.loop ?? false}
           playsInline
-        >
-        </video>
+        ></video>
       </Container>
     </>
   );
@@ -67,6 +66,7 @@ export const VideoDefinition: DME.Widget = {
   get name() {
     return i18n('Video', 'widget');
   },
+  editMask: true,
   type: 'video',
   events: {
     createBlock: (): DMEData.CreatedBlock<VideoEntity> => {
