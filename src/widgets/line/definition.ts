@@ -46,6 +46,14 @@ const lineWidget: DME.Widget = {
         max: 100,
       },
     },
+    {
+      get name() {
+        return i18n('Vertical', 'property-label');
+      },
+      identifier: 'line-vertical',
+      property: 'settings.vertical',
+      settingComponent: 'checkbox',
+    },
   ],
 };
 

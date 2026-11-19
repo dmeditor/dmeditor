@@ -11,11 +11,12 @@ const Line = (props: DME.WidgetRenderProps<EntityLine>) => {
   } = props;
 
   return (
-    <div>
+    <div style={settings?.vertical ? { display: 'flex', height: '100%' } : undefined}>
       <StyledLine
         className={getWidgetStyleClass(props.styleClasses, 'line-item')}
         spaceHeight={settings?.height || 2}
         spaceColor={settings?.color}
+        vertical={settings?.vertical}
       ></StyledLine>
     </div>
   );
