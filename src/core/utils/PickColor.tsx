@@ -6,6 +6,7 @@ import { IconButton, Popover, Tooltip } from '@mui/material';
 import { SketchPicker, type ColorResult } from 'react-color';
 
 import { DME, useEditorStore } from '../..';
+import { CustomSlider } from './Ranger';
 
 // 10 columns
 const PRESET_COLORS = [
@@ -172,6 +173,58 @@ const colorPickerTitle = css`
   padding: 5px;
 `;
 
+const OpacityLabel = styled.div`
+  margin-top: 12px;
+  font-size: 12px;
+`;
+
+const OpacityRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const OpacityInput = styled.input`
+  width: 32px;
+  flex: none;
+  box-sizing: border-box;
+  padding: 4px 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+`;
+
+const parseColor = (value?: string): { hex: string; alpha: number } => {
+  const match = value?.trim().match(/^#([0-9a-fA-F]{6})([0-9a-fA-F]{2})?$/);
+  if (!match) {
+    return { hex: value || '#000000', alpha: 1 };
+  }
+  const alpha = match[2] ? Math.round((parseInt(match[2], 16) / 255) * 100) / 100 : 1;
+  return { hex: '#' + match[1].toLowerCase(), alpha };
+};
+
+const formatColor = (hex: string, alpha: number) => {
+  const match = hex.match(/^#([0-9a-fA-F]{6})/);
+  if (!match) {
+    return hex;
+  }
+  const base = '#' + match[1].toLowerCase();
+  const byte = Math.round(Math.min(1, Math.max(0, alpha)) * 255);
+  if (byte >= 255) {
+    return base;
+  }
+  return base + byte.toString(16).padStart(2, '0');
+};
+
+const formatAlpha = (alpha: number) => String(Math.round(alpha * 100) / 100);
+
 const SimpleColor = (props: { value?: string; onSelected?: (color: string) => void }) => {
   const { value } = props;
   const presetColors = PRESET_COLORS;
@@ -200,20 +253,13 @@ const AdvancedColor = (props: { value?: string; onChange?: (color: string) => vo
   const { value = '', onChange } = props;
 
   const handleChange = (color: ColorResult) => {
-    let hex = color.hex;
-    if (color.rgb.a && color.rgb.a !== 1) {
-      let end = Math.round(color.rgb.a * 255).toString(16);
-      if (end.length === 1) {
-        end = '0' + end;
-      }
-      hex = hex + end;
-    }
-    onChange?.(hex);
+    onChange?.(color.hex);
   };
 
   return (
     <SketchPicker
       color={value}
+      disableAlpha
       presetColors={[]}
       onChange={handleChange}
       styles={{
@@ -226,6 +272,71 @@ const AdvancedColor = (props: { value?: string; onChange?: (color: string) => vo
         },
       }}
     />
+  );
+};
+
+const OpacityControl = (props: { alpha: number; onChange: (alpha: number) => void }) => {
+  const alpha = Math.min(1, Math.max(0, props.alpha));
+  const [text, setText] = useState(formatAlpha(alpha));
+  const focused = useRef(false);
+
+  useEffect(() => {
+    if (!focused.current) {
+      setText(formatAlpha(alpha));
+    }
+  }, [alpha]);
+
+  const commit = (raw: string) => {
+    if (raw.trim() === '' || raw === '.' || raw.endsWith('.')) {
+      return;
+    }
+    const n = Number(raw);
+    if (Number.isNaN(n)) {
+      return;
+    }
+    props.onChange(Math.min(1, Math.max(0, Math.round(n * 100) / 100)));
+  };
+
+  return (
+    <div>
+      <OpacityLabel>Opacity</OpacityLabel>
+      <OpacityRow>
+        <CustomSlider
+          size="small"
+          min={0}
+          max={1}
+          step={0.01}
+          value={alpha}
+          onChange={(_, value) => props.onChange(value as number)}
+          sx={{ flex: 1, py: 1 }}
+        />
+        <OpacityInput
+          type="number"
+          min={0}
+          max={1}
+          step={0.01}
+          value={text}
+          onFocus={() => {
+            focused.current = true;
+          }}
+          onChange={(e) => {
+            setText(e.target.value);
+            commit(e.target.value);
+          }}
+          onBlur={() => {
+            focused.current = false;
+            const n = Number(text);
+            if (text.trim() === '' || Number.isNaN(n)) {
+              setText(formatAlpha(alpha));
+              return;
+            }
+            const next = Math.min(1, Math.max(0, Math.round(n * 100) / 100));
+            setText(formatAlpha(next));
+            props.onChange(next);
+          }}
+        />
+      </OpacityRow>
+    </div>
   );
 };
 
@@ -314,8 +425,20 @@ export const PickColor = (props: {
     onChange?.(localValue);
   };
 
-  const handleChange = (color: string) => {
-    onChange?.(color);
+  const parsed = color ? parseColor(color) : undefined;
+  const alpha = parsed?.alpha ?? 1;
+  const baseHex = parsed?.hex;
+
+  const handleChange = (nextHex: string) => {
+    onChange?.(formatColor(nextHex, alpha));
+  };
+
+  const handleRecent = (nextColor: string) => {
+    onChange?.(nextColor);
+  };
+
+  const handleAlpha = (nextAlpha: number) => {
+    onChange?.(formatColor(baseHex || '#000000', nextAlpha));
   };
 
   return (
@@ -352,11 +475,12 @@ export const PickColor = (props: {
             </IconButton>
           </div>
           {mode === 'simple' ? (
-            <SimpleColor value={color} onSelected={handleChange} />
+            <SimpleColor value={baseHex} onSelected={handleChange} />
           ) : (
-            <AdvancedColor value={color} onChange={handleChange} />
+            <AdvancedColor value={baseHex} onChange={handleChange} />
           )}
-          <RecentColor recentColors={recentColors} value={color} onChange={handleChange} />
+          <OpacityControl alpha={alpha} onChange={handleAlpha} />
+          <RecentColor recentColors={recentColors} value={color} onChange={handleRecent} />
         </ColorPickerWrapper>
       </Popover>
     </>

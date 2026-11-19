@@ -1,6 +1,6 @@
 import { Grid, Input, Slider, styled } from '@mui/material';
 
-const CustomSlider = styled(Slider)(({ theme }) => ({
+export const CustomSlider = styled(Slider)(({ theme }) => ({
   '& .MuiSlider-thumb': {
     width: 18,
     height: 18,
